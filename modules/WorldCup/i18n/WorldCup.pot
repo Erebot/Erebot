@@ -1,0 +1,14 @@
+msgid   "Alright, I'll keep you posted on currently airing matches."
+msgstr  ""
+#
+msgid   "Alright, you'll not receive notifications anymore."
+msgstr  ""
+#
+msgid   "Could not register World Cup trigger"
+msgstr  ""
+#
+msgid   "Hmm... this chan didn't subscribe to notifications."
+msgstr  ""
+#
+msgid   "This channel already receives notifications on the matches."
+msgstr  ""

@@ -1,0 +1,128 @@
+<?php
+/*
+    This file is part of Erebot.
+
+    Erebot is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Erebot is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+include_once('src/streams/timer.php');
+include_once('src/ifaces/timer.php');
+
+/**
+ * \brief
+ *      An implementation of timers.
+ */
+class       ErebotTimer
+implements  iErebotTimer
+{
+    /// Internal stream used to implement a timer.
+    protected $_stream;
+
+    /// Function or method to call when the timer expires.
+    protected $_callback;
+
+    /// Delay after which the timer will expire.
+    protected $_delay;
+
+    /// Number of times the timer will be reset.
+    protected $_repeat;
+
+
+    // Documented in the interface.
+    public function __construct($callback, $delay, $repeat)
+    {
+        if (!is_callable($callback))
+            throw new EErebotInvalidValue('Invalid callback');
+
+        $this->_callback    = $callback;
+        $this->_delay       = $delay;
+        $this->isRepeated($repeat);
+        $this->_stream      = FALSE;
+    }
+
+    public function __destruct()
+    {
+        if ($this->_stream !== FALSE)
+            fclose($this->_stream);
+        $this->_stream = FALSE;
+    }
+
+    // Documented in the interface.
+    public function & getCallback()
+    {
+        return $this->_callback;
+    }
+
+    // Documented in the interface.
+    public function getDelay()
+    {
+        return $this->_delay;
+    }
+
+    // Documented in the interface.
+    public function isRepeated($repeat = NULL)
+    {
+        $res = $this->getRepetition();
+        if ($repeat !== NULL)
+            $this->setRepetition($repeat);
+        return $res;
+    }
+
+    // Documented in the interface.
+    public function getRepetition()
+    {
+        return $this->_repeat;
+    }
+
+    // Documented in the interface.
+    public function setRepetition($repeat)
+    {
+        // If repeat = FALSE, then repeat = 1 (once)
+        // If repeat = TRUE, then repeat = -1 (forever)
+        if (is_bool($repeat))
+            $repeat = (-intval($repeat)) * 2 + 1;
+        // If repeat = NULL, return current value with no modification.
+        // If repeat > 0, the timer will be triggered 'repeat' times.
+        if (!is_int($repeat) && $repeat !== NULL)
+            throw new EErebotInvalidValue('Invalid repetition');
+
+        $this->_repeat = $repeat;
+    }
+
+    // Documented in the interface.
+    public function & getStream()
+    {
+        return $this->_stream;
+    }
+
+    // Documented in the interface.
+    public function reset()
+    {
+        if ($this->_repeat > 0)
+            $this->_repeat--;
+        else if (!$this->_repeat)
+            return;
+
+        if ($this->_stream !== FALSE)
+            fclose($this->_stream);
+        $this->_stream = fopen('timer://'.$this->_delay, 'r');
+    }
+
+    // Documented in the interface.
+    public function activate()
+    {
+        return (bool) call_user_func_array($this->_callback, array(&$this));
+    }
+}
+

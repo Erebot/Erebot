@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<project name="Erebot" description="" default="all">
+    <!--
+        @TODO: Add descriptions for the targets so that they provide
+        useful information when listed using "phing -l".
+    -->
+
+    <property name="force-coverage" value="true"/>
+
+    <property name="locales"        value="fr_FR,en_US"/>
+    <property name="domain"         value="Erebot"/>
+    <property name="version"        value="0.3.2"/>
+    <property name="email"          value="clicky@erebot.net"/>
+    <property name="summary"        value="A modular IRC bot written in PHP"/>
+    <!-- @TODO: Use real values here. -->
+    <property name="description"><![CDATA[
+${summary}
+]]></property>
+    <property name="notes"><![CDATA[
+@TODO
+]]></property>
+
+    <property name="qa.coverage-db"     value="/tmp/coverage.db"/>
+    <property name="qa.coverage-tmp"    value="/tmp/coverage.xml"/>
+    <property name="phar.output_file"   value="Erebot.phar"/>
+
+    <tstamp>
+        <!-- Format is, e.g. Sat, 03 Oct 2009, 16:31 -->
+        <format property="buildtime" pattern="%a, %d %b %Y, %H:%M"/>
+    </tstamp>
+
+    <adhoc-task name="xgettext"><![CDATA[
+    class XgettextTask extends Task
+    {
+        protected $command = 'xgettext';
+        protected $filesets = array();
+
+        public function setCommand($command)    { $this->command = $command;    }
+        public function getCommand()            { return $this->command;        }
+
+        public function createFileset()
+        {
+            $num = array_push($this->filesets, new FileSet());
+            return $this->filesets[$num-1];
+        }
+
+        function main()
+        {
+            $filesToParse = array();
+            foreach ($this->filesets as $fs) {
+                $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
+                foreach($files as $filename) {
+                     $f = new PhingFile($fs->getDir($this->project), $filename);
+                     $filesToParse[] = $f->getAbsolutePath();
+                }
+            }
+
+            $command = $this->command . " " . join(" ", $filesToParse);
+            $this->log("Executing command: " . $command);
+            exec($command, $output, $return);
+
+            if ($return != 0)
+                throw new BuildException("Could not execute Doxygen: " . implode(" ", $output));
+
+            foreach ($output as $line) {
+                $lowerLine = strtolower($line);
+
+                if (strpos($lowerLine, 'warning') !== FALSE) {
+                    $this->log($line, Project::MSG_WARN);
+                    continue;
+                }
+
+                if (strpos($lowerLine, 'notice') !== FALSE) {
+                    $this->log($line, Project::MSG_INFO);
+                    continue;
+                }
+
+                $this->log($line, Project::MSG_VERBOSE);
+            }
+        }
+    }
+    ]]></adhoc-task>
+
+    <fileset dir="src/" id="sources">
+        <include name="**/*.php"/>
+        <exclude name="orm/**"/>
+        <exclude name="logging/**"/>
+    </fileset>
+
+    <fileset dir="tests/" id="tests">
+        <include name="**/*.php"/>
+        <exclude name="*Stub.php"/>
+        <exclude name="bootstrap.php"/>
+        <exclude name="classProxy.php"/>
+    </fileset>
+
+    <target name="all" depends="i18n" description=""/>
+
+    <!-- Internationalization -->
+    <target name="i18n" depends="compile_catalog"/>
+
+    <target name="extract_messages" description="">
+        <xgettext command="xgettext -o i18n/${domain}.pot --from-code utf-8 --foreign-user --no-location -E -i -w 80 -s -L PHP --omit-header --strict --force-po --package-name ${domain} --package-version ${version} --msgid-bugs-address ${email}">
+            <fileset refid="sources"/>
+        </xgettext>
+    </target>
+
+    <target name="update_catalog" description="">
+        <foreach list="${locales}" param="locale" target="update_1_catalog"/>
+    </target>
+
+    <target name="update_1_catalog" description="">
+        <exec command="msgmerge --backup=off -U -N -e -i --strict -w 80 -s -q --no-location i18n/${locale}/LC_MESSAGES/${domain}.po i18n/${domain}.pot" dir="."/>
+    </target>
+
+    <target name="init_catalog" description="">
+        <propertyprompt propertyName="locale" promptText="Name of the locale" useExistingValue="true"/>
+        <mkdir dir="i18n/${locale}/LC_MESSAGES"/>
+        <exec command="msginit --no-translator -w 80 -l ${locale} -i i18n/${domain}.pot -o i18n/${locale}/LC_MESSAGES/${domain}.po" dir="."/>
+    </target>
+
+    <target name="compile_catalog" description="">
+        <foreach list="${locales}" param="locale" target="compile_1_catalog"/>
+    </target>
+
+    <target name="compile_1_catalog" description="">
+        <exec command="msgfmt -f -o i18n/${locale}/LC_MESSAGES/${domain}.mo i18n/${locale}/LC_MESSAGES/${domain}.po" dir="."/>
+    </target>
+
+
+    <!-- Release process -->
+    <target name="release" description="">
+        <pharpackage
+            destfile="${phar.output_file}"
+            signature="sha256"
+            compression="none"
+            alias="Erebot"
+            clistub="/Erebot"
+            basedir="/var/www/Erebot/trunk/"
+            >
+            <fileset dir=".">
+                <include name="Erebot"/>
+                <include name="src/version"/>
+                <include name="src/**/*.rng"/>
+                <include name="i18n/Erebot.pot"/>
+                <include name="i18n/*/LC_MESSAGES/Erebot.po"/>
+                <include name="i18n/*/LC_MESSAGES/Erebot.mo"/>
+            </fileset>
+            <fileset refid="sources"/>
+            <metadata>
+                <element name="version" value="${version}"/>
+                <element name="authors">
+                    <element name="François Poirotte">
+                        <element name="e-mail" value="clicky@erebot.net"/>
+                    </element>
+                </element>
+            </metadata>
+        </pharpackage>
+
+        <pearpkg2 name="Erebot" dir=".">
+            <fileset dir=".">
+                <include name="${phar.output_file}"/>
+            </fileset>
+            <option name="outputdirectory"  value="."/>
+            <option name="channel"          value="pear.erebot.net" />
+            <option name="summary"          value="${summary}"/>
+            <option name="description"      value="${description}"/>
+            <option name="apiversion"       value="0.1.0"/>
+            <option name="apistability"     value="beta"/>
+            <option name="releaseversion"   value="${version}"/>
+            <option name="releasestability" value="beta"/>
+            <option name="license"          value="GPL v3.0 or later"/>
+            <option name="phpdep"           value="5.3.0"/>
+            <option name="pearinstallerdep" value="1.5.0"/>
+            <option name="packagetype"      value="php"/>
+            <option name="notes"            value="${notes}"/>
+            <mapping name="deps">
+                <element>
+                    <element key="channel"  value="pear.php.net"/>
+                    <element key="name"     value="File_Gettext"/>
+                    <element key="version"  value="0.4.1"/>
+                </element>
+            </mapping>
+            <mapping name="maintainers">
+                <element>
+                    <element key="handle"   value="Clicky"/>
+                    <element key="name"     value="François Poirotte"/>
+                    <element key="email"    value="clicky@erebot.net"/>
+                    <element key="role"     value="lead"/>
+                    <element key="active"   value="yes"/>
+                </element>
+            </mapping>
+        </pearpkg2>
+    </target>
+
+
+    <!-- Documentation -->
+    <target name="doc" description="" depends="doxygen"/>
+
+    <target name="doxygen" description="">
+        <exec command="doxygen" dir="."/>
+        <exec command="make" dir="doc/latex"/>
+    </target>
+
+
+    <!-- Unit tests and code coverage -->
+    <target name="test" depends="qa_coverage"/>
+    <target name="tests" depends="qa_coverage"/>
+    <target name="coverage" depends="qa_coverage"/>
+
+
+    <!-- Quality Assurance -->
+    <target name="qa" depends="qa_lint,qa_codesniffer,qa_depend,qa_mess,qa_duplicates,qa_test"/>
+
+    <target name="qa_lint" description="">
+        <phplint><fileset refid="sources"/></phplint>
+    </target>
+
+    <target name="qa_codesniffer" description="">
+        <phpcodesniffer
+            standard="Zend"
+            showWarnings="true"
+            showSniffs="true"
+            tabWidth="4"
+            sniffs="
+Zend_Sniffs_Debug_CodeAnalyzerSniff
+Zend_Sniffs_Files_ClosingTagSniff
+Zend_Sniffs_NamingConventions_ValidVariableNameSniff
+Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff
+Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff
+Generic_Sniffs_PHP_DisallowShortOpenTagSniff
+Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff
+PEAR_Sniffs_Classes_ClassDeclarationSniff
+PEAR_Sniffs_Functions_FunctionCallSignatureSniff
+PEAR_Sniffs_Functions_ValidDefaultValueSniff
+PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff
+Squiz_Sniffs_Functions_GlobalFunctionSniff
+Generic_Sniffs_Files_LineLengthSniff
+Generic_Sniffs_Files_LineEndingsSniff
+"
+            verbosity="1"
+            >
+            <fileset refid="sources"/>
+        </phpcodesniffer>
+    </target>
+
+    <target name="qa_depend">
+        <phpdepend withoutAnnotations="true" file=".">
+            <fileset refid="sources"/>
+            <analyzer type="coderank-mode" value="method"/>
+            <logger type="phpunit-xml" outfile="/dev/null"/>
+        </phpdepend>
+    </target>
+
+    <target name="qa_mess">
+        <phpmd><fileset refid="sources"/></phpmd>
+    </target>
+
+    <target name="qa_duplicates" description="">
+        <phpcpd>
+            <fileset refid="sources"/>
+            <formatter type="default" outfile="/dev/null"/>
+        </phpcpd>
+    </target>
+
+    <target name="qa_pre_coverage" description="">
+        <coverage-setup database="${qa.coverage-db}">
+            <fileset refid="sources"/>
+        </coverage-setup>
+    </target>
+
+    <target name="qa_test" description="" depends="qa_pre_coverage">
+        <phpunit
+            printsummary="true"
+            bootstrap="tests/bootstrap.php"
+            codecoverage="true"
+            >
+            <formatter type="plain" usefile="false"/>
+            <batchtest><fileset refid="tests"/></batchtest>
+        </phpunit>
+    </target>
+
+    <target name="qa_coverage" description="" depends="qa_test">
+        <mkdir dir="doc"/>
+        <mkdir dir="doc/coverage"/>
+        <coverage-report outfile="${qa.coverage-tmp}">
+            <report todir="doc/coverage" styledir="/usr/share/php/data/phing/etc/"/>
+        </coverage-report>
+        <if>
+            <istrue value="${force-coverage}"/>
+            <then>
+                <coverage-threshold
+                    database="${qa.coverage-db}"
+                    perProject="75"
+                    perClass="75"
+                    perMethod="50"
+                    verbose="true"
+                    />
+            </then>
+        </if>
+    </target>
+</project>

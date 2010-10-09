@@ -1,0 +1,41 @@
+msgid   "<b><var name=\"word\"/></b> doesn't exist or is incorrect for this "
+        "game."
+msgstr  ""
+#
+msgid   "<b>A-Z</b> (<for from=\"lists\" item=\"list\"><var name=\"list\"/></"
+        "for>). Current range: <b><var name=\"min\"/></b> -- <b><var name=\"max"
+        "\"/></b> (<b><var name=\"attempts\"/></b> attempts and <b><var name="
+        "\"bad\"/></b> invalid words)"
+msgstr  ""
+#
+msgid   "<b>BINGO!</b> The answer was indeed <u><var name=\"answer\"/></u>. "
+        "Congratulations <b><var name=\"nick\"/></b>!"
+msgstr  ""
+#
+msgid   "A new <b>A-Z</b> game has been started on <b><var name=\"chan\"/></b> "
+        "using the following wordlists: <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+msgstr  ""
+#
+msgid   "Could not register AZ creation trigger"
+msgstr  ""
+#
+msgid   "New range: <b><var name=\"min\"/></b> -- <b><var name=\"max\"/></b>"
+msgstr  ""
+#
+msgid   "The <b>A-Z</b> game was stopped after <b><var name=\"attempts\"/></b> "
+        "attempts and <b><var name=\"bad\"/></b> invalid words. The answer was "
+        "<u><var name=\"answer\"/></u>."
+msgstr  ""
+#
+msgid   "The answer was found after <b><var name=\"attempts\"/></b> attempts "
+        "and <b><var name=\"bad\"/></b> incorrect words."
+msgstr  ""
+#
+msgid   "The following wordlists are available: <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+msgstr  ""
+#
+msgid   "There are not enough words in the selected wordlists to start a new "
+        "game."
+msgstr  ""

@@ -1,0 +1,226 @@
+# Doxyfile 1.5.8
+
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = Erebot
+PROJECT_NUMBER         = $(EREBOT_VERSION)
+OUTPUT_DIRECTORY       = doc
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       = 
+ALWAYS_DETAILED_SEC    = NO
+INLINE_INHERITED_MEMB  = NO
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = 
+STRIP_FROM_INC_PATH    = 
+SHORT_NAMES            = NO
+JAVADOC_AUTOBRIEF      = NO
+QT_AUTOBRIEF           = NO
+MULTILINE_CPP_IS_BRIEF = NO
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = NO
+TAB_SIZE               = 4
+
+ALIASES                = "TODO=\todo"
+ALIASES               += "XXX=\todo"
+ALIASES               += "u{1}=\htmlonly <u>\1</u> \endhtmlonly\latexonly\underline{\1}\endlatexonly"
+ALIASES               += "i{1}=\htmlonly <em>\1</em> \endhtmlonly\latexonly\textit{\1}\endlatexonly"
+ALIASES               += "b{1}=\htmlonly <strong>\1</strong> \endhtmlonly\latexonly\textbf{\1}\endlatexonly"
+ALIASES               += "FIXME=\xrefitem FIXME \"Known issues\" \"Known Issues\""
+ALIASES               += "HACK=\xrefitem HACK \"Dirty hacks\" \"Dirty Hacks\""
+
+OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_JAVA   = NO
+OPTIMIZE_FOR_FORTRAN   = NO
+OPTIMIZE_OUTPUT_VHDL   = NO
+
+EXTENSION_MAPPING      = 
+BUILTIN_STL_SUPPORT    = NO
+CPP_CLI_SUPPORT        = NO
+SIP_SUPPORT            = NO
+IDL_PROPERTY_SUPPORT   = YES
+DISTRIBUTE_GROUP_DOC   = NO
+SUBGROUPING            = YES
+TYPEDEF_HIDES_STRUCT   = NO
+SYMBOL_CACHE_SIZE      = 0
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = NO
+EXTRACT_ANON_NSPACES   = YES
+
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_IN_BODY_DOCS      = YES
+
+INTERNAL_DOCS          = YES
+CASE_SENSE_NAMES       = YES
+HIDE_SCOPE_NAMES       = NO
+SHOW_INCLUDE_FILES     = YES
+INLINE_INFO            = YES
+
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = YES
+SORT_GROUP_NAMES       = YES
+SORT_BY_SCOPE_NAME     = NO
+
+GENERATE_TODOLIST      = YES
+GENERATE_TESTLIST      = YES
+GENERATE_BUGLIST       = YES
+GENERATE_DEPRECATEDLIST= YES
+
+SEARCHENGINE           = NO
+ENABLED_SECTIONS       = 
+MAX_INITIALIZER_LINES  = 29
+
+SHOW_USED_FILES        = YES
+SHOW_DIRECTORIES       = YES
+SHOW_FILES             = YES
+SHOW_NAMESPACES        = YES
+
+QUIET                  = NO
+WARNINGS               = NO
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+WARN_FORMAT            = "$file:$line: $text"
+WARN_LOGFILE           = 
+
+INPUT                  = src
+INPUT_ENCODING         = UTF-8
+INPUT_FILTER           = 
+FILE_PATTERNS          = *.php
+RECURSIVE              = YES
+LAYOUT_FILE            = 
+
+FILE_VERSION_FILTER    = 
+FILTER_PATTERNS        = 
+FILTER_SOURCE_FILES    = NO
+
+EXCLUDE                = src/logging/
+EXCLUDE               += src/orm/
+EXCLUDE_SYMLINKS       = YES
+EXCLUDE_PATTERNS       = 
+EXCLUDE_SYMBOLS        = 
+
+EXAMPLE_PATH           = 
+EXAMPLE_PATTERNS       = 
+EXAMPLE_RECURSIVE      = YES
+IMAGE_PATH             = 
+
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = YES
+
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+REFERENCES_LINK_SOURCE = YES
+
+USE_HTAGS              = NO
+VERBATIM_HEADERS       = YES
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 3
+
+IGNORE_PREFIX          = $ \
+                         Erebot \
+                         AErebot \
+                         iErebot \
+                         EErebot
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = 
+HTML_FOOTER            = 
+HTML_STYLESHEET        = 
+HTML_ALIGN_MEMBERS     = YES
+HTML_DYNAMIC_SECTIONS  = YES
+
+TOC_EXPAND             = YES
+DISABLE_INDEX          = NO
+ENUM_VALUES_PER_LINE   = 4
+
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 250
+
+FORMULA_FONTSIZE       = 10
+
+GENERATE_LATEX         = YES
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = YES
+PAPER_TYPE             = a4wide
+EXTRA_PACKAGES         = 
+LATEX_HEADER           = 
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = YES
+LATEX_HIDE_INDICES     = YES
+
+GENERATE_XML           = NO
+XML_OUTPUT             = xml
+XML_SCHEMA             = 
+XML_DTD                = 
+XML_PROGRAMLISTING     = YES
+
+GENERATE_DOCSET        = NO
+GENERATE_HTMLHELP      = NO
+GENERATE_CHI           = NO
+GENERATE_QHP           = NO
+GENERATE_RTF           = NO
+GENERATE_AUTOGEN_DEF   = NO
+GENERATE_MAN           = NO
+GENERATE_PERLMOD       = NO
+
+ENABLE_PREPROCESSING   = NO
+MACRO_EXPANSION        = NO
+EXPAND_ONLY_PREDEF     = NO
+
+SEARCH_INCLUDES        = NO
+INCLUDE_PATH           = 
+INCLUDE_FILE_PATTERNS  = 
+PREDEFINED             = 
+EXPAND_AS_DEFINED      = 
+SKIP_FUNCTION_MACROS   = YES
+
+TAGFILES                = $(EREBOT_TAGFILES)
+GENERATE_TAGFILE       = Erebot.tagfile
+ALLEXTERNALS           = YES
+EXTERNAL_GROUPS        = YES
+
+UML_LOOK               = YES
+MSCGEN_PATH            = 
+HIDE_UNDOC_RELATIONS   = YES
+TEMPLATE_RELATIONS     = NO
+GENERATE_LEGEND        = YES
+
+HAVE_DOT               = YES
+DOT_FONTNAME           = FreeSans
+DOT_FONTSIZE           = 10
+DOT_FONTPATH           = 
+DOT_IMAGE_FORMAT       = png
+DOT_PATH               = 
+DOT_GRAPH_MAX_NODES    = 50
+DOT_TRANSPARENT        = NO
+DOT_MULTI_TARGETS      = NO
+DOT_CLEANUP            = YES
+DOTFILE_DIRS           = 
+MAX_DOT_GRAPH_DEPTH    = 0
+
+CLASS_DIAGRAMS         = YES
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = NO
+GROUP_GRAPHS           = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+

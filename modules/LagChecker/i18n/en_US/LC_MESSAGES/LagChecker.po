@@ -1,0 +1,37 @@
+msgid   "\n"
+        "<b>Usage:</b> !<var name='trigger'/>.\n"
+        "Display the latency of the connection, that is, the number of "
+        "seconds\n"
+        "it takes for a message from the bot to go to the IRC server and "
+        "back.\n"
+msgstr  "\n"
+        "<b>Usage:</b> !<var name='trigger'/>.\n"
+        "Display the latency of the connection, that is, the number of "
+        "seconds\n"
+        "it takes for a message from the bot to go to the IRC server and "
+        "back.\n"
+#
+msgid   "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which prints\n"
+        "the current lag.\n"
+msgstr  "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which prints\n"
+        "the current lag.\n"
+#
+#, php-format
+msgid   "Attempting reconnection to \"%s\""
+msgstr  "Attempting reconnection to \"%s\""
+#
+msgid   "Current lag: <var name=\"lag\"/> seconds"
+msgstr  "Current lag: <var name=\"lag\"/> seconds"
+#
+msgid   "Lag got too high for \"%(server)s\" ... reconnecting in %(delay)d "
+        "seconds"
+msgstr  "Lag got too high for \"%(server)s\" ... reconnecting in %(delay)d "
+        "seconds"
+#
+msgid   "No lag measure has been done yet"
+msgstr  "No lag measure has been done yet"
+#
+msgid   "Unable to register trigger for Lag Checker"
+msgstr  "Unable to register trigger for Lag Checker"

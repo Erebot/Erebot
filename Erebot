@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+/*
+    This file is part of Erebot.
+
+    Erebot is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Erebot is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
+
+/* Include the bot's core, this is where a lot of the important stuff
+ * is done and the only required file from a user's point of view.
+ */
+include('src/core.php');
+include('Console/CommandLine.php');
+
+function main()
+{
+    $parser = new Console_CommandLine(array(
+        'name'                  => 'Erebot',
+        'description'           => 'A modular IRC bot written in PHP',
+        'version'               => Erebot::VERSION,
+        'add_help_option'       => TRUE,
+        'add_version_option'    => TRUE,
+        'force_posix'           => FALSE,
+    ));
+
+    $defaultConfigFile = getcwd() . DIRECTORY_SEPARATOR . 'Erebot.xml';
+    $parser->addOption('config', array(
+        'short_name'    => '-c',
+        'long_name'     => '--config',
+        'description'   =>  'Path to the configuration file to use instead '.
+                            'of "Erebot.xml" in the current directory.',
+        'action'        => 'StoreString',
+        'default'       => $defaultConfigFile,
+    ));
+
+    try {
+        $res = $parser->parse();
+    }
+    catch (Exception $exc) {
+        $parser->displayError($exc->getMessage());
+        exit(1);
+    }
+    $config = new ErebotMainConfig(
+        $res->options['config'],
+        ErebotMainConfig::LOAD_FROM_FILE
+    );
+    $bot = new Erebot($config);
+    $bot->start();
+    exit(0);
+}
+
+main();
+

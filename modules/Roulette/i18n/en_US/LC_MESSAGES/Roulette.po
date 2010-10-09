@@ -1,0 +1,41 @@
+msgid   "\n"
+        "<b>Usage:</b> !<var name='trigger'/>.\n"
+        "Makes you press the trigger of the russian roulette gun.\n"
+msgstr  "\n"
+        "<b>Usage:</b> !<var name='trigger'/>.\n"
+        "Makes you press the trigger of the russian roulette gun.\n"
+#
+msgid   "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which makes you "
+        "play\n"
+        "in the russian roulette game.\n"
+msgstr  "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which makes you "
+        "play\n"
+        "in the russian roulette game.\n"
+#
+msgid   "+click+"
+msgstr  "+click+"
+#
+msgid   "<b>*BANG*</b>"
+msgstr  "<b>*BANG*</b>"
+#
+msgid   "<var name=\"nick\"/>: chamber <var name=\"chamber\"/> of <var name="
+        "\"total\"/> =&gt; <var name=\"message\"/>"
+msgstr  "<var name=\"nick\"/>: chamber <var name=\"chamber\"/> of <var name="
+        "\"total\"/> =&gt; <var name=\"message\"/>"
+#
+msgid   "Could not register Roulette trigger"
+msgstr  "Could not register Roulette trigger"
+#
+msgid   "There must be at least 2 chambers"
+msgstr  "There must be at least 2 chambers"
+#
+msgid   "You cannot go twice in a row"
+msgstr  "You cannot go twice in a row"
+#
+msgid   "reloads"
+msgstr  "reloads"
+#
+msgid   "spins the cylinder"
+msgstr  "spins the cylinder"

@@ -1,0 +1,16 @@
+## -*- coding: utf-8 -*-
+## vim: set filetype=python
+
+Import('*')
+Export('pkg_name')
+Export('pkg_version')
+Export('pkg_email')
+Export('env')
+Export('init_catalog')
+Export('irglob')
+Export('component')
+
+env.SConscript('SConstruct.generic')
+
+env.Default(env.Command('src/parser.php', 'src/parser.y', '$phplemon -q -s $SOURCE'))
+

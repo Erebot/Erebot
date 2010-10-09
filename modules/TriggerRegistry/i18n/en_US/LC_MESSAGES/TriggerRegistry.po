@@ -1,0 +1,12 @@
+msgid   "Invalid channel"
+msgstr  "Invalid channel"
+#
+msgid   "Invalid token"
+msgstr  "Invalid token"
+#
+msgid   "No such triggers"
+msgstr  "No such triggers"
+#
+#, php-format
+msgid   "No triggers found for channel \"%s\""
+msgstr  "No triggers found for channel \"%s\""

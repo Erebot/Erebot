@@ -1,0 +1,62 @@
+msgid   ""
+msgstr  "Project-Id-Version: \n"
+        "POT-Creation-Date: \n"
+        "PO-Revision-Date: \n"
+        "Last-Translator: \n"
+        "Language-Team: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=utf-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+#
+msgid   "\n"
+        "<b>Usage:</b> !<var name='trigger'/>.\n"
+        "Makes you press the trigger of the russian roulette gun.\n"
+msgstr  ""
+#
+msgid   "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which makes you "
+        "play\n"
+        "in the russian roulette game.\n"
+msgstr  ""
+#
+#
+# File: Roulette.php, line: 77
+msgid   "+click+"
+msgstr  "+clic+"
+#
+#
+# File: Roulette.php, line: 83
+msgid   "<b>*BANG*</b>"
+msgstr  "<b>*BANG*</b>"
+#
+#
+# File: Roulette.php, line: 93
+msgid   "<var name=\"nick\"/>: chamber <var name=\"chamber\"/> of <var name="
+        "\"total\"/> =&gt; <var name=\"message\"/>"
+msgstr  "<var name=\"nick\"/> : chambre <var name=\"chamber\"/> sur <var name="
+        "\"total\"/> =&gt; <var name=\"message\"/>"
+#
+#
+# File: Roulette.php, line: 36
+msgid   "Could not register Roulette trigger"
+msgstr  "Impossible d'enregistrer le déclencheur pour le jeu de la Roulette"
+#
+#
+# File: Roulette.php, line: 19
+msgid   "There must be at least 2 chambers"
+msgstr  "Il doit y avoir au moins 2 chambres"
+#
+#
+# File: Roulette.php, line: 66
+msgid   "You cannot go twice in a row"
+msgstr  "Vous ne pouvez pas tirer 2 fois d'affilée"
+#
+#
+# File: Roulette.php, line: 87
+msgid   "reloads"
+msgstr  "recharge"
+#
+#
+# File: Roulette.php, line: 72
+msgid   "spins the cylinder"
+msgstr  "fait tourner le barillet"

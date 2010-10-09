@@ -1,0 +1,44 @@
+msgid   ""
+msgstr  "Project-Id-Version: \n"
+        "POT-Creation-Date: \n"
+        "PO-Revision-Date: \n"
+        "Last-Translator: \n"
+        "Language-Team: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=utf-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+#
+msgid   "\n"
+        "<b>Usage:</b> !<var name=\"trigger\"/> &lt;<u>filter</u>&gt; &lt;"
+        "<u>input</u>&gt;.\n"
+        "Transforms the given &lt;<u>input</u>&gt; using the given &lt;"
+        "<u>filter</u>&gt;.\n"
+        "The following filters are available: <for from=\"filters\" item="
+        "\"filter\">\n"
+        "<b><var name=\"filter\"/></b></for>.\n"
+msgstr  ""
+#
+msgid   "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which transforms "
+        "the given\n"
+        "input using some PHP filter.\n"
+msgstr  ""
+#
+#
+# File: PhpFilter.php, line: 26
+msgid   "Could not register Filter trigger"
+msgstr  "Impossible d'enregistrer le déclencheur des Filtres"
+#
+#
+# File: PhpFilter.php, line: 100
+msgid   "No such filter \"<var name=\"filter\"/>\" or filter blocked."
+msgstr  "Filtre introuvable \"<var name=\"filter\"/>\" ou filtre bloqué."
+#
+#
+# File: PhpFilter.php, line: 82
+msgid   "Usage: <b><var name=\"cmd\"/> &lt;filter&gt; &lt;text&gt;</b>. "
+        "Available filters: <for from=\"filters\" item=\"filter\"><var name="
+        "\"filter\"/></for>."
+msgstr  "Usage: <b><var name=\"cmd\"/> &lt;filter&gt; &lt;text&gt;</b>. "
+        "Filtres disponibles : <for from=\"filters\" item=\"filter\"><var name="
+        "\"filter\"/></for>."
