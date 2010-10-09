@@ -1,2 +1,0 @@
-msgid   "Could not register Gang of Four creation trigger"
-msgstr  "Could not register Gang of Four creation trigger"
