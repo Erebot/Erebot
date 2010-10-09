@@ -1,0 +1,25 @@
+Erebot v0.3.1
+-------------
+
+This release is mainly an update of the previous one,
+focusing on code & docs improvements.
+
+Changelog:
+*   
+
+
+Erebot v0.3.0
+-------------
+
+The code underwent some serious changes. Most notably, events have been
+rewritten from the grounds up.
+
+Changelog:
+*   Added glob-like XInclude processing in configuration files [#267]
+*   Created the PLOP sub-project which deals with centralized logging [147]
+*   Allowed configurations to be loaded from a string (helps tests) [#200]
+*   Split events in different classes [#151]
+*   Added support for the STARTTLS extension [#69]
+*   Added more tests [#67]
+*   some other minor changes
+

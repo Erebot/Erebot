@@ -1,0 +1,11 @@
+@INCLUDE ../../Doxyfile
+
+PROJECT_NAME            = Erebot/$(EREBOT_MODULE)
+
+GENERATE_TAGFILE        = $(EREBOT_MODULE).tagfile
+INPUT                   = src/ $(EREBOT_MODULE).php
+EXCLUDE                 = ""
+OUTPUT_DIRECTORY        = doc
+WARNINGS                = NO
+ALIASES                += "module{1}=\addtogroup Modules\n\defgroup \1 \1 module\n\ingroup Modules"
+

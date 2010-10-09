@@ -1,0 +1,66 @@
+msgid   "\n"
+        "%with-words:\n"
+        "    0: 0 seconds;\n"
+        "    1: 1 second;\n"
+        "    2: =#0= seconds;\n"
+        "    60/60: <%%min<;\n"
+        "    61/60: <%%min<, >%with-words>;\n"
+        "    3600/60: <%%hr<;\n"
+        "    3601/60: <%%hr<, >%with-words>;\n"
+        "    86400/86400: <%%day<;\n"
+        "    86401/86400: <%%day<, >%with-words>;\n"
+        "    604800/604800: <%%week<;\n"
+        "    604801/604800: <%%week<, >%with-words>;\n"
+        "%%min:\n"
+        "    1: 1 minute;\n"
+        "    2: =#0= minutes;\n"
+        "%%hr:\n"
+        "    1: 1 hour;\n"
+        "    2: =#0= hours;\n"
+        "%%day:\n"
+        "    1: 1 day;\n"
+        "    2: =#0= days;\n"
+        "%%week:\n"
+        "    1: 1 week;\n"
+        "    2: =#0= weeks;\n"
+msgstr  ""
+#
+msgid   "Connection failed, removing it from the pool"
+msgstr  ""
+#
+#, php-format
+msgid   "Could not connect to \"%s\""
+msgstr  ""
+#
+msgid   "Erebot has stopped"
+msgstr  ""
+#
+msgid   "Erebot is starting"
+msgstr  ""
+#
+msgid   "Got exception"
+msgstr  ""
+#
+msgid   "Internal:"
+msgstr  ""
+#
+msgid   "Limit:"
+msgstr  ""
+#
+msgid   "Main event loop"
+msgstr  ""
+#
+msgid   "Max. Allocated memory:"
+msgstr  ""
+#
+msgid   "No more connections to handle, leaving..."
+msgstr  ""
+#
+msgid   "Received out-of-band data"
+msgstr  ""
+#
+msgid   "Received signal #%(signum)d (%(signame)s)"
+msgstr  ""
+#
+msgid   "System:"
+msgstr  ""

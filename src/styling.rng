@@ -1,0 +1,197 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    ns="http://www.erebot.net/xmlns/erebot/styling"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+    <define name="type-color">
+        <choice>
+            <data type="integer"/>
+
+            <data type="string">
+                <!-- "white" -->
+                <param name="pattern">[wW][hH][iI][tT][eE]</param>
+            </data>
+
+            <data type="string">
+                <!-- "black" -->
+                <param name="pattern">[bB][lL][aA][cC][kK]</param>
+            </data>
+
+            <data type="string">
+                <!-- "blue" or "navy blue" or "dark blue" -->
+                <param name="pattern">((([nN][aA][vV][yY])|([dD][aA][rR][kK]))[-_ ])?[bB][lL][uU][eE]</param>
+            </data>
+
+            <data type="string">
+                <!-- "green" or "dark green" -->
+                <param name="pattern">(([dD][aA][rR][kK])[-_ ])?[gG][rR][eE][eE][nN]</param>
+            </data>
+
+            <data type="string">
+                <!-- "red" -->
+                <param name="pattern">[rR][eE][dD]</param>
+            </data>
+
+            <data type="string">
+                <!-- "brown" -->
+                <param name="pattern">[bB][rR][oO][wW][nN]</param>
+            </data>
+
+            <data type="string">
+                <!-- "purple" -->
+                <param name="pattern">[pP][uU][rR][pP][lL][eE]</param>
+            </data>
+
+            <data type="string">
+                <!-- "orange" -->
+                <param name="pattern">[oO][rR][aA][nN][gG][eE]</param>
+            </data>
+
+            <data type="string">
+                <!-- "olive" -->
+                <param name="pattern">[oO][lL][iI][vV][eE]</param>
+            </data>
+
+            <data type="string">
+                <!-- "yellow" -->
+                <param name="pattern">[yY][eE][lL][lL][oO][wW]</param>
+            </data>
+
+            <data type="string">
+                <!-- "light green" or "lime green" -->
+                <param name="pattern">((([lL][iI][gG][hH][tT])|([lL][iI][mM][eE]))[-_ ])[gG][rR][eE][eE][nN]</param>
+            </data>
+
+            <data type="string">
+                <!-- "cyan" or "dark cyan" or "teal" -->
+                <param name="pattern">((([dD][aA][rR][kK])[-_ ])?[cC][yY][aA][nN])|([tT][eE][aA][lL])</param>
+            </data>
+
+            <data type="string">
+                <!-- "light cyan" -->
+                <param name="pattern">[lL][iI][gG][hH][tT][-_ ][cC][yY][aA][nN]</param>
+            </data>
+            <data type="string">
+                <!-- "aqua light" which is another alias for "light cyan" -->
+                <param name="pattern">[aA][qQ][uU][aA][-_ ][lL][iI][gG][hH][tT]</param>
+            </data>
+
+            <data type="string">
+                <!-- "light blue" or "royal blue" -->
+                <param name="pattern">((([lL][iI][gG][hH][tT])|([rR][oO][yY][aA][lL]))[-_ ])[bB][lL][uU][eE]</param>
+            </data>
+
+            <data type="string">
+                <!-- "pink" or "hot pink" -->
+                <param name="pattern">(([hH][oO][tT])[-_ ])?[pP][iI][nN][kK]</param>
+            </data>
+
+            <data type="string">
+                <!-- "gray" or "grey" or "dark gray" or "dark grey" -->
+                <param name="pattern">(([dD][aA][rR][kK])[-_ ])?[gG][rR][eEaA][yY]</param>
+            </data>
+
+            <data type="string">
+                <!-- "light gray" or "light grey" -->
+                <param name="pattern">[lL][iI][gG][hH][tT][-_ ][gG][rR][eEaA][yY]</param>
+            </data>
+        </choice>
+    </define>
+
+    <define name="type-identifier">
+        <text/>
+    </define>
+
+    <start>
+        <ref name="msg"/>
+    </start>
+
+    <define name="msg">
+        <element name="msg">
+            <ref name="subtags"/>
+        </element>
+    </define>
+
+    <define name="subtags">
+        <interleave>
+            <zeroOrMore><ref name="var"/></zeroOrMore>
+            <zeroOrMore><ref name="u"/></zeroOrMore>
+            <zeroOrMore><ref name="b"/></zeroOrMore>
+            <zeroOrMore><ref name="color"/></zeroOrMore>
+            <zeroOrMore><ref name="for"/></zeroOrMore>
+            <zeroOrMore><ref name="plural"/></zeroOrMore>
+            <text/>
+        </interleave>
+    </define>
+
+    <define name="var">
+        <element name="var">
+            <attribute name="name"><ref name="type-identifier"/></attribute>
+
+            <empty/>
+        </element>
+    </define>
+
+    <define name="u">
+        <element name="u">
+            <ref name="subtags"/>
+        </element>
+    </define>
+
+    <define name="b">
+        <element name="b">
+            <ref name="subtags"/>
+        </element>
+    </define>
+
+    <define name="color">
+        <element name="color">
+            <attribute name="fg"><ref name="type-color"/></attribute>
+            <attribute name="bg"><ref name="type-color"/></attribute>
+
+            <ref name="subtags"/>
+        </element>
+    </define>
+
+    <define name="for">
+        <element name="for">
+            <attribute name="from"><ref name="type-identifier"/></attribute>
+            <attribute name="item"><ref name="type-identifier"/></attribute>
+            <optional>
+                <attribute name="key"><ref name="type-identifier"/></attribute>
+            </optional>
+            <optional>
+                <attribute name="separator"><text/></attribute>
+            </optional>
+            <optional>
+                <attribute name="last_separator"><text/></attribute>
+            </optional>
+
+            <ref name="subtags"/>
+        </element>
+    </define>
+
+    <define name="plural">
+        <element name="plural">
+            <attribute name="var"><ref name="type-identifier"/></attribute>
+
+            <oneOrMore>
+                <element name="case">
+                    <!-- From http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html -->
+                    <attribute name="form">
+                        <choice>
+                            <value>zero</value>
+                            <value>one</value>
+                            <value>two</value>
+                            <value>few</value>
+                            <value>many</value>
+                            <value>other</value>
+                        </choice>
+                    </attribute>
+
+                    <ref name="subtags"/>
+                </element>
+            </oneOrMore>
+        </element>
+    </define>
+</grammar>
+

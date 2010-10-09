@@ -1,0 +1,37 @@
+msgid   "\n"
+        "<b>Usage:</b> !<var name='trigger'/> &lt;<u>formula</u>&gt;.\n"
+        "Computes the given formula and displays the result.\n"
+        "The four basic operators (+, -, *, /), parenthesis, exponentiation "
+        "(^)\n"
+        "and modules (%) are supported.\n"
+msgstr  "\n"
+        "<b>Usage:</b> !<var name='trigger'/> &lt;<u>formula</u>&gt;.\n"
+        "Computes the given formula and displays the result.\n"
+        "The four basic operators (+, -, *, /), parenthesis, exponentiation "
+        "(^)\n"
+        "and modules (%) are supported.\n"
+#
+msgid   "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which allows you\n"
+        "to submit formulae to the bot for computation.\n"
+msgstr  "\n"
+        "Provides the <b><var name=\"trigger\"/></b> command which allows you\n"
+        "to submit formulae to the bot for computation.\n"
+#
+msgid   "% is undefined on real numbers"
+msgstr  "% is undefined on real numbers"
+#
+msgid   "Could not register Math trigger"
+msgstr  "Could not register Math trigger"
+#
+msgid   "Division by zero"
+msgstr  "Division by zero"
+#
+msgid   "Exponent is too big for computation"
+msgstr  "Exponent is too big for computation"
+#
+msgid   "Syntax error"
+msgstr  "Syntax error"
+#
+msgid   "^ is undefined for negative exponents"
+msgstr  "^ is undefined for negative exponents"
