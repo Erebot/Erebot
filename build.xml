@@ -91,7 +91,6 @@ ${summary}
         <include name="**/*.php"/>
         <exclude name="*Stub.php"/>
         <exclude name="bootstrap.php"/>
-        <exclude name="classProxy.php"/>
     </fileset>
 
     <target name="all" depends="i18n" description=""/>
