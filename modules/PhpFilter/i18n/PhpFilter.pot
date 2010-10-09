@@ -1,0 +1,13 @@
+# File: PhpFilter.php, line: 27
+msgid   "Could not register Filter trigger"
+msgstr  ""
+#
+# File: PhpFilter.php, line: 104
+msgid   "No such filter \"<var name=\"filter\"/>\" or filter blocked."
+msgstr  ""
+#
+# File: PhpFilter.php, line: 85
+msgid   "Usage: <b><var name=\"cmd\"/> &lt;filter&gt; &lt;text&gt;</b>. "
+        "Available filters: <for from=\"filters\" item=\"filter\"><var name="
+        "\"filter\"/></for>."
+msgstr  ""

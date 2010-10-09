@@ -1,0 +1,13 @@
+# File: TV.php, line: 60
+msgid   "Could not register TV trigger"
+msgstr  ""
+#
+# File: TV.php, line: 137
+msgid   "No such channel(s)"
+msgstr  ""
+#
+# File: TV.php, line: 139
+msgid   "TV programs for <u><var name=\"date\"/></u>: <for from=\"programs\" "
+        "key=\"channel\" item=\"timetable\" separator=\" - \"><b><var name="
+        "\"channel\"/></b>: <var name=\"timetable\"/></for>"
+msgstr  ""

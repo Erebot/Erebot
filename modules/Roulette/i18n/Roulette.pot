@@ -1,0 +1,32 @@
+# File: Roulette.php, line: 80
+msgid   "+click+"
+msgstr  ""
+#
+# File: Roulette.php, line: 86
+msgid   "<b>*BANG*</b>"
+msgstr  ""
+#
+# File: Roulette.php, line: 96
+msgid   "<var name=\"nick\"/>: chamber <var name=\"chamber\"/> of <var name="
+        "\"total\"/> =&gt; <var name=\"message\"/>"
+msgstr  ""
+#
+# File: Roulette.php, line: 38
+msgid   "Could not register Roulette trigger"
+msgstr  ""
+#
+# File: Roulette.php, line: 21
+msgid   "There must be at least 2 chambers"
+msgstr  ""
+#
+# File: Roulette.php, line: 69
+msgid   "You cannot go twice in a row"
+msgstr  ""
+#
+# File: Roulette.php, line: 90
+msgid   "reloads"
+msgstr  ""
+#
+# File: Roulette.php, line: 75
+msgid   "spins the cylinder"
+msgstr  ""

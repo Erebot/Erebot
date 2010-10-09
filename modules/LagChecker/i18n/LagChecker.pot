@@ -1,0 +1,12 @@
+# File: LagChecker.php, line: 189
+#, php-format
+msgid   "Last lag measure revealed %f secs of latency"
+msgstr  ""
+#
+# File: LagChecker.php, line: 186
+msgid   "No lag measure has been done yet"
+msgstr  ""
+#
+# File: LagChecker.php, line: 81
+msgid   "Unable to register trigger for Lag Checker"
+msgstr  ""

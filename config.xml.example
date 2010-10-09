@@ -1,0 +1,128 @@
+<?xml version="1.0" ?>
+<!-- kate: tab-width: 4 -->
+
+<configuration
+    xmlns="http://localhost/Erebot/"
+    version="0.2.1"
+    language="fr-FR"
+    timezone="Europe/Paris">
+
+    <modules>
+        <module name="PingReply"            />
+        <module name="ServerCapabilities"   />
+        <module name="TriggerRegistry"      />
+        <module name="NickTracker"          />
+
+        <module name="LagChecker">
+            <param name="check"     value="60" />
+            <param name="timeout"   value="15" />
+            <param name="reconnect" value="60" />
+        </module>
+
+        <module name="IrcConnector">
+            <param name="nickname"  value="Erebot"  />
+            <param name="identity"  value="Erebot"  />
+            <param name="hostname"  value="Erebot"  />
+            <param name="realname"  value="Doh!"    />
+        </module>
+
+        <module name="GoF">
+            <param name="start_time"    value="45"  />
+            <param name="pause_time"    value="10"   />
+        </module>
+
+        <module name="Uno">
+            <param name="start_time"    value="20"  />
+        </module>
+
+        <module name="TV" />
+
+        <module name="AutoConnect" />
+
+<!--
+        <module name="DbConnector">
+            <param name="DSN"       value="mysql:dbname=erebot;host=127.0.0.1" />
+            <param name="username"  value="root" />
+            <param name="password"  value="" />
+        </module>
+-->
+
+        <module name="Countdown">
+            <param name="minimum"   value="100" />
+            <param name="maximum"   value="999" />
+            <param name="numbers"   value="7" />
+            <param name="allowed"   value="1 2 3 4 5 6 7 8 9 10 25 50 75 100" />
+            <param name="delay"     value="60" />
+        </module>
+
+        <module name="Roulette">
+            <param name="nb_chambers"  value="6" />
+        </module>
+
+        <module name="Math" />
+    </modules>
+
+    <networks>
+        <network name="localhost">
+            <modules>
+<!--                <module name="LagChecker" active="false" /> -->
+<!--                <module name="AutoConnect" active="false" />-->
+            </modules>
+
+            <servers>
+                <server url="irc://localhost:6667/" />
+            </servers>
+
+            <channels>
+                <channel name="#mew" language="en-US">
+                    <modules>
+                        <module name="AutoJoin" />
+                    </modules>
+                </channel>
+            </channels>
+        </network>
+
+        <network name="EpiKnet">
+            <modules>
+                <module name="AutoIdent">
+                    <param name="nickserv"  value="Themis NickServ" />
+                    <param name="password"  value="tralala" />
+                    <param name="pattern"   value=".*enregistré.*" />
+                </module>
+<!--                <module name="AutoConnect" active="false" />-->
+            </modules>
+
+            <servers>
+                <server url="ircs://web.epiknet.org:7002/?verify_peer=0" />
+<!--                <server url="irc://irc.epiknet.org:6667/" />-->
+            </servers>
+
+            <channels>
+                <channel name="#mew">
+                    <modules>
+                        <module name="AutoJoin" />
+                    </modules>
+                </channel>
+            </channels>
+        </network>
+
+        <network name="IIEns">
+            <modules>
+                <module name="AutoConnect" active="false" />
+            </modules>
+
+            <servers>
+                <server url="irc://irc.iiens.net:6667/"         />
+                <server url="irc://irc.secours.iiens.net:6667/" />
+            </servers>
+
+            <channels>
+                <channel name="#mew">
+                    <modules>
+                        <module name="AutoJoin" />
+                    </modules>
+                </channel>
+            </channels>
+        </network>
+    </networks>
+</configuration>

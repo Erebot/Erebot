@@ -1,0 +1,123 @@
+# File: ServerCapabilities.php, line: 238
+msgid   "Bad chan prefix"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 397
+msgid   "Bad channel list ID"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 186
+msgid   "Bad channel name"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 583
+msgid   "Bad prefix"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 602
+msgid   "Bad standard name"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 406
+msgid   "Excepts are not available on this server"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 637
+# File: ServerCapabilities.php, line: 649
+msgid   "Extended bans not supported on this server"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 425
+msgid   "Invalid channel list ID"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 500
+msgid   "Invalid command"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 201
+# File: ServerCapabilities.php, line: 229
+msgid   "Invalid list type"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 344
+# File: ServerCapabilities.php, line: 363
+msgid   "Invalid mapping name"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 433
+# File: ServerCapabilities.php, line: 477
+msgid   "Invalid mode"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 540
+msgid   "Invalid modes"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 456
+msgid   "Invalid prefix"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 163
+msgid   "Invalid status"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 264
+# File: ServerCapabilities.php, line: 300
+msgid   "Invalid text type"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 416
+msgid   "Invites are not available on this server"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 576
+msgid   "No SSL information available"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 381
+msgid   "No charset specified"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 303
+msgid   "No limit defined for this text"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 211
+msgid   "No limit specified"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 437
+# File: ServerCapabilities.php, line: 460
+msgid   "No mapping for prefixes"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 594
+msgid   "No safe channels on this server"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 218
+msgid   "No silence limit specified"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 349
+# File: ServerCapabilities.php, line: 368
+msgid   "No such mapping exists"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 448
+# File: ServerCapabilities.php, line: 493
+msgid   "No such mode"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 469
+msgid   "No such prefix"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 225
+msgid   "No watch limit specified"
+msgstr  ""
+#
+# File: ServerCapabilities.php, line: 130
+msgid   "Not a valid command name"
+msgstr  ""

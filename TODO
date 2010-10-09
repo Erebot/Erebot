@@ -1,0 +1,174 @@
+This list is likely incomplete and is merely a rough enumeration of what I would
+like to add/improve/refactor/whatever in Erebot.
+These notes are more or less organized with the most simple-to-implement stuff
+coming first and the not-so-simple-to-implement stuff coming after that
+(that is, the further you read on, the harder it is to add that feature).
+
+-   okay, now that the DBConnector seems ready, it would probably be the right
+    time to decide how other modules interact with the DB. I mean seriously,
+    a LOT of questions need to be answered to get this correctly:
+    *   Does each one of the modules gets its own table ?
+    *   Do we allow modules to share their data ? How ?
+    *   What if more than one table is required ?
+        What is the chosen naming scheme then ?
+    *   other questions I ought to think about...
+
+-   reimplement Math module for the new architecture DONE, but needs tests
+-   support per-channel configuration DONE, but needs tests
+-   support i18n through gettext DONE, but needs tests
+
+-   support post-connection security upgrade (STARTTLS), as per this doc:
+    http://wiki.inspircd.org/STARTTLS_Documentation
+    The following PHP function should do the trick:
+    http://fr2.php.net/manual/en/function.stream-socket-enable-crypto.php
+    but we must be extra careful as we use non-blocking sockets...
+    (see user notes on the page)
+
+-   reimplement Uno game on the new architecture
+-   reimplement GoF game on the new architecture
+
+-   implement Helper module which provides help about other modules/commands.
+    Maybe link it with TriggerRegistry (which will be used anyway to register
+    the "help" trigger).
+    Maybe do the following:
+    *   register "help" trigger.
+    *   on receival of help command, do a module lookup using that command.
+    *   if a module is found, pass a list of arguments to that module's help
+        method. The targetted module is responsible for providing information.
+        If no module matches or no help method exists, it is an error.
+
+-   add channel tracking, that is:
+    *   keep track of channel modes' changes
+    *   retrieve list of users based on channel modes
+        (eg.: list of all channel operators, etc.)
+
+-   integrate nickname tracking into channel tracking, to somehow:
+    *   be able to retrieve the list of common channels between some user and
+        the bot. If the two trackers don't get merged, I fear this means we'll
+        have some duplicity in the code here, plus most of the logic is already
+        present in the nickname tracker, it'd be a shame not to use it, really!
+
+-   implement persistent user accounts on the bot, which means that:
+    *   the DBConnector plugin should be made functionnal first. DONE
+        -> The DBConnector is a (very) thin abstraction layer above PDO.
+
+-   make other modules (optionally ?) dependent on the DBConnector.
+    This could offer some interesting possibilities:
+    *   save games' scores in a database
+    *   provide statistics (about games and about just any other information the
+        bot knows about, like Thales IRC Statistics)
+    *   (re)implement admin module. Upon installation, a super-admin account is
+        created. This account can then be used to create other accounts.
+        Accounts have permissions attached to them. One of these permissions is
+        to allow some management tasks such as reload modules, changing a
+        module's settings (temporarily and/or permanently ?).
+
+-   implement two sets of configuration: running & startup, similar to what's
+    provided in Cisco routers. In particular:
+    *   the startup configuration is written in some external configuration file
+        (probably config.xml in our case). The file is read each time you start
+        the bot.
+    *   the running configuration is the set of settings which are used during
+        the lifetime on the bot. So the bot starts up with the startup settings,
+        which are copied as the running configuration and live changes are made
+        on the running configuration.
+    *   the running configuration may be saved as the new startup configuration.
+    *   the running configuration may be reloaded at any time by overwriting it
+        with settings found in the config.xml file.
+        How settings are merged between running & startup configuration is yet
+        to be defined. Simplest solution is to overwriting running configuration
+        with settings from the startup configuration upon reloading.
+
+-   add support for identd: (note: this has very low priority for the moment)
+    *   the bot should reply to requests for identification data from irc
+        networks it connects to.
+    *   there are security problem at the moment with that, since identd must be
+        running on TCP port 113 which only root can bind to. I don't feel at
+        ease running PHP as root, especially without any way for a PHP script to
+        drop root privileges once it's started.
+    *   this module should probably be configurable:
+        -   does the server run permanently in the background or is it only
+            active when a connection occurs (this may pose problems with root
+            priviledges handling. See note above).
+        -   probably the best option is to have it listen upon startup, but only
+            reply to identification requests when it's connecting to a network.
+        -   users should be able to choose whether they want their username to
+            be sent out or not. If not, they must be able to set a static string
+            which will be sent in identification response as if it was the
+            actual identification data.
+
+-   add support for a console.
+    Currently, the bot offers very limited options for debugging. Adding a
+    console could be of great help. The console may be used to:
+    *   monitor incoming/outgoing messages (best option would be to provide
+        per-connection window for that).
+    *   set bot settings on the fly (somewhat like what the admin module should
+        provide)
+    *   maybe some other stuff (why not a complete irc client ?...)
+
+-   reimplement (and finish the code for) the Thiercelieux game...
+    There's room for a lot of improvements here, but the codebase is already
+    quite big. So, expect a lot of efforts needed to reimplement that...
+
+
+###################################
+
+Take a break. The following notes were merged from an unsorted TODO file that
+was committed some time before this one was. So... it's not "up-to-date", it
+contains redundant entries with the previous list, it makes references to old
+ideas & modules, etc. That being said, "USE THIS LIST AT YOUR OWN RISK" is the
+best thing I could probably advice about it.
+
+Wanted (additions to) modules :
+
+- DbConnector : handle database connection & usage
+    Make lots of things automatic ?
+    Maybe have a look at Hibernate/Struts to see how they work
+    DONE. Not sure if anything more may be required.
+    Basically, it only creates database connections based on config settings.
+    It's that simple/dumb, really.
+
+- UserAccount : handle user accounts & privileges
+    Depends on DbConnector
+    Maybe merge this with NickTracker module ?
+
+- GoF : add highscore support
+    Depends on UserAccount
+    Use sendMessage() instead of sendCommand() wherever it is applicable
+
+- Uno : add highscore support
+    Depends on UserAccount
+    Use sendMessage() instead of sendCommand() wherever it is applicable
+
+- AZ : port game to new arch
+    Requires a bit of work
+
+- Thiercelieux : port game to new arch
+    Requires a lot of work
+
+- Keywords : associate sentences to keywords
+    Depends on DbConnector (associations get stored in db)
+    Copy rbot's features
+
+- Quotes : the usual quoting system
+    Depends on DbConnector (quotes get stored in db)
+    Have a look at rbot's way of doing things
+
+- phpunit2 : include unit tests !!
+    CRITICAL
+    Done for 3 functions of GoF...
+    WIP in Uno module... lots of tests are on their way :)
+
+- ChanTracker : code it!
+    Keeps an eye on channel modes such as (half)op & voice.
+    Can be used to determine whether someone has the given
+    status on a given channel.
+    Can also be used to retrieve the list of all users with
+    a given status on a given channel.
+    Can be used to find common channels between a given user
+    and the bot.
+
+- ServerCapabilities : move NAMESX handling
+    Move NAMESX detection & reaction to ChanTracker since
+    this is where it has the most meaning.
+

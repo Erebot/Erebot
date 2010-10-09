@@ -1,0 +1,17 @@
+# File: TriggerRegistry.php, line: 39
+msgid   "Invalid channel"
+msgstr  ""
+#
+# File: TriggerRegistry.php, line: 63
+msgid   "Invalid token"
+msgstr  ""
+#
+# File: TriggerRegistry.php, line: 69
+# File: TriggerRegistry.php, line: 92
+msgid   "No such triggers"
+msgstr  ""
+#
+# File: TriggerRegistry.php, line: 79
+#, php-format
+msgid   "No triggers found for channel \"%s\""
+msgstr  ""

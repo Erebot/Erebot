@@ -1,0 +1,8 @@
+# File: NickTracker.php, line: 45
+# File: NickTracker.php, line: 54
+msgid   "No such token"
+msgstr  ""
+#
+# File: NickTracker.php, line: 32
+msgid   "Not a valid nick"
+msgstr  ""

@@ -1,0 +1,71 @@
+# File: Countdown.php, line: 163
+msgid   "<b>BINGO! <var name=\"nick\"/></b> has achieved <b><var name=\"result"
+        "\"/></b> with this formula: <b><var name=\"formula\"/></b>."
+msgstr  ""
+#
+# File: Countdown.php, line: 96
+msgid   "A new Countdown game has been started. You must get <b><var name="
+        "\"target\"/></b> using the following numbers <for from=\"numbers\" "
+        "item=\"number\"><b><var name=\"number\"/></b></for>. You have <var "
+        "name=\"delay\"/> seconds to make suggestions."
+msgstr  ""
+#
+# File: Countdown.php, line: 182
+msgid   "Congratulations <b><var name=\"nick\"/></b>! You're the closest with "
+        "<b><var name=\"result\"/></b>."
+msgstr  ""
+#
+# File: Countdown.php, line: 230
+msgid   "Congratulations to <b><var name=\"nick\"/></b> who wins this "
+        "Countdown game. <b><var name=\"nick\"/></b> has got <b><var name="
+        "\"result\"/></b> with this formula: <b><var name=\"formula\"/></b>."
+msgstr  ""
+#
+# File: Countdown.php, line: 31
+msgid   "Could not register Countdown trigger"
+msgstr  ""
+#
+# File: Countdown.php, line: 141
+msgid   "Division by zero"
+msgstr  ""
+#
+# File: Countdown.php, line: 132
+msgid   "Expected the formula to be a string"
+msgstr  ""
+#
+# File: Countdown.php, line: 136
+#, php-format
+msgid   "Invalid token near \"%1$s\" at offset %2$d"
+msgstr  ""
+#
+# File: Countdown.php, line: 158
+msgid   "No such number or number already used"
+msgstr  ""
+#
+# File: Countdown.php, line: 145
+msgid   "Non integral division"
+msgstr  ""
+#
+# File: Countdown.php, line: 191
+msgid   "Not bad <b><var name=\"nick\"/></b>, you actually got <b><var name="
+        "\"result\"/></b>, but this is not the best formula... Try again ;)"
+msgstr  ""
+#
+# File: Countdown.php, line: 77
+msgid   "So far, <b><var name=\"nick\"/></b> has achieved <b><var name=\"result"
+        "\"/></b> using this formula: <b><var name=\"formula\"/></b>"
+msgstr  ""
+#
+# File: Countdown.php, line: 149
+msgid   "Syntax error"
+msgstr  ""
+#
+# File: Countdown.php, line: 224
+msgid   "Time's up! Nobody has made any suggestion. :("
+msgstr  ""
+#
+# File: Countdown.php, line: 65
+msgid   "You must get <b><var name=\"target\"/></b> using the following "
+        "numbers: <for from=\"numbers\" item=\"number\"><b><var name=\"number"
+        "\"/></b></for>."
+msgstr  ""

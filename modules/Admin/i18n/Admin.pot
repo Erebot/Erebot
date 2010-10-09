@@ -1,0 +1,12 @@
+# File: Admin.php, line: 46
+msgid   "Could not register trigger for admin command \"<var name=\"command\"/>"
+        "\""
+msgstr  ""
+#
+# File: Admin.php, line: 68
+msgid   "Could not register trigger for admin command \"join\""
+msgstr  ""
+#
+# File: Admin.php, line: 86
+msgid   "Could not register trigger for admin command \"reload\""
+msgstr  ""

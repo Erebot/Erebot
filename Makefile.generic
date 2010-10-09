@@ -1,0 +1,152 @@
+# vim: noet ts=8 sts=8 sw=8 ft=Makefile
+
+define default_target
+ifeq ($$($(2)),)
+$(1): default-$(1)
+else
+ifneq ($$($(2)),$(1))
+$(1): $$($(2))
+endif
+endif
+
+.PHONY: default-$(1) $(1)
+endef
+
+DEFAULT_TARGETS =		\
+	extract_messages	\
+	init_catalog		\
+	update_catalog		\
+	compile_catalog		\
+	test			\
+	doc			\
+	clean_doc
+
+$(foreach t,$(DEFAULT_TARGETS),$(eval $(call default_target,$(t),\
+TARGET_$(shell echo '$(t)' | tr a-z A-Z))))
+
+AVAILABLE_CATALOGS := $(shell find i18n/ -mindepth 1 -maxdepth 1 -type d \
+		-exec basename '{}' ';' 2> /dev/null | grep -v .svn)
+
+TERM_COLS	:= $$(stty -a | grep columns | tr -d ';' | cut -d ' ' -f 7)
+TERM_COLS	:= $$(($(TERM_COLS) - 8))
+
+# Prints a colored "[  OK  ]" or "[ FAIL ]" based
+# on the return code of the latest shell command.
+print_status =						\
+	echo -n "\\033[$(TERM_COLS)G\\033[1m[ ";	\
+	if [ $$? -eq 0 ]; then				\
+		echo -n " \\033[32mOK ";		\
+	else 						\
+		echo -n "\\033[31mFAIL";		\
+	fi;						\
+	echo "\\033[0;1m ]\\033[0m"
+
+i18n:
+	mkdir -p i18n
+
+default-extract_messages: i18n
+	@echo -n 'Extracting messages for "$(PACKAGE_NAME)"'
+	@files='';						\
+	if [ -d 'src/' ];					\
+	then							\
+		files=`find src/ -name '*.php'`;		\
+	fi;							\
+	xgettext -o "i18n/$(PACKAGE_NAME).pot"			\
+		--from-code utf-8 --foreign-user		\
+		-E -i -n -w 80 -s -L PHP --omit-header		\
+		--strict --package-name '$(PACKAGE_NAME)'	\
+		--msgid-bugs-address missingno@ifrance.com	\
+		--package-version '$(PACKAGE_VERSION)'		\
+		$$files $(GETTEXT_ARGS);
+	@$(call print_status);
+
+default-i18n/$(PACKAGE_NAME).pot: default-extract_messages
+
+default-init_catalog:
+	@echo -n "Name of the new locale? (eg. 'en_US') "
+	@read locale;							\
+	if [ x$$locale != x ];						\
+	then								\
+		echo -n "Creating new catalog for locale '$$locale'.";	\
+		mkdir -p "i18n/$$locale/LC_MESSAGES/";			\
+		$(call print_status);					\
+		echo -n '';						\
+	fi
+	$(MAKE) update_catalog
+	@echo Done.
+	@echo ''
+
+default-update_catalog: default-i18n/$(PACKAGE_NAME).pot
+	@echo 'Updating catalogs for "$(PACKAGE_NAME)"'
+	@for clog in $(AVAILABLE_CATALOGS);						\
+	do										\
+		echo -n "Updating locale '$$clog'"; 					\
+		if [ ! -f "i18n/$$clog/LC_MESSAGES/$(PACKAGE_NAME).po" ];		\
+		then 									\
+			echo '';							\
+			msginit --no-translator -l $$clog -w 80 			\
+				-i "i18n/$(PACKAGE_NAME).pot" 				\
+				-o "i18n/$$clog/LC_MESSAGES/$(PACKAGE_NAME).po"; 	\
+		else 									\
+			msgmerge --backup=off -U -N -e -i --strict			\
+				-w 80 --add-location -s -q				\
+				"i18n/$$clog/LC_MESSAGES/$(PACKAGE_NAME).po"		\
+				"i18n/$(PACKAGE_NAME).pot";				\
+		fi; 									\
+		$(call print_status); 							\
+	done
+	@echo Done.
+	@echo ''
+
+default-compile_catalog: default-update_catalog
+	@echo Compiling the binary catalogs.
+	@for clog in $(AVAILABLE_CATALOGS);				\
+	do 								\
+		echo -n "Compiling catalog for locale '$$clog'";	\
+		if [ ! -f i18n/$$clog/LC_MESSAGES/$(PACKAGE_NAME).po ];	\
+		then							\
+			echo '';					\
+			continue;					\
+		fi; 							\
+		msgfmt -f -o						\
+			"i18n/$$clog/LC_MESSAGES/$(PACKAGE_NAME).mo"	\
+			"i18n/$$clog/LC_MESSAGES/$(PACKAGE_NAME).po";	\
+		$(call print_status);					\
+	done
+	@echo Done.
+	@echo ''
+
+default-pre_doc:
+	mkdir -p doc/html/coverage
+	mkdir -p doc/latex/coverage
+
+default-doc: clean_doc default-pre_doc
+	@echo 'Running doxygen to create doc.'
+	cat $(DOXYFILE)						| \
+		sed "s/@PACKAGE_NAME@/$(PACKAGE_NAME)/"		| \
+		sed "s/@PACKAGE_VERSION@/$(PACKAGE_VERSION)/"	| \
+		doxygen -
+	@echo 'Now running "make test" for you to generate useful reports.'
+	$(MAKE) -f $(MAKEFILE_LIST) test
+
+
+default-clean_doc:
+	$(RM) -r doc/
+
+/usr/bin/phpunit:
+	$(error "PHPUnit is not installed. "\
+		"Please install it from http://www.phpunit.de/")
+
+default-test: /usr/bin/phpunit default-pre_doc
+	@if [ -d ./tests ];					\
+	then							\
+		/usr/bin/phpunit $(PHPUNIT_ARGS)		\
+			--coverage-html doc/html/coverage	\
+			--testdox-html doc/html/tests.html	\
+			--story-html doc/html/scenarii.html	\
+			-d date.timezone=Europe/Paris		\
+			--colors tests;				\
+	fi
+
+.PHONY: default-pre_doc
+

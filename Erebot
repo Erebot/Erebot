@@ -1,0 +1,24 @@
+#!/usr/bin/php -f
+<?php
+
+/* Include the bot's core, this is where a lot of the important stuff
+ * is done and the only required file from a user's point of view.
+ */
+include('src/core.php');
+
+/* Create a new instance of Erebot and call its start() method to actually
+ * start the bot.
+ *
+ * You may pass the path to a configuration file as an argument to this call.
+ * Please note that Erebot::start() never returns (this is a limitation from
+ * PHP, not from us!). If this is inconvenient for you because you would like
+ * to use it in a script where you want other functions to be executed, create
+ * another script, use proc_open() or a similar function in that script to run
+ * this file, then use pipes and/or signals to control the bot.
+ */
+$bot = new Erebot();
+$bot->start();
+
+// PHP never reaches this line.
+
+?>

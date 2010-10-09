@@ -1,0 +1,87 @@
+default namespace = "http://localhost/Erebot/"
+
+# Pattern used to describe nicknames.
+nick_pattern    = xsd:string { pattern = "[a-zA-Z][a-zA-Z0-9\[\]\-`^\{\}]*" }
+
+# Pattern used to describe channel names.
+chan_pattern    = xsd:string { pattern = "[&amp;#][^ ,]+" }
+
+
+start = configuration
+
+configuration =
+    element configuration {
+        # The "version" attribute should match the bot's current version.
+        # This value is automatically replaced when config.xsd is generated.
+        attribute version   { "@EREBOT_VERSION@" },
+        attribute language  { xsd:language },
+        attribute timezone  { xsd:string },
+
+        (
+            modules? &
+            networks?
+        )
+    }
+
+modules =
+    element modules {
+        module*
+    }?
+
+module =
+    element module {
+        attribute name      { xsd:anyURI },
+        attribute active    { xsd:boolean }? ,
+
+        param*
+    }
+
+param =
+    element param {
+        attribute name      { text },
+        attribute value     { text }
+    }
+
+networks =
+    element networks {
+        network*
+    }
+
+network =
+    element network {
+        attribute name      { text },
+        attribute language  { xsd:language }? ,
+
+        (
+            modules? &
+            servers &
+            channels?
+        )
+    }
+
+servers =
+    element servers {
+        server+
+    }
+
+server =
+    element server {
+        attribute url       { xsd:anyURI },
+        attribute language  { xsd:language }? ,
+
+        modules?
+    }
+
+channels =
+    element channels {
+        channel*
+    }
+
+channel =
+    element channel {
+        attribute name      { chan_pattern },
+        attribute language  { xsd:language }? ,
+
+        modules?
+    }
+

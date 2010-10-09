@@ -1,0 +1,51 @@
+# File: AZ.php, line: 173
+msgid   "<b><var name=\"word\"/></b> doesn't exist or is incorrect for this "
+        "game."
+msgstr  ""
+#
+# File: AZ.php, line: 100
+msgid   "<b>A-Z</b> (<for from=\"lists\" item=\"list\"><var name=\"list\"/></"
+        "for>). Current range: <b><var name=\"min\"/></b> -- <b><var name=\"max"
+        "\"/></b> (<b><var name=\"attempts\"/></b> attempts and <b><var name="
+        "\"bad\"/></b> invalid words)"
+msgstr  ""
+#
+# File: AZ.php, line: 185
+msgid   "<b>BINGO!</b> The answer was indeed <u><var name=\"answer\"/></u>. "
+        "Congratulations <b><var name=\"nick\"/></b>!"
+msgstr  ""
+#
+# File: AZ.php, line: 138
+msgid   "A new <b>A-Z</b> game has been started on <b><var name=\"chan\"/></b> "
+        "using the following wordlists: <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+msgstr  ""
+#
+# File: AZ.php, line: 30
+msgid   "Could not register AZ creation trigger"
+msgstr  ""
+#
+# File: AZ.php, line: 213
+msgid   "New range: <b><var name=\"min\"/></b> -- <b><var name=\"max\"/></b>"
+msgstr  ""
+#
+# File: AZ.php, line: 79
+msgid   "The <b>A-Z</b> game was stopped after <b><var name=\"attempts\"/></b> "
+        "attempts and <b><var name=\"bad\"/></b> invalid words. The answer was "
+        "<u><var name=\"answer\"/></u>."
+msgstr  ""
+#
+# File: AZ.php, line: 193
+msgid   "The answer was found after <b><var name=\"attempts\"/></b> attempts "
+        "and <b><var name=\"bad\"/></b> incorrect words."
+msgstr  ""
+#
+# File: AZ.php, line: 66
+msgid   "The following wordlists are available: <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+msgstr  ""
+#
+# File: AZ.php, line: 123
+msgid   "There are not enough words in the selected wordlists to start a new "
+        "game."
+msgstr  ""

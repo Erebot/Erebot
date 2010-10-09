@@ -1,0 +1,24 @@
+# File: Math.php, line: 28
+msgid   "Could not register Math trigger"
+msgstr  ""
+#
+# File: Math.php, line: 55
+msgid   "Division by zero"
+msgstr  ""
+#
+# File: Math.php, line: 58
+msgid   "Exponent is too big for computation"
+msgstr  ""
+#
+# File: Math.php, line: 64
+#, php-format
+msgid   "Operator % undefined on real numbers"
+msgstr  ""
+#
+# File: Math.php, line: 61
+msgid   "Operator ^ undefined with negative exponents"
+msgstr  ""
+#
+# File: Math.php, line: 67
+msgid   "Syntax error"
+msgstr  ""

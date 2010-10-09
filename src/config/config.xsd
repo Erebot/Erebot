@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost/Erebot/" xmlns:erebot="http://localhost/Erebot/">
+  <!-- Pattern used to describe nicknames. -->
+  <xs:simpleType name="nick_pattern">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z][a-zA-Z0-9\[\]\-`^\{\}]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Pattern used to describe channel names. -->
+  <xs:simpleType name="chan_pattern">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[&amp;amp;#][^ ,]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="configuration">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="erebot:modules"/>
+        <xs:element ref="erebot:networks"/>
+      </xs:choice>
+      <xs:attribute name="version" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="0.2.1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="language" use="required" type="xs:language"/>
+      <xs:attribute name="timezone" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="modules">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="erebot:modules"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="modules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="erebot:module"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="module">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="erebot:param"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required" type="xs:anyURI"/>
+      <xs:attribute name="active" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="param">
+    <xs:complexType>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="value" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="networks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="erebot:network"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="network">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="erebot:modules"/>
+        <xs:element ref="erebot:servers"/>
+        <xs:element ref="erebot:channels"/>
+      </xs:choice>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="language" type="xs:language"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="servers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="erebot:server"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="server">
+    <xs:complexType>
+      <xs:group minOccurs="0" ref="erebot:modules"/>
+      <xs:attribute name="url" use="required" type="xs:anyURI"/>
+      <xs:attribute name="language" type="xs:language"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="channels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="erebot:channel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="channel">
+    <xs:complexType>
+      <xs:group minOccurs="0" ref="erebot:modules"/>
+      <xs:attribute name="name" use="required" type="erebot:chan_pattern"/>
+      <xs:attribute name="language" type="xs:language"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

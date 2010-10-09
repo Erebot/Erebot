@@ -1,0 +1,15 @@
+# File: Helper.php, line: 63
+#, php-format
+msgid   "\n"
+        "Provides help about available commands.\n"
+        "Use '!help <command>' to get help on a specific command.\n"
+        "The following commands are currently available: %s.\n"
+msgstr  ""
+#
+# File: Helper.php, line: 29
+msgid   "Could not register Help trigger"
+msgstr  ""
+#
+# File: Helper.php, line: 114
+msgid   "No help available on \"<var name=\"topic\"/>\"."
+msgstr  ""
