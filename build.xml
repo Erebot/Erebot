@@ -141,9 +141,9 @@ ${summary}
                 <include name="Erebot"/>
                 <include name="src/version"/>
                 <include name="src/**/*.rng"/>
-                <include name="i18n/Erebot.pot"/>
-                <include name="i18n/*/LC_MESSAGES/Erebot.po"/>
-                <include name="i18n/*/LC_MESSAGES/Erebot.mo"/>
+                <include name="i18n/${domain}.pot"/>
+                <include name="i18n/*/LC_MESSAGES/${domain}.po"/>
+                <include name="i18n/*/LC_MESSAGES/${domain}.mo"/>
             </fileset>
             <fileset refid="sources"/>
             <metadata>
