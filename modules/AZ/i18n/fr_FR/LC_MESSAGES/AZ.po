@@ -1,0 +1,73 @@
+msgid   ""
+msgstr  "Project-Id-Version: \n"
+        "POT-Creation-Date: \n"
+        "PO-Revision-Date: \n"
+        "Last-Translator: \n"
+        "Language-Team: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=utf-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+#
+# File: AZ.php, line: 169
+msgid   "<b><var name=\"word\"/></b> doesn't exist or is incorrect for this "
+        "game."
+msgstr  "<b><var name=\"word\"/></b> n'existe pas ou n'est pas admissible pour ce "
+        "jeu."
+#
+# File: AZ.php, line: 97
+msgid   "<b>A-Z</b> (<for from=\"lists\" item=\"list\"><var name=\"list\"/></"
+        "for>). Current range: <b><var name=\"min\"/></b> -- <b><var name=\"max"
+        "\"/></b> (<b><var name=\"attempts\"/></b> attempts and <b><var name="
+        "\"bad\"/></b> invalid words)"
+msgstr  "<b>A-Z</b> (<for from=\"lists\" item=\"list\"><var name=\"list\"/></"
+        "for>). Intervalle actuel : <b><var name=\"min\"/></b> -- <b><var name=\"max"
+        "\"/></b> (<b><var name=\"attempts\"/></b> essais et <b><var name="
+        "\"bad\"/></b> mots incorrects)"
+#
+# File: AZ.php, line: 181
+msgid   "<b>BINGO!</b> The answer was indeed <u><var name=\"answer\"/></u>. "
+        "Congratulations <b><var name=\"nick\"/></b>!"
+msgstr  "<b>BINGO !</b> La réponse était effectivement <u><var name=\"answer\"/></u>. "
+        "Félicitations <b><var name=\"nick\"/></b> !"
+#
+# File: AZ.php, line: 135
+msgid   "A new <b>A-Z</b> game has been started on <b><var name=\"chan\"/></b> "
+        "using the following wordlists: <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+msgstr  "Une nouvelle partie de <b>A-Z</b> commence sur <b><var name=\"chan\"/></b> "
+        "avec les listes suivantes : <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+#
+# File: AZ.php, line: 29
+msgid   "Could not register AZ creation trigger"
+msgstr  "Impossible d'enregistrer le déclencheur pour le jeu AZ"
+#
+# File: AZ.php, line: 209
+msgid   "New range: <b><var name=\"min\"/></b> -- <b><var name=\"max\"/></b>"
+msgstr  "Nouvel intervalle : <b><var name=\"min\"/></b> -- <b><var name=\"max\"/></b>"
+#
+# File: AZ.php, line: 76
+msgid   "The <b>A-Z</b> game was stopped after <b><var name=\"attempts\"/></b> "
+        "attempts and <b><var name=\"bad\"/></b> invalid words. The answer was "
+        "<u><var name=\"answer\"/></u>."
+msgstr  "La partie de <b>A-Z</b> a été arrêtée après <b><var name=\"attempts\"/></b> "
+        "essais et <b><var name=\"bad\"/></b> mots incorrects. La réponse était "
+        "<u><var name=\"answer\"/></u>."
+#
+# File: AZ.php, line: 189
+msgid   "The answer was found after <b><var name=\"attempts\"/></b> attempts "
+        "and <b><var name=\"bad\"/></b> incorrect words."
+msgstr  "La réponse a été trouvée après <b><var name=\"attempts\"/></b> essais "
+        "et <b><var name=\"bad\"/></b> mots incorrects."
+#
+# File: AZ.php, line: 63
+msgid   "The following wordlists are available: <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+msgstr  "Les listes de mots suivantes sont disponibles : <for from=\"lists\" item=\"list"
+        "\"><b><var name=\"list\"/></b></for>."
+#
+# File: AZ.php, line: 120
+msgid   "There are not enough words in the selected wordlists to start a new "
+        "game."
+msgstr  "Il n'y a pas assez de mots dans les listes sélectionnées pour commencer "
+        "une nouvelle partie."

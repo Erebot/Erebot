@@ -1,0 +1,17 @@
+msgid   "% is undefined on real numbers"
+msgstr  ""
+#
+msgid   "Could not register Math trigger"
+msgstr  ""
+#
+msgid   "Division by zero"
+msgstr  ""
+#
+msgid   "Exponent is too big for computation"
+msgstr  ""
+#
+msgid   "Syntax error"
+msgstr  ""
+#
+msgid   "^ is undefined for negative exponents"
+msgstr  ""

@@ -1,0 +1,41 @@
+msgid   ""
+msgstr  "Project-Id-Version: \n"
+        "POT-Creation-Date: \n"
+        "PO-Revision-Date: \n"
+        "Last-Translator: \n"
+        "Language-Team: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=utf-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+#
+msgid   "% is undefined on real numbers"
+msgstr  ""
+#
+# File: Math.php, line: 27
+msgid   "Could not register Math trigger"
+msgstr  "Impossible d'enregistrer le déclencheur pour le module Math"
+#
+# File: Math.php, line: 52
+msgid   "Division by zero"
+msgstr  "Division par zéro"
+#
+# File: Math.php, line: 55
+msgid   "Exponent is too big for computation"
+msgstr  "L'exposant est trop grand pour ce calcul"
+#
+# File: Math.php, line: 64
+msgid   "Syntax error"
+msgstr  "Erreur de syntaxe"
+#
+msgid   "^ is undefined for negative exponents"
+msgstr  ""
+#
+#
+# File: Math.php, line: 61
+#~ msgid        "Operator % undefined on real numbers"
+#~ msgstr       "L'opérateur % n'est pas défini sur les réels"
+#
+#
+# File: Math.php, line: 58
+#~ msgid        "Operator ^ undefined with negative exponents"
+#~ msgstr       "L'opérateur ^ n'est pas défini avec des exposants négatifs"

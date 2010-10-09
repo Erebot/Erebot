@@ -1,0 +1,19 @@
+msgid   "\n"
+        "<b>Usage:</b> !<var name='trigger'/> &lt;<u>filter</u>&gt; &lt;"
+        "<u>input</u>&gt;.\n"
+        "Transforms the given &lt;<u>input</u>&gt; using the given &lt;"
+        "<u>filter</u>&gt;.\n"
+        "The list of available filters can be retrieved using !<var "
+        "name='trigger'/>.\n"
+msgstr  ""
+#
+msgid   "Could not register Filter trigger"
+msgstr  ""
+#
+msgid   "No such filter \"<var name=\"filter\"/>\" or filter blocked."
+msgstr  ""
+#
+msgid   "Usage: <b><var name=\"cmd\"/> &lt;filter&gt; &lt;text&gt;</b>. "
+        "Available filters: <for from=\"filters\" item=\"filter\"><var name="
+        "\"filter\"/></for>."
+msgstr  ""

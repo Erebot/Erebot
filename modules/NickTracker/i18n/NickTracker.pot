@@ -1,0 +1,5 @@
+msgid   "No such token"
+msgstr  ""
+#
+msgid   "Not a valid nick"
+msgstr  ""

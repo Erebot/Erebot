@@ -1,0 +1,19 @@
+msgid   "Could not register trigger for admin command \"<var name=\"command\"/>"
+        "\""
+msgstr  ""
+#
+msgid   "Could not register trigger for admin command \"join\""
+msgstr  ""
+#
+msgid   "Could not register trigger for admin command \"reload\""
+msgstr  ""
+#
+msgid   "Successfully reloaded files."
+msgstr  ""
+#
+msgid   "The following files could not be reloaded: <for from=\"files\" item="
+        "\"file\"><var name=\"file\"/></for>"
+msgstr  ""
+#
+msgid   "The runkit extension is needed to perform hot-reload."
+msgstr  ""

@@ -1,0 +1,13 @@
+msgid   "\n"
+        "Provides help about available commands.\n"
+        "Use '!help &lt;<u>command</u>&gt;' to get help on a specific "
+        "command.\n"
+        "The following commands are currently available: <for from='commands'\n"
+        "item='command'><b><var name='command'/></b></for>.\n"
+msgstr  ""
+#
+msgid   "Could not register Help trigger"
+msgstr  ""
+#
+msgid   "No help available on \"<var name=\"topic\"/>\"."
+msgstr  ""

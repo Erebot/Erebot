@@ -1,0 +1,56 @@
+msgid   "<b>BINGO! <var name=\"nick\"/></b> has achieved <b><var name=\"result"
+        "\"/></b> with this formula: <b><var name=\"formula\"/></b>."
+msgstr  ""
+#
+msgid   "A new Countdown game has been started. You must get <b><var name="
+        "\"target\"/></b> using the following numbers <for from=\"numbers\" "
+        "item=\"number\"><b><var name=\"number\"/></b></for>. You have <var "
+        "name=\"delay\"/> seconds to make suggestions."
+msgstr  ""
+#
+msgid   "Congratulations <b><var name=\"nick\"/></b>! You're the closest with "
+        "<b><var name=\"result\"/></b>."
+msgstr  ""
+#
+msgid   "Congratulations to <b><var name=\"nick\"/></b> who wins this "
+        "Countdown game. <b><var name=\"nick\"/></b> has got <b><var name="
+        "\"result\"/></b> with this formula: <b><var name=\"formula\"/></b>."
+msgstr  ""
+#
+msgid   "Could not register Countdown trigger"
+msgstr  ""
+#
+msgid   "Division by zero"
+msgstr  ""
+#
+msgid   "Expected the formula to be a string"
+msgstr  ""
+#
+#, php-format
+msgid   "Invalid token near \"%1$s\" at offset %2$d"
+msgstr  ""
+#
+msgid   "No such number or number already used"
+msgstr  ""
+#
+msgid   "Non integral division"
+msgstr  ""
+#
+msgid   "Not bad <b><var name=\"nick\"/></b>, you actually got <b><var name="
+        "\"result\"/></b>, but this is not the best formula... Try again ;)"
+msgstr  ""
+#
+msgid   "So far, <b><var name=\"nick\"/></b> has achieved <b><var name=\"result"
+        "\"/></b> using this formula: <b><var name=\"formula\"/></b>"
+msgstr  ""
+#
+msgid   "Syntax error"
+msgstr  ""
+#
+msgid   "Time's up! Nobody has made any suggestion. :("
+msgstr  ""
+#
+msgid   "You must get <b><var name=\"target\"/></b> using the following "
+        "numbers: <for from=\"numbers\" item=\"number\"><b><var name=\"number"
+        "\"/></b></for>."
+msgstr  ""

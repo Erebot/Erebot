@@ -1,0 +1,24 @@
+msgid   "\n"
+        "<b>Usage:</b> !<var name='trigger'/>.\n"
+        "Display the latency of the connection, that is, the number of "
+        "seconds\n"
+        "it takes for a message from the bot to go to the IRC server and "
+        "back.\n"
+msgstr  ""
+#
+#, php-format
+msgid   "Attempting reconnection to \"%s\""
+msgstr  ""
+#
+msgid   "Current lag: <var name=\"lag\"/> seconds"
+msgstr  ""
+#
+msgid   "Lag got to high for \"%(server)s\" ... reconnection in %(delay)d "
+        "seconds"
+msgstr  ""
+#
+msgid   "No lag measure has been done yet"
+msgstr  ""
+#
+msgid   "Unable to register trigger for Lag Checker"
+msgstr  ""

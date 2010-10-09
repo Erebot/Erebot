@@ -1,0 +1,139 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    ns="http://www.erebot.net/xmlns/erebot"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+    <define name="pattern-nick">
+        <data type="string">
+            <param name="pattern">[a-zA-Z][a-zA-Z0-9\[\]\-`^\{\}]*</param>
+        </data>
+    </define>
+
+    <define name="pattern-chan">
+        <data type="string">
+            <param name="pattern">[#&amp;][^ ,]+</param>
+        </data>
+    </define>
+
+    <start>
+        <ref name="configuration"/>
+    </start>
+
+    <define name="configuration">
+        <element name="configuration">
+            <attribute name="version">
+                <data type="string">
+                    <param name="pattern">[0-9]+(\.[0-9]+)*(-(dev|alpha|beta|RC|rc|pl|[ab#p])[0-9]+)?</param>
+                </data>
+            </attribute>
+            <attribute name="language">
+                <data type="language"/>
+            </attribute>
+            <attribute name="timezone">
+                <data type="string"/>
+            </attribute>
+
+            <interleave>
+                <optional>
+                    <externalRef href="../logging/src/config.rng">
+                        <ref name="logging"/>
+                    </externalRef>
+                </optional>
+
+                <optional><ref name="modules"/></optional>
+                <optional><ref name="networks"/></optional>
+            </interleave>
+        </element>
+    </define>
+
+    <define name="modules">
+        <element name="modules">
+            <zeroOrMore>
+                <ref name="module"/>
+            </zeroOrMore>
+        </element>
+    </define>
+
+    <define name="module">
+        <element name="module">
+            <attribute name="name"><text/></attribute>
+            <optional>
+                <attribute name="active">
+                    <data type="boolean"/>
+                </attribute>
+            </optional>
+
+            <zeroOrMore>
+                <ref name="param"/>
+            </zeroOrMore>
+        </element>
+    </define>
+
+    <define name="param">
+        <element name="param">
+            <attribute name="name"><text/></attribute>
+            <attribute name="value"><text/></attribute>
+        </element>
+    </define>
+
+    <define name="inherited-config">
+        <optional>
+            <attribute name="language">
+                <data type="language"/>
+            </attribute>
+        </optional>
+
+        <optional>
+            <ref name="modules"/>
+        </optional>
+    </define>
+
+    <define name="networks">
+        <element name="networks">
+            <zeroOrMore>
+                <ref name="network"/>
+            </zeroOrMore>
+        </element>
+    </define>
+
+    <define name="network">
+        <element name="network">
+            <attribute name="name"><text/></attribute>
+            <interleave>
+                <ref name="inherited-config"/>
+                <ref name="servers"/>
+                <optional><ref name="channels"/></optional>
+            </interleave>
+        </element>
+    </define>
+
+    <define name="servers">
+        <element name="servers">
+            <oneOrMore>
+                <ref name="server"/>
+            </oneOrMore>
+        </element>
+    </define>
+
+    <define name="server">
+        <element name="server">
+            <attribute name="url"><data type="anyURI"/></attribute>
+            <ref name="inherited-config"/>
+        </element>
+    </define>
+
+    <define name="channels">
+        <element name="channels">
+            <zeroOrMore>
+                <ref name="channel"/>
+            </zeroOrMore>
+        </element>
+    </define>
+
+    <define name="channel">
+        <element name="channel">
+            <attribute name="name"><ref name="pattern-chan"/></attribute>
+            <ref name="inherited-config"/>
+        </element>
+    </define>
+</grammar>
+

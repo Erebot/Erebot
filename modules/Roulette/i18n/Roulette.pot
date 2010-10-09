@@ -1,0 +1,24 @@
+msgid   "+click+"
+msgstr  ""
+#
+msgid   "<b>*BANG*</b>"
+msgstr  ""
+#
+msgid   "<var name=\"nick\"/>: chamber <var name=\"chamber\"/> of <var name="
+        "\"total\"/> =&gt; <var name=\"message\"/>"
+msgstr  ""
+#
+msgid   "Could not register Roulette trigger"
+msgstr  ""
+#
+msgid   "There must be at least 2 chambers"
+msgstr  ""
+#
+msgid   "You cannot go twice in a row"
+msgstr  ""
+#
+msgid   "reloads"
+msgstr  ""
+#
+msgid   "spins the cylinder"
+msgstr  ""

@@ -1,0 +1,162 @@
+msgid   "<b><var name=\"last_nick\"/></b>'s move was legal. <b><var name=\"nick"
+        "\"/></b> must pick <b><var name=\"count\"/></b> cards!"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b> deals the first card from the stock"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b> draws a card"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b> has <var name=\"logo\"/>"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b> joins this <var name=\"logo\"/> game."
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b> passes turn"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b> passes turn, and has to pick <b><var name="
+        "\"count\"/></b> cards!"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b> plays <var name=\"card\"/> <b><var name="
+        "\"count\"/> times!</b>"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b>'s cards: <for from=\"cards\" item=\"card"
+        "\" separator=\" \"><var name=\"card\"/></for>"
+msgstr  ""
+#
+msgid   "<b><var name=\"nick\"/></b>'s move <b>WAS NOT</b> legal. <b><var name="
+        "\"nick\"/></b> must pick <b><var name=\"count\"/></b> cards!"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> <b><var name=\"nick\"/></b> challenges <b><var "
+        "name=\"last_nick\"/></b>'s <var name=\"card\"/>."
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> <b><var name=\"nick\"/></b> must draw <b><var "
+        "name=\"count\"/></b> cards."
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> <b><var name=\"nick\"/></b> skips his turn!"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> <b><var name=\"nick\"/></b>, please choose a "
+        "color with <b><var name=\"cmd\"/> &lt;r|b|g|y&gt;</b>"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> <b><var name=\"nick\"/></b>: it's your turn "
+        "sleepyhead!"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> A game is already running, managed by <var name="
+        "\"creator\"/>. The following rules apply: <for from=\"rules\" item="
+        "\"rule\"><var name=\"rule\"/></for>. Say \"<b><var name=\"trigger\"/"
+        "></b>\" to join it."
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> A new game has been created in <var name=\"chan"
+        "\"/>. The following rules apply: <for from=\"rules\" item=\"rule"
+        "\"><var name=\"rule\"/></for>. Say \"<b><var name=\"trigger\"/></b>\" "
+        "to join it."
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> Cards: <for from=\"counts\" item=\"count\" key="
+        "\"nick\"><b><var name=\"nick\"/></b>: <var name=\"count\"/></for>"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> Current discard: <var name=\"discard\"/>"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> Current discard: <var name=\"discard\"/> "
+        "(<b><var name=\"count\"/></b> cards left in the stock)"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> It's <b><var name=\"nick\"/></b>'s turn."
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> Next player must respond correctly or pick "
+        "<b><var name=\"count\"/></b> cards"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> Playing order: <for from=\"nicks\" item=\"nick"
+        "\"><b><var name=\"nick\"/></b></for>"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> Previous move cannot be challenged!"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> The color is now <var name=\"color\"/>"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> You're already in the game <b><var name=\"nick\"/"
+        "></b>!"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> game finished in <var name=\"duration\"/>. The "
+        "winner is <b><var name=\"nick\"/></b>!"
+msgstr  ""
+#
+msgid   "<var name=\"logo\"/> game running since <var name=\"duration\"/>"
+msgstr  ""
+#
+msgid   "<var name=\"nick\"/> still had <for from=\"cards\" item=\"card\" "
+        "separator=\" \"><var name=\"card\"/></for>"
+msgstr  ""
+#
+msgid   "<var name=\"nick\"/> wins with <b><var name=\"score\"/></b> points"
+msgstr  ""
+#
+msgid   "Could not register UNO creation trigger"
+msgstr  ""
+#
+msgid   "Hmm, yes <b><var name=\"nick\"/></b>, what is it?"
+msgstr  ""
+#
+msgid   "No card has been played yet"
+msgstr  ""
+#
+msgid   "This move is not valid"
+msgstr  ""
+#
+msgid   "Unable to register triggers for <var name=\"logo\"/> game!"
+msgstr  ""
+#
+msgid   "You already drew a card"
+msgstr  ""
+#
+msgid   "You cannot play multiple cards"
+msgstr  ""
+#
+msgid   "You cannot play multiple reverses/skips in a non 1vs1 game"
+msgstr  ""
+#
+msgid   "You cannot play that move"
+msgstr  ""
+#
+msgid   "You cannot play that move now"
+msgstr  ""
+#
+msgid   "You do not have the cards required for that move"
+msgstr  ""
+#
+msgid   "You drew: <for from=\"cards\" item=\"card\" separator=\" \"><var name="
+        "\"card\"/></for>"
+msgstr  ""
+#
+msgid   "You may only play one of the following cards: <for from=\"cards\" "
+        "item=\"card\" separator=\" \"><var name=\"card\"/></for>"
+msgstr  ""
+#
+msgid   "You may only play the card you just drew"
+msgstr  ""
+#
+msgid   "You must draw a card first"
+msgstr  ""
+#
+msgid   "Your cards: <for from=\"cards\" item=\"card\" separator=\" \"><var "
+        "name=\"card\"/></for>"
+msgstr  ""
