@@ -272,7 +272,7 @@ Generic_Sniffs_Files_LineEndingsSniff
         <phpunit
             printsummary="true"
             bootstrap="tests/bootstrap.php"
-            codecoverage="true"
+            codecoverage="${force-coverage}"
             >
             <formatter type="plain" usefile="false"/>
             <batchtest><fileset refid="tests"/></batchtest>
