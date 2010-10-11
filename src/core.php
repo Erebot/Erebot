@@ -503,9 +503,17 @@ implements  iErebot
 
         $classes = get_declared_classes();
 
-        $path = 'modules/'.$module.'/'.$module.'.php';
-        if (!file_exists($path))
-            throw new EErebotInvalidValue('No such module');
+        $pathParts      = array('modules', $module);
+        $pathParts[]    = $module.'.php';
+
+        $path = implode(DIRECTORY_SEPARATOR, $pathParts);
+        if (!file_exists($path)) {
+            // Try again with a "trunk" subpath (for dev environments).
+            array_splice($pathParts, 2, 0, array('trunk'));
+            $path = implode(DIRECTORY_SEPARATOR, $pathParts);
+            if (!file_exists($path))
+                throw new EErebotInvalidValue('No such module');
+        }
 
         $ok = include_once($path);
         if ($ok === FALSE)
