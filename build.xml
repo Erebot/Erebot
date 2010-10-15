@@ -270,7 +270,6 @@ Generic_Sniffs_Files_LineEndingsSniff
 
     <target name="qa_test" description="" depends="qa_pre_coverage">
         <phpunit
-            printsummary="true"
             bootstrap="tests/bootstrap.php"
             codecoverage="${force-coverage}"
             >
