@@ -71,6 +71,7 @@ extends EErebot
 set_error_handler(
     create_function(
         '$errno, $errstr, $errfile, $errline',
+        'if (($errno & error_reporting()) != $errno) return FALSE;'.
         'throw new EErebotErrorReporting($errstr, $errno, $errfile, $errline);'
     ),
     E_ALL

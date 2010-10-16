@@ -22,6 +22,9 @@ error_reporting(E_ALL | E_STRICT);
 set_time_limit(0);
 
 include_once('src/utils.php');
+// We need to include the styling API,
+// so that modules do not need to do it themselves.
+include_once('src/styling.php');
 include_once('src/logging/src/logging.php');
 include_once('src/events/raws.php');
 include_once('src/events/events.php');

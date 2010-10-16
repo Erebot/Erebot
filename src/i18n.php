@@ -67,19 +67,26 @@ implements iErebotI18n
             clearstatcache(FALSE, $translationFile);
         else
             clearstatcache();
+
+        /**
+         * FIXME: filemtime() raises a warning if the given file
+         * could not be stat'd (such as when is does not exist).
+         * An error_reporting level of E_ALL & ~E_DEPRECATED
+         * would otherwise be fine for File_Gettext.
+         */
+        $oldErrorReporting = error_reporting(0);
         $mtime = filemtime($translationFile);
 
         if (!isset(self::$_cache[$translationFile]) ||
             $mtime !== self::$_cache[$translationFile]['mtime']) {
-            $oldErrorReporting = error_reporting(E_ALL & ~E_DEPRECATED);
             $parser =& File_Gettext::factory('MO', $translationFile);
             $parser->load();
-            error_reporting($oldErrorReporting);
             self::$_cache[$translationFile] = array(
                 'mtime'     => $mtime,
                 'strings'   => $parser->strings,
             );
         }
+        error_reporting($oldErrorReporting);
 
         if (isset(self::$_cache[$translationFile]['strings'][$message]))
             return self::$_cache[$translationFile]['strings'][$message];
