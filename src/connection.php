@@ -927,16 +927,7 @@ implements  iErebotConnection
         catch (EErebotErrorReporting $e) {
             $logging    =&  Plop::getInstance();
             $logger     =   $logging->getLogger(__FILE__);
-            $logger->error(
-                $this->_bot->gettext(
-                    '%(message)s in %(file)s on line %(line)d'
-                ),
-                array(
-                    'message'   => $e->getMessage(),
-                    'file'      => $e->getFile(),
-                    'line'      => $e->getLine(),
-                )
-            );
+            $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
             $this->disconnect($e->getMessage());
         }
     }
@@ -954,16 +945,7 @@ implements  iErebotConnection
         catch (EErebotErrorReporting $e) {
             $logging    =&  Plop::getInstance();
             $logger     =   $logging->getLogger(__FILE__);
-            $logger->error(
-                $this->_bot->gettext(
-                    '%(message)s in %(file)s on line %(line)d'
-                ),
-                array(
-                    'message'   => $e->getMessage(),
-                    'file'      => $e->getFile(),
-                    'line'      => $e->getLine(),
-                )
-            );
+            $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
             $this->disconnect($e->getMessage());
         }
     }
