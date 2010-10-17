@@ -349,7 +349,13 @@ implements  iErebot
         $this->_mainCfg         = NULL;
     }
 
-    // Documented in the interface.
+    /**
+     * Handles request for a graceful shutdown of the bot.
+     * Such request are received as signals.
+     *
+     * \param $signum
+     *      The number of the received signal.
+     */
     public function quitGracefully($signum)
     {
         $consts     = get_defined_constants(TRUE);

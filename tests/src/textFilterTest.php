@@ -3,10 +3,20 @@
 include_once('src/utils.php');
 include_once('src/exceptions/Exception.php');
 include_once('src/exceptions/IllegalAction.php');
-include_once('src/textFilter.php');
+#include_once('src/textFilter.php');
 include_once('src/events/events.php');
+
+include_once('src/ifaces/core.php');
+include_once('src/ifaces/connection.php');
+include_once('src/ifaces/mainConfig.php');
+include_once('src/ifaces/serverConfig.php');
+include_once('src/ifaces/networkConfig.php');
+
 include_once('tests/connectionStub.php');
-include_once('tests/configStub.php');
+include_once('tests/mainConfigStub.php');
+include_once('tests/serverConfigStub.php');
+include_once('tests/networkConfigStub.php');
+include_once('tests/coreStub.php');
 
 class   TextFilterArgumentsTest
 extends PHPUnit_Framework_TestCase
@@ -147,4 +157,3 @@ extends TextFilterStaticTest
     const PATTERN_TEXT = 'te?? & &';
 }
 
-?>

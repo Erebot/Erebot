@@ -139,7 +139,7 @@ implements  iErebotMainConfig
             throw new EErebotInvalidValue('No version defined');
         $this->_version  = (string) $xml['version'];
 
-        if (!version_compare($this->_version, Erebot::VERSION, 'eq'))
+        if (!version_compare($this->_version, iErebot::VERSION, 'eq'))
             throw new EErebotInvalidValue(sprintf(
                 'Invalid version (expected %s, got %s)',
                 Erebot::VERSION, $this->_version

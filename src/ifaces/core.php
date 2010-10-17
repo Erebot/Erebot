@@ -84,15 +84,6 @@ interface iErebot
     public function stop();
 
     /**
-     * Handles request for a graceful shutdown of the bot.
-     * Such request are received as signals.
-     *
-     * \param $signum
-     *      The number of the received signal.
-     */
-    public function quitGracefully($signum);
-
-    /**
      * Retrieve a list of all \link ErebotTimer ErebotTimers\endlink registered.
      *
      * \return

@@ -43,7 +43,7 @@ implements      iErebotEvent
     protected $_halt;
     protected $_connection;
 
-    public function __construct(ErebotConnection &$connection)
+    public function __construct(iErebotConnection &$connection)
     {
         $this->_halt        =   FALSE;
         $this->_connection  =&  $connection;
@@ -79,7 +79,7 @@ implements      iErebotEventText
 {
     protected $_text;
 
-    public function __construct(ErebotConnection &$connection, $text)
+    public function __construct(iErebotConnection &$connection, $text)
     {
         parent::__construct($connection);
         $this->_text = new ErebotTextWrapper($text);
@@ -104,7 +104,7 @@ implements      iErebotEventChan,
     protected $_chan;
     protected $_source;
 
-    public function __construct(ErebotConnection &$connection, $chan, $source)
+    public function __construct(iErebotConnection &$connection, $chan, $source)
     {
         parent::__construct($connection);
         $this->_chan    =&  $chan;
@@ -136,7 +136,7 @@ implements      iErebotEventText
     protected $_text;
 
     public function __construct(
-        ErebotConnection    &$connection,
+        iErebotConnection  &$connection,
                             $chan,
                             $source,
                             $text
@@ -165,7 +165,7 @@ implements      iErebotEventCtcp
     protected $_ctcpType;
     
     public function __construct(
-        ErebotConnection    &$connection,
+        iErebotConnection   &$connection,
                             $chan,
                             $source,
                             $ctcpType,
@@ -193,7 +193,7 @@ implements      iErebotEventSource
 {
     protected $_source;
     
-    public function __construct(ErebotConnection &$connection, $source, $text)
+    public function __construct(iErebotConnection &$connection, $source, $text)
     {
         parent::__construct($connection, $text);
         $this->_source = ErebotUtils::extractNick($source, FALSE);
@@ -218,7 +218,7 @@ implements      iErebotEventCtcp
     protected $_ctcpType;
     
     public function __construct(
-        ErebotConnection    &$connection,
+        iErebotConnection   &$connection,
                             $source,
                             $ctcpType,
                             $text
@@ -247,7 +247,11 @@ implements      iErebotEventSource,
     protected $_source;
     protected $_target;
 
-    public function __construct(ErebotConnection &$connection, $source, $target)
+    public function __construct(
+        iErebotConnection  &$connection,
+                            $source,
+                            $target
+    )
     {
         parent::__construct($connection);
         $this->_source  =   ErebotUtils::extractNick($source, FALSE);
@@ -278,7 +282,7 @@ implements      iErebotEventText
     protected $_text;
 
     public function __construct(
-        ErebotConnection    &$connection,
+        iErebotConnection   &$connection,
                             $source,
                             $target,
                             $text
@@ -307,7 +311,7 @@ implements      iErebotEventChan
     protected $_chan;
 
     public function __construct(
-        ErebotConnection    &$connection,
+        iErebotConnection   &$connection,
                             $chan,
                             $source,
                             $target
@@ -336,7 +340,7 @@ implements      iErebotEventText
     protected $_text;
 
     public function __construct(
-        ErebotConnection    &$connection,
+        iErebotConnection   &$connection,
                             $chan,
                             $source,
                             $target,
@@ -398,7 +402,7 @@ extends         ErebotEventWithSourceAndText
     protected $_timestamp;
 
     public function __construct(
-        ErebotConnection    &$connection,
+        iErebotConnection   &$connection,
                             $source,
                             $ident,
                             $host,

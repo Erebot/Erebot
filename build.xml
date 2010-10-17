@@ -109,13 +109,13 @@ ${summary}
     </target>
 
     <target name="update_1_catalog" description="">
-        <exec command="msgmerge --backup=off -U -N -e -i --strict -w 80 -s -q --no-location i18n/${locale}/LC_MESSAGES/${domain}.po i18n/${domain}.pot" dir="."/>
+        <exec command="msgmerge --backup=off -U -N -e -i --strict -w 80 -s -q --no-location i18n/${locale}/LC_MESSAGES/${domain}.po i18n/${domain}.pot" dir="." passthru="true" checkreturn="true"/>
     </target>
 
     <target name="init_catalog" description="">
         <propertyprompt propertyName="locale" promptText="Name of the locale" useExistingValue="true"/>
         <mkdir dir="i18n/${locale}/LC_MESSAGES"/>
-        <exec command="msginit --no-translator -w 80 -l ${locale} -i i18n/${domain}.pot -o i18n/${locale}/LC_MESSAGES/${domain}.po" dir="."/>
+        <exec command="msginit --no-translator -w 80 -l ${locale} -i i18n/${domain}.pot -o i18n/${locale}/LC_MESSAGES/${domain}.po" dir="." passthru="true" checkreturn="true"/>
     </target>
 
     <target name="compile_catalog" description="">
@@ -123,7 +123,7 @@ ${summary}
     </target>
 
     <target name="compile_1_catalog" description="">
-        <exec command="msgfmt -f -o i18n/${locale}/LC_MESSAGES/${domain}.mo i18n/${locale}/LC_MESSAGES/${domain}.po" dir="."/>
+        <exec command="msgfmt -f -o i18n/${locale}/LC_MESSAGES/${domain}.mo i18n/${locale}/LC_MESSAGES/${domain}.po" dir="." passthru="true" checkreturn="true"/>
     </target>
 
 
@@ -197,8 +197,8 @@ ${summary}
     <target name="doc" description="" depends="doxygen"/>
 
     <target name="doxygen" description="">
-        <exec command="doxygen" dir="."/>
-        <exec command="make" dir="doc/latex"/>
+        <exec command="doxygen" dir="." passthru="true" checkreturn="true"/>
+        <exec command="make" dir="doc/latex" passthru="true" checkreturn="true"/>
     </target>
 
 

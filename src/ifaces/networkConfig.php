@@ -86,7 +86,7 @@ extends     iErebotConfigProxy
      *      The ErebotChannelConfig object for that channel.
      *
      * \throw EErebotNotFound
-     *      No such channem has been configured on this IRC network.
+     *      No such channel has been configured on this IRC network.
      */
     public function & getChannelCfg($channel);
 

@@ -1,10 +1,9 @@
 <?php
 
-include_once('src/core.php');
-include_once('tests/configStub.php');
+include_once('tests/mainConfigStub.php');
 
-class ErebotStubbedCore
-extends Erebot
+class       ErebotStubbedCore
+implements  iErebot
 {
     static protected $_stubModules = array();
 
@@ -15,6 +14,50 @@ extends Erebot
         if ($config === NULL)
             $config = new ErebotStubbedMainConfig(NULL, NULL);
         $this->_mainCfg         =   $config;
+    }
+
+    public function getConnections()
+    {
+        return array();
+    }
+    
+    public function start($connectionCls = NULL)
+    {
+    }
+
+    public function stop()
+    {
+    }
+
+    public function getTimers()
+    {
+        return array();
+    }
+
+    public function addTimer(iErebotTimer &$timer)
+    {
+    }
+
+    public function removeTimer(iErebotTimer &$timer)
+    {
+    }
+
+    static public function getVersion()
+    {
+        return self::VERSION;
+    }
+
+    public function addConnection(iErebotConnection &$connection)
+    {
+    }
+
+    public function removeConnection(iErebotConnection &$connection)
+    {
+    }
+
+    public function gettext($msg)
+    {
+        return $msg;
     }
 
     public function loadModule($module)
@@ -50,4 +93,3 @@ extends Erebot
     }
 }
 
-?>

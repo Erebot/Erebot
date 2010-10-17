@@ -9,12 +9,10 @@ set_include_path(
     get_include_path()
 );
 
-include_once('tests/connectionStub.php');
-include_once('tests/configStub.php');
-
 include_once('src/moduleBase.php');
 include_once('src/events/events.php');
 
+include_once('src/exceptions/Exception.php');
 include_once('src/exceptions/IllegalAction.php');
 include_once('src/exceptions/InvalidValue.php');
 
@@ -24,4 +22,3 @@ $logging =& Plop::getInstance();
 $logging->basicConfig();
 unset($logging);
 
-?>

@@ -2,7 +2,6 @@
 
 include_once('src/config/mainConfig.php');
 
-
 class   ConfigTest
 extends PHPUnit_Framework_TestCase
 {
@@ -23,8 +22,8 @@ extends PHPUnit_Framework_TestCase
 
     public function testLoadValidConfigFromString()
     {
-        $data =<<<CONFIG
-<?xml version="1.0" ?>
+        $data = '<?xml version="1.0" ?'.'>';
+        $data .=<<<CONFIG
 <configuration
     xmlns="http://www.erebot.net/xmlns/erebot"
     version="%s"
@@ -51,8 +50,8 @@ CONFIG;
      */
     public function testLoadInvalidConfigFromString()
     {
-        $data =<<<CONFIG
-<?xml version="1.0" ?>
+        $data = '<?xml version="1.0" ?'.'>';
+        $data .=<<<CONFIG
 <configuration xmlns="http://www.erebot.net/xmlns/erebot"></configuration>
 CONFIG;
 
@@ -60,4 +59,3 @@ CONFIG;
     }
 }
 
-?>
