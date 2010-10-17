@@ -2,7 +2,7 @@
 
 include_once('src/ifaces/i18n.php');
 include_once('src/styling.php');
-include_once('tests/i18nStub.php');
+include_once('tests/testenv/i18nStub.php');
 
 class   StylingTest
 extends PHPUnit_Framework_TestCase

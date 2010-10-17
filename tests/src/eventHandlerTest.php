@@ -1,6 +1,6 @@
 <?php
 
-include_once('tests/connectionStub.php');
+include_once('tests/testenv/connectionStub.php');
 include_once('src/events/eventHandler.php');
 
 class   EventHandlerMatchTest

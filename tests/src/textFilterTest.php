@@ -12,11 +12,11 @@ include_once('src/ifaces/mainConfig.php');
 include_once('src/ifaces/serverConfig.php');
 include_once('src/ifaces/networkConfig.php');
 
-include_once('tests/connectionStub.php');
-include_once('tests/mainConfigStub.php');
-include_once('tests/serverConfigStub.php');
-include_once('tests/networkConfigStub.php');
-include_once('tests/coreStub.php');
+include_once('tests/testenv/connectionStub.php');
+include_once('tests/testenv/mainConfigStub.php');
+include_once('tests/testenv/serverConfigStub.php');
+include_once('tests/testenv/networkConfigStub.php');
+include_once('tests/testenv/coreStub.php');
 
 class   TextFilterArgumentsTest
 extends PHPUnit_Framework_TestCase
