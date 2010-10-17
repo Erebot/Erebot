@@ -1,16 +1,15 @@
 <?php
 
-#include_once(dirname(dirname(__FILE__)).'/configStub.php');
-include_once('src/utils.php');
+include_once('src/ifaces/i18n.php');
 include_once('src/styling.php');
-#include_once('tests/i18nStub.php');
+include_once('tests/i18nStub.php');
 
 class   StylingTest
 extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->translator = new ErebotI18n('', '');
+        $this->translator = new ErebotStubbedI18n('', '');
     }
 
     public function testArrayWithOnlyOneElement()
@@ -76,4 +75,3 @@ extends PHPUnit_Framework_TestCase
     }
 }
 
-?>

@@ -5,7 +5,6 @@ implements  iErebotI18n
 {
     public function __construct($locale = NULL, $component = NULL)
     {
-
     }
 
     public function getLocale()

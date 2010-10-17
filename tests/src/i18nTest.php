@@ -1,6 +1,5 @@
 <?php
 
-include_once('src/utils.php');
 include_once('src/i18n.php');
 
 class   I18nTest
@@ -74,4 +73,3 @@ extends PHPUnit_Framework_TestCase
     }
 }
 
-?>
