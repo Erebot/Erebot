@@ -327,22 +327,10 @@ implements  iErebot
         if (!$this->_running)
             return;
 
-        $error          = error_get_last();
-        $quitMessage    = NULL;
-        if ($error !== NULL) {
-            $quitMessage = $error['message'].' ['.
-                            $error['file'].':'.
-                            $error['line'].']';
-            $logger->critical(
-                $this->gettext('%(message)s in %(file)s on line %(line)d'),
-                $error
-            );
-        }
-
         foreach ($this->_connections as &$connection) {
             $event = new ErebotEventExit($connection);
             $connection->dispatchEvent($event);
-            $connection->disconnect($quitMessage);
+            $connection->disconnect();
         }
         unset($connection);
 
