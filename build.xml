@@ -89,7 +89,7 @@ ${summary}
 
     <fileset dir="tests/" id="tests">
         <include name="**/*.php"/>
-        <exclude name="*Stub.php"/>
+        <exclude name="testenv/**/*.php"/>
         <exclude name="bootstrap.php"/>
     </fileset>
 
