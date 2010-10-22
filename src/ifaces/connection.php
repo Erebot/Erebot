@@ -38,10 +38,10 @@ interface iErebotConnection
     /**
      * Constructs the object which will hold a connection.
      *
-     * \param $bot
+     * \param iErebot $bot
      *      A bot instance.
      *
-     * \param $config
+     * \param iErebotServerConfig $config
      *      A server configuration instance.
      *
      * \note
@@ -64,8 +64,8 @@ interface iErebotConnection
     /**
      * Disconnects the bot from that particular IRC server.
      *
-     * \param $quitMessage
-     *      An optional message which will be visible
+     * \param string $quitMessage
+     *      (optional) A message which will be visible
      *      by other users when the bot gets disconnected.
      *      If no message is given, the IrcConnector module
      *      is probed for its "quit_message" parameter.
@@ -77,7 +77,7 @@ interface iErebotConnection
     /**
      * Adds a given line to the outgoing FIFO.
      *
-     * \param $line
+     * \param string $line
      *      The line of text to send.
      *
      * \throw EErebotInvalidValue
@@ -96,14 +96,16 @@ interface iErebotConnection
     /**
      * Retrieves the configuration for a given channel.
      *
-     * \param $chan
+     * \param NULL|string $chan
      *      The name of the IRC channel for which a configuration
      *      must be retrieved. If $chan is NULL, the ErebotServerConfig
      *      instance associated with this object is returned instead.
      *
-     * \return
-     *      An ErebotChannelConfig or ErebotServerConfig, depending
-     *      on its availability and the value of $chan.
+     * \retval iErebotChannelConfig
+     *      The configuration for the given channel, if there is one.
+     *
+     * \retval iErebotServerConfig
+     *      Otherwise, the configuration for the associated IRC server.
      *
      * \throw EErebotNotFound
      *      No ErebotChannelConfig object exists for the given channel.
@@ -114,7 +116,7 @@ interface iErebotConnection
      * Returns the underlying transport implementation
      * for this connection.
      *
-     * \return
+     * \retval stream
      *      Returns this connection's socket, as a PHP stream.
      *
      * \note
@@ -128,9 +130,11 @@ interface iErebotConnection
      * Returns a boolean indicating whether the incoming FIFO
      * is empty or not.
      *
-     * \return
-     *      A boolean indicating whether the FIFO for incoming
-     *      messages is empty (\b{TRUE}) or not (\b{FALSE}).
+     * \retval TRUE
+     *      The FIFO for incoming messages is empty.
+     *
+     * \retval FALSE
+     *      The FIFO for incoming messages is NOT empty.
      */
     public function emptyReadQueue();
 
@@ -138,9 +142,11 @@ interface iErebotConnection
      * Returns a boolean indicating whether the outgoing FIFO
      * is empty or not.
      *
-     * \return
-     *      A boolean indicating whether the FIFO for outgoing
-     *      messages is empty (\b{TRUE}) or not (\b{FALSE}).
+     * \retval TRUE
+     *      The FIFO for outgoing messages is empty.
+     *
+     * \retval FALSE
+     *      The FIFO for outgoing messages is NOT empty.
      */
     public function emptySendQueue();
 
@@ -184,24 +190,24 @@ interface iErebotConnection
      * Returns the bot instance this connection
      * is associated with.
      *
-     * \return
-     *      An Erebot instance.
+     * \retval iErebot
+     *      An instance of the core class (Erebot).
      */
     public function & getBot();
 
     /**
      * Loads a module for a specific channel or for the whole connection.
      *
-     * \param $module
+     * \param string $module
      *      The name of the module to load.
      *
-     * \param $chan
-     *      An optional IRC channel name. If given, the module will be
+     * \param NULL|string $chan
+     *      (optional) An IRC channel name. If given, the module will be
      *      loaded and a specific instance will be created for that
      *      $chan. Otherwise, an instance will be created that will be
      *      shared across channels on the same connection.
      *
-     * \return
+     * \retval ErebotModuleBase
      *      An instance of the module.
      *
      * \note
@@ -224,13 +230,13 @@ interface iErebotConnection
      * Returns the modules loaded for a given channel
      * or for the whole connection.
      *
-     * \param $chan
-     *      An optional IRC channel name. If given, both the modules
+     * \param string $chan
+     *      (optional) An IRC channel name. If given, both the modules
      *      which were specifically loaded for that channel and the
      *      shared modules are returned. Otherwise, only the shared
      *      modules are returned.
      *
-     * \return
+     * \retval list(ErebotModuleBase)
      *      An array of module instances.
      */
     public function getModules($chan = NULL);
@@ -238,23 +244,23 @@ interface iErebotConnection
     /**
      * Returns an instance of a given module on a given channel.
      *
-     * \param $name
+     * \param string $name
      *      Depending on the $type parameter, this is either
      *      the name of the module or the name of the class
      *      implementing the module we're interested in.
      *
-     * \param $type
+     * \param opaque $type
      *      Either ErebotConnection::MODULE_BY_NAME to search for the
      *      module by its name, or ErebotConnection::MODULE_BY_CLASS
      *      to look for the module by its class.
      *
-     * \param $chan
-     *      An optional IRC channel name. If given, the bot will try
+     * \param string $chan
+     *      (optional) An IRC channel name. If given, the bot will try
      *      to return an instance which is specific to that particular
      *      channel, before falling back to a shared instance.
      *      Otherwise, this method only looks for a shared instance.
      *
-     * \return
+     * \retval ErebotModuleBase
      *      An instance of the given module.
      *
      * \throw EErebotInvalidValue
@@ -268,16 +274,16 @@ interface iErebotConnection
     /**
      * Registers a raw handler on this connection.
      *
-     * \param $handler
-     *      The ErebotRawHandler to register.
+     * \param iErebotRawHandler $handler
+     *      The handler to register.
      */
     public function addRawHandler(iErebotRawHandler &$handler);
 
     /**
      * Unregisters a raw handler on this connection.
      *
-     * \param $handler
-     *      The ErebotRawHandler to unregister.
+     * \param iErebotRawHandler $handler
+     *      The handler to unregister.
      *
      * \throw EErebotNotFound
      *      Thrown when the given handler could not be found,
@@ -288,16 +294,16 @@ interface iErebotConnection
     /**
      * Registers an event handler on this connection.
      *
-     * \param $handler
-     *      The ErebotEventHandler to register.
+     * \param iErebotEventHandler $handler
+     *      The handler to register.
      */
     public function addEventHandler(iErebotEventHandler &$handler);
 
     /**
      * Unregisters an event handler on this connection.
      *
-     * \param $handler
-     *      The ErebotEventHandler to unregister.
+     * \param iErebotEventHandler $handler
+     *      The handler to unregister.
      *
      * \throw EErebotNotFound
      *      Thrown when the given handler could not be found,
@@ -307,21 +313,19 @@ interface iErebotConnection
 
     /**
      * Dispatches the given event to handlers
-     * which have registered for this type of event.
+     * which have been registered for this type of event.
      *
-     * \param $event
-     *      An object to dispatch, which implements
-     *      the iErebotEvent interface.
+     * \param iErebotEvent $event
+     *      An event to dispatch.
      */
     public function dispatchEvent(iErebotEvent &$event);
 
     /**
      * Dispatches the given raw to handlers
-     * which have registered for this type of raw.
+     * which have been registered for this type of raw.
      *
-     * \param $raw
-     *      An object to dispatch, which implements
-     *      the iErebotRaw interface.
+     * \param iErebotRaw $raw
+     *      A raw message to dispatch.
      */
     public function dispatchRaw(iErebotRaw &$raw);
 }

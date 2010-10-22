@@ -28,12 +28,12 @@ interface iErebotRawHandler
     /**
      * Constructs a raw event handler.
      *
-     * \param $callback
+     * \param callback $callback
      *      A callback function/method which will be called
      *      whenever the bot receives a message of the given
      *      $raw numeric.
      *
-     * \param $raw
+     * \param int $raw
      *      The particular raw numeric code this raw handler will
      *      react to.
      */
@@ -42,7 +42,7 @@ interface iErebotRawHandler
     /**
      * Returns the raw numeric code associated with this handler.
      *
-     * \return
+     * \retval int
      *      The raw numeric code for this handler.
      */
     public function getRaw();
@@ -51,7 +51,7 @@ interface iErebotRawHandler
      * Returns the callback function/method associated with
      * this handler.
      *
-     * \return
+     * \retval callback
      *      The callback for this handler.
      */
     public function getCallback();
@@ -59,7 +59,7 @@ interface iErebotRawHandler
     /**
      * Given a raw message, this methods tries to handle it.
      *
-     * \param $raw
+     * \param iErebotRaw $raw
      *      The raw message to try to handle.
      *
      * \note

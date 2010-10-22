@@ -32,7 +32,7 @@ class ErebotDependency
     /**
      * Constructs a dependency.
      *
-     * \param $dependency
+     * \param string $dependency
      *      A dependency specification like "foo >= 42".
      *      The general form a dependency specification
      *      is "<name> [<operator> <version>]", where the
@@ -103,8 +103,8 @@ class ErebotDependency
     /**
      * Returns the name of the dependency.
      *
-     * \return
-     *      The dependency's name, as a string.
+     * \retval
+     *      The dependency's name.
      */
     public function getName()
     {
@@ -114,9 +114,11 @@ class ErebotDependency
     /**
      * Returns the operator for the dependency.
      *
-     * \return
-     *      The dependency's operator, as a string,
-     *      or NULL if no specific version is required.
+     * \retval string
+     *      The dependency's operator.
+     *
+     * \retval NULL
+     *      No specific version is required.
      */
     public function getOperator()
     {
@@ -126,9 +128,11 @@ class ErebotDependency
     /**
      * Returns the version for the dependency.
      *
-     * \return
-     *      The dependency's version, as a string,
-     *      or NULL if no specific version is required.
+     * \retval string
+     *      The dependency's version.
+     *
+     * \retval NULL
+     *      No specific version is required.
      */
     public function getVersion()
     {
@@ -139,8 +143,8 @@ class ErebotDependency
      * Returns the full dependency specification,
      * as a string.
      *
-     * \return
-     *      The dependency specification, as a string.
+     * \retval
+     *      The dependency specification.
      */
     public function __toString()
     {

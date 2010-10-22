@@ -284,22 +284,21 @@ interface iErebotRaw
     /**
      * Constructs a raw message.
      *
-     * \param $connection
-     *      The connection this message came from, as an object
-     *      implementing the iErebotConnection interface.
+     * \param iErebotConnection $connection
+     *      The connection this message came from.
      *
-     * \param $raw
+     * \param int $raw
      *      The raw numeric code.
      *
-     * \param $source
+     * \param string $source
      *      The source of the raw message. This will generally be
      *      the name of an IRC server.
      *
-     * \param $target
+     * \param string $target
      *      The target of the raw message. This will generally be
      *      the bot's nickname.
      *
-     * \param $text
+     * \param string $text
      *      The raw content of the message.
      *
      * \note
@@ -314,9 +313,8 @@ interface iErebotRaw
      * Returns the connection this raw message came from.
      * This is the same object as that passed during construction.
      *
-     * \return
-     *      Returns an object implementing the iErebotConnection
-     *      interface.
+     * \retval iErebotConnection
+     *      The connection this raw message came from.
      */
     public function & getConnection();
 
@@ -324,7 +322,7 @@ interface iErebotRaw
      * Returns the raw numeric code associated with
      * the current message.
      *
-     * \return
+     * \retval int
      *      The raw numeric code of this message.
      *
      * \see
@@ -343,7 +341,7 @@ interface iErebotRaw
      * This will generally be the name of an IRC
      * server.
      *
-     * \return
+     * \retval string
      *      The source of this message.
      */
     public function getSource();
@@ -352,7 +350,7 @@ interface iErebotRaw
      * Returns the target of the current message.
      * This will generally be the bot's nickname.
      *
-     * \return
+     * \retval string
      *      The target of this message.
      */
     public function getTarget();
@@ -362,7 +360,7 @@ interface iErebotRaw
      * message. No attempt is made at parsing
      * the content.
      *
-     * \return
+     * \retval string
      *      The content of this message.
      */
     public function getText();

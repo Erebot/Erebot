@@ -42,7 +42,7 @@ abstract class ErebotModuleBase
      * is (re)loaded. You should perform whatever operations
      * you need to do, depending of the given $flags.
      *
-     * \param $flags
+     * \param int $flags
      *      A bitwise OR of the ErebotModuleBase::RELOAD_*
      *      constants. Your method should take proper actions
      *      depending on the value of those flags.
@@ -153,15 +153,15 @@ abstract class ErebotModuleBase
     /**
      * Returns the boolean value for a setting in this module's configuration.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
-     *      An optional default value in case no value has been set
+     * \param bool $default
+     *      (optional) A default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
-     *      The boolean value for that parameter.
+     * \retval bool
+     *      The value for that parameter.
      */
     protected function parseBool($param, $default = NULL)
     {
@@ -171,15 +171,15 @@ abstract class ErebotModuleBase
     /**
      * Returns the string value for a setting in this module's configuration.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
+     * \param string $default
      *      An optional default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
-     *      The string value for that parameter.
+     * \retval string
+     *      The value for that parameter.
      */
     protected function parseString($param, $default = NULL)
     {
@@ -189,15 +189,15 @@ abstract class ErebotModuleBase
     /**
      * Returns the integer value for a setting in this module's configuration.
      *
-     * \param $param
+     * \param int $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
-     *      An optional default value in case no value has been set
+     * \param int $default
+     *      (optional) A default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
-     *      The integer value for that parameter.
+     * \retval int
+     *      The value for that parameter.
      */
     protected function parseInt($param, $default = NULL)
     {
@@ -207,15 +207,15 @@ abstract class ErebotModuleBase
     /**
      * Returns the real value for a setting in this module's configuration.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
-     *      An optional default value in case no value has been set
+     * \param float $default
+     *      (optional) A default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
-     *      The real value for that parameter.
+     * \retval float
+     *      The value for that parameter.
      */
     protected function parseReal($param, $default = NULL)
     {
@@ -230,13 +230,15 @@ abstract class ErebotModuleBase
      * This method may also choose to ignore a given request, which will
      * result in a default "No help available" response.
      *
-     * \param $callback
+     * \param callback $callback
      *      The callback to register as the help method
      *      for this module.
      *
-     * \return
-     *      Returns TRUE if the callback could be registered,
-     *      FALSE otherwise.
+     * \retval TRUE
+     *      The callback could be registered.
+     *
+     * \retval FALSE
+     *      The callback could not be registered.
      *
      * \note
      *      In case multiple calls to this method are done by
@@ -261,13 +263,14 @@ abstract class ErebotModuleBase
     /**
      * Returns the appropriate translator for the given channel.
      *
-     * \param $chan
-     *      The channel for which a translator must be returned.
+     * \param NULL|FALSE|string $chan
+     *      (optional) The channel for which a translator must be
+     *      returned.
      *      If $chan is NULL, the hierarchy of configurations is
      *      traversed to find the most appropriate translator.
      *      If $chan is FALSE, a translator using the bot's main
      *      language is returned (this is the same as using
-     *      $this->_translator).
+     *      <tt>$this->_translator</tt>).
      */
     protected function getTranslator($chan)
     {

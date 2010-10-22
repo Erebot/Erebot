@@ -37,18 +37,16 @@ interface iErebot
     /**
      * Creates a new Erebot instance.
      *
-     * \param $config
-     *      A configuration to use, as an object implementing the
-     *      iErebotMainConfig interface.
+     * \param iErebotMainConfig $config
+     *      The (main) configuration to use.
      */
     public function __construct(iErebotMainConfig $config);
 
     /**
      * Retrieve a list of all connections handled by the bot.
      *
-     * \return
-     *      A list of all \link ErebotConnection ErebotConnections\endlink
-     *      handled by this instance.
+     * \retval list(iErebotConnection)
+     *      A list of connections handled by this instance.
      *
      * \note
      *      There is not much use for this method actually. The only
@@ -61,7 +59,7 @@ interface iErebot
     /**
      * Starts the bot.
      *
-     * \param $connectionCls
+     * \param string $connectionCls
      *      The name of the class to use to create new connections.
      *      This class must implement the iErebotConnection interface.
      *
@@ -86,36 +84,32 @@ interface iErebot
     /**
      * Retrieve a list of all \link ErebotTimer ErebotTimers\endlink registered.
      *
-     * \return
-     *      Returns a list of all \link ErebotTimer ErebotTimers\endlink
-     *      registered for this instance.
+     * \retval list(iErebotTimer)
+     *      Returns a list of timers registered for this instance.
      */
     public function getTimers();
 
     /**
      * Registers a timer for this instance.
      *
-     * \param $timer
-     *      An object implementing the iErebotTimer interface and which
-     *      conveys information about the timer to register.
+     * \param iErebotTimer $timer
+     *      A timer to register.
      */
     public function addTimer(iErebotTimer &$timer);
 
     /**
      * Unregisters a timer.
      *
-     * \param $timer
-     *      An object implementing the ErebotTimer interface and which must
-     *      be removed from the list of registered timers for this instance.
+     * \param iErebotTimer $timer
+     *      A timer to unregister.
      */
     public function removeTimer(iErebotTimer &$timer);
 
     /**
      * Retrieve the bot's version information.
      *
-     * \return
-     *      Returns a string containing formatted version information
-     *      about the bot.
+     * \retval string
+     *      A string containing formatted version information about the bot.
      *
      * \see
      *      The constant Erebot::VERSION contains the raw version information.
@@ -125,10 +119,10 @@ interface iErebot
     /**
      * Loads a module.
      *
-     * \param $module
+     * \param string $module
      *      The name of the module to load.
      *
-     * \return
+     * \retval string
      *      Returns the name of the class to use to create instances of this
      *      module.
      *
@@ -147,10 +141,10 @@ interface iErebot
     /**
      * Get the class associated with a given module.
      *
-     * \param $modName
+     * \param string $modName
      *      Name of the (loaded) module whose class we're interested in.
      *
-     * \return
+     * \retval string
      *      Upon success, the name of the class to use to create
      *      new instances of this module is returned.
      *
@@ -165,10 +159,10 @@ interface iErebot
     /**
      * Get the name of the module associated with a given class.
      *
-     * \param $className
+     * \param string $className
      *      Name of the class whose module we're interested in.
      *
-     * \return
+     * \retval string
      *      Upon success, the name of the module that the given class
      *      is used to create is returned.
      *
@@ -187,8 +181,9 @@ interface iErebot
      * it to the pool of connections the bot must process.
      * This enables the connection to send and receive messages.
      *
-     * \param $connection
-     *      An object implementing the iErebotConnection interface.
+     * \param iErebotConnection $connection
+     *      Adds a connection to the list of connections handled by
+     *      this instance of the bot.
      *
      * \throw EErebotInvalidValue
      *      This connection is already part of the connection pool
@@ -203,8 +198,9 @@ interface iErebot
      * the bot must process, such as when the connection is lost with the
      * remote IRC server.
      *
-     * \param $connection
-     *      An object implementing the iErebotConnection interface.
+     * \param iErebotConnection $connection
+     *      Removes a connection from the list of connections handled by
+     *      this instance of the bot.
      *
      * \throw EErebotNotFound
      *      The given connection is not part of the connection pool
@@ -219,10 +215,10 @@ interface iErebot
      * That is, using the language defined in the "language" attribute of
      * the "configuration" tag in your XML configuration file.
      *
-     * \param $message
+     * \param string $message
      *      The original message to translate, in english.
      *
-     * \return
+     * \retval string
      *      Returns the translation for this message or the original (english)
      *      message if no translation is available.
      */

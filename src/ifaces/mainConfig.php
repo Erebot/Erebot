@@ -38,9 +38,21 @@ extends     iErebotConfigProxy
     /**
      * Creates a new instance of the ErebotMainConfig class.
      *
-     * Do not call this class' constructor directly. Instead, use
-     * ErebotMainConfig::getInstance() to retrieve an instance of
-     * this class.
+     * \param string $configData
+     *      Either a (relative or absolute) path to the configuration file
+     *      to load or a string representation of the configuration, 
+     *      depending on the value of the $source parameter.
+     *
+     * \param opaque $source
+     *      iErebotMainConfig::LOAD_FROM_FILE or
+     *      iErebotMainConfig::LOAD_FROM_STRING, depending on
+     *      whether $configData contains a filename or the string
+     *      representation of the configuration data, respectively.
+     *
+     * \throw EErebotInvalidValue
+     *      The configuration file did not exist or contained invalid values.
+     *      This exception is also thrown when the $source parameter contains
+     *      an invalid value.
      */
     public function __construct($configData, $source);
 
@@ -53,14 +65,16 @@ extends     iErebotConfigProxy
     /**
      * (Re)loads a configuration file.
      *
-     * \param $configData
+     * \param string $configData
      *      Either a (relative or absolute) path to the configuration file
      *      to load or a string representation of the configuration, 
      *      depending on the value of the $source parameter.
      *
-     * \param $source
-     *      Whether $configData contains a filename or the string
-     *      representation of the configuration. data
+     * \param opaque $source
+     *      iErebotMainConfig::LOAD_FROM_FILE or
+     *      iErebotMainConfig::LOAD_FROM_STRING, depending on
+     *      whether $configData contains a filename or the string
+     *      representation of the configuration data, respectively.
      *
      * \throw EErebotInvalidValue
      *      The configuration file did not exist or contained invalid values.
@@ -76,12 +90,12 @@ extends     iErebotConfigProxy
     /**
      * Returns the configuration object for a particular IRC network.
      *
-     * \param $network
+     * \param string $network
      *      The name of the IRC network whose configuration
      *      we're interested in.
      *
-     * \return
-     *      The ErebotNetworkConfig object for that network.
+     * \retval iErebotNetworkConfig
+     *      The configuration object for that network.
      *
      * \throw EErebotNotFound
      *      No such network has been configured on the bot.
@@ -91,17 +105,16 @@ extends     iErebotConfigProxy
     /**
      * Returns all IRC network configurations.
      *
-     * \return
-     *       A list of ErebotNetworkConfig instances.
+     * \retval list(iErebotNetworkConfig)
+     *       A list of network configurations.
      */
     public function getNetworks();
 
     /**
      * Returns the bot's version string.
      *
-     * \return
-     *      A string representing the bot's version,
-     *      such as '0.20-pre'.
+     * \retval string
+     *      The bot's version, such as '0.20-pre'.
      *
      * \note
      *      This version string is compatible with PHP's versioning scheme.
@@ -113,9 +126,8 @@ extends     iErebotConfigProxy
     /**
      * Returns the bot's timezone.
      *
-     * \return
-     *      A string describing the bot's current timezone,
-     *      such as 'Europe/Paris'.
+     * \retval string
+     *      The bot's current timezone, such as 'Europe/Paris'.
      */
     public function getTimezone();
 }

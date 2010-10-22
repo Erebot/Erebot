@@ -353,7 +353,7 @@ implements  iErebot
      * Handles request for a graceful shutdown of the bot.
      * Such request are received as signals.
      *
-     * \param $signum
+     * \param int $signum
      *      The number of the received signal.
      */
     public function quitGracefully($signum)
@@ -443,9 +443,11 @@ implements  iErebot
      * loaded module and determine whether that module respects a
      * set of constraints.
      *
-     * \return
-     *      A boolean indicating whether the given class subclasses
-     *      ErebotModuleBase (\b{TRUE}) or not (\b{FALSE}).
+     * \retval TRUE
+     *      The given class subclasses ErebotModuleBase.
+     *
+     * \retval FALSE
+     *      It does not subclasses ErebotModuleBase.
      */
     static private function __subclasses_EMB($a)
     {
@@ -458,16 +460,17 @@ implements  iErebot
      * loaded module and determine whether that module respects a
      * set of constraints.
      *
-     * \param $a
+     * \param string $a
      *      First class.
      *
-     * \param $b
+     * \param string $b
      *      Second class.
      *
-     * \return
-     *      Returns :
-     *      \li -1 if $a subclasses $b.
-     *      \li +1 if $b subclasses $a.
+     * \retval -1
+     *      $a subclasses $b.
+     *
+     * \retval +1
+     *      $b subclasses $a.
      *
      * \note
      *      This method assumes both classes are subclasses

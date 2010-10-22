@@ -32,12 +32,12 @@ extends     iErebotConfigProxy
     /**
      * Creates a new ErebotServerConfig instance.
      *
-     * \param $netCfg
-     *      A reference to an ErebotNetworkConfig object which contains the
-     *      configuration for the IRC network this server is a part of.
+     * \param iErebotNetworkConfig $netCfg
+     *      A reference to an object which contains the configuration
+     *      for the IRC network this server is a part of.
      *
-     * \param $xml
-     *      A SimpleXMLElement node containing the configuration data
+     * \param SimpleXMLElement $xml
+     *      An XML node containing the configuration data
      *      for this server.
      */
     public function __construct(
@@ -48,8 +48,8 @@ extends     iErebotConfigProxy
     /**
      * Returns the URL to use to connect to this IRC server.
      *
-     * \return
-     *      This server's connection URL, as a string.
+     * \retval string
+     *      This server's connection URL.
      */
     public function getConnectionURL();
 
@@ -57,8 +57,9 @@ extends     iErebotConfigProxy
      * Returns the IRC network configuration upon which this
      * IRC server configuration depends.
      *
-     * \return
-     *      An instance of the ErebotNetworkConfig class.
+     * \retval ErebotNetworkConfig
+     *      The network configuration associated with this server
+     *      configuration.
      */
     public function & getNetworkCfg();
 }

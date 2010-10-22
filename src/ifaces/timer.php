@@ -30,26 +30,31 @@ interface iErebotTimer
      * Creates a new timer, set off to call the given callback
      * (optionally, repeatedly) when the associated delay passed.
      *
-     * \param $callback
+     * \param callback $callback
      *      The callback to call when the timer expires.
      *      See http://php.net/manual/en/language.pseudo-types.php
      *      for acceptable callback values.
      *
-     * \param $delay
+     * \param int|float $delay
      *      The number of seconds to wait for before calling the
      *      callback. This may be a float/double or an int, but
      *      the implementation may choose to round it up to the
      *      nearest integer if sub-second precision is impossible
      *      to get (eg. on Windows).
      *
-     * \param $repeat
-     *      A boolean which indicates whether the callback should
-     *      be called repeatedly every $delay seconds or just once.
+     * \param bool|int $repeat
+     *      Either a boolean indicating whether the callback should
+     *      be called repeatedly every $delay seconds or just once,
+     *      or an integer specifying the exact number of times the
+     *      callback will be called.
      */
     public function __construct($callback, $delay, $repeat);
 
     /**
      * Returns a reference to the callback associated with this timer.
+     *
+     * \retval callback
+     *      The callback for this timer.
      */
     public function & getCallback();
 
@@ -57,6 +62,11 @@ interface iErebotTimer
      * Returns the delay after which the callback will be called.
      * This is the original value given to the timer during construction,
      * and it is not updated live as time passes by.
+     *
+     * \retval int
+     *      The original delay for this timer.
+     * \retval float
+     *      The original delay for this timer.
      */
     public function getDelay();
 
@@ -64,7 +74,7 @@ interface iErebotTimer
      * Returns the repetition flag of this timer.
      * It can also be used to change that flag.
      *
-     * \param $repeat
+     * \param bool|int $repeat
      *      (optional) If given, it can be:
      *      \arg    An integer indicating the number of times the timer
      *              will be triggered (with any negative value being
@@ -73,7 +83,7 @@ interface iErebotTimer
      *              the callback periodically (TRUE, same as -1) or just
      *              once (FALSE, same as 1).
      *
-     * \return
+     * \retval int
      *      Returns the repetition state of the timer.
      *      If the value was changed by means of the $repeat parameter,
      *      the value before any change was made is returned.
@@ -90,7 +100,7 @@ interface iErebotTimer
     /**
      * Returns the number of timer this timer will be restarted.
      *
-     * \return
+     * \retval int
      *      Returns the repetition state of the timer.
      */
     public function getRepetition();
@@ -98,7 +108,7 @@ interface iErebotTimer
     /**
      * Changes the number of times this timer can go off.
      *
-     * \param $repeat
+     * \param bool|int $repeat
      *      Can be either:
      *      \arg    An integer indicating the number of times the timer
      *              will be triggered (with any negative value being
@@ -114,6 +124,9 @@ interface iErebotTimer
      * to create timers.
      *
      * \internal
+     *
+     * \retval stream
+     *      The underlying PHP stream.
      */
     public function & getStream();
 

@@ -47,7 +47,7 @@ include_once('src/utils.php');
  *      </tr>
  *
  *      <tr>
- *          <td>&lt;var <br>name="..."/&gt;</td>
+ *          <td>&lt;var name="..."/&gt;</td>
  *          <td>This markup gets replaced by the content
  *              of the given variable</td>
  *      </tr>
@@ -134,9 +134,13 @@ class   ErebotStyling
     /**
      * Construct a new styling object.
      *
-     * \param $source
+     * \param string $source
      *      The template which will be used to produce
      *      the final message.
+     *
+     * \param iErebotI18n $translator
+     *      A translator object, used to determine the correct
+     *      pluralization rules.
      */
     public function __construct($source, iErebotI18n &$translator)
     {
@@ -191,10 +195,10 @@ class   ErebotStyling
      * Unlike ErebotStyling::assign_by_ref(), this
      * method assigns the variable by value.
      *
-     * \param $name
+     * \param string $name
      *      Name of the variable to assign.
      *
-     * \param $value
+     * \param mixed $value
      *      Value for that variable.
      */
     public function assign($name, $value)
@@ -208,10 +212,10 @@ class   ErebotStyling
      * Unlike ErebotStyling::assign(), this method
      * assigns the variable by reference.
      *
-     * \param $name
+     * \param string $name
      *      Name of the variable to assign.
      *
-     * \param $value
+     * \param mixed $value
      *      Value for that variable, as a reference.
      */
     public function assign_by_ref($name, &$value)
@@ -233,7 +237,7 @@ class   ErebotStyling
      * Unsets any previous value assigned to
      * a given variable.
      *
-     * \param $varname
+     * \param string $varname
      *      Name of the variable to unset.
      */
     public function clear_assign($varname)
@@ -245,10 +249,8 @@ class   ErebotStyling
      * Renders the template using assigned
      * variables.
      *
-     * \return
-     *      Returns a string appropriate for
-     *      sending over the network to the
-     *      IRC server.
+     * \retval string
+     *      The formatted result for this template.
      */
     public function render()
     {
@@ -282,13 +284,14 @@ class   ErebotStyling
      * Returns either all variables assigned to the template,
      * or the value assigned to a particular variable.
      *
-     * \param $varname
+     * \param NULL|string $varname
      *      If given, this must be the name of a variable
      *      assigned to the template.
      *
-     * \return
+     * \retval mixed
      *      If $varname was given, returns the current value
-     *      assigned to the variable which goes by the name.
+     *      assigned to the variable which goes by that name.
+     * \retval dict(string=>mixed)
      *      Otherwise, returns all variables currently assigned
      *      to this template, as an associative array mapping
      *      the variables' names to their values.

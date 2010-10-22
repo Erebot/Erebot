@@ -63,8 +63,8 @@ class ErebotUtils
      *      $bar->baz(); // Prints something like "object(Bar)#2 (0) {}".
      * \endcode
      *
-     * \return
-     *      Returns the caller object of the method which called
+     * \retval object
+     *      The caller object of the method which called
      *      ErebotUtils::getCallerObject().
      */
     static public function getCallerObject()
@@ -79,15 +79,15 @@ class ErebotUtils
      * after splitting the given text with the given
      * separator.
      *
-     * \param $text
+     * \param string $text
      *      The text to split and from which the number
      *      of tokens should be returned.
      *
-     * \param $separator
+     * \param NULL|string $separator
      *      (optional) The separator to use to split
      *      the text. Defaults to a whitespace (' ').
      *
-     * \return
+     * \retval int
      *      The number of tokens obtained after splitting
      *      the text.
      */
@@ -103,26 +103,26 @@ class ErebotUtils
      * given separator. The $start and $length parameters
      * are used to determine what chunks are returned.
      *
-     * \param $text
+     * \param string $text
      *      The text to split and from which the tokens
      *      should be returned.
      *
-     * \param $start
+     * \param int $start
      *      Offset of the first chunk to return (starting at 0).
      *      If negative, it starts at the end of the text.
      *
-     * \param $length
-     *      Number of chunks to return in the new string.
+     * \param NULL|int $length
+     *      (optional) Number of chunks to return in the new string.
      *      If set to 0 (the default), returns all chunks from
      *      $start onward until the end of the text.
      *
-     * \param $separator
+     * \param NULL|string $separator
      *      (optional) The separator to use to split
      *      the text. Defaults to a whitespace (' ').
      *
-     * \return
-     *      A new string with at most $length tokens (if
-     *      $length > 0) and its whitespaces squeezed.
+     * \retval string
+     *      A new string with at most $length tokens (if $length > 0)
+     *      and its whitespaces squeezed.
      */
     static public function gettok($text, $start, $length = 0, $separator = ' ')
     {
@@ -143,15 +143,15 @@ class ErebotUtils
     /**
      * Strips IRC styles from a text.
      *
-     * \param $text
+     * \param string $text
      *      The text from which styles must be stripped.
      *
-     * \param $strip
+     * \param int $strip
      *      A bitwise OR of the codes of the styles we want to strip.
      *      The default is to strip all forms of styles from the text.
      *      See also the ErebotUtils::STRIP_* constants.
      *
-     * \return
+     * \retval string
      *      The text with all the styles specified in $strip stripped.
      */
     static public function stripCodes($text, $strip = self::STRIP_ALL)
@@ -186,10 +186,10 @@ class ErebotUtils
      * Given some user's full IRC identity (nick!ident\@host),
      * this methods extracts and returns that user's nickname.
      *
-     * \param $source
+     * \param string $source
      *      Some user's full IRC identity (as "nick!ident\@host").
      *
-     * \return
+     * \retval string
      *      The nickname of the user represented by that identity.
      *
      * \note
@@ -211,12 +211,14 @@ class ErebotUtils
      * Can be used to determine if a string contains a sequence
      * of valid UTF-8 encoded codepoints.
      *
-     * \param $text
+     * \param string $text
      *      Some text to test for UTF-8 correctness.
      *
-     * \return
-     *      Returns TRUE if the $text contains a valid UTF-8
-     *      sequence of codepoints, FALSE otherwise.
+     * \retval TRUE
+     *      The $text contains a valid UTF-8 sequence.
+     *
+     * \retval FALSE
+     *      The $text is not a valid UTF-8 sequence.
      */
     static public function isUTF8($text)
     {
@@ -239,14 +241,14 @@ class ErebotUtils
     /**
      * Transforms the given text into a UTF-8 sequence.
      *
-     * \param $text
+     * \param string $text
      *      The text to convert into a UTF-8 sequence.
      *
-     * \param $from
+     * \param NULL|string $from
      *      (optional) The encoding currently used by $text.
      *      A default of "iso-8859-1" is assumed.
      *
-     * \return
+     * \retval string
      *      The original text, converted into UTF-8.
      *
      * \throw EErebotNotImplemented

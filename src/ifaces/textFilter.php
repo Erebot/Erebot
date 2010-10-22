@@ -41,20 +41,20 @@ interface iErebotTextFilter
      * Except for $config, the rest of the arguments is the same as for
      * iErebotTextFilter::addPattern() or iErebotTextFilter::removePattern().
      *
-     * \param $config
+     * \param iErebotMainConfig $config
      *      The main configuration for the bot (used to determine the prefix
-     *      to use, if any). Must implement the iErebotMainConfig interface.
+     *      to use, if any).
      *
-     * \param $type
+     * \param NULL|opaque $type
      *      (optional) The type of pattern used, that is, one of:
      *      *   iErebotTextFilter::TYPE_STATIC
      *      *   iErebotTextFilter::TYPE_WILDCARD
      *      *   iErebotTextFilter::TYPE_REGEXP
      *
-     * \param $pattern
+     * \param NULL|string $pattern
      *      (optional) The pattern which will be matched against by this filter.
      *
-     * \param $require_prefix
+     * \param NULL|string $requirePrefix
      *      (optional) A boolean which indicates whether a prefix is required
      *      (TRUE) or not (FALSE) for the filter to match. You may also set it
      *      to NULL to indicate it doesn't matter whether a prefix is present
@@ -92,16 +92,16 @@ interface iErebotTextFilter
     /**
      * Adds a match pattern to this filter.
      *
-     * \param $type
+     * \param opaque $type
      *      The type of pattern to add, that is, one of:
      *      *   iErebotTextFilter::TYPE_STATIC
      *      *   iErebotTextFilter::TYPE_WILDCARD
      *      *   iErebotTextFilter::TYPE_REGEXP
      *
-     * \param $pattern
+     * \param string $pattern
      *      The pattern which will be matched against by this filter.
      *
-     * \param $require_prefix
+     * \param NULL|bool $requirePrefix
      *      A boolean which indicates whether a prefix is required
      *      (TRUE) or not (FALSE) for the filter to match. You may
      *      also set it to NULL to indicate it doesn't matter whether
@@ -119,16 +119,16 @@ interface iErebotTextFilter
      * as when it was added (be it at construction time or through the
      * use of iErebotTextFilter::addPattern()).
      *
-     * \param $type
+     * \param opaque $type
      *      The type of pattern to remove, that is, one of:
      *      *   iErebotTextFilter::TYPE_STATIC
      *      *   iErebotTextFilter::TYPE_WILDCARD
      *      *   iErebotTextFilter::TYPE_REGEXP
      *
-     * \param $pattern
+     * \param string $pattern
      *      The pattern which will be matched against by this filter.
      *
-     * \param $require_prefix
+     * \param NULL|bool $requirePrefix
      *      A boolean which indicates whether a prefix is required
      *      (TRUE) or not (FALSE) for the filter to match. You may
      *      also set it to NULL to indicate it doesn't matter whether
@@ -144,14 +144,14 @@ interface iErebotTextFilter
      * Returns an array of all patterns registered on this filter
      * for the given $type.
      *
-     * \param $type
+     * \param NULL|opaque $type
      *      (optional) Only patterns of this type will be returned.
      *      If set to NULL (the default), an array of arrays is
      *      returned instead where the outermost array's keys are
      *      pattern types and the corresponding arrays are the
      *      patterns registered for that particular type.
      *
-     * \return
+     * \retval list(string)
      *      Returns pattern of the given $type or all patterns if
      *      $type is NULL.
      */
@@ -160,13 +160,14 @@ interface iErebotTextFilter
     /**
      * Tests whether this filter matches the text in the given $event.
      *
-     * \param $event
-     *      An object implementing the iErebotEvent interface
-     *      to match against.
+     * \param iErebotEvent $event
+     *      The event to try to match against the current filter.
      *
-     * \return
-     *      Returns TRUE if one of this filter's patterns matches
-     *      data in the given $event, FALSE otherwise.
+     * \retval TRUE
+     *      If one of this filter's patterns matches
+     *      data in the given $event
+     * \retval FALSE
+     *      Otherwise.
      */
     public function match(iErebotEvent &$event);
 }

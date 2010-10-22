@@ -30,14 +30,14 @@ interface   iErebotChannelConfig
 extends     iErebotConfigProxy
 {
     /**
-     * Creates a new ErebotChannelConfig instance.
+     * Creates a new configuration object for an IRC channel.
      *
-     * \param $netCfg
-     *      A reference to the ErebotNetworkConfig object which contains
-     *      the network configuration for this channel.
+     * \param iErebotNetworkConfig $netCfg
+     *      An object which contains the network configuration
+     *      for this channel.
      *
-     * \param $xml
-     *      A SimpleXMLElement node containing the configuration data
+     * \param SimpleXMLElement $xml
+     *      An XML node containing the configuration data
      *      for this network.
      */
     public function __construct(
@@ -48,8 +48,8 @@ extends     iErebotConfigProxy
     /**
      * Returns the name of this IRC channel.
      *
-     * \return
-     *      The name of this IRC channel, as a string.
+     * \retval string
+     *      The name of this IRC channel.
      */
     public function getName();
 
@@ -57,8 +57,8 @@ extends     iErebotConfigProxy
      * Returns the IRC network configuration upon which this
      * IRC channel configuration depends.
      *
-     * \return
-     *      An instance of the ErebotNetworkConfig class.
+     * \retval iErebotNetworkConfig
+     *      The IRC network configuration for this IRC channel.
      */
     public function & getNetworkCfg();
 }

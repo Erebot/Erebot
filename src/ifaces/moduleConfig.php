@@ -27,23 +27,23 @@
 interface iErebotModuleConfig
 {
     /**
-     * Creates a new instance of the ErebotModuleConfig class.
+     * Creates a new configuration object for a module.
      *
-     * \param $xml
-     *      A SimpleXMLElement node containing the configuration
-     *      settings for a module.
+     * \param SimpleXMLElement $xml
+     *      An XML node containing the configuration
+     *      settings for the module.
      */
     public function __construct(SimpleXMLElement &$xml);
 
     /**
      * Gets/sets the active flag on this module.
      *
-     * \param $active
+     * \param NULL|bool $active
      *      An optional parameter which can be used to change the
      *      value of the active flag for this module.
      *
-     * \return
-     *      Returns the value of the active flag as it was before
+     * \retval bool
+     *      The value of the active flag as it was before
      *      this method was called.
      *
      * \throw EErebotInvalidValue
@@ -55,7 +55,7 @@ interface iErebotModuleConfig
     /**
      * Returns the name of this module.
      *
-     * \return
+     * \retval string
      *      The name of the module represented by this module configuration.
      */
     public function getName();
@@ -63,11 +63,11 @@ interface iErebotModuleConfig
     /**
      * Returns the value for the given parameter.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \return
-     *      The value of the parameter, as a string.
+     * \retval string
+     *      The value of the parameter.
      *
      * \throw EErebotInvalidValue
      *      The $param argument was not a valid parameter name.
@@ -81,8 +81,8 @@ interface iErebotModuleConfig
     /**
      * Returns the names of the parameters for this module.
      *
-     * \return
-     *      An array with the names of the parameters configured
+     * \retval list(string)
+     *      A list with the names of the parameters configured
      *      for this module.
      */    
     public function getParamsNames();

@@ -30,14 +30,13 @@ interface   iErebotNetworkConfig
 extends     iErebotConfigProxy
 {
     /**
-     * Creates a new ErebotNetworkConfig instance.
+     * Creates a new configuration object for an IRC network.
      *
-     * \param $mainCfg
-     *      A reference to an ErebotMainConfig object which contains the
-     *      general configuration for the bot.
+     * \param iErebotMainConfig $mainCfg
+     *      A reference to the main configuration for the bot.
      *
-     * \param $xml
-     *      A SimpleXMLElement node containing the configuration data
+     * \param SimpleXMLElement $xml
+     *      An XML node containing the configuration data
      *      for this network.
      */
     public function __construct(
@@ -48,19 +47,19 @@ extends     iErebotConfigProxy
     /**
      * Returns the name of this IRC network.
      *
-     * \return
-     *      The name of this IRC network, as a string.
+     * \retval string
+     *      The name of this IRC network.
      */
     public function getName();
 
     /**
      * Returns the configuration object for a particular IRC server.
      *
-     * \param $server
+     * \param string $server
      *      The name of the IRC server whose configuration we're interested in.
      *
-     * \return
-     *      The ErebotServerConfig object for that server.
+     * \retval iErebotServerConfig
+     *      The configuration object for that server.
      *
      * \throw EErebotNotFound
      *      No such server has been configured on this IRC network.
@@ -70,20 +69,21 @@ extends     iErebotConfigProxy
     /**
      * Returns all IRC server configurations.
      *
-     * \return
-     *      A list of ErebotServerConfig instances.
+     * \retval list(iErebotServerConfig)
+     *      A list of all server configuration instances
+     *      stored by this network configuration object.
      */
     public function getServers();
 
     /**
      * Returns the configuration object for a particular IRC channel.
      *
-     * \param $channel
+     * \param string $channel
      *      The name of the IRC channel whose configuration
      *      we're interested in.
      *
-     * \return
-     *      The ErebotChannelConfig object for that channel.
+     * \retval iErebotChannelConfig
+     *      The configuration object for that channel.
      *
      * \throw EErebotNotFound
      *      No such channel has been configured on this IRC network.
@@ -93,8 +93,9 @@ extends     iErebotConfigProxy
     /**
      * Returns all IRC channel configurations.
      *
-     * \return
-     *      A list of ErebotChannelConfig instances.
+     * \retval list(iErebotChannelConfig)
+     *      A list of all channel configuration instances
+     *      stored by this network configuration object.
      */
     public function getChannels();
 }

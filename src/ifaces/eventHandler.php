@@ -28,22 +28,21 @@ interface iErebotEventHandler
     /**
      * Constructs an event handler.
      *
-     * \param $callback
+     * \param callback $callback
      *      The callback function/method which will be called
      *      when an event is received which meets the $constraints,
      *      is part of valid $targets and passed the $filters
      *      successfully.
      *
-     * \param $constraints
+     * \param string|list(string) $constraints
      *      Either a string of array of strings containing
      *      the names of classes/interfaces which should be
      *      considered acceptable events for this handler
      *      to treat. Therefore, it's a list of constraints
      *      on the event's type.
      *
-     * \param $targets
-     *      (optional) An object implementing the iErebotEventTargets
-     *      interface, which describes which targets this event handler
+     * \param NULL|iErebotEventTarget $targets
+     *      (optional) A description of the targets this event handler
      *      will consider valid. This is complementary to the $constraints
      *      parameter and can be used to build whitelists/blacklists
      *      (eg. make the bot react to an event only if it comes from
@@ -52,9 +51,8 @@ interface iErebotEventHandler
      *      If this is set to NULL (the default), any target is
      *      considered valid.
      *
-     * \param $filters
-     *      (optional) An object implementing the iErebotTextFilter
-     *      interface, which can be used to filter events containing
+     * \param NULL|iErebotTextFilter $filters
+     *      (optional) An object used to filter events containing
      *      text based on the content of that text.
      *      See the documentation on iErebotTextFilter for more information.
      *      If this is set to NULL (the default), any text is considered
@@ -71,8 +69,8 @@ interface iErebotEventHandler
      * Returns a reference to the callback which was associated
      * with this handler during construction.
      *
-     * \return
-     *      The callback associated for this handler.
+     * \retval callback
+     *      The callback associated with this handler.
      */
     public function & getCallback();
 
@@ -80,7 +78,7 @@ interface iErebotEventHandler
      * Returns the constraints on the event's type associated
      * with this handler during construction.
      *
-     * \return
+     * \retval mixed
      *      Type constraints for this handler, either
      *      as a string or an array of strings (whichever
      *      was used during construction).
@@ -91,9 +89,8 @@ interface iErebotEventHandler
      * Returns the constraints on the event's target associated
      * with this handler during construction.
      *
-     * \return
-     *      An object implementing the iErebotEventTargets
-     *      interface and expressing constraints on targets.
+     * \retval iErebotEventTarget
+     *      An object expressing constraints on targets.
      */
     public function & getTargets();
 
@@ -101,19 +98,16 @@ interface iErebotEventHandler
      * Returns the constraints on the event's text associated
      * with this handler during construction.
      *
-     * \return
-     *      An object implementing the iErebotTextFilter
-     *      interface and expressing constraints on an
-     *      event's text.
+     * \retval iErebotTextFilter
+     *      An object expressing constraints on an event's text.
      */
     public function & getFilters();
 
     /**
      * Given an event, this method does its best to handler it.
      *
-     * \param $event
-     *      An object implementing the iErebotEvent interface
-     *      that this method will try to handle.
+     * \param iErebotEvent $event
+     *      An event to try to handle.
      *
      * \note
      *      It is this method's responsability to make appropriate

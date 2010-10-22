@@ -49,13 +49,12 @@ class ErebotConfigProxy
     /**
      * Creates new instance of a ErebotConfigProxy object.
      *
-     * \param $proxified
-     *      An ErebotConfigProxy object which should be proxied through
+     * \param iErebotConfigProxy $proxified
+     *      A configuration object which should be proxied through
      *      this instance. This allows settings to be cascaded.
      *
-     * \param $xml
-     *      A SimpleXMLElement representing the XML node which should
-     *      be used as the basis for configuration.
+     * \param SimpleXMLElement $xml
+     *      An XML node which should be used as the basis for configuration.
      */
     protected function __construct(
         ErebotConfigProxy   &$proxified,
@@ -148,14 +147,16 @@ class ErebotConfigProxy
     /**
      * Parses a text and tries to extract a boolean value.
      *
-     * \param $value
+     * \param string $value
      *      The text from which a boolean should be extracted.
      *
-     * \return
+     * \retval bool
      *      If a boolean could be extracted from the $value provided,
      *      it is returned as the corresponding PHP boolean value
-     *      (either TRUE or FALSE). If no boolean could be extracted,
-     *      NULL is returned instead.
+     *      (either TRUE or FALSE).
+     *
+     * \retval NULL
+     *      No boolean could be extracted.
      *
      * \note
      *      Currently, the following texts are recognized as TRUE:
@@ -226,13 +227,15 @@ class ErebotConfigProxy
     /**
      * Parses a text and tries to extract an integer value.
      *
-     * \param $value
+     * \param string $value
      *      The text from which an integer should be extracted.
      *
-     * \return
+     * \retval int
      *      If an integer could be extracted from the $value provided,
      *      it is returned as the corresponding PHP (signed) integer value.
-     *      If no integer could be extracted, NULL is returned instead.
+     *
+     * \retval NULL
+     *      If no integer could be extracted.
      */
     protected function _parseInt($value)
     {
@@ -280,13 +283,15 @@ class ErebotConfigProxy
     /**
      * Parses a text and tries to extract a real.
      *
-     * \param $value
+     * \param string $value
      *      The text from which a real should be extracted.
      *
-     * \return
+     * \retval float
      *      If a real could be extracted from the $value provided,
-     *      it is returned as the corresponding PHP double value.
-     *      If no real could be extracted, NULL is returned instead.
+     *      it is returned as the corresponding PHP float value.
+     *
+     * \retval NULL
+     *      If no real could be extracted.
      */
     protected function _parseReal($value)
     {

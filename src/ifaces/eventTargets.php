@@ -61,7 +61,7 @@ interface iErebotEventTargets
     /**
      * Constructs a target for event matching.
      *
-     * \param $order
+     * \param opaque $order
      *      Controls the order in which declarations are processed.
      *      See iErebotEventTargets::setOrder() for acceptable values.
      */
@@ -70,7 +70,7 @@ interface iErebotEventTargets
     /**
      * Sets the order in which declarations are processed.
      *
-     * \param $order
+     * \param opaque $order
      *      Either iErebotEventTargets::ORDER_ALLOW_DENY to process
      *      allow declarations before deny declarations,
      *      or iErebotEventTargets::ORDER_DENY_ALLOW to process
@@ -81,11 +81,11 @@ interface iErebotEventTargets
     /**
      * Returns the order in which declarations are processed.
      *
-     * \return
-     *      Returns one of the iErebotEventTargets::ORDER_*
-     *      constants to indicate the order in which declarations
-     *      are processed, according to the last call to
-     *      iErebotEventTargets::setOrder() or the order set
+     * \retval opaque
+     *      One of iErebotEventTargets::ORDER_ALLOW_DENY or
+     *      iErebotEventTargets::ORDER_DENY_ALLOW to indicate the order
+     *      in which declarations are processed, according to the last
+     *      call to iErebotEventTargets::setOrder() or the order set
      *      at construction time.
      */
     public function getOrder();
@@ -94,34 +94,38 @@ interface iErebotEventTargets
      * Tests whether the given $event matches one of the allow
      * targets declared in this instance.
      *
-     * \param $event
-     *      An object to test, implementing the iErebotEvent
-     *      interface.
+     * \param iErebotEvent $event
+     *      An event to try to match with this filter.
      *
-     * \return
-     *      Returns TRUE if the $event matches a target or
-     *      FALSE otherwise.
+     * \retval TRUE
+     *      The $event matches one of the targets described by
+     *      this filter.
+     *
+     * \retval FALSE
+     *      Otherwise.
      */
     public function match(iErebotEvent &$event);
 
     /**
      * Adds a matching rule to this instance.
      *
-     * \param $type
+     * \param opaque $type
      *      The type of rule to add (allow or deny).
      *      Pass one of iErebotEventTargets::TYPE_ALLOW
      *      or iErebotEventTargets::TYPE_DENY for this
      *      parameter.
      *
-     * \param $nick
-     *      The specific nickname to accept/reject.
+     * \param opaque|string $nick
+     *      The specific nickname to accept/reject or
+     *      iErebotEventTargets::MATCH_ALL.
      *      The default (iErebotEventTargets::MATCH_ALL)
      *      accepts/rejects every nick depending on the
      *      order set during construction or with the
      *      iErebotEventTargets::setOrder() method.
      *
-     * \param $chan
-     *      The specific channel to accept/reject.
+     * \param opaque|string $chan
+     *      The specific channel to accept/reject or
+     *      iErebotEventTargets::MATCH_ALL.
      *      The default (iErebotEventTargets::MATCH_ALL)
      *      accepts/rejects every channel depending on
      *      the order set during construction or with
@@ -136,17 +140,19 @@ interface iErebotEventTargets
     /**
      * Removes a matching rule from this instance.
      *
-     * \param $type
+     * \param opaque $type
      *      The type of rule to remove (allow or deny).
      *      Pass one of iErebotEventTargets::TYPE_ALLOW
      *      or iErebotEventTargets::TYPE_DENY for this
      *      parameter.
      *
-     * \param $nick
-     *      The specific nickname which was accepted/rejected.
+     * \param opaque|string $nick
+     *      The specific nickname which was accepted/rejected,
+     *      or iErebotEventTargets::MATCH_ALL.
      *
-     * \param $chan
-     *      The specific channel which was accepted/rejected.
+     * \param opaque|string $chan
+     *      The specific channel which was accepted/rejected,
+     *      or iErebotEventTargets::MATCH_ALL.
      *
      * \note
      *      You MUST call iErebotEventTargets::removeRule()

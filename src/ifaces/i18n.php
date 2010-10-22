@@ -29,11 +29,11 @@ interface iErebotI18n
     /**
      * Creates a new translator for messages.
      *
-     * \param $locale
+     * \param string $locale
      *      The target locale for messages translated
      *      by this instance.
      *
-     * \param $component
+     * \param string $component
      *      The name of the component to use for translations.
      *      This should be set to the name of the module
      *      or "Erebot" for the core.
@@ -44,9 +44,9 @@ interface iErebotI18n
      * Returns the target locale of this translator
      * in canonical form.
      *
-     * \return
-     *      Returns the canonical form of the target
-     *      locale for this translator. 
+     * \retval string
+     *      The canonical form of the target locale
+     *      for this translator. 
      */
     public function getLocale();
 
@@ -54,12 +54,11 @@ interface iErebotI18n
      * Translates the given message using the translations
      * for the current component.
      *
-     * \param $message
+     * \param string $message
      *      The original message to translate, in US English.
      *
-     * \return
-     *      Returns the message translated into the selected
-     *      locale.
+     * \retval string
+     *      The message, translated into the selected locale.
      */
     public function gettext($message);
 
@@ -67,13 +66,12 @@ interface iErebotI18n
      * Formats a duration according to the rules
      * of the current locale.
      *
-     * \param $duration
+     * \param int $duration
      *      The duration to format, given in seconds.
      *
-     * \return
-     *      Returns a string expressing the duration
-     *      according to the rules of the current
-     *      locale.
+     * \retval string
+     *      A representation of the duration according to
+     *      the rules of the current locale.
      */
     public function formatDuration($duration);
 }

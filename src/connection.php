@@ -75,8 +75,8 @@ implements  iErebotConnection
     /**
      * Loads modules which are shared by all channels.
      * This means that all modules associated to this instance's $config
-     * (an ErebotServerConfig) and its parents (an ErebotNetworkConfig
-     * and an ErebotMainConfig) get loaded by this method.
+     * (an iErebotServerConfig) and its parents (an iErebotNetworkConfig
+     * and an iErebotMainConfig) get loaded by this method.
      *
      * \note
      *      This method uses the modules metadata to take dependencies
@@ -329,9 +329,11 @@ implements  iErebotConnection
      * Retrieves a single line of text from the incoming buffer
      * and puts it in the incoming FIFO.
      *
-     * \return
-     *      A boolean indicating whether a line could be fetched
-     *      from the buffer (TRUE) or not (FALSE).
+     * \retval TRUE
+     *      Whether a line could be fetched from the buffer.
+     *
+     * \retval FALSE
+     *      ... or not.
      *
      * \note
      *      Lines fetched by this method are always UTF-8 encoded.
@@ -399,7 +401,7 @@ implements  iErebotConnection
     /**
      * Handles a single IRC message.
      *
-     * \param $msg
+     * \param string $msg
      *      The message to process.
      *
      * \note

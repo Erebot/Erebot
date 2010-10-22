@@ -29,7 +29,7 @@ class ErebotTextWrapper
     /**
      * Constructs a new instance of a text wrapper.
      *
-     * \param $text
+     * \param string $text
      *      The text to wrap.
      */
     public function __construct($text)
@@ -44,21 +44,21 @@ class ErebotTextWrapper
      * Whitespaces are squeezed together in the process,
      * no matter what separator is actually used.
      *
-     * \param $start
+     * \param int $start
      *      Offset of the first chunk to return (starting at 0).
      *      If negative, it starts at the end of the wrapped text.
      *
-     * \param $length
-     *      Number of chunks to return in the new string.
+     * \param NULL|int $length
+     *      (optional) Number of chunks to return in the new string.
      *      If set to 0 (the default), returns all chunks from
      *      $start onward until the end of the wrapped text.
      *
-     * \param $separator
-     *      The separator to use while splitting the text.
+     * \param NULL|string $separator
+     *      (optional) The separator to use while splitting the text.
      *      The default is to split it on whitespaces (' ').
      *
-     * \return
-     *      A string with at most $length chunks (if $length > 0)
+     * \retval string
+     *      At most $length chunks (if $length > 0)
      *      and its whitespaces squeezed.
      */
     public function getTokens($start, $length = 0, $separator = ' ')
@@ -73,11 +73,11 @@ class ErebotTextWrapper
      * Whitespaces are squeezed together in the process,
      * no matter what separator is actually used.
      *
-     * \param $separator
-     *      The separator to use while splitting the text.
+     * \param NULL|string $separator
+     *      (optional) The separator to use while splitting the text.
      *      The default is to split it on whitespaces (' ').
      *
-     * \return
+     * \retval int
      *      The number of tokens in the string.
      */
     public function countTokens($separator = ' ')
@@ -88,7 +88,7 @@ class ErebotTextWrapper
     /**
      * Returns the wrapped text (untouched).
      *
-     * \return
+     * \retval string
      *      The text wrapped by this instance.
      */
     public function __toString()

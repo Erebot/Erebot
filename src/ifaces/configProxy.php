@@ -29,13 +29,13 @@ interface iErebotConfigProxy
      * Returns the appropriate ErebotI18n object to apply for translations
      * at this configuration level.
      *
-     * \param $component
+     * \param string $component
      *      Name of the component we're interested in.
      *      This should be set to the name of a module or "Erebot"
-     *      for the core translators.
+     *      for the core translator.
      *
-     * \return
-     *      An appropriate ErebotI18n object.
+     * \retval iErebotI18n
+     *      A translator object.
      *
      * \throw EErebotNotFound
      *      No appropriate translator exists for this configuration level.
@@ -46,21 +46,21 @@ interface iErebotConfigProxy
      * Returns the ErebotMainConfig object associated with this hierarchy
      * of configurations.
      *
-     * \return
-     *      The ErebotMainConfig for this hierarchy.
+     * \retval iErebotMainConfig
+     *      The main configuration of the bot.
      */
     public function & getMainCfg();
 
     /**
      * Returns a list with the names of all currently active modules.
      *
-     * \param $recursive
+     * \param bool $recursive
      *      If set to TRUE, the list is retrieved recursively by merging
      *      the lists obtained at this level and all levels above it.
      *      If set to FALSE, only the modules activated at this particular
      *      level are returned.
      *
-     * \return
+     * \retval list(string)
      *      A list with the names of currently active modules.
      */
     public function getModules($recursive);
@@ -68,10 +68,10 @@ interface iErebotConfigProxy
     /**
      * Returns the instance of the module configuration with the given name.
      *
-     * \param $moduleName
+     * \param string $moduleName
      *      Name of the module whose configuration we're insterested in.
      *
-     * \return
+     * \retval iErebotModuleConfig
      *      Instance of the module's configuration.
      *
      * \throw EErebotNotFound
@@ -81,17 +81,17 @@ interface iErebotConfigProxy
     /**
      * Returns the boolean value for a setting in some module.
      *
-     * \param $module
+     * \param string $module
      *      The name of the module from which to retrieved the setting.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
+     * \param bool $default
      *      An optional default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
+     * \retval bool
      *      The boolean value for that particular module and parameter.
      *
      * \throw EErebotNotFound
@@ -112,17 +112,17 @@ interface iErebotConfigProxy
     /**
      * Returns the string value for a setting in some module.
      *
-     * \param $module
+     * \param string $module
      *      The name of the module from which to retrieved the setting.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
+     * \param string $default
      *      An optional default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
+     * \retval string
      *      The string value for that particular module and parameter.
      *
      * \throw EErebotNotFound
@@ -143,18 +143,18 @@ interface iErebotConfigProxy
     /**
      * Returns the integer value for a setting in some module.
      *
-     * \param $module
+     * \param string $module
      *      The name of the module from which to retrieved the setting.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
+     * \param int $default
      *      An optional default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
-     *      The boolean value for that particular module and parameter.
+     * \retval int
+     *      The interger value for that particular module and parameter.
      *
      * \throw EErebotNotFound
      *      The given $module or $param name could not be found.
@@ -186,17 +186,17 @@ interface iErebotConfigProxy
     /**
      * Returns the real number for a setting in some module.
      *
-     * \param $module
+     * \param string $module
      *      The name of the module from which to retrieved the setting.
      *
-     * \param $param
+     * \param string $param
      *      The name of the parameter we are interested in.
      *
-     * \param $default
+     * \param float $default
      *      An optional default value in case no value has been set
      *      at the configuration level.
      *
-     * \return
+     * \retval float
      *      The real number for that particular module and parameter.
      *
      * \throw EErebotNotFound
