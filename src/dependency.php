@@ -103,7 +103,7 @@ class ErebotDependency
     /**
      * Returns the name of the dependency.
      *
-     * \retval
+     * \retval string
      *      The dependency's name.
      */
     public function getName()
@@ -143,7 +143,7 @@ class ErebotDependency
      * Returns the full dependency specification,
      * as a string.
      *
-     * \retval
+     * \retval string
      *      The dependency specification.
      */
     public function __toString()
