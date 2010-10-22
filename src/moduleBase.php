@@ -162,6 +162,9 @@ abstract class ErebotModuleBase
      *
      * \retval bool
      *      The value for that parameter.
+     *
+     * \throw EErebotInvalidValue
+     *      The given $default value does not have the right type.
      */
     protected function parseBool($param, $default = NULL)
     {
@@ -180,6 +183,9 @@ abstract class ErebotModuleBase
      *
      * \retval string
      *      The value for that parameter.
+     *
+     * \throw EErebotInvalidValue
+     *      The given $default value does not have the right type.
      */
     protected function parseString($param, $default = NULL)
     {
@@ -198,6 +204,9 @@ abstract class ErebotModuleBase
      *
      * \retval int
      *      The value for that parameter.
+     *
+     * \throw EErebotInvalidValue
+     *      The given $default value does not have the right type.
      */
     protected function parseInt($param, $default = NULL)
     {
@@ -216,6 +225,9 @@ abstract class ErebotModuleBase
      *
      * \retval float
      *      The value for that parameter.
+     *
+     * \throw EErebotInvalidValue
+     *      The given $default value does not have the right type.
      */
     protected function parseReal($param, $default = NULL)
     {
@@ -264,8 +276,7 @@ abstract class ErebotModuleBase
      * Returns the appropriate translator for the given channel.
      *
      * \param NULL|FALSE|string $chan
-     *      (optional) The channel for which a translator must be
-     *      returned.
+     *      The channel for which a translator must be returned.
      *      If $chan is NULL, the hierarchy of configurations is
      *      traversed to find the most appropriate translator.
      *      If $chan is FALSE, a translator using the bot's main

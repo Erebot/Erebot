@@ -34,7 +34,7 @@ class ErebotDependency
      *
      * \param string $dependency
      *      A dependency specification like "foo >= 42".
-     *      The general form a dependency specification
+     *      The general form of a dependency specification
      *      is "<name> [<operator> <version>]", where the
      *      \b operator and \b version may be ommitted
      *      to indicate that \b name must be installed,

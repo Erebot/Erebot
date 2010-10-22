@@ -37,6 +37,11 @@ include_once('src/utils.php');
  *      <caption>Special markup in templates</caption>
  *
  *      <tr>
+ *          <th>Markup</th>
+ *          <th>Role</th>
+ *      </tr>
+ *
+ *      <tr>
  *          <td>&lt;b&gt;...&lt;/b&gt;</td>
  *          <td>The text is rendered in \b{bold}</td>
  *      </tr>
@@ -53,7 +58,13 @@ include_once('src/utils.php');
  *      </tr>
  *
  *      <tr>
- *          <td>&lt;color fg="..." bg="..."&gt;...&lt;/color&gt;</td>
+ *          <td>
+ *              &lt;color<br/>
+ *                  &nbsp;&nbsp;fg="..."<br/>
+ *                  &nbsp;&nbsp;bg="..."&gt;<br/>
+ *                  &nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+ *              &lt;/color&gt;
+ *          </td>
  *          <td>The text is rendered with the given foreground (\a fg)
  *              and background (\a bg) colors. The value of the \a fg and
  *              \a bg attributes may be either an integer (see the COLOR_*
@@ -62,8 +73,16 @@ include_once('src/utils.php');
  *      </tr>
  *
  *      <tr>
- *          <td>&lt;for from="..." item="..." key="..." separator=", "
- *              last_separator=" &amp; "&gt;...&lt;/for&gt;</td>
+ *          <td>
+ *              &lt;for<br/>
+ *                  &nbsp;&nbsp;from="..."<br/>
+ *                  &nbsp;&nbsp;item="..."<br/>
+ *                  &nbsp;&nbsp;key="..."<br/>
+ *                  &nbsp;&nbsp;separator=&quot;,&nbsp;&quot;<br/>
+ *                  &nbsp;&nbsp;last_separator=&quot;&nbsp;&amp;amp;&nbsp;&quot;&gt;<br/>
+ *                  &nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+ *              &lt;/for&gt;
+ *          </td>
  *          <td>This markup loops over the associative array in \a from.
  *              The key for each entry in that array is stored in the
  *              temporary variable given by the \a key attribute if given,
@@ -78,8 +97,13 @@ include_once('src/utils.php');
  *      </tr>
  *
  *      <tr>
- *          <td>&lt;plural var="..."&gt;&lt;case
- *              form="..."&gt;...&lt;/case&gt;&lt;/plural&;gt;</td>
+ *          <td>
+ *              &lt;plural var="..."&gt;<br/>
+ *                  &nbsp;&nbsp;&lt;case form="..."&gt;<br/>
+ *                      &nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+ *                  &nbsp;&nbsp;&lt;/case&gt;<br/>
+ *              &lt;/plural&gt;
+ *          </td>
  *          <td>Handles plurals. Depending on the value of the variable
  *              pointed by \a var, one of the cases will be used. The page at
  * http://unicode.org/cldr/data/charts/supplemental/language_plural_rules.html
