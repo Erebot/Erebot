@@ -85,7 +85,7 @@ include_once('src/utils.php');
  *          </td>
  *          <td>This markup loops over the associative array in \a from.
  *              The key for each entry in that array is stored in the
- *              temporary variable given by the \a key attribute if given,
+ *              temporary variable named by the \a key attribute if given,
  *              while the associated value is stored in the temporary
  *              variable named by \a item. The value of \a separator is
  *              appended automatically between each entry of the array,

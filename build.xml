@@ -198,7 +198,7 @@ ${summary}
 
     <target name="doxygen" description="">
         <exec command="doxygen" dir="." passthru="true" checkreturn="true"/>
-        <exec command="make" dir="doc/latex" passthru="true" checkreturn="true"/>
+        <exec command="make" dir="doc/latex" passthru="true"/>
     </target>
 
 

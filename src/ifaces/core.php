@@ -43,7 +43,7 @@ interface iErebot
     public function __construct(iErebotMainConfig $config);
 
     /**
-     * Retrieve a list of all connections handled by the bot.
+     * Returns a list of all connections handled by the bot.
      *
      * \retval list(iErebotConnection)
      *      A list of connections handled by this instance.
@@ -82,7 +82,7 @@ interface iErebot
     public function stop();
 
     /**
-     * Retrieve a list of all \link ErebotTimer ErebotTimers\endlink registered.
+     * Returns a list of all \link ErebotTimer ErebotTimers\endlink registered.
      *
      * \retval list(iErebotTimer)
      *      Returns a list of timers registered for this instance.
@@ -106,7 +106,7 @@ interface iErebot
     public function removeTimer(iErebotTimer &$timer);
 
     /**
-     * Retrieve the bot's version information.
+     * Retrieves the bot's version information.
      *
      * \retval string
      *      A string containing formatted version information about the bot.
@@ -139,7 +139,7 @@ interface iErebot
     public function loadModule($module);
 
     /**
-     * Get the class associated with a given module.
+     * Returns the class associated with a given module.
      *
      * \param string $modName
      *      Name of the (loaded) module whose class we're interested in.
@@ -157,7 +157,7 @@ interface iErebot
     public function moduleNameToClass($modName);
 
     /**
-     * Get the name of the module associated with a given class.
+     * Returns the name of the module associated with a given class.
      *
      * \param string $className
      *      Name of the class whose module we're interested in.
@@ -175,7 +175,7 @@ interface iErebot
     public function moduleClassToName($className);
 
     /**
-     * Add a (new) connection to the bot.
+     * Adds a (new) connection to the bot.
      *
      * Once a new connection has been created, use this method to add
      * it to the pool of connections the bot must process.
@@ -192,7 +192,7 @@ interface iErebot
     public function addConnection(iErebotConnection &$connection);
 
     /**
-     * Remove a connection from the bot.
+     * Removes a connection from the bot.
      *
      * Use this method to remove a connection from the pool of connections
      * the bot must process, such as when the connection is lost with the
@@ -219,7 +219,7 @@ interface iErebot
      *      The original message to translate, in english.
      *
      * \retval string
-     *      Returns the translation for this message or the original (english)
+     *      The translation for this message or the original (english)
      *      message if no translation is available.
      */
     public function gettext($message);

@@ -35,7 +35,7 @@ interface iErebotTimer
      *      See http://php.net/manual/en/language.pseudo-types.php
      *      for acceptable callback values.
      *
-     * \param int|float $delay
+     * \param number $delay
      *      The number of seconds to wait for before calling the
      *      callback. This may be a float/double or an int, but
      *      the implementation may choose to round it up to the
@@ -63,10 +63,9 @@ interface iErebotTimer
      * This is the original value given to the timer during construction,
      * and it is not updated live as time passes by.
      *
-     * \retval int
-     *      The original delay for this timer.
-     * \retval float
-     *      The original delay for this timer.
+     * \retval number
+     *      The original delay for this timer, as decided at
+     *      construction time.
      */
     public function getDelay();
 

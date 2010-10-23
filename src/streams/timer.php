@@ -71,6 +71,7 @@ class ErebotWrapperTimer
     }
 }
 
-if (!in_array("timer", stream_get_wrappers()))
+if (!in_array("timer", stream_get_wrappers())) {
     stream_wrapper_register('timer', 'ErebotWrapperTimer');
+}
 

@@ -16,11 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if (!defined('STREAM_CAST_AS_STREAM')) {
-    define('STREAM_CAST_AS_STREAM', NULL);
-    define('STREAM_CAST_FOR_SELECT', NULL);
-}
-
 include_once('src/exceptions/ConnectionFailure.php');
 
 /**
@@ -199,9 +194,16 @@ class ErebotWrapperIRC
     }
 }
 
-if (!in_array("irc", stream_get_wrappers()))
-    stream_wrapper_register('irc', 'ErebotWrapperIRC', STREAM_IS_URL);
+if (!defined('STREAM_CAST_AS_STREAM')) {
+    define('STREAM_CAST_AS_STREAM', NULL);
+    define('STREAM_CAST_FOR_SELECT', NULL);
+}
 
-if (!in_array("ircs", stream_get_wrappers()))
+if (!in_array("irc", stream_get_wrappers())) {
+    stream_wrapper_register('irc', 'ErebotWrapperIRC', STREAM_IS_URL);
+}
+
+if (!in_array("ircs", stream_get_wrappers())) {
     stream_wrapper_register('ircs', 'ErebotWrapperIRC', STREAM_IS_URL);
+}
 

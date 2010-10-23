@@ -131,6 +131,7 @@ class ErebotWrapperXGlob
 
 // The name "glob" is already used internally as of PHP 5.3.0.
 // Moreover, we need extra stuff (XML validity), hence "xglob".
-if (!in_array("xglob", stream_get_wrappers()))
+if (!in_array("xglob", stream_get_wrappers())) {
     stream_wrapper_register('xglob', 'ErebotWrapperXGlob', STREAM_IS_URL);
+}
 

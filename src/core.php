@@ -76,10 +76,10 @@ implements  iErebot
      */
     const DEFAULT_CONNECTION_CLS    = 'ErebotConnection';
 
-    /// List of \link ErebotConnection ErebotConnections\endlink to handle.
+    /// List of \link iErebotConnection iErebotConnections\endlink to handle.
     protected $_connections;
 
-    /// List of \link ErebotTimer ErebotTimers\endlink to trigger, eventually.
+    /// List of \link iErebotTimer iErebotTimers\endlink to trigger, eventually.
     protected $_timers;
 
     /// Dictionary with mappings between modules and their classes.

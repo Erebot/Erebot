@@ -22,9 +22,9 @@
  *
  * This is an implementation of a custom exception which turns
  * all PHP messages (errors, warnings, notices, etc.) into exceptions.
- * We use this exception instead of PHP's ErrorException because it
- * is buggy under PHP 5.2, which might be a target version for Erebot
- * at some time.
+ * We use this exception instead of PHP's ErrorException because the
+ * latter is buggy under PHP 5.2, which might be a target version for
+ * Erebot at some time.
  * Original implementation proposed by luke at cywh dot com:
  * http://php.net/manual/en/class.errorexception.php#89132
  */
