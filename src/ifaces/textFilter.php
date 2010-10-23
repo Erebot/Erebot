@@ -47,9 +47,9 @@ interface iErebotTextFilter
      *
      * \param NULL|opaque $type
      *      (optional) The type of pattern used, that is, one of:
-     *      *   iErebotTextFilter::TYPE_STATIC
-     *      *   iErebotTextFilter::TYPE_WILDCARD
-     *      *   iErebotTextFilter::TYPE_REGEXP
+     *      - iErebotTextFilter::TYPE_STATIC
+     *      - iErebotTextFilter::TYPE_WILDCARD
+     *      - iErebotTextFilter::TYPE_REGEXP
      *
      * \param NULL|string $pattern
      *      (optional) The pattern which will be matched against by this filter.
@@ -94,9 +94,9 @@ interface iErebotTextFilter
      *
      * \param opaque $type
      *      The type of pattern to add, that is, one of:
-     *      *   iErebotTextFilter::TYPE_STATIC
-     *      *   iErebotTextFilter::TYPE_WILDCARD
-     *      *   iErebotTextFilter::TYPE_REGEXP
+     *      -   iErebotTextFilter::TYPE_STATIC
+     *      -   iErebotTextFilter::TYPE_WILDCARD
+     *      -   iErebotTextFilter::TYPE_REGEXP
      *
      * \param string $pattern
      *      The pattern which will be matched against by this filter.
@@ -121,9 +121,9 @@ interface iErebotTextFilter
      *
      * \param opaque $type
      *      The type of pattern to remove, that is, one of:
-     *      *   iErebotTextFilter::TYPE_STATIC
-     *      *   iErebotTextFilter::TYPE_WILDCARD
-     *      *   iErebotTextFilter::TYPE_REGEXP
+     *      -   iErebotTextFilter::TYPE_STATIC
+     *      -   iErebotTextFilter::TYPE_WILDCARD
+     *      -   iErebotTextFilter::TYPE_REGEXP
      *
      * \param string $pattern
      *      The pattern which will be matched against by this filter.
