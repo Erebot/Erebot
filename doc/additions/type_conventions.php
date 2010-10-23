@@ -29,7 +29,8 @@ The following types are used in this documentation:
         <td>
             \c int<br/>
             \c string<br/>
-            \c float
+            \c float<br/>
+            \c bool
         </td>
         <td>
             Same as the corresponding \link http://www.php.net/manual/en/language.types.php type \endlink in PHP.

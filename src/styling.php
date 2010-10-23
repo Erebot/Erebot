@@ -31,7 +31,7 @@ include_once('src/utils.php');
  *
  *  A template is composed of a single string, which may contain
  *  special markup to insert dynamic content, add formatting
- *  attributes to the text (like bold, underline, colors).
+ *  attributes to the text (like bold, underline, colors), etc.
  *
  *  <table>
  *      <caption>Special markup in templates</caption>
