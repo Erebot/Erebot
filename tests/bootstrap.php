@@ -9,13 +9,6 @@ set_include_path(
     get_include_path()
 );
 
-#include_once('src/moduleBase.php');
-#include_once('src/events/events.php');
-
-#include_once('src/exceptions/Exception.php');
-#include_once('src/exceptions/IllegalAction.php');
-#include_once('src/exceptions/InvalidValue.php');
-
 include_once('src/logging/src/logging.php');
 
 $logging =& Plop::getInstance();
