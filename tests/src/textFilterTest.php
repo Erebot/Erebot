@@ -1,37 +1,17 @@
 <?php
 
-include_once('src/utils.php');
-include_once('src/exceptions/Exception.php');
-include_once('src/exceptions/IllegalAction.php');
-#include_once('src/textFilter.php');
-include_once('src/events/events.php');
-
-include_once('src/ifaces/core.php');
-include_once('src/ifaces/connection.php');
-include_once('src/ifaces/mainConfig.php');
-include_once('src/ifaces/serverConfig.php');
-include_once('src/ifaces/networkConfig.php');
-
-include_once('tests/testenv/connectionStub.php');
-include_once('tests/testenv/mainConfigStub.php');
-include_once('tests/testenv/serverConfigStub.php');
-include_once('tests/testenv/networkConfigStub.php');
-include_once('tests/testenv/coreStub.php');
+include_once('tests/testenv/bootstrap.php');
+include_once('src/textFilter.php');
 
 class   TextFilterArgumentsTest
-extends PHPUnit_Framework_TestCase
+extends ErebotModuleTestCase
 {
-    public function setUp()
-    {
-        $this->config = new ErebotStubbedMainConfig(NULL, NULL);
-    }
-
     /**
      * @expectedException   EErebotIllegalAction
      */
     public function testInvalidArgumentsThrowAnException()
     {
-        new ErebotTextFilter($this->config, ErebotTextFilter::TYPE_STATIC, NULL);
+        new ErebotTextFilter($this->_mainConfig, ErebotTextFilter::TYPE_STATIC, NULL);
     }
 
     /**
@@ -39,7 +19,7 @@ extends PHPUnit_Framework_TestCase
      */
     public function testInvalidArgumentsThrowAnException2()
     {
-        new ErebotTextFilter($this->config, ErebotTextFilter::TYPE_WILDCARD, NULL);
+        new ErebotTextFilter($this->_mainConfig, ErebotTextFilter::TYPE_WILDCARD, NULL);
     }
 
     /**
@@ -47,7 +27,7 @@ extends PHPUnit_Framework_TestCase
      */
     public function testInvalidArgumentsThrowAnException3()
     {
-        new ErebotTextFilter($this->config, ErebotTextFilter::TYPE_REGEXP, NULL);
+        new ErebotTextFilter($this->_mainConfig, ErebotTextFilter::TYPE_REGEXP, NULL);
     }
 
     /**
@@ -55,21 +35,30 @@ extends PHPUnit_Framework_TestCase
      */
     public function testInvalidArgumentsThrowAnException4()
     {
-        new ErebotTextFilter($this->config, NULL, '');
+        new ErebotTextFilter($this->_mainConfig, NULL, '');
     }
 }
 
 class   TextFilterStaticTest
-extends PHPUnit_Framework_TestCase
+extends ErebotModuleTestCase
 {
     const PATTERN_TYPE = ErebotTextFilter::TYPE_STATIC;
     const PATTERN_TEXT = 'test phrase here';
 
-    protected function getFilter($config, $prefixing)
+    public function setUp()
+    {
+        parent::setUp();
+        $this->_mainConfig
+            ->expects($this->any())
+            ->method('getCommandsPrefix')
+            ->will($this->returnValue('!'));
+    }
+
+    protected function getFilter($prefixing)
     {
         $reflect    = new ReflectionObject($this);
         $filter     = new ErebotTextFilter(
-                            $config,
+                            $this->_mainConfig,
                             $reflect->getConstant('PATTERN_TYPE'),
                             $reflect->getConstant('PATTERN_TEXT'),
                             $prefixing);
@@ -78,15 +67,11 @@ extends PHPUnit_Framework_TestCase
 
     protected function validate($prefix_mode, $with_prefix, $without_prefix)
     {
-        $config     = new ErebotStubbedMainConfig(NULL, NULL);
-        $filter     = $this->getFilter($config, $prefix_mode);
-        $prefix     = $config->getCommandsPrefix();
-        $bot        = new ErebotStubbedCore();
-        $config     = ErebotStubbedServerConfig::create(array());
-        $connection = new ErebotStubbedConnection($bot, $config);
+        $filter     = $this->getFilter($prefix_mode);
+        $prefix     = $this->_mainConfig->getCommandsPrefix();
 
         $event  =   new ErebotEventTextPrivate(
-                        $connection, 'foo',
+                        $this->_connection, 'foo',
                         $prefix.'test phrase here'
                     );
         if ($with_prefix)
@@ -99,7 +84,7 @@ extends PHPUnit_Framework_TestCase
                 "Internal state:\n".print_r($filter->getPatterns(), TRUE));
 
         $event  =   new ErebotEventTextPrivate(
-                        $connection, 'foo',
+                        $this->_connection, 'foo',
                         'test phrase here'
                     );
         if ($without_prefix)
@@ -112,7 +97,7 @@ extends PHPUnit_Framework_TestCase
                 "Internal state:\n".print_r($filter->getPatterns(), TRUE));
 
         $event  =   new ErebotEventTextPrivate(
-                        $connection, 'foo',
+                        $this->_connection, 'foo',
                         'ttest phrase here'
                     );
         $this->assertEquals(FALSE, $filter->match($event),

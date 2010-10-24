@@ -130,5 +130,13 @@ extends     iErebotConfigProxy
      *      The bot's current timezone, such as 'Europe/Paris'.
      */
     public function getTimezone();
+
+    /**
+     * Returns the prefix used by commands.
+     *
+     * \retval string
+     *      The prefix for commands, such as '!'.
+     */
+    public function getCommandsPrefix();
 }
 

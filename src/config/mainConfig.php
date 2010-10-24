@@ -224,6 +224,7 @@ implements  iErebotMainConfig
         return $this->_timezone;
     }
 
+    // Documented in the interface.
     public function getCommandsPrefix()
     {
         return $this->_commandsPrefix;

@@ -16,7 +16,7 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/version.php');
+define('EREBOT_VERSION', '0.3.2-dev1');
 
 /**
  * \brief
