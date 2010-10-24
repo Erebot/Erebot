@@ -21,22 +21,33 @@ error_reporting(E_ALL | E_STRICT);
 // The bot may run indefinitely, avoid the default 30 seconds time limit.
 set_time_limit(0);
 
-include_once('src/utils.php');
+if (!defined('__DIR__')) {
+  class __FILE_CLASS__ {
+    function  __toString() {
+      $X = debug_backtrace();
+      return dirname($X[1]['file']);
+    }
+  }
+  define('__DIR__', new __FILE_CLASS__);
+} 
+
+
+include_once(__DIR__.'/utils.php');
 // We need to include the styling API,
 // so that modules do not need to do it themselves.
-include_once('src/styling.php');
-include_once('src/logging/src/logging.php');
-include_once('src/events/raws.php');
-include_once('src/events/events.php');
-include_once('src/moduleBase.php');
-include_once('src/connection.php');
-include_once('src/config/mainConfig.php');
-include_once('src/timer.php');
-include_once('src/streams/irc.php');
-include_once('src/exceptions/NotImplemented.php');
-include_once('src/exceptions/ErrorReporting.php');
-include_once('src/ifaces/core.php');
-include_once('src/orm/Doctrine.php');
+include_once(__DIR__.'/styling.php');
+include_once(__DIR__.'/logging/src/logging.php');
+include_once(__DIR__.'/events/raws.php');
+include_once(__DIR__.'/events/events.php');
+include_once(__DIR__.'/moduleBase.php');
+include_once(__DIR__.'/connection.php');
+include_once(__DIR__.'/config/mainConfig.php');
+include_once(__DIR__.'/timer.php');
+include_once(__DIR__.'/streams/irc.php');
+include_once(__DIR__.'/exceptions/NotImplemented.php');
+include_once(__DIR__.'/exceptions/ErrorReporting.php');
+include_once(__DIR__.'/ifaces/core.php');
+include_once(__DIR__.'/orm/Doctrine.php');
 
 // Initialize Doctrine.
 spl_autoload_register(array('Doctrine', 'autoload'));
