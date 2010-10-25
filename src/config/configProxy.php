@@ -16,6 +16,7 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+include_once('src/exceptions/Exception.php');
 include_once('src/exceptions/NotFound.php');
 include_once('src/exceptions/InvalidValue.php');
 include_once('src/config/moduleConfig.php');
