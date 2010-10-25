@@ -20,8 +20,8 @@ ${summary}
 @TODO
 ]]></property>
 
-    <property name="qa.coverage-db"     value="/tmp/coverage.db"/>
-    <property name="qa.coverage-tmp"    value="/tmp/coverage.xml"/>
+    <property name="qa.coverage-db"     value="/tmp/Erebot.db"/>
+    <property name="qa.coverage-tmp"    value="/tmp/Erebot.xml"/>
     <property name="phar.output_file"   value="Erebot.phar"/>
 
     <tstamp>
@@ -129,67 +129,7 @@ ${summary}
 
     <!-- Release process -->
     <target name="release" description="">
-        <pharpackage
-            destfile="${phar.output_file}"
-            signature="sha256"
-            compression="none"
-            alias="Erebot"
-            clistub="/Erebot"
-            basedir="/var/www/Erebot/trunk/"
-            >
-            <fileset dir=".">
-                <include name="Erebot"/>
-                <include name="src/version"/>
-                <include name="src/**/*.rng"/>
-                <include name="i18n/${domain}.pot"/>
-                <include name="i18n/*/LC_MESSAGES/${domain}.po"/>
-                <include name="i18n/*/LC_MESSAGES/${domain}.mo"/>
-            </fileset>
-            <fileset refid="sources"/>
-            <metadata>
-                <element name="version" value="${version}"/>
-                <element name="authors">
-                    <element name="François Poirotte">
-                        <element name="e-mail" value="clicky@erebot.net"/>
-                    </element>
-                </element>
-            </metadata>
-        </pharpackage>
-
-        <pearpkg2 name="Erebot" dir=".">
-            <fileset dir=".">
-                <include name="${phar.output_file}"/>
-            </fileset>
-            <option name="outputdirectory"  value="."/>
-            <option name="channel"          value="pear.erebot.net" />
-            <option name="summary"          value="${summary}"/>
-            <option name="description"      value="${description}"/>
-            <option name="apiversion"       value="0.1.0"/>
-            <option name="apistability"     value="beta"/>
-            <option name="releaseversion"   value="${version}"/>
-            <option name="releasestability" value="beta"/>
-            <option name="license"          value="GPL v3.0 or later"/>
-            <option name="phpdep"           value="5.3.0"/>
-            <option name="pearinstallerdep" value="1.5.0"/>
-            <option name="packagetype"      value="php"/>
-            <option name="notes"            value="${notes}"/>
-            <mapping name="deps">
-                <element>
-                    <element key="channel"  value="pear.php.net"/>
-                    <element key="name"     value="File_Gettext"/>
-                    <element key="version"  value="0.4.1"/>
-                </element>
-            </mapping>
-            <mapping name="maintainers">
-                <element>
-                    <element key="handle"   value="Clicky"/>
-                    <element key="name"     value="François Poirotte"/>
-                    <element key="email"    value="clicky@erebot.net"/>
-                    <element key="role"     value="lead"/>
-                    <element key="active"   value="yes"/>
-                </element>
-            </mapping>
-        </pearpkg2>
+        <exec command="pyrus.phar package --phar --tgz" passthru="true" checkreturn="true"/>
     </target>
 
 
