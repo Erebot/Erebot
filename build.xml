@@ -5,7 +5,8 @@
         useful information when listed using "phing -l".
     -->
 
-    <property name="force-coverage" value="true"/>
+    <!-- @TODO: pass this to true once we have enough tests. -->
+    <property name="force-coverage" value="false"/>
 
     <property name="locales"        value="fr_FR,en_US"/>
     <property name="domain"         value="Erebot"/>
@@ -60,7 +61,7 @@ ${summary}
             exec($command, $output, $return);
 
             if ($return != 0)
-                throw new BuildException("Could not execute Doxygen: " . implode(" ", $output));
+                throw new BuildException("Could not execute xgettext: " . implode(" ", $output));
 
             foreach ($output as $line) {
                 $lowerLine = strtolower($line);
