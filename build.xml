@@ -9,7 +9,6 @@
     <property name="domain"         value="Erebot"/>
     <property name="version"        value="0.3.2"/>
     <property name="email"          value="clicky@erebot.net"/>
-    <property name="summary"        value="A modular IRC bot written in PHP"/>
     <property name="qa.coverage.force" value="false"/>
 
     <fileset dir="src/" id="sources">
