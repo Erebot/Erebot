@@ -218,6 +218,10 @@ implements  iErebotConnection
      */
     public function __destruct()
     {
+        if (is_resource($this->_socket))
+            fclose($this->_socket);
+        $this->_socket = NULL;
+
         unset(
             $this->_events,
             $this->_raws,
@@ -233,10 +237,66 @@ implements  iErebotConnection
     {
         $url = $this->_config->getConnectionURL();
 
+        $url    = @parse_url($url);
         try {
-            $this->_socket = fopen($url, 'r+b');
+            if ($url === FALSE          ||
+                !isset($url['scheme'])  ||
+                !isset($url['host'])) {
+                throw new EErebotInvalidValue('Malformed URL');
+            }
+
+            $queryString = isset($url['query']) ? $url['query'] : '';
+            parse_str($queryString, $params);
+
+            $context = stream_context_get_default();
+            $ctxOptions = stream_context_get_options($context);
+
+            if (isset($params['verify_peer']))
+                $ctxOptions['ssl']['verify_peer'] =
+                    $this->_parseBool($params['verify_peer']);
+            else if (!isset($ctxOptions['ssl']['verify_peer']))
+                $ctxOptions['ssl']['verify_peer'] = TRUE;
+
+            if (isset($params['allow_self_signed']))
+                $ctxOptions['ssl']['allow_self_signed'] =
+                    $this->_parseBool($params['allow_self_signed']);
+            else if (!isset($ctxOptions['ssl']['allow_self_signed']))
+                $ctxOptions['ssl']['allow_self_signed'] = TRUE;
+
+            if (isset($params['ciphers']))
+                $ctxOptions['ssl']['ciphers'] = $params['ciphers'];
+            else if (!isset($options['ssl']['ciphers']))
+                $ctxOptions['ssl']['ciphers'] = 'HIGH';
+
+            $context  = stream_context_create($ctxOptions);
+
+            if (!strcasecmp($url['scheme'], 'ircs')) {
+                $port           = 994;
+                $proto          = 'tls';
+            }
+            else {
+                $port       = 194;
+                $proto      = 'tcp';
+            }
+
+            if (isset($url['port']))
+                $port = $url['port'];
+
+            $opened = $proto.'://'.$url['host'].':'.$port;
+            $this->_socket = stream_socket_client(
+                $opened, $errno, $errstr,
+                ini_get('default_socket_timeout'),
+                STREAM_CLIENT_CONNECT,
+                $context
+            );
+            stream_set_write_buffer($this->_socket, 0);
+            stream_socket_enable_crypto(
+                $this->_socket,
+                FALSE,
+                STREAM_CRYPTO_METHOD_TLS_CLIENT
+            );
         }
-        catch (EErebotErrorReporting $e) {
+        catch (Exception $e) {
             throw new EErebotConnectionFailure(
                 sprintf("Unable to connect to '%s'", $url));
         }
@@ -798,7 +858,7 @@ implements  iErebotConnection
         $class      =   $this->_bot->loadModule($module);
         $instance   =   new $class($this, $chan);
 
-        $metadata   = $instance::getMetadata();
+        $metadata   = $instance->getMetadata($class);
         $depends = (isset($metadata['requires']) ?
                     $metadata['requires'] : array());
 
@@ -814,7 +874,7 @@ implements  iErebotConnection
 
                 // Check version of the module.
                 if ($depVer !== NULL) {
-                    $metadata   = $depended::getMetadata();
+                    $metadata   = $depended->getMetadata($depend->getName());
                     $depEffVer = (isset($metadata['version']) ?
                                     $metadata['version'] : NULL);
                     if ($depEffVer === NULL ||

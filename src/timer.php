@@ -16,7 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/streams/timer.php');
 include_once('src/ifaces/timer.php');
 
 /**
@@ -48,14 +47,14 @@ implements  iErebotTimer
         $this->_callback    = $callback;
         $this->_delay       = $delay;
         $this->isRepeated($repeat);
-        $this->_stream      = FALSE;
+        $this->_stream      = NULL;
     }
 
     public function __destruct()
     {
-        if ($this->_stream !== FALSE)
-            fclose($this->_stream);
-        $this->_stream = FALSE;
+        if ($this->_stream)
+            pclose($this->_stream);
+        $this->_stream = NULL;
     }
 
     // Documented in the interface.
@@ -114,9 +113,17 @@ implements  iErebotTimer
         else if (!$this->_repeat)
             return;
 
-        if ($this->_stream !== FALSE)
-            fclose($this->_stream);
-        $this->_stream = fopen('timer://'.$this->_delay, 'r');
+        if ($this->_stream)
+            pclose($this->_stream);
+
+        # "Windows Server 2003 Resource Kit Tools" is needed under Windows.
+        # Grab it from: http://www.microsoft.com/downloads/details.aspx
+        #               ?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd
+        if (!strncasecmp(PHP_OS, 'WIN', 3))
+            $command    = 'start /B sleep.exe -m '.($this->_delay * 1000);
+        else
+            $command    = 'sleep '.$this->_delay.' &';
+        $this->_stream = popen($command, 'r');
     }
 
     // Documented in the interface.

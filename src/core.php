@@ -31,19 +31,18 @@ if (!defined('__DIR__')) {
   define('__DIR__', new __FILE_CLASS__);
 } 
 
+include_once(__DIR__.'/logging/src/Plop/Plop.php');
 
 include_once(__DIR__.'/utils.php');
 // We need to include the styling API,
 // so that modules do not need to do it themselves.
 include_once(__DIR__.'/styling.php');
-include_once(__DIR__.'/logging/src/logging.php');
 include_once(__DIR__.'/events/raws.php');
 include_once(__DIR__.'/events/events.php');
 include_once(__DIR__.'/moduleBase.php');
 include_once(__DIR__.'/connection.php');
 include_once(__DIR__.'/config/mainConfig.php');
 include_once(__DIR__.'/timer.php');
-include_once(__DIR__.'/streams/irc.php');
 include_once(__DIR__.'/exceptions/NotImplemented.php');
 include_once(__DIR__.'/exceptions/ErrorReporting.php');
 include_once(__DIR__.'/ifaces/core.php');
@@ -242,7 +241,7 @@ implements  iErebot
                 // Block until there is activity. Since timers
                 // are treated as streams too, we will also wake
                 // up whenever a timer fires.
-                $nb = stream_select($read, $write, $except, NULL);            
+                $nb = stream_select($read, $write, $except, NULL);
             }
             catch (EErebotErrorReporting $e) {
                 if ($this->_running)

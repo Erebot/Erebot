@@ -76,13 +76,25 @@ abstract class ErebotModuleBase
             $this->_connection,
             $this->_translator,
             $this->_channel,
-            $this->_moduleName
+            $this->_moduleName,
+            $this->_mainCfg
         );
     }
 
-    static public function getMetadata()
+    static public function getMetadata($className)
     {
-        return static::$_metadata;
+        if (!class_exists($className))
+            throw new EErebotInvalidValue('Invalid class name');
+        for ($obj = $className; $obj; $obj = get_parent_class($obj)) {
+            $refl = new ReflectionClass($obj);
+            try {
+                $reflProp = $refl->getProperty('_metadata');
+                return $reflProp->getValue();
+            }
+            catch (ReflectionException $e) {
+            }
+        }
+        return array();
     }
 
     public function install()

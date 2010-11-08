@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.1" xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
+ <name>Erebot</name>
+ <channel>pear.erebot.net</channel>
+ <summary>Erebot: an IRC bot written in PHP.
+</summary>
+ <description>
+@TODO
+</description>
+ <lead>
+  <name>François Poirotte</name>
+  <user>clicky</user>
+  <email>clicky@erebot.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-10-24</date>
+ <time>17:59:36</time>
+ <version>
+  <release>0.3.2</release>
+  <api>0.0.3</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.gnu.org/licenses/gpl.html">General Public License v3.0+</license>
+ <notes>
+
+</notes>
+ <contents>
+  <dir name="/">
+   <dir name="doc" baseinstalldir="/">
+    <dir name="additions">
+     <file role="doc" name="type_conventions.php"/>
+    </dir>
+    <dir name="coverage">
+     <dir name="default">
+      <file role="doc" name="EErebot.html"/>
+      <file role="doc" name="EErebotConnectionFailure.html"/>
+      <file role="doc" name="EErebotErrorReporting.html"/>
+      <file role="doc" name="EErebotIllegalAction.html"/>
+      <file role="doc" name="EErebotInvalidValue.html"/>
+      <file role="doc" name="EErebotNotFound.html"/>
+      <file role="doc" name="EErebotNotImplemented.html"/>
+      <file role="doc" name="Erebot.html"/>
+      <file role="doc" name="ErebotChannelConfig.html"/>
+      <file role="doc" name="ErebotConfigProxy.html"/>
+      <file role="doc" name="ErebotConnection.html"/>
+      <file role="doc" name="ErebotDependency.html"/>
+      <file role="doc" name="ErebotEvent.html"/>
+      <file role="doc" name="ErebotEventActionChan.html"/>
+      <file role="doc" name="ErebotEventActionPrivate.html"/>
+      <file role="doc" name="ErebotEventBan.html"/>
+      <file role="doc" name="ErebotEventChanUserModeBase.html"/>
+      <file role="doc" name="ErebotEventChanUserModeMaskBase.html"/>
+      <file role="doc" name="ErebotEventConnect.html"/>
+      <file role="doc" name="ErebotEventCtcpChan.html"/>
+      <file role="doc" name="ErebotEventCtcpPrivate.html"/>
+      <file role="doc" name="ErebotEventCtcpReplyChan.html"/>
+      <file role="doc" name="ErebotEventCtcpReplyPrivate.html"/>
+      <file role="doc" name="ErebotEventDeHalfop.html"/>
+      <file role="doc" name="ErebotEventDeOp.html"/>
+      <file role="doc" name="ErebotEventDeOwner.html"/>
+      <file role="doc" name="ErebotEventDeProtect.html"/>
+      <file role="doc" name="ErebotEventDeVoice.html"/>
+      <file role="doc" name="ErebotEventDisconnect.html"/>
+      <file role="doc" name="ErebotEventError.html"/>
+      <file role="doc" name="ErebotEventExcept.html"/>
+      <file role="doc" name="ErebotEventExit.html"/>
+      <file role="doc" name="ErebotEventHalfop.html"/>
+      <file role="doc" name="ErebotEventHandler.html"/>
+      <file role="doc" name="ErebotEventInvite.html"/>
+      <file role="doc" name="ErebotEventJoin.html"/>
+      <file role="doc" name="ErebotEventKick.html"/>
+      <file role="doc" name="ErebotEventKill.html"/>
+      <file role="doc" name="ErebotEventLogon.html"/>
+      <file role="doc" name="ErebotEventModeGive.html"/>
+      <file role="doc" name="ErebotEventModeTake.html"/>
+      <file role="doc" name="ErebotEventNick.html"/>
+      <file role="doc" name="ErebotEventNoticeChan.html"/>
+      <file role="doc" name="ErebotEventNoticePrivate.html"/>
+      <file role="doc" name="ErebotEventNotify.html"/>
+      <file role="doc" name="ErebotEventOp.html"/>
+      <file role="doc" name="ErebotEventOwner.html"/>
+      <file role="doc" name="ErebotEventPart.html"/>
+      <file role="doc" name="ErebotEventPing.html"/>
+      <file role="doc" name="ErebotEventPong.html"/>
+      <file role="doc" name="ErebotEventProtect.html"/>
+      <file role="doc" name="ErebotEventQuit.html"/>
+      <file role="doc" name="ErebotEventRawMode.html"/>
+      <file role="doc" name="ErebotEventTargets.html"/>
+      <file role="doc" name="ErebotEventTextChan.html"/>
+      <file role="doc" name="ErebotEventTextPrivate.html"/>
+      <file role="doc" name="ErebotEventTopic.html"/>
+      <file role="doc" name="ErebotEventUnban.html"/>
+      <file role="doc" name="ErebotEventUnexcept.html"/>
+      <file role="doc" name="ErebotEventUnNotify.html"/>
+      <file role="doc" name="ErebotEventUserMode.html"/>
+      <file role="doc" name="ErebotEventVoice.html"/>
+      <file role="doc" name="ErebotEventWatchNotification.html"/>
+      <file role="doc" name="ErebotEventWithChanAndSource.html"/>
+      <file role="doc" name="ErebotEventWithChanSourceAndCtcp.html"/>
+      <file role="doc" name="ErebotEventWithChanSourceAndTarget.html"/>
+      <file role="doc" name="ErebotEventWithChanSourceAndText.html"/>
+      <file role="doc" name="ErebotEventWithChanSourceTargetAndText.html"/>
+      <file role="doc" name="ErebotEventWithSourceAndCtcp.html"/>
+      <file role="doc" name="ErebotEventWithSourceAndTarget.html"/>
+      <file role="doc" name="ErebotEventWithSourceAndText.html"/>
+      <file role="doc" name="ErebotEventWithSourceTargetAndText.html"/>
+      <file role="doc" name="ErebotEventWithText.html"/>
+      <file role="doc" name="ErebotI18n.html"/>
+      <file role="doc" name="ErebotMainConfig.html"/>
+      <file role="doc" name="ErebotModuleBase.html"/>
+      <file role="doc" name="ErebotModuleConfig.html"/>
+      <file role="doc" name="ErebotNetworkConfig.html"/>
+      <file role="doc" name="ErebotRaw.html"/>
+      <file role="doc" name="ErebotRawHandler.html"/>
+      <file role="doc" name="ErebotServerConfig.html"/>
+      <file role="doc" name="ErebotStyling.html"/>
+      <file role="doc" name="ErebotTextFilter.html"/>
+      <file role="doc" name="ErebotTextWrapper.html"/>
+      <file role="doc" name="ErebotTimer.html"/>
+      <file role="doc" name="ErebotUtils.html"/>
+      <file role="doc" name="ErebotWrapperIRC.html"/>
+      <file role="doc" name="ErebotWrapperTimer.html"/>
+      <file role="doc" name="ErebotWrapperXGlob.html"/>
+      <file role="doc" name="package-frame.html"/>
+      <file role="doc" name="package-summary.html"/>
+     </dir>
+     <file role="doc" name="allclasses-frame.html"/>
+     <file role="doc" name="index.html"/>
+     <file role="doc" name="overview-frame.html"/>
+     <file role="doc" name="overview-summary.html"/>
+     <file role="doc" name="stylesheet.css"/>
+    </dir>
+   </dir>
+   <dir name="src" baseinstalldir="/">
+    <dir name="config">
+     <file role="php" name="channelConfig.php"/>
+     <file role="php" name="config.rng"/>
+     <file role="php" name="configProxy.php"/>
+     <file role="php" name="mainConfig.php"/>
+     <file role="php" name="moduleConfig.php"/>
+     <file role="php" name="networkConfig.php"/>
+     <file role="php" name="serverConfig.php"/>
+    </dir>
+    <dir name="events">
+     <file role="php" name="aclasses.php"/>
+     <file role="php" name="eventHandler.php"/>
+     <file role="php" name="events.php"/>
+     <file role="php" name="eventTargets.php"/>
+     <file role="php" name="interfaces.php"/>
+     <file role="php" name="rawHandler.php"/>
+     <file role="php" name="raws.php"/>
+    </dir>
+    <dir name="exceptions">
+     <file role="php" name="ConnectionFailure.php"/>
+     <file role="php" name="ErrorReporting.php"/>
+     <file role="php" name="Exception.php"/>
+     <file role="php" name="IllegalAction.php"/>
+     <file role="php" name="InvalidValue.php"/>
+     <file role="php" name="NotFound.php"/>
+     <file role="php" name="NotImplemented.php"/>
+    </dir>
+    <dir name="ifaces">
+     <file role="php" name="channelConfig.php"/>
+     <file role="php" name="configProxy.php"/>
+     <file role="php" name="connection.php"/>
+     <file role="php" name="core.php"/>
+     <file role="php" name="eventHandler.php"/>
+     <file role="php" name="eventTargets.php"/>
+     <file role="php" name="i18n.php"/>
+     <file role="php" name="mainConfig.php"/>
+     <file role="php" name="moduleConfig.php"/>
+     <file role="php" name="networkConfig.php"/>
+     <file role="php" name="raw.php"/>
+     <file role="php" name="rawHandler.php"/>
+     <file role="php" name="serverConfig.php"/>
+     <file role="php" name="textFilter.php"/>
+     <file role="php" name="timer.php"/>
+    </dir>
+    <dir name="orm">
+     <dir name="Doctrine">
+      <dir name="Adapter">
+       <dir name="Statement">
+        <file role="php" name="Interface.php"/>
+        <file role="php" name="Mock.php"/>
+        <file role="php" name="Oracle.php"/>
+       </dir>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Interface.php"/>
+       <file role="php" name="Mock.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Statement.php"/>
+      </dir>
+      <dir name="AuditLog">
+       <dir name="Listener">
+        <file role="php" name="Microtime.php"/>
+       </dir>
+       <file role="php" name="Listener.php"/>
+      </dir>
+      <dir name="Cache">
+       <file role="php" name="Apc.php"/>
+       <file role="php" name="Array.php"/>
+       <file role="php" name="Db.php"/>
+       <file role="php" name="Driver.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Interface.php"/>
+       <file role="php" name="Memcache.php"/>
+       <file role="php" name="Xcache.php"/>
+      </dir>
+      <dir name="Cli">
+       <file role="php" name="AnsiColorFormatter.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Formatter.php"/>
+      </dir>
+      <dir name="Collection">
+       <dir name="Iterator">
+        <file role="php" name="Expandable.php"/>
+        <file role="php" name="Normal.php"/>
+        <file role="php" name="Offset.php"/>
+       </dir>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Iterator.php"/>
+       <file role="php" name="Offset.php"/>
+       <file role="php" name="OnDemand.php"/>
+      </dir>
+      <dir name="Compiler">
+       <file role="php" name="Exception.php"/>
+      </dir>
+      <dir name="Connection">
+       <dir name="Mssql">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <dir name="Mysql">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <dir name="Oracle">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <dir name="Pgsql">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <dir name="Profiler">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <dir name="Sqlite">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <file role="php" name="Common.php"/>
+       <file role="php" name="Db2.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Mock.php"/>
+       <file role="php" name="Module.php"/>
+       <file role="php" name="Mssql.php"/>
+       <file role="php" name="Mysql.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Pgsql.php"/>
+       <file role="php" name="Profiler.php"/>
+       <file role="php" name="Sqlite.php"/>
+       <file role="php" name="Statement.php"/>
+       <file role="php" name="UnitOfWork.php"/>
+      </dir>
+      <dir name="Data">
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Export.php"/>
+       <file role="php" name="Import.php"/>
+      </dir>
+      <dir name="DataDict">
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Mssql.php"/>
+       <file role="php" name="Mysql.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Pgsql.php"/>
+       <file role="php" name="Sqlite.php"/>
+      </dir>
+      <dir name="EventListener">
+       <file role="php" name="Chain.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Interface.php"/>
+      </dir>
+      <dir name="Export">
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Mssql.php"/>
+       <file role="php" name="Mysql.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Pgsql.php"/>
+       <file role="php" name="Reporter.php"/>
+       <file role="php" name="Schema.php"/>
+       <file role="php" name="Sqlite.php"/>
+      </dir>
+      <dir name="Expression">
+       <file role="php" name="Driver.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Mock.php"/>
+       <file role="php" name="Mssql.php"/>
+       <file role="php" name="Mysql.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Pgsql.php"/>
+       <file role="php" name="Sqlite.php"/>
+      </dir>
+      <dir name="File">
+       <file role="php" name="Index.php"/>
+      </dir>
+      <dir name="Hook">
+       <dir name="Parser">
+        <file role="php" name="Complex.php"/>
+       </dir>
+       <file role="php" name="Equal.php"/>
+       <file role="php" name="Integer.php"/>
+       <file role="php" name="Parser.php"/>
+       <file role="php" name="WordLike.php"/>
+      </dir>
+      <dir name="Hydrator">
+       <file role="php" name="Abstract.php"/>
+       <file role="php" name="ArrayDriver.php"/>
+       <file role="php" name="ArrayHierarchyDriver.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Graph.php"/>
+       <file role="php" name="NoneDriver.php"/>
+       <file role="php" name="RecordDriver.php"/>
+       <file role="php" name="RecordHierarchyDriver.php"/>
+       <file role="php" name="ScalarDriver.php"/>
+       <file role="php" name="SingleScalarDriver.php"/>
+      </dir>
+      <dir name="I18n">
+       <file role="php" name="Exception.php"/>
+      </dir>
+      <dir name="Import">
+       <dir name="Builder">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <file role="php" name="Builder.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Mssql.php"/>
+       <file role="php" name="Mysql.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Pgsql.php"/>
+       <file role="php" name="Schema.php"/>
+       <file role="php" name="Sqlite.php"/>
+      </dir>
+      <dir name="Locator">
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Injectable.php"/>
+      </dir>
+      <dir name="Locking">
+       <dir name="Manager">
+        <file role="php" name="Pessimistic.php"/>
+       </dir>
+       <file role="php" name="Exception.php"/>
+      </dir>
+      <dir name="Manager">
+       <file role="php" name="Exception.php"/>
+      </dir>
+      <dir name="Migration">
+       <file role="php" name="Base.php"/>
+       <file role="php" name="Builder.php"/>
+       <file role="php" name="Diff.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="IrreversibleMigrationException.php"/>
+       <file role="php" name="Process.php"/>
+      </dir>
+      <dir name="Node">
+       <dir name="AdjacencyList">
+        <file role="php" name="LevelOrderIterator.php"/>
+        <file role="php" name="PostOrderIterator.php"/>
+        <file role="php" name="PreOrderIterator.php"/>
+       </dir>
+       <dir name="MaterializedPath">
+        <file role="php" name="LevelOrderIterator.php"/>
+        <file role="php" name="PostOrderIterator.php"/>
+        <file role="php" name="PreOrderIterator.php"/>
+       </dir>
+       <dir name="NestedSet">
+        <file role="php" name="LevelOrderIterator.php"/>
+        <file role="php" name="PostOrderIterator.php"/>
+        <file role="php" name="PreOrderIterator.php"/>
+       </dir>
+       <file role="php" name="AdjacencyList.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Interface.php"/>
+       <file role="php" name="MaterializedPath.php"/>
+       <file role="php" name="NestedSet.php"/>
+      </dir>
+      <dir name="Pager">
+       <dir name="Range">
+        <file role="php" name="Jumping.php"/>
+        <file role="php" name="Sliding.php"/>
+       </dir>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Layout.php"/>
+       <file role="php" name="Range.php"/>
+      </dir>
+      <dir name="Parser">
+       <dir name="sfYaml">
+        <file role="php" name="sfYaml.php"/>
+        <file role="php" name="sfYamlDumper.php"/>
+        <file role="php" name="sfYamlInline.php"/>
+        <file role="php" name="sfYamlParser.php"/>
+       </dir>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Json.php"/>
+       <file role="php" name="Serialize.php"/>
+       <file role="php" name="Xml.php"/>
+       <file role="php" name="Yml.php"/>
+      </dir>
+      <dir name="Query">
+       <dir name="Filter">
+        <file role="php" name="Chain.php"/>
+        <file role="php" name="Interface.php"/>
+       </dir>
+       <dir name="Registry">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <dir name="Tokenizer">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <file role="php" name="Abstract.php"/>
+       <file role="php" name="Check.php"/>
+       <file role="php" name="Condition.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Filter.php"/>
+       <file role="php" name="Forupdate.php"/>
+       <file role="php" name="From.php"/>
+       <file role="php" name="Groupby.php"/>
+       <file role="php" name="Having.php"/>
+       <file role="php" name="JoinCondition.php"/>
+       <file role="php" name="Limit.php"/>
+       <file role="php" name="Offset.php"/>
+       <file role="php" name="Orderby.php"/>
+       <file role="php" name="Parser.php"/>
+       <file role="php" name="Part.php"/>
+       <file role="php" name="Registry.php"/>
+       <file role="php" name="Select.php"/>
+       <file role="php" name="Set.php"/>
+       <file role="php" name="Tokenizer.php"/>
+       <file role="php" name="Where.php"/>
+      </dir>
+      <dir name="RawSql">
+       <file role="php" name="Exception.php"/>
+      </dir>
+      <dir name="Record">
+       <dir name="Filter">
+        <file role="php" name="Compound.php"/>
+        <file role="php" name="Standard.php"/>
+       </dir>
+       <dir name="Listener">
+        <file role="php" name="Chain.php"/>
+        <file role="php" name="Interface.php"/>
+       </dir>
+       <dir name="State">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <file role="php" name="Abstract.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Filter.php"/>
+       <file role="php" name="Generator.php"/>
+       <file role="php" name="Iterator.php"/>
+       <file role="php" name="Listener.php"/>
+       <file role="php" name="UnknownPropertyException.php"/>
+      </dir>
+      <dir name="Relation">
+       <dir name="Association">
+        <file role="php" name="Self.php"/>
+       </dir>
+       <dir name="Parser">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <file role="php" name="Association.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="ForeignKey.php"/>
+       <file role="php" name="LocalKey.php"/>
+       <file role="php" name="Nest.php"/>
+       <file role="php" name="Parser.php"/>
+      </dir>
+      <dir name="Search">
+       <dir name="Analyzer">
+        <file role="php" name="Exception.php"/>
+        <file role="php" name="Interface.php"/>
+        <file role="php" name="Standard.php"/>
+        <file role="php" name="Utf8.php"/>
+       </dir>
+       <dir name="Indexer">
+        <file role="php" name="Dir.php"/>
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <file role="php" name="Analyzer.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="File.php"/>
+       <file role="php" name="Indexer.php"/>
+       <file role="php" name="Listener.php"/>
+       <file role="php" name="Parser.php"/>
+       <file role="php" name="Query.php"/>
+       <file role="php" name="Record.php"/>
+      </dir>
+      <dir name="Sequence">
+       <file role="php" name="Db2.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Mssql.php"/>
+       <file role="php" name="Mysql.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Pgsql.php"/>
+       <file role="php" name="Sqlite.php"/>
+      </dir>
+      <dir name="Table">
+       <dir name="Repository">
+        <file role="php" name="Exception.php"/>
+       </dir>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Repository.php"/>
+      </dir>
+      <dir name="Task">
+       <file role="php" name="BuildAll.php"/>
+       <file role="php" name="BuildAllLoad.php"/>
+       <file role="php" name="BuildAllReload.php"/>
+       <file role="php" name="Compile.php"/>
+       <file role="php" name="CreateDb.php"/>
+       <file role="php" name="CreateTables.php"/>
+       <file role="php" name="Dql.php"/>
+       <file role="php" name="DropDb.php"/>
+       <file role="php" name="DumpData.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="GenerateMigration.php"/>
+       <file role="php" name="GenerateMigrationsDb.php"/>
+       <file role="php" name="GenerateMigrationsDiff.php"/>
+       <file role="php" name="GenerateMigrationsModels.php"/>
+       <file role="php" name="GenerateModelsDb.php"/>
+       <file role="php" name="GenerateModelsYaml.php"/>
+       <file role="php" name="GenerateSql.php"/>
+       <file role="php" name="GenerateYamlDb.php"/>
+       <file role="php" name="GenerateYamlModels.php"/>
+       <file role="php" name="LoadData.php"/>
+       <file role="php" name="Migrate.php"/>
+       <file role="php" name="RebuildDb.php"/>
+      </dir>
+      <dir name="Template">
+       <dir name="Listener">
+        <file role="php" name="Sluggable.php"/>
+        <file role="php" name="SoftDelete.php"/>
+        <file role="php" name="Timestampable.php"/>
+       </dir>
+       <file role="php" name="Geographical.php"/>
+       <file role="php" name="I18n.php"/>
+       <file role="php" name="NestedSet.php"/>
+       <file role="php" name="Searchable.php"/>
+       <file role="php" name="Sluggable.php"/>
+       <file role="php" name="SoftDelete.php"/>
+       <file role="php" name="Timestampable.php"/>
+       <file role="php" name="Versionable.php"/>
+      </dir>
+      <dir name="Transaction">
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Mock.php"/>
+       <file role="php" name="Mssql.php"/>
+       <file role="php" name="Mysql.php"/>
+       <file role="php" name="Oracle.php"/>
+       <file role="php" name="Pgsql.php"/>
+       <file role="php" name="Sqlite.php"/>
+      </dir>
+      <dir name="Tree">
+       <file role="php" name="AdjacencyList.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Interface.php"/>
+       <file role="php" name="MaterializedPath.php"/>
+       <file role="php" name="NestedSet.php"/>
+      </dir>
+      <dir name="Validator">
+       <file role="php" name="Country.php"/>
+       <file role="php" name="Creditcard.php"/>
+       <file role="php" name="Date.php"/>
+       <file role="php" name="Driver.php"/>
+       <file role="php" name="Email.php"/>
+       <file role="php" name="ErrorStack.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Future.php"/>
+       <file role="php" name="Htmlcolor.php"/>
+       <file role="php" name="Ip.php"/>
+       <file role="php" name="Minlength.php"/>
+       <file role="php" name="Nospace.php"/>
+       <file role="php" name="Notblank.php"/>
+       <file role="php" name="Notnull.php"/>
+       <file role="php" name="Past.php"/>
+       <file role="php" name="Range.php"/>
+       <file role="php" name="Readonly.php"/>
+       <file role="php" name="Regexp.php"/>
+       <file role="php" name="Time.php"/>
+       <file role="php" name="Timestamp.php"/>
+       <file role="php" name="Unique.php"/>
+       <file role="php" name="Unsigned.php"/>
+       <file role="php" name="Usstate.php"/>
+      </dir>
+      <dir name="View">
+       <file role="php" name="Exception.php"/>
+      </dir>
+      <file role="php" name="Access.php"/>
+      <file role="php" name="AuditLog.php"/>
+      <file role="php" name="Builder.php"/>
+      <file role="php" name="Cli.php"/>
+      <file role="php" name="Collection.php"/>
+      <file role="php" name="Column.php"/>
+      <file role="php" name="Compiler.php"/>
+      <file role="php" name="Configurable.php"/>
+      <file role="php" name="Connection.php"/>
+      <file role="php" name="Core.php"/>
+      <file role="php" name="Data.php"/>
+      <file role="php" name="DataDict.php"/>
+      <file role="php" name="Event.php"/>
+      <file role="php" name="EventListener.php"/>
+      <file role="php" name="Exception.php"/>
+      <file role="php" name="Export.php"/>
+      <file role="php" name="Expression.php"/>
+      <file role="php" name="File.php"/>
+      <file role="php" name="Formatter.php"/>
+      <file role="php" name="Hook.php"/>
+      <file role="php" name="Hydrator.php"/>
+      <file role="php" name="I18n.php"/>
+      <file role="php" name="Import.php"/>
+      <file role="php" name="Inflector.php"/>
+      <file role="php" name="IntegrityMapper.php"/>
+      <file role="php" name="Lib.php"/>
+      <file role="php" name="Locator.php"/>
+      <file role="php" name="Manager.php"/>
+      <file role="php" name="Migration.php"/>
+      <file role="php" name="Node.php"/>
+      <file role="php" name="Null.php"/>
+      <file role="php" name="Overloadable.php"/>
+      <file role="php" name="Pager.php"/>
+      <file role="php" name="Parser.php"/>
+      <file role="php" name="Query.php"/>
+      <file role="php" name="RawSql.php"/>
+      <file role="php" name="Record.php"/>
+      <file role="php" name="Relation.php"/>
+      <file role="php" name="Search.php"/>
+      <file role="php" name="Sequence.php"/>
+      <file role="php" name="Table.php"/>
+      <file role="php" name="Task.php"/>
+      <file role="php" name="Template.php"/>
+      <file role="php" name="Transaction.php"/>
+      <file role="php" name="Tree.php"/>
+      <file role="php" name="Util.php"/>
+      <file role="php" name="Validator.php"/>
+      <file role="php" name="View.php"/>
+     </dir>
+     <file role="php" name="Doctrine.php"/>
+    </dir>
+    <dir name="streams">
+     <file role="php" name="irc.php"/>
+     <file role="php" name="timer.php"/>
+     <file role="php" name="xglob.php"/>
+    </dir>
+    <file role="php" name="connection.php"/>
+    <file role="php" name="core.php"/>
+    <file role="php" name="dependency.php"/>
+    <file role="php" name="i18n.php"/>
+    <file role="php" name="logging"/>
+    <file role="php" name="moduleBase.php"/>
+    <file role="php" name="styling.php"/>
+    <file role="php" name="styling.rng"/>
+    <file role="php" name="textFilter.php"/>
+    <file role="php" name="textWrapper.php"/>
+    <file role="php" name="timer.php"/>
+    <file role="php" name="utils.php"/>
+   </dir>
+   <dir name="tests" baseinstalldir="/">
+    <dir name="data" baseinstalldir="/">
+     <file role="test" name="valid-config.xml"/>
+    </dir>
+    <dir name="src" baseinstalldir="/">
+     <file role="test" name="configTest.php"/>
+     <file role="test" name="dependencyTest.php"/>
+     <file role="test" name="eventHandlerTest.php"/>
+     <file role="test" name="i18nTest.php"/>
+     <file role="test" name="stylingTest.php"/>
+     <file role="test" name="textFilterTest.php"/>
+     <file role="test" name="textWrapperTest.php"/>
+     <file role="test" name="timerTest.php"/>
+     <file role="test" name="utilsTest.php"/>
+    </dir>
+    <dir name="testenv">
+     <file role="test" name="bootstrap.php"/>
+    </dir>
+    <file role="test" name="bootstrap.php"/>
+   </dir>
+   <file role="script" name="Erebot"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>2.0.0a1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease/>
+</package>

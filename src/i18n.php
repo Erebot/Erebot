@@ -57,7 +57,7 @@ implements iErebotI18n
     protected function real_gettext($message, $component)
     {
         if ($component == 'Erebot')
-            $translationFile = dirname(dirname(__FILE__)).'/i18n/';
+            $translationFile = dirname(dirname(__FILE__)).'/data/i18n/';
         else
             $translationFile = dirname(dirname(__FILE__)).
                 '/modules/'.$component.'/i18n/';

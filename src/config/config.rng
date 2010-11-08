@@ -55,7 +55,7 @@
 
             <interleave>
                 <optional>
-                    <externalRef href="../logging/src/config.rng">
+                    <externalRef href="../logging/data/config.rng">
                         <ref name="logging"/>
                     </externalRef>
                 </optional>

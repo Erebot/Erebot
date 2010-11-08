@@ -368,7 +368,7 @@ extends         ErebotEventWithChanSourceAndTarget
 {
     public function getMode()
     {
-        return static::MODE_PREFIX . static::MODE_LETTER;
+        return $this->MODE_PREFIX . $this->MODE_LETTER;
     }
 }
 

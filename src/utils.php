@@ -42,6 +42,9 @@ class ErebotUtils
     /// Strip all forms of styles from the text.
     const STRIP_ALL         = 0xFF;
 
+    const VSTATIC_CONST     = 0x01;
+    const VSTATIC_VAR       = 0x02;
+
     /**
      * Returns the object (if any) associated with the method
      * that called the method which called ErebotUtils::getCallerObject().
@@ -290,14 +293,34 @@ class ErebotUtils
         throw new EErebotNotImplemented('No way to convert to UTF-8');
     }
 
-    static public function getVStatic($class, $variable)
+    static public function getVStatic(
+        $class,
+        $name,
+        $source = self::VSTATIC_CONST
+    )
     {
         if (is_object($class))
             $class = get_class($class);
         $refl = new ReflectionClass($class);
-        if (!$refl->hasConstant($variable))
-            throw new EErebotNotFound('No such constant');
-        return $refl->getConstant($variable);
+
+        if (($source & self::VSTATIC_CONST) == self::VSTATIC_CONST) {
+            try {
+                return $refl->getConstant($name);
+            }
+            catch (ReflectionException $e) {
+            }
+        }
+
+        if (($source & self::VSTATIC_VAR) == self::VSTATIC_VAR) {
+            try {
+                $reflProp = $refl->getProperty($name);
+                return $reflProp->getValue();
+            }
+            catch (ReflectionException $e) {
+            }
+        }
+            
+        throw new EErebotNotFound('No such thing');
     }
 }
 

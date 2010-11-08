@@ -18,8 +18,6 @@
 
 include_once('src/config/configProxy.php');
 include_once('src/config/networkConfig.php');
-include_once('src/logging/src/logging.php');
-include_once('src/logging/src/config/XML.php');
 include_once('src/streams/xglob.php');
 include_once('src/ifaces/mainConfig.php');
 
@@ -170,12 +168,12 @@ implements  iErebotMainConfig
                 throw new EErebotInvalidValue('Invalid command prefix');
         }
 
-        $logging =& Plop::getInstance();
-        if (isset($xml->children(PlopConfigXML::XMLNS)->logging[0]))
+        $logging =& Plop_Plop::getInstance();
+        if (isset($xml->children(Plop_Config_Format_XML::XMLNS)->logging[0]))
             $logging->fileConfig(
-                $xml->children(PlopConfigXML::XMLNS)->logging[0],
+                $xml->children(Plop_Config_Format_XML::XMLNS)->logging[0],
                 array(),
-                'XML'
+                'Plop_Config_Format_XML'
             );
 
         $logger = $logging->getLogger(__FILE__);
