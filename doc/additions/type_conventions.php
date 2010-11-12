@@ -7,9 +7,11 @@ This page describes the conventions used to represent types
 in this documentation.
 
 It is mainly inspired by PHP's own pages on
-\link http://www.php.net/manual/en/language.types.php types \endlink and
-\link http://php.net/manual/en/language.pseudo-types.php pseudo-types \endlink.
+<a target="_blank" href="http://www.php.net/manual/en/language.types.php">types</a> and
+<a target="_blank" href="http://php.net/manual/en/language.pseudo-types.php">pseudo-types</a>.
 Whenever possible, we reuse the same definitions.
+Other notations were mainly taken from Python with a small touch to make
+them more PHP-ish.
 
 \b{Note}: a lot of methods are marked as accepting/returning interfaces.
 Most of the time, it means that they accept/return an object implementing
@@ -33,8 +35,9 @@ The following types are used in this documentation:
             \c bool
         </td>
         <td>
-            Same as the corresponding \link http://www.php.net/manual/en/language.types.php type \endlink in PHP.
+            Same as the corresponding <a target="_blank" href="http://www.php.net/manual/en/language.types.php">type</a> in PHP.
             Please note that PHP treats terms such as \a float, \a double and \a real as equivalent.
+            To avoid confusion, we chose to only use the term \a float.
         </td>
     </tr>
 
@@ -45,7 +48,7 @@ The following types are used in this documentation:
             \c number
         </td>
         <td>
-            Same as the corresponding \link http://php.net/manual/en/language.pseudo-types.php pseudo-type \endlink in PHP.
+            Same as the corresponding <a target="_blank" href="http://php.net/manual/en/language.pseudo-types.php">pseudo-type</a> in PHP.
         </td>
     </tr>
 
