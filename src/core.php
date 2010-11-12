@@ -46,6 +46,10 @@ include_once(__DIR__.'/timer.php');
 include_once(__DIR__.'/exceptions/NotImplemented.php');
 include_once(__DIR__.'/exceptions/ErrorReporting.php');
 include_once(__DIR__.'/ifaces/core.php');
+
+/*
+/// @TODO: re-think integration of Doctrine a little...
+// Especially, we don't want to depend on it too much.
 include_once(__DIR__.'/orm/Doctrine.php');
 
 // Initialize Doctrine.
@@ -64,6 +68,7 @@ $manager->setAttribute(
     Doctrine_Core::MODEL_LOADING_CONSERVATIVE
 );
 unset($manager);
+*/
 
 /**
  * \brief
