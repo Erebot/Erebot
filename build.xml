@@ -33,5 +33,15 @@
         <exec command="make" dir="doc/latex" passthru="true"/>
     </target>
 
+    <target name="qa_test" description="" depends="qa_pre_coverage">
+        <phpunit
+            codecoverage="true"
+            bootstrap="tests/bootstrap.php"
+            >
+            <formatter type="plain" usefile="false"/>
+            <batchtest><fileset refid="tests"/></batchtest>
+        </phpunit>
+    </target>
+
     <import file="buildenv/build.xml"/>
 </project>

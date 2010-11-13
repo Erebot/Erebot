@@ -12,28 +12,21 @@ if (!defined('__DIR__')) {
     }
   }
   define('__DIR__', new __FILE_CLASS__);
-} 
+}
 
-set_include_path(
-    __DIR__ . DIRECTORY_SEPARATOR . '..' .
-    PATH_SEPARATOR .
-    get_include_path()
+require_once(
+    dirname(__FILE__) .
+    str_replace(
+        '/', DIRECTORY_SEPARATOR,
+        '/../../../autoloader.php'
+    )
 );
 
-set_include_path(
-    __DIR__ . implode(
-        DIRECTORY_SEPARATOR, array(
-            'src',
-            'logging',
-            'src',
-        )
-    ) .
-    PATH_SEPARATOR .
-    get_include_path()
+require_once(
+    dirname(__FILE__) .
+    DIRECTORY_SEPARATOR . 'testenv' .
+    DIRECTORY_SEPARATOR . 'bootstrap.php'
 );
-
-include_once('src/logging/src/Plop.php');
-include_once('src/logging/tests/bootstrap.php');
 
 $logging =& Plop::getInstance();
 $logging->basicConfig();
