@@ -46,7 +46,7 @@ interface Erebot_Interface_Config_Module
      *      The value of the active flag as it was before
      *      this method was called.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The new value for the active flag is not a valid boolean
      *      value.
      */
@@ -69,10 +69,10 @@ interface Erebot_Interface_Config_Module
      * \retval string
      *      The value of the parameter.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The $param argument was not a valid parameter name.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      There was no parameter with this name defined in the
      *      configuration file.
      */

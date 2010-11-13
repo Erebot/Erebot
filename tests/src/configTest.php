@@ -6,7 +6,7 @@ class   ConfigTest
 extends PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException   EErebotInvalidValue
+     * @expectedException   Erebot_InvalidValueException
      */
     public function testLoadConfigFromInvalidSource()
     {
@@ -46,7 +46,7 @@ CONFIG;
     }
 
     /**
-     * @expectedException   EErebotInvalidValue
+     * @expectedException   Erebot_InvalidValueException
      */
     public function testLoadInvalidConfigFromString()
     {

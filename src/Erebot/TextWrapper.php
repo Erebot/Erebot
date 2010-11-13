@@ -21,7 +21,7 @@
  *      A wrapper to easily split a string using a separator and
  *      deal with other operations related to separators.
  */
-class ErebotTextWrapper
+class Erebot_TextWrapper
 {
     /// The text wrapped by this instance.
     protected $_text;
@@ -63,7 +63,7 @@ class ErebotTextWrapper
      */
     public function getTokens($start, $length = 0, $separator = ' ')
     {
-        return ErebotUtils::gettok($this->_text, $start, $length, $separator);
+        return Erebot_Utils::gettok($this->_text, $start, $length, $separator);
     }
 
     /**
@@ -82,7 +82,7 @@ class ErebotTextWrapper
      */
     public function countTokens($separator = ' ')
     {
-        return ErebotUtils::numtok($this->_text, $separator);
+        return Erebot_Utils::numtok($this->_text, $separator);
     }
 
     /**

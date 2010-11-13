@@ -61,7 +61,7 @@ implements      Erebot_Event_Interface
         $res = $this->_halt;
         if ($prevent !== NULL) {
             if (!is_bool($prevent))
-                throw new EErebotInvalidValue('Bad prevention value');
+                throw new Erebot_InvalidValueException('Bad prevention value');
 
             $this->_halt = $prevent;
         }

@@ -60,7 +60,7 @@ implements  Erebot_Interface_Config_Module
         $res = $this->_active;
         if ($active !== NULL) {
             if (!is_bool($active))
-                throw new EErebotInvalidValue('Invalid activation value');
+                throw new Erebot_InvalidValueException('Invalid activation value');
             $this->_active = $active;
         }
         return $res;
@@ -76,9 +76,9 @@ implements  Erebot_Interface_Config_Module
     public function getParam($param)
     {
         if (!is_string($param))
-            throw new EErebotInvalidValue('Bad parameter name');
+            throw new Erebot_InvalidValueException('Bad parameter name');
         if (!isset($this->_params[$param]))
-            throw new EErebotNotFound('No such parameter');
+            throw new Erebot_NotFoundException('No such parameter');
         return $this->_params[$param];
     }
 

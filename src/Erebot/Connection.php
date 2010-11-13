@@ -78,7 +78,7 @@ implements  Erebot_Interface_Connection
      *      This method uses the modules metadata to take dependencies
      *      into account.
      *
-     * \exception EErebotNotFound
+     * \exception Erebot_NotFoundException
      *      Thrown whenever an unsatisfied module dependency is discovered,
      *      such as when a module depends on another which is not loaded
      *      by the current configuration.
@@ -98,7 +98,7 @@ implements  Erebot_Interface_Connection
                 try {
                     $this->loadModule($module, NULL);
                 }
-                catch (EErebotNotFound $e) {
+                catch (Erebot_NotFoundException $e) {
                     $logger->debug(
                         "Could not load '%(module)s' module, ".
                         "putting it on hold for now...",
@@ -118,7 +118,7 @@ implements  Erebot_Interface_Connection
                     $this->loadModule($module, NULL);
                     $logger->critical("An exception was expected");
                 }
-                catch (EErebotNotFound $e) {
+                catch (Erebot_NotFoundException $e) {
                     $logger->error(
                         "Unmet dependency for module '%(module)s': ".
                         "%(dependency)s",
@@ -130,7 +130,7 @@ implements  Erebot_Interface_Connection
                 }
             }
             $this->_bot->stop();
-            throw new EErebotNotFound('There are unmet dependencies');
+            throw new Erebot_NotFoundException('There are unmet dependencies');
         }
     }
 
@@ -146,7 +146,7 @@ implements  Erebot_Interface_Connection
      *      given channel by simply adding a new configuration for that
      *      module under that channel's XML tag.
      *
-     * \exception EErebotNotFound
+     * \exception Erebot_NotFoundException
      *      Thrown whenever an unsatisfied module dependency is discovered,
      *      such as when a module depends on another which is not loaded
      *      by the current configuration.
@@ -170,7 +170,7 @@ implements  Erebot_Interface_Connection
                     try {
                         $this->loadModule($module, $chan);
                     }
-                    catch (EErebotNotFound $e) {
+                    catch (Erebot_NotFoundException $e) {
                         $logger->debug(
                             "Could not load '%(module)s' module, ".
                             "putting it on hold for now...",
@@ -190,7 +190,7 @@ implements  Erebot_Interface_Connection
                         $this->loadModule($module, $chan);
                         $logger->critical("An exception was expected");
                     }
-                    catch (EErebotNotFound $e) {
+                    catch (Erebot_NotFoundException $e) {
                         $logger->error(
                             "Unmet dependency for module ".
                             "'%(module)s' on %(channel)s: %(dependency)s",
@@ -203,7 +203,7 @@ implements  Erebot_Interface_Connection
                     }
                 }
                 $this->_bot->stop();
-                throw new EErebotNotFound('There are unmet dependencies');
+                throw new Erebot_NotFoundException('There are unmet dependencies');
             }
         }
         unset($chanCfg);
@@ -238,7 +238,7 @@ implements  Erebot_Interface_Connection
             if ($url === FALSE          ||
                 !isset($url['scheme'])  ||
                 !isset($url['host'])) {
-                throw new EErebotInvalidValue('Malformed URL');
+                throw new Erebot_InvalidValueException('Malformed URL');
             }
 
             $queryString = isset($url['query']) ? $url['query'] : '';
@@ -293,7 +293,7 @@ implements  Erebot_Interface_Connection
             );
         }
         catch (Exception $e) {
-            throw new EErebotConnectionFailure(
+            throw new Erebot_ConnectionFailureException(
                 sprintf("Unable to connect to '%s'", $url));
         }
 
@@ -319,7 +319,7 @@ implements  Erebot_Interface_Connection
                     'quit_message'
                 );
             }
-            catch (EErebot $e) {
+            catch (Erebot_Exception $e) {
                 // No default quit message configured.
             }
             unset($config);
@@ -341,7 +341,7 @@ implements  Erebot_Interface_Connection
         $chars = array("\r", "\n");
         foreach ($chars as $char)
             if (strpos($line, $char) !== FALSE)
-                throw new EErebotInvalidValue(
+                throw new Erebot_InvalidValueException(
                     'Line contains forbidden characters');
         $this->_sndQueue[] =& $line;
     }
@@ -358,7 +358,7 @@ implements  Erebot_Interface_Connection
             unset($netCfg);
             return $chanCfg;
         }
-        catch (EErebotNotFound $e) {
+        catch (Erebot_NotFoundException $e) {
             return $this->_config;
         }
     }
@@ -421,7 +421,7 @@ implements  Erebot_Interface_Connection
             $this->dispatchEvent($event);
 
             if (!$event->preventDefault())
-                throw new EErebotConnectionFailure('Disconnected');
+                throw new Erebot_ConnectionFailureException('Disconnected');
             return;
         }
 
@@ -434,7 +434,7 @@ implements  Erebot_Interface_Connection
     public function processOutgoingData()
     {
         if ($this->emptySendQueue())
-            throw new EErebotNotFound('No outgoing data needs to be handled');
+            throw new Erebot_NotFoundException('No outgoing data needs to be handled');
         $line       =   array_shift($this->_sndQueue);
         $logging    =&  Plop::getInstance();
         $logger     =   $logging->getLogger(
@@ -859,7 +859,8 @@ implements  Erebot_Interface_Connection
                     $metadata['requires'] : array());
 
         foreach ($depends as $depend) {
-            $depend = new ErebotDependency($depend);
+            /// @TODO: use dependency injection instead.
+            $depend = new Erebot_Dependency($depend);
             try {
                 $depVer     = $depend->getVersion();
                 $depended   = $this->getModule(
@@ -879,14 +880,14 @@ implements  Erebot_Interface_Connection
                             $depVer,
                             $depend->getOperator()
                         ))
-                        throw new EErebotNotFound();
+                        throw new Erebot_NotFoundException();
                 }
             }
-            catch (EErebotNotFound $e) {
+            catch (Erebot_NotFoundException $e) {
                 unset($instance);
                 // We raise a new exception with the full
                 // dependency specification.
-                throw new EErebotNotFound((string) $depend);
+                throw new Erebot_NotFoundException((string) $depend);
             }
         }
 
@@ -896,9 +897,9 @@ implements  Erebot_Interface_Connection
                 Erebot_Module_Base::RELOAD_INIT
             );
         }
-        catch (EErebotNotFound $e) {
+        catch (Erebot_NotFoundException $e) {
             unset($instance);
-            throw new EErebotNotFound('??? (missing dependency)');
+            throw new Erebot_NotFoundException('??? (missing dependency)');
         }
 
         if ($chan === NULL)
@@ -931,7 +932,7 @@ implements  Erebot_Interface_Connection
         else if ($type == self::MODULE_BY_CLASS)
             $name = $this->_bot->moduleClassToName($name);
         else
-            throw new EErebotInvalidValue('Invalid retrieval type');
+            throw new Erebot_InvalidValueException('Invalid retrieval type');
 
         if ($chan !== NULL && isset($this->_channelModules[$chan][$name]))
             return $this->_channelModules[$chan][$name];
@@ -939,7 +940,7 @@ implements  Erebot_Interface_Connection
         if (isset($this->_plainModules[$name]))
             return $this->_plainModules[$name];
 
-        throw new EErebotNotFound('No instance found');
+        throw new Erebot_NotFoundException('No instance found');
     }
 
     // Documented in the interface.
@@ -953,7 +954,7 @@ implements  Erebot_Interface_Connection
     {
         $key = array_search($handler, $this->_raws);
         if ($key === FALSE)
-            throw new EErebotNotFound('No such raw handler');
+            throw new Erebot_NotFoundException('No such raw handler');
         unset($this->_raws[$key]);
     }
 
@@ -968,7 +969,7 @@ implements  Erebot_Interface_Connection
     {
         $key = array_search($handler, $this->_events);
         if ($key === FALSE)
-            throw new EErebotNotFound('No such event handler');
+            throw new Erebot_NotFoundException('No such event handler');
         unset($this->_events[$key]);
     }
 
@@ -982,7 +983,7 @@ implements  Erebot_Interface_Connection
             }
         }
         // This should help make the code a little more "bug-free" (TM).
-        catch (EErebotErrorReporting $e) {
+        catch (Erebot_ExceptionErrorReporting $e) {
             $logging    =&  Plop::getInstance();
             $logger     =   $logging->getLogger(__FILE__);
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
@@ -1000,7 +1001,7 @@ implements  Erebot_Interface_Connection
             }
         }
         // This should help make the code a little more "bug-free" (TM).
-        catch (EErebotErrorReporting $e) {
+        catch (Erebot_ExceptionErrorReporting $e) {
             $logging    =&  Plop::getInstance();
             $logger     =   $logging->getLogger(__FILE__);
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);

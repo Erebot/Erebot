@@ -66,7 +66,7 @@ interface Erebot_Interface_Core
      * \note
      *      If no connection class is given, it defaults to ErebotConnection.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The given value for $connectionCls is invalid (not a class name,
      *      a class with a bad interface, etc.).
      *
@@ -126,7 +126,7 @@ interface Erebot_Interface_Core
      *      Returns the name of the class to use to create instances of this
      *      module.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The given \a $module name does not define a valid module.
      *
      * \note
@@ -148,7 +148,7 @@ interface Erebot_Interface_Core
      *      Upon success, the name of the class to use to create
      *      new instances of this module is returned.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      No module with the given name has been loaded.
      *
      * \see
@@ -166,7 +166,7 @@ interface Erebot_Interface_Core
      *      Upon success, the name of the module that the given class
      *      is used to create is returned.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      No module using the given class name has been loaded.
      *
      * \see
@@ -185,7 +185,7 @@ interface Erebot_Interface_Core
      *      Adds a connection to the list of connections handled by
      *      this instance of the bot.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      This connection is already part of the connection pool
      *      handled by this instance of the bot.
      */
@@ -202,7 +202,7 @@ interface Erebot_Interface_Core
      *      Removes a connection from the list of connections handled by
      *      this instance of the bot.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      The given connection is not part of the connection pool
      *      handled by this instance of the bot.
      */

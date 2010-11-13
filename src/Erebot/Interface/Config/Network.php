@@ -59,7 +59,7 @@ extends     Erebot_Interface_Config_Proxy
      * \retval iErebotServerConfig
      *      The configuration object for that server.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      No such server has been configured on this IRC network.
      */
     public function & getServerCfg($server);
@@ -83,7 +83,7 @@ extends     Erebot_Interface_Config_Proxy
      * \retval iErebotChannelConfig
      *      The configuration object for that channel.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      No such channel has been configured on this IRC network.
      */
     public function & getChannelCfg($channel);

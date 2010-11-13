@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/eventTargets.php');
-
 /**
  * \brief
  *      A whitelist/blacklist mechanism for targets of an event.
@@ -26,8 +24,8 @@ include_once('src/ifaces/eventTargets.php');
  *  filter out unwanted events depending on the target they're
  *  being addressed to.
  */
-class       ErebotEventTargets
-implements  iErebotEventTargets
+class       Erebot_EventTarget
+implements  Erebot_Interface_EventTarget
 {
     protected $_allow;
     protected $_deny;
@@ -50,7 +48,7 @@ implements  iErebotEventTargets
     {
         if ($order !== self::ORDER_ALLOW_DENY &&
             $order !== self::ORDER_DENY_ALLOW)
-            throw new EErebotInvalidValue('Invalid order for allow/deny rules');
+            throw new Erebot_InvalidValueException('Invalid order for allow/deny rules');
 
         $this->_order = $order;
     }
@@ -62,7 +60,7 @@ implements  iErebotEventTargets
     }
 
     // Documented in the interface.
-    public function match(iErebotEvent &$event)
+    public function match(Erebot_Interface_Event_Generic &$event)
     {
         if (!in_array('iErebotEventSource', class_implements($event)) ||
             !in_array('iErebotEventChan', class_implements($event)))
@@ -115,11 +113,11 @@ implements  iErebotEventTargets
     )
     {
         if (!is_string($nick) && $nick !== self::MATCH_ALL)
-            throw new EErebotInvalidValue('Bad nickname filter');
+            throw new Erebot_InvalidValueException('Bad nickname filter');
 
         if (!is_string($chan) && $chan !== self::MATCH_ALL &&
             $chan !== self::MATCH_CHANNEL && $chan !== self::MATCH_PRIVATE)
-            throw new EErebotInvalidValue('Bad channel filter');
+            throw new Erebot_InvalidValueException('Bad channel filter');
 
         switch ($type) {
             case self::TYPE_ALLOW:
@@ -131,7 +129,7 @@ implements  iErebotEventTargets
                 break;
 
             default:
-                throw new EErebotInvalidValue('Invalid rule type');
+                throw new Erebot_InvalidValueException('Invalid rule type');
         }
 
         array_push($this->$array, array('nick' => $nick, 'chan' => $chan));
@@ -145,11 +143,11 @@ implements  iErebotEventTargets
     )
     {
         if (!is_string($nick) && $nick !== self::MATCH_ALL)
-            throw new EErebotInvalidValue('Bad nickname filter');
+            throw new Erebot_InvalidValueException('Bad nickname filter');
 
         if (!is_string($chan) && $chan !== self::MATCH_ALL &&
             $chan !== self::MATCH_CHANNEL && $chan !== self::MATCH_PRIVATE)
-            throw new EErebotInvalidValue('Bad channel filter');
+            throw new Erebot_InvalidValueException('Bad channel filter');
 
         switch ($type) {
             case self::TYPE_ALLOW:
@@ -161,7 +159,7 @@ implements  iErebotEventTargets
                 break;
 
             default:
-                throw new EErebotInvalidValue('Invalid rule type');
+                throw new Erebot_InvalidValueException('Invalid rule type');
         }
 
         $key = array_search(
@@ -169,7 +167,7 @@ implements  iErebotEventTargets
             $this->$array
         );
         if ($key === FALSE)
-            throw new EErebotNotFound('No such rule');
+            throw new Erebot_NotFoundException('No such rule');
 
         $ref =& $this->$array;
         unset($ref[$key]);

@@ -85,7 +85,7 @@ abstract class Erebot_Module_Base
     static public function getMetadata($className)
     {
         if (!class_exists($className))
-            throw new EErebotInvalidValue('Invalid class name');
+            throw new Erebot_InvalidValueException('Invalid class name');
         for ($obj = $className; $obj; $obj = get_parent_class($obj)) {
             $refl = new ReflectionClass($obj);
             try {
@@ -155,7 +155,7 @@ abstract class Erebot_Module_Base
                 $config     =&  $this->_connection->getConfig($this->_channel);
                 return $config->$function($this->_moduleName, $param);
             }
-            catch (EErebot $e) {
+            catch (Erebot_Exception $e) {
                 unset($config);
             }
         }
@@ -176,7 +176,7 @@ abstract class Erebot_Module_Base
      * \retval bool
      *      The value for that parameter.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The given $default value does not have the right type.
      */
     protected function parseBool($param, $default = NULL)
@@ -197,7 +197,7 @@ abstract class Erebot_Module_Base
      * \retval string
      *      The value for that parameter.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The given $default value does not have the right type.
      */
     protected function parseString($param, $default = NULL)
@@ -218,7 +218,7 @@ abstract class Erebot_Module_Base
      * \retval int
      *      The value for that parameter.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The given $default value does not have the right type.
      */
     protected function parseInt($param, $default = NULL)
@@ -239,7 +239,7 @@ abstract class Erebot_Module_Base
      * \retval float
      *      The value for that parameter.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The given $default value does not have the right type.
      */
     protected function parseReal($param, $default = NULL)
@@ -306,7 +306,7 @@ abstract class Erebot_Module_Base
             try {
                 return $config->getTranslator($this->_moduleName);
             }
-            catch (EErebot $e) {
+            catch (Erebot_Exception $e) {
             // The channel lacked a specific config. Use the cascade.
             }
             unset($config);
@@ -316,7 +316,7 @@ abstract class Erebot_Module_Base
         try {
             return $config->getTranslator($this->_moduleName);
         }
-        catch (EErebot $e) {
+        catch (Erebot_Exception $e) {
             // The channel lacked a specific config. Use the cascade.
         }
         unset($config);

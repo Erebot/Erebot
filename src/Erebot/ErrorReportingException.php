@@ -28,8 +28,8 @@
  * Original implementation proposed by luke at cywh dot com:
  * http://php.net/manual/en/class.errorexception.php#89132
  */
-class   EErebotErrorReporting
-extends EErebot
+class   Erebot_ErrorReportingException
+extends Erebot_Exception
 {
     static protected $_map = NULL;
 
@@ -72,7 +72,8 @@ set_error_handler(
     create_function(
         '$errno, $errstr, $errfile, $errline',
         'if (($errno & error_reporting()) != $errno) return FALSE;'.
-        'throw new EErebotErrorReporting($errstr, $errno, $errfile, $errline);'
+        'throw new Erebot_ErrorReportingException('.
+            '$errstr, $errno, $errfile, $errline);'
     ),
     E_ALL
 );

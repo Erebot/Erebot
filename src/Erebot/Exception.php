@@ -20,7 +20,7 @@
  * \brief
  *      Base class for other (Erebot-related) exceptions.
  */
-class   EErebot
+class   Erebot_Exception
 extends Exception
 {
 }

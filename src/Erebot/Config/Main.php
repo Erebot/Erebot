@@ -97,7 +97,7 @@ implements  Erebot_Interface_Config_Main
                                     self::LOAD_FROM_STRING,
                                 );
         if (!in_array($source, $possibleSources, TRUE))
-            throw new EErebotInvalidValue('Invalid $source');
+            throw new Erebot_InvalidValueException('Invalid $source');
 
         if (is_string($configData) && $configData != '') {
             if ($source == self::LOAD_FROM_FILE)
@@ -107,7 +107,7 @@ implements  Erebot_Interface_Config_Main
                 $file = NULL;
         }
         else
-            throw new EErebotInvalidValue('Invalid configuration file');
+            throw new Erebot_InvalidValueException('Invalid configuration file');
 
         if (basename(dirname(dirname(dirname(__DIR__)))) == 'trunk')
             $schemaDir = '../../../data';
@@ -136,7 +136,7 @@ implements  Erebot_Interface_Config_Main
             # show some (hopefully) useful information.
             $errmsg = print_r($errors, TRUE);
             fprintf(STDERR, '%s', $errmsg);
-            throw new EErebotInvalidValue(
+            throw new Erebot_InvalidValueException(
                 'Error while validating the configuration file');
         }
 
@@ -144,7 +144,7 @@ implements  Erebot_Interface_Config_Main
         parent::__construct($this, $xml);
 
         if (!isset($xml['version']))
-            throw new EErebotInvalidValue('No version defined');
+            throw new Erebot_InvalidValueException('No version defined');
         $this->_version  = (string) $xml['version'];
 
         if (!version_compare(
@@ -152,20 +152,20 @@ implements  Erebot_Interface_Config_Main
             Erebot_Interface_Core::VERSION,
             'eq'
         ))
-            throw new EErebotInvalidValue(sprintf(
+            throw new Erebot_InvalidValueException(sprintf(
                 'Invalid version (expected %s, got %s)',
                 Erebot::VERSION, $this->_version
             ));
 
         if (!isset($xml['timezone']))
-            throw new EErebotInvalidValue('No timezone defined');
+            throw new Erebot_InvalidValueException('No timezone defined');
         $this->_timezone = (string) $xml['timezone'];
 
         // Set timezone information.
         // This is needed to configure the logging subsystem.
         if (function_exists('date_default_timezone_set')) {
             if (!date_default_timezone_set($this->_timezone))
-                throw EErebotInvalidValue(
+                throw Erebot_InvalidValueException(
                     sprintf(
                         'Invalid timezone: "%s"',
                         $this->_timezone
@@ -179,7 +179,7 @@ implements  Erebot_Interface_Config_Main
             $this->_commandsPrefix = (string) $xml['commands-prefix'];
             if (strcspn($this->_commandsPrefix, " \r\n\t") !=
                 strlen($this->_commandsPrefix))
-                throw new EErebotInvalidValue('Invalid command prefix');
+                throw new Erebot_InvalidValueException('Invalid command prefix');
         }
 
         $logging =& Plop::getInstance();
@@ -215,7 +215,7 @@ implements  Erebot_Interface_Config_Main
     public function & getNetworkCfg($network)
     {
         if (!isset($this->_networks[$network]))
-            throw new EErebotNotFound('No such network');
+            throw new Erebot_NotFoundException('No such network');
         return $this->_networks[$network];
     }
 

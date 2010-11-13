@@ -91,7 +91,7 @@ implements  Erebot_Interface_Config_Network
     public function & getServerCfg($server)
     {
         if (!isset($this->_servers[$server]))
-            throw new EErebotNotFound('No such server');
+            throw new Erebot_NotFoundException('No such server');
         return $this->_servers[$server];
     }
 
@@ -105,7 +105,7 @@ implements  Erebot_Interface_Config_Network
     public function & getChannelCfg($channel)
     {
         if (!isset($this->_channels[$channel]))
-            throw new EErebotNotFound('No such channel');
+            throw new Erebot_NotFoundException('No such channel');
         return $this->_channels[$channel];
     }
 

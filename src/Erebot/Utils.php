@@ -16,14 +16,11 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/exceptions/Exception.php');
-include_once('src/exceptions/NotFound.php');
-
 /**
  * \brief
  *      Utility methods for Erebot.
  */
-class ErebotUtils
+class Erebot_Utils
 {
     /// Do not strip anything from the text.
     const STRIP_NONE        = 0x00;
@@ -160,7 +157,7 @@ class ErebotUtils
     static public function stripCodes($text, $strip = self::STRIP_ALL)
     {
         if (!is_int($strip))
-            throw new EErebotInvalidValue("Invalid stripping flags");
+            throw new Erebot_InvalidValueException("Invalid stripping flags");
 
         if ($strip & self::STRIP_BOLD)
             $text = str_replace("\002", '', $text);
@@ -254,7 +251,7 @@ class ErebotUtils
      * \retval string
      *      The original text, converted into UTF-8.
      *
-     * \throw EErebotNotImplemented
+     * \throw Erebot_NotImplementedException
      *      Raised if no method could be found to convert
      *      the text. See also the notes for information on
      *      how to avoid this exception being raised.
@@ -290,7 +287,7 @@ class ErebotUtils
                 ENT_QUOTES, 'UTF-8'
             );
 
-        throw new EErebotNotImplemented('No way to convert to UTF-8');
+        throw new Erebot_NotImplementedException('No way to convert to UTF-8');
     }
 
     static public function getVStatic(
@@ -320,7 +317,7 @@ class ErebotUtils
             }
         }
             
-        throw new EErebotNotFound('No such thing');
+        throw new Erebot_NotFoundException('No such thing');
     }
 }
 

@@ -20,8 +20,8 @@
  * \brief
  *      An exception thrown to indicate a connection failure.
  */
-class   EErebotConnectionFailure
-extends EErebot
+class   Erebot_ConnectionFailureException
+extends Erebot_Exception
 {
 }
 

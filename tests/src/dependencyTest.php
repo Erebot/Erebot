@@ -44,7 +44,7 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException EErebotInvalidValue
+     * @expectedException Erebot_InvalidValueException
      */
     public function testInvalidSpecification()
     {
@@ -52,7 +52,7 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException EErebotInvalidValue
+     * @expectedException Erebot_InvalidValueException
      */
     public function testInvalidSpecification2()
     {

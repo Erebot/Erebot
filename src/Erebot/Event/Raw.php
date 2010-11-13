@@ -27,14 +27,12 @@
  *      The global constants will be removed as of Erebot 0.4.0.
  */
 
-include_once('src/ifaces/raw.php');
-
 /**
  * \brief
  *      A class representing a raw numeric event.
  */
-class       ErebotRaw
-implements  iErebotRaw
+class       Erebot_Event_Raw
+implements  Erebot_Interface_Raw
 {
     protected $_connection;
     protected $_raw;
@@ -44,11 +42,11 @@ implements  iErebotRaw
 
     // Documented in the interface.
     public function __construct(
-        iErebotConnection   &$connection,
-                            $raw,
-                            $source,
-                            $target,
-                            $text
+        Erebot_Interface_Connection    &$connection,
+                                        $raw,
+                                        $source,
+                                        $target,
+                                        $text
     )
     {
         $this->_connection  =&  $connection;

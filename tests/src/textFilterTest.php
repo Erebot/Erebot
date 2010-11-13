@@ -7,7 +7,7 @@ class   TextFilterArgumentsTest
 extends ErebotModuleTestCase
 {
     /**
-     * @expectedException   EErebotIllegalAction
+     * @expectedException   Erebot_IllegalActionException
      */
     public function testInvalidArgumentsThrowAnException()
     {
@@ -15,7 +15,7 @@ extends ErebotModuleTestCase
     }
 
     /**
-     * @expectedException   EErebotIllegalAction
+     * @expectedException   Erebot_IllegalActionException
      */
     public function testInvalidArgumentsThrowAnException2()
     {
@@ -23,7 +23,7 @@ extends ErebotModuleTestCase
     }
 
     /**
-     * @expectedException   EErebotIllegalAction
+     * @expectedException   Erebot_IllegalActionException
      */
     public function testInvalidArgumentsThrowAnException3()
     {
@@ -31,7 +31,7 @@ extends ErebotModuleTestCase
     }
 
     /**
-     * @expectedException   EErebotIllegalAction
+     * @expectedException   Erebot_IllegalActionException
      */
     public function testInvalidArgumentsThrowAnException4()
     {

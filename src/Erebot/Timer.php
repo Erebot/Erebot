@@ -16,14 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/timer.php');
-
 /**
  * \brief
  *      An implementation of timers.
  */
-class       ErebotTimer
-implements  iErebotTimer
+class       Erebot_Timer
+implements  Erebot_Interface_Timer
 {
     /// Internal stream used to implement a timer.
     protected $_stream;
@@ -42,7 +40,7 @@ implements  iErebotTimer
     public function __construct($callback, $delay, $repeat)
     {
         if (!is_callable($callback))
-            throw new EErebotInvalidValue('Invalid callback');
+            throw new Erebot_InvalidValueException('Invalid callback');
 
         $this->_callback    = $callback;
         $this->_delay       = $delay;
@@ -94,7 +92,7 @@ implements  iErebotTimer
         // If repeat = NULL, return current value with no modification.
         // If repeat > 0, the timer will be triggered 'repeat' times.
         if (!is_int($repeat) && $repeat !== NULL)
-            throw new EErebotInvalidValue('Invalid repetition');
+            throw new Erebot_InvalidValueException('Invalid repetition');
 
         $this->_repeat = $repeat;
     }

@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/utils.php');
-
 /**
  * \brief
  *      Provides styling (formatting) features.
@@ -111,7 +109,7 @@ include_once('src/utils.php');
  *      </tr>
  *  </table>
  */
-class   ErebotStyling
+class   Erebot_Styling
 {
     protected $_translator;
     protected $_variables;
@@ -166,7 +164,7 @@ class   ErebotStyling
      *      A translator object, used to determine the correct
      *      pluralization rules.
      */
-    public function __construct($source, iErebotI18n &$translator)
+    public function __construct($source, Erebot_Interface_I18n &$translator)
     {
         $source =
             '<msg xmlns="http://www.erebot.net/xmlns/erebot/styling">'.
@@ -186,7 +184,7 @@ class   ErebotStyling
             # show some (hopefully) useful information.
             $errmsg = print_r($errors, TRUE);
             fprintf(STDERR, '%s', $errmsg);
-            throw new EErebotInvalidValue(
+            throw new Erebot_InvalidValueException(
                 'Error while validating the message');
         }
         $this->_translator  =&  $translator;
@@ -373,8 +371,8 @@ class   ErebotStyling
                             if ($attributes[$color] != $saved[$color])
                                 $colors[$pos] = $attributes[$color];
                         }
-                        catch (EErebotNotFound $e) {
-                            throw new EErebotInvalidValue(
+                        catch (Erebot_NotFoundException $e) {
+                            throw new Erebot_InvalidValueException(
                                         'Invalid color "'.$value.'"');
                         }
                     }
@@ -438,7 +436,7 @@ class   ErebotStyling
              * steps are done before without using ICU. */
             $attrNode = $node->getAttributeNode('var');
             if ($attrNode === FALSE)
-                throw new EErebotInvalidValue('No variable name given');
+                throw new Erebot_InvalidValueException('No variable name given');
             $value = (int) $variables[$attrNode->nodeValue];
             $subcontents = array();
             $pattern = '{0,plural,';
@@ -463,7 +461,7 @@ class   ErebotStyling
             // instead of throwing an exception.
             // See http://bugs.php.net/bug.php?id=52776 
             if ($formatter === NULL)
-                throw new EErebotInvalidValue('Invalid plural forms');
+                throw new Erebot_InvalidValueException('Invalid plural forms');
             $correctForm = $formatter->format(array($value));
             $result .= $subcontents[$correctForm];
         }

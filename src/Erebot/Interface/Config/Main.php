@@ -47,7 +47,7 @@ extends     Erebot_Interface_Config_Proxy
      *      whether $configData contains a filename or the string
      *      representation of the configuration data, respectively.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The configuration file did not exist or contained invalid values.
      *      This exception is also thrown when the $source parameter contains
      *      an invalid value.
@@ -74,7 +74,7 @@ extends     Erebot_Interface_Config_Proxy
      *      whether $configData contains a filename or the string
      *      representation of the configuration data, respectively.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      The configuration file did not exist or contained invalid values.
      *      This exception is also thrown when the $source parameter contains
      *      an invalid value.
@@ -95,7 +95,7 @@ extends     Erebot_Interface_Config_Proxy
      * \retval iErebotNetworkConfig
      *      The configuration object for that network.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      No such network has been configured on the bot.
      */
     public function & getNetworkCfg($network);

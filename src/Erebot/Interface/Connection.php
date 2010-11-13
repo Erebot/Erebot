@@ -58,7 +58,7 @@ interface Erebot_Interface_Connection
      * using the configuration data passed to the
      * constructor.
      *
-     * \throw EErebotConnectionFailure
+     * \throw Erebot_ExceptionConnectionFailure
      *      Thrown whenever the bot fails to establish
      *      a connection to the given server.
      */
@@ -83,7 +83,7 @@ interface Erebot_Interface_Connection
      * \param string $line
      *      The line of text to send.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      Thrown if the $line contains invalid characters.
      *
      * \warning
@@ -110,7 +110,7 @@ interface Erebot_Interface_Connection
      * \retval iErebotServerConfig
      *      Otherwise, the configuration for the associated IRC server.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      No ErebotChannelConfig object exists for the given channel.
      */
     public function & getConfig($chan);
@@ -177,7 +177,7 @@ interface Erebot_Interface_Connection
      * This is done so that a throttling policy may be put
      * in place if needed (eg. for an anti-flood system).
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      Thrown if the outgoing FIFO is empty.
      */
     public function processOutgoingData();
@@ -218,11 +218,11 @@ interface Erebot_Interface_Connection
      *      or the pool of shared modules. Therefore, it is safe to call
      *      this method multiple times with the same parameters.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      Thrown when invalid values are found in the (meta)data
      *      of the module.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      Thrown when a required dependency could not be loaded.
      *      You may want to load the required dependency and then
      *      try to load the module again.
@@ -266,10 +266,10 @@ interface Erebot_Interface_Connection
      * \retval ErebotModuleBase
      *      An instance of the given module.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      Thrown when an invalid $type is passed.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      Thrown if no instance of the given module could be found.
      */
     public function & getModule($name, $type, $chan = NULL);
@@ -288,7 +288,7 @@ interface Erebot_Interface_Connection
      * \param iErebotRawHandler $handler
      *      The handler to unregister.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      Thrown when the given handler could not be found,
      *      such as when it was not registered on this connection.
      */
@@ -308,7 +308,7 @@ interface Erebot_Interface_Connection
      * \param iErebotEventHandler $handler
      *      The handler to unregister.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      Thrown when the given handler could not be found,
      *      such as when it was not registered on this connection.
      */

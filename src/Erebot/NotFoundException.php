@@ -23,8 +23,8 @@
  *  Often used is getters which operate on associative arrays when
  *  asked for a key which doesn't exist.
  */
-class   EErebotNotFound
-extends EErebot
+class   Erebot_NotFoundException
+extends Erebot_Exception
 {
 }
 

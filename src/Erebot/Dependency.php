@@ -71,7 +71,7 @@ class ErebotDependency
         else {
             $depVerStart    = $len - strcspn(strrev($dependency), $opTokens);
             if ($depVerStart <= $depNameEnd)
-                throw new EErebotInvalidValue(
+                throw new Erebot_InvalidValueException(
                     'Invalid dependency specification');
 
             $depVer         = strtolower(substr($dependency, $depVerStart));
@@ -87,11 +87,11 @@ class ErebotDependency
             );
 
             if (!isset($opMapping[$depOp]))
-                throw new EErebotInvalidValue(
+                throw new Erebot_InvalidValueException(
                     'Invalid dependency operator ('.$depOp.')');
 
             if ($depVer == '')
-                throw new EErebotInvalidValue(
+                throw new Erebot_InvalidValueException(
                     'Invalid dependency specification');
         }
 

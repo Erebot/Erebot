@@ -137,12 +137,12 @@ implements  Erebot_Interface_Core
         $logger->info($this->gettext('Erebot is starting'));
 
         if (!is_string($connectionCls) || !class_exists($connectionCls))
-            throw new EErebotInvalidValue('Not a valid class name '.
+            throw new Erebot_InvalidValueException('Not a valid class name '.
                 $connectionCls);
         else {
             $reflect = new ReflectionClass($connectionCls);
             if (!$reflect->implementsInterface('Erebot_Interface_Connection'))
-                throw new EErebotInvalidValue($connectionCls.' does not '.
+                throw new Erebot_InvalidValueException($connectionCls.' does not '.
                     'implement the Erebot_Interface_Connection interface');
         }
 
@@ -161,7 +161,7 @@ implements  Erebot_Interface_Core
                     $this->_connections[] = $connection;
                     break;
                 }
-                catch (EErebotConnectionFailure $e) {
+                catch (Erebot_ConnectionFailureException $e) {
                     // Nothing to do... We simply
                     // try the next server on the
                     // list until we successfully
@@ -228,7 +228,7 @@ implements  Erebot_Interface_Core
                 // up whenever a timer fires.
                 $nb = stream_select($read, $write, $except, NULL);
             }
-            catch (EErebotErrorReporting $e) {
+            catch (Erebot_ErrorReportingException $e) {
                 if ($this->_running)
                     $logger->exception($this->gettext('Got exception'), $e);
                 else
@@ -259,7 +259,7 @@ implements  Erebot_Interface_Core
                         try {
                             $this->_connections[$index]->processIncomingData();
                         }
-                        catch (EErebotConnectionFailure $e) {
+                        catch (Erebot_ConnectionFailureException $e) {
                             $logger->info(
                                 $this->gettext(
                                     'Connection failed, removing it '.
@@ -410,7 +410,7 @@ implements  Erebot_Interface_Core
     {
         $key = array_search($timer, $this->_timers);
         if ($key !== FALSE)
-            throw new EErebotInvalidValue('Timer already registered');
+            throw new Erebot_InvalidValueException('Timer already registered');
 
         $timer->reset();
         $this->_timers[] =&  $timer;
@@ -421,7 +421,7 @@ implements  Erebot_Interface_Core
     {
         $key = array_search($timer, $this->_timers);
         if ($key === FALSE)
-            throw new EErebotNotFound('Timer not found');
+            throw new Erebot_NotFoundException('Timer not found');
 
         unset($this->_timers[$key]);
     }
@@ -432,108 +432,25 @@ implements  Erebot_Interface_Core
         return 'Erebot v'.self::VERSION;
     }
 
-    /**
-     * Determines whether a given class subclasses ErebotModuleBase.
-     * This method is used to create an inheritance tree for a newly
-     * loaded module and determine whether that module respects a
-     * set of constraints.
-     *
-     * \retval TRUE
-     *      The given class subclasses ErebotModuleBase.
-     *
-     * \retval FALSE
-     *      It does not subclasses ErebotModuleBase.
-     */
-    static private function __subclasses_EMB($a)
-    {
-        return (is_subclass_of($a, "ErebotModuleBase"));
-    }
-
-    /**
-     * Determines how two classes inherit from one another.
-     * This method is used to create an inheritance tree for a newly
-     * loaded module and determine whether that module respects a
-     * set of constraints.
-     *
-     * \param string $a
-     *      First class.
-     *
-     * \param string $b
-     *      Second class.
-     *
-     * \retval -1
-     *      $a subclasses $b.
-     *
-     * \retval +1
-     *      $b subclasses $a.
-     *
-     * \note
-     *      This method assumes both classes are subclasses
-     *      of ErebotModuleBase.
-     *
-     * \throw EErebotInvalidValue
-     *      The two classes are not related (ie: none of the two
-     *      classes subclasses the other one).
-     */
-    static private function __inherits_EMB($a, $b)
-    {
-        if (is_subclass_of($a, get_class($b)))
-            return -1;
-        if (is_subclass_of($b, get_class($a)))
-            return +1;
-        throw new EErebotInvalidValue("Bad module! There must be exactly ".
-            "1 subclass of ErebotModuleBase in it.");
-    }
-
     // Documented in the interface.
     public function loadModule($module)
     {
         if (isset($this->_modulesMapping[$module]))
             return $this->_modulesMapping[$module];
 
-        $first = substr($module, 0, 1);
-        if (strtoupper($first) != $first)
-            throw new EErebotInvalidValue('Module names must start with '.
-                                            'an uppercase letter');
+        if (!is_subclass_of($module, 'Erebot_Module_Base'))
+            throw new Erebot_InvalidValueException(
+                "Invalid module! Not a subclass of Erebot_Module_Base.");
 
-        $classes = get_declared_classes();
-
-        $pathParts      = array('modules', $module);
-        $pathParts[]    = $module.'.php';
-
-        $path = implode(DIRECTORY_SEPARATOR, $pathParts);
-        if (!file_exists($path)) {
-            // Try again with a "trunk" subpath (for dev environments).
-            array_splice($pathParts, 2, 0, array('trunk'));
-            $path = implode(DIRECTORY_SEPARATOR, $pathParts);
-            if (!file_exists($path))
-                throw new EErebotInvalidValue('No such module');
-        }
-
-        $ok = include_once($path);
-        if ($ok === FALSE)
-            throw new EErebotInvalidValue('Error while loading module');
-
-        $classes = array_diff(get_declared_classes(), $classes);
-        $classes = array_filter($classes, array($this, '__subclasses_EMB'));
-
-        if (!count($classes))
-            throw new EErebotInvalidValue("Bad module! No subclass of ".
-                                            "ErebotModuleBase found.");
-
-        // __inherits_EMB throws an exception if there are more than
-        // two hierarchies of classes inheriting from ErebotModuleBase.
-        usort($classes, array($this, '__inherits_EMB'));
-        $class                          = reset($classes);
-        $this->_modulesMapping[$module] = $class;
-        return $class;
+        $this->_modulesMapping[$module] = $module;
+        return $module;
     }
 
     // Documented in the interface.
     public function moduleNameToClass($modName)
     {
         if (!isset($this->_modulesMapping[$modName]))
-            throw new EErebotNotFound('No such module');
+            throw new Erebot_NotFoundException('No such module');
         return $this->_modulesMapping[$module];
     }
 
@@ -545,7 +462,7 @@ implements  Erebot_Interface_Core
 
         $modName = array_search($className, $this->_modulesMapping);
         if ($modName === FALSE)
-            throw new EErebotNotFound('No such module');
+            throw new Erebot_NotFoundException('No such module');
         return $modName;
     }
 
@@ -554,7 +471,7 @@ implements  Erebot_Interface_Core
     {
         $key = array_search($connection, $this->_connections);
         if ($key !== FALSE)
-            throw new EErebotInvalidValue('Already handling this connection');
+            throw new Erebot_InvalidValueException('Already handling this connection');
 
         $this->_connections[] =& $connection;
     }
@@ -570,7 +487,7 @@ implements  Erebot_Interface_Core
 
         $key = array_search($connection, $this->_connections);
         if ($key === FALSE)
-            throw new EErebotNotFound('No such connection');
+            throw new Erebot_NotFoundException('No such connection');
 
         unset($this->_connections[$key]);
     }

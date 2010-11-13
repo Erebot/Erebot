@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/mainConfig.php');
-
 /**
  * \brief
  *      Interface to filter events based on their content.
@@ -25,7 +23,7 @@ include_once('src/ifaces/mainConfig.php');
  * This interface provides the necessary methods to filter
  * an event based on the contents of the message it contains.
  */
-interface iErebotTextFilter
+interface Erebot_Interface_TextFilter
 {
     /// The pattern contains a static text to match.
     const TYPE_STATIC   = 0;
@@ -83,10 +81,10 @@ interface iErebotTextFilter
      *      \endcode
      */
     public function __construct(
-        iErebotMainConfig  &$config,
-                            $type           = NULL,
-                            $pattern        = NULL,
-                            $requirePrefix  = FALSE
+        Erebot_Interface_Config_Main   &$config,
+                                        $type           = NULL,
+                                        $pattern        = NULL,
+                                        $requirePrefix  = FALSE
     );
 
     /**
@@ -169,6 +167,6 @@ interface iErebotTextFilter
      * \retval FALSE
      *      Otherwise.
      */
-    public function match(iErebotEvent &$event);
+    public function match(Erebot_Interface_Event_Generic &$event);
 }
 

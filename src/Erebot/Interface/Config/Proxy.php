@@ -37,7 +37,7 @@ interface Erebot_Interface_Config_Proxy
      * \retval iErebotI18n
      *      A translator object.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      No appropriate translator exists for this configuration level.
      */
     public function getTranslator($component);
@@ -74,7 +74,7 @@ interface Erebot_Interface_Config_Proxy
      * \retval iErebotModuleConfig
      *      Instance of the module's configuration.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      */
      public function & getModule($moduleName);
 
@@ -94,10 +94,10 @@ interface Erebot_Interface_Config_Proxy
      * \retval bool
      *      The boolean value for that particular module and parameter.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      The given $module or $param name could not be found.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      A value could be retrieved, but its type is not the one we
      *      expected (it was NOT a boolean). Either the configuration file
      *      contains an invalid value, or no value has been defined in the
@@ -125,10 +125,10 @@ interface Erebot_Interface_Config_Proxy
      * \retval string
      *      The string value for that particular module and parameter.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      The given $module or $param name could not be found.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      A value could be retrieved, but its type is not the one we
      *      expected (it was NOT a string). Either the configuration file
      *      contains an invalid value, or no value has been defined in the
@@ -156,10 +156,10 @@ interface Erebot_Interface_Config_Proxy
      * \retval int
      *      The interger value for that particular module and parameter.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      The given $module or $param name could not be found.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      A value could be retrieved, but its type is not the one we
      *      expected (it was NOT an integer). Either the configuration file
      *      contains an invalid value, or no value has been defined in the
@@ -172,7 +172,7 @@ interface Erebot_Interface_Config_Proxy
      *      \code
      *          $port = $config->parseInt('server', 'incomingPort');
      *          if ($port <= 0 || $port > 65535)
-     *              throw new EErebotInvalidValue(
+     *              throw new Erebot_InvalidValueException(
      *                  "Incoming port value is out of range (1-65535)");
      *          // Else, use the $port value to create a listening socket, etc.
      *      \endcode
@@ -199,10 +199,10 @@ interface Erebot_Interface_Config_Proxy
      * \retval float
      *      The real number for that particular module and parameter.
      *
-     * \throw EErebotNotFound
+     * \throw Erebot_NotFoundException
      *      The given $module or $param name could not be found.
      *
-     * \throw EErebotInvalidValue
+     * \throw Erebot_InvalidValueException
      *      A value could be retrieved, but its type is not the one we
      *      expected (it was NOT a real). Either the configuration file
      *      contains an invalid value, or no value has been defined in the
@@ -214,7 +214,7 @@ interface Erebot_Interface_Config_Proxy
      *      \code
      *          $price = $config->parseReal('prices', '$item);
      *          if ($price <= 0.1)
-     *              throw EErebotInvalidValue(
+     *              throw Erebot_InvalidValueException(
      *                  "Invalid price: we're loosing money here!");
      *      \endcode
      *

@@ -16,31 +16,29 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/textFilter.php');
-
 /**
  * \brief
  *      A class to filter events out based on their content (message).
  */
-class       ErebotTextFilter
-implements  iErebotTextFilter
+class       Erebot_TextFilter
+implements  Erebot_Interface_TextFilter
 {
     protected $_prefix;
     protected $_patterns;
 
     // Documented in the interface.
     public function __construct(
-        iErebotMainConfig   &$config,
-                            $type = NULL,
-                            $pattern = NULL,
-                            $requirePrefix = FALSE
+        Erebot_Interface_Config_Main   &$config,
+                                        $type           = NULL,
+                                        $pattern        = NULL,
+                                        $requirePrefix  = FALSE
     )
     {
         $this->_prefix = $config->getCommandsPrefix();
 
         if (($type === NULL && $pattern !== NULL) ||
             ($type !== NULL && $pattern === NULL))
-            throw new EErebotIllegalAction(
+            throw new Erebot_IllegalActionException(
                 'Either both or none of type & pattern must be given'
             );
 
@@ -62,7 +60,7 @@ implements  iErebotTextFilter
         $pattern    = $this->_rewritePattern($type, $pattern, $requirePrefix);
         $keys       = array_keys($this->_patterns[$type], $pattern);
         if (!count($keys))
-            throw new EErebotNotFound('No such pattern');
+            throw new Erebot_NotFoundException('No such pattern');
 
         foreach ($keys as $key)
             unset($this->_patterns[$type][$key]);
@@ -72,13 +70,13 @@ implements  iErebotTextFilter
     {
         // Sanity checks.
         if (!is_int($type) || !isset($this->_patterns[$type]))
-            throw new EErebotInvalidValue('Invalid pattern type');
+            throw new Erebot_InvalidValueException('Invalid pattern type');
 
         if (!is_string($pattern))
-            throw new EErebotInvalidValue('Pattern must be a string');
+            throw new Erebot_InvalidValueException('Pattern must be a string');
 
         if ($requirePrefix !== NULL && !is_bool($requirePrefix))
-            throw new EErebotInvalidValue(
+            throw new Erebot_InvalidValueException(
                 'requirePrefix must be a boolean or NULL'
             );
 
@@ -130,13 +128,13 @@ implements  iErebotTextFilter
             return $this->_patterns;
 
         if (!is_int($type) || !isset($this->_patterns[$type]))
-            throw new EErebotInvalidValue('Invalid pattern type');
+            throw new Erebot_InvalidValueException('Invalid pattern type');
 
         return $this->_patterns[$type];
     }
 
     // Documented in the interface.
-    public function match(iErebotEvent &$event)
+    public function match(Erebot_Interface_Event_Generic &$event)
     {
         if (!in_array('iErebotEventText', class_implements($event)))
             return TRUE;

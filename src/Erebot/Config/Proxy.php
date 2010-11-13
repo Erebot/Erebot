@@ -92,7 +92,7 @@ class Erebot_Config_Proxy
         if (isset($this->_locale))
             return new Erebot_I18n($this->_locale, $component);
         if ($this->_proxified === $this)
-            throw new EErebotNotFound('No translator associated');
+            throw new Erebot_NotFoundException('No translator associated');
         return $this->_proxified->getTranslator($component);
     }
 
@@ -108,7 +108,7 @@ class Erebot_Config_Proxy
     public function getModules($recursive)
     {
         if (!is_bool($recursive))
-            throw new EErebotInvalidValue('Invalid value for recursion');
+            throw new Erebot_InvalidValueException('Invalid value for recursion');
 
         if ($recursive && $this->_proxified !== $this)
             $inherited = $this->_proxified->getModules(TRUE);
@@ -135,7 +135,7 @@ class Erebot_Config_Proxy
         if (!isset($this->_modules[$moduleName])) {
             if ($this->_proxified !== $this)
                 return $this->_proxified->getModule($moduleName);
-            throw new EErebotNotFound('No such module');        
+            throw new Erebot_NotFoundException('No such module');        
         }
         return $this->_modules[$moduleName];
     }
@@ -175,23 +175,23 @@ class Erebot_Config_Proxy
     {
         try {
             if (!isset($this->_modules[$module]))
-                throw new EErebotNotFound('No such module');
+                throw new Erebot_NotFoundException('No such module');
             $value = $this->_modules[$module]->getParam($param);
             $value = $this->_parseBool($value);
             if ($value !== NULL)
                 return $value;
-            throw new EErebotInvalidValue('Bad value in configuration');
+            throw new Erebot_InvalidValueException('Bad value in configuration');
         }
-        catch (EErebotNotFound $e) {
+        catch (Erebot_NotFoundException $e) {
             if ($this->_proxified !== $this)
                 return $this->_proxified->parseBool($module, $param, $default);
 
             if ($default === NULL)
-                throw new EErebotNotFound('No such parameter');
+                throw new Erebot_NotFoundException('No such parameter');
 
             if (is_bool($default))
                 return $default;
-            throw new EErebotInvalidValue('Bad default value');
+            throw new Erebot_InvalidValueException('Bad default value');
         }
     }
 
@@ -200,10 +200,10 @@ class Erebot_Config_Proxy
     {
         try {
             if (!isset($this->_modules[$module]))
-                throw new EErebotNotFound('No such module');
+                throw new Erebot_NotFoundException('No such module');
             return $this->_modules[$module]->getParam($param);
         }
-        catch (EErebotNotFound $e) {
+        catch (Erebot_NotFoundException $e) {
             if ($this->_proxified !== $this)
                 return $this->_proxified->parseString(
                     $module,
@@ -212,11 +212,11 @@ class Erebot_Config_Proxy
                 );
 
             if ($default === NULL)
-                throw new EErebotNotFound('No such parameter');
+                throw new Erebot_NotFoundException('No such parameter');
 
             if (is_string($default))
                 return $default;
-            throw new EErebotInvalidValue('Bad default value');
+            throw new Erebot_InvalidValueException('Bad default value');
         }
     }
 
@@ -256,23 +256,23 @@ class Erebot_Config_Proxy
     {
         try {
             if (!isset($this->_modules[$module]))
-                throw new EErebotNotFound('No such module');
+                throw new Erebot_NotFoundException('No such module');
             $value = $this->_modules[$module]->getParam($param);
             $value = $this->_parseInt($value);
             if ($value !== NULL)
                 return $value;
-            throw new EErebotInvalidValue('Bad value in configuration');
+            throw new Erebot_InvalidValueException('Bad value in configuration');
         }
-        catch (EErebotNotFound $e) {
+        catch (Erebot_NotFoundException $e) {
             if ($this->_proxified !== $this)
                 return $this->_proxified->parseInt($module, $param, $default);
 
             if ($default === NULL)
-                throw new EErebotNotFound('No such parameter');
+                throw new Erebot_NotFoundException('No such parameter');
 
             if (is_int($default))
                 return $default;
-            throw new EErebotInvalidValue('Bad default value');
+            throw new Erebot_InvalidValueException('Bad default value');
         }
     }
 
@@ -302,23 +302,23 @@ class Erebot_Config_Proxy
     {
         try {
             if (!isset($this->_modules[$module]))
-                throw new EErebotNotFound('No such module');
+                throw new Erebot_NotFoundException('No such module');
             $value = $this->_modules[$module]->getParam($param);
             $value = $this->_parseReal($value);
             if ($value !== NULL)
                 return $value;
-            throw new EErebotInvalidValue('Bad value in configuration');
+            throw new Erebot_InvalidValueException('Bad value in configuration');
         }
-        catch (EErebotNotFound $e) {
+        catch (Erebot_NotFoundException $e) {
             if ($this->_proxified !== $this)
                 return $this->_proxified->parseReal($module, $param, $default);
 
             if ($default === NULL)
-                throw new EErebotNotFound('No such parameter');
+                throw new Erebot_NotFoundException('No such parameter');
 
             if (is_real($default))
                 return $default;
-            throw new EErebotInvalidValue('Bad default value');
+            throw new Erebot_InvalidValueException('Bad default value');
         }
     }
 }

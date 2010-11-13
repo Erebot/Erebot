@@ -16,9 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/textFilter.php');
-include_once('src/ifaces/eventHandler.php');
-
 /**
  * \brief
  *      An event handler which will call a callback function/method
@@ -27,8 +24,8 @@ include_once('src/ifaces/eventHandler.php');
  *  Such conditions may be related to the event being of a certain type,
  *  being addressed to a certain target and/or having a certain content.
  */
-class       ErebotEventHandler
-implements  iErebotEventHandler
+class       Erebot_EventHandler
+implements  Erebot_Interface_EventHandler
 {
     protected $_callback;
     protected $_constraints;
@@ -39,30 +36,30 @@ implements  iErebotEventHandler
     public function __construct(
         $callback,
         $constraints,
-        iErebotEventTargets $targets    = NULL,
-        iErebotTextFilter   $filters    = NULL
+        Erebot_Interface_EventTarget    $targets    = NULL,
+        Erebot_Interface_TextFilter     $filters    = NULL
     )
     {
         $reflector  = new ReflectionParameter($callback, 0);
         $cls        = $reflector->getClass();
         if ($cls === NULL || !$cls->implementsInterface('iErebotEvent'))
-            throw new EErebotInvalidValue('Invalid signature');
+            throw new Erebot_InvalidValueException('Invalid signature');
 
         if (!is_array($constraints))
             $constraints = array($constraints);
 
         foreach ($constraints as $constraint) {
             if (!is_string($constraint))
-                throw new EErebotInvalidValue('Invalid event type');
+                throw new Erebot_InvalidValueException('Invalid event type');
 
             if (!class_exists($constraint) && !interface_exists($constraint))
-                throw new EErebotInvalidValue('Invalid event type');
+                throw new Erebot_InvalidValueException('Invalid event type');
 
             // We want to determine if the given type (either a class
             // or an interface) implements the iErebotEvent interface.
             $reflect = new ReflectionClass($constraint);
             if (!$reflect->implementsInterface('iErebotEvent'))
-                throw new EErebotInvalidValue('Invalid event type');
+                throw new Erebot_InvalidValueException('Invalid event type');
         }
 
         $this->_callback        =&  $callback;
@@ -100,7 +97,7 @@ implements  iErebotEventHandler
     }
 
     // Documented in the interface.
-    public function handleEvent(iErebotEvent &$event)
+    public function handleEvent(Erebot_Interface_Event_Generic &$event)
     {
         foreach ($this->_constraints as $constraint) {
             if (!($event instanceof $constraint))

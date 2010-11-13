@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/rawHandler.php');
-
 /**
  * \brief
  *      A class to handle raw numeric events.
@@ -26,8 +24,8 @@ include_once('src/ifaces/rawHandler.php');
  * whenever the bot receives a raw numeric event for the
  * raw code this instance is meant to handle.
  */
-class       ErebotRawHandler
-implements  iErebotRawHandler
+class       Erebot_RawHandler
+implements  Erebot_Interface_RawHandler
 {
     protected $_raw;
     protected $_callback;
@@ -38,7 +36,7 @@ implements  iErebotRawHandler
         $reflector  = new ReflectionParameter($callback, 0);
         $cls        = $reflector->getClass();
         if ($cls === NULL || !$cls->implementsInterface('iErebotRaw'))
-            throw new EErebotInvalidValue('Invalid signature');
+            throw new Erebot_InvalidValueException('Invalid signature');
 
         $this->_raw         =   $raw;
         $this->_callback    =&  $callback;
@@ -61,7 +59,7 @@ implements  iErebotRawHandler
     }
 
     // Documented in the interface.
-    public function handleRaw(iErebotRaw &$raw)
+    public function handleRaw(Erebot_Interface_Event_Raw &$raw)
     {
         if ($raw->getRaw() != $this->_raw)
             return NULL;
