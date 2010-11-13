@@ -18,12 +18,11 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      Interface for BAN mode.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+interface   iErebotEventChanModeBan
+extends     iErebotEvent
 {
+    const MODE_LETTER = 'b';
 }
 

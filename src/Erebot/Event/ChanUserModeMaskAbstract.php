@@ -18,12 +18,19 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      An abstract Event whose target is an IRC mask (nick!ident\@host).
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+abstract class  ErebotEventChanUserModeMaskBase
+extends         ErebotEventChanUserModeBase
+implements      iErebotEventTargetNick
 {
+    // Documented in the interface.
+    public function getTargetNick()
+    {
+        $nick = ErebotUtils::extractNick($this->target);
+        return  (strpos($nick, '?') === FALSE &&
+                strpos($nick, '*') === FALSE) ?
+                $nick : NULL;
+    }
 }
 

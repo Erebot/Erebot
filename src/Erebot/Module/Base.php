@@ -16,14 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/dependency.php');
-
 /**
  * \brief
  *      An abstract class which serves as the base
  *      to build additional modules for Erebot.
  */
-abstract class ErebotModuleBase
+abstract class Erebot_Module_Base
 {
     protected   $_moduleName;
     protected   $_connection;
@@ -53,7 +51,10 @@ abstract class ErebotModuleBase
      */
     abstract public function reload($flags);
 
-    final public function __construct(iErebotConnection &$connection, $channel)
+    final public function __construct(
+        Erebot_Interface_Connection    &$connection,
+                                        $channel
+    )
     {
         $this->_connection  =&  $connection;
         $bot                =&  $connection->getBot();
@@ -133,13 +134,13 @@ abstract class ErebotModuleBase
         $this->_connection->pushLine($command);
     }
 
-    protected function addTimer(iErebotTimer &$timer)
+    protected function addTimer(Erebot_Interface_Timer &$timer)
     {
         $bot =& $this->_connection->getBot();
         return $bot->addTimer($timer);
     }
 
-    protected function removeTimer(iErebotTimer &$timer)
+    protected function removeTimer(Erebot_Interface_Timer &$timer)
     {
         $bot =& $this->_connection->getBot();
         return $bot->removeTimer($timer);
@@ -274,7 +275,7 @@ abstract class ErebotModuleBase
         try {
             $helper = $this->_connection->getModule(
                 'Helper',
-                ErebotConnection::MODULE_BY_NAME,
+                Erebot_Interface_Connection::MODULE_BY_NAME,
                 $this->_channel
             );
             return $helper->realRegisterHelpMethod($this, $callback);

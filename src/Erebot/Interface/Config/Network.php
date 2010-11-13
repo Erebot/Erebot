@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/configProxy.php');
-
 /**
  * \brief
  *      Interface for an IRC network's configuration.
@@ -26,8 +24,8 @@ include_once('src/ifaces/configProxy.php');
  * to represent the configuration associated with
  * some IRC network.
  */
-interface   iErebotNetworkConfig
-extends     iErebotConfigProxy
+interface   Erebot_Interface_Config_Network
+extends     Erebot_Interface_Config_Proxy
 {
     /**
      * Creates a new configuration object for an IRC network.
@@ -40,8 +38,8 @@ extends     iErebotConfigProxy
      *      for this network.
      */
     public function __construct(
-        iErebotMainConfig  &$mainCfg,
-        SimpleXMLElement   &$xml
+        Erebot_Interface_Config_Main    &$mainCfg,
+        SimpleXMLElement                &$xml
     );
 
     /**

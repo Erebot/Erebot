@@ -23,7 +23,7 @@
  * This interface provides methods which are common
  * to different configuration interfaces.
  */
-interface iErebotConfigProxy
+interface Erebot_Interface_Config_Proxy
 {
     /**
      * Returns the appropriate ErebotI18n object to apply for translations

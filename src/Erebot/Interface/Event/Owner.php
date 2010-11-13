@@ -18,12 +18,11 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      Interface for OWNER mode.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+interface   iErebotEventChanModeOwner
+extends     iErebotEvent
 {
+    const MODE_LETTER = 'q';
 }
 

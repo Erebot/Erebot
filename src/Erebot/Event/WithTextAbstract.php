@@ -18,12 +18,24 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      An abstract Event containing some text.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+abstract class  Erebot_Event_WithTextAbstract
+extends         Erebot_Event_Abstract
+implements      Erebot_Event_TextInterface
 {
+    protected $_text;
+
+    public function __construct(iErebotConnection &$connection, $text)
+    {
+        parent::__construct($connection);
+        $this->_text = new ErebotTextWrapper($text);
+    }
+
+    // Documented in the interface.
+    public function & getText()
+    {
+        return $this->_text;
+    }
 }
 

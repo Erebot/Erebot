@@ -18,12 +18,11 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      Interface for HALF-OPerator mode.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+interface   iErebotEventChanModeHalfop
+extends     iErebotEvent
 {
+    const MODE_LETTER = 'h';
 }
 

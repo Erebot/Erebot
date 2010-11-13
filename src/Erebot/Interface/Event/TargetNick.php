@@ -18,12 +18,14 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      Interface for an event whose target is an IRC mask.
+ *
+ * Classes implementing this interface should do their best
+ * to resolve the mask to a single nickname.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+interface   iErebotEventTargetNick
+extends     iErebotEvent
 {
+    public function getTargetNick();
 }
 

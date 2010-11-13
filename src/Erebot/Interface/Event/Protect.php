@@ -18,12 +18,10 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      Interface for PROTECTion mode.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+interface   iErebotEventChanModeProtect
+extends     iErebotEvent
 {
+    const MODE_LETTER = 'a';
 }
-

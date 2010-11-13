@@ -18,12 +18,15 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      An abstract Event which represents a usermode change
+ *      on a channel.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+abstract class  ErebotEventChanUserModeBase
+extends         ErebotEventWithChanSourceAndTarget
 {
+    public function getMode()
+    {
+        return $this->MODE_PREFIX . $this->MODE_LETTER;
+    }
 }
 

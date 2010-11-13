@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/channelConfig.php');
-
 /**
  * \brief
  *      Contains the configuration for an IRC channel.
@@ -25,9 +23,9 @@ include_once('src/ifaces/channelConfig.php');
  * This is mainly used to provide autojoin and advanced i18n
  * capabilities to the bot.
  */
-class       ErebotChannelConfig
-extends     ErebotConfigProxy
-implements  iErebotChannelConfig
+class       Erebot_Config_Channel
+extends     Erebot_Config_Proxy
+implements  Erebot_Interface_Config_Channel
 {
     /// The name of the channel this configuration refers to.
     protected $_name;
@@ -37,8 +35,8 @@ implements  iErebotChannelConfig
 
     // Documented in the interface.
     public function __construct(
-        iErebotNetworkConfig    &$netCfg,
-        SimpleXMLElement        &$xml
+        Erebot_Interface_Config_Network &$netCfg,
+        SimpleXMLElement                &$xml
     )
     {
         parent::__construct($this, $xml);

@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/serverConfig.php');
-
 /**
  * \brief
  *      This class contains the configuration for an IRC server.
@@ -25,17 +23,17 @@ include_once('src/ifaces/serverConfig.php');
  * This class stores settings which are specific to an IRC server,
  * such as a connection URL and a default quit message.
  */
-class       ErebotServerConfig
-extends     ErebotConfigProxy
-implements  iErebotServerConfig
+class       Erebot_Config_Server
+extends     Erebot_Config_Proxy
+implements  Erebot_Interface_Config_Network
 {
     /// A URL used to connect to this IRC(S) server.
     protected $_connectionURL;
 
     // Documented in the interface.
     public function __construct(
-        iErebotNetworkConfig    &$netCfg,
-        SimpleXMLElement        &$xml
+        Erebot_Interface_Config_Network &$netCfg,
+        SimpleXMLElement                &$xml
     )
     {
         parent::__construct($netCfg, $xml);

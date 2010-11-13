@@ -16,10 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/config/serverConfig.php');
-include_once('src/config/channelConfig.php');
-include_once('src/ifaces/networkConfig.php');
-
 /**
  * \brief
  *      This class contains the configuration for an IRC network.
@@ -29,9 +25,9 @@ include_once('src/ifaces/networkConfig.php');
  * It also contains references to instances of the ErebotServerConfig
  * and ErebotChannelConfig classes which apply on this IRC network.
  */
-class       ErebotNetworkConfig
-extends     ErebotConfigProxy
-implements  iErebotNetworkConfig
+class       Erebot_Config_Network
+extends     Erebot_Config_Proxy
+implements  Erebot_Interface_Config_Network
 {
     /// A reference to the ErebotMainConfig this instance depends on.
     protected $_maincfg;
@@ -47,8 +43,8 @@ implements  iErebotNetworkConfig
 
     // Documented in the interface.
     public function __construct(
-        iErebotMainConfig   &$mainCfg,
-        SimpleXMLElement    &$xml
+        Erebot_Interface_Config_Main    &$mainCfg,
+        SimpleXMLElement                &$xml
     )
     {
         parent::__construct($mainCfg, $xml);
@@ -58,14 +54,16 @@ implements  iErebotNetworkConfig
         $this->_name        = (string) $xml['name'];
 
         foreach ($xml->servers->server as $serverCfg) {
-            $newConfig = new ErebotServerConfig($this, $serverCfg);
+            /// @TODO: use dependency injection instead.
+            $newConfig = new Erebot_Config_Server($this, $serverCfg);
             $this->_servers[$newConfig->getConnectionURL()] =& $newConfig;
             unset($newConfig);
         }
 
         if (isset($xml->channels->channel)) {
             foreach ($xml->channels->channel as $channelCfg) {
-                $newConfig = new ErebotChannelConfig($this, $channelCfg);
+                /// @TODO: use dependency injection instead.
+                $newConfig = new Erebot_Config_Channel($this, $channelCfg);
                 $this->_channels[$newConfig->getName()] =& $newConfig;
                 unset($newConfig);
             }
@@ -73,7 +71,7 @@ implements  iErebotNetworkConfig
     }
 
     /**
-     * Destructs ErebotNetworkConfig instances.
+     * Destructor.
      */
     public function __destruct()
     {

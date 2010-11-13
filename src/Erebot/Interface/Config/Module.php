@@ -24,7 +24,7 @@
  * to represent the configuration associated with
  * a module.
  */
-interface iErebotModuleConfig
+interface Erebot_Interface_Config_Module
 {
     /**
      * Creates a new configuration object for a module.

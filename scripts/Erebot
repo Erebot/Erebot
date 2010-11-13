@@ -17,16 +17,13 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-set_include_path(
-    dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src' .
-    PATH_SEPARATOR . get_include_path()
-);
-
-/* Include the bot's core, this is where a lot of the important stuff
- * is done and the only required file from a user's point of view.
- */
-include('core.php');
-include('Console/CommandLine.php');
+if (basename(dirname(dirname(__FILE__))) == 'trunk') {
+    $path = '/../../../autoloader.php';
+    include_once(
+        dirname(__FILE__) .
+        str_replace('/', DIRECTORY_SEPARATOR, $path)
+    );
+}
 
 function main()
 {
@@ -56,9 +53,9 @@ function main()
         $parser->displayError($exc->getMessage());
         exit(1);
     }
-    $config = new ErebotMainConfig(
+    $config = new Erebot_Config_Main(
         $res->options['config'],
-        ErebotMainConfig::LOAD_FROM_FILE
+        Erebot_Config_Main::LOAD_FROM_FILE
     );
     $bot = new Erebot($config);
     $bot->start();

@@ -18,12 +18,11 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      Interface for an event which contains some text.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+interface   iErebotEventText
+extends     iErebotEvent
 {
+    public function & getText();
 }
 

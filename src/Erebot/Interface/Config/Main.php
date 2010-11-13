@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/configProxy.php');
-
 /**
  * \brief
  *      Interface for the main (general) configuration.
@@ -26,8 +24,8 @@ include_once('src/ifaces/configProxy.php');
  * to represent the general configuration associated
  * with an instance of the bot.
  */
-interface   iErebotMainConfig
-extends     iErebotConfigProxy
+interface   Erebot_Interface_Config_Main
+extends     Erebot_Interface_Config_Proxy
 {
     /// Indicates that the configuration must be loaded from a file.
     const LOAD_FROM_FILE = 1;

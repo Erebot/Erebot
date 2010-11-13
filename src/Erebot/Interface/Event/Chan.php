@@ -18,12 +18,11 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      Interface for an event which applies to a channel.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+interface   iErebotEventChan
+extends     iErebotEvent
 {
+    public function & getChan();
 }
 

@@ -18,12 +18,30 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      An abstract CTCP Event which applies to the bot
+ *      and contains some text.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+abstract class  ErebotEventWithSourceAndCtcp
+extends         ErebotEventWithSourceAndText
+implements      iErebotEventCtcp
 {
+    protected $_ctcpType;
+    
+    public function __construct(
+        iErebotConnection   &$connection,
+                            $source,
+                            $ctcpType,
+                            $text
+    )
+    {
+        parent::__construct($connection, $source, $text);
+        $this->_ctcpType =& $ctcpType;
+    }
+
+    // Documented in the interface.
+    public function & getCtcpType()
+    {
+        return $this->_ctcpType;
+    }
 }
 

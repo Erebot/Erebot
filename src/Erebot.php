@@ -18,9 +18,13 @@
 
 // We want maximum verbosity! (or just a clean code :)
 error_reporting(E_ALL | E_STRICT);
+
 // The bot may run indefinitely, avoid the default 30 seconds time limit.
 set_time_limit(0);
 
+// Define the __DIR__ magic-constant for pre-5.3.0.
+// Many thanks to the anonymous person who posted this trick on:
+// http://php.net/manual/en/language.constants.predefined.php#99278
 if (!defined('__DIR__')) {
   class __FILE_CLASS__ {
     function  __toString() {
@@ -30,22 +34,6 @@ if (!defined('__DIR__')) {
   }
   define('__DIR__', new __FILE_CLASS__);
 } 
-
-include_once(__DIR__.'/logging/src/Plop.php');
-
-include_once(__DIR__.'/utils.php');
-// We need to include the styling API,
-// so that modules do not need to do it themselves.
-include_once(__DIR__.'/styling.php');
-include_once(__DIR__.'/events/raws.php');
-include_once(__DIR__.'/events/events.php');
-include_once(__DIR__.'/moduleBase.php');
-include_once(__DIR__.'/connection.php');
-include_once(__DIR__.'/config/mainConfig.php');
-include_once(__DIR__.'/timer.php');
-include_once(__DIR__.'/exceptions/NotImplemented.php');
-include_once(__DIR__.'/exceptions/ErrorReporting.php');
-include_once(__DIR__.'/ifaces/core.php');
 
 /*
 /// @TODO: re-think integration of Doctrine a little...
@@ -83,14 +71,8 @@ unset($manager);
  * starts the bot.
  */
 class       Erebot
-implements  iErebot
+implements  Erebot_Interface_Core
 {
-    /**
-     * The default class to use to create new connections if no specific class
-     * is passed to the start() method.
-     */
-    const DEFAULT_CONNECTION_CLS    = 'ErebotConnection';
-
     /// List of \link iErebotConnection iErebotConnections\endlink to handle.
     protected $_connections;
 
@@ -107,7 +89,7 @@ implements  iErebot
     protected $_running;
 
     // Documented in the interface.
-    public function __construct(iErebotMainConfig $config)
+    public function __construct(Erebot_Interface_Config_Main $config)
     {
         $this->_connections     =
         $this->_timers          =
@@ -148,28 +130,26 @@ implements  iErebot
     }
 
     // Documented in the interface.
-    public function start($connectionCls = NULL)
+    public function start($connectionCls = 'Erebot_Connection')
     {
         $logging    =&  Plop::getInstance();
         $logger     =   $logging->getLogger(__FILE__);
         $logger->info($this->gettext('Erebot is starting'));
 
-        if ($connectionCls === NULL)
-            $connectionCls = self::DEFAULT_CONNECTION_CLS;
-        else if (!is_string($connectionCls) || !class_exists($connectionCls))
+        if (!is_string($connectionCls) || !class_exists($connectionCls))
             throw new EErebotInvalidValue('Not a valid class name '.
                 $connectionCls);
         else {
             $reflect = new ReflectionClass($connectionCls);
-            if (!$reflect->implementsInterface('iErebotConnection'))
+            if (!$reflect->implementsInterface('Erebot_Interface_Connection'))
                 throw new EErebotInvalidValue($connectionCls.' does not '.
-                    'implement the iErebotConnection interface');
+                    'implement the Erebot_Interface_Connection interface');
         }
 
         // Let's establish some contacts.
-        $networks       =   $this->_mainCfg->getNetworks();
+        $networks = $this->_mainCfg->getNetworks();
         foreach ($networks as $network) {
-            $servers    = $network->getServers();
+            $servers = $network->getServers();
 
             if (!in_array('AutoConnect', $network->getModules(TRUE)))
                 continue;
@@ -426,7 +406,7 @@ implements  iErebot
     }
 
     // Documented in the interface.
-    public function addTimer(iErebotTimer &$timer)
+    public function addTimer(Erebot_Interface_Timer &$timer)
     {
         $key = array_search($timer, $this->_timers);
         if ($key !== FALSE)
@@ -437,7 +417,7 @@ implements  iErebot
     }
 
     // Documented in the interface.
-    public function removeTimer(iErebotTimer &$timer)
+    public function removeTimer(Erebot_Interface_Timer &$timer)
     {
         $key = array_search($timer, $this->_timers);
         if ($key === FALSE)
@@ -570,7 +550,7 @@ implements  iErebot
     }
 
     // Documented in the interface.
-    public function addConnection(iErebotConnection &$connection)
+    public function addConnection(Erebot_Interface_Connection &$connection)
     {
         $key = array_search($connection, $this->_connections);
         if ($key !== FALSE)
@@ -580,7 +560,7 @@ implements  iErebot
     }
 
     // Documented in the interface.
-    public function removeConnection(iErebotConnection &$connection)
+    public function removeConnection(Erebot_Interface_Connection &$connection)
     {
         /* $this->_connections is unset during destructor call,
          * but the destructing code depends on this method.

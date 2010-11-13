@@ -25,7 +25,7 @@ define('EREBOT_VERSION', '0.3.2-dev1');
  * This interface provides the necessary methods
  * to get a basic instance of the bot running.
  */
-interface iErebot
+interface Erebot_Interface_Core
 {
     /**
      * Version information regarding this release of the bot.
@@ -37,15 +37,15 @@ interface iErebot
     /**
      * Creates a new Erebot instance.
      *
-     * \param iErebotMainConfig $config
+     * \param Erebot_Interface_Config_MainInterface $config
      *      The (main) configuration to use.
      */
-    public function __construct(iErebotMainConfig $config);
+    public function __construct(Erebot_Interface_Config_Main $config);
 
     /**
      * Returns a list of all connections handled by the bot.
      *
-     * \retval list(iErebotConnection)
+     * \retval list(Erebot_Interface_ConnectionInterface)
      *      A list of connections handled by this instance.
      *
      * \note
@@ -95,7 +95,7 @@ interface iErebot
      * \param iErebotTimer $timer
      *      A timer to register.
      */
-    public function addTimer(iErebotTimer &$timer);
+    public function addTimer(Erebot_Interface_Timer &$timer);
 
     /**
      * Unregisters a timer.
@@ -103,7 +103,7 @@ interface iErebot
      * \param iErebotTimer $timer
      *      A timer to unregister.
      */
-    public function removeTimer(iErebotTimer &$timer);
+    public function removeTimer(Erebot_Interface_Timer &$timer);
 
     /**
      * Retrieves the bot's version information.
@@ -189,7 +189,7 @@ interface iErebot
      *      This connection is already part of the connection pool
      *      handled by this instance of the bot.
      */
-    public function addConnection(iErebotConnection &$connection);
+    public function addConnection(Erebot_Interface_Connection &$connection);
 
     /**
      * Removes a connection from the bot.
@@ -206,7 +206,7 @@ interface iErebot
      *      The given connection is not part of the connection pool
      *      handled by this instance of the bot.
      */
-    public function removeConnection(iErebotConnection &$connection);
+    public function removeConnection(Erebot_Interface_Connection &$connection);
 
     /**
      * Returns the translation of a message in the primary language.

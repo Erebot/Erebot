@@ -16,8 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/ifaces/moduleConfig.php');
-
 /**
  * \brief
  *      This class stores configuration data about modules.
@@ -25,8 +23,8 @@ include_once('src/ifaces/moduleConfig.php');
  * For each module at any configuration level, an instance of
  * ErebotModuleConfig will be created.
  */
-class       ErebotModuleConfig
-implements  iErebotModuleConfig
+class       Erebot_Config_Module
+implements  Erebot_Interface_Config_Module
 {
     /// A dictionary mapping parameter names to their textual value.
     protected $_params;

@@ -16,12 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/exceptions/Exception.php');
-include_once('src/exceptions/NotFound.php');
-include_once('src/exceptions/InvalidValue.php');
-include_once('src/config/moduleConfig.php');
-include_once('src/i18n.php');
-
 /**
  * \brief
  *      A configuration proxy which cascades settings.
@@ -36,7 +30,7 @@ include_once('src/i18n.php');
  * The root of the hierarchy acts as a proxy for itself and is
  * always an instance implementing iErebotMainConfig.
  */
-class ErebotConfigProxy
+class Erebot_Config_Proxy
 {
     /// The current locale.
     protected $_locale;
@@ -58,8 +52,8 @@ class ErebotConfigProxy
      *      An XML node which should be used as the basis for configuration.
      */
     protected function __construct(
-        ErebotConfigProxy   &$proxified,
-        SimpleXMLElement    &$xml
+        Erebot_Interface_Config_Proxy   &$proxified,
+        SimpleXMLElement                &$xml
     )
     {
         $this->_proxified   =&  $proxified;
@@ -74,13 +68,14 @@ class ErebotConfigProxy
             return;
 
         foreach ($xml->modules->module as $module) {
-            $instance = new ErebotModuleConfig($module);
+            /// @TODO: use dependency injection instead.
+            $instance = new Erebot_Config_Module($module);
             $this->_modules[$instance->getName()] = $instance;
         }
     }
 
     /**
-     * Destructor for ErebotConfigProxy instances.
+     * Destructor.
      * Takes care of breaking possible circular references.
      */
     public function __destruct()
@@ -95,7 +90,7 @@ class ErebotConfigProxy
     public function getTranslator($component)
     {
         if (isset($this->_locale))
-            return new ErebotI18n($this->_locale, $component);
+            return new Erebot_I18n($this->_locale, $component);
         if ($this->_proxified === $this)
             throw new EErebotNotFound('No translator associated');
         return $this->_proxified->getTranslator($component);

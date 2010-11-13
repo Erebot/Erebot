@@ -16,20 +16,18 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$oldErrorReporting = error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-require('File/Gettext.php');
-error_reporting($oldErrorReporting);
-unset($oldErrorReporting);
-
-include_once('src/ifaces/i18n.php');
+#$oldErrorReporting = error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+#require('File/Gettext.php');
+#error_reporting($oldErrorReporting);
+#unset($oldErrorReporting);
 
 /**
  * \brief
  *      A class which provides translations for
  *      messages used by the core and modules.
  */
-class ErebotI18n
-implements iErebotI18n
+class       Erebot_I18n
+implements  Erebot_Interface_I18n
 {
     static protected $_cache = array();
 
@@ -56,12 +54,23 @@ implements iErebotI18n
 
     protected function real_gettext($message, $component)
     {
-        if ($component == 'Erebot')
-            $translationFile = dirname(dirname(__FILE__)).'/data/i18n/';
+        if (basename(dirname(dirname(__DIR__)) == 'trunk') {
+            if ($component == 'Erebot') {
+                $base = '../../data/i18n';
+            }
+            else if (!strncasecmp($component, 'Erebot_Module', 13)) {
+                $base = '../../../../modules/' .
+                    substr($component, 13) .
+                    '/trunk/data/i18n';
+            }
+        }
         else
-            $translationFile = dirname(dirname(__FILE__)).
-                '/modules/'.$component.'/i18n/';
-        $translationFile .= $this->_locale.'/LC_MESSAGES/'.$component.'.mo';
+            $base = '../../../data/pear.erebot.net/' . $component . '/i18n';
+        $base = str_replace('/', DIRECTORY_SEPARATOR, trim('/', $base));
+        $prefix = __DIR__ . DIRECTORY_SEPARATOR . $base . DIRECTORY_SEPARATOR;
+
+        $translationFile = $prefix . $this->_locale . DIRECTORY_SEPARATOR .
+            'LC_MESSAGES' . DIRECTORY_SEPARATOR . $component . '.mo';
 
         if (version_compare(PHP_VERSION, '5.3.0', '>='))
             clearstatcache(FALSE, $translationFile);

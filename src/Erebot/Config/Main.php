@@ -16,7 +16,11 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'XglobStream.php');
+include_once(
+    dirname(dirname(__FILE__)) .
+    DIRECTORY_SEPARATOR .
+    'XglobStream.php'
+);
 
 /**
  * \brief
@@ -89,14 +93,14 @@ implements  Erebot_Interface_Config_Main
     public function load($configData, $source)
     {
         $possibleSources =     array(
-                                    Erebot_Config_Main::LOAD_FROM_FILE,
-                                    Erebot_Config_Main::LOAD_FROM_STRING,
+                                    self::LOAD_FROM_FILE,
+                                    self::LOAD_FROM_STRING,
                                 );
         if (!in_array($source, $possibleSources, TRUE))
             throw new EErebotInvalidValue('Invalid $source');
 
         if (is_string($configData) && $configData != '') {
-            if ($source == Erebot_Config_Main::LOAD_FROM_FILE)
+            if ($source == self::LOAD_FROM_FILE)
                 $file = $configData[0] == '/' ? $configData :
                         dirname(dirname(__FILE__)).'/'.$configData;
             else
@@ -105,20 +109,29 @@ implements  Erebot_Interface_Config_Main
         else
             throw new EErebotInvalidValue('Invalid configuration file');
 
-        $schema = dirname(__FILE__).'/config.rng';
+        if (basename(dirname(dirname(dirname(__DIR__)))) == 'trunk')
+            $schemaDir = '../../../data';
+        else
+            $schemaDir = '../../../data/pear.erebot.net/Erebot';
+
+        $schemaDir = str_replace('/', DIRECTORY_SEPARATOR, $schemaDir);
+        $schema = dirname(__FILE__) .
+            DIRECTORY_SEPARATOR . $schemaDir .
+            DIRECTORY_SEPARATOR . 'config.rng';
+
         $ue     = libxml_use_internal_errors(TRUE);
         $domxml = new DomDocument;
-        if ($source == Erebot_Config_Main::LOAD_FROM_FILE)
+        if ($source == self::LOAD_FROM_FILE)
             $domxml->load($file);
         else
             $domxml->loadXML($configData);
 
         $domxml->xinclude(LIBXML_NOBASEFIX);
         $this->_stripXGlobWrappers($domxml);
-        $domxml->relaxNGValidate($schema);
+        $ok = $domxml->relaxNGValidate($schema);
 
         $errors = libxml_get_errors();
-        if (count($errors)) {
+        if (!$ok && count($errors)) {
             # Some unpredicted error occurred,
             # show some (hopefully) useful information.
             $errmsg = print_r($errors, TRUE);
@@ -127,14 +140,18 @@ implements  Erebot_Interface_Config_Main
                 'Error while validating the configuration file');
         }
 
-        $xml            = simplexml_import_dom($domxml);
+        $xml = simplexml_import_dom($domxml);
         parent::__construct($this, $xml);
 
         if (!isset($xml['version']))
             throw new EErebotInvalidValue('No version defined');
         $this->_version  = (string) $xml['version'];
 
-        if (!version_compare($this->_version, iErebot::VERSION, 'eq'))
+        if (!version_compare(
+            $this->_version,
+            Erebot_Interface_Core::VERSION,
+            'eq'
+        ))
             throw new EErebotInvalidValue(sprintf(
                 'Invalid version (expected %s, got %s)',
                 Erebot::VERSION, $this->_version
@@ -178,6 +195,7 @@ implements  Erebot_Interface_Config_Main
 
         $this->_networks = array();
         foreach ($xml->networks->network as $netCfg) {
+            /// @TODO: use dependency injection instead.
             $newConfig  =   new Erebot_Config_Network($this, $netCfg);
             $this->_networks[$newConfig->getName()]  =& $newConfig;
             unset($newConfig);
@@ -187,7 +205,7 @@ implements  Erebot_Interface_Config_Main
         libxml_use_internal_errors($ue);
         unset($domxml);
 
-        if ($source == Erebot_Config_Main::LOAD_FROM_FILE)
+        if ($source == self::LOAD_FROM_FILE)
             $this->_configFile   = $configData;
         else
             $this->_configFile   = NULL;

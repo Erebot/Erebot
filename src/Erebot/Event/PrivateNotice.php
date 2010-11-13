@@ -20,7 +20,7 @@
  * \brief
  *      Triggered when a private notice is received.
  */
-class       ErebotEventNoticePrivate
+class       Erebot_Event_PrivateNotice
 extends     ErebotEventWithSourceAndText
 implements  iErebotEventMessageNotice,
             iErebotEventPrivate

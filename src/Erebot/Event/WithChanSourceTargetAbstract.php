@@ -18,12 +18,30 @@
 
 /**
  * \brief
- *      Triggered when a private message is received.
+ *      An abstract Event which applies to a channel
+ *      and has a source and a target.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+abstract class  ErebotEventWithChanSourceAndTarget
+extends         ErebotEventWithSourceAndTarget
+implements      iErebotEventChan
 {
+    protected $_chan;
+
+    public function __construct(
+        iErebotConnection   &$connection,
+                            $chan,
+                            $source,
+                            $target
+    )
+    {
+        parent::__construct($connection, $source, $target);
+        $this->_chan =& $chan;
+    }
+
+    // Documented in the interface.
+    public function & getChan()
+    {
+        return $this->_chan;
+    }
 }
 
