@@ -1,7 +1,5 @@
 <?php
 
-include_once('src/i18n.php');
-
 class   I18nTest
 extends PHPUnit_Framework_TestCase
 {
@@ -13,7 +11,7 @@ extends PHPUnit_Framework_TestCase
             'fr_FR',
         );
         foreach ($locales as $locale)
-            $this->translators[$locale] = new ErebotI18n($locale, "Erebot");
+            $this->translators[$locale] = new Erebot_I18n($locale, "Erebot");
     }
 
     public function testGetLocale()

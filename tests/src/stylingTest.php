@@ -1,8 +1,5 @@
 <?php
 
-include_once('src/ifaces/i18n.php');
-include_once('src/styling.php');
-
 class   StylingTest
 extends PHPUnit_Framework_TestCase
 {
@@ -11,7 +8,11 @@ extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->_translator = $this->getMock('iErebotI18n', array(), array('', ''), '', FALSE, FALSE, FALSE);
+        $this->_translator = $this->getMock(
+            'Erebot_Interface_I18n',
+            array(), array('', ''), '',
+            FALSE, FALSE, FALSE
+        );
     }
 
     public function tearDown()
@@ -22,7 +23,7 @@ extends PHPUnit_Framework_TestCase
     public function testArrayWithOnlyOneElement()
     {
         $source =   '<for from="names" item="name"><var name="name"/></for>';
-        $template   = new ErebotStyling($source, $this->_translator);
+        $template   = new Erebot_Styling($source, $this->_translator);
         $template->assign('names', array('Clicky'));
         $result     = addcslashes($template->render(), "\000..\037");
         $expected   = "Clicky";
@@ -34,7 +35,7 @@ extends PHPUnit_Framework_TestCase
         $source =   'The Beatles: <for from="Beatles" item="Beatle">'.
                     '<u><var name="Beatle"/></u></for>.';
 
-        $template   = new ErebotStyling($source, $this->_translator);
+        $template   = new Erebot_Styling($source, $this->_translator);
         $template->assign('Beatles', array('George', 'John', 'Paul', 'Ringo'));
         $result     = addcslashes($template->render(), "\000..\037");
         $expected   =   "The Beatles: \\037George\\037, \\037John\\037, ".
@@ -50,7 +51,7 @@ extends PHPUnit_Framework_TestCase
                     '<b><u><color fg="green"><var name="nick"/></color></u>: '.
                     '<var name="score"/></b></for>';
 
-        $template   =   new ErebotStyling($source, $this->_translator);
+        $template   =   new Erebot_Styling($source, $this->_translator);
         $scores     =   array(
                             'Clicky' => 42,
                             'Looksup' => 23,
@@ -72,7 +73,7 @@ extends PHPUnit_Framework_TestCase
         $source =   "<plural var='foo'><case form='one'>there's <var ".
                     "name='foo'/> file</case><case form='other'>there ".
                     "are #{''<var name='foo'/>''}# files</case></plural>";
-        $template   =   new ErebotStyling($source, $this->_translator);
+        $template   =   new Erebot_Styling($source, $this->_translator);
         $template->assign('foo', 0);
         $this->assertEquals("there are #{''0''}# files", $template->render());
         $template->assign('foo', 1);

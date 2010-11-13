@@ -7,7 +7,7 @@ extends PHPUnit_Framework_TestCase
 {
     private $_flag;
 
-    public function helper(iErebotTimer &$timer)
+    public function helper(Erebot_Interface_Timer &$timer)
     {
         $this->_flag = TRUE;
     }
@@ -28,7 +28,7 @@ extends PHPUnit_Framework_TestCase
 
         $this->_flag = FALSE;
         $callback = array($this, 'helper');
-        $timer = new ErebotTimer($callback, $delay, FALSE);
+        $timer = new Erebot_Timer($callback, $delay, FALSE);
         $this->assertEquals($callback, $timer->getCallback());
         $this->assertSame($delay, $timer->getDelay());
 

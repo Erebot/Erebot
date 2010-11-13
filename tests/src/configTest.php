@@ -1,7 +1,5 @@
 <?php
 
-include_once('src/config/mainConfig.php');
-
 class   ConfigTest
 extends PHPUnit_Framework_TestCase
 {
@@ -10,13 +8,13 @@ extends PHPUnit_Framework_TestCase
      */
     public function testLoadConfigFromInvalidSource()
     {
-        $config = new ErebotMainConfig('foo', 'bar');
+        $config = new Erebot_Config_Main('foo', 'bar');
     }
 
     public function testLoadValidConfigFromFile()
     {
         $file = dirname(dirname(__FILE__)).'/data/valid-config.xml';
-        $config = new ErebotMainConfig($file, ErebotMainConfig::LOAD_FROM_FILE);
+        $config = new Erebot_Config_Main($file, Erebot_Config_Main::LOAD_FROM_FILE);
         unset($config);
     }
 
@@ -41,7 +39,7 @@ extends PHPUnit_Framework_TestCase
 CONFIG;
 
         $data = sprintf($data, EREBOT_VERSION);
-        $config = new ErebotMainConfig($data, ErebotMainConfig::LOAD_FROM_STRING);
+        $config = new Erebot_Config_Main($data, Erebot_Config_Main::LOAD_FROM_STRING);
         unset($config);
     }
 
@@ -55,7 +53,7 @@ CONFIG;
 <configuration xmlns="http://www.erebot.net/xmlns/erebot"></configuration>
 CONFIG;
 
-        $config = new ErebotMainConfig($data, ErebotMainConfig::LOAD_FROM_STRING);
+        $config = new Erebot_Config_Main($data, Erebot_Config_Main::LOAD_FROM_STRING);
     }
 }
 

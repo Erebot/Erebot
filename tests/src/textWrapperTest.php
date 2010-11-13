@@ -1,14 +1,12 @@
 <?php
 
-include_once('src/textWrapper.php');
-
 class   TextWrapperTest
 extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         $this->text = ' foo   bar baz   ';
-        $this->wrapped = new ErebotTextWrapper($this->text);
+        $this->wrapped = new Erebot_TextWrapper($this->text);
     }
 
     public function testGetTokens()

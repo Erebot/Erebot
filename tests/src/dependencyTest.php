@@ -1,8 +1,5 @@
 <?php
 
-include_once('src/utils.php');
-include_once('src/dependency.php');
-
 class   DependencyTest
 extends PHPUnit_Framework_TestCase
 {
@@ -26,20 +23,20 @@ extends PHPUnit_Framework_TestCase
     public function testValidDependencySpecifications()
     {
         foreach (self::$opMapping as $mapped => $value) {
-            $dep = new ErebotDependency('foo'.$mapped.'42');
+            $dep = new Erebot_Dependency('foo'.$mapped.'42');
             $this->assertEquals('foo '.$value.' 42', (string) $dep);
         }
 
-        $dep = new ErebotDependency('foo');
+        $dep = new Erebot_Dependency('foo');
         $this->assertEquals('foo', (string) $dep);
 
         // Same values with additional whitespaces.
         foreach (self::$opMapping as $mapped => $value) {
-            $dep = new ErebotDependency('  foo  '.$mapped.'  42  ');
+            $dep = new Erebot_Dependency('  foo  '.$mapped.'  42  ');
             $this->assertEquals('foo '.$value.' 42', (string) $dep);
         }
 
-        $dep = new ErebotDependency('   foo   ');
+        $dep = new Erebot_Dependency('   foo   ');
         $this->assertEquals('foo', (string) $dep);
     }
 
@@ -48,7 +45,7 @@ extends PHPUnit_Framework_TestCase
      */
     public function testInvalidSpecification()
     {
-        new ErebotDependency('foo ~= 42');
+        new Erebot_Dependency('foo ~= 42');
     }
 
     /**
@@ -56,7 +53,7 @@ extends PHPUnit_Framework_TestCase
      */
     public function testInvalidSpecification2()
     {
-        new ErebotDependency('foo >');
+        new Erebot_Dependency('foo >');
     }
 }
 

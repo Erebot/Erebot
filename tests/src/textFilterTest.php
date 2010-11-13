@@ -1,7 +1,6 @@
 <?php
 
 include_once('tests/testenv/bootstrap.php');
-include_once('src/textFilter.php');
 
 class   TextFilterArgumentsTest
 extends ErebotModuleTestCase
@@ -11,7 +10,11 @@ extends ErebotModuleTestCase
      */
     public function testInvalidArgumentsThrowAnException()
     {
-        new ErebotTextFilter($this->_mainConfig, ErebotTextFilter::TYPE_STATIC, NULL);
+        new Erebot_TextFilter(
+            $this->_mainConfig,
+            Erebot_TextFilter::TYPE_STATIC,
+            NULL
+        );
     }
 
     /**
@@ -19,7 +22,11 @@ extends ErebotModuleTestCase
      */
     public function testInvalidArgumentsThrowAnException2()
     {
-        new ErebotTextFilter($this->_mainConfig, ErebotTextFilter::TYPE_WILDCARD, NULL);
+        new Erebot_TextFilter(
+            $this->_mainConfig,
+            Erebot_TextFilter::TYPE_WILDCARD,
+            NULL
+        );
     }
 
     /**
@@ -27,7 +34,11 @@ extends ErebotModuleTestCase
      */
     public function testInvalidArgumentsThrowAnException3()
     {
-        new ErebotTextFilter($this->_mainConfig, ErebotTextFilter::TYPE_REGEXP, NULL);
+        new Erebot_TextFilter(
+            $this->_mainConfig,
+            Erebot_TextFilter::TYPE_REGEXP,
+            NULL
+        );
     }
 
     /**
@@ -35,14 +46,14 @@ extends ErebotModuleTestCase
      */
     public function testInvalidArgumentsThrowAnException4()
     {
-        new ErebotTextFilter($this->_mainConfig, NULL, '');
+        new Erebot_TextFilter($this->_mainConfig, NULL, '');
     }
 }
 
 class   TextFilterStaticTest
 extends ErebotModuleTestCase
 {
-    const PATTERN_TYPE = ErebotTextFilter::TYPE_STATIC;
+    const PATTERN_TYPE = Erebot_TextFilter::TYPE_STATIC;
     const PATTERN_TEXT = 'test phrase here';
 
     public function setUp()
@@ -57,7 +68,7 @@ extends ErebotModuleTestCase
     protected function getFilter($prefixing)
     {
         $reflect    = new ReflectionObject($this);
-        $filter     = new ErebotTextFilter(
+        $filter     = new Erebot_TextFilter(
                             $this->_mainConfig,
                             $reflect->getConstant('PATTERN_TYPE'),
                             $reflect->getConstant('PATTERN_TEXT'),
@@ -70,7 +81,7 @@ extends ErebotModuleTestCase
         $filter     = $this->getFilter($prefix_mode);
         $prefix     = $this->_mainConfig->getCommandsPrefix();
 
-        $event  =   new ErebotEventTextPrivate(
+        $event  =   new Erebot_Event_PrivateText(
                         $this->_connection, 'foo',
                         $prefix.'test phrase here'
                     );
@@ -83,7 +94,7 @@ extends ErebotModuleTestCase
                 "Failed to reject a command with a prefix ($prefix).\n".
                 "Internal state:\n".print_r($filter->getPatterns(), TRUE));
 
-        $event  =   new ErebotEventTextPrivate(
+        $event  =   new Erebot_Event_PrivateText(
                         $this->_connection, 'foo',
                         'test phrase here'
                     );
@@ -96,7 +107,7 @@ extends ErebotModuleTestCase
                 "Failed to reject a command without any prefix.\n".
                 "Internal state:\n".print_r($filter->getPatterns(), TRUE));
 
-        $event  =   new ErebotEventTextPrivate(
+        $event  =   new Erebot_Event_PrivateText(
                         $this->_connection, 'foo',
                         'ttest phrase here'
                     );
@@ -124,21 +135,21 @@ extends ErebotModuleTestCase
 class   TextFilterWildcardTest
 extends TextFilterStaticTest
 {
-    const PATTERN_TYPE = ErebotTextFilter::TYPE_WILDCARD;
+    const PATTERN_TYPE = Erebot_TextFilter::TYPE_WILDCARD;
     const PATTERN_TEXT = 't?st phrase here';
 }
 
 class   TextFilterWildcard2Test
 extends TextFilterStaticTest
 {
-    const PATTERN_TYPE = ErebotTextFilter::TYPE_WILDCARD;
+    const PATTERN_TYPE = Erebot_TextFilter::TYPE_WILDCARD;
     const PATTERN_TEXT = 'te*here';
 }
 
 class   TextFilterWildcard3Test
 extends TextFilterStaticTest
 {
-    const PATTERN_TYPE = ErebotTextFilter::TYPE_WILDCARD;
+    const PATTERN_TYPE = Erebot_TextFilter::TYPE_WILDCARD;
     const PATTERN_TEXT = 'te?? & &';
 }
 
