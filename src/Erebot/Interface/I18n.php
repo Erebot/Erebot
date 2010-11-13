@@ -24,7 +24,7 @@
  * to provide internationalization of the messages
  * the bot emits through logging or exceptions.
  */
-interface iErebotI18n
+interface Erebot_Interface_I18n
 {
     /**
      * Creates a new translator for messages.

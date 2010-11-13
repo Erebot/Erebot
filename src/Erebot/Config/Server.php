@@ -25,7 +25,7 @@
  */
 class       Erebot_Config_Server
 extends     Erebot_Config_Proxy
-implements  Erebot_Interface_Config_Network
+implements  Erebot_Interface_Config_Server
 {
     /// A URL used to connect to this IRC(S) server.
     protected $_connectionURL;

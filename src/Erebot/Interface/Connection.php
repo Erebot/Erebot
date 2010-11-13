@@ -23,7 +23,7 @@
  * This interface provides the necessary methods
  * to handle an IRC(S) connection.
  */
-interface iErebotConnection
+interface Erebot_Interface_Connection
 {
     /// Retrieves an instance of a module by its name.
     const MODULE_BY_NAME    = 0;
@@ -48,7 +48,10 @@ interface iErebotConnection
      *      There is no actual connection until ErebotConnection::connect()
      *      is used.
      */
-    public function __construct(iErebot &$bot, iErebotServerConfig &$config);
+    public function __construct(
+        Erebot_Interface_Core           &$bot,
+        Erebot_Interface_Config_Server  &$config
+    );
 
     /**
      * Makes the actual connection to an IRC server,
@@ -277,7 +280,7 @@ interface iErebotConnection
      * \param iErebotRawHandler $handler
      *      The handler to register.
      */
-    public function addRawHandler(iErebotRawHandler &$handler);
+    public function addRawHandler(Erebot_Interface_RawHandler &$handler);
 
     /**
      * Unregisters a raw handler on this connection.
@@ -289,7 +292,7 @@ interface iErebotConnection
      *      Thrown when the given handler could not be found,
      *      such as when it was not registered on this connection.
      */
-    public function removeRawHandler(iErebotRawHandler &$handler);
+    public function removeRawHandler(Erebot_Interface_RawHandler &$handler);
 
     /**
      * Registers an event handler on this connection.
@@ -297,7 +300,7 @@ interface iErebotConnection
      * \param iErebotEventHandler $handler
      *      The handler to register.
      */
-    public function addEventHandler(iErebotEventHandler &$handler);
+    public function addEventHandler(Erebot_Interface_EventHandler &$handler);
 
     /**
      * Unregisters an event handler on this connection.
@@ -309,7 +312,7 @@ interface iErebotConnection
      *      Thrown when the given handler could not be found,
      *      such as when it was not registered on this connection.
      */
-    public function removeEventHandler(iErebotEventHandler &$handler);
+    public function removeEventHandler(Erebot_Interface_EventHandler &$handler);
 
     /**
      * Dispatches the given event to handlers
@@ -318,7 +321,7 @@ interface iErebotConnection
      * \param iErebotEvent $event
      *      An event to dispatch.
      */
-    public function dispatchEvent(iErebotEvent &$event);
+    public function dispatchEvent(Erebot_Interface_Event_Generic &$event);
 
     /**
      * Dispatches the given raw to handlers
@@ -327,6 +330,6 @@ interface iErebotConnection
      * \param iErebotRaw $raw
      *      A raw message to dispatch.
      */
-    public function dispatchRaw(iErebotRaw &$raw);
+    public function dispatchRaw(Erebot_Interface_Raw &$raw);
 }
 

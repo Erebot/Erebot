@@ -16,18 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/config/mainConfig.php');
-include_once('src/events/events.php');
-include_once('src/events/rawHandler.php');
-include_once('src/events/eventHandler.php');
-include_once('src/ifaces/connection.php');
-
 /**
  * \brief
  *      Handles a (possibly encrypted) connection to an IRC server.
  */
-class       ErebotConnection
-implements  iErebotConnection
+class       Erebot_Connection
+implements  Erebot_Interface_Connection
 {
     /// A configuration object implementing the iErebotServerConfig interface.
     protected $_config;
@@ -54,7 +48,9 @@ implements  iErebotConnection
     protected $_events;
 
     // Documented in the interface.
-    public function __construct(iErebot &$bot, iErebotServerConfig &$config)
+    public function __construct(
+        Erebot_Interface_Core           &$bot,
+        Erebot_Interface_Config_Server  &$config)
     {
         $this->_config  =&  $config;
         $this->_bot     =&  $bot;
@@ -567,7 +563,7 @@ implements  iErebotConnection
                     break;
                 }
 
-                $modes  = ErebotUtils::gettok($msg, 0, 1);
+                $modes  = Erebot_Utils::gettok($msg, 0, 1);
                 $len    = strlen($modes);
                 $mode   = self::MODE_ADD;
                 $k      = 1;
@@ -896,8 +892,8 @@ implements  iErebotConnection
 
         try {
             $instance->reload(
-                ErebotModuleBase::RELOAD_ALL |
-                ErebotModuleBase::RELOAD_INIT
+                Erebot_Module_Base::RELOAD_ALL |
+                Erebot_Module_Base::RELOAD_INIT
             );
         }
         catch (EErebotNotFound $e) {
@@ -947,13 +943,13 @@ implements  iErebotConnection
     }
 
     // Documented in the interface.
-    public function addRawHandler(iErebotRawHandler &$handler)
+    public function addRawHandler(Erebot_Interface_RawHandler &$handler)
     {
         $this->_raws[] = $handler;
     }
 
     // Documented in the interface.
-    public function removeRawHandler(iErebotRawHandler &$handler)
+    public function removeRawHandler(Erebot_Interface_RawHandler &$handler)
     {
         $key = array_search($handler, $this->_raws);
         if ($key === FALSE)
@@ -962,13 +958,13 @@ implements  iErebotConnection
     }
 
     // Documented in the interface.
-    public function addEventHandler(iErebotEventHandler &$handler)
+    public function addEventHandler(Erebot_Interface_EventHandler &$handler)
     {
         $this->_events[] = $handler;
     }
 
     // Documented in the interface.
-    public function removeEventHandler(iErebotEventHandler &$handler)
+    public function removeEventHandler(Erebot_Interface_EventHandler &$handler)
     {
         $key = array_search($handler, $this->_events);
         if ($key === FALSE)
@@ -977,7 +973,7 @@ implements  iErebotConnection
     }
 
     // Documented in the interface.
-    public function dispatchEvent(iErebotEvent &$event)
+    public function dispatchEvent(Erebot_Interface_Event_Generic &$event)
     {
         try {
             foreach ($this->_events as &$handler) {
@@ -995,7 +991,7 @@ implements  iErebotConnection
     }
 
     // Documented in the interface.
-    public function dispatchRaw(iErebotRaw &$raw)
+    public function dispatchRaw(Erebot_Interface_Raw &$raw)
     {
         try {
             foreach ($this->_raws as &$handler) {
