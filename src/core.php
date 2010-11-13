@@ -31,7 +31,7 @@ if (!defined('__DIR__')) {
   define('__DIR__', new __FILE_CLASS__);
 } 
 
-include_once(__DIR__.'/logging/src/Plop/Plop.php');
+include_once(__DIR__.'/logging/src/Plop.php');
 
 include_once(__DIR__.'/utils.php');
 // We need to include the styling API,

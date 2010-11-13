@@ -168,7 +168,7 @@ implements  iErebotMainConfig
                 throw new EErebotInvalidValue('Invalid command prefix');
         }
 
-        $logging =& Plop_Plop::getInstance();
+        $logging =& Plop::getInstance();
         if (isset($xml->children(Plop_Config_Format_XML::XMLNS)->logging[0]))
             $logging->fileConfig(
                 $xml->children(Plop_Config_Format_XML::XMLNS)->logging[0],

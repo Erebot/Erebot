@@ -32,10 +32,10 @@ set_include_path(
     get_include_path()
 );
 
-include_once('src/logging/src/Plop/Plop.php');
+include_once('src/logging/src/Plop.php');
 include_once('src/logging/tests/bootstrap.php');
 
-$logging =& Plop_Plop::getInstance();
+$logging =& Plop::getInstance();
 $logging->basicConfig();
 unset($logging);
 
