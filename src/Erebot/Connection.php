@@ -23,9 +23,12 @@
 class       Erebot_Connection
 implements  Erebot_Interface_Connection
 {
-    /// A configuration object implementing the iErebotServerConfig interface.
+    /**
+     * A configuration object implementing
+     * the Erebot_Interface_Config_Server interface.
+     */
     protected $_config;
-    /// A bot object implementing the iErebot interface.
+    /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
 
     /// The underlying socket, represented as a stream.
@@ -71,8 +74,9 @@ implements  Erebot_Interface_Connection
     /**
      * Loads modules which are shared by all channels.
      * This means that all modules associated to this instance's $config
-     * (an iErebotServerConfig) and its parents (an iErebotNetworkConfig
-     * and an iErebotMainConfig) get loaded by this method.
+     * (an Erebot_Interface_Config_Server) and its parents (an
+     * Erebot_Interface_Config_Network and an Erebot_Interface_Config_Main)
+     * get loaded by this method.
      *
      * \note
      *      This method uses the modules metadata to take dependencies
@@ -992,7 +996,7 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function dispatchRaw(Erebot_Interface_Raw &$raw)
+    public function dispatchRaw(Erebot_Interface_Event_Raw &$raw)
     {
         try {
             foreach ($this->_raws as &$handler) {

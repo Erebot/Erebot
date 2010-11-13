@@ -160,7 +160,7 @@ class   Erebot_Styling
      *      The template which will be used to produce
      *      the final message.
      *
-     * \param iErebotI18n $translator
+     * \param Erebot_Interface_I18n $translator
      *      A translator object, used to determine the correct
      *      pluralization rules.
      */

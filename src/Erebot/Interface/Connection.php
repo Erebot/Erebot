@@ -38,14 +38,14 @@ interface Erebot_Interface_Connection
     /**
      * Constructs the object which will hold a connection.
      *
-     * \param iErebot $bot
+     * \param Erebot_Interface_Core $bot
      *      A bot instance.
      *
-     * \param iErebotServerConfig $config
+     * \param Erebot_Interface_Config_Server $config
      *      A server configuration instance.
      *
      * \note
-     *      There is no actual connection until ErebotConnection::connect()
+     *      There is no actual connection until Erebot_Connection::connect()
      *      is used.
      */
     public function __construct(
@@ -104,10 +104,10 @@ interface Erebot_Interface_Connection
      *      must be retrieved. If $chan is NULL, the ErebotServerConfig
      *      instance associated with this object is returned instead.
      *
-     * \retval iErebotChannelConfig
+     * \retval Erebot_Interface_Config_Channel
      *      The configuration for the given channel, if there is one.
      *
-     * \retval iErebotServerConfig
+     * \retval Erebot_Interface_Config_Server
      *      Otherwise, the configuration for the associated IRC server.
      *
      * \throw Erebot_NotFoundException
@@ -159,7 +159,7 @@ interface Erebot_Interface_Connection
      * Once this method has been called, all lines awaiting
      * processing in the incoming buffer have been transferred
      * to the incoming FIFO.
-     * You must call ErebotConnection::processQueuedData()
+     * You must call Erebot_Connection::processQueuedData()
      * after that in order to process the lines in the FIFO.
      * This is done so that a throttling policy may be put
      * in place if needed (eg. for an anti-flood system).
@@ -193,7 +193,7 @@ interface Erebot_Interface_Connection
      * Returns the bot instance this connection
      * is associated with.
      *
-     * \retval iErebot
+     * \retval Erebot_Interface_Core
      *      An instance of the core class (Erebot).
      */
     public function & getBot();
@@ -210,7 +210,7 @@ interface Erebot_Interface_Connection
      *      $chan. Otherwise, an instance will be created that will be
      *      shared across channels on the same connection.
      *
-     * \retval ErebotModuleBase
+     * \retval Erebot_Module_Base
      *      An instance of the module.
      *
      * \note
@@ -239,7 +239,7 @@ interface Erebot_Interface_Connection
      *      shared modules are returned. Otherwise, only the shared
      *      modules are returned.
      *
-     * \retval list(ErebotModuleBase)
+     * \retval list(Erebot_Module_Base)
      *      An array of module instances.
      */
     public function getModules($chan = NULL);
@@ -253,8 +253,8 @@ interface Erebot_Interface_Connection
      *      implementing the module we're interested in.
      *
      * \param opaque $type
-     *      Either ErebotConnection::MODULE_BY_NAME to search for the
-     *      module by its name, or ErebotConnection::MODULE_BY_CLASS
+     *      Either Erebot_Connection::MODULE_BY_NAME to search for the
+     *      module by its name, or Erebot_Connection::MODULE_BY_CLASS
      *      to look for the module by its class.
      *
      * \param string $chan
@@ -263,7 +263,7 @@ interface Erebot_Interface_Connection
      *      channel, before falling back to a shared instance.
      *      Otherwise, this method only looks for a shared instance.
      *
-     * \retval ErebotModuleBase
+     * \retval Erebot_Module_Base
      *      An instance of the given module.
      *
      * \throw Erebot_InvalidValueException
@@ -277,7 +277,7 @@ interface Erebot_Interface_Connection
     /**
      * Registers a raw handler on this connection.
      *
-     * \param iErebotRawHandler $handler
+     * \param Erebot_Interface_RawHandler $handler
      *      The handler to register.
      */
     public function addRawHandler(Erebot_Interface_RawHandler &$handler);
@@ -285,7 +285,7 @@ interface Erebot_Interface_Connection
     /**
      * Unregisters a raw handler on this connection.
      *
-     * \param iErebotRawHandler $handler
+     * \param Erebot_Interface_RawHandler $handler
      *      The handler to unregister.
      *
      * \throw Erebot_NotFoundException
@@ -297,7 +297,7 @@ interface Erebot_Interface_Connection
     /**
      * Registers an event handler on this connection.
      *
-     * \param iErebotEventHandler $handler
+     * \param Erebot_Interface_EventHandler $handler
      *      The handler to register.
      */
     public function addEventHandler(Erebot_Interface_EventHandler &$handler);
@@ -305,7 +305,7 @@ interface Erebot_Interface_Connection
     /**
      * Unregisters an event handler on this connection.
      *
-     * \param iErebotEventHandler $handler
+     * \param Erebot_Interface_EventHandler $handler
      *      The handler to unregister.
      *
      * \throw Erebot_NotFoundException
@@ -318,7 +318,7 @@ interface Erebot_Interface_Connection
      * Dispatches the given event to handlers
      * which have been registered for this type of event.
      *
-     * \param iErebotEvent $event
+     * \param Erebot_Interface_Event_Generic $event
      *      An event to dispatch.
      */
     public function dispatchEvent(Erebot_Interface_Event_Generic &$event);
@@ -327,9 +327,9 @@ interface Erebot_Interface_Connection
      * Dispatches the given raw to handlers
      * which have been registered for this type of raw.
      *
-     * \param iErebotRaw $raw
+     * \param Erebot_Interface_Event_Raw $raw
      *      A raw message to dispatch.
      */
-    public function dispatchRaw(Erebot_Interface_Raw &$raw);
+    public function dispatchRaw(Erebot_Interface_Event_Raw &$raw);
 }
 

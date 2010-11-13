@@ -23,7 +23,7 @@
  * This interface provides the necessary methods
  * to represent a raw numeric message from an IRC server.
  */
-interface iErebotRaw
+interface Erebot_Interface_Event_Raw
 {
     /// @TODO document each constant...
 

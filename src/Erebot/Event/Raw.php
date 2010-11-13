@@ -24,7 +24,7 @@
  *      by the iErebotRaw interface.
  *      For the sake of backward compatibility, they are still defined
  *      as global constants too.
- *      The global constants will be removed as of Erebot 0.4.0.
+ *      The global constants will be removed as of Erebot 0.5.0.
  */
 
 /**
@@ -32,7 +32,7 @@
  *      A class representing a raw numeric event.
  */
 class       Erebot_Event_Raw
-implements  Erebot_Interface_Raw
+implements  Erebot_Interface_Event_Raw
 {
     protected $_connection;
     protected $_raw;

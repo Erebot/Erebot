@@ -28,7 +28,7 @@
  * configuration levels.
  *
  * The root of the hierarchy acts as a proxy for itself and is
- * always an instance implementing iErebotMainConfig.
+ * always an instance implementing Erebot_Interface_Config_Main.
  */
 class Erebot_Config_Proxy
 {
@@ -44,7 +44,7 @@ class Erebot_Config_Proxy
     /**
      * Creates new instance of a ErebotConfigProxy object.
      *
-     * \param iErebotConfigProxy $proxified
+     * \param Erebot_Interface_Config_Proxy $proxified
      *      A configuration object which should be proxied through
      *      this instance. This allows settings to be cascaded.
      *

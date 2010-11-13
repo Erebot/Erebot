@@ -34,7 +34,7 @@ interface Erebot_Interface_Config_Proxy
      *      This should be set to the name of a module or "Erebot"
      *      for the core translator.
      *
-     * \retval iErebotI18n
+     * \retval Erebot_Interface_I18n
      *      A translator object.
      *
      * \throw Erebot_NotFoundException
@@ -46,7 +46,7 @@ interface Erebot_Interface_Config_Proxy
      * Returns the ErebotMainConfig object associated with this hierarchy
      * of configurations.
      *
-     * \retval iErebotMainConfig
+     * \retval Erebot_Interface_Config_Main
      *      The main configuration of the bot.
      */
     public function & getMainCfg();
@@ -71,7 +71,7 @@ interface Erebot_Interface_Config_Proxy
      * \param string $moduleName
      *      Name of the module whose configuration we're insterested in.
      *
-     * \retval iErebotModuleConfig
+     * \retval Erebot_Interface_Config_Module
      *      Instance of the module's configuration.
      *
      * \throw Erebot_NotFoundException

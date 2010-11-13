@@ -23,7 +23,7 @@
  * This interface provides the necessary methods to handle
  * a raw numeric message from an IRC server.
  */
-interface iErebotRawHandler
+interface Erebot_Interface_RawHandler
 {
     /**
      * Constructs a raw event handler.
@@ -59,7 +59,7 @@ interface iErebotRawHandler
     /**
      * Given a raw message, this methods tries to handle it.
      *
-     * \param iErebotRaw $raw
+     * \param Erebot_Interface_Event_Raw $raw
      *      The raw message to try to handle.
      *
      * \note
@@ -67,6 +67,6 @@ interface iErebotRawHandler
      *      checks on the message and take any action depending on
      *      the result of those checks.
      */
-    public function handleRaw(iErebotRaw &$raw);
+    public function handleRaw(Erebot_Interface_Event_Raw &$raw);
 }
 

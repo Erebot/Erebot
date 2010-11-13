@@ -73,10 +73,10 @@ unset($manager);
 class       Erebot
 implements  Erebot_Interface_Core
 {
-    /// List of \link iErebotConnection iErebotConnections\endlink to handle.
+    /// List of \link Erebot_Interface_Connection Erebot_Interface_Connections\endlink to handle.
     protected $_connections;
 
-    /// List of \link iErebotTimer iErebotTimers\endlink to trigger, eventually.
+    /// List of \link Erebot_Interface_Timer Erebot_Interface_Timers\endlink to trigger, eventually.
     protected $_timers;
 
     /// Dictionary with mappings between modules and their classes.

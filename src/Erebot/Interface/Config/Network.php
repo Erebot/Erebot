@@ -30,7 +30,7 @@ extends     Erebot_Interface_Config_Proxy
     /**
      * Creates a new configuration object for an IRC network.
      *
-     * \param iErebotMainConfig $mainCfg
+     * \param Erebot_Interface_Config_Main $mainCfg
      *      A reference to the main configuration for the bot.
      *
      * \param SimpleXMLElement $xml
@@ -56,7 +56,7 @@ extends     Erebot_Interface_Config_Proxy
      * \param string $server
      *      The name of the IRC server whose configuration we're interested in.
      *
-     * \retval iErebotServerConfig
+     * \retval Erebot_Interface_Config_Server
      *      The configuration object for that server.
      *
      * \throw Erebot_NotFoundException
@@ -67,7 +67,7 @@ extends     Erebot_Interface_Config_Proxy
     /**
      * Returns all IRC server configurations.
      *
-     * \retval list(iErebotServerConfig)
+     * \retval list(Erebot_Interface_Config_Server)
      *      A list of all server configuration instances
      *      stored by this network configuration object.
      */
@@ -80,7 +80,7 @@ extends     Erebot_Interface_Config_Proxy
      *      The name of the IRC channel whose configuration
      *      we're interested in.
      *
-     * \retval iErebotChannelConfig
+     * \retval Erebot_Interface_Config_Channel
      *      The configuration object for that channel.
      *
      * \throw Erebot_NotFoundException
@@ -91,7 +91,7 @@ extends     Erebot_Interface_Config_Proxy
     /**
      * Returns all IRC channel configurations.
      *
-     * \retval list(iErebotChannelConfig)
+     * \retval list(Erebot_Interface_Config_Channel)
      *      A list of all channel configuration instances
      *      stored by this network configuration object.
      */

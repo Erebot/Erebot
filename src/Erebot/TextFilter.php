@@ -136,7 +136,7 @@ implements  Erebot_Interface_TextFilter
     // Documented in the interface.
     public function match(Erebot_Interface_Event_Generic &$event)
     {
-        if (!in_array('iErebotEventText', class_implements($event)))
+        if (!in_array('Erebot_Interface_Event_Text', class_implements($event)))
             return TRUE;
 
         $text   = $event->getText();

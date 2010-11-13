@@ -30,7 +30,7 @@ extends     Erebot_Interface_Config_Proxy
     /**
      * Creates a new ErebotServerConfig instance.
      *
-     * \param iErebotNetworkConfig $netCfg
+     * \param Erebot_Interface_Config_Network $netCfg
      *      A reference to an object which contains the configuration
      *      for the IRC network this server is a part of.
      *

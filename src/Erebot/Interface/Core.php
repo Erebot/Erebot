@@ -61,7 +61,7 @@ interface Erebot_Interface_Core
      *
      * \param string $connectionCls
      *      The name of the class to use to create new connections.
-     *      This class must implement the iErebotConnection interface.
+     *      This class must implement the Erebot_Interface_Connection interface.
      *
      * \note
      *      If no connection class is given, it defaults to ErebotConnection.
@@ -84,7 +84,7 @@ interface Erebot_Interface_Core
     /**
      * Returns a list of all \link ErebotTimer ErebotTimers\endlink registered.
      *
-     * \retval list(iErebotTimer)
+     * \retval list(Erebot_Interface_Timer)
      *      Returns a list of timers registered for this instance.
      */
     public function getTimers();
@@ -92,7 +92,7 @@ interface Erebot_Interface_Core
     /**
      * Registers a timer for this instance.
      *
-     * \param iErebotTimer $timer
+     * \param Erebot_Interface_Timer $timer
      *      A timer to register.
      */
     public function addTimer(Erebot_Interface_Timer &$timer);
@@ -100,7 +100,7 @@ interface Erebot_Interface_Core
     /**
      * Unregisters a timer.
      *
-     * \param iErebotTimer $timer
+     * \param Erebot_Interface_Timer $timer
      *      A timer to unregister.
      */
     public function removeTimer(Erebot_Interface_Timer &$timer);
@@ -152,7 +152,7 @@ interface Erebot_Interface_Core
      *      No module with the given name has been loaded.
      *
      * \see
-     *      iErebot::moduleClassToName which does the opposite conversion.
+     *      Erebot_Interface_Core::moduleClassToName which does the opposite conversion.
      */
     public function moduleNameToClass($modName);
 
@@ -170,7 +170,7 @@ interface Erebot_Interface_Core
      *      No module using the given class name has been loaded.
      *
      * \see
-     *      iErebot::moduleNameToClass which does the opposite conversion.
+     *      Erebot_Interface_Core::moduleNameToClass which does the opposite conversion.
      */
     public function moduleClassToName($className);
 
@@ -181,7 +181,7 @@ interface Erebot_Interface_Core
      * it to the pool of connections the bot must process.
      * This enables the connection to send and receive messages.
      *
-     * \param iErebotConnection $connection
+     * \param Erebot_Interface_Connection $connection
      *      Adds a connection to the list of connections handled by
      *      this instance of the bot.
      *
@@ -198,7 +198,7 @@ interface Erebot_Interface_Core
      * the bot must process, such as when the connection is lost with the
      * remote IRC server.
      *
-     * \param iErebotConnection $connection
+     * \param Erebot_Interface_Connection $connection
      *      Removes a connection from the list of connections handled by
      *      this instance of the bot.
      *

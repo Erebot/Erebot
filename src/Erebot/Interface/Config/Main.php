@@ -42,8 +42,8 @@ extends     Erebot_Interface_Config_Proxy
      *      depending on the value of the $source parameter.
      *
      * \param opaque $source
-     *      iErebotMainConfig::LOAD_FROM_FILE or
-     *      iErebotMainConfig::LOAD_FROM_STRING, depending on
+     *      Erebot_Interface_Config_Main::LOAD_FROM_FILE or
+     *      Erebot_Interface_Config_Main::LOAD_FROM_STRING, depending on
      *      whether $configData contains a filename or the string
      *      representation of the configuration data, respectively.
      *
@@ -69,8 +69,8 @@ extends     Erebot_Interface_Config_Proxy
      *      depending on the value of the $source parameter.
      *
      * \param opaque $source
-     *      iErebotMainConfig::LOAD_FROM_FILE or
-     *      iErebotMainConfig::LOAD_FROM_STRING, depending on
+     *      Erebot_Interface_Config_Main::LOAD_FROM_FILE or
+     *      Erebot_Interface_Config_Main::LOAD_FROM_STRING, depending on
      *      whether $configData contains a filename or the string
      *      representation of the configuration data, respectively.
      *
@@ -92,7 +92,7 @@ extends     Erebot_Interface_Config_Proxy
      *      The name of the IRC network whose configuration
      *      we're interested in.
      *
-     * \retval iErebotNetworkConfig
+     * \retval Erebot_Interface_Config_Network
      *      The configuration object for that network.
      *
      * \throw Erebot_NotFoundException
@@ -103,7 +103,7 @@ extends     Erebot_Interface_Config_Proxy
     /**
      * Returns all IRC network configurations.
      *
-     * \retval list(iErebotNetworkConfig)
+     * \retval list(Erebot_Interface_Config_Network)
      *       A list of network configurations.
      */
     public function getNetworks();

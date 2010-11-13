@@ -30,7 +30,7 @@ extends     Erebot_Interface_Config_Proxy
     /**
      * Creates a new configuration object for an IRC channel.
      *
-     * \param iErebotNetworkConfig $netCfg
+     * \param Erebot_Interface_Config_Network $netCfg
      *      An object which contains the network configuration
      *      for this channel.
      *
@@ -55,7 +55,7 @@ extends     Erebot_Interface_Config_Proxy
      * Returns the IRC network configuration upon which this
      * IRC channel configuration depends.
      *
-     * \retval iErebotNetworkConfig
+     * \retval Erebot_Interface_Config_Network
      *      The IRC network configuration for this IRC channel.
      */
     public function & getNetworkCfg();

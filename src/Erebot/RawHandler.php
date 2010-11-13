@@ -35,7 +35,7 @@ implements  Erebot_Interface_RawHandler
     {
         $reflector  = new ReflectionParameter($callback, 0);
         $cls        = $reflector->getClass();
-        if ($cls === NULL || !$cls->implementsInterface('iErebotRaw'))
+        if ($cls === NULL || !$cls->implementsInterface('Erebot_Interface_Event_Raw'))
             throw new Erebot_InvalidValueException('Invalid signature');
 
         $this->_raw         =   $raw;

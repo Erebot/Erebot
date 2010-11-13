@@ -24,7 +24,7 @@
  * to implement timers and make them available
  * to other parts of the bot.
  */
-interface iErebotTimer
+interface Erebot_Interface_Timer
 {
     /**
      * Creates a new timer, set off to call the given callback
@@ -88,10 +88,10 @@ interface iErebotTimer
      *      the value before any change was made is returned.
      *
      * \deprecated
-     *      This method is only a wrapper around iErebotTimer::setRepetition
-     *      and iErebotTimer::getRepetition meant to keep the code backward
-     *      compatible. It will be removed as of Erebot 0.4.0.
-     *      Use iErebotTimer::setRepetition & iErebotTimer::getRepetition
+     *      This method is only a wrapper around Erebot_Interface_Timer::setRepetition
+     *      and Erebot_Interface_Timer::getRepetition meant to keep the code backward
+     *      compatible. It will be removed as of Erebot 0.5.0.
+     *      Use Erebot_Interface_Timer::setRepetition & Erebot_Interface_Timer::getRepetition
      *      in new code instead of this method.
      */
     public function isRepeated($repeat = NULL);

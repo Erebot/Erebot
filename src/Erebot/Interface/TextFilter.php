@@ -37,17 +37,17 @@ interface Erebot_Interface_TextFilter
     /**
      * Constructs a new text filter using the given configuration.
      * Except for $config, the rest of the arguments is the same as for
-     * iErebotTextFilter::addPattern() or iErebotTextFilter::removePattern().
+     * Erebot_Interface_TextFilter::addPattern() or Erebot_Interface_TextFilter::removePattern().
      *
-     * \param iErebotMainConfig $config
+     * \param Erebot_Interface_Config_Main $config
      *      The main configuration for the bot (used to determine the prefix
      *      to use, if any).
      *
      * \param NULL|opaque $type
      *      (optional) The type of pattern used, that is, one of:
-     *      - iErebotTextFilter::TYPE_STATIC
-     *      - iErebotTextFilter::TYPE_WILDCARD
-     *      - iErebotTextFilter::TYPE_REGEXP
+     *      - Erebot_Interface_TextFilter::TYPE_STATIC
+     *      - Erebot_Interface_TextFilter::TYPE_WILDCARD
+     *      - Erebot_Interface_TextFilter::TYPE_REGEXP
      *
      * \param NULL|string $pattern
      *      (optional) The pattern which will be matched against by this filter.
@@ -65,7 +65,7 @@ interface Erebot_Interface_TextFilter
      * \note
      *      If both $type and $pattern are set to NULL (the default),
      *      an empty filter is created to which patterns can be added
-     *      later using the iErebotTextFilter::addPattern() method.
+     *      later using the Erebot_Interface_TextFilter::addPattern() method.
      *      Therefore, the following snippets of code are equivalent:
      *      \code
      *      $filter = new ErebotTextFilter(
@@ -92,9 +92,9 @@ interface Erebot_Interface_TextFilter
      *
      * \param opaque $type
      *      The type of pattern to add, that is, one of:
-     *      -   iErebotTextFilter::TYPE_STATIC
-     *      -   iErebotTextFilter::TYPE_WILDCARD
-     *      -   iErebotTextFilter::TYPE_REGEXP
+     *      -   Erebot_Interface_TextFilter::TYPE_STATIC
+     *      -   Erebot_Interface_TextFilter::TYPE_WILDCARD
+     *      -   Erebot_Interface_TextFilter::TYPE_REGEXP
      *
      * \param string $pattern
      *      The pattern which will be matched against by this filter.
@@ -115,13 +115,13 @@ interface Erebot_Interface_TextFilter
      * Removes a match pattern from this filter.
      * The parameters used to remove a pattern MUST be EXACTLY THE SAME
      * as when it was added (be it at construction time or through the
-     * use of iErebotTextFilter::addPattern()).
+     * use of Erebot_Interface_TextFilter::addPattern()).
      *
      * \param opaque $type
      *      The type of pattern to remove, that is, one of:
-     *      -   iErebotTextFilter::TYPE_STATIC
-     *      -   iErebotTextFilter::TYPE_WILDCARD
-     *      -   iErebotTextFilter::TYPE_REGEXP
+     *      -   Erebot_Interface_TextFilter::TYPE_STATIC
+     *      -   Erebot_Interface_TextFilter::TYPE_WILDCARD
+     *      -   Erebot_Interface_TextFilter::TYPE_REGEXP
      *
      * \param string $pattern
      *      The pattern which will be matched against by this filter.
@@ -158,7 +158,7 @@ interface Erebot_Interface_TextFilter
     /**
      * Tests whether this filter matches the text in the given $event.
      *
-     * \param iErebotEvent $event
+     * \param Erebot_Interface_Event_Generic $event
      *      The event to try to match against the current filter.
      *
      * \retval TRUE
