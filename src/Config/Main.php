@@ -16,10 +16,7 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once('src/config/configProxy.php');
-include_once('src/config/networkConfig.php');
-include_once('src/streams/xglob.php');
-include_once('src/ifaces/mainConfig.php');
+include_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'XglobStream.php');
 
 /**
  * \brief
@@ -27,16 +24,16 @@ include_once('src/ifaces/mainConfig.php');
  *
  * This class deals with settings which affect the whole bot such as its
  * version string.
- * It also contains references to instances of the ErebotNetworkConfig class.
+ * It also contains references to instances of the Erebot_Config_Network class.
  */
-class       ErebotMainConfig
-extends     ErebotConfigProxy
-implements  iErebotMainConfig
+class       Erebot_Config_Main
+extends     Erebot_Config_Proxy
+implements  Erebot_Interface_Config_Main
 {
     /// The (relative or absolute) path to the configuration, if available.
     protected $_configFile;
 
-    /// A list of ErebotNetworkConfig objects.
+    /// A list of Erebot_Config_Network objects.
     protected $_networks;
 
     /// The bot's version string.
@@ -55,7 +52,7 @@ implements  iErebotMainConfig
     }
 
     /**
-     * Destructs ErebotMainConfig instances.
+     * Destructs Erebot_Config_Main instances.
      */
     public function __destruct()
     {
@@ -75,8 +72,8 @@ implements  iErebotMainConfig
     private function _stripXGlobWrappers(&$domxml)
     {
         $xpath = new DOMXPath($domxml);
-        $xpath->registerNamespace('xglob', ErebotWrapperXGlob::XMLNS);
-        $wrappers = $xpath->query('//xglob:'.ErebotWrapperXGlob::TAG);
+        $xpath->registerNamespace('xglob', Erebot_XGlobStream::XMLNS);
+        $wrappers = $xpath->query('//xglob:'.Erebot_XGlobStream::TAG);
         foreach ($wrappers as $wrapper) {
             for ($i = $wrapper->childNodes->length; $i > 0; $i--) {
                 $wrapper->parentNode->insertBefore(
@@ -92,14 +89,14 @@ implements  iErebotMainConfig
     public function load($configData, $source)
     {
         $possibleSources =     array(
-                                    ErebotMainConfig::LOAD_FROM_FILE,
-                                    ErebotMainConfig::LOAD_FROM_STRING,
+                                    Erebot_Config_Main::LOAD_FROM_FILE,
+                                    Erebot_Config_Main::LOAD_FROM_STRING,
                                 );
         if (!in_array($source, $possibleSources, TRUE))
             throw new EErebotInvalidValue('Invalid $source');
 
         if (is_string($configData) && $configData != '') {
-            if ($source == ErebotMainConfig::LOAD_FROM_FILE)
+            if ($source == Erebot_Config_Main::LOAD_FROM_FILE)
                 $file = $configData[0] == '/' ? $configData :
                         dirname(dirname(__FILE__)).'/'.$configData;
             else
@@ -111,7 +108,7 @@ implements  iErebotMainConfig
         $schema = dirname(__FILE__).'/config.rng';
         $ue     = libxml_use_internal_errors(TRUE);
         $domxml = new DomDocument;
-        if ($source == ErebotMainConfig::LOAD_FROM_FILE)
+        if ($source == Erebot_Config_Main::LOAD_FROM_FILE)
             $domxml->load($file);
         else
             $domxml->loadXML($configData);
@@ -181,7 +178,7 @@ implements  iErebotMainConfig
 
         $this->_networks = array();
         foreach ($xml->networks->network as $netCfg) {
-            $newConfig  =   new ErebotNetworkConfig($this, $netCfg);
+            $newConfig  =   new Erebot_Config_Network($this, $netCfg);
             $this->_networks[$newConfig->getName()]  =& $newConfig;
             unset($newConfig);
         }
@@ -190,7 +187,7 @@ implements  iErebotMainConfig
         libxml_use_internal_errors($ue);
         unset($domxml);
 
-        if ($source == ErebotMainConfig::LOAD_FROM_FILE)
+        if ($source == Erebot_Config_Main::LOAD_FROM_FILE)
             $this->_configFile   = $configData;
         else
             $this->_configFile   = NULL;
