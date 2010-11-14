@@ -79,6 +79,7 @@ implements  Erebot_Interface_Config_Network
             $this->_servers,
             $this->_maincfg
         );
+        parent::__destruct();
     }
 
     // Documented in the interface.

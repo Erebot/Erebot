@@ -49,6 +49,7 @@ implements  Erebot_Interface_Config_Channel
      */
     public function __destruct()
     {
+        parent::__destruct();
     }
 
     // Documented in the interface.

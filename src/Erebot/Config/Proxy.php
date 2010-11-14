@@ -84,6 +84,7 @@ class Erebot_Config_Proxy
             $this->_modules,
             $this->_proxified
         );
+        parent::__destruct();
     }
 
     // Documented in the interface.
