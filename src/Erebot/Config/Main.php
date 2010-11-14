@@ -109,7 +109,7 @@ implements  Erebot_Interface_Config_Main
         else
             throw new Erebot_InvalidValueException('Invalid configuration file');
 
-        if (basename(dirname(dirname(dirname(__DIR__)))) == 'trunk')
+        if (basename(dirname(dirname(dirname(dirname(__FILE__))))) == 'trunk')
             $schemaDir = '../../../data';
         else
             $schemaDir = '../../../data/pear.erebot.net/Erebot';

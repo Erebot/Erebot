@@ -54,7 +54,7 @@ implements  Erebot_Interface_I18n
 
     protected function real_gettext($message, $component)
     {
-        if (basename(dirname(dirname(__DIR__))) == 'trunk') {
+        if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk') {
             if ($component == 'Erebot') {
                 $base = '../../data/i18n';
             }
@@ -67,7 +67,8 @@ implements  Erebot_Interface_I18n
         else
             $base = '../../../data/pear.erebot.net/' . $component . '/i18n';
         $base = str_replace('/', DIRECTORY_SEPARATOR, trim($base, '/'));
-        $prefix = __DIR__ . DIRECTORY_SEPARATOR . $base . DIRECTORY_SEPARATOR;
+        $prefix = dirname(__FILE__) . DIRECTORY_SEPARATOR .
+            $base . DIRECTORY_SEPARATOR;
 
         $translationFile = $prefix . $this->_locale . DIRECTORY_SEPARATOR .
             'LC_MESSAGES' . DIRECTORY_SEPARATOR . $component . '.mo';
