@@ -545,11 +545,25 @@ implements  Erebot_Interface_Connection
                 break;
 
             case 'MODE':    // :nick1!ident@host MODE <nick2/#chan> modes
-                $capabilities = $this->getModule(
-                    'ServerCapabilities',
-                    self::MODULE_BY_NAME
+                try {
+                    $capabilities = $this->getModule(
+                        'Erebot_Module_ServerCapabilities',
+                        self::MODULE_BY_NAME
+                    );
+                }
+                catch (Erebot_NotFoundException $e) {
+                    $capabilities = NULL;
+                }
+
+                $isChan = (
+                    $capabilities !== NULL &&
+                    $capabilities->isChannel($target)
+                ) || (
+                    $capabilities === NULL &&
+                    substr($target, 0, 1) == '#'
                 );
-                if (!$capabilities->isChannel($target)) {
+
+                if (!$isChan) {
                     $event = new Erebot_Event_UserMode(
                         $this,
                         $source,
@@ -669,10 +683,24 @@ implements  Erebot_Interface_Connection
                 break;
 
             case 'NOTICE':    // :nick1!ident@host NOTICE <nick2/#chan> :Message
-                $capabilities = $this->getModule(
-                    'ServerCapabilities',
-                    self::MODULE_BY_NAME
+                try {
+                    $capabilities = $this->getModule(
+                        'Erebot_Module_ServerCapabilities',
+                        self::MODULE_BY_NAME
+                    );
+                }
+                catch (Erebot_NotFoundException $e) {
+                    $capabilities = NULL;
+                }
+
+                $isChan = (
+                    $capabilities !== NULL &&
+                    $capabilities->isChannel($target)
+                ) || (
+                    $capabilities === NULL &&
+                    substr($target, 0, 1) == '#'
                 );
+
                 if (($len = strlen($msg)) > 1 &&
                     $msg[$len-1] == "\x01" &&
                     $msg[0] == "\x01") {
@@ -682,7 +710,7 @@ implements  Erebot_Interface_Connection
                     $ctcp   = strtoupper(substr($msg, 0, $pos));
                     $msg    = substr($msg, $pos + 1);
 
-                    if ($capabilities->isChannel($target))
+                    if ($isChan)
                         $event = new Erebot_Event_ChanCtcpReply(
                             $this,
                             $target,
@@ -701,7 +729,7 @@ implements  Erebot_Interface_Connection
                     break;
                 }
 
-                if ($capabilities->isChannel($target))
+                if ($isChan)
                     $event = new Erebot_Event_ChanNotice(
                         $this,
                         $target,
@@ -725,10 +753,24 @@ implements  Erebot_Interface_Connection
                 break;
 
             case 'PRIVMSG':    // :nick1!ident@host PRIVMSG <nick2/#chan> :Msg
-                $capabilities = $this->getModule(
-                    'ServerCapabilities',
-                    self::MODULE_BY_NAME
+                try {
+                    $capabilities = $this->getModule(
+                        'Erebot_Module_ServerCapabilities',
+                        self::MODULE_BY_NAME
+                    );
+                }
+                catch (Erebot_NotFoundException $e) {
+                    $capabilities = NULL;
+                }
+
+                $isChan = (
+                    $capabilities !== NULL &&
+                    $capabilities->isChannel($target)
+                ) || (
+                    $capabilities === NULL &&
+                    substr($target, 0, 1) == '#'
                 );
+
                 if (($len = strlen($msg)) > 1 &&
                     $msg[$len-1] == "\x01" &&
                     $msg[0] == "\x01") {
@@ -739,7 +781,7 @@ implements  Erebot_Interface_Connection
                     $msg    = substr($msg, $pos + 1);
 
                     if ($ctcp == "ACTION") {
-                        if ($capabilities->isChannel($target))
+                        if ($isChan)
                             $event = new Erebot_Event_ChanAction(
                                 $this,
                                 $target,
@@ -756,7 +798,7 @@ implements  Erebot_Interface_Connection
                         break;
                     }
 
-                    if ($capabilities->isChannel($target))
+                    if ($isChan)
                         $event = new Erebot_Event_ChanCtcp(
                             $this,
                             $target,
@@ -775,7 +817,7 @@ implements  Erebot_Interface_Connection
                     break;
                 }
 
-                if ($capabilities->isChannel($target))
+                if ($isChan)
                     $event = new Erebot_Event_ChanText(
                         $this,
                         $target,
