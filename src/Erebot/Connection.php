@@ -839,13 +839,13 @@ implements  Erebot_Interface_Connection
                 if (ctype_digit($type)) {
                     $type   = intval($type, 10);
                     switch ($type) {
-                        case RPL_WELCOME:
+                        case Erebot_Interface_Event_Raw::RPL_WELCOME:
                             $event = new Erebot_Event_Connect($this);
                             $this->dispatchEvent($event);
                             break;
 
-                        case RPL_NOWON:
-                        case RPL_NOWOFF:
+                        case Erebot_Interface_Event_Raw::RPL_NOWON:
+                        case Erebot_Interface_Event_Raw::RPL_NOWOFF:
                             $nick       = array_shift($parts);
                             $ident      = array_shift($parts);
                             $host       = array_shift($parts);
@@ -855,8 +855,10 @@ implements  Erebot_Interface_Connection
                                 $text = substr($text, 1);
 
                             $map    = array(
-                                RPL_NOWON   => 'Erebot_Event_Notify',
-                                RPL_NOWOFF  => 'Erebot_Event_UnNotify',
+                                Erebot_Interface_Event_Raw::RPL_NOWON   =>
+                                    'Erebot_Event_Notify',
+                                Erebot_Interface_Event_Raw::RPL_NOWOFF  =>
+                                    'Erebot_Event_UnNotify',
                             );
                             $cls    = $map[$type];
                             $event  = new $cls($this, $nick, $ident, $host,
@@ -865,7 +867,7 @@ implements  Erebot_Interface_Connection
                             break;
                     }
 
-                    $event  = new ErebotRaw(
+                    $event  = new Erebot_Event_Raw(
                         $this,
                         $type,
                         $source,

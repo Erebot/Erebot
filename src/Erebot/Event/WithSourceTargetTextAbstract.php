@@ -34,7 +34,7 @@ implements      Erebot_Interface_Event_Text
     )
     {
         parent::__construct($connection, $source, $target);
-        $this->_text = new ErebotTextWrapper($text);
+        $this->_text = new Erebot_TextWrapper($text);
     }
     
     // Documented in the interface.

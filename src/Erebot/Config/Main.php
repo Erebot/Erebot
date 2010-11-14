@@ -52,6 +52,8 @@ implements  Erebot_Interface_Config_Main
     // Documented in the interface.
     public function __construct($configData, $source)
     {
+        $this->_proxified = NULL;
+        $this->_modules = array();
         $this->load($configData, $source);
     }
 
@@ -62,7 +64,6 @@ implements  Erebot_Interface_Config_Main
     {
         parent::__destruct();
         unset(
-            $this->_modules,
             $this->_networks
         );
     }
