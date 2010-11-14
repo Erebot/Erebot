@@ -20,8 +20,8 @@
  * \brief
  *      Triggered when someone gets invited on a channel.
  */
-class   ErebotEventInvite
-extends ErebotEventWithChanSourceAndTarget
+class   Erebot_Event_Invite
+extends Erebot_Event_WithChanSourceTargetAbstract
 {
 }
 

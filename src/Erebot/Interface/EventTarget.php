@@ -23,7 +23,7 @@
  * This interface provides the necessary methods
  * to filter events based on their target.
  */
-interface iErebotEventTargets
+interface Erebot_Interface_EventTarget
 {
     /**
      * Test all allow declarations first, then all deny declarations.
@@ -63,7 +63,9 @@ interface iErebotEventTargets
      *
      * \param opaque $order
      *      Controls the order in which declarations are processed.
-     *      See iErebotEventTargets::setOrder() for acceptable values.
+     *
+     * \see Erebot_Interface_EventTarget::setOrder()
+     *      For possible values for the $order parameter.
      */
     public function __construct($order);
 
@@ -71,10 +73,10 @@ interface iErebotEventTargets
      * Sets the order in which declarations are processed.
      *
      * \param opaque $order
-     *      Either iErebotEventTargets::ORDER_ALLOW_DENY to process
-     *      allow declarations before deny declarations,
-     *      or iErebotEventTargets::ORDER_DENY_ALLOW to process
-     *      deny declarations first, then allow declarations.
+     *      Either Erebot_Interface_EventTarget::ORDER_ALLOW_DENY
+     *      to process allow declarations before deny declarations,
+     *      or Erebot_Interface_EventTarget::ORDER_DENY_ALLOW to
+     *      process deny declarations first, then allow declarations.
      */
     public function setOrder($order);
 
@@ -82,11 +84,11 @@ interface iErebotEventTargets
      * Returns the order in which declarations are processed.
      *
      * \retval opaque
-     *      One of iErebotEventTargets::ORDER_ALLOW_DENY or
-     *      iErebotEventTargets::ORDER_DENY_ALLOW to indicate the order
-     *      in which declarations are processed, according to the last
-     *      call to iErebotEventTargets::setOrder() or the order set
-     *      at construction time.
+     *      One of Erebot_Interface_EventTarget::ORDER_ALLOW_DENY or
+     *      Erebot_Interface_EventTarget::ORDER_DENY_ALLOW to indicate
+     *      the order in which declarations are processed, according to
+     *      the last call to Erebot_Interface_EventTarget::setOrder()
+     *      or the order set at object construction time.
      */
     public function getOrder();
 
@@ -94,7 +96,7 @@ interface iErebotEventTargets
      * Tests whether the given $event matches one of the allow
      * targets declared in this instance.
      *
-     * \param iErebotEvent $event
+     * \param Erebot_Interface_Event_Generic $event
      *      An event to try to match with this filter.
      *
      * \retval TRUE
@@ -104,32 +106,32 @@ interface iErebotEventTargets
      * \retval FALSE
      *      Otherwise.
      */
-    public function match(iErebotEvent &$event);
+    public function match(Erebot_Interface_Event_Generic &$event);
 
     /**
      * Adds a matching rule to this instance.
      *
      * \param opaque $type
      *      The type of rule to add (allow or deny).
-     *      Pass one of iErebotEventTargets::TYPE_ALLOW
-     *      or iErebotEventTargets::TYPE_DENY for this
+     *      Pass one of Erebot_Interface_EventTarget::TYPE_ALLOW
+     *      or Erebot_Interface_EventTarget::TYPE_DENY for this
      *      parameter.
      *
      * \param opaque|string $nick
      *      The specific nickname to accept/reject or
-     *      iErebotEventTargets::MATCH_ALL.
-     *      The default (iErebotEventTargets::MATCH_ALL)
+     *      Erebot_Interface_EventTarget::MATCH_ALL.
+     *      The default (Erebot_Interface_EventTarget::MATCH_ALL)
      *      accepts/rejects every nick depending on the
      *      order set during construction or with the
-     *      iErebotEventTargets::setOrder() method.
+     *      Erebot_Interface_EventTarget::setOrder() method.
      *
      * \param opaque|string $chan
      *      The specific channel to accept/reject or
-     *      iErebotEventTargets::MATCH_ALL.
-     *      The default (iErebotEventTargets::MATCH_ALL)
+     *      Erebot_Interface_EventTarget::MATCH_ALL.
+     *      The default (Erebot_Interface_EventTarget::MATCH_ALL)
      *      accepts/rejects every channel depending on
      *      the order set during construction or with
-     *      the iErebotEventTargets::setOrder() method.
+     *      the Erebot_Interface_EventTarget::setOrder() method.
      */
     public function addRule(
         $type,
@@ -142,23 +144,23 @@ interface iErebotEventTargets
      *
      * \param opaque $type
      *      The type of rule to remove (allow or deny).
-     *      Pass one of iErebotEventTargets::TYPE_ALLOW
-     *      or iErebotEventTargets::TYPE_DENY for this
+     *      Pass one of Erebot_Interface_EventTarget::TYPE_ALLOW
+     *      or Erebot_Interface_EventTarget::TYPE_DENY for this
      *      parameter.
      *
      * \param opaque|string $nick
      *      The specific nickname which was accepted/rejected,
-     *      or iErebotEventTargets::MATCH_ALL.
+     *      or Erebot_Interface_EventTarget::MATCH_ALL.
      *
      * \param opaque|string $chan
      *      The specific channel which was accepted/rejected,
-     *      or iErebotEventTargets::MATCH_ALL.
+     *      or Erebot_Interface_EventTarget::MATCH_ALL.
      *
      * \note
-     *      You MUST call iErebotEventTargets::removeRule()
+     *      You MUST call Erebot_Interface_EventTarget::removeRule()
      *      with exactly the same parameters you passed when
-     *      calling iErebotEventTargets::addRule() for it to
-     *      have any effect.
+     *      calling Erebot_Interface_EventTarget::addRule()
+     *      for it to have any effect.
      */
     public function removeRule(
         $type,

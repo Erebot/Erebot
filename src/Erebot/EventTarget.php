@@ -62,8 +62,8 @@ implements  Erebot_Interface_EventTarget
     // Documented in the interface.
     public function match(Erebot_Interface_Event_Generic &$event)
     {
-        if (!in_array('iErebotEventSource', class_implements($event)) ||
-            !in_array('iErebotEventChan', class_implements($event)))
+        if (!in_array('Erebot_Interface_Event_Source', class_implements($event)) ||
+            !in_array('Erebot_Interface_Event_Chan', class_implements($event)))
             return TRUE;
 
         $allowed    = $this->hasMatchingRule($event, $this->_allow);

@@ -20,8 +20,8 @@
  * \brief
  *      Interface for ban EXCEPTion mode.
  */
-interface   iErebotEventChanModeExcept
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Except
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_LETTER = 'e';
 }

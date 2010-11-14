@@ -20,8 +20,8 @@
  * \brief
  *      Interface for PROTECTion mode.
  */
-interface   iErebotEventChanModeProtect
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Protect
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_LETTER = 'a';
 }

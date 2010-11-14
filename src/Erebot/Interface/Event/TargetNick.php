@@ -23,8 +23,8 @@
  * Classes implementing this interface should do their best
  * to resolve the mask to a single nickname.
  */
-interface   iErebotEventTargetNick
-extends     iErebotEvent
+interface   Erebot_Interface_Event_TargetNick
+extends     Erebot_Interface_Event_Generic
 {
     public function getTargetNick();
 }

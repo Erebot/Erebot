@@ -23,7 +23,7 @@
  * This interface provides the necessary methods to represent
  * a structure capable of handling events from an IRC server.
  */
-interface iErebotEventHandler
+interface Erebot_Interface_EventHandler
 {
     /**
      * Constructs an event handler.
@@ -41,28 +41,29 @@ interface iErebotEventHandler
      *      to treat. Therefore, it's a list of constraints
      *      on the event's type.
      *
-     * \param NULL|iErebotEventTarget $targets
+     * \param NULL|Erebot_Interface_EventTarget $targets
      *      (optional) A description of the targets this event handler
      *      will consider valid. This is complementary to the $constraints
      *      parameter and can be used to build whitelists/blacklists
      *      (eg. make the bot react to an event only if it comes from
      *      a trusted source like the bot's administrator).
-     *      See the documentation on iErebotEventTargets for more information.
+     *      See the documentation on Erebot_Interface_EventTarget
+     *      for more information.
      *      If this is set to NULL (the default), any target is
      *      considered valid.
      *
-     * \param NULL|iErebotTextFilter $filters
+     * \param NULL|Erebot_Interface_TextFilter $filters
      *      (optional) An object used to filter events containing
      *      text based on the content of that text.
-     *      See the documentation on iErebotTextFilter for more information.
+     *      See the documentation on Erebot_Interface_TextFilter for more information.
      *      If this is set to NULL (the default), any text is considered
      *      valid (ie: no filtering is done).
      */
     public function __construct(
         $callback,
         $constraints,
-        iErebotEventTargets $targets    = NULL,
-        iErebotTextFilter   $filters    = NULL
+        Erebot_Interface_EventTarget    $targets    = NULL,
+        Erebot_Interface_TextFilter     $filters    = NULL
     );
 
     /**
@@ -89,7 +90,7 @@ interface iErebotEventHandler
      * Returns the constraints on the event's target associated
      * with this handler during construction.
      *
-     * \retval iErebotEventTarget
+     * \retval Erebot_Interface_EventTarget
      *      An object expressing constraints on targets.
      */
     public function & getTargets();
@@ -98,7 +99,7 @@ interface iErebotEventHandler
      * Returns the constraints on the event's text associated
      * with this handler during construction.
      *
-     * \retval iErebotTextFilter
+     * \retval Erebot_Interface_TextFilter
      *      An object expressing constraints on an event's text.
      */
     public function & getFilters();
@@ -106,7 +107,7 @@ interface iErebotEventHandler
     /**
      * Given an event, this method does its best to handler it.
      *
-     * \param iErebotEvent $event
+     * \param Erebot_Interface_Event_Generic $event
      *      An event to try to handle.
      *
      * \note
@@ -116,6 +117,6 @@ interface iErebotEventHandler
      *      constraints (on type, target and/or content) expressed
      *      by the current handler.
      */
-    public function handleEvent(iErebotEvent &$event);
+    public function handleEvent(Erebot_Interface_Event_Generic &$event);
 }
 

@@ -20,8 +20,8 @@
  * \brief
  *      Triggered when someone asks the bot to shutdown (from the command-line).
  */
-class   ErebotEventExit
-extends ErebotEvent
+class   Erebot_Event_Exit
+extends Erebot_Event_Abstract
 {
 }
 

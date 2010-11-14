@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when a private message is received.
  */
-class       Erebot_EventTextPrivate
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageText,
-            iErebotEventPrivate
+class       Erebot_Event_PrivateText
+extends     Erebot_Event_WithSourceTextAbstract
+implements  Erebot_Interface_Event_TextMessage,
+            Erebot_Interface_Event_Private
 {
 }
 

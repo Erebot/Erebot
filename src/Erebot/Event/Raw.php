@@ -21,7 +21,7 @@
  * \deprecated
  *      This file used to provide constants for most raw events.
  *      They have been converted to class constants and are now provided
- *      by the iErebotRaw interface.
+ *      by the Erebot_Interface_Event_Raw interface.
  *      For the sake of backward compatibility, they are still defined
  *      as global constants too.
  *      The global constants will be removed as of Erebot 0.5.0.

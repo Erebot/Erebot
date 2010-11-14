@@ -20,9 +20,9 @@
  * \brief
  *      Triggered when a notice is received on a channel the bot is on.
  */
-class       ErebotEventNoticeChan
-extends     ErebotEventWithChanSourceAndText
-implements  iErebotEventMessageNotice
+class       Erebot_Event_ChanNotice
+extends     Erebot_Event_WithChanSourceTextAbstract
+implements  Erebot_Interface_Event_NoticeMessage
 {
 }
 

@@ -22,8 +22,8 @@
  *
  * This event can be used to send credentials, negociate options, etc.
  */
-class   ErebotEventLogon
-extends ErebotEvent
+class   Erebot_Event_Logon
+extends Erebot_Event_Abstract
 {
 }
 

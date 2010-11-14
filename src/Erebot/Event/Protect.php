@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone receives PROTECTion priviledges on a channel.
  */
-class       ErebotEventProtect
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeGive,
-            iErebotEventChanModeProtect
+class       Erebot_Event_Protect
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeGiven,
+            Erebot_Interface_Event_Protect
 {
 }
 

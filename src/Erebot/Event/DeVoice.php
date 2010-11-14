@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone loses VOICE priviledges on a channel.
  */
-class       ErebotEventDeVoice
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeTake,
-            iErebotEventChanModeVoice
+class       Erebot_Event_DeVoice
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeTaken,
+            Erebot_Interface_Event_Voice
 {
 }
 

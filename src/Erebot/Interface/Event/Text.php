@@ -20,8 +20,8 @@
  * \brief
  *      Interface for an event which contains some text.
  */
-interface   iErebotEventText
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Text
+extends     Erebot_Interface_Event_Generic
 {
     public function & getText();
 }

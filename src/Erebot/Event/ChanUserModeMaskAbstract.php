@@ -20,14 +20,14 @@
  * \brief
  *      An abstract Event whose target is an IRC mask (nick!ident\@host).
  */
-abstract class  ErebotEventChanUserModeMaskBase
-extends         ErebotEventChanUserModeBase
-implements      iErebotEventTargetNick
+abstract class  Erebot_Event_ChanUserModeMaskAbstract
+extends         Erebot_Event_ChanUserModeAbstract
+implements      Erebot_Interface_Event_TargetNick
 {
     // Documented in the interface.
     public function getTargetNick()
     {
-        $nick = ErebotUtils::extractNick($this->target);
+        $nick = Erebot_Utils::extractNick($this->target);
         return  (strpos($nick, '?') === FALSE &&
                 strpos($nick, '*') === FALSE) ?
                 $nick : NULL;

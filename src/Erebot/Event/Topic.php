@@ -20,7 +20,7 @@
  * \brief
  *      Triggered when the topic of a channel the bot is on changes.
  */
-class   ErebotEventTopic
-extends ErebotEventWithChanSourceAndText
+class   Erebot_Event_Topic
+extends Erebot_Event_WithChanSourceTextAbstract
 {
 }

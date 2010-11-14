@@ -21,8 +21,8 @@
  *      An abstract Event which represents a usermode change
  *      on a channel.
  */
-abstract class  ErebotEventChanUserModeBase
-extends         ErebotEventWithChanSourceAndTarget
+abstract class  Erebot_Event_ChanUserModeAbstract
+extends         Erebot_Event_WithChanSourceTargetAbstract
 {
     public function getMode()
     {

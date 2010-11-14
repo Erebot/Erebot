@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when a ban exception is removed from a channel.
  */
-class       ErebotEventUnexcept
-extends     ErebotEventChanUserModeMaskBase
-implements  iErebotEventChanModeTake,
-            iErebotEventChanModeExcept
+class       Erebot_Event_UnExcept
+extends     Erebot_Event_ChanUserModeMaskAbstract
+implements  Erebot_Interface_Event_ChanModeTaken,
+            Erebot_Interface_Event_Except
 {
 }
 

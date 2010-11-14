@@ -21,17 +21,17 @@
  *      An abstract CTCP Event which applies to the bot
  *      and contains some text.
  */
-abstract class  ErebotEventWithSourceAndCtcp
-extends         ErebotEventWithSourceAndText
-implements      iErebotEventCtcp
+abstract class  Erebot_Event_WithSourceCtcpAbstract
+extends         Erebot_Event_WithSourceTextAbstract
+implements      Erebot_Interface_Event_Ctcp
 {
     protected $_ctcpType;
     
     public function __construct(
-        iErebotConnection   &$connection,
-                            $source,
-                            $ctcpType,
-                            $text
+        Erebot_Interface_Connection    &$connection,
+                                        $source,
+                                        $ctcpType,
+                                        $text
     )
     {
         parent::__construct($connection, $source, $text);

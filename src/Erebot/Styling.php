@@ -170,7 +170,17 @@ class   Erebot_Styling
             '<msg xmlns="http://www.erebot.net/xmlns/erebot/styling">'.
             $source.
             '</msg>';
-        $schema = dirname(__FILE__).'/styling.rng';
+
+        if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk')
+            $schemaDir = '../../data';
+        else
+            $schemaDir = '../../data/pear.erebot.net/Erebot';
+
+        $schemaDir = str_replace('/', DIRECTORY_SEPARATOR, $schemaDir);
+        $schema = dirname(__FILE__) .
+            DIRECTORY_SEPARATOR . $schemaDir .
+            DIRECTORY_SEPARATOR . 'styling.rng';
+
         $ue     = libxml_use_internal_errors(TRUE);
         $this->_dom         =   new DomDocument();
         $this->_variables   =   array();
@@ -364,7 +374,7 @@ class   Erebot_Styling
                         $value = str_replace(array(' ', '-'), '_', $value);
                         try {
                             if (!ctype_digit($value))
-                                $value = ErebotUtils::getVStatic(
+                                $value = Erebot_Utils::getVStatic(
                                     $this, 'COLOR_'.strtoupper($value)
                                 );
                             $attributes[$color] = sprintf('%02d', $value);

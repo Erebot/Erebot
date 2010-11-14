@@ -20,8 +20,8 @@
  * \brief
  *      Interface for an event which occurs in a PRIVATE query.
  */
-interface   iErebotEventPrivate
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Private
+extends     Erebot_Interface_Event_Generic
 {
 }
 

@@ -20,8 +20,8 @@
  * \brief
  *      Interface for an event which applies to a channel.
  */
-interface   iErebotEventChan
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Chan
+extends     Erebot_Interface_Event_Generic
 {
     public function & getChan();
 }

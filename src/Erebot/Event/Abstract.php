@@ -21,7 +21,7 @@
  *      An abstract Event.
  */
 abstract class  Erebot_Event_Abstract
-implements      Erebot_Event_Interface
+implements      Erebot_Interface_Event_Generic
 {
     /// @TODO add support for these events or remove them...
 #    const ON_CHAT           = 30;
@@ -43,7 +43,7 @@ implements      Erebot_Event_Interface
     protected $_halt;
     protected $_connection;
 
-    public function __construct(iErebotConnection &$connection)
+    public function __construct(Erebot_Interface_Connection &$connection)
     {
         $this->_halt        =   FALSE;
         $this->_connection  =&  $connection;

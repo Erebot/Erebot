@@ -20,8 +20,8 @@
  * \brief
  *      Interface for BAN mode.
  */
-interface   iErebotEventChanModeBan
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Ban
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_LETTER = 'b';
 }

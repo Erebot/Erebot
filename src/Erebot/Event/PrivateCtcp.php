@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when a CTCP request is received in private.
  */
-class       ErebotEventCtcpPrivate
-extends     ErebotEventWithSourceAndCtcp
-implements  iErebotEventMessageCtcp,
-            iErebotEventPrivate
+class       Erebot_Event_PrivateCtcp
+extends     Erebot_Event_WithSourceCtcpAbstract
+implements  Erebot_Interface_Event_CtcpMessage,
+            Erebot_Interface_Event_Private
 {
 }
 

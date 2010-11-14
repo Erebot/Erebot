@@ -20,8 +20,8 @@
  * \brief
  *      Interface for an event which has a target.
  */
-interface   iErebotEventTarget
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Target
+extends     Erebot_Interface_Event_Generic
 {
     public function & getTarget();
 }

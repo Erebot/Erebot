@@ -20,8 +20,8 @@
  * \brief
  *      Interface for an event capable of conveying a text message.
  */
-interface   iErebotEventMessageText
-extends     iErebotEventMessageCapable
+interface   Erebot_Interface_Event_TextMessage
+extends     Erebot_Interface_Event_MessageCapable
 {
 }
 

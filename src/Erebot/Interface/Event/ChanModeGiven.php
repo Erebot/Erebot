@@ -20,8 +20,8 @@
  * \brief
  *      Interface for a mode which is given to someone.
  */
-interface   iErebotEventChanModeGive
-extends     iErebotEvent
+interface   Erebot_Interface_Event_ChanModeGiven
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_PREFIX = '+';
 }

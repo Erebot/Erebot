@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone receives OPerator priviledges on a channel.
  */
-class       ErebotEventOp
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeGive,
-            iErebotEventChanModeOp
+class       Erebot_Event_Op
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeGiven,
+            Erebot_Interface_Event_Op
 {
 }
 

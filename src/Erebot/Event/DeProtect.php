@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone loses PROTECTion priviledges on a channel.
  */
-class       ErebotEventDeProtect
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeTake,
-            iErebotEventChanModeProtect
+class       Erebot_Event_DeProtect
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeTaken,
+            Erebot_Interface_Event_Protect
 {
 }
 

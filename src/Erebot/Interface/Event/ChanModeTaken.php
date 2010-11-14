@@ -20,8 +20,8 @@
  * \brief
  *      Interface for a mode which is taken from someone.
  */
-interface   iErebotEventChanModeTake
-extends     iErebotEvent
+interface   Erebot_Interface_Event_ChanModeTaken
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_PREFIX = '-';
 }

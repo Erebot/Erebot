@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone loses HALF-OPerator priviledges on a channel.
  */
-class       ErebotEventDeHalfop
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeTake,
-            iErebotEventChanModeHalfop
+class       Erebot_Event_DeHalfop
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeTaken,
+            Erebot_Interface_Event_Halfop
 {
 }
 

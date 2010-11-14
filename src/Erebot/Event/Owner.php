@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone receives OWNER priviledges on a channel.
  */
-class       ErebotEventOwner
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeGive,
-            iErebotEventChanModeOwner
+class       Erebot_Event_Owner
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeGiven,
+            Erebot_Interface_Event_Owner
 {
 }
 

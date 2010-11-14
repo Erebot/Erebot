@@ -44,13 +44,13 @@ class Erebot_Utils
 
     /**
      * Returns the object (if any) associated with the method
-     * that called the method which called ErebotUtils::getCallerObject().
+     * that called the method which called Erebot_Utils::getCallerObject().
      *
      * Consider the following example:
      * \code
      *      class Foo {
      *          public function bar() {
-     *              var_dump(ErebotUtils::getCallerObject());
+     *              var_dump(Erebot_Utils::getCallerObject());
      *          }
      *      }
      *      class Bar {
@@ -65,7 +65,7 @@ class Erebot_Utils
      *
      * \retval object
      *      The caller object of the method which called
-     *      ErebotUtils::getCallerObject().
+     *      Erebot_Utils::getCallerObject().
      */
     static public function getCallerObject()
     {
@@ -149,7 +149,7 @@ class Erebot_Utils
      * \param int $strip
      *      A bitwise OR of the codes of the styles we want to strip.
      *      The default is to strip all forms of styles from the text.
-     *      See also the ErebotUtils::STRIP_* constants.
+     *      See also the Erebot_Utils::STRIP_* constants.
      *
      * \retval string
      *      The text with all the styles specified in $strip stripped.
@@ -197,7 +197,7 @@ class Erebot_Utils
      *      only a nickname to work with. Therefore, it is safe
      *      to call this method with the result of a previous
      *      invocation. Thus, the following snippet:
-     *      ErebotUtils::extractNick(ErebotUtils::extractNick('foo!bar\@baz'));
+     *      Erebot_Utils::extractNick(Erebot_Utils::extractNick('foo!bar\@baz'));
      *      will return "foo" as expected.
      */
     static public function extractNick($source)
@@ -265,7 +265,7 @@ class Erebot_Utils
      */
     static public function toUTF8($text, $from='iso-8859-1')
     {
-        if (ErebotUtils::isUTF8($text))
+        if (self::isUTF8($text))
             return $text;
 
         if (!strcasecmp($from, 'iso-8859-1') &&

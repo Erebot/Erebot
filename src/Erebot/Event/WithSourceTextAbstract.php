@@ -20,16 +20,20 @@
  * \brief
  *      An abstract Event which has a source and contains some text.
  */
-abstract class  ErebotEventWithSourceAndText
-extends         ErebotEventWithText
-implements      iErebotEventSource
+abstract class  Erebot_Event_WithSourceTextAbstract
+extends         Erebot_Event_WithTextAbstract
+implements      Erebot_Interface_Event_Source
 {
     protected $_source;
     
-    public function __construct(iErebotConnection &$connection, $source, $text)
+    public function __construct(
+        Erebot_Interface_Connection    &$connection,
+                                        $source,
+                                        $text
+    )
     {
         parent::__construct($connection, $text);
-        $this->_source = ErebotUtils::extractNick($source, FALSE);
+        $this->_source = Erebot_Utils::extractNick($source, FALSE);
     }
 
     // Documented in the interface.

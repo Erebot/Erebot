@@ -32,7 +32,7 @@ extends ErebotModuleTestCase
 
     public function testMatchByInheritedClass()
     {
-        $handler    = new Erebot_EventHandler($this->_cb, 'Erebot_Event_WithText');
+        $handler    = new Erebot_EventHandler($this->_cb, 'Erebot_Event_WithTextAbstract');
         $event      = new Erebot_Event_Ping($this->_connection, 'foo');
         $this->assertTrue($handler->handleEvent($event));
     }

@@ -21,9 +21,9 @@
  *      Triggered when a private notice is received.
  */
 class       Erebot_Event_PrivateNotice
-extends     ErebotEventWithSourceAndText
-implements  iErebotEventMessageNotice,
-            iErebotEventPrivate
+extends     Erebot_Event_WithSourceTextAbstract
+implements  Erebot_Interface_Event_NoticeMessage,
+            Erebot_Interface_Event_Private
 {
 }
 

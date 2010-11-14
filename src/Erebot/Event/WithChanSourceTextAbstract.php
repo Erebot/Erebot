@@ -21,21 +21,21 @@
  *      An abstract Event containing some text, having a source
  *      and applying to a channel.
  */
-abstract class  ErebotEventWithChanSourceAndText
-extends         ErebotEventWithChanAndSource
-implements      iErebotEventText
+abstract class  Erebot_Event_WithChanSourceTextAbstract
+extends         Erebot_Event_WithChanSourceAbstract
+implements      Erebot_Interface_Event_Text
 {
     protected $_text;
 
     public function __construct(
-        iErebotConnection  &$connection,
-                            $chan,
-                            $source,
-                            $text
+        Erebot_Interface_Connection    &$connection,
+                                        $chan,
+                                        $source,
+                                        $text
     )
     {
         parent::__construct($connection, $chan, $source);
-        $this->_text = new ErebotTextWrapper($text);
+        $this->_text = new Erebot_TextWrapper($text);
     }
 
     // Documented in the interface.

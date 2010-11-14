@@ -20,8 +20,8 @@
  * \brief
  *      Interface for HALF-OPerator mode.
  */
-interface   iErebotEventChanModeHalfop
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Halfop
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_LETTER = 'h';
 }

@@ -20,8 +20,8 @@
  * \brief
  *      Interface for OWNER mode.
  */
-interface   iErebotEventChanModeOwner
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Owner
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_LETTER = 'q';
 }

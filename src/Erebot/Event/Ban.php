@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when a ban is set on a channel.
  */
-class       ErebotEventBan
-extends     ErebotEventChanUserModeMaskBase
-implements  iErebotEventChanModeGive,
-            iErebotEventChanModeBan
+class       Erebot_Event_Ban
+extends     Erebot_Event_ChanUserModeMaskAbstract
+implements  Erebot_Interface_Event_ChanModeGiven,
+            Erebot_Interface_Event_Ban
 {
 }
 

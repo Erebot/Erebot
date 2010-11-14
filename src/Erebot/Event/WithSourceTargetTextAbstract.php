@@ -20,17 +20,17 @@
  * \brief
  *      An abstract Event with a source, a target and some text.
  */
-abstract class  ErebotEventWithSourceTargetAndText
-extends         ErebotEventWithSourceAndTarget
-implements      iErebotEventText
+abstract class  Erebot_Event_WithSourceTargetTextAbstract
+extends         Erebot_Event_WithSourceTargetAbstract
+implements      Erebot_Interface_Event_Text
 {
     protected $_text;
 
     public function __construct(
-        iErebotConnection   &$connection,
-                            $source,
-                            $target,
-                            $text
+        Erebot_Interface_Connection    &$connection,
+                                        $source,
+                                        $target,
+                                        $text
     )
     {
         parent::__construct($connection, $source, $target);

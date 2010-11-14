@@ -284,7 +284,7 @@ interface Erebot_Interface_Event_Raw
     /**
      * Constructs a raw message.
      *
-     * \param iErebotConnection $connection
+     * \param Erebot_Interface_Connection $connection
      *      The connection this message came from.
      *
      * \param int $raw
@@ -305,15 +305,18 @@ interface Erebot_Interface_Event_Raw
      *      No attempt is made at parsing the content of the message.
      */
     public function __construct(
-        iErebotConnection &$connection,
-        $raw, $source, $target, $text
+        Erebot_Interface_Connection    &$connection,
+                                        $raw,
+                                        $source,
+                                        $target,
+                                        $text
     );
 
     /**
      * Returns the connection this raw message came from.
      * This is the same object as that passed during construction.
      *
-     * \retval iErebotConnection
+     * \retval Erebot_Interface_Connection
      *      The connection this raw message came from.
      */
     public function & getConnection();
@@ -366,8 +369,8 @@ interface Erebot_Interface_Event_Raw
     public function getText();
 }
 
-/// @TODO: For backward-compatibility (remove in 0.4.0).
-$reflector = new ReflectionClass('iErebotRaw');
+/// @TODO: For backward-compatibility (will be removed in 0.5.0).
+$reflector = new ReflectionClass('Erebot_Interface_Event_Raw');
 foreach ($reflector->getConstants() as $name => $value) {
     if (strncasecmp($name, 'ERR_', 4) &&
         strncasecmp($name, 'RPL_', 4))

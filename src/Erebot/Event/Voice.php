@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone receives VOICE priviledges on a channel.
  */
-class       ErebotEventVoice
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeGive,
-            iErebotEventChanModeVoice
+class       Erebot_Event_Voice
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeGiven,
+            Erebot_Interface_Event_Voice
 {
 }
 

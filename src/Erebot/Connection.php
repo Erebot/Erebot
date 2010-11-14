@@ -404,7 +404,7 @@ implements  Erebot_Interface_Connection
         if ($pos === FALSE)
             return FALSE;
 
-        $line = ErebotUtils::toUTF8(substr($this->_incomingData, 0, $pos));
+        $line = Erebot_Utils::toUTF8(substr($this->_incomingData, 0, $pos));
         $this->_incomingData    = substr($this->_incomingData, $pos + 2);
         $this->_rcvQueue[]      = $line;
 
@@ -611,7 +611,7 @@ implements  Erebot_Interface_Connection
                         case 'a':
                         case 'q':
                         case 'b':
-                            $tnick  = ErebotUtils::gettok($msg, $k++, 1);
+                            $tnick  = Erebot_Utils::gettok($msg, $k++, 1);
                             $cls    = $priv[$mode][$modes[$i]];
                             $event  = new $cls($this, $target, $source, $tnick);
                             $this->dispatchEvent($event);

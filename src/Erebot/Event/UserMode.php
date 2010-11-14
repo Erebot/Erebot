@@ -20,8 +20,8 @@
  * \brief
  *      Triggered when the bot's usermodes are changed.
  */
-class   ErebotEventUserMode
-extends ErebotEventWithSourceTargetAndText
+class   Erebot_Event_UserMode
+extends Erebot_Event_WithSourceTargetTextAbstract
 {
 }
 

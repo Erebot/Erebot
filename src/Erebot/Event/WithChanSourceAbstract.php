@@ -20,19 +20,23 @@
  * \brief
  *      An abstract Event which has a source and applies to a channel.
  */
-abstract class  ErebotEventWithChanAndSource
-extends         ErebotEvent
-implements      iErebotEventChan,
-                iErebotEventSource
+abstract class  Erebot_Event_WithChanSourceAbstract
+extends         Erebot_Event_Abstract
+implements      Erebot_Interface_Event_Chan,
+                Erebot_Interface_Event_Source
 {
     protected $_chan;
     protected $_source;
 
-    public function __construct(iErebotConnection &$connection, $chan, $source)
+    public function __construct(
+        Erebot_Interface_Connection    &$connection,
+                                        $chan,
+                                        $source
+    )
     {
         parent::__construct($connection);
         $this->_chan    =&  $chan;
-        $this->_source  =   ErebotUtils::extractNick($source, FALSE);
+        $this->_source  =   Erebot_Utils::extractNick($source, FALSE);
     }
 
     // Documented in the interface.

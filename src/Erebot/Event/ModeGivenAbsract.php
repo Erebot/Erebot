@@ -18,11 +18,11 @@
 
 /**
  * \brief
- *      Triggered when someone removes a mode from a channel.
+ *      Triggered when someone sets a mode on a channel.
  */
-class       ErebotEventModeTake
-extends     ErebotEventWithChanSourceAndText
-implements  iErebotEventChanModeTake
+class       Erebot_Event_ModeGivenAbstract
+extends     Erebot_Event_WithChanSourceTextAbstract
+implements  Erebot_Interface_Event_ChanModeGiven
 {
 }
 

@@ -21,17 +21,17 @@
  *      An abstract Event which applies to a channel
  *      and has a source and a target.
  */
-abstract class  ErebotEventWithChanSourceAndTarget
-extends         ErebotEventWithSourceAndTarget
-implements      iErebotEventChan
+abstract class  Erebot_Event_WithChanSourceTargetAbstract
+extends         Erebot_Event_WithSourceTargetAbstract
+implements      Erebot_Interface_Event_Chan
 {
     protected $_chan;
 
     public function __construct(
-        iErebotConnection   &$connection,
-                            $chan,
-                            $source,
-                            $target
+        Erebot_Interface_Connection    &$connection,
+                                        $chan,
+                                        $source,
+                                        $target
     )
     {
         parent::__construct($connection, $source, $target);

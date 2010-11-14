@@ -20,7 +20,7 @@
  * \brief
  *      Interface for a generic Event.
  */
-interface iErebotEvent
+interface Erebot_Interface_Event_Generic
 {
 }
 

@@ -20,20 +20,20 @@
  * \brief
  *      An abstract Event for WATCH list notifications.
  */
-abstract class  ErebotEventWatchNotification
-extends         ErebotEventWithSourceAndText
+abstract class  Erebot_Event_NotificationAbstract
+extends         Erebot_Event_WithSourceTextAbstract
 {
     protected $_ident;
     protected $_host;
     protected $_timestamp;
 
     public function __construct(
-        iErebotConnection   &$connection,
-                            $source,
-                            $ident,
-                            $host,
-                            $timestamp,
-                            $text
+        Erebot_Interface_Connection    &$connection,
+                                        $source,
+                                        $ident,
+                                        $host,
+                                        $timestamp,
+                                        $text
     )
     {
         parent::__construct($connection, $source, $text);

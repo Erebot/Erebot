@@ -42,7 +42,7 @@ implements  Erebot_Interface_EventHandler
     {
         $reflector  = new ReflectionParameter($callback, 0);
         $cls        = $reflector->getClass();
-        if ($cls === NULL || !$cls->implementsInterface('iErebotEvent'))
+        if ($cls === NULL || !$cls->implementsInterface('Erebot_Interface_Event_Generic'))
             throw new Erebot_InvalidValueException('Invalid signature');
 
         if (!is_array($constraints))
@@ -55,10 +55,11 @@ implements  Erebot_Interface_EventHandler
             if (!class_exists($constraint) && !interface_exists($constraint))
                 throw new Erebot_InvalidValueException('Invalid event type');
 
-            // We want to determine if the given type (either a class
-            // or an interface) implements the iErebotEvent interface.
+            // We want to determine if the given type
+            // (either a class or an interface) implements
+            // the Erebot_Interface_Event_Generic interface.
             $reflect = new ReflectionClass($constraint);
-            if (!$reflect->implementsInterface('iErebotEvent'))
+            if (!$reflect->implementsInterface('Erebot_Interface_Event_Generic'))
                 throw new Erebot_InvalidValueException('Invalid event type');
         }
 

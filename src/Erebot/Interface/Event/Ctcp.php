@@ -20,8 +20,8 @@
  * \brief
  *      Interface for a CTCP event.
  */
-interface   iErebotEventCtcp
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Ctcp
+extends     Erebot_Interface_Event_Generic
 {
     public function & getCtcpType();
 }

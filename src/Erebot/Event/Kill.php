@@ -20,8 +20,8 @@
  * \brief
  *      Triggered when the bot receives a KILL message from the server.
  */
-class   ErebotEventKill
-extends ErebotEventWithSourceTargetAndText
+class   Erebot_Event_Kill
+extends Erebot_Event_WithSourceTargetTextAbstract
 {
 }
 

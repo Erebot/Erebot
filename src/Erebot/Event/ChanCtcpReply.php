@@ -20,9 +20,9 @@
  * \brief
  *      Triggered when a CTCP reply is received on a channel the bot is on.
  */
-class       ErebotEventCtcpReplyChan
-extends     ErebotEventWithChanSourceAndCtcp
-implements  iErebotEventMessageCtcpReply
+class       Erebot_Event_ChanCtcpReply
+extends     Erebot_Event_WithChanSourceCtcpAbstract
+implements  Erebot_Interface_Event_CtcpReplyMessage
 {
 }
 

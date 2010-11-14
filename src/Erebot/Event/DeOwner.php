@@ -20,10 +20,10 @@
  * \brief
  *      Triggered when someone loses OWNER priviledges on a channel.
  */
-class       ErebotEventDeOwner
-extends     ErebotEventChanUserModeBase
-implements  iErebotEventChanModeTake,
-            iErebotEventChanModeOwner
+class       Erebot_Event_DeOwner
+extends     Erebot_Event_ChanUserModeAbstract
+implements  Erebot_Interface_Event_ChanModeTaken,
+            Erebot_Interface_Event_Owner
 {
 }
 

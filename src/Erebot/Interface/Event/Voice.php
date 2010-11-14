@@ -20,8 +20,8 @@
  * \brief
  *      Interface for VOICE mode.
  */
-interface   iErebotEventChanModeVoice
-extends     iErebotEvent
+interface   Erebot_Interface_Event_Voice
+extends     Erebot_Interface_Event_Generic
 {
     const MODE_LETTER = 'v';
 }
