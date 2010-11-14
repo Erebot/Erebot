@@ -40,6 +40,15 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', (string) $dep);
     }
 
+    public function testGetters()
+    {
+        $dep = new Erebot_Dependency('Pi >= 3.14');
+        $this->assertEquals('Pi', $dep->getName());
+        $this->assertEquals('>=', $dep->getOperator());
+        $this->assertEquals('3.14', $dep->getVersion());
+        $this->assertEquals('Pi >= 3.14', (string) $dep);
+    }
+
     /**
      * @expectedException Erebot_InvalidValueException
      */

@@ -65,9 +65,8 @@ class Erebot_XGlobStream
         $first  = substr($path, 0, 1);
         $abs    = '';
 
-        if ($first != DIRECTORY_SEPARATOR && (
-            strncasecmp(PHP_OS, 'Win', 3) || $first != '/'))
-            $abs = dirname(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR;
+        if ($first != '/')
+            $abs = getcwd().DIRECTORY_SEPARATOR;
 
         $matches    = glob($abs.$path, 0);
         if ($matches === FALSE)
