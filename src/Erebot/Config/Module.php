@@ -59,7 +59,6 @@ implements  Erebot_Interface_Config_Module
      */
     public function __destruct()
     {
-        parent::__destruct();
     }
 
     // Documented in the interface.

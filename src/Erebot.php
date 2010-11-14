@@ -151,7 +151,7 @@ implements  Erebot_Interface_Core
         foreach ($networks as $network) {
             $servers = $network->getServers();
 
-            if (!in_array('AutoConnect', $network->getModules(TRUE)))
+            if (!in_array('Erebot_Module_AutoConnect', $network->getModules(TRUE)))
                 continue;
 
             foreach ($servers as $server) {

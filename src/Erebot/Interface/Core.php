@@ -133,7 +133,7 @@ interface Erebot_Interface_Core
      *      There should be a folder going by the name of the \a $module
      *      itself containing a file called \a $module.php in the
      *      "modules/" folder. The file must contain a single class derived
-     *      from ErebotModuleBase for it to be considered a valid module.
+     *      from Erebot_Module_Base for it to be considered a valid module.
      *      You're free to give that class whatever name you like.
      */
     public function loadModule($module);

@@ -41,7 +41,7 @@ abstract class Erebot_Module_Base
      * you need to do, depending of the given $flags.
      *
      * \param int $flags
-     *      A bitwise OR of the ErebotModuleBase::RELOAD_*
+     *      A bitwise OR of the Erebot_Module_Base::RELOAD_*
      *      constants. Your method should take proper actions
      *      depending on the value of those flags.
      *
