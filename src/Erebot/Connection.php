@@ -301,7 +301,7 @@ implements  Erebot_Interface_Connection
                 sprintf("Unable to connect to '%s'", $url));
         }
 
-        $event = new ErebotEventLogon($this);
+        $event = new Erebot_Event_Logon($this);
         $this->dispatchEvent($event);
     }
 
@@ -421,7 +421,7 @@ implements  Erebot_Interface_Connection
     {
         $received   = fread($this->_socket, 4096);
         if ($received === FALSE || feof($this->_socket)) {
-            $event = new ErebotEventDisconnect($this);
+            $event = new Erebot_Event_Disconnect($this);
             $this->dispatchEvent($event);
 
             if (!$event->preventDefault())
@@ -476,7 +476,7 @@ implements  Erebot_Interface_Connection
         // Ping message from the server.
         if (!strcasecmp($source, 'PING')) {
             $msg = implode(' ', $parts);
-            $event = new ErebotEventPing($this, $msg);
+            $event = new Erebot_Event_Ping($this, $msg);
             $this->dispatchEvent($event);
             return;
         }
@@ -497,7 +497,7 @@ implements  Erebot_Interface_Connection
                 $parts[0] = substr($parts[0], 1);
 
             $msg = implode(' ', $parts);
-            $event = new ErebotEventError($this, $source, $msg);
+            $event = new Erebot_Event_Error($this, $source, $msg);
             $this->dispatchEvent($event);
             return;
         }
@@ -513,12 +513,12 @@ implements  Erebot_Interface_Connection
 
         switch ($type) {
             case 'INVITE':     // :nick1!ident@host INVITE nick2 :#chan
-                $event = new ErebotEventInvite($this, $msg, $source, $target);
+                $event = new Erebot_Event_Invite($this, $msg, $source, $target);
                 $this->dispatchEvent($event);
                 break;
 
             case 'JOIN':    // :nick1!ident@host JOIN :#chan
-                $event = new ErebotEventJoin($this, $target, $source);
+                $event = new Erebot_Event_Join($this, $target, $source);
                 $this->dispatchEvent($event);
                 break;
 
@@ -529,7 +529,7 @@ implements  Erebot_Interface_Connection
                 if (strlen($msg) && $msg[0] == ':')
                     $msg = substr($msg, 1);
 
-                $event  = new ErebotEventKick(
+                $event  = new Erebot_Event_Kick(
                     $this,
                     $target,
                     $source,
@@ -540,7 +540,7 @@ implements  Erebot_Interface_Connection
                 break;
 
             case 'KILL':    // :nick1!ident@host KILL nick2 :Reason
-                $event  = new ErebotEventKill($this, $target, $source, $msg);
+                $event  = new Erebot_Event_Kill($this, $target, $source, $msg);
                 $this->dispatchEvent($event);
                 break;
 
@@ -550,7 +550,7 @@ implements  Erebot_Interface_Connection
                     self::MODULE_BY_NAME
                 );
                 if (!$capabilities->isChannel($target)) {
-                    $event = new ErebotEventUserMode(
+                    $event = new Erebot_Event_UserMode(
                         $this,
                         $source,
                         $target,
@@ -560,7 +560,7 @@ implements  Erebot_Interface_Connection
                     break;
                 }
 
-                $event  = new ErebotEventRawMode($this, $target, $source, $msg);
+                $event  = new Erebot_Event_RawMode($this, $target, $source, $msg);
                 $this->dispatchEvent($event);
 
                 if ($event->preventDefault(TRUE)) {
@@ -575,23 +575,23 @@ implements  Erebot_Interface_Connection
                 $priv     = array(
                     self::MODE_ADD =>
                         array(
-                            'o' => 'ErebotEventOp',
-                            'h' => 'ErebotEventHalfop',
-                            'v' => 'ErebotEventVoice',
-                            'a' => 'ErebotEventProtect',
-                            'q' => 'ErebotEventOwner',
-                            'b' => 'ErebotEventBan',
-                            'e' => 'ErebotEventExcept',
+                            'o' => 'Erebot_Event_Op',
+                            'h' => 'Erebot_Event_Halfop',
+                            'v' => 'Erebot_Event_Voice',
+                            'a' => 'Erebot_Event_Protect',
+                            'q' => 'Erebot_Event_Owner',
+                            'b' => 'Erebot_Event_Ban',
+                            'e' => 'Erebot_Event_Except',
                         ),
                     self::MODE_REMOVE =>
                         array(
-                            'o' => 'ErebotEventDeOp',
-                            'h' => 'ErebotEventDeHalfop',
-                            'v' => 'ErebotEventDeVoice',
-                            'a' => 'ErebotEventDeProtect',
-                            'q' => 'ErebotEventDeOwner',
-                            'b' => 'ErebotEventUnban',
-                            'e' => 'ErebotEventUnexcept',
+                            'o' => 'Erebot_Event_DeOp',
+                            'h' => 'Erebot_Event_DeHalfop',
+                            'v' => 'Erebot_Event_DeVoice',
+                            'a' => 'Erebot_Event_DeProtect',
+                            'q' => 'Erebot_Event_DeOwner',
+                            'b' => 'Erebot_Event_UnBan',
+                            'e' => 'Erebot_Event_UnExcept',
                         ),
                 );
 
@@ -664,7 +664,7 @@ implements  Erebot_Interface_Connection
                 break; // ON_MODE
 
             case 'NICK':    // :oldnick!ident@host NICK newnick
-                $event = new ErebotEventNick($this, $source, $target);
+                $event = new Erebot_Event_Nick($this, $source, $target);
                 $this->dispatchEvent($event);
                 break;
 
@@ -683,7 +683,7 @@ implements  Erebot_Interface_Connection
                     $msg    = substr($msg, $pos + 1);
 
                     if ($capabilities->isChannel($target))
-                        $event = new ErebotEventCtcpReplyChan(
+                        $event = new Erebot_Event_ChanCtcpReply(
                             $this,
                             $target,
                             $source,
@@ -691,7 +691,7 @@ implements  Erebot_Interface_Connection
                             $msg
                         );
                     else
-                        $event = new ErebotEventCtcpReplyPrivate(
+                        $event = new Erebot_Event_PrivateCtcpReply(
                             $this,
                             $source,
                             $ctcp,
@@ -702,25 +702,25 @@ implements  Erebot_Interface_Connection
                 }
 
                 if ($capabilities->isChannel($target))
-                    $event = new ErebotEventNoticeChan(
+                    $event = new Erebot_Event_ChanNotice(
                         $this,
                         $target,
                         $source,
                         $msg
                     );
                 else
-                    $event = new ErebotEventNoticePrivate($this, $source, $msg);
+                    $event = new Erebot_Event_PrivateNotice($this, $source, $msg);
                 $this->dispatchEvent($event);
                 break;
 
             case 'PART':    // :nick1!ident@host PART #chan :Reason
-                $event = new ErebotEventPart($this, $target, $source, $msg);
+                $event = new Erebot_Event_Part($this, $target, $source, $msg);
                 $this->dispatchEvent($event);
                 break;
 
             /* We sent a PING and got a PONG! :) */
             case 'PONG':    // :origin PONG origin target
-                $event = new ErebotEventPong($this, $source, $msg);
+                $event = new Erebot_Event_Pong($this, $source, $msg);
                 $this->dispatchEvent($event);
                 break;
 
@@ -740,14 +740,14 @@ implements  Erebot_Interface_Connection
 
                     if ($ctcp == "ACTION") {
                         if ($capabilities->isChannel($target))
-                            $event = new ErebotEventActionChan(
+                            $event = new Erebot_Event_ChanAction(
                                 $this,
                                 $target,
                                 $source,
                                 $msg
                             );
                         else
-                            $event = new ErebotEventActionPrivate(
+                            $event = new Erebot_Event_PrivateAction(
                                 $this,
                                 $source,
                                 $msg
@@ -757,7 +757,7 @@ implements  Erebot_Interface_Connection
                     }
 
                     if ($capabilities->isChannel($target))
-                        $event = new ErebotEventCtcpChan(
+                        $event = new Erebot_Event_ChanCtcp(
                             $this,
                             $target,
                             $source,
@@ -765,7 +765,7 @@ implements  Erebot_Interface_Connection
                             $msg
                         );
                     else
-                        $event = new ErebotEventCtcpPrivate(
+                        $event = new Erebot_Event_PrivateCtcp(
                             $this,
                             $source,
                             $ctcp,
@@ -776,19 +776,19 @@ implements  Erebot_Interface_Connection
                 }
 
                 if ($capabilities->isChannel($target))
-                    $event = new ErebotEventTextChan(
+                    $event = new Erebot_Event_ChanText(
                         $this,
                         $target,
                         $source,
                         $msg
                     );
                 else
-                    $event = new ErebotEventTextPrivate($this, $source, $msg);
+                    $event = new Erebot_Event_PrivateText($this, $source, $msg);
                 $this->dispatchEvent($event);
                 break;
 
             case 'TOPIC':    // :nick1!ident@host TOPIC #chan :New topic
-                $event = new ErebotEventTopic($this, $target, $source, $msg);
+                $event = new Erebot_Event_Topic($this, $target, $source, $msg);
                 $this->dispatchEvent($event);
                 break;
 
@@ -798,7 +798,7 @@ implements  Erebot_Interface_Connection
                     $type   = intval($type, 10);
                     switch ($type) {
                         case RPL_WELCOME:
-                            $event = new ErebotEventConnect($this);
+                            $event = new Erebot_Event_Connect($this);
                             $this->dispatchEvent($event);
                             break;
 
@@ -813,8 +813,8 @@ implements  Erebot_Interface_Connection
                                 $text = substr($text, 1);
 
                             $map    = array(
-                                RPL_NOWON   => 'ErebotEventNotify',
-                                RPL_NOWOFF  => 'ErebotEventUnNotify',
+                                RPL_NOWON   => 'Erebot_Event_Notify',
+                                RPL_NOWOFF  => 'Erebot_Event_UnNotify',
                             );
                             $cls    = $map[$type];
                             $event  = new $cls($this, $nick, $ident, $host,
