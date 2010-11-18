@@ -226,7 +226,8 @@ implements  Erebot_Interface_Core
                 // Block until there is activity. Since timers
                 // are treated as streams too, we will also wake
                 // up whenever a timer fires.
-                $nb = stream_select($read, $write, $except, NULL);
+                // Throws a warning under PHP 5.2 when a signal is received.
+                $nb = @stream_select($read, $write, $except, NULL);
             }
             catch (Erebot_ErrorReportingException $e) {
                 if ($this->_running)
@@ -307,7 +308,7 @@ implements  Erebot_Interface_Core
             foreach ($write as $socket) {
                 $index = array_search($socket, $actives['connections']);
                 if ($index !== FALSE &&
-                    is_a($this->_connections[$index], $connectionCls))
+                    $this->_connections[$index] instanceof $connectionCls)
                     $this->_connections[$index]->processOutgoingData();
             }
         }
