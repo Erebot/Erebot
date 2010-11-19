@@ -8,6 +8,60 @@
     timezone="Europe/Paris"
     commands-prefix="!">
 
+    <logging xmlns="http://www.erebot.net/xmlns/logging">
+        <loggers>
+            <logger name="root">
+                <level>NOTSET</level>
+                <handlers>
+                    <handler>console</handler>
+                </handlers>
+            </logger>
+            <logger name="in">
+                <level>NOTSET</level>
+                <qualname>/var/www/Erebot/core/trunk/src/connection.php/input</qualname>
+                <propagate>0</propagate>
+                <handlers>
+                    <handler>in</handler>
+                </handlers>
+            </logger>
+            <logger name="out">
+                <level>NOTSET</level>
+                <qualname>/var/www/Erebot/core/trunk/src/connection.php/output</qualname>
+                <propagate>0</propagate>
+                <handlers>
+                    <handler>out</handler>
+                </handlers>
+            </logger>
+        </loggers>
+
+        <handlers>
+            <handler name="console">
+                <class>Plop_Handler_Stream</class>
+                <formatter>console</formatter>
+            </handler>
+            <handler name="in">
+                <class>Plop_Handler_Stream</class>
+                <formatter>in</formatter>
+            </handler>
+            <handler name="out">
+                <class>Plop_Handler_Stream</class>
+                <formatter>out</formatter>
+            </handler>
+        </handlers>
+
+        <formatters>
+            <formatter name="console">
+                <format>%(asctime)s [%(levelname)s] %(message)s</format>
+            </formatter>
+            <formatter name="in">
+                <format>%(asctime)s &lt;- %(message)s</format>
+            </formatter>
+            <formatter name="out">
+                <format>%(asctime)s -&gt; %(message)s</format>
+            </formatter>
+        </formatters>
+    </logging>
+
     <modules>
         <module name="PingReply"            />
         <module name="ServerCapabilities"   />
