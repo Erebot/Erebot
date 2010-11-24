@@ -109,7 +109,7 @@ implements  Erebot_Interface_Timer
         if ($this->_repeat > 0)
             $this->_repeat--;
         else if (!$this->_repeat)
-            return;
+            return FALSE;
 
         if ($this->_stream)
             pclose($this->_stream);
@@ -122,6 +122,7 @@ implements  Erebot_Interface_Timer
         else
             $command    = 'sleep '.$this->_delay.' &';
         $this->_stream = popen($command, 'r');
+        return TRUE;
     }
 
     // Documented in the interface.

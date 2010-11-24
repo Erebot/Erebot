@@ -64,5 +64,38 @@ extends PHPUnit_Framework_TestCase
     {
         new Erebot_Dependency('foo >');
     }
+
+    /**
+     * @expectedException Erebot_InvalidValueException
+     */
+    public function testInvalidSpecification3()
+    {
+        new Erebot_Dependency('> foo');
+    }
+
+    /**
+     * @expectedException Erebot_InvalidValueException
+     */
+    public function testInvalidSpecification4()
+    {
+        new Erebot_Dependency('');
+    }
+
+    /**
+     * @expectedException Erebot_InvalidValueException
+     */
+    public function testInvalidSpecification5()
+    {
+        new Erebot_Dependency(42);
+    }
+
+    /**
+     * @expectedException Erebot_InvalidValueException
+     */
+    public function testInvalidSpecification6()
+    {
+        new Erebot_Dependency('<>');
+    }
+
 }
 

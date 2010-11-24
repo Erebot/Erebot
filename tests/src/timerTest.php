@@ -37,7 +37,7 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $timer->getRepetition());
 
         $start = microtime(TRUE);
-        $timer->reset();
+        $this->assertTrue($timer->reset());
         $read = array($timer->getStream());
         $null = array();
 
@@ -58,7 +58,7 @@ extends PHPUnit_Framework_TestCase
 
         $this->_flag = FALSE;
         $start = microtime(TRUE);
-        $timer->reset();
+        $this->assertTrue($timer->reset());
         $read = array($timer->getStream());
         $null = array();
 
@@ -75,6 +75,8 @@ extends PHPUnit_Framework_TestCase
         $timer->activate();
         $this->assertTrue($this->_flag);
         $this->assertGreaterThanOrEqual($min, microtime(TRUE) - $start);
+
+        $this->assertFalse($timer->reset());
     }
 }
 

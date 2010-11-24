@@ -60,9 +60,16 @@ class Erebot_Dependency
                             "ne"    => "!=",
                         );
 
+        $errorMessage = 'Invalid dependency specification';
+        if (!is_string($dependency) || $dependency == '')
+            throw new Erebot_InvalidValueException($errorMessage);
+
         $dependency     = trim($dependency);
         $depNameEnd     = strcspn($dependency, $opTokens);
         $depName        = substr($dependency, 0, $depNameEnd);
+
+        if ($depName == '')
+            throw new Erebot_InvalidValueException($errorMessage);
 
         $len = strlen($dependency);
         if ($depNameEnd == $len)
@@ -71,8 +78,7 @@ class Erebot_Dependency
         else {
             $depVerStart    = $len - strcspn(strrev($dependency), $opTokens);
             if ($depVerStart <= $depNameEnd)
-                throw new Erebot_InvalidValueException(
-                    'Invalid dependency specification');
+                throw new Erebot_InvalidValueException($errorMessage);
 
             $depVer         = strtolower(substr($dependency, $depVerStart));
             $depOp          = strtolower(
@@ -91,8 +97,7 @@ class Erebot_Dependency
                     'Invalid dependency operator ('.$depOp.')');
 
             if ($depVer == '')
-                throw new Erebot_InvalidValueException(
-                    'Invalid dependency specification');
+                throw new Erebot_InvalidValueException($errorMessage);
         }
 
         $this->_name        = $depName;
