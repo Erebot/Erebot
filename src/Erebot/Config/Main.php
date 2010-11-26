@@ -196,7 +196,7 @@ implements  Erebot_Interface_Config_Main
 
         $this->_networks = array();
         foreach ($xml->networks->network as $netCfg) {
-            /// @TODO: use dependency injection instead.
+            /// @TODO use dependency injection instead.
             $newConfig  =   new Erebot_Config_Network($this, $netCfg);
             $this->_networks[$newConfig->getName()]  =& $newConfig;
             unset($newConfig);

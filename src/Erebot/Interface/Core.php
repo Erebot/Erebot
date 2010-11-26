@@ -82,7 +82,7 @@ interface Erebot_Interface_Core
     public function stop();
 
     /**
-     * Returns a list of all \link ErebotTimer ErebotTimers\endlink registered.
+     * Returns a list of all \link Erebot_Timer timers\endlink registered.
      *
      * \retval list(Erebot_Interface_Timer)
      *      Returns a list of timers registered for this instance.

@@ -36,7 +36,7 @@ if (!defined('__DIR__')) {
 } 
 
 /*
-/// @TODO: re-think integration of Doctrine a little...
+/// @TODO re-think integration of Doctrine a little...
 // Especially, we don't want to depend on it too much.
 include_once(__DIR__.'/orm/Doctrine.php');
 
@@ -64,8 +64,8 @@ unset($manager);
  *
  * This class is responsible for controlling the bot, from its start
  * to its shutdown. This is the class that will create new
- * \link ErebotConnection ErebotConnections\endlink, handle
- * \link ErebotTimer ErebotTimers\endlink, apply multiplexing, etc.
+ * \link Erebot_Connection connections\endlink, handle
+ * \link Erebot_Timer timers\endlink, apply multiplexing, etc.
  *
  * The main method you will be interested in is Erebot::start() which
  * starts the bot.
@@ -73,10 +73,10 @@ unset($manager);
 class       Erebot
 implements  Erebot_Interface_Core
 {
-    /// List of \link Erebot_Interface_Connection Erebot_Interface_Connections\endlink to handle.
+    /// List of \link Erebot_Interface_Connection connections\endlink to handle.
     protected $_connections;
 
-    /// List of \link Erebot_Interface_Timer Erebot_Interface_Timers\endlink to trigger, eventually.
+    /// List of \link Erebot_Interface_Timer timers\endlink to trigger, eventually.
     protected $_timers;
 
     /// Dictionary with mappings between modules and their classes.
@@ -505,9 +505,8 @@ implements  Erebot_Interface_Core
 if (!empty($_SERVER['DOCUMENT_ROOT']))
     die("This script isn't meant to be run from the Internet!\n");
 
-// For older versions of PHP (>= 4.3.0)
-// which don't support pcntl_signal_dispatch,
-// and yet support signals (< 5.3.0).
+// For older versions of PHP that support signals
+// but don't support pcntl_signal_dispatch (5.2.x).
 if (!function_exists('pcntl_signal_dispatch'))
     declare(ticks=1);
 

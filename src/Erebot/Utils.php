@@ -168,7 +168,7 @@ class Erebot_Utils
                 '', $text
             );
 
-        /// @TODO: strip extended colors.
+        /// @TODO strip extended colors.
 
         if ($strip & self::STRIP_RESET)
             $text = str_replace("\017", '', $text);

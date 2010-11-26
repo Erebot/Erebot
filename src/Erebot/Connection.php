@@ -907,7 +907,7 @@ implements  Erebot_Interface_Connection
                     $metadata['requires'] : array());
 
         foreach ($depends as $depend) {
-            /// @TODO: use dependency injection instead.
+            /// @TODO use dependency injection instead.
             $depend = new Erebot_Dependency($depend);
             try {
                 $depVer     = $depend->getVersion();

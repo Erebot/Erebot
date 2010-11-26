@@ -54,7 +54,7 @@ implements  Erebot_Interface_Config_Network
         $this->_name        = (string) $xml['name'];
 
         foreach ($xml->servers->server as $serverCfg) {
-            /// @TODO: use dependency injection instead.
+            /// @TODO use dependency injection instead.
             $newConfig = new Erebot_Config_Server($this, $serverCfg);
             $this->_servers[$newConfig->getConnectionURL()] =& $newConfig;
             unset($newConfig);
@@ -62,7 +62,7 @@ implements  Erebot_Interface_Config_Network
 
         if (isset($xml->channels->channel)) {
             foreach ($xml->channels->channel as $channelCfg) {
-                /// @TODO: use dependency injection instead.
+                /// @TODO use dependency injection instead.
                 $newConfig = new Erebot_Config_Channel($this, $channelCfg);
                 $this->_channels[$newConfig->getName()] =& $newConfig;
                 unset($newConfig);

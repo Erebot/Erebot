@@ -68,7 +68,7 @@ class Erebot_Config_Proxy
             return;
 
         foreach ($xml->modules->module as $module) {
-            /// @TODO: use dependency injection instead.
+            /// @TODO use dependency injection instead.
             $instance = new Erebot_Config_Module($module);
             $this->_modules[$instance->getName()] = $instance;
         }
