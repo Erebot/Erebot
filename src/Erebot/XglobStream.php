@@ -122,6 +122,12 @@ class Erebot_XGlobStream
         }
     }
 
+    // Needed under certain circumstances when using PHP 5.2.x.
+    public function stream_stat()
+    {
+        return array();
+    }
+
     public function url_stat()
     {
         return array();

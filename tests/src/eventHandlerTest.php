@@ -16,10 +16,42 @@ extends ErebotModuleTestCase
     public function setUp()
     {
         $sxml = new SimpleXMLElement('<foo/>');
-        $networkConfig = $this->getMock('Erebot_Interface_Config_Network', array(), array($mainConfig, $sxml), '', FALSE, FALSE, FALSE);
-        $serverConfig = $this->getMock('Erebot_Interface_Config_Server', array(), array($networkConfig, $sxml), '', FALSE, FALSE, FALSE);
-        $bot = $this->getMock('ErebotTestCore', array(), array($mainConfig), '', FALSE, FALSE, FALSE);
-        $this->_connection = $this->getMock('Erebot_Interface_Connection', array(), array($bot, $serverConfig), '', FALSE, FALSE, FALSE);
+        $networkConfig = $this->getMock(
+            'Erebot_Interface_Config_Network',
+            array(),
+            array($this->_mainConfig, $sxml),
+            '',
+            FALSE,
+            FALSE,
+            FALSE
+        );
+        $serverConfig = $this->getMock(
+            'Erebot_Interface_Config_Server',
+            array(),
+            array($networkConfig, $sxml),
+            '',
+            FALSE,
+            FALSE,
+            FALSE
+        );
+        $bot = $this->getMock(
+            'ErebotTestCore',
+            array(),
+            array($this->_mainConfig),
+            '',
+            FALSE,
+            FALSE,
+            FALSE
+        );
+        $this->_connection = $this->getMock(
+            'Erebot_Interface_Connection',
+            array(),
+            array($bot, $serverConfig),
+            '',
+            FALSE,
+            FALSE,
+            FALSE
+        );
         $this->_cb           = array($this, 'dummyCallback');
     }
 
