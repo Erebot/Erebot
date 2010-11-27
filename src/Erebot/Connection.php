@@ -274,10 +274,12 @@ implements  Erebot_Interface_Connection
                 $port           = 994;
                 $proto          = 'tls';
             }
-            else {
+            else if (!strcasecmp($url['scheme'], 'irc')) {
                 $port       = 194;
                 $proto      = 'tcp';
             }
+            else
+                throw new Erebot_InvalidValueException('Invalid scheme in URL');
 
             if (isset($url['port']))
                 $port = $url['port'];
