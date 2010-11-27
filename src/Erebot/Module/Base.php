@@ -23,7 +23,6 @@
  */
 abstract class Erebot_Module_Base
 {
-    protected   $_moduleName;
     protected   $_connection;
     protected   $_channel;
     protected   $_translator;
@@ -58,14 +57,11 @@ abstract class Erebot_Module_Base
     {
         $this->_connection  =&  $connection;
         $bot                =&  $connection->getBot();
-        $this->_moduleName  =   $bot->moduleClassToName($this);
         unset($bot);
 
         $config             =&  $this->_connection->getConfig(NULL);
         $this->_mainCfg     =&  $config->getMainCfg();
-        $this->_translator  =   $this->_mainCfg->getTranslator(
-            $this->_moduleName
-        );
+        $this->_translator  =   $this->_mainCfg->getTranslator(get_class($this));
         unset($config);
 
         $this->_channel     =   $channel;
@@ -77,7 +73,6 @@ abstract class Erebot_Module_Base
             $this->_connection,
             $this->_translator,
             $this->_channel,
-            $this->_moduleName,
             $this->_mainCfg
         );
     }
@@ -153,14 +148,14 @@ abstract class Erebot_Module_Base
         if ($this->_channel !== NULL) {
             try {
                 $config     =&  $this->_connection->getConfig($this->_channel);
-                return $config->$function($this->_moduleName, $param);
+                return $config->$function(get_class($this), $param);
             }
             catch (Erebot_Exception $e) {
                 unset($config);
             }
         }
         $config     =&  $this->_connection->getConfig(NULL);
-        return $config->$function($this->_moduleName, $param, $default);
+        return $config->$function(get_class($this), $param, $default);
     }
 
     /**
@@ -274,8 +269,7 @@ abstract class Erebot_Module_Base
     {
         try {
             $helper = $this->_connection->getModule(
-                'Helper',
-                Erebot_Interface_Connection::MODULE_BY_NAME,
+                'Erebot_Module_Helper',
                 $this->_channel
             );
             return $helper->realRegisterHelpMethod($this, $callback);
@@ -304,7 +298,7 @@ abstract class Erebot_Module_Base
         else if ($chan !== NULL) {
             $config     =&  $this->_connection->getConfig($chan);
             try {
-                return $config->getTranslator($this->_moduleName);
+                return $config->getTranslator(get_class());
             }
             catch (Erebot_Exception $e) {
             // The channel lacked a specific config. Use the cascade.
@@ -314,7 +308,7 @@ abstract class Erebot_Module_Base
 
         $config     =&  $this->_connection->getConfig($this->_channel);
         try {
-            return $config->getTranslator($this->_moduleName);
+            return $config->getTranslator(get_class());
         }
         catch (Erebot_Exception $e) {
             // The channel lacked a specific config. Use the cascade.
@@ -322,7 +316,7 @@ abstract class Erebot_Module_Base
         unset($config);
 
         $config     =&  $this->_connection->getConfig(NULL);
-        return $config->getTranslator($this->_moduleName);
+        return $config->getTranslator(get_class());
     }
 }
 

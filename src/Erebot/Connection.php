@@ -253,13 +253,13 @@ implements  Erebot_Interface_Connection
 
             if (isset($params['verify_peer']))
                 $ctxOptions['ssl']['verify_peer'] =
-                    $this->_parseBool($params['verify_peer']);
+                    Erebot_Config_Proxy::_parseBool($params['verify_peer']);
             else if (!isset($ctxOptions['ssl']['verify_peer']))
                 $ctxOptions['ssl']['verify_peer'] = TRUE;
 
             if (isset($params['allow_self_signed']))
                 $ctxOptions['ssl']['allow_self_signed'] =
-                    $this->_parseBool($params['allow_self_signed']);
+                    Erebot_Config_Proxy::_parseBool($params['allow_self_signed']);
             else if (!isset($ctxOptions['ssl']['allow_self_signed']))
                 $ctxOptions['ssl']['allow_self_signed'] = TRUE;
 
@@ -290,11 +290,6 @@ implements  Erebot_Interface_Connection
                 $context
             );
             stream_set_write_buffer($this->_socket, 0);
-            stream_socket_enable_crypto(
-                $this->_socket,
-                FALSE,
-                STREAM_CRYPTO_METHOD_TLS_CLIENT
-            );
         }
         catch (Exception $e) {
             throw new Erebot_ConnectionFailureException(
@@ -424,8 +419,12 @@ implements  Erebot_Interface_Connection
             $event = new Erebot_Event_Disconnect($this);
             $this->dispatchEvent($event);
 
-            if (!$event->preventDefault())
+            if (!$event->preventDefault()) {
+                $logging    =&  Plop::getInstance();
+                $logger     =   $logging->getLogger(__FILE__);
+                $logger->error('Disconnected');
                 throw new Erebot_ConnectionFailureException('Disconnected');
+            }
             return;
         }
 
@@ -547,8 +546,7 @@ implements  Erebot_Interface_Connection
             case 'MODE':    // :nick1!ident@host MODE <nick2/#chan> modes
                 try {
                     $capabilities = $this->getModule(
-                        'Erebot_Module_ServerCapabilities',
-                        self::MODULE_BY_NAME
+                        'Erebot_Module_ServerCapabilities'
                     );
                 }
                 catch (Erebot_NotFoundException $e) {
@@ -685,8 +683,7 @@ implements  Erebot_Interface_Connection
             case 'NOTICE':    // :nick1!ident@host NOTICE <nick2/#chan> :Message
                 try {
                     $capabilities = $this->getModule(
-                        'Erebot_Module_ServerCapabilities',
-                        self::MODULE_BY_NAME
+                        'Erebot_Module_ServerCapabilities'
                     );
                 }
                 catch (Erebot_NotFoundException $e) {
@@ -755,8 +752,7 @@ implements  Erebot_Interface_Connection
             case 'PRIVMSG':    // :nick1!ident@host PRIVMSG <nick2/#chan> :Msg
                 try {
                     $capabilities = $this->getModule(
-                        'Erebot_Module_ServerCapabilities',
-                        self::MODULE_BY_NAME
+                        'Erebot_Module_ServerCapabilities'
                     );
                 }
                 catch (Erebot_NotFoundException $e) {
@@ -899,10 +895,13 @@ implements  Erebot_Interface_Connection
         $logging    =&  Plop::getInstance();
         $logger     =   $logging->getLogger(__FILE__);
 
-        $class      =   $this->_bot->loadModule($module);
-        $instance   =   new $class($this, $chan);
+        if (!is_subclass_of($module, 'Erebot_Module_Base'))
+            throw new Erebot_InvalidValueException(
+                "Invalid module! Not a subclass of Erebot_Module_Base.");
 
-        $metadata   = $instance->getMetadata($class);
+        $instance   =   new $module($this, $chan);
+
+        $metadata   = $instance->getMetadata($module);
         $depends = (isset($metadata['requires']) ?
                     $metadata['requires'] : array());
 
@@ -911,11 +910,7 @@ implements  Erebot_Interface_Connection
             $depend = new Erebot_Dependency($depend);
             try {
                 $depVer     = $depend->getVersion();
-                $depended   = $this->getModule(
-                    $depend->getName(),
-                    self::MODULE_BY_NAME,
-                    $chan
-                );
+                $depended   = $this->getModule($depend->getName(), $chan);
 
                 // Check version of the module.
                 if ($depVer !== NULL) {
@@ -947,7 +942,9 @@ implements  Erebot_Interface_Connection
         }
         catch (Erebot_NotFoundException $e) {
             unset($instance);
-            throw new Erebot_NotFoundException('??? (missing dependency)');
+            throw new Erebot_NotFoundException(
+                '(maybe missing dependency): '.((string) $e)
+            );
         }
 
         if ($chan === NULL)
@@ -973,15 +970,8 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function & getModule($name, $type, $chan = NULL)
+    public function & getModule($name, $chan = NULL)
     {
-        if ($type == self::MODULE_BY_NAME)
-            ;   // Nothing to do here.
-        else if ($type == self::MODULE_BY_CLASS)
-            $name = $this->_bot->moduleClassToName($name);
-        else
-            throw new Erebot_InvalidValueException('Invalid retrieval type');
-
         if ($chan !== NULL && isset($this->_channelModules[$chan][$name]))
             return $this->_channelModules[$chan][$name];
 

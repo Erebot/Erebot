@@ -25,11 +25,6 @@
  */
 interface Erebot_Interface_Connection
 {
-    /// Retrieves an instance of a module by its name.
-    const MODULE_BY_NAME    = 0;
-    /// Retrieves an instance of a module using that module's class name.
-    const MODULE_BY_CLASS   = 1;
-
     /// Indicates that a given mode is to be added.
     const MODE_ADD          = 0;
     /// Indicates that a given mode is to be removed.
@@ -248,14 +243,8 @@ interface Erebot_Interface_Connection
      * Returns an instance of a given module on a given channel.
      *
      * \param string $name
-     *      Depending on the $type parameter, this is either
-     *      the name of the module or the name of the class
-     *      implementing the module we're interested in.
-     *
-     * \param opaque $type
-     *      Either Erebot_Connection::MODULE_BY_NAME to search for the
-     *      module by its name, or Erebot_Connection::MODULE_BY_CLASS
-     *      to look for the module by its class.
+     *      The name of the module (ie. the name of the class
+     *      implementing the feature we're interested in).
      *
      * \param string $chan
      *      (optional) An IRC channel name. If given, the bot will try
@@ -272,7 +261,7 @@ interface Erebot_Interface_Connection
      * \throw Erebot_NotFoundException
      *      Thrown if no instance of the given module could be found.
      */
-    public function & getModule($name, $type, $chan = NULL);
+    public function & getModule($name, $chan = NULL);
 
     /**
      * Registers a raw handler on this connection.

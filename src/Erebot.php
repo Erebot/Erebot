@@ -79,9 +79,6 @@ implements  Erebot_Interface_Core
     /// List of \link Erebot_Interface_Timer timers\endlink to trigger, eventually.
     protected $_timers;
 
-    /// Dictionary with mappings between modules and their classes.
-    protected $_modulesMapping;
-
     /// Main configuration for the bot.
     protected $_mainCfg;
 
@@ -92,8 +89,7 @@ implements  Erebot_Interface_Core
     public function __construct(Erebot_Interface_Config_Main $config)
     {
         $this->_connections     =
-        $this->_timers          =
-        $this->_modulesMapping  = array();
+        $this->_timers          = array();
         $this->_running         = FALSE;
         $this->_mainCfg  = $config;
 
@@ -307,7 +303,7 @@ implements  Erebot_Interface_Core
             // Handle write-ready sockets (flush outgoing data).
             foreach ($write as $socket) {
                 $index = array_search($socket, $actives['connections']);
-                if ($index !== FALSE &&
+                if ($index !== FALSE && isset($this->_connections[$index]) &&
                     $this->_connections[$index] instanceof $connectionCls)
                     $this->_connections[$index]->processOutgoingData();
             }
@@ -334,14 +330,12 @@ implements  Erebot_Interface_Core
         unset(
             $this->_timers,
             $this->_connections,
-            $this->_modulesMapping,
             $this->_mainCfg
         );
 
         $this->_running         = FALSE;
         $this->_connections     =
         $this->_timers          =
-        $this->_modulesMapping  =
         $this->_mainCfg         = NULL;
     }
 
@@ -379,12 +373,12 @@ implements  Erebot_Interface_Core
 
         // Print some statistics.
         if (function_exists('memory_get_peak_usage')) {
-            $logger->info($this->gettext('Max. Allocated memory:'));
+            $logger->info($this->gettext('Memory usage:'));
 
             $stats = array(
-                $this->gettext("System:")   => memory_get_peak_usage(TRUE)."B",
-                $this->gettext("Internal:") => memory_get_peak_usage(FALSE)."B",
-                $this->gettext("Limit:")    => ini_get('memory_limit'),
+                $this->gettext("Allocated:")    => memory_get_peak_usage(TRUE)."B",
+                $this->gettext("Used:")         => memory_get_peak_usage(FALSE)."B",
+                $this->gettext("Limit:")        => ini_get('memory_limit'),
             );
 
             foreach ($stats as $key => $value)
@@ -431,40 +425,6 @@ implements  Erebot_Interface_Core
     public static function getVersion()
     {
         return 'Erebot v'.self::VERSION;
-    }
-
-    // Documented in the interface.
-    public function loadModule($module)
-    {
-        if (isset($this->_modulesMapping[$module]))
-            return $this->_modulesMapping[$module];
-
-        if (!is_subclass_of($module, 'Erebot_Module_Base'))
-            throw new Erebot_InvalidValueException(
-                "Invalid module! Not a subclass of Erebot_Module_Base.");
-
-        $this->_modulesMapping[$module] = $module;
-        return $module;
-    }
-
-    // Documented in the interface.
-    public function moduleNameToClass($modName)
-    {
-        if (!isset($this->_modulesMapping[$modName]))
-            throw new Erebot_NotFoundException('No such module');
-        return $this->_modulesMapping[$module];
-    }
-
-    // Documented in the interface.
-    public function moduleClassToName($className)
-    {
-        if (is_object($className))
-            $className = get_class($className);
-
-        $modName = array_search($className, $this->_modulesMapping);
-        if ($modName === FALSE)
-            throw new Erebot_NotFoundException('No such module');
-        return $modName;
     }
 
     // Documented in the interface.

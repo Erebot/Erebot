@@ -117,64 +117,6 @@ interface Erebot_Interface_Core
     public static function getVersion();
 
     /**
-     * Loads a module.
-     *
-     * \param string $module
-     *      The name of the module to load.
-     *
-     * \retval string
-     *      Returns the name of the class to use to create instances of this
-     *      module.
-     *
-     * \throw Erebot_InvalidValueException
-     *      The given \a $module name does not define a valid module.
-     *
-     * \note
-     *      There should be a folder going by the name of the \a $module
-     *      itself containing a file called \a $module.php in the
-     *      "modules/" folder. The file must contain a single class derived
-     *      from Erebot_Module_Base for it to be considered a valid module.
-     *      You're free to give that class whatever name you like.
-     */
-    public function loadModule($module);
-
-    /**
-     * Returns the class associated with a given module.
-     *
-     * \param string $modName
-     *      Name of the (loaded) module whose class we're interested in.
-     *
-     * \retval string
-     *      Upon success, the name of the class to use to create
-     *      new instances of this module is returned.
-     *
-     * \throw Erebot_NotFoundException
-     *      No module with the given name has been loaded.
-     *
-     * \see
-     *      Erebot_Interface_Core::moduleClassToName which does the opposite conversion.
-     */
-    public function moduleNameToClass($modName);
-
-    /**
-     * Returns the name of the module associated with a given class.
-     *
-     * \param string $className
-     *      Name of the class whose module we're interested in.
-     *
-     * \retval string
-     *      Upon success, the name of the module that the given class
-     *      is used to create is returned.
-     *
-     * \throw Erebot_NotFoundException
-     *      No module using the given class name has been loaded.
-     *
-     * \see
-     *      Erebot_Interface_Core::moduleNameToClass which does the opposite conversion.
-     */
-    public function moduleClassToName($className);
-
-    /**
      * Adds a (new) connection to the bot.
      *
      * Once a new connection has been created, use this method to add
