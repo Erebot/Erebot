@@ -160,7 +160,7 @@ class Erebot_Config_Proxy
      *      "false", "0", "off" & "no" are recognized as FALSE.
      *      The comparison is case-insensitive (ie. "true" == "TrUe").
      */
-    protected function _parseBool($value)
+    static public function _parseBool($value)
     {
         $value = strtolower($value);
         if (in_array($value, array('true', '1', 'on', 'yes'), TRUE))
@@ -233,7 +233,7 @@ class Erebot_Config_Proxy
      * \retval NULL
      *      If no integer could be extracted.
      */
-    protected function _parseInt($value)
+    static public function _parseInt($value)
     {
         if ($value == '')
             return NULL;
@@ -289,7 +289,7 @@ class Erebot_Config_Proxy
      * \retval NULL
      *      If no real could be extracted.
      */
-    protected function _parseReal($value)
+    static public function _parseReal($value)
     {
         if (!is_numeric($value))
             return NULL;
