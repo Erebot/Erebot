@@ -13,6 +13,11 @@ extends PHPUnit_Framework_TestCase
             array(), array('', ''), '',
             FALSE, FALSE, FALSE
         );
+
+        $this->_translator
+            ->expects($this->any())
+            ->method('getLocale')
+            ->will($this->returnValue('en-US'));
     }
 
     public function tearDown()
@@ -27,7 +32,7 @@ extends PHPUnit_Framework_TestCase
         $template->assign('names', array('Clicky'));
         $result     = addcslashes($template->render(), "\000..\037");
         $expected   = "Clicky";
-        $this->assertEquals($expected, $result);        
+        $this->assertEquals($expected, $result);
     }
 
     public function testBeatlesTest()

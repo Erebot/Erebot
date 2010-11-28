@@ -438,6 +438,7 @@ class   Erebot_Styling
             $result .= $this->parseChildren($node, $attributes, $variables);
             $variables = $savedVariables;
         }
+
         // Handle plurals.
         else if ($node->tagName == 'plural') {
             /* We don't need the full set of features/complexity/bugs
@@ -475,11 +476,12 @@ class   Erebot_Styling
             $correctForm = $formatter->format(array($value));
             $result .= $subcontents[$correctForm];
         }
+
         // Handle childrens.
         else
             $result .= $this->parseChildren($node, $attributes, $variables);
 
-        // Post-handling.
+        // Post-handling : restore old state.
         switch ($node->tagName) {
             case 'u':
                 if (!$saved['underline'])
