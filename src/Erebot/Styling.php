@@ -174,7 +174,7 @@ class   Erebot_Styling
         if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk')
             $schemaDir = '../../data';
         else
-            $schemaDir = '../../data/pear.erebot.net/Erebot';
+            $schemaDir = '../../data/Erebot/pear.erebot.net';
 
         $schemaDir = str_replace('/', DIRECTORY_SEPARATOR, $schemaDir);
         $schema = dirname(__FILE__) .

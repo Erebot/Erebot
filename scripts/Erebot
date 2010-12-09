@@ -17,12 +17,43 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if (basename(dirname(dirname(__FILE__))) == 'trunk') {
-    $path = '/../../../autoloader.php';
-    include_once(
-        dirname(__FILE__) .
-        str_replace('/', DIRECTORY_SEPARATOR, $path)
-    );
+function Erebot_autoloader($className)
+{
+    $class = ltrim($className, '\\');
+    $path = str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class);
+
+    // When running from the trunk.
+    if ('@php_dir@' == '@'.'php_dir'.'@') {
+        $parts = explode(DIRECTORY_SEPARATOR, $path);
+        $repos_root = dirname(dirname(dirname(dirname(__FILE__))));
+        if (count($parts) > 2 && $parts[2] != 'Base' &&
+            array_slice($parts, 0, 2) == array('Erebot', 'Module'))
+            array_unshift($parts, $repos_root, 'modules', $parts[2], 'trunk', 'src');
+        else if ($parts[0] == 'Plop')
+            array_unshift($parts, $repos_root, 'logging', 'trunk', 'src');
+        else if ($parts[0] == 'Erebot')
+            array_unshift($parts, $repos_root, 'core', 'trunk', 'src');
+        $path = implode(DIRECTORY_SEPARATOR, $parts);
+    }
+    // When running from a pear/pyrus installation.
+    else array_unshift($parts, '@php_dir@');
+
+    $path .= '.php';
+    if (($fp = @fopen($path, 'rb', TRUE)) !== FALSE) {
+        fclose($fp);
+        unset($fp);
+        include_once($path);
+    }
+}
+
+// Register the autoloader, using whatever's available.
+if (function_exists('spl_autoload_register'))
+    spl_autoload_register('Erebot_autoloader');
+else {
+    function __autoload($class)
+    {
+        return Erebot_autoloader($class);
+    }
 }
 
 function main()

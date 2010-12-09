@@ -65,7 +65,7 @@ implements  Erebot_Interface_I18n
             }
         }
         else
-            $base = '../../../data/pear.erebot.net/' . $component . '/i18n';
+            $base = '../../data/' . $component . '/pear.erebot.net/i18n';
         $base = str_replace('/', DIRECTORY_SEPARATOR, trim($base, '/'));
         $prefix = dirname(__FILE__) . DIRECTORY_SEPARATOR .
             $base . DIRECTORY_SEPARATOR;

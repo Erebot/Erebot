@@ -13,10 +13,11 @@ $deps = array(
     'pear.erebot.net/Erebot_Module_AutoJoin',
     'pear.erebot.net/Erebot_Module_AutoConnect',
 );
+$compat_deps = $deps;
 
-foreach ($deps as $dep) {
+foreach ($deps as $dep)
     $package->dependencies['required']->package[$dep]->save();
+foreach ($compat_deps as $dep)
     $compatible->dependencies['required']->package[$dep]->save();
-}
 
 ?>
