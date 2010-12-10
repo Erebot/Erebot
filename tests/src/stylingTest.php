@@ -1,5 +1,11 @@
 <?php
 
+require_once(
+    dirname(dirname(__FILE__)) .
+    DIRECTORY_SEPARATOR . 'testenv' .
+    DIRECTORY_SEPARATOR . 'bootstrap.php'
+);
+
 class   StylingTest
 extends PHPUnit_Framework_TestCase
 {

@@ -1,12 +1,17 @@
 <?php
 
-include_once('Erebot/XglobStream.php');
+require_once(
+    dirname(dirname(__FILE__)) .
+    DIRECTORY_SEPARATOR . 'testenv' .
+    DIRECTORY_SEPARATOR . 'bootstrap.php'
+);
 
 class   XglobStreamTest
 extends PHPUnit_Framework_TestCase
 {
     public function testXglobStream()
     {
+        $this->assertTrue(class_exists('Erebot_XglobStream'));
         $expected = array(
             '<xglob:wrapping xmlns:xglob="http://www.erebot.net/xmlns/xglob"><?xml version="1.0" ?>',
             '<!-- kate: tab-width: 4 -->',

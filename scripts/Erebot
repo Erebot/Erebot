@@ -33,6 +33,8 @@ function Erebot_autoloader($className)
             array_unshift($parts, $repos_root, 'logging', 'trunk', 'src');
         else if ($parts[0] == 'Erebot')
             array_unshift($parts, $repos_root, 'core', 'trunk', 'src');
+        // Otherwise, the path gets restored to its previous state,
+        // where PHP uses the usual include_path to locate the file.
         $path = implode(DIRECTORY_SEPARATOR, $parts);
     }
     // When running from a pear/pyrus installation.
