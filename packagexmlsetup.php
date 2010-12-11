@@ -12,6 +12,7 @@ $deps = array(
     'pear.erebot.net/Erebot_Module_IrcConnector',
     'pear.erebot.net/Erebot_Module_AutoJoin',
     'pear.erebot.net/Erebot_Module_AutoConnect',
+    'pear.erebot.net/Plop',
 );
 $compat_deps = $deps;
 
