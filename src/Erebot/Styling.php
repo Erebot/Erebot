@@ -190,10 +190,12 @@ class   Erebot_Styling
         libxml_use_internal_errors($ue);
         $errors = libxml_get_errors();
         if (count($errors)) {
-            # Some unpredicted error occurred,
-            # show some (hopefully) useful information.
-            $errmsg = print_r($errors, TRUE);
-            fprintf(STDERR, '%s', $errmsg);
+            // Some unpredicted error occurred,
+            // show some (hopefully) useful information.
+            $errmsg     =   print_r($errors, TRUE);
+            $logging    =&  Plop::getInstance();
+            $logger     =   $logging->getLogger(__FILE__);
+            $logger->error($errmsg);
             throw new Erebot_InvalidValueException(
                 'Error while validating the message');
         }

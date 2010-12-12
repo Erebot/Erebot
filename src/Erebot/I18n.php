@@ -16,11 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#$oldErrorReporting = error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-#require('File/Gettext.php');
-#error_reporting($oldErrorReporting);
-#unset($oldErrorReporting);
-
 /**
  * \brief
  *      A class which provides translations for
