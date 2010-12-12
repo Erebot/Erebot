@@ -12,5 +12,8 @@ Changelog:
 *   The code is now delivered as a set of PEAR packages [#306]
 *   Moved from php-gettext to File_Gettext to handle translations [#90]
 *   Timers have been ported to Windows [#79] (experimental)
+*   Added support for daemonization (ie. run the bot in the background) [#331]
+*   Added options to change identity when started by root [#332]
+
 See https://projets.iiens.net/versions/show/27 for the full list of changes.
 
