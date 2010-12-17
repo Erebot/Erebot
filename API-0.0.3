@@ -1,1 +1,15 @@
-This API is pretty stable...
+Here's a short list of API changes made recently.
+Though it's not very long, it was decided to change the API version
+because of the way the packaging evolved to (releasing the code as
+PEAR packages means we need a new way to organize things -- PEAR
+has a few guidelines regarding that which seem quite helpful and
+have therefore been adopted).
+
+Main changes:
+*   Most class names have changed to accomodate with PEAR2's policy
+    regarding the actual class to file mapping.
+*   A few methods have been added to somes interfaces or otherwise
+    moved from one interface to another.
+    It would be vain to try to list them due to the change in class
+    names themselves. But expect a more thorough analysis of changes
+    for the next API release.
