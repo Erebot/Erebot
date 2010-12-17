@@ -5,7 +5,7 @@ This release is the first one to be packaged as a set of PEAR packages.
 Apart from this change in the packaging method, a few features were also
 added or otherwise modified.
 
-Changelog:
+Major changes:
 *   Added a cache for translation files in the i18n API. [#310]
 *   Moved to Phing to manage many things (builds, tests, ...) [#309]
 *   The bot can now be run using a different configuration file [#307]

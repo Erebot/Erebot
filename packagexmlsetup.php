@@ -12,8 +12,8 @@ $deps = array(
     'pear.php.net/Console_CommandLine',
     'pear.php.net/File_Gettext',
     'pear.erebot.net/Erebot_Module_IrcConnector',
-    'pear.erebot.net/Erebot_Module_AutoJoin',
     'pear.erebot.net/Erebot_Module_AutoConnect',
+    'pear.erebot.net/Erebot_Module_PingReply',
     'pear.erebot.net/Plop',
 );
 $compat_deps = $deps;
