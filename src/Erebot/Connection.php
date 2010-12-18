@@ -1023,7 +1023,7 @@ implements  Erebot_Interface_Connection
             }
         }
         // This should help make the code a little more "bug-free" (TM).
-        catch (Erebot_ExceptionErrorReporting $e) {
+        catch (Erebot_ErrorReportingException $e) {
             $logging    =&  Plop::getInstance();
             $logger     =   $logging->getLogger(__FILE__);
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
@@ -1041,7 +1041,7 @@ implements  Erebot_Interface_Connection
             }
         }
         // This should help make the code a little more "bug-free" (TM).
-        catch (Erebot_ExceptionErrorReporting $e) {
+        catch (Erebot_ErrorReportingException $e) {
             $logging    =&  Plop::getInstance();
             $logger     =   $logging->getLogger(__FILE__);
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);

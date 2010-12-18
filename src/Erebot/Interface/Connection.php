@@ -53,7 +53,7 @@ interface Erebot_Interface_Connection
      * using the configuration data passed to the
      * constructor.
      *
-     * \throw Erebot_ExceptionConnectionFailure
+     * \throw Erebot_ConnectionFailureException
      *      Thrown whenever the bot fails to establish
      *      a connection to the given server.
      */
