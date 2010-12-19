@@ -238,7 +238,7 @@ implements  Erebot_Interface_Core
 
             // Handle exception (OOB) data.
             if (count($except)) {
-                $logger->error($this->gettext('Received out-of-band data'));
+                $logger->info($this->gettext('Received out-of-band data'));
                 return $this->stop();
             }
 
@@ -295,10 +295,12 @@ implements  Erebot_Interface_Core
             }
 
             // Take care of incoming data waiting for processing.
-            foreach ($this->_connections as &$connection) {
-                $connection->processQueuedData();
+            if (is_array($this->_connections)) {
+                foreach ($this->_connections as &$connection) {
+                    $connection->processQueuedData();
+                }
+                unset($connection);
             }
-            unset($connection);
 
             // Handle write-ready sockets (flush outgoing data).
             foreach ($write as $socket) {

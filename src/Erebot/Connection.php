@@ -409,7 +409,7 @@ implements  Erebot_Interface_Connection
         $logger     =   $logging->getLogger(
             __FILE__ . DIRECTORY_SEPARATOR . 'input'
         );
-        $logger->info("%s", addcslashes($line, "\000..\037"));
+        $logger->debug("%s", addcslashes($line, "\000..\037"));
         return TRUE;
     }
 
@@ -445,7 +445,7 @@ implements  Erebot_Interface_Connection
         $logger     =   $logging->getLogger(
             __FILE__ . DIRECTORY_SEPARATOR . 'output'
         );
-        $logger->info("%s", addcslashes($line, "\000..\037"));
+        $logger->debug("%s", addcslashes($line, "\000..\037"));
         return fwrite($this->_socket, $line."\r\n");
     }
 
