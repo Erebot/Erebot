@@ -10,7 +10,7 @@ Changelog:
 *   Allowed configurations to be loaded from a string (helps tests) [#200]
 *   Split events in different classes [#151]
 *   Added support for the STARTTLS extension [#69]
-*   Added more tests [#67]
+*   Added support for NOTIFY/UNOTIFY events [#263]
 *   some other minor changes
 
 See https://projets.iiens.net/versions/show/22 for the full list of changes.
