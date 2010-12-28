@@ -103,8 +103,13 @@ abstract class Erebot_Module_Base
         // By default, we do nothing.
     }
 
-    protected function sendMessage($targets, $message)
+    protected function sendMessage($targets, $message, $type = 'PRIVMSG')
     {
+        $types = array('PRIVMSG', 'NOTICE', 'CTCP', 'CTCPREPLY', 'ACTION');
+        $type = strtoupper($type);
+        if (!in_array($type, $types))
+            throw new Exception('Not a valid type');
+
         if (is_array($targets))
             $targets = implode(',', $targets);
         else if (!is_string($targets))
@@ -112,16 +117,38 @@ abstract class Erebot_Module_Base
 
         $parts      = array_map('trim', explode("\n", trim($message)));
         $message    = implode(' ', $parts);
-        $prefix = 'PRIVMSG '.$targets.' :';
-        /* The RFC says a message (command+parameters) may take up
-         * 510 characters, but some IRC servers truncate messages
-         * before that. The 450 character limit is a rough estimation
-         * of what "ought to be enough for anybody". */
+        $marker     = '';
+        $ctcpType   = '';
+
+        if ($type == 'ACTION') {
+            $type       = 'PRIVMSG';
+            $marker     = "\001";
+            $ctcpType   = 'ACTION';
+        }
+
+        if ($type == 'CTCP' || $type == 'CTCPREPLY') {
+                $type       = ($type == 'CTCP' ? 'PRIVMSG' : 'NOTICE');
+                $marker     = "\001";
+                $parts      = explode(' ', $message);
+                $ctcpType   = array_shift($parts);
+                $message    = implode(' ', $parts);
+        }
+
+        if ($ctcpType != "" && $message != "")
+            $ctcpType .= " ";
+
+        $prefix = $type.' '.$targets.' :'.$marker.$ctcpType;
         $messages = explode(
-            "\n", wordwrap($message, 450 - $prefix - 2, "\n", TRUE)
+            "\n",
+            wordwrap(
+                $message,
+                450 - $prefix - 2,
+                "\n",
+                TRUE
+            )
         );
         foreach ($messages as $msg)
-            $this->_connection->pushLine($prefix.$msg);
+            $this->_connection->pushLine($prefix.$msg.$marker);
     }
 
     protected function sendCommand($command)

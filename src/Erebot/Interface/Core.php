@@ -71,8 +71,8 @@ interface Erebot_Interface_Core
      *      a class with a bad interface, etc.).
      *
      * \attention
-     *      This method never returns. Therefore, this MUST be the last
-     *      method you call in your script.
+     *      This method does not return until the bot drops its connections.
+     *      Therefore, this MUST be the last method you call in your script.
      */
     public function start($connectionCls = NULL);
 
@@ -165,5 +165,17 @@ interface Erebot_Interface_Core
      *      message if no translation is available.
      */
     public function gettext($message);
+
+    /**
+     * Returns the number of seconds elapsed since the bot was last started.
+     *
+     * \retval FALSE
+     *      The bot is not running (Erebot_Interface_Core::start() has not
+     *      been called yet).
+     *
+     * \retval integer
+     *      The number of seconds elapsed since the was last started.
+     */
+    public function getRunningTime();
 }
 

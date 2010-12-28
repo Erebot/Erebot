@@ -170,9 +170,9 @@ implements  Erebot_Interface_Core
             }
         }
 
-        // This flag is changed by quitGracefully()
+        // This is changed by quitGracefully()
         // when the bot should stop.
-        $this->_running = TRUE;
+        $this->_running = time();
 
         // Main loop
         while ($this->_running) {
@@ -461,6 +461,14 @@ implements  Erebot_Interface_Core
         $translator = $this->_mainCfg->getTranslator('Erebot');
         $function   = 'gettext';
         return $translator->$function($message);
+    }
+
+    // Documented in the interface.
+    public function getRunningTime()
+    {
+        if (!$this->_running)
+            return FALSE;
+        return time() - $this->_running;
     }
 }
 

@@ -706,8 +706,8 @@ implements  Erebot_Interface_Connection
 
                     $msg    = substr($msg, 1, -1);
                     $pos    = strcspn($msg, " ");
-                    $ctcp   = strtoupper(substr($msg, 0, $pos));
-                    $msg    = substr($msg, $pos + 1);
+                    $ctcp   = substr($msg, 0, $pos);
+                    $msg    = (string) substr($msg, $pos + 1);
 
                     if ($isChan)
                         $event = new Erebot_Event_ChanCtcpReply(
@@ -775,8 +775,8 @@ implements  Erebot_Interface_Connection
 
                     $msg    = substr($msg, 1, -1);
                     $pos    = strcspn($msg, " ");
-                    $ctcp   = strtoupper(substr($msg, 0, $pos));
-                    $msg    = substr($msg, $pos + 1);
+                    $ctcp   = substr($msg, 0, $pos);
+                    $msg    = (string) substr($msg, $pos + 1);
 
                     if ($ctcp == "ACTION") {
                         if ($isChan)
