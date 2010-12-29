@@ -113,7 +113,8 @@ extends PHPUnit_Framework_TestCase
         $this->assertSame(2, count($dispatched));
         $this->assertInstanceOf("Erebot_Event_Notify", $dispatched[0]);
         $this->assertEquals("foo!bar@baz", $dispatched[0]->getMask());
-        $this->assertEquals(42, $dispatched[0]->getTimestamp());
+        $ts = $dispatched[0]->getTimestamp();
+        $this->assertEquals(42, $ts->format('U'));
         $this->assertEquals(
             "is now online",
             (string) $dispatched[0]->getText()
@@ -131,7 +132,8 @@ extends PHPUnit_Framework_TestCase
         $this->assertSame(2, count($dispatched));
         $this->assertInstanceOf("Erebot_Event_UnNotify", $dispatched[0]);
         $this->assertEquals("foo!bar@baz", $dispatched[0]->getMask());
-        $this->assertEquals(42, $dispatched[0]->getTimestamp());
+        $ts = $dispatched[0]->getTimestamp();
+        $this->assertEquals(42, $ts->format('U'));
         $this->assertEquals(
             "is now offline",
             (string) $dispatched[0]->getText()

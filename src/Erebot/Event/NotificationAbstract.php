@@ -32,7 +32,7 @@ extends         Erebot_Event_WithSourceTextAbstract
                                         $source,
                                         $ident,
                                         $host,
-                                        $timestamp,
+        DateTime                       &$timestamp,
                                         $text
     )
     {

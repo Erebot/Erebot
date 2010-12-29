@@ -852,6 +852,7 @@ implements  Erebot_Interface_Connection
                             $ident      = array_shift($parts);
                             $host       = array_shift($parts);
                             $timestamp  = intval(array_shift($parts), 10);
+                            $timestamp  = new DateTime('@'.$timestamp);
                             $text       = implode(' ', $parts);
                             if (substr($text, 0, 1) == ':')
                                 $text = substr($text, 1);
