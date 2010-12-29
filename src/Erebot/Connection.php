@@ -846,6 +846,8 @@ implements  Erebot_Interface_Connection
 
                         case Erebot_Interface_Event_Raw::RPL_NOWON:
                         case Erebot_Interface_Event_Raw::RPL_NOWOFF:
+                        case Erebot_Interface_Event_Raw::RPL_LOGON:
+                        case Erebot_Interface_Event_Raw::RPL_LOGOFF:
                             $nick       = array_shift($parts);
                             $ident      = array_shift($parts);
                             $host       = array_shift($parts);
@@ -857,7 +859,11 @@ implements  Erebot_Interface_Connection
                             $map    = array(
                                 Erebot_Interface_Event_Raw::RPL_NOWON   =>
                                     'Erebot_Event_Notify',
+                                Erebot_Interface_Event_Raw::RPL_LOGON   =>
+                                    'Erebot_Event_Notify',
                                 Erebot_Interface_Event_Raw::RPL_NOWOFF  =>
+                                    'Erebot_Event_UnNotify',
+                                Erebot_Interface_Event_Raw::RPL_LOGOFF  =>
                                     'Erebot_Event_UnNotify',
                             );
                             $cls    = $map[$type];
