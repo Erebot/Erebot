@@ -477,6 +477,8 @@ implements  Erebot_Interface_Connection
         // Ping message from the server.
         if (!strcasecmp($source, 'PING')) {
             $msg = implode(' ', $parts);
+            if (substr($msg, 0, 1) == ':')
+                $msg = substr($msg, 1);
             $event = new Erebot_Event_Ping($this, $msg);
             $this->dispatchEvent($event);
             return;

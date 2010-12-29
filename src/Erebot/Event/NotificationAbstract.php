@@ -59,7 +59,7 @@ extends         Erebot_Event_WithSourceTextAbstract
 
     public function getTimestamp()
     {
-        return $this->timestamp;
+        return $this->_timestamp;
     }
 }
 
