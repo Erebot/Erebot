@@ -36,7 +36,7 @@ implements      Erebot_Interface_Event_Ctcp
     )
     {
         parent::__construct($connection, $chan, $source, $text);
-        $this->ctcpType =& $_ctcpType;
+        $this->_ctcpType =& $ctcpType;
     }
 
     // Documented in the interface.
