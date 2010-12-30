@@ -34,19 +34,24 @@ implements  Erebot_Interface_EventHandler
 
     // Documented in the interface.
     public function __construct(
-        $callback,
-        $constraints,
-        Erebot_Interface_EventTarget    $targets    = NULL,
-        Erebot_Interface_TextFilter     $filters    = NULL
+                                        $callback,
+                                        $constraints,
+        Erebot_Interface_EventTarget    $targets        = NULL,
+                                        $filters        = NULL
     )
     {
         $reflector  = new ReflectionParameter($callback, 0);
         $cls        = $reflector->getClass();
         if ($cls === NULL || !$cls->implementsInterface('Erebot_Interface_Event_Generic'))
-            throw new Erebot_InvalidValueException('Invalid signature');
+            throw new Erebot_InvalidValueException('Invalid callback');
 
         if (!is_array($constraints))
             $constraints = array($constraints);
+
+        if ($filters === NULL)
+            $filters = array();
+        if (!is_array($filters))
+            $filters = array($filters);
 
         foreach ($constraints as $constraint) {
             if (!is_string($constraint))
@@ -63,8 +68,14 @@ implements  Erebot_Interface_EventHandler
                 throw new Erebot_InvalidValueException('Invalid event type');
         }
 
+        foreach ($filters as &$filter) {
+            if (!($filter instanceof Erebot_TextFilter))
+                throw new Erebot_InvalidValueException('Invalid filter');
+        }
+        unset($filter);
+
         $this->_callback        =&  $callback;
-        $this->_constraints     =   $constraints;
+        $this->_constraints     =&  $constraints;
         $this->_targets         =&  $targets;
         $this->_filters         =&  $filters;
     }
@@ -91,6 +102,28 @@ implements  Erebot_Interface_EventHandler
         return $this->_targets;
     }
 
+    public function & addFilter(Erebot_TextFilter &$filter)
+    {
+        if (!in_array($filter, $this->_filters))
+            $this->_filters[] = $filter;
+        return $this;
+    }
+
+    public function & removeFilter(
+        Erebot_TextFilter  &$filter,
+                            $ignoreMissing = TRUE
+    )
+    {
+        $key = array_search($filter, $this->_filters);
+        if ($key === FALSE) {
+            if ($ignoreMissing)
+                return $this;
+            throw new Erebot_NotFoundException('Filter not found');
+        }
+        unset($this->_filters[$key]);
+        return $this;
+    }
+
     // Documented in the interface.
     public function & getFilters()
     {
@@ -98,7 +131,10 @@ implements  Erebot_Interface_EventHandler
     }
 
     // Documented in the interface.
-    public function handleEvent(Erebot_Interface_Event_Generic &$event)
+    public function handleEvent(
+        Erebot_Interface_Config_Main   &$config,
+        Erebot_Interface_Event_Generic &$event
+    )
     {
         foreach ($this->_constraints as $constraint) {
             if (!($event instanceof $constraint))
@@ -108,9 +144,25 @@ implements  Erebot_Interface_EventHandler
         if ($this->_targets !== NULL && !$this->_targets->match($event))
             return NULL;
 
-        if ($this->_filters !== NULL && !$this->_filters->match($event))
-            return NULL;
+        $matched = (!in_array(
+            'Erebot_Interface_Event_Text',
+            class_implements($event))
+        );
 
+        if (!$matched) {
+            if (!count($this->_filters))
+                $matched = TRUE;
+            foreach ($this->_filters as &$filter) {
+                if ($filter->match($event)) {
+                    $matched = TRUE;
+                    break;
+                }
+            }
+            unset($filter);
+        }
+
+        if (!$matched)
+            return NULL;
         return call_user_func($this->_callback, $event);
     }
 }

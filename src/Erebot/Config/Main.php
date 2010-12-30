@@ -52,8 +52,10 @@ implements  Erebot_Interface_Config_Main
     // Documented in the interface.
     public function __construct($configData, $source)
     {
-        $this->_proxified = NULL;
-        $this->_modules = array();
+        $this->_proxified   = NULL;
+        $this->_modules     = array();
+
+        $this->_configFile  = NULL;
         $this->load($configData, $source);
     }
 
@@ -187,7 +189,7 @@ implements  Erebot_Interface_Config_Main
         if (isset($xml->children(Plop_Config_Format_XML::XMLNS)->logging[0]))
             $logging->fileConfig(
                 $xml->children(Plop_Config_Format_XML::XMLNS)->logging[0],
-                array(),
+                NULL,
                 'Plop_Config_Format_XML'
             );
 
@@ -197,7 +199,7 @@ implements  Erebot_Interface_Config_Main
         $this->_networks = array();
         foreach ($xml->networks->network as $netCfg) {
             /// @TODO use dependency injection instead.
-            $newConfig  =   new Erebot_Config_Network($this, $netCfg);
+            $newConfig  = new Erebot_Config_Network($this, $netCfg);
             $this->_networks[$newConfig->getName()]  =& $newConfig;
             unset($newConfig);
         }
@@ -242,6 +244,12 @@ implements  Erebot_Interface_Config_Main
     public function getCommandsPrefix()
     {
         return $this->_commandsPrefix;
+    }
+
+    // Documented in the interface.
+    public function getConfigFile()
+    {
+        return $this->_configFile;
     }
 }
 

@@ -91,7 +91,7 @@ implements  Erebot_Interface_Core
         $this->_connections     =
         $this->_timers          = array();
         $this->_running         = FALSE;
-        $this->_mainCfg  = $config;
+        $this->_mainCfg         = $config;
 
         // If pcntl_signal is not supported,
         // the bot won't be able to stop!
@@ -108,6 +108,8 @@ implements  Erebot_Interface_Core
 
             foreach ($signals as $signal)
                 pcntl_signal($signal, array($this, 'quitGracefully'), TRUE);
+
+            pcntl_signal(SIGHUP, array($this, 'reload'), TRUE);
         }
     }
 
@@ -174,12 +176,13 @@ implements  Erebot_Interface_Core
         // when the bot should stop.
         $this->_running = time();
 
+        // PHP 5.3 way of handling signals.
+        $hasSignalDispatch = function_exists('pcntl_signal_dispatch');
+
         // Main loop
         while ($this->_running) {
             $logger->debug($this->gettext('Main event loop'));
-
-            // This is the way PHP 5.3 passes signals to their handlers.
-            if (function_exists('pcntl_signal_dispatch'))
+            if ($hasSignalDispatch)
                 pcntl_signal_dispatch();
 
             $read = $write = $except = array();
@@ -236,11 +239,13 @@ implements  Erebot_Interface_Core
                     continue;
             }
 
-            // Handle exception (OOB) data.
-            if (count($except)) {
-                $logger->info($this->gettext('Received out-of-band data'));
-                return $this->stop();
-            }
+            // Handle exceptional (out-of-band) data.
+            // It seems that PHP will mark signal interruptions with OOB data.
+            // We simply do a new iteration, because the signal dispatcher
+            // will be called right away if needed.
+            // For older versions, see declare(ticks) at the end.
+            if (count($except))
+                continue;
 
             // Handle read-ready "sockets"
             foreach ($read as $socket) {
@@ -469,6 +474,28 @@ implements  Erebot_Interface_Core
         if (!$this->_running)
             return FALSE;
         return time() - $this->_running;
+    }
+
+    public function reload()
+    {
+        $logging    =&  Plop::getInstance();
+        $logger     =   $logging->getLogger(__FILE__);
+        $configFile =   $this->_mainCfg->getConfigFile();
+
+        if ($configFile === NULL) {
+            $msg = $this->gettext('No configuration file to reload from');
+            $logger->info($msg);
+            return;
+        }
+
+        $msg = $this->gettext('Reloading the configuration (from %s)');
+        $logger->info($msg, $configFile);
+        $this->_mainCfg->load(
+            $configFile,
+            Erebot_Interface_Config_Main::LOAD_FROM_FILE
+        );
+        $msg = $this->gettext('Successfully reloaded the configuration');
+        $logger->info($msg, $configFile);
     }
 }
 

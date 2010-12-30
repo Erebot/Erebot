@@ -52,18 +52,20 @@ interface Erebot_Interface_EventHandler
      *      If this is set to NULL (the default), any target is
      *      considered valid.
      *
-     * \param NULL|Erebot_Interface_TextFilter $filters
-     *      (optional) An object used to filter events containing
-     *      text based on the content of that text.
-     *      See the documentation on Erebot_Interface_TextFilter for more information.
-     *      If this is set to NULL (the default), any text is considered
-     *      valid (ie: no filtering is done).
+     * \param NULL|Erebot_Interface_TextFilter|array $filters
+     *      (optional) An object or array of objects used to filter events
+     *      based on their text (in any). See the documentation on
+     *      Erebot_Interface_TextFilter for more information.
+     *      If this is set to NULL (the default) or an empty array, any text
+     *      is considered valid (ie: no filtering is done). Otherwise, the
+     *      event's text must match the criteria defined by that object (or
+     *      by any of the objects in case an array was passed).
      */
     public function __construct(
         $callback,
         $constraints,
         Erebot_Interface_EventTarget    $targets    = NULL,
-        Erebot_Interface_TextFilter     $filters    = NULL
+                                        $filters    = NULL
     );
 
     /**
@@ -107,6 +109,9 @@ interface Erebot_Interface_EventHandler
     /**
      * Given an event, this method does its best to handler it.
      *
+     * \param Erebot_Interface_Config_Main $config
+     *      An object containing the global configuration for the bot.
+     *
      * \param Erebot_Interface_Event_Generic $event
      *      An event to try to handle.
      *
@@ -117,6 +122,9 @@ interface Erebot_Interface_EventHandler
      *      constraints (on type, target and/or content) expressed
      *      by the current handler.
      */
-    public function handleEvent(Erebot_Interface_Event_Generic &$event);
+    public function handleEvent(
+        Erebot_Interface_Config_Main   &$config,
+        Erebot_Interface_Event_Generic &$event
+    );
 }
 

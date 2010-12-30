@@ -136,5 +136,17 @@ extends     Erebot_Interface_Config_Proxy
      *      The prefix for commands, such as '!'.
      */
     public function getCommandsPrefix();
+
+    /**
+     * Returns the name of the currently loaded configuration file.
+     *
+     * \retval string
+     *      Currently loaded configuration file.
+     *
+     * \retval NULL
+     *      No configuration file has been loaded or the configuration was
+     *      loaded using Erebot_Interface_Config_Main::LOAD_FROM_STRING.
+     */
+    public function getConfigFile();
 }
 

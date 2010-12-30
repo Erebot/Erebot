@@ -1025,9 +1025,10 @@ implements  Erebot_Interface_Connection
     // Documented in the interface.
     public function dispatchEvent(Erebot_Interface_Event_Generic &$event)
     {
+        $mainCfg =& $this->_config->getMainCfg();
         try {
             foreach ($this->_events as &$handler) {
-                if ($handler->handleEvent($event) === FALSE)
+                if ($handler->handleEvent($mainCfg, $event) === FALSE)
                     break;
             }
         }
