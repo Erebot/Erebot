@@ -850,7 +850,6 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    /// @TODO: document the new autoload behaviour.
     public function & getModule($name, $chan = NULL, $autoload = TRUE)
     {
         if ($chan !== NULL) {

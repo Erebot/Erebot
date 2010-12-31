@@ -252,6 +252,11 @@ interface Erebot_Interface_Connection
      *      channel, before falling back to a shared instance.
      *      Otherwise, this method only looks for a shared instance.
      *
+     * \param bool $autoload
+     *      (optional) Whether the module should be autoloaded if it
+     *      could not be found first time around (TRUE) or not (FALSE).
+     *      The default is to autoload missing modules.
+     *
      * \retval Erebot_Module_Base
      *      An instance of the given module.
      *
@@ -261,7 +266,7 @@ interface Erebot_Interface_Connection
      * \throw Erebot_NotFoundException
      *      Thrown if no instance of the given module could be found.
      */
-    public function & getModule($name, $chan = NULL);
+    public function & getModule($name, $chan = NULL, $autoload = TRUE);
 
     /**
      * Registers a raw handler on this connection.
