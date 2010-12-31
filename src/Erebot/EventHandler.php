@@ -153,7 +153,7 @@ implements  Erebot_Interface_EventHandler
             if (!count($this->_filters))
                 $matched = TRUE;
             foreach ($this->_filters as &$filter) {
-                if ($filter->match($event)) {
+                if ($filter->match($config, $event)) {
                     $matched = TRUE;
                     break;
                 }

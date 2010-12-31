@@ -38,10 +38,11 @@ extends Erebot_TextFilter
             if ($this->_requirePrefix === NULL)
                 $prefixPattern .= '?';
         }
-        $pattern    =   "#^".$prefix.strtr(
+        $pattern    =   "#^".$prefixPattern.strtr(
             preg_quote($pattern, '#'),
             $translationTable
         )."$#i";
+var_dump($pattern, $text);
         return (preg_match($pattern, $text) == 1);
     }
 }
