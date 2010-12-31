@@ -11,11 +11,7 @@ extends Erebot_Connection
 {
     protected $_dispatched = array();
 
-    protected function _loadGeneralModules()
-    {
-    }
-
-    protected function _loadChannelModules()
+    protected function _loadModules()
     {
     }
 
