@@ -67,150 +67,27 @@ implements  Erebot_Interface_Connection
         $this->_rcvQueue        = array();
         $this->_incomingData    = '';
 
-        $this->_loadGeneralModules();
-        $this->_loadChannelModules();
+        
+        $this->_loadModules();
     }
 
-    /**
-     * Loads modules which are shared by all channels.
-     * This means that all modules associated to this instance's $config
-     * (an Erebot_Interface_Config_Server) and its parents (an
-     * Erebot_Interface_Config_Network and an Erebot_Interface_Config_Main)
-     * get loaded by this method.
-     *
-     * \note
-     *      This method uses the modules metadata to take dependencies
-     *      into account.
-     *
-     * \exception Erebot_NotFoundException
-     *      Thrown whenever an unsatisfied module dependency is discovered,
-     *      such as when a module depends on another which is not loaded
-     *      by the current configuration.
-     */
-    protected function _loadGeneralModules()
+    protected function _loadModules()
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
-
-        // First pass: try to load them.
-        $failed    = $this->_config->getModules(TRUE);
-        do {
-            $modules    = $failed;
-            $failed     = array();
-
-            foreach ($modules as $module) {
-                try {
-                    $this->loadModule($module, NULL);
-                }
-                catch (Erebot_NotFoundException $e) {
-                    $logger->debug(
-                        "Could not load '%(module)s' module, ".
-                        "putting it on hold for now...",
-                        array(
-                            'module'    => $module,
-                        )
-                    );
-                    $failed[] = $module;
-                }
-            }
-        } while (count($modules) != count($failed));
-
-        // Second pass: display unsatisfied dependencies.
-        if (count($failed)) {
-            foreach ($failed as $module) {
-                try {
-                    $this->loadModule($module, NULL);
-                    $logger->critical("An exception was expected");
-                }
-                catch (Erebot_NotFoundException $e) {
-                    $logger->error(
-                        "Unmet dependency for module '%(module)s': ".
-                        "%(dependency)s",
-                        array(
-                            'module'        => $module,
-                            'dependency'    => $e->getMessage(),
-                        )
-                    );
-                }
-            }
-            $this->_bot->stop();
-            throw new Erebot_NotFoundException('There are unmet dependencies');
-        }
-    }
-
-    /**
-     * Loads modules which are specific to some channel.
-     *
-     * \note
-     *      This method uses the modules metadata to take dependencies
-     *      into account.
-     *
-     * \note
-     *      You may override the configuration of a shared module for a
-     *      given channel by simply adding a new configuration for that
-     *      module under that channel's XML tag.
-     *
-     * \exception Erebot_NotFoundException
-     *      Thrown whenever an unsatisfied module dependency is discovered,
-     *      such as when a module depends on another which is not loaded
-     *      by the current configuration.
-     */
-    protected function _loadChannelModules()
-    {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
-
         $netCfg     =&  $this->_config->getNetworkCfg();
         $channels   =   $netCfg->getChannels();
         foreach ($channels as &$chanCfg) {
-            // First pass.
-            $failed = $chanCfg->getModules(FALSE);
+            $modules = $chanCfg->getModules(FALSE);
             $chan   = $chanCfg->getName();
-            do {
-                $modules    = $failed;
-                $failed     = array();
-
-                foreach ($modules as $module) {
-                    try {
-                        $this->loadModule($module, $chan);
-                    }
-                    catch (Erebot_NotFoundException $e) {
-                        $logger->debug(
-                            "Could not load '%(module)s' module, ".
-                            "putting it on hold for now...",
-                            array(
-                                'module'    => $module,
-                            )
-                        );
-                        $failed[] = $module;
-                    }
-                }
-            } while (count($modules) != count($failed));
-
-            // Second pass.
-            if (count($failed)) {
-                foreach ($failed as $module) {
-                    try {
-                        $this->loadModule($module, $chan);
-                        $logger->critical("An exception was expected");
-                    }
-                    catch (Erebot_NotFoundException $e) {
-                        $logger->error(
-                            "Unmet dependency for module ".
-                            "'%(module)s' on %(channel)s: %(dependency)s",
-                            array(
-                                'channel'       => $chan,
-                                'module'        => $module,
-                                'dependency'    => $e->getMessage(),
-                            )
-                        );
-                    }
-                }
-                $this->_bot->stop();
-                throw new Erebot_NotFoundException('There are unmet dependencies');
-            }
+            foreach ($modules as &$module)
+                $this->loadModule($module, $chan);
+            unset($module);
         }
         unset($chanCfg);
+
+        $modules    = $this->_config->getModules(TRUE);
+        foreach ($modules as &$module)
+            $this->loadModule($module, NULL);
+        unset($module);
     }
 
     /**
@@ -912,6 +789,11 @@ implements  Erebot_Interface_Connection
 
         $instance   =   new $module($this, $chan);
 
+        if ($chan === NULL)
+            $this->_plainModules[$module] = $instance;
+        else
+            $this->_channelModules[$chan][$module] = $instance;
+
         $metadata   = $instance->getMetadata($module);
         $depends = (isset($metadata['requires']) ?
                     $metadata['requires'] : array());
@@ -945,23 +827,10 @@ implements  Erebot_Interface_Connection
             }
         }
 
-        try {
-            $instance->reload(
-                Erebot_Module_Base::RELOAD_ALL |
-                Erebot_Module_Base::RELOAD_INIT
-            );
-        }
-        catch (Erebot_NotFoundException $e) {
-            unset($instance);
-            throw new Erebot_NotFoundException(
-                '(maybe missing dependency): '.((string) $e)
-            );
-        }
-
-        if ($chan === NULL)
-            $this->_plainModules[$module] = $instance;
-        else
-            $this->_channelModules[$chan][$module] = $instance;
+        $instance->reload(
+            Erebot_Module_Base::RELOAD_ALL |
+            Erebot_Module_Base::RELOAD_INIT
+        );
 
         $logger->info(
             $this->_bot->gettext("Successfully loaded module '%s'"),
@@ -981,15 +850,31 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function & getModule($name, $chan = NULL)
+    /// @TODO: document the new autoload behaviour.
+    public function & getModule($name, $chan = NULL, $autoload = TRUE)
     {
-        if ($chan !== NULL && isset($this->_channelModules[$chan][$name]))
-            return $this->_channelModules[$chan][$name];
+        if ($chan !== NULL) {
+            if (isset($this->_channelModules[$chan][$name]))
+                return $this->_channelModules[$chan][$name];
+
+            $netCfg =& $this->_config->getNetworkCfg();
+            $chanCfg =& $netCfg->getChannel($chan);
+            $modules = $chanCfg->getModules(FALSE);
+            if (in_array($name, $modules, TRUE)) {
+                if (!$autoload)
+                    throw new Erebot_NotFoundException('No instance found');
+                return $this->loadModule($name, $chan);
+            }
+        }
 
         if (isset($this->_plainModules[$name]))
             return $this->_plainModules[$name];
 
-        throw new Erebot_NotFoundException('No instance found');
+        $modules = $this->_config->getModules(TRUE);
+        if (!in_array($name, $modules, TRUE) || !$autoload)
+            throw new Erebot_NotFoundException('No instance found');
+
+        return $this->loadModule($name, NULL);
     }
 
     // Documented in the interface.
