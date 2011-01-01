@@ -80,7 +80,7 @@ extends PHPUnit_Framework_TestCase
         $this->_connection->handleMessage('PING :foo');
         $dispatched = $this->_connection->resetDispatched();
         $this->assertSame(1, count($dispatched));
-        $this->assertInstanceOf("Erebot_Event_Ping", $dispatched[0]);
+        $this->assertTrue($dispatched[0] instanceof Erebot_Event_Ping);
         $this->assertEquals("foo", (string) $dispatched[0]->getText());
     }
 
@@ -92,8 +92,8 @@ extends PHPUnit_Framework_TestCase
         );
         $dispatched = $this->_connection->resetDispatched();
         $this->assertSame(2, count($dispatched));
-        $this->assertInstanceOf("Erebot_Event_Connect", $dispatched[0]);
-        $this->assertInstanceOf("Erebot_Event_Raw", $dispatched[1]);
+        $this->assertTrue($dispatched[0] instanceof Erebot_Event_Connect);
+        $this->assertTrue($dispatched[1] instanceof Erebot_Event_Raw);
         $this->assertEquals(
             Erebot_Interface_Event_Raw::RPL_WELCOME,
             $dispatched[1]->getRaw()
@@ -107,7 +107,7 @@ extends PHPUnit_Framework_TestCase
         );
         $dispatched = $this->_connection->resetDispatched();
         $this->assertSame(2, count($dispatched));
-        $this->assertInstanceOf("Erebot_Event_Notify", $dispatched[0]);
+        $this->assertTrue($dispatched[0] instanceof Erebot_Event_Notify);
         $this->assertEquals("foo!bar@baz", $dispatched[0]->getMask());
         $ts = $dispatched[0]->getTimestamp();
         $this->assertEquals(42, $ts->format('U'));
@@ -115,7 +115,7 @@ extends PHPUnit_Framework_TestCase
             "is now online",
             (string) $dispatched[0]->getText()
         );
-        $this->assertInstanceOf("Erebot_Event_Raw", $dispatched[1]);
+        $this->assertTrue($dispatched[1] instanceof Erebot_Event_Raw);
         $this->assertEquals(
             Erebot_Interface_Event_Raw::RPL_NOWON,
             $dispatched[1]->getRaw()
@@ -126,7 +126,7 @@ extends PHPUnit_Framework_TestCase
         );
         $dispatched = $this->_connection->resetDispatched();
         $this->assertSame(2, count($dispatched));
-        $this->assertInstanceOf("Erebot_Event_UnNotify", $dispatched[0]);
+        $this->assertTrue($dispatched[0] instanceof Erebot_Event_UnNotify);
         $this->assertEquals("foo!bar@baz", $dispatched[0]->getMask());
         $ts = $dispatched[0]->getTimestamp();
         $this->assertEquals(42, $ts->format('U'));
@@ -134,7 +134,7 @@ extends PHPUnit_Framework_TestCase
             "is now offline",
             (string) $dispatched[0]->getText()
         );
-        $this->assertInstanceOf("Erebot_Event_Raw", $dispatched[1]);
+        $this->assertTrue($dispatched[1] instanceof Erebot_Event_Raw);
         $this->assertEquals(
             Erebot_Interface_Event_Raw::RPL_NOWOFF,
             $dispatched[1]->getRaw()
