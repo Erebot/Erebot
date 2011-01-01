@@ -50,6 +50,9 @@ implements  Erebot_Interface_Connection
     /// A list of eventHandlers.
     protected $_events;
 
+    /// Valid mappings for case-insensitive comparisons.
+    static protected $_caseMappings = NULL;
+
     // Documented in the interface.
     public function __construct(
         Erebot_Interface_Core           &$bot,
@@ -67,7 +70,24 @@ implements  Erebot_Interface_Connection
         $this->_rcvQueue        = array();
         $this->_incomingData    = '';
 
-        
+        // Build possible 
+        if (self::$_caseMappings === NULL) {
+            self::$_caseMappings = array(
+                    'ascii' => array_combine(
+                        range('a', 'z'),
+                        range('A', 'Z')
+                    ),
+                    'strict-rfc1459' => array_combine(
+                        range('a', chr(125)),
+                        range('A', chr(93))
+                    ),
+                    'rfc1459' => array_combine(
+                        range('a', chr(126)),
+                        range('A', chr(94))
+                    ),
+            );
+        }
+
         $this->_loadModules();
     }
 
@@ -425,24 +445,7 @@ implements  Erebot_Interface_Connection
                 break;
 
             case 'MODE':    // :nick1!ident@host MODE <nick2/#chan> modes
-                try {
-                    $capabilities = $this->getModule(
-                        'Erebot_Module_ServerCapabilities'
-                    );
-                }
-                catch (Erebot_NotFoundException $e) {
-                    $capabilities = NULL;
-                }
-
-                $isChan = (
-                    $capabilities !== NULL &&
-                    $capabilities->isChannel($target)
-                ) || (
-                    $capabilities === NULL &&
-                    substr($target, 0, 1) == '#'
-                );
-
-                if (!$isChan) {
+                if (!$this->isChannel($target)) {
                     $event = new Erebot_Event_UserMode(
                         $this,
                         $source,
@@ -562,23 +565,6 @@ implements  Erebot_Interface_Connection
                 break;
 
             case 'NOTICE':    // :nick1!ident@host NOTICE <nick2/#chan> :Message
-                try {
-                    $capabilities = $this->getModule(
-                        'Erebot_Module_ServerCapabilities'
-                    );
-                }
-                catch (Erebot_NotFoundException $e) {
-                    $capabilities = NULL;
-                }
-
-                $isChan = (
-                    $capabilities !== NULL &&
-                    $capabilities->isChannel($target)
-                ) || (
-                    $capabilities === NULL &&
-                    substr($target, 0, 1) == '#'
-                );
-
                 if (($len = strlen($msg)) > 1 &&
                     $msg[$len-1] == "\x01" &&
                     $msg[0] == "\x01") {
@@ -588,7 +574,7 @@ implements  Erebot_Interface_Connection
                     $ctcp   = substr($msg, 0, $pos);
                     $msg    = (string) substr($msg, $pos + 1);
 
-                    if ($isChan)
+                    if ($this->isChannel($target))
                         $event = new Erebot_Event_ChanCtcpReply(
                             $this,
                             $target,
@@ -607,7 +593,7 @@ implements  Erebot_Interface_Connection
                     break;
                 }
 
-                if ($isChan)
+                if ($this->isChannel($target))
                     $event = new Erebot_Event_ChanNotice(
                         $this,
                         $target,
@@ -631,23 +617,6 @@ implements  Erebot_Interface_Connection
                 break;
 
             case 'PRIVMSG':    // :nick1!ident@host PRIVMSG <nick2/#chan> :Msg
-                try {
-                    $capabilities = $this->getModule(
-                        'Erebot_Module_ServerCapabilities'
-                    );
-                }
-                catch (Erebot_NotFoundException $e) {
-                    $capabilities = NULL;
-                }
-
-                $isChan = (
-                    $capabilities !== NULL &&
-                    $capabilities->isChannel($target)
-                ) || (
-                    $capabilities === NULL &&
-                    substr($target, 0, 1) == '#'
-                );
-
                 if (($len = strlen($msg)) > 1 &&
                     $msg[$len-1] == "\x01" &&
                     $msg[0] == "\x01") {
@@ -658,7 +627,7 @@ implements  Erebot_Interface_Connection
                     $msg    = (string) substr($msg, $pos + 1);
 
                     if ($ctcp == "ACTION") {
-                        if ($isChan)
+                        if ($this->isChannel($target))
                             $event = new Erebot_Event_ChanAction(
                                 $this,
                                 $target,
@@ -675,7 +644,7 @@ implements  Erebot_Interface_Connection
                         break;
                     }
 
-                    if ($isChan)
+                    if ($this->isChannel($target))
                         $event = new Erebot_Event_ChanCtcp(
                             $this,
                             $target,
@@ -694,7 +663,7 @@ implements  Erebot_Interface_Connection
                     break;
                 }
 
-                if ($isChan)
+                if ($this->isChannel($target))
                     $event = new Erebot_Event_ChanText(
                         $this,
                         $target,
@@ -971,6 +940,114 @@ implements  Erebot_Interface_Connection
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
             $this->disconnect($e->getMessage());
         }
+    }
+
+    protected function _cmp($a, $b, $mapping, $len)
+    {
+        if ($mapping !== NULL) {
+            $a = strtr($a, $mapping);
+            $b = strtr($b, $mapping);
+        }
+
+        if ($len == -1)
+            return strcmp($a, $b);
+        return strncmp($a, $b, $len);
+    }
+
+    // Documented in the interface.
+    public function irccmp($a, $b)
+    {
+        return $this->_cmp($a, $b, NULL, -1);
+    }
+
+    // Documented in the interface.
+    public function ircncmp($a, $b, $len)
+    {
+        return $this->_cmp($a, $b, NULL, $len);
+    }
+
+    // Documented in the interface.
+    public function irccasecmp($a, $b, $mappingName = NULL)
+    {
+        $translator = $this->getTranslator(NULL);
+        if ($mappingName === NULL) {
+            try {
+                $capabilities = $this->getModule(
+                    'Erebot_Module_ServerCapabilities',
+                    NULL, FALSE
+                );
+                $mappingName = $capabilities->getCaseMapping();
+            }
+            catch (Erebot_NotFoundException $e) {
+                // Fallback to a safe mapping.
+                $mappingName = 'rfc1459';
+            }
+        }
+
+        if (!is_string($mappingName))
+            throw new Erebot_InvalidValueException(
+                $this->_bot->gettext('Invalid mapping name')
+            );
+
+        $mappingName = strtolower($mappingName);
+        if (!isset(self::$_caseMappings[$mappingName]))
+            throw new Erebot_NotFoundException(
+                $this->_bot->gettext('No such mapping exists')
+            );
+        return $this->_cmp($a, $b, self::$_caseMappings[$mappingName], -1);
+    }
+
+    // Documented in the interface.
+    public function ircncasecmp($a, $b, $len, $mappingName = NULL)
+    {
+        $translator = $this->getTranslator(NULL);
+        if ($mappingName === NULL) {
+            try {
+                $capabilities = $this->getModule(
+                    'Erebot_Module_ServerCapabilities',
+                    NULL, FALSE
+                );
+                $mappingName = $capabilities->getCaseMapping();
+            }
+            catch (Erebot_NotFoundException $e) {
+                // Fallback to a safe mapping.
+                $mappingName = 'rfc1459';
+            }
+        }
+
+        if (!is_string($mappingName))
+            throw new Erebot_InvalidValueException(
+                $this->_bot->gettext('Invalid mapping name')
+            );
+
+        $mappingName = strtolower($mappingName);
+        if (!isset(self::$_caseMappings[$mappingName]))
+            throw new Erebot_NotFoundException(
+                $this->_bot->gettext('No such mapping exists')
+            );
+        return $this->_cmp($a, $b, self::$_caseMappings[$mappingName], $len);
+    }
+
+    // Documented in the interface.
+    public function isChannel($chan)
+    {
+        try {
+            $capabilities = $this->getModule(
+                'Erebot_Module_ServerCapabilities',
+                NULL, FALSE
+            );
+            return $capabilities->isChannel($chan);
+        }
+        catch (Erebot_NotFoundException $e) {
+            // Ignore silently.
+        }
+
+        if (!is_string($chan) || !strlen($chan)) {
+            throw new Erebot_InvalidValueException(
+                $this->_bot->gettext('Bad channel name')
+            );
+        }
+        return (strpos('#&', $target[0]) !== FALSE);
     }
 }
 

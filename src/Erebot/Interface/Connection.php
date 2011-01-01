@@ -325,5 +325,12 @@ interface Erebot_Interface_Connection
      *      A raw message to dispatch.
      */
     public function dispatchRaw(Erebot_Interface_Event_Raw &$raw);
+
+    /// @TODO: properly document those.
+    public function irccmp($a, $b);
+    public function ircncmp($a, $b, $len);
+    public function irccasecmp($a, $b, $mappingName = NULL);
+    public function ircncasecmp($a, $b, $len, $mappingName = NULL);
+    public function isChannel($chan);
 }
 
