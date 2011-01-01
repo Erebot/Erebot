@@ -16,33 +16,31 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class   Erebot_TextFilter_Wildcard
-extends Erebot_TextFilter
+class   Erebot_Event_Match_TextStatic
+extends Erebot_Event_Match_TextAbstract
 {
     public function match(
         Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Text    &$event
+        Erebot_Interface_Event_Generic &$event
     )
     {
-        $translationTable = array(
-            '\\*'   => '.*',
-            '\\?'   => '.',
-            '\\\\&' => '&',
-            '&'     => '[^\\040]+',
-        );
+        if (!($event instanceof Erebot_Interface_Event_Text))
+            return FALSE;
+
         $text       = preg_replace('/\s+/', ' ', $event->getText());
         $pattern    = preg_replace('/\s+/', ' ', $this->_pattern);
-        $prefixPattern = '';
-        if ($this->_requirePrefix !== FALSE) {
-            $prefixPattern = '(?:'.preg_quote($config->getCommandsPrefix()).')';
-            if ($this->_requirePrefix === NULL)
-                $prefixPattern .= '?';
-        }
-        $pattern    =   "#^".$prefixPattern.strtr(
-            preg_quote($pattern, '#'),
-            $translationTable
-        )."$#i";
-        return (preg_match($pattern, $text) == 1);
+
+        // Prefix forbidden.
+        if ($this->_requirePrefix === FALSE)
+            return ($pattern == $text);
+
+        $matched    = ($text == $config->getCommandsPrefix().$pattern);
+        // Prefix required.
+        if ($this->_requirePrefix === TRUE)
+            return $matched;
+
+        // Prefix allowed.
+        return ($matched || $pattern == $text);
     }
 }
 

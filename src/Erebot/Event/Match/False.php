@@ -16,15 +16,15 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class   Erebot_TextFilter_Regex
-extends Erebot_TextFilter
+class       Erebot_Event_Match_False
+implements  Erebot_Interface_Event_Match
 {
     public function match(
         Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Text    &$event
+        Erebot_Interface_Event_Generic &$event
     )
     {
-        return (preg_match($this->_pattern, $event->getText()) == 1);
+        return FALSE;
     }
 }
 

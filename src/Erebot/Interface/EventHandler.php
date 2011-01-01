@@ -34,38 +34,13 @@ interface Erebot_Interface_EventHandler
      *      is part of valid $targets and passed the $filters
      *      successfully.
      *
-     * \param string|list(string) $constraints
-     *      Either a string of array of strings containing
-     *      the names of classes/interfaces which should be
-     *      considered acceptable events for this handler
-     *      to treat. Therefore, it's a list of constraints
-     *      on the event's type.
-     *
-     * \param NULL|Erebot_Interface_EventTarget $targets
-     *      (optional) A description of the targets this event handler
-     *      will consider valid. This is complementary to the $constraints
-     *      parameter and can be used to build whitelists/blacklists
-     *      (eg. make the bot react to an event only if it comes from
-     *      a trusted source like the bot's administrator).
-     *      See the documentation on Erebot_Interface_EventTarget
-     *      for more information.
-     *      If this is set to NULL (the default), any target is
-     *      considered valid.
-     *
-     * \param NULL|Erebot_Interface_TextFilter|array $filters
-     *      (optional) An object or array of objects used to filter events
-     *      based on their text (in any). See the documentation on
-     *      Erebot_Interface_TextFilter for more information.
-     *      If this is set to NULL (the default) or an empty array, any text
-     *      is considered valid (ie: no filtering is done). Otherwise, the
-     *      event's text must match the criteria defined by that object (or
-     *      by any of the objects in case an array was passed).
+     * \param NULL|Erebot_Interface_Event_Match $filter
+     *      (optional) A filter which must be matched for the callback
+     *      associated with this handler to be called.
      */
     public function __construct(
-        $callback,
-        $constraints,
-        Erebot_Interface_EventTarget    $targets    = NULL,
-                                        $filters    = NULL
+                                        $callback,
+        Erebot_Interface_Event_Match    $filter = NULL
     );
 
     /**
@@ -77,34 +52,9 @@ interface Erebot_Interface_EventHandler
      */
     public function & getCallback();
 
-    /**
-     * Returns the constraints on the event's type associated
-     * with this handler during construction.
-     *
-     * \retval mixed
-     *      Type constraints for this handler, either
-     *      as a string or an array of strings (whichever
-     *      was used during construction).
-     */
-    public function getConstraints();
-
-    /**
-     * Returns the constraints on the event's target associated
-     * with this handler during construction.
-     *
-     * \retval Erebot_Interface_EventTarget
-     *      An object expressing constraints on targets.
-     */
-    public function & getTargets();
-
-    /**
-     * Returns the constraints on the event's text associated
-     * with this handler during construction.
-     *
-     * \retval Erebot_Interface_TextFilter
-     *      An object expressing constraints on an event's text.
-     */
-    public function & getFilters();
+    /// @TODO: properly document those.
+    public function setFilter(Erebot_Interface_Event_Match $filter = NULL);
+    public function getFilter();
 
     /**
      * Given an event, this method does its best to handler it.
@@ -119,8 +69,8 @@ interface Erebot_Interface_EventHandler
      *      It is this method's responsability to make appropriate
      *      checks and act upon the result of those checks.
      *      It may for example check that the event matches the
-     *      constraints (on type, target and/or content) expressed
-     *      by the current handler.
+     *      filters (on type, target and/or content) associated
+     *      with the handler.
      */
     public function handleEvent(
         Erebot_Interface_Config_Main   &$config,

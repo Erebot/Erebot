@@ -68,7 +68,7 @@ extends ErebotModuleTestCase
     {
         $handler    = new Erebot_EventHandler(
             $this->_cb,
-            'Erebot_Event_Logon'
+            new Erebot_Event_Match_InstanceOf('Erebot_Event_Logon')
         );
         $event      = new Erebot_Event_Logon($this->_connection);
         $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
@@ -78,7 +78,7 @@ extends ErebotModuleTestCase
     {
         $handler    = new Erebot_EventHandler(
             $this->_cb,
-            'Erebot_Event_WithTextAbstract'
+            new Erebot_Event_Match_InstanceOf('Erebot_Event_WithTextAbstract')
         );
         $event      = new Erebot_Event_Ping($this->_connection, 'foo');
         $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
@@ -88,7 +88,7 @@ extends ErebotModuleTestCase
     {
         $handler    = new Erebot_EventHandler(
             $this->_cb,
-            'Erebot_Event_Abstract'
+            new Erebot_Event_Match_InstanceOf('Erebot_Event_Abstract')
         );
         $event      = new Erebot_Event_Ping($this->_connection, 'foo');
         $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
@@ -96,8 +96,11 @@ extends ErebotModuleTestCase
 
     public function testMatchByDirectInterface()
     {
-        $handler    = new Erebot_EventHandler($this->_cb,
-            'Erebot_Interface_Event_TextMessage'
+        $handler    = new Erebot_EventHandler(
+            $this->_cb,
+            new Erebot_Event_Match_InstanceOf(
+                'Erebot_Interface_Event_TextMessage'
+            )
         );
         $event      = new Erebot_Event_ChanText(
             $this->_connection,
@@ -110,7 +113,9 @@ extends ErebotModuleTestCase
     {
         $handler    = new Erebot_EventHandler(
             $this->_cb,
-            'Erebot_Interface_Event_MessageCapable'
+            new Erebot_Event_Match_InstanceOf(
+                'Erebot_Interface_Event_MessageCapable'
+            )
         );
         $event      = new Erebot_Event_ChanText(
             $this->_connection,
@@ -123,7 +128,7 @@ extends ErebotModuleTestCase
     {
         $handler    = new Erebot_EventHandler(
             $this->_cb,
-            'Erebot_Interface_Event_Generic'
+            new Erebot_Event_Match_InstanceOf('Erebot_Interface_Event_Generic')
         );
         $event      = new Erebot_Event_ChanText(
             $this->_connection,

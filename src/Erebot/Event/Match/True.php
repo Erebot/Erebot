@@ -16,28 +16,15 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class   Erebot_TextFilter_Static
-extends Erebot_TextFilter
+class       Erebot_Event_Match_True
+implements  Erebot_Interface_Event_Match
 {
     public function match(
         Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Text    &$event
+        Erebot_Interface_Event_Generic &$event
     )
     {
-        $text       = preg_replace('/\s+/', ' ', $event->getText());
-        $pattern    = preg_replace('/\s+/', ' ', $this->_pattern);
-
-        // Prefix forbidden.
-        if ($this->_requirePrefix === FALSE)
-            return ($pattern == $text);
-
-        $matched    = ($text == $config->getCommandsPrefix().$pattern);
-        // Prefix required.
-        if ($this->_requirePrefix === TRUE)
-            return $matched;
-
-        // Prefix allowed.
-        return ($matched || $pattern == $text);
+        return TRUE;
     }
 }
 

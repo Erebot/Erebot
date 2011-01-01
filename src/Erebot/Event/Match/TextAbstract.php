@@ -16,12 +16,13 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-abstract class  Erebot_TextFilter
+abstract class  Erebot_Event_Match_TextAbstract
+implements      Erebot_Interface_Event_Match
 {
     protected $_pattern;
     protected $_requirePrefix;
 
-    final public function __construct($pattern, $requirePrefix = FALSE)
+    public function __construct($pattern, $requirePrefix = FALSE)
     {
         if (!is_string($pattern))
             throw new Erebot_InvalidValueException('Pattern must be a string');
@@ -35,19 +36,14 @@ abstract class  Erebot_TextFilter
         $this->_requirePrefix = $requirePrefix;
     }
 
-    final public function getPattern()
+    public function getPattern()
     {
         return $this->_pattern;
     }
 
-    final public function requiresPrefix()
+    public function requiresPrefix()
     {
         return $this->_requirePrefix;
     }
-
-    abstract public function match(
-        Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Text    &$event
-    );
 }
 
