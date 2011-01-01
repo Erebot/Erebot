@@ -415,7 +415,7 @@ implements  Erebot_Interface_Core
             throw new Erebot_InvalidValueException('Timer already registered');
 
         $timer->reset();
-        $this->_timers[] =&  $timer;
+        $this->_timers[] =  $timer;
     }
 
     // Documented in the interface.
@@ -441,7 +441,7 @@ implements  Erebot_Interface_Core
         if ($key !== FALSE)
             throw new Erebot_InvalidValueException('Already handling this connection');
 
-        $this->_connections[] =& $connection;
+        $this->_connections[] = $connection;
     }
 
     // Documented in the interface.

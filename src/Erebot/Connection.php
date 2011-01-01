@@ -827,6 +827,36 @@ implements  Erebot_Interface_Connection
             }
         }
 
+        $depends = (isset($metadata['recommends']) ?
+                    $metadata['recommends'] : array());
+
+        foreach ($depends as $depend) {
+            /// @TODO use dependency injection instead.
+            $depend = new Erebot_Dependency($depend);
+            try {
+                $depVer     = $depend->getVersion();
+                $depended   = $this->getModule($depend->getName(), $chan);
+
+                // Check version of the module.
+                if ($depVer !== NULL) {
+                    $metadata   = $depended->getMetadata($depend->getName());
+                    $depEffVer = (isset($metadata['version']) ?
+                                    $metadata['version'] : NULL);
+                    if ($depEffVer === NULL ||
+                        !version_compare(
+                            $depEffVer,
+                            $depVer,
+                            $depend->getOperator()
+                        ))
+                        throw new Erebot_NotFoundException();
+                }
+            }
+            catch (Erebot_NotFoundException $e) {
+                // This is only a recommendation,
+                // so we silently ignore failures.
+            }
+        }
+
         $instance->reload(
             Erebot_Module_Base::RELOAD_ALL |
             Erebot_Module_Base::RELOAD_INIT
