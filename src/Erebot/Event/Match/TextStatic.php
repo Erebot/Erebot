@@ -19,15 +19,12 @@
 class   Erebot_Event_Match_TextStatic
 extends Erebot_Event_Match_TextAbstract
 {
-    public function match(
+    protected function _match(
         Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
+                                        $text
     )
     {
-        if (!($event instanceof Erebot_Interface_Event_Text))
-            return FALSE;
-
-        $text       = preg_replace('/\s+/', ' ', $event->getText());
+        $text       = preg_replace('/\s+/', ' ', $text);
         $pattern    = preg_replace('/\s+/', ' ', $this->_pattern);
 
         // Prefix forbidden.

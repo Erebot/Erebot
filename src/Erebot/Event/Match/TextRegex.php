@@ -19,14 +19,12 @@
 class   Erebot_Event_Match_TextRegex
 extends Erebot_Event_Match_TextAbstract
 {
-    public function match(
+    protected function _match(
         Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
+                                        $text
     )
     {
-        if (!($event instanceof Erebot_Interface_Event_Text))
-            return FALSE;
-        return (preg_match($this->_pattern, $event->getText()) == 1);
+        return (preg_match($this->_pattern, $text) == 1);
     }
 }
 
