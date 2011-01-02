@@ -266,7 +266,7 @@ class Erebot_Config_Proxy
             $param,
             $default,
             array($this, '_parseBool'),
-            __METHOD__,
+            __FUNCTION__,
             'is_bool'
         );
     }
@@ -279,7 +279,7 @@ class Erebot_Config_Proxy
             $param,
             $default,
             'strval',
-            __METHOD__,
+            __FUNCTION__,
             'is_string'
         );
     }
@@ -292,7 +292,7 @@ class Erebot_Config_Proxy
             $param,
             $default,
             array($this, '_parseInt'),
-            __METHOD__,
+            __FUNCTION__,
             'is_int'
         );
     }
@@ -305,7 +305,7 @@ class Erebot_Config_Proxy
             $param,
             $default,
             array($this, '_parseReal'),
-            __METHOD__,
+            __FUNCTION__,
             'is_real'
         );
     }
