@@ -16,23 +16,24 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class       Erebot_Event_Match_Chan
-implements  Erebot_Interface_Event_Match,
-            Erebot_Interface_Event_Chan
+class       Erebot_Event_Match_Not
+implements  Erebot_Interface_Event_Match
 {
-    protected $_chan;
+    protected $_filter;
 
-    public function __construct($chan = NULL)
+    public function __construct(Erebot_Interface_Event_Match $filter)
     {
-        if ($chan !== NULL && !is_string($chan))
-            throw new Erebot_InvalidValueException('Not a channel');
-
-        $this->_chan = $chan;
+        $this->setFilter($filter);
     }
 
-    public function & getChan()
+    public function getFilter()
     {
-        return $this->_chan;
+        return $this->_filter;
+    }
+
+    public function setFilter(Erebot_Interface_Event_Match $filter)
+    {
+        $this->_filter = $filter;
     }
 
     public function match(
@@ -40,18 +41,7 @@ implements  Erebot_Interface_Event_Match,
         Erebot_Interface_Event_Generic &$event
     )
     {
-        if (!($event instanceof Erebot_Interface_Event_Chan))
-            return FALSE;
-
-        if ($this->_chan === NULL)
-            return TRUE;
-
-        return (
-            $event->getConnection()->irccasecmp(
-                $event->getChan(),
-                $this->_chan
-            ) == 0
-        );
+        return (!$this->_filter->match($config, $event));
     }
 }
 

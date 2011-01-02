@@ -46,7 +46,12 @@ implements  Erebot_Interface_Event_Match,
         if ($this->_source === NULL)
             return TRUE;
 
-        return ($event->getSource() == $this->_source);
+        return (
+            $event->getConnection()->irccasecmp(
+                $event->getSource(),
+                $this->_source
+            ) == 0
+        );
     }
 }
 
