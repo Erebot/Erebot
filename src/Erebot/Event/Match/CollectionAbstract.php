@@ -64,7 +64,7 @@ implements      Erebot_Interface_Event_Match,
     }
 
     // "Fluent" interface.
-    public function & addFilter(Erebot_Interface_Event_Match &$filter)
+    public function & addFilter(Erebot_Interface_Event_Match $filter)
     {
         if (!in_array($filter, $this->_matches, TRUE))
             $this->_matches[] = $filter;
@@ -72,7 +72,7 @@ implements      Erebot_Interface_Event_Match,
     }
 
     // "Fluent" interface.
-    public function & removeFilter(Erebot_Interface_Event_Match &$filter)
+    public function & removeFilter(Erebot_Interface_Event_Match $filter)
     {
         $key = array_search($filter, $this->_matches, TRUE);
         if ($key !== FALSE)
