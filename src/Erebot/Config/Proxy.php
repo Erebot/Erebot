@@ -170,56 +170,6 @@ class Erebot_Config_Proxy
         return NULL;
     }
 
-    // Documented in the interface.
-    public function parseBool($module, $param, $default = NULL)
-    {
-        try {
-            if (!isset($this->_modules[$module]))
-                throw new Erebot_NotFoundException('No such module');
-            $value = $this->_modules[$module]->getParam($param);
-            $value = $this->_parseBool($value);
-            if ($value !== NULL)
-                return $value;
-            throw new Erebot_InvalidValueException('Bad value in configuration');
-        }
-        catch (Erebot_NotFoundException $e) {
-            if ($this->_proxified !== $this)
-                return $this->_proxified->parseBool($module, $param, $default);
-
-            if ($default === NULL)
-                throw new Erebot_NotFoundException('No such parameter');
-
-            if (is_bool($default))
-                return $default;
-            throw new Erebot_InvalidValueException('Bad default value');
-        }
-    }
-
-    // Documented in the interface.
-    public function parseString($module, $param, $default = NULL)
-    {
-        try {
-            if (!isset($this->_modules[$module]))
-                throw new Erebot_NotFoundException('No such module');
-            return $this->_modules[$module]->getParam($param);
-        }
-        catch (Erebot_NotFoundException $e) {
-            if ($this->_proxified !== $this)
-                return $this->_proxified->parseString(
-                    $module,
-                    $param,
-                    $default
-                );
-
-            if ($default === NULL)
-                throw new Erebot_NotFoundException('No such parameter');
-
-            if (is_string($default))
-                return $default;
-            throw new Erebot_InvalidValueException('Bad default value');
-        }
-    }
-
     /**
      * Parses a text and tries to extract an integer value.
      *
@@ -251,31 +201,6 @@ class Erebot_Config_Proxy
         return NULL;
     }
 
-    // Documented in the interface.
-    public function parseInt($module, $param, $default = NULL)
-    {
-        try {
-            if (!isset($this->_modules[$module]))
-                throw new Erebot_NotFoundException('No such module');
-            $value = $this->_modules[$module]->getParam($param);
-            $value = $this->_parseInt($value);
-            if ($value !== NULL)
-                return $value;
-            throw new Erebot_InvalidValueException('Bad value in configuration');
-        }
-        catch (Erebot_NotFoundException $e) {
-            if ($this->_proxified !== $this)
-                return $this->_proxified->parseInt($module, $param, $default);
-
-            if ($default === NULL)
-                throw new Erebot_NotFoundException('No such parameter');
-
-            if (is_int($default))
-                return $default;
-            throw new Erebot_InvalidValueException('Bad default value');
-        }
-    }
-
     /**
      * Parses a text and tries to extract a real.
      *
@@ -297,29 +222,92 @@ class Erebot_Config_Proxy
         return (double) $value;
     }
 
-    // Documented in the interface.
-    public function parseReal($module, $param, $default = NULL)
+    protected function _parseSomething(
+        $module,
+        $param,
+        $default,
+        $parser,
+        $origin,
+        $checker
+    )
     {
+        if (!is_callable($parser))
+            throw new Erebot_InvalidValueException('Invalid parser');
+        if (!is_callable($checker))
+            throw new Erebot_InvalidValueException('Invalid checker');
+
         try {
             if (!isset($this->_modules[$module]))
                 throw new Erebot_NotFoundException('No such module');
-            $value = $this->_modules[$module]->getParam($param);
-            $value = $this->_parseReal($value);
+            $value  = $this->_modules[$module]->getParam($param);
+            $value  = call_user_func($parser, $value);
             if ($value !== NULL)
                 return $value;
             throw new Erebot_InvalidValueException('Bad value in configuration');
         }
         catch (Erebot_NotFoundException $e) {
             if ($this->_proxified !== $this)
-                return $this->_proxified->parseReal($module, $param, $default);
+                return $this->_proxified->$origin($module, $param, $default);
 
             if ($default === NULL)
                 throw new Erebot_NotFoundException('No such parameter');
 
-            if (is_real($default))
+            if (call_user_func($checker, $default))
                 return $default;
             throw new Erebot_InvalidValueException('Bad default value');
         }
+    }
+
+    // Documented in the interface.
+    public function parseBool($module, $param, $default = NULL)
+    {
+        return $this->_parseSomething(
+            $module,
+            $param,
+            $default,
+            array($this, '_parseBool'),
+            __METHOD__,
+            'is_bool'
+        );
+    }
+
+    // Documented in the interface.
+    public function parseString($module, $param, $default = NULL)
+    {
+        return $this->_parseSomething(
+            $module,
+            $param,
+            $default,
+            'strval',
+            __METHOD__,
+            'is_string'
+        );
+    }
+
+    // Documented in the interface.
+    public function parseInt($module, $param, $default = NULL)
+    {
+        return $this->_parseSomething(
+            $module,
+            $param,
+            $default,
+            array($this, '_parseInt'),
+            __METHOD__,
+            'is_int'
+        );
+    }
+
+    // Documented in the interface.
+    public function parseReal($module, $param, $default = NULL)
+    {
+        return $this->_parseSomething(
+            $module,
+            $param,
+            $default,
+            array($this, '_parseReal'),
+            __METHOD__,
+            'is_real'
+        );
     }
 }
 
