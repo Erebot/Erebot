@@ -969,7 +969,6 @@ implements  Erebot_Interface_Connection
     // Documented in the interface.
     public function irccasecmp($a, $b, $mappingName = NULL)
     {
-        $translator = $this->getTranslator(NULL);
         if ($mappingName === NULL) {
             try {
                 $capabilities = $this->getModule(
@@ -1000,7 +999,6 @@ implements  Erebot_Interface_Connection
     // Documented in the interface.
     public function ircncasecmp($a, $b, $len, $mappingName = NULL)
     {
-        $translator = $this->getTranslator(NULL);
         if ($mappingName === NULL) {
             try {
                 $capabilities = $this->getModule(
