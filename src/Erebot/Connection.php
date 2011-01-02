@@ -353,8 +353,11 @@ implements  Erebot_Interface_Connection
 
             try {
                 // Ask politely if we can send our message.
-                if (!$rateLimiter->canSend())
+                if (!$rateLimiter->canSend()) {
+                    // Put back what we took before.
+                    array_unshift($this->_sndQueue, $line);
                     return;
+                }
             }
             catch (Exception $e) {
                 $logger->exception(

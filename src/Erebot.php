@@ -181,7 +181,6 @@ implements  Erebot_Interface_Core
 
         // Main loop
         while ($this->_running) {
-            $logger->debug($this->gettext('Main event loop'));
             if ($hasSignalDispatch)
                 pcntl_signal_dispatch();
 
