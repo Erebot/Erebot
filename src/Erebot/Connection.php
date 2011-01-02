@@ -342,8 +342,49 @@ implements  Erebot_Interface_Connection
         $logger     =   $logging->getLogger(
             __FILE__ . DIRECTORY_SEPARATOR . 'output'
         );
+
+        try {
+            /// @TODO:  use some variable from the configuration instead
+            //          or having the module's name hard-coded like that.
+            $rateLimiter = $this->getModule(
+                'Erebot_Module_RateLimiter',
+                NULL, FALSE
+            );
+
+            try {
+                // Ask politely if we can send our message.
+                if (!$rateLimiter->canSend())
+                    return;
+            }
+            catch (Exception $e) {
+                $logger->exception(
+                    $this->_bot->gettext(
+                        'Got an exception from the rate-limiter module. '.
+                        'Assuming implicit approval to send the message.'
+                    ),
+                    $e
+                );
+            }
+        }
+        catch (Erebot_NotFoundException $e) {
+            // No rate-limit in effect, send away!
+        }
+
         $logger->debug("%s", addcslashes($line, "\000..\037"));
-        return fwrite($this->_socket, $line."\r\n");
+
+        // Make sure we send the whole line,
+        // with a trailing CR LF sequence.
+        $line .= "\r\n";
+        for (
+            $written = 0, $len = strlen($line);
+            $written < $len;
+            $written += $fwrite
+        ) {
+            $fwrite = fwrite($this->_socket, substr($line, $written));
+            if ($fwrite === FALSE)
+                return FALSE;
+        }
+        return $written;
     }
 
     // Documented in the interface.
