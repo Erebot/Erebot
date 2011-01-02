@@ -2,16 +2,19 @@ A modular IRC bot written in PHP
 
 Erebot is an IRC bot written in PHP thought up with modularity in mind.
 It already implements a few useful features:
--   connections to IRC servers using either plain-text or crypted connections,
-    with support for passworded IRC servers
--   autoconnect and autojoin modules, so you don't need to worry about having
-    to make the bot join channels right after connection by yourself
--   a lag checker, which can kill the connection and force the bot to reconnect
-    if it's lagging too badly
--   a module that displays information on TV schedules 
--   an implementation of the popular Uno game, compatible with that of rbot,
-    but also providing other variants, making the game even funnier
--   an implementation of the TV gameshow Countdown
--   many other modules... plus, it's really easy to roll your own if you want
-    to add new features!
+-   Connections to IRC servers using either plain-text or encrypted connections,
+    with support for passworded IRC servers and "security upgrades".
+-   Autoconnect and autojoin modules, so you don't need to worry about having
+    to make the bot join channels by yourself.
+-   A lag checker, which can kill the connection and force the bot to reconnect
+    if it's lagging too badly.
+-   A rate-limiting module so you don't have to worry about the bot being
+    disconnecting because it is sending too many messages at once.
+-   A module that displays information on TV schedules .
+-   An implementation of the popular Uno game, compatible with that of rbot,
+    but also providing other variants, making the game even funnier.
+-   An implementation of the TV gameshow Countdown.
+-   An implementation of the traditionnal game "Gang of Four".
+-   Many other modules... (more than 20 for now, and counting!)
+    Plus, it's really easy to roll your own if you want to add new features!
 
