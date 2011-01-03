@@ -149,10 +149,64 @@ extends     Erebot_Interface_Config_Proxy
      */
     public function getConfigFile();
 
-    /// @TODO: Document those properly.
+    /**
+     * Indicates whether the bot should "daemonize" itself upon startup.
+     *
+     * \retval bool
+     *      TRUE if the bot must turn into a daemon, FALSE otherwise.
+     *
+     * \note
+     *      The -n (--no-daemon) and -d (--daemon) command-line flags
+     *      can be used to override this option.
+     */
     public function mustDaemonize();
+
+    /**
+     * Returns the group identity the bot should switch to upon startup.
+     *
+     * \retval string
+     *      The group name or GID the bot must switch to, or NULL
+     *      if the bot should keep its current group identity.
+     *
+     * \note
+     *      To be able to impersonate some group's identity, the bot
+     *      must be launched by the super-user (root).
+     *
+     * \note
+     *      The -g (--group) command-line switch can be used to override
+     *      this option.
+     */
     public function getGroupIdentity();
+
+    /**
+     * Returns the user identity the bot should switch to upon startup.
+     *
+     * \retval string
+     *      The user name or GID the bot must switch to, or NULL
+     *      if the bot should keep its current user identity.
+     *
+     * \note
+     *      To be able to impersonate some user's identity, the bot
+     *      must be launched by the super-user (root).
+     *
+     * \note
+     *      The -u (--user) command-line switch can be used to override
+     *      this option.
+     */
     public function getUserIdentity();
+
+    /**
+     * Returns the file where the bot's PID should be written
+     * to upon startup.
+     *
+     * \retval string
+     *      The file where the bot's PID should be written,
+     *      or NULL if its PID should not be written anywhere.
+     *
+     * \note
+     *      The -p (--pidfile) command-line switch can be used
+     *      to override this option.
+     */
     public function getPidfile();
 }
 

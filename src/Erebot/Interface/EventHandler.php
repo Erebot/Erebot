@@ -52,8 +52,24 @@ interface Erebot_Interface_EventHandler
      */
     public function & getCallback();
 
-    /// @TODO: properly document those.
+    /**
+     * Sets the filter associated with this event handler.
+     *
+     * \param $filter
+     *      The new filter associated with this event handler.
+     *      Its criterion must sucessfully match the contents of
+     *      an event for that event to trigger this event handler's
+     *      callback.
+     */
     public function setFilter(Erebot_Interface_Event_Match $filter = NULL);
+
+    /**
+     * Returns the filter currently associated with this event handler.
+     *
+     * \retval Erebot_Interface_Event_Match
+     *      The current filter associated with this event handler,
+     *      or NULL if no filter has been set yet.
+     */
     public function getFilter();
 
     /**

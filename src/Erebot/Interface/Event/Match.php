@@ -18,6 +18,16 @@
 
 interface Erebot_Interface_Event_Match
 {
+    /**
+     * Decides whether the given event passes the filter or not.
+     *
+     * \param $event
+     *      An event to try to match to the criterion expressed
+     *      by this filter.
+     *
+     * \retval bool
+     *      TRUE if the event matches the criterion, FALSE otherwise.
+     */
     public function match(Erebot_Interface_Event_Generic &$event);
 }
 

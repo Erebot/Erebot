@@ -143,7 +143,9 @@ function main()
     $noDaemon = new Console_CommandLine_MyOption('no_daemon', array(
         'short_name'    => '-n',
         'long_name'     => '--no-daemon',
-        'description'   =>  'Do not run the bot in the background.',
+        'description'   =>  'Do not run the bot in the background. '.
+                            'This is the default, unless the -d option '.
+                            'is used or the bot is configured otherwise',
         'action'        => 'StoreProxy',
         'action_params' => array('option' => 'daemon'),
     ));
@@ -158,23 +160,23 @@ function main()
         'default'       => NULL,
     ));
 
-    $parser->addOption('gid', array(
+    $parser->addOption('group', array(
         'short_name'    => '-g',
-        'long_name'     => '--gid',
-        'description'   =>  'Set group identity to this gid/group during '.
+        'long_name'     => '--group',
+        'description'   =>  'Set group identity to this GID/group during '.
                             'startup. The default is to NOT change group '.
-                            'identity.',
+                            'identity, unless configured otherwise.',
         'help_name'     => 'GROUP/GID',
         'action'        => 'StoreString',
         'default'       => NULL,
     ));
 
-    $parser->addOption('uid', array(
+    $parser->addOption('user', array(
         'short_name'    => '-u',
-        'long_name'     => '--uid',
-        'description'   =>  'Set user identity to this uid/username during '.
+        'long_name'     => '--user',
+        'description'   =>  'Set user identity to this UID/username during '.
                             'startup. The default is to NOT change user '.
-                            'identity.',
+                            'identity, unless configured otherwise.',
         'help_name'     => 'USER/UID',
         'action'        => 'StoreString',
         'default'       => NULL,
@@ -198,8 +200,8 @@ function main()
     // if there is no override from the command line.
     $overrides = array(
         'daemon'    => 'mustDaemonize',
-        'gid'       => 'getGroupIdentity',
-        'uid'       => 'getUserIdentity',
+        'group'     => 'getGroupIdentity',
+        'user'      => 'getUserIdentity',
         'pidfile'   => 'getPidfile',
     );
     foreach ($overrides as $option => $func)
@@ -258,8 +260,8 @@ function main()
     }
 
     // Change group identity if necessary.
-    if ($parsed->options['gid'] !== NULL &&
-        $parsed->options['gid'] != '') {
+    if ($parsed->options['group'] !== NULL &&
+        $parsed->options['group'] != '') {
         if (!$hasPosix) {
             $logger->warning(
                 'The posix extension is needed in order '.
@@ -274,13 +276,13 @@ function main()
             );
         }
         else {
-            if (ctype_digit($parsed->options['gid']))
-                $info = posix_getgrgid((int) $parsed->options['gid']);
+            if (ctype_digit($parsed->options['group']))
+                $info = posix_getgrgid((int) $parsed->options['group']);
             else
-                $info = posix_getgrnam($parsed->options['gid']);
+                $info = posix_getgrnam($parsed->options['group']);
 
             if ($info === FALSE) {
-                $logger->error('No such group "%s"', $parsed->options['gid']);
+                $logger->error('No such group "%s"', $parsed->options['group']);
                 exit(1);
             }
 
@@ -306,8 +308,8 @@ function main()
     }
 
     // Change user identity if necessary.
-    if ($parsed->options['uid'] !== NULL ||
-        $parsed->options['uid'] != '') {
+    if ($parsed->options['user'] !== NULL ||
+        $parsed->options['user'] != '') {
         if (!$hasPosix) {
             $logger->warning(
                 'The posix extension is needed in order '.
@@ -322,13 +324,13 @@ function main()
             );
         }
         else {
-            if (ctype_digit($parsed->options['uid']))
-                $info = posix_getpwuid((int) $parsed->options['uid']);
+            if (ctype_digit($parsed->options['user']))
+                $info = posix_getpwuid((int) $parsed->options['user']);
             else
-                $info = posix_getpwnam($parsed->options['uid']);
+                $info = posix_getpwnam($parsed->options['user']);
 
             if ($info === FALSE) {
-                $logger->error('No such user "%s"', $parsed->options['uid']);
+                $logger->error('No such user "%s"', $parsed->options['user']);
                 exit(1);
             }
 

@@ -369,15 +369,3 @@ interface Erebot_Interface_Event_Raw
     public function getText();
 }
 
-/// @TODO For backward-compatibility (will be removed in 0.5.0).
-$reflector = new ReflectionClass('Erebot_Interface_Event_Raw');
-foreach ($reflector->getConstants() as $name => $value) {
-    if (strncasecmp($name, 'ERR_', 4) &&
-        strncasecmp($name, 'RPL_', 4))
-        continue;
-    if (defined($name))
-        continue;
-    define($name, $value);
-}
-unset($reflector, $name, $value);
-
