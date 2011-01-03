@@ -1088,7 +1088,18 @@ implements  Erebot_Interface_Connection
                 $this->_bot->gettext('Bad channel name')
             );
         }
-        return (strpos('#&', $target[0]) !== FALSE);
+
+        // Restricted characters in channel names,
+        // as per RFC 2811 - (2.1) Namespace.
+        foreach (array(' ', ',', "\x07", ':') as $token)
+            if (strpos($token, $target) !== FALSE)
+                return FALSE;
+
+        if (strlen($chan) > 50)
+            return FALSE;
+
+        // As per RFC 2811 - (2.1) Namespace.
+        return (strpos('#&+!', $target[0]) !== FALSE);
     }
 }
 
