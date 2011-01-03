@@ -79,12 +79,37 @@ function Erebot_cleanup_pidfile($handle, $pidfile)
     $logger->debug('Removed lock on pidfile (%s)', $pidfile);
 }
 
+class   StoreProxy_Action
+extends Console_CommandLine_Action
+{
+    public function setResult($option, $result)
+    {
+        $this->result->options[$option] = $result;
+    }
+
+    public function execute($value = FALSE, $params = array())
+    {
+        $this->setResult($params['option'], FALSE);
+    }
+}
+
+class   Console_CommandLine_MyOption
+extends Console_CommandLine_Option
+{
+    public function expectsArgument()
+    {
+        return FALSE;
+    }
+}
+
 function main()
 {
     // Determine availability of PHP extensions
     // needed by some of the command-line options.
     $hasPosix = in_array('posix', get_loaded_extensions());
     $hasPcntl = in_array('pcntl', get_loaded_extensions());
+
+    Console_CommandLine::registerAction('StoreProxy', 'StoreProxy_Action');
 
     $parser = new Console_CommandLine(array(
         'name'                  => 'Erebot',
@@ -94,6 +119,7 @@ function main()
         'add_version_option'    => TRUE,
         'force_posix'           => FALSE,
     ));
+    $parser->renderer->options_on_different_lines = TRUE;
 
     $defaultConfigFile = getcwd() . DIRECTORY_SEPARATOR . 'Erebot.xml';
     $parser->addOption('config', array(
@@ -102,22 +128,32 @@ function main()
         'description'   =>  'Path to the configuration file to use instead '.
                             'of "Erebot.xml", relative to the current '.
                             'directory.',
+        'help_name'     => 'FILE',
         'action'        => 'StoreString',
         'default'       => $defaultConfigFile,
     ));
 
     $parser->addOption('daemon', array(
-        'short_name'    => '-d',
-        'long_name'     => '--daemon',
-        'description'   =>  'Run the bot in the background (daemon).',
-        'action'        => 'StoreTrue',
-        'default'       => FALSE,
+        'short_name'        => '-d',
+        'long_name'         => '--daemon',
+        'description'       =>  'Run the bot in the background (daemon).',
+        'action'            => 'StoreTrue',
     ));
+
+    $noDaemon = new Console_CommandLine_MyOption('no_daemon', array(
+        'short_name'    => '-n',
+        'long_name'     => '--no-daemon',
+        'description'   =>  'Do not run the bot in the background.',
+        'action'        => 'StoreProxy',
+        'action_params' => array('option' => 'daemon'),
+    ));
+    $parser->addOption($noDaemon);
 
     $parser->addOption('pidfile', array(
         'short_name'    => '-p',
         'long_name'     => '--pidfile',
         'description'   =>  'Store the bot\'s PID in this file.',
+        'help_name'     => 'FILE',
         'action'        => 'StoreString',
         'default'       => NULL,
     ));
@@ -128,6 +164,7 @@ function main()
         'description'   =>  'Set group identity to this gid/group during '.
                             'startup. The default is to NOT change group '.
                             'identity.',
+        'help_name'     => 'GROUP/GID',
         'action'        => 'StoreString',
         'default'       => NULL,
     ));
@@ -138,6 +175,7 @@ function main()
         'description'   =>  'Set user identity to this uid/username during '.
                             'startup. The default is to NOT change user '.
                             'identity.',
+        'help_name'     => 'USER/UID',
         'action'        => 'StoreString',
         'default'       => NULL,
     ));
@@ -155,6 +193,18 @@ function main()
         $parsed->options['config'],
         Erebot_Config_Main::LOAD_FROM_FILE
     );
+
+    // Use values from the XML configuration file
+    // if there is no override from the command line.
+    $overrides = array(
+        'daemon'    => 'mustDaemonize',
+        'gid'       => 'getGroupIdentity',
+        'uid'       => 'getUserIdentity',
+        'pidfile'   => 'getPidfile',
+    );
+    foreach ($overrides as $option => $func)
+        if ($parsed->options[$option] === NULL)
+            $parsed->options[$option] = $config->$func();
 
     $logging    =&  Plop::getInstance();
     $logger     =   $logging->getLogger(__FILE__);
@@ -208,7 +258,8 @@ function main()
     }
 
     // Change group identity if necessary.
-    if ($parsed->options['gid'] !== NULL) {
+    if ($parsed->options['gid'] !== NULL &&
+        $parsed->options['gid'] != '') {
         if (!$hasPosix) {
             $logger->warning(
                 'The posix extension is needed in order '.
@@ -255,7 +306,8 @@ function main()
     }
 
     // Change user identity if necessary.
-    if ($parsed->options['uid'] !== NULL) {
+    if ($parsed->options['uid'] !== NULL ||
+        $parsed->options['uid'] != '') {
         if (!$hasPosix) {
             $logger->warning(
                 'The posix extension is needed in order '.
@@ -301,7 +353,8 @@ function main()
     }
 
     // Write new pidfile.
-    if (isset($parsed->options['pidfile'])) {
+    if ($parsed->options['pidfile'] !== NULL &&
+        $parsed->options['pidfile'] != '') {
         $pid = @file_get_contents($parsed->options['pidfile']);
         // If the file already existed, the bot may already be started
         // or it may contain data not related to Erebot at all.

@@ -148,5 +148,11 @@ extends     Erebot_Interface_Config_Proxy
      *      loaded using Erebot_Interface_Config_Main::LOAD_FROM_STRING.
      */
     public function getConfigFile();
+
+    /// @TODO: Document those properly.
+    public function mustDaemonize();
+    public function getGroupIdentity();
+    public function getUserIdentity();
+    public function getPidfile();
 }
 

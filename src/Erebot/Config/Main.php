@@ -49,6 +49,18 @@ implements  Erebot_Interface_Config_Main
     /// The prefix used to recognize commands.
     protected $_commandsPrefix;
 
+    /// Whether to daemonize the bot or not.
+    protected $_daemonize;
+
+    /// User identity to switch to.
+    protected $_userIdentity;
+
+    /// Group identity to switch to.
+    protected $_groupIdentity;
+
+    /// File where the bot's PID will be written. 
+    protected $_pidfile;
+
     // Documented in the interface.
     public function __construct($configData, $source)
     {
@@ -176,6 +188,18 @@ implements  Erebot_Interface_Config_Main
                 );
         }
 
+        $daemonize      = isset($xml['daemon'])
+                        ? $this->_parseBool((string) $xml['daemon'])
+                        : FALSE;
+        $userIdentity   = isset($xml['uid']) ? ((string) $xml['uid']) : NULL;
+        $groupIdentity  = isset($xml['gid']) ? ((string) $xml['gid']) : NULL;
+        $pidfile        = isset($xml['pidfile'])
+                        ? ((string) $xml['pidfile'])
+                        : NULL;
+
+        if ($daemonize === NULL)
+            throw new Erebot_InvalidValueException('Invalid "daemon" value');
+
         if (!isset($xml['commands-prefix']))
             $this->_commandsPrefix = '!';
         else {
@@ -212,6 +236,12 @@ implements  Erebot_Interface_Config_Main
             $this->_configFile   = $configData;
         else
             $this->_configFile   = NULL;
+
+        // Default values.
+        $this->_daemonize       = $daemonize;
+        $this->_userIdentity    = $userIdentity;
+        $this->_groupIdentity   = $groupIdentity;
+        $this->_pidfile         = $pidfile;
     }
 
     // Documented in the interface.
@@ -250,6 +280,27 @@ implements  Erebot_Interface_Config_Main
     public function getConfigFile()
     {
         return $this->_configFile;
+    }
+
+    // Documented in the interface.
+    public function mustDaemonize()
+    {
+        return $this->_daemonize;
+    }
+
+    public function getGroupIdentity()
+    {
+        return $this->_groupIdentity;
+    }
+
+    public function getUserIdentity()
+    {
+        return $this->_userIdentity;
+    }
+
+    public function getPidfile()
+    {
+        return $this->_pidfile;
     }
 }
 

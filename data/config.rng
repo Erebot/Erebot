@@ -52,6 +52,26 @@
                     <data type="string"/>
                 </attribute>
             </optional>
+            <optional>
+                <attribute name="daemon">
+                    <data type="string"/>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="uid">
+                    <data type="string"/>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="gid">
+                    <data type="string"/>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="pidfile">
+                    <data type="string"/>
+                </attribute>
+            </optional>
 
             <interleave>
                 <optional>
