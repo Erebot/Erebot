@@ -17,7 +17,7 @@ extends PHPUnit_Framework_TestCase
             '<!-- kate: tab-width: 4 -->',
             '<configuration',
             '    xmlns="http://www.erebot.net/xmlns/erebot"',
-            '    version="0.3.2-dev1"',
+            sprintf('    version="%s"', EREBOT_VERSION),
             '    language="fr-FR"',
             '    timezone="Europe/Paris">',
             '    <networks>',

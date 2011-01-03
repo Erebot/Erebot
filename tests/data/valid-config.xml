@@ -3,7 +3,7 @@
 
 <configuration
     xmlns="http://www.erebot.net/xmlns/erebot"
-    version="0.3.2-dev1"
+    version="0.5.0"
     language="fr-FR"
     timezone="Europe/Paris">
 
