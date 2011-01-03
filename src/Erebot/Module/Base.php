@@ -23,16 +23,31 @@
  */
 abstract class Erebot_Module_Base
 {
+    /// The connection associated with this instance.
     protected   $_connection;
+
+    /// The channel associated with this instance, if any.
     protected   $_channel;
+
+    /// The translator to use for messages coming from this instance.
     protected   $_translator;
+
+    /// The module's metadata.
     static protected $_metadata = array();
+
+    /// @TODO document each constant.
 
     const RELOAD_INIT       = 0x01;
     const RELOAD_TESTING    = 0x02;
     const RELOAD_MEMBERS    = 0x10;
     const RELOAD_HANDLERS   = 0x20;
     const RELOAD_ALL        = 0xF0;
+
+    const MSG_TYPE_PRIVMSG      = 'PRIVMSG';
+    const MSG_TYPE_NOTICE       = 'NOTICE';
+    const MSG_TYPE_CTCP         = 'CTCP';
+    const MSG_TYPE_CTCPREPLY    = 'CTCPREPLY';
+    const MSG_TYPE_ACTION       = 'ACTION';
 
     /**
      * An abstract method which is called whenever the module
@@ -50,6 +65,17 @@ abstract class Erebot_Module_Base
      */
     abstract public function reload($flags);
 
+    /**
+     * Constructor for modules.
+     *
+     * \param Erebot_Interface_Connection $connection
+     *      IRC connection associated with this instance.
+     *
+     * \param string|NULL $channel
+     *      (optional) The channel this instance applies to.
+     *      This will be NULL for modules loaded at the server
+     *      level or higher in the configuration hierarchy.
+     */
     final public function __construct(
         Erebot_Interface_Connection    &$connection,
                                         $channel
@@ -67,6 +93,7 @@ abstract class Erebot_Module_Base
         $this->_channel     =   $channel;
     }
 
+    /** Destructor. */
     final public function __destruct()
     {
         unset(
@@ -77,6 +104,16 @@ abstract class Erebot_Module_Base
         );
     }
 
+    /**
+     * \internal
+     * Returns metadata associated with this module.
+     *
+     * \param string $className
+     *      The class whose metadata should be returned.
+     *
+     * \retval array
+     *      The module's metadata.
+     */
     static public function getMetadata($className)
     {
         if (!class_exists($className))
@@ -103,7 +140,30 @@ abstract class Erebot_Module_Base
         // By default, we do nothing.
     }
 
-    protected function sendMessage($targets, $message, $type = 'PRIVMSG')
+    /**
+     * Send a message to a set of IRC targets (nicks or channels).
+     *
+     * \param string|list $targets
+     *      Either a single nick or channel to which the message
+     *      must be sent or an array of nicks/channels.
+     *
+     * \param string $message
+     *      The message to send.
+     *
+     * \param opaque $type
+     *      (optional) The type of message to send. The default is
+     *      to send a regular message (using the PRIVMSG command).
+     *      Use the MSG_TYPE_* constants to specify a different type.
+     *
+     * \throw Exception
+     *      An invalid value was used for the $type or $targets
+     *      parameter.
+     */
+    protected function sendMessage(
+        $targets,
+        $message,
+        $type = self::MSG_TYPE_PRIVMSG
+    )
     {
         $types = array('PRIVMSG', 'NOTICE', 'CTCP', 'CTCPREPLY', 'ACTION');
         $type = strtoupper($type);
@@ -151,23 +211,73 @@ abstract class Erebot_Module_Base
             $this->_connection->pushLine($prefix.$msg.$marker);
     }
 
+    /**
+     * Send a raw command to the IRC server.
+     *
+     * \param string $command
+     *      The command to send.
+     */
     protected function sendCommand($command)
     {
         $this->_connection->pushLine($command);
     }
 
+    /**
+     * Register a timer.
+     *
+     * \param Erebot_Interface_Timer $timer
+     *      The timer to register.
+     *
+     * \note
+     *      This method is only a shortcut for
+     *      Erebot_Interface_Core::addTimer().
+     */
     protected function addTimer(Erebot_Interface_Timer &$timer)
     {
         $bot =& $this->_connection->getBot();
         return $bot->addTimer($timer);
     }
 
+    /**
+     * Unregister a timer.
+     *
+     * \param Erebot_Interface_Timer $timer
+     *      The timer to unregister.
+     *
+     * \note
+     *      This method is only a shortcut for
+     *      Erebot_Interface_Core::removeTimer().
+     */
     protected function removeTimer(Erebot_Interface_Timer &$timer)
     {
         $bot =& $this->_connection->getBot();
         return $bot->removeTimer($timer);
     }
 
+    /**
+     * \internal
+     * Retrieves a parameter from the module's configuration
+     * by recursively traversing the configuration hierarchy
+     * and parses it using the appropriate function.
+     *
+     * \param string $something
+     *      The type of parsing to apply to the parameter.
+     *      This is used to determine the correct parsing
+     *      method to call.
+     *
+     * \param string $param
+     *      The name of the parameter to retrieve.
+     *
+     * \param mixed $default
+     *      The default value if the parameter is absent.
+     *      It's actual type depends on the type of parsing
+     *      applied by the $something argument.
+     *
+     * \warning
+     *      This method may throw several exceptions for
+     *      different reasons (such as a missing parameter,
+     *      an invalid value or an invalid default value).
+     */
     private function parseSomething($something, $param, $default)
     {
         $function   =   'parse'.$something;

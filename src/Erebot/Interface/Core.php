@@ -16,7 +16,7 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('EREBOT_VERSION', '0.3.2-dev1');
+define('EREBOT_VERSION', '0.5.0');
 
 /**
  * \brief
