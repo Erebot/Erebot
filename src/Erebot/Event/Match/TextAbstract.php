@@ -52,7 +52,7 @@ implements      Erebot_Interface_Event_Match
             return FALSE;
 
         $prefix = $event
-            ->getConnection()->getConfig()
+            ->getConnection()->getConfig(NULL)
             ->getMainCfg()->getCommandsPrefix();
         return $this->_match($prefix, $event->getText());
     }
