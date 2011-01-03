@@ -71,7 +71,7 @@ extends ErebotModuleTestCase
             new Erebot_Event_Match_InstanceOf('Erebot_Event_Logon')
         );
         $event      = new Erebot_Event_Logon($this->_connection);
-        $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
+        $this->assertTrue($handler->handleEvent($event));
     }
 
     public function testMatchByInheritedClass()
@@ -81,7 +81,7 @@ extends ErebotModuleTestCase
             new Erebot_Event_Match_InstanceOf('Erebot_Event_WithTextAbstract')
         );
         $event      = new Erebot_Event_Ping($this->_connection, 'foo');
-        $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
+        $this->assertTrue($handler->handleEvent($event));
     }
 
     public function testMatchByTopClass()
@@ -91,7 +91,7 @@ extends ErebotModuleTestCase
             new Erebot_Event_Match_InstanceOf('Erebot_Event_Abstract')
         );
         $event      = new Erebot_Event_Ping($this->_connection, 'foo');
-        $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
+        $this->assertTrue($handler->handleEvent($event));
     }
 
     public function testMatchByDirectInterface()
@@ -106,7 +106,7 @@ extends ErebotModuleTestCase
             $this->_connection,
             '#foo', 'bar', 'baz'
         );
-        $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
+        $this->assertTrue($handler->handleEvent($event));
     }
 
     public function testMatchByInheritedInterface()
@@ -121,7 +121,7 @@ extends ErebotModuleTestCase
             $this->_connection,
             '#foo', 'bar', 'baz'
         );
-        $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
+        $this->assertTrue($handler->handleEvent($event));
     }
 
     public function testMatchByTopInterface()
@@ -134,7 +134,7 @@ extends ErebotModuleTestCase
             $this->_connection,
             '#foo', 'bar', 'baz'
         );
-        $this->assertTrue($handler->handleEvent($this->_mainConfig, $event));
+        $this->assertTrue($handler->handleEvent($event));
     }
 }
 
