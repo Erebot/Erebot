@@ -36,12 +36,9 @@ implements  Erebot_Interface_Event_Match
         $this->_filter = $filter;
     }
 
-    public function match(
-        Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
-    )
+    public function match(Erebot_Interface_Event_Generic &$event)
     {
-        return (!$this->_filter->match($config, $event));
+        return (!$this->_filter->match($event));
     }
 }
 

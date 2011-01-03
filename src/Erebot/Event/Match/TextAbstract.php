@@ -46,19 +46,17 @@ implements      Erebot_Interface_Event_Match
         return $this->_requirePrefix;
     }
 
-    public function match(
-        Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
-    )
+    public function match(Erebot_Interface_Event_Generic &$event)
     {
         if (!($event instanceof Erebot_Interface_Event_Text))
             return FALSE;
-        return $this->_match($config, $event->getText());
+
+        $prefix = $event
+            ->getConnection()->getConfig()
+            ->getMainCfg()->getCommandsPrefix();
+        return $this->_match($prefix, $event->getText());
     }
 
-    abstract protected function _match(
-        Erebot_Interface_Config_Main   &$config,
-                                        $text
-    );
+    abstract protected function _match($prefix, $text);
 }
 

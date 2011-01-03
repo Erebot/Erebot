@@ -59,9 +59,6 @@ interface Erebot_Interface_EventHandler
     /**
      * Given an event, this method does its best to handler it.
      *
-     * \param Erebot_Interface_Config_Main $config
-     *      An object containing the global configuration for the bot.
-     *
      * \param Erebot_Interface_Event_Generic $event
      *      An event to try to handle.
      *
@@ -72,9 +69,6 @@ interface Erebot_Interface_EventHandler
      *      filters (on type, target and/or content) associated
      *      with the handler.
      */
-    public function handleEvent(
-        Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
-    );
+    public function handleEvent(Erebot_Interface_Event_Generic &$event);
 }
 

@@ -35,10 +35,7 @@ implements  Erebot_Interface_Event_Match,
         return $this->_chan;
     }
 
-    public function match(
-        Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
-    )
+    public function match(Erebot_Interface_Event_Generic &$event)
     {
         if (!($event instanceof Erebot_Interface_Event_Chan))
             return FALSE;

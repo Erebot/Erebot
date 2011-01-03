@@ -68,15 +68,12 @@ implements  Erebot_Interface_EventHandler
     }
 
     // Documented in the interface.
-    public function handleEvent(
-        Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
-    )
+    public function handleEvent(Erebot_Interface_Event_Generic &$event)
     {
         $matched = TRUE;
 
         if ($this->_filter !== NULL)
-            $matched = $this->_filter->match($config, $event);
+            $matched = $this->_filter->match($event);
 
         return ($matched ? call_user_func($this->_callback, $event) : NULL);
     }

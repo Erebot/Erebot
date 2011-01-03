@@ -19,10 +19,7 @@
 class   Erebot_Event_Match_TextStatic
 extends Erebot_Event_Match_TextAbstract
 {
-    protected function _match(
-        Erebot_Interface_Config_Main   &$config,
-                                        $text
-    )
+    protected function _match($prefix, $text)
     {
         $text       = preg_replace('/\s+/', ' ', $text);
         $pattern    = preg_replace('/\s+/', ' ', $this->_pattern);
@@ -31,7 +28,7 @@ extends Erebot_Event_Match_TextAbstract
         if ($this->_requirePrefix === FALSE)
             return ($pattern == $text);
 
-        $matched    = ($text == $config->getCommandsPrefix().$pattern);
+        $matched    = ($text == $prefix.$pattern);
         // Prefix required.
         if ($this->_requirePrefix === TRUE)
             return $matched;

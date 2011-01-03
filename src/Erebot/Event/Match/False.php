@@ -19,10 +19,7 @@
 class       Erebot_Event_Match_False
 implements  Erebot_Interface_Event_Match
 {
-    public function match(
-        Erebot_Interface_Config_Main   &$config,
-        Erebot_Interface_Event_Generic &$event
-    )
+    public function match(Erebot_Interface_Event_Generic &$event)
     {
         return FALSE;
     }

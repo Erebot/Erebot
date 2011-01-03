@@ -19,10 +19,7 @@
 class   Erebot_Event_Match_TextRegex
 extends Erebot_Event_Match_TextAbstract
 {
-    protected function _match(
-        Erebot_Interface_Config_Main   &$config,
-                                        $text
-    )
+    protected function _match($prefix, $text)
     {
         return (preg_match($this->_pattern, $text) == 1);
     }

@@ -19,13 +19,10 @@
 class   Erebot_Event_Match_Any
 extends Erebot_Event_Match_CollectionAbstract
 {
-    public function match(
-        Erebot_Interface_Config_Main    &$config,
-        Erebot_Interface_Event_Generic  &$event
-    )
+    public function match(Erebot_Interface_Event_Generic  &$event)
     {
         foreach ($this->_matches as &$match) {
-            if ($match->match($config, $event))
+            if ($match->match($event))
                 return TRUE;
         }
         unset($match);

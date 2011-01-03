@@ -19,10 +19,7 @@
 class   Erebot_Event_Match_TextWildcard
 extends Erebot_Event_Match_TextAbstract
 {
-    protected function _match(
-        Erebot_Interface_Config_Main   &$config,
-                                        $text
-    )
+    protected function _match($prefix, $text)
     {
         $translationTable = array(
             '\\*'   => '.*',
@@ -34,7 +31,7 @@ extends Erebot_Event_Match_TextAbstract
         $pattern    = preg_replace('/\s+/', ' ', $this->_pattern);
         $prefixPattern = '';
         if ($this->_requirePrefix !== FALSE) {
-            $prefixPattern = '(?:'.preg_quote($config->getCommandsPrefix()).')';
+            $prefixPattern = '(?:'.preg_quote($prefix).')';
             if ($this->_requirePrefix === NULL)
                 $prefixPattern .= '?';
         }
