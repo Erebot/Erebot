@@ -144,6 +144,10 @@ implements  Erebot_Interface_Core
                     'implement the Erebot_Interface_Connection interface');
         }
 
+        // This is changed by quitGracefully()
+        // when the bot should stop.
+        $this->_running = time();
+
         // Let's establish some contacts.
         $networks = $this->_mainCfg->getNetworks();
         foreach ($networks as $network) {
@@ -153,10 +157,26 @@ implements  Erebot_Interface_Core
                 continue;
 
             foreach ($servers as $server) {
+                $serverURL = $server->getConnectionURL();
                 try {
+                    $logger->info(
+                        $this->gettext('Loading modules required for "%s"...'),
+                        $serverURL
+                    );
                     $connection = new $connectionCls($this, $server);
+
+                    $logger->info(
+                        $this->gettext('Trying to connect to "%s"...'),
+                        $serverURL
+                    );
                     $connection->connect();
                     $this->_connections[] = $connection;
+
+                    $logger->info(
+                        $this->gettext('Successfully connected to "%s"...'),
+                        $serverURL
+                    );
+
                     break;
                 }
                 catch (Erebot_ConnectionFailureException $e) {
@@ -166,15 +186,11 @@ implements  Erebot_Interface_Core
                     // connect or cycle the list.
                     $logger->warning(
                         $this->gettext('Could not connect to "%s"'),
-                        $server->getConnectionURL()
+                        $serverURL
                     );
                 }
             }
         }
-
-        // This is changed by quitGracefully()
-        // when the bot should stop.
-        $this->_running = time();
 
         // PHP 5.3 way of handling signals.
         $hasSignalDispatch = function_exists('pcntl_signal_dispatch');
