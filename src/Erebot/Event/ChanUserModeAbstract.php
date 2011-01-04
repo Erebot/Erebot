@@ -26,7 +26,7 @@ extends         Erebot_Event_WithChanSourceTargetAbstract
 {
     public function getMode()
     {
-        return $this->MODE_PREFIX . $this->MODE_LETTER;
+        return self::MODE_PREFIX . self::MODE_LETTER;
     }
 }
 

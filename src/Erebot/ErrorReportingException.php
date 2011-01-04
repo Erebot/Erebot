@@ -73,7 +73,8 @@ set_error_handler(
         '$errno, $errstr, $errfile, $errline',
         'if (($errno & error_reporting()) != $errno) return FALSE;'.
         'throw new Erebot_ErrorReportingException('.
-            '$errstr, $errno, $errfile, $errline);'
+        '   $errstr, $errno, $errfile, $errline'.
+        ');'
     ),
     E_ALL
 );
