@@ -1,10 +1,5 @@
 <?xml version="1.0"?>
 <project name="Erebot" description="" default="all">
-    <!--
-        @TODO: Add descriptions for the targets so that they provide
-        useful information when listed using "phing -l".
-    -->
-
     <property name="locales"        value="fr_FR,en_US"/>
     <property name="domain"         value="Erebot"/>
     <property name="version"        value="0.3.2"/>
@@ -20,24 +15,6 @@
     <fileset dir="tests/" id="tests">
         <include name="**/*.php"/>
     </fileset>
-
-    <!-- Documentation -->
-    <target name="doc" description="" depends="doc_html,doc_pdf"/>
-
-    <target name="doc_html" description="">
-        <exec command="doxygen" dir="." passthru="true" checkreturn="true"/>
-    </target>
-
-    <target name="doc_pdf" description="">
-        <exec command="make" dir="doc/latex" passthru="true"/>
-    </target>
-
-    <target name="qa_test" description="" depends="qa_pre_coverage">
-        <phpunit codecoverage="true">
-            <formatter type="plain" usefile="false"/>
-            <batchtest><fileset refid="tests"/></batchtest>
-        </phpunit>
-    </target>
 
     <import file="buildenv/build.xml"/>
 </project>
