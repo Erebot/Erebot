@@ -39,7 +39,10 @@ class Erebot_Utils
     /// Strip all forms of styles from the text.
     const STRIP_ALL         = 0xFF;
 
+    /// Return the value of a constant.
     const VSTATIC_CONST     = 0x01;
+
+    /// Return the value of a static variable.
     const VSTATIC_VAR       = 0x02;
 
     /**
@@ -290,6 +293,31 @@ class Erebot_Utils
         throw new Erebot_NotImplementedException('No way to convert to UTF-8');
     }
 
+    /**
+     * Returns some static data from a class/object.
+     *
+     * \param string|object $class
+     *      Either the name of a class or an instance of a class
+     *      from which the static data will be retrieved.
+     *
+     * \param string $name
+     *      The name of the static data to return.
+     *
+     * \param opaque $source
+     *      (optional) The kind of static data to look for (either
+     *      a constant or a static variable).
+     *      Use Erebot_Utils::VSTATIC_CONST or Erebot_Utils::VSTATIC_VAR
+     *      to select a specific source of data.
+     *      The default is to look for a constant (same as if $source
+     *      had been set to Erebot_Utils::VSTATIC_CONST).
+     *
+     * \retval mixed
+     *      The content of the static data whose name is $name.
+     *
+     * \throw Erebot_NotFoundException
+     *      No data could be found which matches the given $name,
+     *      using the specified $source of data.
+     */
     static public function getVStatic(
         $class,
         $name,
@@ -318,6 +346,26 @@ class Erebot_Utils
         }
             
         throw new Erebot_NotFoundException('No such thing');
+    }
+
+    /**
+     * Checks whether a variable can be safely cast to a string.
+     * This is the case when the variable is already a string or
+     * when it's an object with a __toString() method.
+     *
+     * \param mixed $item
+     *      Variable to test.
+     *
+     * \retval bool
+     *      Whether the given $item can be safely cast to a string.
+     */
+    static public function stringifiable($item)
+    {
+        if (is_string($item))
+            return TRUE;
+        if (is_object($item) && method_exists($item, '__toString'))
+            return TRUE;
+        return FALSE;
     }
 }
 

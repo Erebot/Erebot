@@ -24,7 +24,7 @@ implements      Erebot_Interface_Event_Match
 
     public function __construct($pattern, $requirePrefix = FALSE)
     {
-        if (!is_string($pattern))
+        if (!Erebot_Utils::stringifiable($pattern))
             throw new Erebot_InvalidValueException('Pattern must be a string');
 
         if ($requirePrefix !== NULL && !is_bool($requirePrefix))

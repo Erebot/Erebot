@@ -28,7 +28,7 @@ extends Erebot_Event_Match_TextAbstract
             '&'     => '[^\\040]+',
         );
         $text       = preg_replace('/\s+/', ' ', $text);
-        $pattern    = preg_replace('/\s+/', ' ', $this->_pattern);
+        $pattern    = preg_replace('/\s+/', ' ', (string) $this->_pattern);
         $prefixPattern = '';
         if ($this->_requirePrefix !== FALSE) {
             $prefixPattern = '(?:'.preg_quote($prefix).')';

@@ -24,7 +24,7 @@ implements  Erebot_Interface_Event_Match,
 
     public function __construct($source = NULL)
     {
-        if ($source !== NULL && !is_string($source))
+        if ($source !== NULL && !Erebot_Utils::stringifiable($source))
             throw new Erebot_InvalidValueException('Not a valid nickname');
 
         $this->_source = $source;
@@ -46,7 +46,7 @@ implements  Erebot_Interface_Event_Match,
         return (
             $event->getConnection()->irccasecmp(
                 $event->getSource(),
-                $this->_source
+                (string) $this->_source
             ) == 0
         );
     }

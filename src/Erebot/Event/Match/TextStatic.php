@@ -22,7 +22,7 @@ extends Erebot_Event_Match_TextAbstract
     protected function _match($prefix, $text)
     {
         $text       = preg_replace('/\s+/', ' ', $text);
-        $pattern    = preg_replace('/\s+/', ' ', $this->_pattern);
+        $pattern    = preg_replace('/\s+/', ' ', (string) $this->_pattern);
 
         // Prefix forbidden.
         if ($this->_requirePrefix === FALSE)

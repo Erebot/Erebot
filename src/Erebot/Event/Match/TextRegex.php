@@ -21,7 +21,7 @@ extends Erebot_Event_Match_TextAbstract
 {
     protected function _match($prefix, $text)
     {
-        return (preg_match($this->_pattern, $text) == 1);
+        return (preg_match((string) $this->_pattern, $text) == 1);
     }
 }
 
