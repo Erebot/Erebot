@@ -67,6 +67,6 @@ interface Erebot_Interface_RawHandler
      *      checks on the message and take any action depending on
      *      the result of those checks.
      */
-    public function handleRaw(Erebot_Interface_Event_Raw &$raw);
+    public function handleRaw(Erebot_Interface_Event_Raw $raw);
 }
 

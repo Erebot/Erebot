@@ -50,6 +50,8 @@ implements  Erebot_Interface_Connection
     /// A list of eventHandlers.
     protected $_events;
 
+    protected $_connected;
+
     /// Valid mappings for case-insensitive comparisons.
     static protected $_caseMappings = NULL;
 
@@ -69,6 +71,7 @@ implements  Erebot_Interface_Connection
         $this->_sndQueue        = array();
         $this->_rcvQueue        = array();
         $this->_incomingData    = '';
+        $this->_connected       = FALSE;
 
         // Build possible 
         if (self::$_caseMappings === NULL) {
@@ -132,6 +135,9 @@ implements  Erebot_Interface_Connection
     // Documented in the interface.
     public function connect()
     {
+        if ($this->_connected)
+            return FALSE;
+
         $url = $this->_config->getConnectionURL();
 
         $url    = @parse_url($url);
@@ -197,6 +203,7 @@ implements  Erebot_Interface_Connection
 
         $event = new Erebot_Event_Logon($this);
         $this->dispatchEvent($event);
+        return TRUE;
     }
 
     // Documented in the interface.
@@ -230,7 +237,8 @@ implements  Erebot_Interface_Connection
         $this->_bot->removeConnection($this);
         if (is_resource($this->_socket))
             fclose($this->_socket);
-        $this->_socket = NULL;
+        $this->_socket      = NULL;
+        $this->_connected   = FALSE;
     }
 
     // Documented in the interface.
@@ -726,53 +734,62 @@ implements  Erebot_Interface_Connection
 
             default:        // :server numeric parameters
                 /* RAW (numeric) events */
-                if (ctype_digit($type)) {
-                    $type   = intval($type, 10);
-                    switch ($type) {
-                        case Erebot_Interface_Event_Raw::RPL_WELCOME:
-                            $event = new Erebot_Event_Connect($this);
-                            $this->dispatchEvent($event);
+                if (!ctype_digit($type))
+                    break;
+
+                $type   = intval($type, 10);
+                switch ($type) {
+                    /* We can't rely on RPL_WELCOME because we may need
+                     * to detect the server's capabilities first.
+                     * So, we delay detection of the connection for as
+                     * long as we can (while keeping portability). */
+                    case Erebot_Interface_Event_Raw::RPL_LUSERME:
+                        if ($this->_connected)
                             break;
+                        $event = new Erebot_Event_Connect($this);
+                        $this->dispatchEvent($event);
+                        $this->_connected = TRUE;
+                        break;
 
-                        case Erebot_Interface_Event_Raw::RPL_NOWON:
-                        case Erebot_Interface_Event_Raw::RPL_NOWOFF:
-                        case Erebot_Interface_Event_Raw::RPL_LOGON:
-                        case Erebot_Interface_Event_Raw::RPL_LOGOFF:
-                            $nick       = array_shift($parts);
-                            $ident      = array_shift($parts);
-                            $host       = array_shift($parts);
-                            $timestamp  = intval(array_shift($parts), 10);
-                            $timestamp  = new DateTime('@'.$timestamp);
-                            $text       = implode(' ', $parts);
-                            if (substr($text, 0, 1) == ':')
-                                $text = substr($text, 1);
+                    case Erebot_Interface_Event_Raw::RPL_NOWON:
+                    case Erebot_Interface_Event_Raw::RPL_NOWOFF:
+                    case Erebot_Interface_Event_Raw::RPL_LOGON:
+                    case Erebot_Interface_Event_Raw::RPL_LOGOFF:
+                        $nick       = array_shift($parts);
+                        $ident      = array_shift($parts);
+                        $host       = array_shift($parts);
+                        $timestamp  = intval(array_shift($parts), 10);
+                        $timestamp  = new DateTime('@'.$timestamp);
+                        $text       = implode(' ', $parts);
+                        if (substr($text, 0, 1) == ':')
+                            $text = substr($text, 1);
 
-                            $map    = array(
-                                Erebot_Interface_Event_Raw::RPL_NOWON   =>
-                                    'Erebot_Event_Notify',
-                                Erebot_Interface_Event_Raw::RPL_LOGON   =>
-                                    'Erebot_Event_Notify',
-                                Erebot_Interface_Event_Raw::RPL_NOWOFF  =>
-                                    'Erebot_Event_UnNotify',
-                                Erebot_Interface_Event_Raw::RPL_LOGOFF  =>
-                                    'Erebot_Event_UnNotify',
-                            );
-                            $cls    = $map[$type];
-                            $event  = new $cls($this, $nick, $ident, $host,
-                                                $timestamp, $text);
-                            $this->dispatchEvent($event);
-                            break;
-                    }
-
-                    $event  = new Erebot_Event_Raw(
-                        $this,
-                        $type,
-                        $source,
-                        $target,
-                        $msg
-                    );
-                    $this->dispatchRaw($event);
+                        $map    = array(
+                            Erebot_Interface_Event_Raw::RPL_NOWON   =>
+                                'Erebot_Event_Notify',
+                            Erebot_Interface_Event_Raw::RPL_LOGON   =>
+                                'Erebot_Event_Notify',
+                            Erebot_Interface_Event_Raw::RPL_NOWOFF  =>
+                                'Erebot_Event_UnNotify',
+                            Erebot_Interface_Event_Raw::RPL_LOGOFF  =>
+                                'Erebot_Event_UnNotify',
+                        );
+                        $cls    = $map[$type];
+                        $event  = new $cls($this, $nick, $ident, $host,
+                                            $timestamp, $text);
+                        $this->dispatchEvent($event);
+                        break;
                 }
+
+                $event  = new Erebot_Event_Raw(
+                    $this,
+                    $type,
+                    $source,
+                    $target,
+                    $msg
+                );
+                $this->dispatchRaw($event);
+                break;
         } /* switch ($type) */
     }
 
@@ -920,13 +937,13 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function addRawHandler(Erebot_Interface_RawHandler &$handler)
+    public function addRawHandler(Erebot_Interface_RawHandler $handler)
     {
         $this->_raws[] = $handler;
     }
 
     // Documented in the interface.
-    public function removeRawHandler(Erebot_Interface_RawHandler &$handler)
+    public function removeRawHandler(Erebot_Interface_RawHandler $handler)
     {
         $key = array_search($handler, $this->_raws);
         if ($key === FALSE)
@@ -935,13 +952,13 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function addEventHandler(Erebot_Interface_EventHandler &$handler)
+    public function addEventHandler(Erebot_Interface_EventHandler $handler)
     {
         $this->_events[] = $handler;
     }
 
     // Documented in the interface.
-    public function removeEventHandler(Erebot_Interface_EventHandler &$handler)
+    public function removeEventHandler(Erebot_Interface_EventHandler $handler)
     {
         $key = array_search($handler, $this->_events);
         if ($key === FALSE)
@@ -950,36 +967,44 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function dispatchEvent(Erebot_Interface_Event_Generic &$event)
+    public function dispatchEvent(Erebot_Interface_Event_Generic $event)
     {
+        $logging    =&  Plop::getInstance();
+        $logger     =   $logging->getLogger(__FILE__);
+#        $logger->debug(
+#            $this->_bot->gettext('Dispatching "%s" event.'),
+#            get_class($event)
+#        );
         try {
-            foreach ($this->_events as &$handler) {
+            foreach ($this->_events as $handler) {
                 if ($handler->handleEvent($event) === FALSE)
                     break;
             }
         }
         // This should help make the code a little more "bug-free" (TM).
         catch (Erebot_ErrorReportingException $e) {
-            $logging    =&  Plop::getInstance();
-            $logger     =   $logging->getLogger(__FILE__);
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
             $this->disconnect($e->getMessage());
         }
     }
 
     // Documented in the interface.
-    public function dispatchRaw(Erebot_Interface_Event_Raw &$raw)
+    public function dispatchRaw(Erebot_Interface_Event_Raw $raw)
     {
+        $logging    =&  Plop::getInstance();
+        $logger     =   $logging->getLogger(__FILE__);
+#        $logger->debug(
+#            $this->_bot->gettext('Dispatching raw #%s.'),
+#            sprintf('%03d', $raw->getRaw())
+#        );
         try {
-            foreach ($this->_raws as &$handler) {
+            foreach ($this->_raws as $handler) {
                 if ($handler->handleRaw($raw) === FALSE)
                     break;
             }
         }
         // This should help make the code a little more "bug-free" (TM).
         catch (Erebot_ErrorReportingException $e) {
-            $logging    =&  Plop::getInstance();
-            $logger     =   $logging->getLogger(__FILE__);
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
             $this->disconnect($e->getMessage());
         }

@@ -38,8 +38,8 @@ implements  Erebot_Interface_RawHandler
         if ($cls === NULL || !$cls->implementsInterface('Erebot_Interface_Event_Raw'))
             throw new Erebot_InvalidValueException('Invalid signature');
 
-        $this->_raw         =   $raw;
-        $this->_callback    =&  $callback;
+        $this->_raw         = $raw;
+        $this->_callback    = $callback;
     }
 
     public function __destruct()
@@ -59,7 +59,7 @@ implements  Erebot_Interface_RawHandler
     }
 
     // Documented in the interface.
-    public function handleRaw(Erebot_Interface_Event_Raw &$raw)
+    public function handleRaw(Erebot_Interface_Event_Raw $raw)
     {
         if ($raw->getRaw() != $this->_raw)
             return NULL;

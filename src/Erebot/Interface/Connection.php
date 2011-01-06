@@ -274,7 +274,7 @@ interface Erebot_Interface_Connection
      * \param Erebot_Interface_RawHandler $handler
      *      The handler to register.
      */
-    public function addRawHandler(Erebot_Interface_RawHandler &$handler);
+    public function addRawHandler(Erebot_Interface_RawHandler $handler);
 
     /**
      * Unregisters a raw handler on this connection.
@@ -286,7 +286,7 @@ interface Erebot_Interface_Connection
      *      Thrown when the given handler could not be found,
      *      such as when it was not registered on this connection.
      */
-    public function removeRawHandler(Erebot_Interface_RawHandler &$handler);
+    public function removeRawHandler(Erebot_Interface_RawHandler $handler);
 
     /**
      * Registers an event handler on this connection.
@@ -294,7 +294,7 @@ interface Erebot_Interface_Connection
      * \param Erebot_Interface_EventHandler $handler
      *      The handler to register.
      */
-    public function addEventHandler(Erebot_Interface_EventHandler &$handler);
+    public function addEventHandler(Erebot_Interface_EventHandler $handler);
 
     /**
      * Unregisters an event handler on this connection.
@@ -306,7 +306,7 @@ interface Erebot_Interface_Connection
      *      Thrown when the given handler could not be found,
      *      such as when it was not registered on this connection.
      */
-    public function removeEventHandler(Erebot_Interface_EventHandler &$handler);
+    public function removeEventHandler(Erebot_Interface_EventHandler $handler);
 
     /**
      * Dispatches the given event to handlers
@@ -315,7 +315,7 @@ interface Erebot_Interface_Connection
      * \param Erebot_Interface_Event_Generic $event
      *      An event to dispatch.
      */
-    public function dispatchEvent(Erebot_Interface_Event_Generic &$event);
+    public function dispatchEvent(Erebot_Interface_Event_Generic $event);
 
     /**
      * Dispatches the given raw to handlers
@@ -324,7 +324,7 @@ interface Erebot_Interface_Connection
      * \param Erebot_Interface_Event_Raw $raw
      *      A raw message to dispatch.
      */
-    public function dispatchRaw(Erebot_Interface_Event_Raw &$raw);
+    public function dispatchRaw(Erebot_Interface_Event_Raw $raw);
 
     /**
      * Compares two string in a case-sensitive fashion (like strcmp).
