@@ -163,7 +163,8 @@ interface Erebot_Interface_Event_Raw
     const RPL_ENDOFEXEMPTLIST       = 349;
     const RPL_VERSION               = 351;
     const RPL_WHOREPLY              = 352;
-    const RPL_NAMREPLY              = 353;
+    const RPL_NAMEREPLY             = 353;
+    const RPL_NAMREPLY              = 353;  // Often mispelled in documentation.
     const RPL_RWHOREPLY             = 354;
     const RPL_CLOSING               = 362;
     const RPL_CLOSEEND              = 363;

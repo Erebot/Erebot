@@ -53,7 +53,7 @@ implements  Erebot_Interface_Event_Raw
         $this->_raw         =   $raw;
         $this->_source      =   $source;
         $this->_target      =   $target;
-        $this->_text        =   $text;
+        $this->_text        =   new Erebot_TextWrapper((string) $text);
     }
 
     public function __destruct()

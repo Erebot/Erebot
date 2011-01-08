@@ -29,7 +29,7 @@ implements      Erebot_Interface_Event_Text
     public function __construct(Erebot_Interface_Connection &$connection, $text)
     {
         parent::__construct($connection);
-        $this->_text = new Erebot_TextWrapper($text);
+        $this->_text = new Erebot_TextWrapper((string) $text);
     }
 
     // Documented in the interface.
