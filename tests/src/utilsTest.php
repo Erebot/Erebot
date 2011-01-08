@@ -36,32 +36,6 @@ extends PHPUnit_Framework_TestCase
         $this->assertNotSame($this, Erebot_Utils::getCallerObject());
     }
 
-    public function numtokProvider()
-    {
-        return array(
-            array(3, 'foo bar baz',   ' '),
-            array(2, 'foo       baz', ' '),
-            array(3, 'foo, bar, baz', ','),
-        );
-    }
-
-    /**
-     * @dataProvider    numtokProvider
-     */
-    public function testNumtok($expected, $text, $separator)
-    {
-        $this->assertEquals($expected, Erebot_Utils::numtok($text, $separator));
-    }
-
-    public function testGettok()
-    {
-        $this->assertEquals('foo', Erebot_Utils::gettok('foo bar baz', 0, 1));
-        $this->assertEquals('baz', Erebot_Utils::gettok('foo bar baz', -1, 1));
-        $this->assertEquals('bar baz', Erebot_Utils::gettok('foo bar baz', 1));
-        $this->assertEquals('bar baz', Erebot_Utils::gettok('foo bar baz', -2));
-        $this->assertSame(NULL, Erebot_Utils::gettok('foo bar baz', 3));
-    }
-
     public function testStripCodes()
     {
         /*

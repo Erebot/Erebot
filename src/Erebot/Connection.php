@@ -515,7 +515,8 @@ implements  Erebot_Interface_Connection
                     break;
                 }
 
-                $modes  = Erebot_Utils::gettok($msg, 0, 1);
+                $wrappedMessage = new Erebot_TextWrapper($msg);
+                $modes  = $wrappedMessage[0];
                 $len    = strlen($modes);
                 $mode   = self::MODE_ADD;
                 $k      = 1;
@@ -559,7 +560,7 @@ implements  Erebot_Interface_Connection
                         case 'a':
                         case 'q':
                         case 'b':
-                            $tnick  = Erebot_Utils::gettok($msg, $k++, 1);
+                            $tnick  = $wrappedMessage[$k++];
                             $cls    = $priv[$mode][$modes[$i]];
                             $event  = new $cls($this, $target, $source, $tnick);
                             $this->dispatchEvent($event);
@@ -582,7 +583,7 @@ implements  Erebot_Interface_Connection
                                         break;
                                 case 1:
                                 case 2:
-                                    $remains[] = $this->gettok($msg, $k++, 1);
+                                    $remains[] = $wrappedMessage[$k++]
                                     break;
                             }
 */

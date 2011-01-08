@@ -21,10 +21,16 @@
  *      A wrapper to easily split a string using a separator and
  *      deal with other operations related to separators.
  */
-class Erebot_TextWrapper
+class       Erebot_TextWrapper
+implements  Countable,
+            ArrayAccess,
+            Iterator
 {
     /// The text wrapped by this instance.
     protected $_text;
+
+    /// Position in the text.
+    protected $_position;
 
     /**
      * Constructs a new instance of a text wrapper.
@@ -34,7 +40,8 @@ class Erebot_TextWrapper
      */
     public function __construct($text)
     {
-        $this->_text = $text;
+        $this->_text        = $text;
+        $this->_position    = 0;
     }
 
     /**
@@ -63,7 +70,18 @@ class Erebot_TextWrapper
      */
     public function getTokens($start, $length = 0, $separator = ' ')
     {
-        return Erebot_Utils::gettok($this->_text, $start, $length, $separator);
+        $string = preg_replace('/\\s+/', ' ', trim($this->_text, $separator));
+        $parts  = explode($separator, $string);
+
+        if (!$length)
+            $parts = array_slice($parts, $start);
+        else
+            $parts = array_slice($parts, $start, $length);
+
+        if (!count($parts))
+            return NULL;
+
+        return implode($separator, $parts);
     }
 
     /**
@@ -82,7 +100,8 @@ class Erebot_TextWrapper
      */
     public function countTokens($separator = ' ')
     {
-        return Erebot_Utils::numtok($this->_text, $separator);
+        $string = preg_replace('/\\s+/', ' ', trim($this->_text, $separator));
+        return count(explode($separator, $string));
     }
 
     /**
@@ -94,6 +113,65 @@ class Erebot_TextWrapper
     public function __toString()
     {
         return $this->_text;
+    }
+
+    // Countable interface.
+    public function count()
+    {
+        return $this->countTokens();
+    }
+
+    // Iterator interface.
+    public function current()
+    {
+        return $this->getTokens($this->_position, 1);
+    }
+
+    public function key()
+    {
+        return $this->_position;
+    }
+
+    public function next()
+    {
+        $this->_position++;
+    }
+
+    public function rewind()
+    {
+        $this->_position = 0;
+    }
+
+    public function valid()
+    {
+        return ($this->_position < $this->countTokens());
+    }
+
+    // ArrayAccess interface.
+    public function offsetExists($offset)
+    {
+        return (
+            is_int($offset) &&
+            $offset >= 0 &&
+            $offset < $this->countTokens()
+        );
+    }
+
+    public function offsetGet($offset)
+    {
+        if (!is_int($offset))
+            return NULL;
+        return $this->getTokens($offset, 1);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        throw new RuntimeException('The wrapped text is read-only');
+    }
+
+    public function offsetUnset($offset)
+    {
+        throw new RuntimeException('The wrapped text is read-only');
     }
 }
 

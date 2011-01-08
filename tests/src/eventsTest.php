@@ -31,12 +31,12 @@ extends Erebot_Connection
     {
     }
 
-    public function dispatchEvent(Erebot_Interface_Event_Generic &$event)
+    public function dispatchEvent(Erebot_Interface_Event_Generic $event)
     {
         $this->_dispatched[] = $event;
     }
 
-    public function dispatchRaw(Erebot_Interface_Event_Raw &$raw)
+    public function dispatchRaw(Erebot_Interface_Event_Raw $raw)
     {
         $this->_dispatched[] = $raw;
     }
@@ -100,18 +100,17 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals("foo", (string) $dispatched[0]->getText());
     }
 
-    public function testConnectAndRaw001()
+    public function testConnectAndRaw255()
     {
         $this->_connection->handleMessage(
-            ':localhost 001 Erebot :Welcome to the '.
-            'Internet Relay Network Erebot!erebot@localhost'
+            ':localhost 255 :I have 42 clients and 23 servers'
         );
         $dispatched = $this->_connection->resetDispatched();
         $this->assertSame(2, count($dispatched));
         $this->assertTrue($dispatched[0] instanceof Erebot_Event_Connect);
         $this->assertTrue($dispatched[1] instanceof Erebot_Event_Raw);
         $this->assertEquals(
-            Erebot_Interface_Event_Raw::RPL_WELCOME,
+            Erebot_Interface_Event_Raw::RPL_LUSERME,
             $dispatched[1]->getRaw()
         );
     }

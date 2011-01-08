@@ -39,6 +39,7 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals('baz', $this->wrapped->getTokens(-1));
         $this->assertEquals('bar baz', $this->wrapped->getTokens(-2));
         $this->assertEquals('foo', $this->wrapped->getTokens(-3, 1));
+        $this->assertSame(NULL, $this->wrapped->getTokens(3));
     }
 
 
@@ -53,6 +54,29 @@ extends PHPUnit_Framework_TestCase
     public function testToString()
     {
         $this->assertEquals($this->text, (string) $this->wrapped);
+    }
+
+    public function testIterator()
+    {
+        $tokens = array('foo', 'bar', 'baz');
+        $i = 0;
+        foreach ($this->wrapped as $token) {
+            if (!isset($tokens[$i]))
+                $this->fail('Too many tokens');
+            $this->assertEquals($tokens[$i++], $token);
+        }
+        $this->assertNotEquals(0, $i);
+    }
+
+    public function testCountableAndArrayAccess()
+    {
+        $tokens = array('foo', 'bar', 'baz');
+        $len = count($this->wrapped);
+        $this->assertEquals(3, $len);
+
+        for ($i = 0; $i < $len; $i++) {
+            $this->assertEquals($tokens[$i], $this->wrapped[$i]);
+        }
     }
 }
 
