@@ -444,5 +444,7 @@ interface Erebot_Interface_Connection
      *      $chan is not a string or is empty.
      */
     public function isChannel($chan);
+
+    public function normalizeNick($nick, $mappingName = NULL);
 }
 

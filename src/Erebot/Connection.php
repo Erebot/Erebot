@@ -1011,88 +1011,64 @@ implements  Erebot_Interface_Connection
         }
     }
 
-    protected function _cmp($a, $b, $mapping, $len)
+    protected function _getMapping($mappingName = NULL)
     {
-        if ($mapping !== NULL) {
-            $a = strtr($a, $mapping);
-            $b = strtr($b, $mapping);
+        if ($mappingName === NULL) {
+            try {
+                $capabilities = $this->getModule(
+                    'Erebot_Module_ServerCapabilities',
+                    NULL, FALSE
+                );
+                $mappingName = $capabilities->getCaseMapping();
+            }
+            catch (Erebot_NotFoundException $e) {
+                // Fallback to a safe mapping.
+                $mappingName = 'rfc1459';
+            }
         }
 
-        if ($len == -1)
-            return strcmp($a, $b);
-        return strncmp($a, $b, $len);
+        if (!is_string($mappingName))
+            throw new Erebot_InvalidValueException(
+                $this->_bot->gettext('Invalid mapping name')
+            );
+
+        $mappingName = strtolower($mappingName);
+        if (!isset(self::$_caseMappings[$mappingName]))
+            throw new Erebot_NotFoundException(
+                $this->_bot->gettext('No such mapping exists')
+            );
+        return self::$_caseMappings[$mappingName];
     }
 
     // Documented in the interface.
     public function irccmp($a, $b)
     {
-        return $this->_cmp($a, $b, NULL, -1);
+        return strcmp($a, $b);
     }
 
     // Documented in the interface.
     public function ircncmp($a, $b, $len)
     {
-        return $this->_cmp($a, $b, NULL, $len);
+        return strncmp($a, $b, $len);
     }
 
     // Documented in the interface.
     public function irccasecmp($a, $b, $mappingName = NULL)
     {
-        if ($mappingName === NULL) {
-            try {
-                $capabilities = $this->getModule(
-                    'Erebot_Module_ServerCapabilities',
-                    NULL, FALSE
-                );
-                $mappingName = $capabilities->getCaseMapping();
-            }
-            catch (Erebot_NotFoundException $e) {
-                // Fallback to a safe mapping.
-                $mappingName = 'rfc1459';
-            }
-        }
-
-        if (!is_string($mappingName))
-            throw new Erebot_InvalidValueException(
-                $this->_bot->gettext('Invalid mapping name')
-            );
-
-        $mappingName = strtolower($mappingName);
-        if (!isset(self::$_caseMappings[$mappingName]))
-            throw new Erebot_NotFoundException(
-                $this->_bot->gettext('No such mapping exists')
-            );
-        return $this->_cmp($a, $b, self::$_caseMappings[$mappingName], -1);
+        return strcmp(
+            $this->normalizeNick($a, $mappingName),
+            $this->normalizeNick($b, $mappingName)
+        );
     }
 
     // Documented in the interface.
     public function ircncasecmp($a, $b, $len, $mappingName = NULL)
     {
-        if ($mappingName === NULL) {
-            try {
-                $capabilities = $this->getModule(
-                    'Erebot_Module_ServerCapabilities',
-                    NULL, FALSE
-                );
-                $mappingName = $capabilities->getCaseMapping();
-            }
-            catch (Erebot_NotFoundException $e) {
-                // Fallback to a safe mapping.
-                $mappingName = 'rfc1459';
-            }
-        }
-
-        if (!is_string($mappingName))
-            throw new Erebot_InvalidValueException(
-                $this->_bot->gettext('Invalid mapping name')
-            );
-
-        $mappingName = strtolower($mappingName);
-        if (!isset(self::$_caseMappings[$mappingName]))
-            throw new Erebot_NotFoundException(
-                $this->_bot->gettext('No such mapping exists')
-            );
-        return $this->_cmp($a, $b, self::$_caseMappings[$mappingName], $len);
+        return strncmp(
+            $this->normalizeNick($a, $mappingName),
+            $this->normalizeNick($b, $mappingName),
+            $len
+        );
     }
 
     // Documented in the interface.
@@ -1126,6 +1102,25 @@ implements  Erebot_Interface_Connection
 
         // As per RFC 2811 - (2.1) Namespace.
         return (strpos('#&+!', $target[0]) !== FALSE);
+    }
+
+    // Documented in the interface.
+    public function normalizeNick($nick, $mappingName = NULL)
+    {
+        $mapping = $this->_getMapping($mappingName);
+        $pos = strpos($nick, '!');
+        $suffix = '';
+        if ($pos !== FALSE) {
+            $suffix = substr($nick, $pos);
+            $nick = substr($nick, 0, $pos);
+            if ($nick === FALSE)
+                throw new Erebot_InvalidValueException(
+                    $this->_bot->gettext('Not a valid mask')
+                );
+        }
+
+        $nick = strtr($nick, $mapping);
+        return $nick.$suffix;
     }
 }
 
