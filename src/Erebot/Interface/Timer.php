@@ -47,8 +47,12 @@ interface Erebot_Interface_Timer
      *      be called repeatedly every $delay seconds or just once,
      *      or an integer specifying the exact number of times the
      *      callback will be called.
+     *
+     * \param array $args
+     *      (optional) Additional arguments to pass to the callback
+     *      when it is called.
      */
-    public function __construct($callback, $delay, $repeat);
+    public function __construct($callback, $delay, $repeat, $args = NULL);
 
     /**
      * Returns a reference to the callback associated with this timer.
@@ -56,7 +60,22 @@ interface Erebot_Interface_Timer
      * \retval callback
      *      The callback for this timer.
      */
-    public function & getCallback();
+    public function getCallback();
+
+    /**
+     * Returns an array of additional arguments to pass to the callback.
+     *
+     * \retval array
+     *      Arguments that will be passed to the callback.
+     *
+     * \note
+     *      The first argument passed to the callback is ALWAYS
+     *      the timer event that timed out, <b>but</b> the timer
+     *      IS NOT considered as a part of the arguments for the
+     *      purpose of this method and therefore will be missing
+     *      from the array it returns.
+     */
+    public function getArgs();
 
     /**
      * Returns the delay after which the callback will be called.
@@ -127,7 +146,7 @@ interface Erebot_Interface_Timer
      * \retval stream
      *      The underlying PHP stream.
      */
-    public function & getStream();
+    public function getStream();
 
     /**
      * (Re)starts the timer.

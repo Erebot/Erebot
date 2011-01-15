@@ -35,9 +35,11 @@ implements  Erebot_Interface_Timer
     /// Number of times the timer will be reset.
     protected $_repeat;
 
+    /// Additional arguments to call the callback function with.
+    protected $_args;
 
     // Documented in the interface.
-    public function __construct($callback, $delay, $repeat)
+    public function __construct($callback, $delay, $repeat, $args = NULL)
     {
         if (!is_callable($callback))
             throw new Erebot_InvalidValueException('Invalid callback');
@@ -46,6 +48,9 @@ implements  Erebot_Interface_Timer
         $this->_delay       = $delay;
         $this->isRepeated($repeat);
         $this->_stream      = NULL;
+        if ($args === NULL)
+            $args = array();
+        $this->_args        = $args;
     }
 
     public function __destruct()
@@ -56,9 +61,15 @@ implements  Erebot_Interface_Timer
     }
 
     // Documented in the interface.
-    public function & getCallback()
+    public function getCallback()
     {
         return $this->_callback;
+    }
+
+    // Documented in the interface.
+    public function getArgs()
+    {
+        return $this->_args;
     }
 
     // Documented in the interface.
@@ -98,7 +109,7 @@ implements  Erebot_Interface_Timer
     }
 
     // Documented in the interface.
-    public function & getStream()
+    public function getStream()
     {
         return $this->_stream;
     }
@@ -128,7 +139,10 @@ implements  Erebot_Interface_Timer
     // Documented in the interface.
     public function activate()
     {
-        return (bool) call_user_func_array($this->_callback, array(&$this));
+        return (bool) call_user_func_array(
+            $this->_callback,
+            array_merge(array(&$this), $this->_args)
+        );
     }
 }
 
