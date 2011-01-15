@@ -27,8 +27,10 @@ extends PHPUnit_Framework_TestCase
 {
     private $_flag;
 
-    public function helper(Erebot_Interface_Timer &$timer)
+    public function helper(Erebot_Interface_Timer &$timer, $foo, $bar)
     {
+        $this->assertNotEquals('bar', $foo);
+        $this->assertEquals('bar', $bar);
         $this->_flag = TRUE;
     }
 
@@ -48,7 +50,7 @@ extends PHPUnit_Framework_TestCase
 
         $this->_flag = FALSE;
         $callback = array($this, 'helper');
-        $timer = new Erebot_Timer($callback, $delay, FALSE);
+        $timer = new Erebot_Timer($callback, $delay, FALSE, array('foo', 'bar'));
         $this->assertEquals($callback, $timer->getCallback());
         $this->assertSame($delay, $timer->getDelay());
 
