@@ -1,0 +1,40 @@
+Changes in API v0.0.4
+---------------------
+
+*   A few methods which expected references have been modified
+    to not do so anymore.
+
+*   The Erebot_TextFilter & Erebot_EventTargets classes have
+    been merged in a new concept named "event filters" [#271]
+    Both event and raw handlers need to be updated.
+    When defining an handler, you can pass it a "filter" (an
+    object implementing the Erebot_Interface_Event_Match
+    interface). Filters have been written which correspond
+    to the old text filters & event targets.
+    Complex predicates can be defined, using for example
+    the Erebot_Event_Match_All & Erebot_Event_Match_Any
+    classes (which act like the boolean AND/OR operators).
+
+*   The class Erebot_TextWrapper has been improved and now
+    implements some SPL interfaces (Countable, ArrayAccess
+    and Iterator) [#342]. This means that you can for example
+    retrieve the number of words in the text by using
+    count($wrapper).
+    The wrapped text is still read-only so operations like
+    $wrapper[0] = "Hello"; will throw an exception.
+
+*   As a consequence of the previous point, the following
+    methods have been removed:
+    -   Erebot_Utils::gettok()
+    -   Erebot_Utils::numtok()
+    Please use the Erebot_TextWrapper class instead for all
+    future developments.
+
+*   Features marked for removal in 0.5.0 have effectively
+    been removed (eg. global constants for raw messages).
+
+*   The bot now uses a different raw to detect that it successfully
+    connected to an IRC server (and trigger a Connect event).
+    You may need to update your code if it relied on events
+    arriving in a precise order upon connection.
+

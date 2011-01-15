@@ -1,0 +1,16 @@
+Erebot v0.5.0
+-------------
+
+Major changes:
+*   Change timers so that additional arguments can be passed to callbacks.
+*   The bot now traps the SIGHUP signal and tries to reload its configuration
+    when such a signal is received. This feature is still very experimental
+    and will probably evolve in the next releases [#89 & #301]
+*   The Erebot_TextFilter & Erebot_EventTargets classes have been merged
+    in a new concept named "event filters" [#271]
+*   Miscellaneous improvements have been made to the Erebot_TextWrapper
+    class [#342].
+*   Some features marked as deprecated have been removed.
+
+See https://projets.iiens.net/versions/show/30 for the full list of changes.
+
