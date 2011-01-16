@@ -86,6 +86,14 @@ class Erebot_Config_Proxy
         );
     }
 
+    /**
+     * Copy constructor.
+     */
+    public function __clone()
+    {
+        throw new Exception("Cloning forbidden!");
+    }
+
     // Documented in the interface.
     public function getTranslator($component)
     {

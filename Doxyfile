@@ -3,7 +3,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = Erebot
 PROJECT_NUMBER         = $(EREBOT_VERSION)
-OUTPUT_DIRECTORY       = doc
+OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 

@@ -132,6 +132,14 @@ implements  Erebot_Interface_Connection
         );
     }
 
+    /**
+     * Copy-constructor.
+     */
+    public function __clone()
+    {
+        throw new Exception("Cloning forbidden!");
+    }
+
     // Documented in the interface.
     public function connect()
     {
