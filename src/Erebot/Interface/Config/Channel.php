@@ -39,8 +39,8 @@ extends     Erebot_Interface_Config_Proxy
      *      for this network.
      */
     public function __construct(
-        Erebot_Interface_Config_Network &$netCfg,
-        SimpleXMLElement                &$xml
+        Erebot_Interface_Config_Network $netCfg,
+        SimpleXMLElement                $xml
     );
 
     /**
@@ -58,6 +58,6 @@ extends     Erebot_Interface_Config_Proxy
      * \retval Erebot_Interface_Config_Network
      *      The IRC network configuration for this IRC channel.
      */
-    public function & getNetworkCfg();
+    public function getNetworkCfg();
 }
 

@@ -98,7 +98,7 @@ extends     Erebot_Interface_Config_Proxy
      * \throw Erebot_NotFoundException
      *      No such network has been configured on the bot.
      */
-    public function & getNetworkCfg($network);
+    public function getNetworkCfg($network);
 
     /**
      * Returns all IRC network configurations.

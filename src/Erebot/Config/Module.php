@@ -36,7 +36,7 @@ implements  Erebot_Interface_Config_Module
     protected $_name;
 
     // Documented in the interface.
-    public function __construct(SimpleXMLElement &$xml)
+    public function __construct(SimpleXMLElement $xml)
     {
         $this->_name    = (string) $xml['name'];
         $this->_params  = array();

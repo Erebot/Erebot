@@ -35,13 +35,13 @@ implements  Erebot_Interface_Config_Channel
 
     // Documented in the interface.
     public function __construct(
-        Erebot_Interface_Config_Network &$netCfg,
-        SimpleXMLElement                &$xml
+        Erebot_Interface_Config_Network $netCfg,
+        SimpleXMLElement                $xml
     )
     {
         parent::__construct($this, $xml);
-        $this->_name     =   (string) $xml['name'];
-        $this->_netCfg   =&  $netCfg;
+        $this->_name     = (string) $xml['name'];
+        $this->_netCfg   = $netCfg;
     }
 
     /**
@@ -59,7 +59,7 @@ implements  Erebot_Interface_Config_Channel
     }
 
     // Documented in the interface.
-    public function & getNetworkCfg()
+    public function getNetworkCfg()
     {
         return $this->_netCfg;
     }

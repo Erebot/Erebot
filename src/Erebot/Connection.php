@@ -57,11 +57,11 @@ implements  Erebot_Interface_Connection
 
     // Documented in the interface.
     public function __construct(
-        Erebot_Interface_Core           &$bot,
-        Erebot_Interface_Config_Server  &$config)
+        Erebot_Interface_Core           $bot,
+        Erebot_Interface_Config_Server  $config)
     {
-        $this->_config  =&  $config;
-        $this->_bot     =&  $bot;
+        $this->_config  = $config;
+        $this->_bot     = $bot;
 
         $this->_channelModules  = array();
         $this->_plainModules    = array();
@@ -96,21 +96,18 @@ implements  Erebot_Interface_Connection
 
     protected function _loadModules()
     {
-        $netCfg     =&  $this->_config->getNetworkCfg();
-        $channels   =   $netCfg->getChannels();
-        foreach ($channels as &$chanCfg) {
+        $netCfg     = $this->_config->getNetworkCfg();
+        $channels   = $netCfg->getChannels();
+        foreach ($channels as $chanCfg) {
             $modules = $chanCfg->getModules(FALSE);
             $chan   = $chanCfg->getName();
-            foreach ($modules as &$module)
+            foreach ($modules as $module)
                 $this->loadModule($module, $chan);
-            unset($module);
         }
-        unset($chanCfg);
 
         $modules    = $this->_config->getModules(TRUE);
-        foreach ($modules as &$module)
+        foreach ($modules as $module)
             $this->loadModule($module, NULL);
-        unset($module);
     }
 
     /**
@@ -217,17 +214,17 @@ implements  Erebot_Interface_Connection
     // Documented in the interface.
     public function disconnect($quitMessage = NULL)
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
-        $url        =   $this->_config->getConnectionURL();
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
+        $url        = $this->_config->getConnectionURL();
         $logger->info("Disconnecting from '%s' ...", $url);
 
         // Purge send queue and send QUIT message to notify server.
         $this->_sndQueue = array();
         if ($quitMessage === NULL) {
             try {
-                $config =& $this->getConfig(NULL);
-                $quitMessage = $config->parseString(
+                $config         = $this->getConfig(NULL);
+                $quitMessage    = $config->parseString(
                     'IrcConnector',
                     'quit_message'
                 );
@@ -257,18 +254,18 @@ implements  Erebot_Interface_Connection
             if (strpos($line, $char) !== FALSE)
                 throw new Erebot_InvalidValueException(
                     'Line contains forbidden characters');
-        $this->_sndQueue[] =& $line;
+        $this->_sndQueue[] = $line;
     }
 
     // Documented in the interface.
-    public function & getConfig($chan)
+    public function getConfig($chan)
     {
         if ($chan === NULL)
             return $this->_config;
 
         try {
-            $netCfg     =&  $this->_config->getNetworkCfg();
-            $chanCfg    =&  $netCfg->getChannelCfg($chan);
+            $netCfg     = $this->_config->getNetworkCfg();
+            $chanCfg    = $netCfg->getChannelCfg($chan);
             unset($netCfg);
             return $chanCfg;
         }
@@ -278,7 +275,7 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function & getSocket()
+    public function getSocket()
     {
         return $this->_socket;
     }
@@ -318,8 +315,8 @@ implements  Erebot_Interface_Connection
         $this->_incomingData    = substr($this->_incomingData, $pos + 2);
         $this->_rcvQueue[]      = $line;
 
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(
             __FILE__ . DIRECTORY_SEPARATOR . 'input'
         );
         $logger->debug("%s", addcslashes($line, "\000..\037"));
@@ -335,8 +332,8 @@ implements  Erebot_Interface_Connection
             $this->dispatchEvent($event);
 
             if (!$event->preventDefault()) {
-                $logging    =&  Plop::getInstance();
-                $logger     =   $logging->getLogger(__FILE__);
+                $logging    = Plop::getInstance();
+                $logger     = $logging->getLogger(__FILE__);
                 $logger->error('Disconnected');
                 throw new Erebot_ConnectionFailureException('Disconnected');
             }
@@ -353,9 +350,9 @@ implements  Erebot_Interface_Connection
     {
         if ($this->emptySendQueue())
             throw new Erebot_NotFoundException('No outgoing data needs to be handled');
-        $line       =   array_shift($this->_sndQueue);
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(
+        $line       = array_shift($this->_sndQueue);
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(
             __FILE__ . DIRECTORY_SEPARATOR . 'output'
         );
 
@@ -803,13 +800,13 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function & getBot()
+    public function getBot()
     {
         return $this->_bot;
     }
 
     // Documented in the interface.
-    public function & loadModule($module, $chan = NULL)
+    public function loadModule($module, $chan = NULL)
     {
         if ($chan !== NULL) {
             if (isset($this->_channelModules[$chan][$module]))
@@ -819,8 +816,8 @@ implements  Erebot_Interface_Connection
         else if (isset($this->_plainModules[$module]))
             return $this->_plainModules[$module];
 
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
 
         if (!is_subclass_of($module, 'Erebot_Module_Base'))
             throw new Erebot_InvalidValueException(
@@ -919,15 +916,15 @@ implements  Erebot_Interface_Connection
     }
 
     // Documented in the interface.
-    public function & getModule($name, $chan = NULL, $autoload = TRUE)
+    public function getModule($name, $chan = NULL, $autoload = TRUE)
     {
         if ($chan !== NULL) {
             if (isset($this->_channelModules[$chan][$name]))
                 return $this->_channelModules[$chan][$name];
 
-            $netCfg =& $this->_config->getNetworkCfg();
-            $chanCfg =& $netCfg->getChannel($chan);
-            $modules = $chanCfg->getModules(FALSE);
+            $netCfg     = $this->_config->getNetworkCfg();
+            $chanCfg    = $netCfg->getChannel($chan);
+            $modules    = $chanCfg->getModules(FALSE);
             if (in_array($name, $modules, TRUE)) {
                 if (!$autoload)
                     throw new Erebot_NotFoundException('No instance found');
@@ -978,8 +975,8 @@ implements  Erebot_Interface_Connection
     // Documented in the interface.
     public function dispatchEvent(Erebot_Interface_Event_Generic $event)
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
 #        $logger->debug(
 #            $this->_bot->gettext('Dispatching "%s" event.'),
 #            get_class($event)
@@ -1000,8 +997,8 @@ implements  Erebot_Interface_Connection
     // Documented in the interface.
     public function dispatchRaw(Erebot_Interface_Event_Raw $raw)
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
 #        $logger->debug(
 #            $this->_bot->gettext('Dispatching raw #%s.'),
 #            sprintf('%03d', $raw->getRaw())

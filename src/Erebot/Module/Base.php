@@ -77,20 +77,20 @@ abstract class Erebot_Module_Base
      *      level or higher in the configuration hierarchy.
      */
     final public function __construct(
-        Erebot_Interface_Connection    &$connection,
+        Erebot_Interface_Connection     $connection,
                                         $channel
     )
     {
-        $this->_connection  =&  $connection;
-        $bot                =&  $connection->getBot();
+        $this->_connection  = $connection;
+        $bot                = $connection->getBot();
         unset($bot);
 
-        $config             =&  $this->_connection->getConfig(NULL);
-        $this->_mainCfg     =&  $config->getMainCfg();
-        $this->_translator  =   $this->_mainCfg->getTranslator(get_class($this));
+        $config             = $this->_connection->getConfig(NULL);
+        $this->_mainCfg     = $config->getMainCfg();
+        $this->_translator  = $this->_mainCfg->getTranslator(get_class($this));
         unset($config);
 
-        $this->_channel     =   $channel;
+        $this->_channel     = $channel;
     }
 
     /** Destructor. */
@@ -172,6 +172,8 @@ abstract class Erebot_Module_Base
 
         if (is_array($targets))
             $targets = implode(',', $targets);
+        else if ($targets instanceof Erebot_Identity)
+            $targets = (string) $targets;
         else if (!is_string($targets))
             throw new Exception('Not a valid target');
 

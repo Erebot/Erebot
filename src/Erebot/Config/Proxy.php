@@ -52,12 +52,12 @@ class Erebot_Config_Proxy
      *      An XML node which should be used as the basis for configuration.
      */
     protected function __construct(
-        Erebot_Interface_Config_Proxy   &$proxified,
-        SimpleXMLElement                &$xml
+        Erebot_Interface_Config_Proxy   $proxified,
+        SimpleXMLElement                $xml
     )
     {
-        $this->_proxified   =&  $proxified;
-        $this->_modules     =   array();
+        $this->_proxified   = $proxified;
+        $this->_modules     = array();
 
         if (isset($xml['language']))
             $this->_locale = (string) $xml['language'];
@@ -105,7 +105,7 @@ class Erebot_Config_Proxy
     }
 
     // Documented in the interface.
-    public function & getMainCfg()
+    public function getMainCfg()
     {
         if ($this->_proxified === $this)
             return $this;
@@ -125,20 +125,19 @@ class Erebot_Config_Proxy
 
         $added      = array();
         $removed    = array();
-        foreach ($this->_modules as $name => &$module) {
+        foreach ($this->_modules as $name => $module) {
             if ($module->isActive())
                 $added[]    = $name;
             else
                 $removed[]  = $name;
         }
-        unset($module);
 
         $inherited = array_diff($inherited, $removed);
         return array_merge($added, $inherited);
     }
 
     // Documented in the interface.
-    public function & getModule($moduleName)
+    public function getModule($moduleName)
     {
         if (!isset($this->_modules[$moduleName])) {
             if ($this->_proxified !== $this)

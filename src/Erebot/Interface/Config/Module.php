@@ -33,7 +33,7 @@ interface Erebot_Interface_Config_Module
      *      An XML node containing the configuration
      *      settings for the module.
      */
-    public function __construct(SimpleXMLElement &$xml);
+    public function __construct(SimpleXMLElement $xml);
 
     /**
      * Gets/sets the active flag on this module.

@@ -38,8 +38,8 @@ extends     Erebot_Interface_Config_Proxy
      *      for this network.
      */
     public function __construct(
-        Erebot_Interface_Config_Main    &$mainCfg,
-        SimpleXMLElement                &$xml
+        Erebot_Interface_Config_Main    $mainCfg,
+        SimpleXMLElement                $xml
     );
 
     /**
@@ -62,7 +62,7 @@ extends     Erebot_Interface_Config_Proxy
      * \throw Erebot_NotFoundException
      *      No such server has been configured on this IRC network.
      */
-    public function & getServerCfg($server);
+    public function getServerCfg($server);
 
     /**
      * Returns all IRC server configurations.
@@ -86,7 +86,7 @@ extends     Erebot_Interface_Config_Proxy
      * \throw Erebot_NotFoundException
      *      No such channel has been configured on this IRC network.
      */
-    public function & getChannelCfg($channel);
+    public function getChannelCfg($channel);
 
     /**
      * Returns all IRC channel configurations.

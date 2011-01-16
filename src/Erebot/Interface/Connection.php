@@ -44,8 +44,8 @@ interface Erebot_Interface_Connection
      *      is used.
      */
     public function __construct(
-        Erebot_Interface_Core           &$bot,
-        Erebot_Interface_Config_Server  &$config
+        Erebot_Interface_Core           $bot,
+        Erebot_Interface_Config_Server  $config
     );
 
     /**
@@ -108,7 +108,7 @@ interface Erebot_Interface_Connection
      * \throw Erebot_NotFoundException
      *      No ErebotChannelConfig object exists for the given channel.
      */
-    public function & getConfig($chan);
+    public function getConfig($chan);
 
     /**
      * Returns the underlying transport implementation
@@ -122,7 +122,7 @@ interface Erebot_Interface_Connection
      *      stream, but it may be useful in cases where you need
      *      to do a select() on the connection.
      */
-    public function & getSocket();
+    public function getSocket();
 
     /**
      * Returns a boolean indicating whether the incoming FIFO
@@ -191,7 +191,7 @@ interface Erebot_Interface_Connection
      * \retval Erebot_Interface_Core
      *      An instance of the core class (Erebot).
      */
-    public function & getBot();
+    public function getBot();
 
     /**
      * Loads a module for a specific channel or for the whole connection.
@@ -222,7 +222,7 @@ interface Erebot_Interface_Connection
      *      You may want to load the required dependency and then
      *      try to load the module again.
      */
-    public function & loadModule($module, $chan = NULL);
+    public function loadModule($module, $chan = NULL);
 
     /**
      * Returns the modules loaded for a given channel
@@ -266,7 +266,7 @@ interface Erebot_Interface_Connection
      * \throw Erebot_NotFoundException
      *      Thrown if no instance of the given module could be found.
      */
-    public function & getModule($name, $chan = NULL, $autoload = TRUE);
+    public function getModule($name, $chan = NULL, $autoload = TRUE);
 
     /**
      * Registers a raw handler on this connection.

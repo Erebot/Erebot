@@ -209,7 +209,7 @@ implements  Erebot_Interface_Config_Main
                 throw new Erebot_InvalidValueException('Invalid command prefix');
         }
 
-        $logging =& Plop::getInstance();
+        $logging = Plop::getInstance();
         if (isset($xml->children(Plop_Config_Format_XML::XMLNS)->logging[0]))
             $logging->fileConfig(
                 $xml->children(Plop_Config_Format_XML::XMLNS)->logging[0],
@@ -224,7 +224,7 @@ implements  Erebot_Interface_Config_Main
         foreach ($xml->networks->network as $netCfg) {
             /// @TODO use dependency injection instead.
             $newConfig  = new Erebot_Config_Network($this, $netCfg);
-            $this->_networks[$newConfig->getName()]  =& $newConfig;
+            $this->_networks[$newConfig->getName()] = $newConfig;
             unset($newConfig);
         }
 
@@ -245,7 +245,7 @@ implements  Erebot_Interface_Config_Main
     }
 
     // Documented in the interface.
-    public function & getNetworkCfg($network)
+    public function getNetworkCfg($network)
     {
         if (!isset($this->_networks[$network]))
             throw new Erebot_NotFoundException('No such network');

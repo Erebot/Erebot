@@ -49,7 +49,7 @@ interface Erebot_Interface_Config_Proxy
      * \retval Erebot_Interface_Config_Main
      *      The main configuration of the bot.
      */
-    public function & getMainCfg();
+    public function getMainCfg();
 
     /**
      * Returns a list with the names of all currently active modules.
@@ -76,7 +76,7 @@ interface Erebot_Interface_Config_Proxy
      *
      * \throw Erebot_NotFoundException
      */
-     public function & getModule($moduleName);
+     public function getModule($moduleName);
 
     /**
      * Returns the boolean value for a setting in some module.

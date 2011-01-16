@@ -43,12 +43,12 @@ implements  Erebot_Interface_Config_Network
 
     // Documented in the interface.
     public function __construct(
-        Erebot_Interface_Config_Main    &$mainCfg,
-        SimpleXMLElement                &$xml
+        Erebot_Interface_Config_Main    $mainCfg,
+        SimpleXMLElement                $xml
     )
     {
         parent::__construct($mainCfg, $xml);
-        $this->_maincfg     =& $mainCfg;
+        $this->_maincfg     = $mainCfg;
         $this->_servers     = array();
         $this->_channels    = array();
         $this->_name        = (string) $xml['name'];
@@ -56,7 +56,7 @@ implements  Erebot_Interface_Config_Network
         foreach ($xml->servers->server as $serverCfg) {
             /// @TODO use dependency injection instead.
             $newConfig = new Erebot_Config_Server($this, $serverCfg);
-            $this->_servers[$newConfig->getConnectionURL()] =& $newConfig;
+            $this->_servers[$newConfig->getConnectionURL()] = $newConfig;
             unset($newConfig);
         }
 
@@ -64,7 +64,7 @@ implements  Erebot_Interface_Config_Network
             foreach ($xml->channels->channel as $channelCfg) {
                 /// @TODO use dependency injection instead.
                 $newConfig = new Erebot_Config_Channel($this, $channelCfg);
-                $this->_channels[$newConfig->getName()] =& $newConfig;
+                $this->_channels[$newConfig->getName()] = $newConfig;
                 unset($newConfig);
             }
         }
@@ -89,7 +89,7 @@ implements  Erebot_Interface_Config_Network
     }
 
     // Documented in the interface.
-    public function & getServerCfg($server)
+    public function getServerCfg($server)
     {
         if (!isset($this->_servers[$server]))
             throw new Erebot_NotFoundException('No such server');
@@ -103,7 +103,7 @@ implements  Erebot_Interface_Config_Network
     }
 
     // Documented in the interface.
-    public function & getChannelCfg($channel)
+    public function getChannelCfg($channel)
     {
         if (!isset($this->_channels[$channel]))
             throw new Erebot_NotFoundException('No such channel');
