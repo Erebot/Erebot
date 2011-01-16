@@ -40,7 +40,7 @@ extends PHPUnit_Framework_TestCase
      * We create a timer set to go off twice with a delay of 2.5 seconds.
      * We check that each parameter is correctly set before each run.
      * We test whether or not the timer went off roughly at the right time
-     * (between 2.5 et 3 seconds, to allow some CPU overhead).
+     * (between 2.5 and 3 seconds, to allow some CPU overhead).
      */
     public function testNominalCase()
     {

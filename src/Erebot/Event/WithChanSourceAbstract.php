@@ -35,8 +35,8 @@ implements      Erebot_Interface_Event_Chan,
     )
     {
         parent::__construct($connection);
-        $this->_chan    =&  $chan;
-        $this->_source  =   Erebot_Utils::extractNick($source, FALSE);
+        $this->_chan    = $chan;
+        $this->_source  = new Erebot_Identity($source);
     }
 
     // Documented in the interface.

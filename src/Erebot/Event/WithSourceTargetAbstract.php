@@ -35,7 +35,7 @@ implements      Erebot_Interface_Event_Source,
     )
     {
         parent::__construct($connection);
-        $this->_source  =   Erebot_Utils::extractNick($source, FALSE);
+        $this->_source  =   new Erebot_Identity($source);
         $this->_target  =&  $target;
     }
     

@@ -27,10 +27,8 @@ implements      Erebot_Interface_Event_TargetNick
     // Documented in the interface.
     public function getTargetNick()
     {
-        $nick = Erebot_Utils::extractNick($this->target);
-        return  (strpos($nick, '?') === FALSE &&
-                strpos($nick, '*') === FALSE) ?
-                $nick : NULL;
+        $identity = new Erebot_Identity($this->_target);
+        return $identity->getNick();
     }
 }
 

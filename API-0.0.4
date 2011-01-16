@@ -33,8 +33,15 @@ Changes in API v0.0.4
 *   Features marked for removal in 0.5.0 have effectively
     been removed (eg. global constants for raw messages).
 
-*   The bot now uses a different raw to detect that it successfully
-    connected to an IRC server (and trigger a Connect event).
+*   The bot now uses a different raw to detect successful
+    connections to IRC servers (and trigger Connect events).
     You may need to update your code if it relied on events
-    arriving in a precise order upon connection.
+    being received in a precise order upon connection.
 
+*   The new Erebot_Identity class has been written in order
+    to simplify extraction of information from IRC masks.
+    It provides more features than Erebot_Utils::extractNick()
+    and is therefore preferred. It is now used internally,
+    especially for events whose source or target are masks.
+    As a result, you should expect Erebot_Utils::extractNick()
+    to disappear very soon!
