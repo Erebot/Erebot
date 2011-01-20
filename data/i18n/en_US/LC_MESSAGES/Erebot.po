@@ -1,3 +1,4 @@
+#
 msgid   "\n"
         "%with-words:\n"
         "    0: 0 seconds;\n"
@@ -49,8 +50,18 @@ msgstr  "\n"
         "    1: 1 week;\n"
         "    2: =#0= weeks;\n"
 #
-msgid   "%(message)s in %(file)s on line %(line)d"
-msgstr  "%(message)s in %(file)s on line %(line)d"
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 407
+msgid   "Allocated:"
+msgstr  "Allocated:"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1095
+msgid   "Bad channel name"
+msgstr  "Bad channel name"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 992
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1014
+msgid   "Code is not clean!"
+msgstr  "Code is not clean!"
 #
 msgid   "Connection failed, removing it from the pool"
 msgstr  "Connection failed, removing it from the pool"
@@ -65,33 +76,102 @@ msgstr  "Erebot has stopped"
 msgid   "Erebot is starting"
 msgstr  "Erebot is starting"
 #
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 378
+msgid   "Got an exception from the rate-limiter module. Assuming implicit "
+        "approval to send the message."
+msgstr  "Got an exception from the rate-limiter module. Assuming implicit "
+        "approval to send the message."
+#
 msgid   "Got exception"
 msgstr  "Got exception"
 #
-msgid   "Internal:"
-msgstr  "Internal:"
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1037
+msgid   "Invalid mapping name"
+msgstr  "Invalid mapping name"
 #
 msgid   "Limit:"
 msgstr  "Limit:"
 #
-msgid   "Main event loop"
-msgstr  "Main event loop"
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 173
+#, php-format
+msgid   "Loading modules required for \"%s\"..."
+msgstr  "Loading modules required for \"%s\"..."
 #
-msgid   "Max. Allocated memory:"
-msgstr  "Max. Allocated memory:"
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 404
+msgid   "Memory usage:"
+msgstr  "Memory usage:"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 507
+msgid   "No configuration file to reload from"
+msgstr  "No configuration file to reload from"
 #
 msgid   "No more connections to handle, leaving..."
 msgstr  "No more connections to handle, leaving..."
 #
-msgid   "Received out-of-band data"
-msgstr  "Received out-of-band data"
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1043
+msgid   "No such mapping exists"
+msgstr  "No such mapping exists"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1123
+msgid   "Not a valid mask"
+msgstr  "Not a valid mask"
 #
 msgid   "Received signal #%(signum)d (%(signame)s)"
 msgstr  "Received signal #%(signum)d (%(signame)s)"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 512
+#, php-format
+msgid   "Reloading the configuration (from %s)"
+msgstr  "Reloading the configuration (from %s)"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 186
+#, php-format
+msgid   "Successfully connected to \"%s\"..."
+msgstr  "Successfully connected to \"%s\"..."
 #
 #, php-format
 msgid   "Successfully loaded module '%s'"
 msgstr  "Successfully loaded module '%s'"
 #
-msgid   "System:"
-msgstr  "System:"
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 518
+msgid   "Successfully reloaded the configuration"
+msgstr  "Successfully reloaded the configuration"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 179
+#, php-format
+msgid   "Trying to connect to \"%s\"..."
+msgstr  "Trying to connect to \"%s\"..."
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 408
+msgid   "Used:"
+msgstr  "Used:"
+#
+#
+#
+#~ msgid        "%(message)s in %(file)s on line %(line)d"
+#~ msgstr       "%(message)s in %(file)s on line %(line)d"
+#
+#
+#
+#~ msgid        "Internal:"
+#~ msgstr       "Internal:"
+#
+#
+#
+#~ msgid        "Main event loop"
+#~ msgstr       "Main event loop"
+#
+#
+#
+#~ msgid        "Max. Allocated memory:"
+#~ msgstr       "Max. Allocated memory:"
+#
+#
+#
+#~ msgid        "Received out-of-band data"
+#~ msgstr       "Received out-of-band data"
+#
+#
+#
+#~ msgid        "System:"
+#~ msgstr       "System:"
