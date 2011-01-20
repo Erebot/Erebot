@@ -19,12 +19,24 @@
 /**
  * Represents the identity of an IRC user.
  */
-class   Erebot_Identity
+class       Erebot_Identity
+implements  Erebot_Interface_Identity
 {
     protected $_nick;
     protected $_ident;
     protected $_host;
 
+    /**
+     * Creates a new object holding some user's identity.
+     *
+     * \param string $user
+     *      A string, representing some user.
+     *      This can be either a mask, such as "foo!ident@host"
+     *      or just a nickname, such as "foo".
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $user does not represent a valid identity.
+     */
     public function __construct($user)
     {
         if (!is_string($user))
@@ -57,21 +69,33 @@ class   Erebot_Identity
         $this->_host    = $host;
     }
 
+    // Documented in the interface.
     public function getNick()
     {
         return $this->_nick;
     }
 
+    // Documented in the interface.
     public function getIdent()
     {
         return $this->_ident;
     }
 
+    // Documented in the interface.
     public function getHost()
     {
         return $this->_host;
     }
 
+    // Documented in the interface.
+    public function getMask()
+    {
+        $ident  = ($this->_ident === NULL) ? '*' : $this->_ident;
+        $host   = ($this->_host === NULL) ? '*' : $this->_host;
+        return $this->_nick.'!'.$ident.'@'.$host;
+    }
+
+    // Documented in the interface.
     public function __toString()
     {
         return $this->_nick;
