@@ -306,7 +306,7 @@ interface Erebot_Interface_Event_Raw
      *      No attempt is made at parsing the content of the message.
      */
     public function __construct(
-        Erebot_Interface_Connection    &$connection,
+        Erebot_Interface_Connection     $connection,
                                         $raw,
                                         $source,
                                         $target,
@@ -320,7 +320,7 @@ interface Erebot_Interface_Event_Raw
      * \retval Erebot_Interface_Connection
      *      The connection this raw message came from.
      */
-    public function & getConnection();
+    public function getConnection();
 
     /**
      * Returns the raw numeric code associated with

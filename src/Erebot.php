@@ -140,8 +140,8 @@ implements  Erebot_Interface_Core
     // Documented in the interface.
     public function start($connectionCls = 'Erebot_Connection')
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
         $logger->info($this->gettext('Erebot is starting'));
 
         if (!is_string($connectionCls) || !class_exists($connectionCls))
@@ -217,7 +217,7 @@ implements  Erebot_Interface_Core
                 break;
 
             // Find out connections in need of some handling.
-            foreach ($this->_connections as $index => &$connection) {
+            foreach ($this->_connections as $index => $connection) {
                 $socket = $connection->getSocket();
 
                 if (!$connection->emptySendQueue())
@@ -229,14 +229,12 @@ implements  Erebot_Interface_Core
             }
 
             // Find out timed out timers.
-            foreach ($this->_timers as $index => &$timer) {
+            foreach ($this->_timers as $index => $timer) {
                 $stream = $timer->getStream();
 
                 $read[]                     = $stream;
                 $actives['timers'][$index]  = $stream;
             }
-
-            unset($connection, $timer);
 
             // No activity.
             if (count($read) + count($write) + count($except) == 0) {
@@ -303,8 +301,8 @@ implements  Erebot_Interface_Core
                     // Is it a timer?
                     $index = array_search($socket, $actives['timers'], TRUE);
                     if ($index !== FALSE) {
-                        $timer      =&  $this->_timers[$index];
-                        $restart    =   $timer->activate();
+                        $timer      = $this->_timers[$index];
+                        $restart    = $timer->activate();
 
                         // Maybe the callback function
                         // removed the timer already.
@@ -326,10 +324,9 @@ implements  Erebot_Interface_Core
 
             // Take care of incoming data waiting for processing.
             if (is_array($this->_connections)) {
-                foreach ($this->_connections as &$connection) {
+                foreach ($this->_connections as $connection) {
                     $connection->processQueuedData();
                 }
-                unset($connection);
             }
 
             // Handle write-ready sockets (flush outgoing data).
@@ -345,18 +342,17 @@ implements  Erebot_Interface_Core
     // Documented in the interface.
     public function stop()
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
 
         if (!$this->_running)
             return;
 
-        foreach ($this->_connections as &$connection) {
+        foreach ($this->_connections as $connection) {
             $event = new Erebot_Event_Exit($connection);
             $connection->dispatchEvent($event);
             $connection->disconnect();
         }
-        unset($connection);
 
         $logger->info($this->gettext('Erebot has stopped'));
         unset(
@@ -391,8 +387,8 @@ implements  Erebot_Interface_Core
             }
         }
 
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
         $logger->info(
             $this->gettext(
                 'Received signal #%(signum)d (%(signame)s)'
@@ -433,7 +429,7 @@ implements  Erebot_Interface_Core
     }
 
     // Documented in the interface.
-    public function addTimer(Erebot_Interface_Timer &$timer)
+    public function addTimer(Erebot_Interface_Timer $timer)
     {
         $key = array_search($timer, $this->_timers);
         if ($key !== FALSE)
@@ -444,7 +440,7 @@ implements  Erebot_Interface_Core
     }
 
     // Documented in the interface.
-    public function removeTimer(Erebot_Interface_Timer &$timer)
+    public function removeTimer(Erebot_Interface_Timer $timer)
     {
         $key = array_search($timer, $this->_timers);
         if ($key === FALSE)
@@ -460,7 +456,7 @@ implements  Erebot_Interface_Core
     }
 
     // Documented in the interface.
-    public function addConnection(Erebot_Interface_Connection &$connection)
+    public function addConnection(Erebot_Interface_Connection $connection)
     {
         $key = array_search($connection, $this->_connections);
         if ($key !== FALSE)
@@ -470,7 +466,7 @@ implements  Erebot_Interface_Core
     }
 
     // Documented in the interface.
-    public function removeConnection(Erebot_Interface_Connection &$connection)
+    public function removeConnection(Erebot_Interface_Connection $connection)
     {
         /* $this->_connections is unset during destructor call,
          * but the destructing code depends on this method.
@@ -503,9 +499,9 @@ implements  Erebot_Interface_Core
 
     public function reload()
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
-        $configFile =   $this->_mainCfg->getConfigFile();
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
+        $configFile = $this->_mainCfg->getConfigFile();
 
         if ($configFile === NULL) {
             $msg = $this->gettext('No configuration file to reload from');

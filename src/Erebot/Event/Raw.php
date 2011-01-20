@@ -42,18 +42,18 @@ implements  Erebot_Interface_Event_Raw
 
     // Documented in the interface.
     public function __construct(
-        Erebot_Interface_Connection    &$connection,
+        Erebot_Interface_Connection     $connection,
                                         $raw,
                                         $source,
                                         $target,
                                         $text
     )
     {
-        $this->_connection  =&  $connection;
-        $this->_raw         =   $raw;
-        $this->_source      =   $source;
-        $this->_target      =   $target;
-        $this->_text        =   new Erebot_TextWrapper((string) $text);
+        $this->_connection  = $connection;
+        $this->_raw         = $raw;
+        $this->_source      = $source;
+        $this->_target      = $target;
+        $this->_text        = new Erebot_TextWrapper((string) $text);
     }
 
     public function __destruct()
@@ -61,7 +61,7 @@ implements  Erebot_Interface_Event_Raw
     }
 
     // Documented in the interface.
-    public function & getConnection()
+    public function getConnection()
     {
         return $this->_connection;
     }

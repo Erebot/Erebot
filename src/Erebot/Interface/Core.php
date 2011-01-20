@@ -95,7 +95,7 @@ interface Erebot_Interface_Core
      * \param Erebot_Interface_Timer $timer
      *      A timer to register.
      */
-    public function addTimer(Erebot_Interface_Timer &$timer);
+    public function addTimer(Erebot_Interface_Timer $timer);
 
     /**
      * Unregisters a timer.
@@ -103,7 +103,7 @@ interface Erebot_Interface_Core
      * \param Erebot_Interface_Timer $timer
      *      A timer to unregister.
      */
-    public function removeTimer(Erebot_Interface_Timer &$timer);
+    public function removeTimer(Erebot_Interface_Timer $timer);
 
     /**
      * Retrieves the bot's version information.
@@ -131,7 +131,7 @@ interface Erebot_Interface_Core
      *      This connection is already part of the connection pool
      *      handled by this instance of the bot.
      */
-    public function addConnection(Erebot_Interface_Connection &$connection);
+    public function addConnection(Erebot_Interface_Connection $connection);
 
     /**
      * Removes a connection from the bot.
@@ -148,7 +148,7 @@ interface Erebot_Interface_Core
      *      The given connection is not part of the connection pool
      *      handled by this instance of the bot.
      */
-    public function removeConnection(Erebot_Interface_Connection &$connection);
+    public function removeConnection(Erebot_Interface_Connection $connection);
 
     /**
      * Returns the translation of a message in the primary language.

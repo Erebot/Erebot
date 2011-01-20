@@ -234,9 +234,9 @@ abstract class Erebot_Module_Base
      *      This method is only a shortcut for
      *      Erebot_Interface_Core::addTimer().
      */
-    protected function addTimer(Erebot_Interface_Timer &$timer)
+    protected function addTimer(Erebot_Interface_Timer $timer)
     {
-        $bot =& $this->_connection->getBot();
+        $bot = $this->_connection->getBot();
         return $bot->addTimer($timer);
     }
 
@@ -250,9 +250,9 @@ abstract class Erebot_Module_Base
      *      This method is only a shortcut for
      *      Erebot_Interface_Core::removeTimer().
      */
-    protected function removeTimer(Erebot_Interface_Timer &$timer)
+    protected function removeTimer(Erebot_Interface_Timer $timer)
     {
-        $bot =& $this->_connection->getBot();
+        $bot = $this->_connection->getBot();
         return $bot->removeTimer($timer);
     }
 
@@ -282,18 +282,18 @@ abstract class Erebot_Module_Base
      */
     private function parseSomething($something, $param, $default)
     {
-        $function   =   'parse'.$something;
-        $bot        =&  $this->_connection->getBot();
+        $function   = 'parse'.$something;
+        $bot        = $this->_connection->getBot();
         if ($this->_channel !== NULL) {
             try {
-                $config     =&  $this->_connection->getConfig($this->_channel);
+                $config = $this->_connection->getConfig($this->_channel);
                 return $config->$function(get_class($this), $param);
             }
             catch (Erebot_Exception $e) {
                 unset($config);
             }
         }
-        $config     =&  $this->_connection->getConfig(NULL);
+        $config = $this->_connection->getConfig(NULL);
         return $config->$function(get_class($this), $param, $default);
     }
 
@@ -435,7 +435,7 @@ abstract class Erebot_Module_Base
             return $this->_translator;
 
         else if ($chan !== NULL) {
-            $config     =&  $this->_connection->getConfig($chan);
+            $config = $this->_connection->getConfig($chan);
             try {
                 return $config->getTranslator(get_class());
             }
@@ -445,7 +445,7 @@ abstract class Erebot_Module_Base
             unset($config);
         }
 
-        $config     =&  $this->_connection->getConfig($this->_channel);
+        $config = $this->_connection->getConfig($this->_channel);
         try {
             return $config->getTranslator(get_class());
         }
@@ -454,7 +454,7 @@ abstract class Erebot_Module_Base
         }
         unset($config);
 
-        $config     =&  $this->_connection->getConfig(NULL);
+        $config = $this->_connection->getConfig(NULL);
         return $config->getTranslator(get_class());
     }
 }
