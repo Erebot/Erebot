@@ -288,22 +288,28 @@ implements  Erebot_Interface_Config_Main
         return $this->_daemonize;
     }
 
+    // Documented in the interface.
     public function getGroupIdentity()
     {
         return $this->_groupIdentity;
     }
 
+    // Documented in the interface.
     public function getUserIdentity()
     {
         return $this->_userIdentity;
     }
 
+    // Documented in the interface.
     public function getPidfile()
     {
         return $this->_pidfile;
     }
 }
 
+/* Needed to prevent libxml from trying to magically "fix" URLs
+ * included with XInclude as this breaks a lot of things.
+ * This requires libxml >= 2.6.20 (which was released in 2005). */
 if (!defined('LIBXML_NOBASEFIX'))
     define('LIBXML_NOBASEFIX', 1 << 18);
 

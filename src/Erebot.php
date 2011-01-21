@@ -109,9 +109,9 @@ implements  Erebot_Interface_Core
                         );
 
             foreach ($signals as $signal)
-                pcntl_signal($signal, array($this, 'quitGracefully'), TRUE);
+                pcntl_signal($signal, array($this, 'handleSignal'), TRUE);
 
-            pcntl_signal(SIGHUP, array($this, 'reload'), TRUE);
+            pcntl_signal(SIGHUP, array($this, 'handleSIGHUP'), TRUE);
         }
     }
 
@@ -144,63 +144,11 @@ implements  Erebot_Interface_Core
         $logger     = $logging->getLogger(__FILE__);
         $logger->info($this->gettext('Erebot is starting'));
 
-        if (!is_string($connectionCls) || !class_exists($connectionCls))
-            throw new Erebot_InvalidValueException('Not a valid class name '.
-                $connectionCls);
-        else {
-            $reflect = new ReflectionClass($connectionCls);
-            if (!$reflect->implementsInterface('Erebot_Interface_Connection'))
-                throw new Erebot_InvalidValueException($connectionCls.' does not '.
-                    'implement the Erebot_Interface_Connection interface');
-        }
-
-        // This is changed by quitGracefully()
+        // This is changed by handleSignal()
         // when the bot should stop.
         $this->_running = time();
 
-        // Let's establish some contacts.
-        $networks = $this->_mainCfg->getNetworks();
-        foreach ($networks as $network) {
-            $servers = $network->getServers();
-
-            if (!in_array('Erebot_Module_AutoConnect', $network->getModules(TRUE)))
-                continue;
-
-            foreach ($servers as $server) {
-                $serverURL = $server->getConnectionURL();
-                try {
-                    $logger->info(
-                        $this->gettext('Loading modules required for "%s"...'),
-                        $serverURL
-                    );
-                    $connection = new $connectionCls($this, $server);
-
-                    $logger->info(
-                        $this->gettext('Trying to connect to "%s"...'),
-                        $serverURL
-                    );
-                    $connection->connect();
-                    $this->_connections[] = $connection;
-
-                    $logger->info(
-                        $this->gettext('Successfully connected to "%s"...'),
-                        $serverURL
-                    );
-
-                    break;
-                }
-                catch (Erebot_ConnectionFailureException $e) {
-                    // Nothing to do... We simply
-                    // try the next server on the
-                    // list until we successfully
-                    // connect or cycle the list.
-                    $logger->warning(
-                        $this->gettext('Could not connect to "%s"'),
-                        $serverURL
-                    );
-                }
-            }
-        }
+        $this->_createConnections($connectionCls, $this->_mainCfg);
 
         // PHP 5.3 way of handling signals.
         $hasSignalDispatch = function_exists('pcntl_signal_dispatch');
@@ -374,7 +322,7 @@ implements  Erebot_Interface_Core
      * \param int $signum
      *      The number of the received signal.
      */
-    public function quitGracefully($signum)
+    public function handleSignal($signum)
     {
         $consts     = get_defined_constants(TRUE);
         $signame    = '???';
@@ -497,26 +445,137 @@ implements  Erebot_Interface_Core
         return time() - $this->_running;
     }
 
-    public function reload()
+    public function handleSIGHUP()
+    {
+        return $this->reload();
+    }
+
+    public function reload(Erebot_Interface_Config_Main $config = NULL)
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
-        $configFile = $this->_mainCfg->getConfigFile();
 
-        if ($configFile === NULL) {
-            $msg = $this->gettext('No configuration file to reload from');
-            $logger->info($msg);
+        $msg = $this->gettext('Reloading the configuration');
+        $logger->info($msg);
+
+        if (!count($this->_connections)) {
+            $logger->info($this->gettext('No active connections... Aborting.'));
             return;
         }
 
-        $msg = $this->gettext('Reloading the configuration (from %s)');
-        $logger->info($msg, $configFile);
-        $this->_mainCfg->load(
-            $configFile,
-            Erebot_Interface_Config_Main::LOAD_FROM_FILE
-        );
+        if ($config === NULL) {
+            $configFile = $this->_mainCfg->getConfigFile();
+            if ($configFile === NULL) {
+                $msg = $this->gettext('No configuration file to reload');
+                $logger->info($msg);
+                return;
+            }
+
+            /// @TODO: dependency injection
+            $config = new Erebot_Config_Main(
+                $configFile,
+                Erebot_Interface_Config_Main::LOAD_FROM_FILE
+            );
+        }
+
+        $connectionCls = get_class($this->_connections[0]);
+        $this->_createConnections($connectionCls, $config);        
         $msg = $this->gettext('Successfully reloaded the configuration');
-        $logger->info($msg, $configFile);
+        $logger->info($msg);
+    }
+
+    protected function _createConnections(
+                                        $connectionCls,
+        Erebot_Interface_Config_Main    $config
+    )
+    {
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
+
+        if (!is_string($connectionCls) || !class_exists($connectionCls))
+            throw new Erebot_InvalidValueException('Not a valid class name '.
+                $connectionCls);
+        else {
+            $reflect = new ReflectionClass($connectionCls);
+            if (!$reflect->implementsInterface('Erebot_Interface_Connection'))
+                throw new Erebot_InvalidValueException($connectionCls.' does not '.
+                    'implement the Erebot_Interface_Connection interface');
+        }
+
+        // List existing connections so they
+        // can eventually be reused.
+        $newConnections     =
+        $currentConnections = array();
+        foreach ($this->_connections as $connection) {
+            $netCfg = $connection->getConfig(NULL)->getNetworkCfg();
+            $currentConnections[$netCfg->getName()] = $connection;
+        }
+
+        // Let's establish some contacts.
+        $networks           = $config->getNetworks();
+        foreach ($networks as $network) {
+            $netName = $network->getName();
+            if (isset($currentConnections[$netName])) {
+                $logger->info(
+                    $this->gettext('Reusing existing connection for network "%s"'),
+                    $netName
+                );
+                // Move it from existing connections to new connections,
+                // marking it as still being in use.
+                $newConnections[] = $currentConnections[$netName];
+                unset($currentConnections[$netName]);
+                continue;
+            }
+
+            if (!in_array('Erebot_Module_AutoConnect', $network->getModules(TRUE)))
+                continue;
+
+            $servers = $network->getServers();
+            foreach ($servers as $server) {
+                $serverURL = $server->getConnectionURL();
+                try {
+                    $logger->info(
+                        $this->gettext('Loading modules required for "%s"...'),
+                        $serverURL
+                    );
+                    $connection = new $connectionCls($this, $server);
+
+                    $logger->info(
+                        $this->gettext('Trying to connect to "%s"...'),
+                        $serverURL
+                    );
+                    $connection->connect();
+                    $newConnections[] = $connection;
+
+                    $logger->info(
+                        $this->gettext('Successfully connected to "%s"...'),
+                        $serverURL
+                    );
+
+                    break;
+                }
+                catch (Erebot_ConnectionFailureException $e) {
+                    // Nothing to do... We simply
+                    // try the next server on the
+                    // list until we successfully
+                    // connect or cycle the list.
+                    $logger->warning(
+                        $this->gettext('Could not connect to "%s"'),
+                        $serverURL
+                    );
+                }
+            }
+        }
+
+        // Gracefully quit leftover connections.
+        foreach ($currentConnections as $connection) {
+            $connection->disconnect();
+        }
+
+        /// @TODO: update the connections' modules.
+
+        $this->_connections = $newConnections;
+        $this->_mainCfg     = $config;
     }
 }
 
