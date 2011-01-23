@@ -56,7 +56,9 @@ implements  Erebot_Interface_Config_Network
         foreach ($xml->servers->server as $serverCfg) {
             /// @TODO use dependency injection instead.
             $newConfig = new Erebot_Config_Server($this, $serverCfg);
-            $this->_servers[$newConfig->getConnectionURL()] = $newConfig;
+            $url            = parse_url($newConfig->getConnectionURL());
+            $serverIdentity = $url['scheme'].'://'.$url['host'].':'.$url['port'];
+            $this->_servers[$serverIdentity] = $newConfig;
             unset($newConfig);
         }
 

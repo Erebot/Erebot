@@ -317,10 +317,10 @@ implements  Erebot_Interface_Core
 
     /**
      * Handles request for a graceful shutdown of the bot.
-     * Such request are received as signals.
+     * Such requests are received as signals.
      *
      * \param int $signum
-     *      The number of the received signal.
+     *      The number of the signal.
      */
     public function handleSignal($signum)
     {
@@ -445,6 +445,13 @@ implements  Erebot_Interface_Core
         return time() - $this->_running;
     }
 
+    /**
+     * Handles request yo reload the configuration.
+     * Such requests are received as signals.
+     *
+     * \param int $signum
+     *      The number of the signal.
+     */
     public function handleSIGHUP()
     {
         return $this->reload();
@@ -479,7 +486,7 @@ implements  Erebot_Interface_Core
         }
 
         $connectionCls = get_class($this->_connections[0]);
-        $this->_createConnections($connectionCls, $config);        
+        $this->_createConnections($connectionCls, $config);
         $msg = $this->gettext('Successfully reloaded the configuration');
         $logger->info($msg);
     }
@@ -512,19 +519,38 @@ implements  Erebot_Interface_Core
         }
 
         // Let's establish some contacts.
-        $networks           = $config->getNetworks();
+        $networks = $config->getNetworks();
         foreach ($networks as $network) {
             $netName = $network->getName();
             if (isset($currentConnections[$netName])) {
-                $logger->info(
-                    $this->gettext('Reusing existing connection for network "%s"'),
-                    $netName
-                );
-                // Move it from existing connections to new connections,
-                // marking it as still being in use.
-                $newConnections[] = $currentConnections[$netName];
-                unset($currentConnections[$netName]);
-                continue;
+                try {
+                    $url = parse_url(
+                        $currentConnections[$netName]
+                            ->getConfig(NULL)
+                            ->getConnectionURL()
+                    );
+                    $serverIdentity =
+                        $url['scheme'].'://'.
+                        $url['host'].':'.
+                        $url['port'];
+
+                    $serverCfg = $network->getServerCfg($serverIdentity);
+
+                    $logger->info(
+                        $this->gettext('Reusing existing connection for network "%s"'),
+                        $netName
+                    );
+                    // Move it from existing connections to new connections,
+                    // marking it as still being in use.
+                    $copy = clone $currentConnections[$netName];
+                    $newConnections[] = $copy;
+                    $copy->reload($serverCfg);
+                    unset($currentConnections[$netName]);
+                    continue;
+                }
+                catch (Erebot_NotFoundException $e) {
+                    // Nothing to do.
+                }
             }
 
             if (!in_array('Erebot_Module_AutoConnect', $network->getModules(TRUE)))
@@ -539,6 +565,13 @@ implements  Erebot_Interface_Core
                         $serverURL
                     );
                     $connection = new $connectionCls($this, $server);
+
+                    // Drop connection to a (now-)unconfigured
+                    // server on that network.
+                    if (isset($currentConnections[$netName])) {
+                        $currentConnections[$netName]->disconnect();
+                        unset($currentConnections[$netName]);
+                    }
 
                     $logger->info(
                         $this->gettext('Trying to connect to "%s"...'),
@@ -571,8 +604,6 @@ implements  Erebot_Interface_Core
         foreach ($currentConnections as $connection) {
             $connection->disconnect();
         }
-
-        /// @TODO: update the connections' modules.
 
         $this->_connections = $newConnections;
         $this->_mainCfg     = $config;

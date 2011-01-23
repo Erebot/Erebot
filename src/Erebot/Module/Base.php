@@ -35,24 +35,42 @@ abstract class Erebot_Module_Base
     /// The module's metadata.
     static protected $_metadata = array();
 
-    /// @TODO document each constant.
 
+    /// Passed when the module is loaded (instead of reloaded).
     const RELOAD_INIT       = 0x01;
+
+    /// Passed during unittests (currently unused...).
     const RELOAD_TESTING    = 0x02;
+
+    /// The module should (re)load its members.
     const RELOAD_MEMBERS    = 0x10;
+
+    /// The module should (re)load its handlers.
     const RELOAD_HANDLERS   = 0x20;
+
+    /// The module should (re)load all of its contents.
     const RELOAD_ALL        = 0xF0;
 
+
+    /// A regular message.
     const MSG_TYPE_PRIVMSG      = 'PRIVMSG';
+
+    /// A notice.
     const MSG_TYPE_NOTICE       = 'NOTICE';
+
+    /// A CTCP request.
     const MSG_TYPE_CTCP         = 'CTCP';
+
+    /// A reply to a CTCP request.
     const MSG_TYPE_CTCPREPLY    = 'CTCPREPLY';
+
+    /// An action.
     const MSG_TYPE_ACTION       = 'ACTION';
 
     /**
      * An abstract method which is called whenever the module
      * is (re)loaded. You should perform whatever operations
-     * you need to do, depending of the given $flags.
+     * you need to do, depending on the given $flags.
      *
      * \param int $flags
      *      A bitwise OR of the Erebot_Module_Base::RELOAD_*
@@ -63,33 +81,21 @@ abstract class Erebot_Module_Base
      *      See the documentation on individual RELOAD_*
      *      constants for a list of possible values.
      */
-    abstract public function reload($flags);
+    abstract protected function _reload($flags);
 
     /**
      * Constructor for modules.
-     *
-     * \param Erebot_Interface_Connection $connection
-     *      IRC connection associated with this instance.
      *
      * \param string|NULL $channel
      *      (optional) The channel this instance applies to.
      *      This will be NULL for modules loaded at the server
      *      level or higher in the configuration hierarchy.
      */
-    final public function __construct(
-        Erebot_Interface_Connection     $connection,
-                                        $channel
-    )
+    final public function __construct($channel)
     {
-        $this->_connection  = $connection;
-        $bot                = $connection->getBot();
-        unset($bot);
-
-        $config             = $this->_connection->getConfig(NULL);
-        $this->_mainCfg     = $config->getMainCfg();
-        $this->_translator  = $this->_mainCfg->getTranslator(get_class($this));
-        unset($config);
-
+        $this->_connection  =
+        $this->_translator  =
+        $this->_mainCfg     = NULL;
         $this->_channel     = $channel;
     }
 
@@ -102,6 +108,39 @@ abstract class Erebot_Module_Base
             $this->_channel,
             $this->_mainCfg
         );
+    }
+
+    /**
+     * Public method to (re)load a module.
+     * This eventually reconfigures the bot.
+     *
+     * \param Erebot_Interface_Connection $connection
+     *      IRC connection associated with this instance.
+     *
+     * \param int $flags
+     *      A bitwise OR of the Erebot_Module_Base::RELOAD_*
+     *      constants. Your method should take proper actions
+     *      depending on the value of those flags.
+     *
+     * \note
+     *      See the documentation on individual RELOAD_*
+     *      constants for a list of possible values.
+     */
+    final public function reload(
+        Erebot_Interface_Connection $connection,
+                                    $flags,
+    )
+    {
+        if ($this->_connection === NULL)
+            $flags |= self::RELOAD_INIT;
+        else
+            $flags &= ~self::RELOAD_INIT;
+
+        $this->_connection  = $connection;
+        $serverCfg          = $this->_connection->getConfig(NULL);
+        $this->_mainCfg     = $serverCfg->getMainCfg();
+        $this->_translator  = $this->_mainCfg->getTranslator(get_class($this));
+        $this->_reload($flags);
     }
 
     /**
@@ -165,8 +204,8 @@ abstract class Erebot_Module_Base
         $type = self::MSG_TYPE_PRIVMSG
     )
     {
-        $types = array('PRIVMSG', 'NOTICE', 'CTCP', 'CTCPREPLY', 'ACTION');
-        $type = strtoupper($type);
+        $types  = array('PRIVMSG', 'NOTICE', 'CTCP', 'CTCPREPLY', 'ACTION');
+        $type   = strtoupper($type);
         if (!in_array($type, $types))
             throw new Exception('Not a valid type');
 

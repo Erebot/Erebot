@@ -73,25 +73,30 @@ implements  Erebot_Interface_Connection
         $this->_incomingData    = '';
         $this->_connected       = FALSE;
 
-        // Build possible 
+        // Build case mappings for case-insensitive comparisons.
         if (self::$_caseMappings === NULL) {
             self::$_caseMappings = array(
-                    'ascii' => array_combine(
-                        range('a', 'z'),
-                        range('A', 'Z')
-                    ),
-                    'strict-rfc1459' => array_combine(
-                        range('a', chr(125)),
-                        range('A', chr(93))
-                    ),
-                    'rfc1459' => array_combine(
-                        range('a', chr(126)),
-                        range('A', chr(94))
-                    ),
+                'ascii' => array_combine(
+                    range('a', 'z'),
+                    range('A', 'Z')
+                ),
+                'strict-rfc1459' => array_combine(
+                    range('a', chr(125)),
+                    range('A', chr(93))
+                ),
+                'rfc1459' => array_combine(
+                    range('a', chr(126)),
+                    range('A', chr(94))
+                ),
             );
         }
 
         $this->_loadModules();
+    }
+
+    public function reload(Erebot_Interface_Config_Server $config)
+    {
+        
     }
 
     protected function _loadModules()
@@ -115,10 +120,7 @@ implements  Erebot_Interface_Connection
      */
     public function __destruct()
     {
-        if (is_resource($this->_socket))
-            fclose($this->_socket);
         $this->_socket = NULL;
-
         unset(
             $this->_events,
             $this->_raws,
@@ -127,14 +129,6 @@ implements  Erebot_Interface_Connection
             $this->_channelModules,
             $this->_plainModules
         );
-    }
-
-    /**
-     * Copy-constructor.
-     */
-    public function __clone()
-    {
-        throw new Exception("Cloning forbidden!");
     }
 
     // Documented in the interface.
@@ -823,7 +817,7 @@ implements  Erebot_Interface_Connection
             throw new Erebot_InvalidValueException(
                 "Invalid module! Not a subclass of Erebot_Module_Base.");
 
-        $instance   =   new $module($this, $chan);
+        $instance = new $module($chan);
 
         if ($chan === NULL)
             $this->_plainModules[$module] = $instance;
@@ -893,10 +887,7 @@ implements  Erebot_Interface_Connection
             }
         }
 
-        $instance->reload(
-            Erebot_Module_Base::RELOAD_ALL |
-            Erebot_Module_Base::RELOAD_INIT
-        );
+        $instance->reload($this, Erebot_Module_Base::RELOAD_ALL);
 
         $logger->info(
             $this->_bot->gettext("Successfully loaded module '%s'"),
