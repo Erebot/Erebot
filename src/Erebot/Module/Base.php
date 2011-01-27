@@ -128,7 +128,7 @@ abstract class Erebot_Module_Base
      */
     final public function reload(
         Erebot_Interface_Connection $connection,
-                                    $flags,
+                                    $flags
     )
     {
         if ($this->_connection === NULL)

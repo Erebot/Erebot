@@ -65,7 +65,6 @@ implements  Erebot_Interface_Connection
 
         $this->_channelModules  = array();
         $this->_plainModules    = array();
-        $this->_moduleClasses   = array();
         $this->_raws            = array();
         $this->_events          = array();
         $this->_sndQueue        = array();
@@ -91,28 +90,108 @@ implements  Erebot_Interface_Connection
             );
         }
 
-        $this->_loadModules();
+        $this->_loadModules(
+            $config,
+            Erebot_Module_Base::RELOAD_ALL |
+            Erebot_Module_Base::RELOAD_INIT
+        );
     }
 
     public function reload(Erebot_Interface_Config_Server $config)
     {
-        
+        $this->_loadModules(
+            $config,
+            Erebot_Module_Base::RELOAD_ALL
+        );
+        $this->_config = $config;
     }
 
-    protected function _loadModules()
+    protected function _loadModules(
+        Erebot_Interface_Config_Server  $config,
+                                        $flags
+    )
     {
-        $netCfg     = $this->_config->getNetworkCfg();
-        $channels   = $netCfg->getChannels();
-        foreach ($channels as $chanCfg) {
-            $modules = $chanCfg->getModules(FALSE);
-            $chan   = $chanCfg->getName();
-            foreach ($modules as $module)
-                $this->loadModule($module, $chan);
+        $channelModules = $this->_channelModules;
+        $plainModules   = $this->_plainModules;
+
+        $newNetCfg      = $config->getNetworkCfg();
+        $newChannels    = $newNetCfg->getChannels();
+
+        $oldNetCfg      = $this->_config->getNetworkCfg();
+        $oldChannels    = $oldNetCfg->getChannels();
+
+        // Keep whatever can be kept from the old
+        // channels-related module configurations.
+        foreach ($oldChannels as $chan => $oldChanCfg) {
+            try {
+                $newChanCfg = $newNetCfg->getChannelCfg($chan);
+                $newModules = array();
+                foreach ($newChanCfg->getModules(FALSE) as $newModCfg) {
+                    $newModules[$newModCfg->getName()] = $newModCfg;
+                }
+                foreach ($oldChanCfg->getModules(FALSE) as $oldModCfg) {
+                    $module = $oldModCfg->getName();
+                    if (!isset($newModules[$module]))
+                        unset($this->_channelModules[$chan][$module]);
+                    else
+                        $this->_channelModules[$chan][$module] =
+                            clone $this->_channelModules[$chan][$module];
+                }
+            }
+            catch (Erebot_NotFoundException $e) {
+                unset($this->_channelModules[$chan]);
+            }
         }
 
-        $modules    = $this->_config->getModules(TRUE);
-        foreach ($modules as $module)
-            $this->loadModule($module, NULL);
+        // Keep whatever can be kept from the old
+        // generic module configurations.
+        $newModules = array();
+        foreach ($config->getModules(TRUE) as $newModCfg) {
+            $newModules[$newModCfg->getName()] = $newModCfg;
+        }
+        foreach ($this->_config->getModules(TRUE) as $oldModCfg) {
+            $module = $oldModCfg->getName();
+            if (!isset($newModules[$module]))
+                unset($this->_plainModules[$module]);
+            else
+                $this->_plainModules[$module] =
+                    clone $this->_plainModules[$module];
+        }
+
+        // Configure new modules, both channel-related
+        // and generic ones.
+        try {
+            foreach ($newChannels as $chanCfg) {
+                $modules    = $chanCfg->getModules(FALSE);
+                $chan       = $chanCfg->getName();
+                foreach ($modules as $module)
+                    $this->_loadModule(
+                        $module, $chan, $flags,
+                        $this->_plainModules,
+                        $this->_channelModules
+                    );
+            }
+
+            foreach ($newModules as $module)
+                $this->_loadModule(
+                    $module, NULL, $flags,
+                    $this->_plainModules,
+                    $this->_channelModules
+                );
+
+            // Unload old module instances.
+            foreach ($channelModules as $modules)
+                foreach ($modules as $module)
+                    $this->_unloadModule($module);
+            foreach ($plainModules as $module)
+                $this->_unloadModule($module);
+        }
+
+        // If something wrong happens, restore the previous configuration.
+        catch (Exception $e) {
+            $this->_plainModules    = $plainModules;
+            $this->_channelModules  = $channelModules;
+        }
     }
 
     /**
@@ -129,6 +208,12 @@ implements  Erebot_Interface_Connection
             $this->_channelModules,
             $this->_plainModules
         );
+    }
+
+    // Documented in the interface.
+    public function isConnected()
+    {
+        return $this->_connected;
     }
 
     // Documented in the interface.
@@ -799,16 +884,15 @@ implements  Erebot_Interface_Connection
         return $this->_bot;
     }
 
-    // Documented in the interface.
-    public function loadModule($module, $chan = NULL)
+    protected function _loadModule($module, $chan, $flags, &$plainModules, &$channelModules)
     {
         if ($chan !== NULL) {
-            if (isset($this->_channelModules[$chan][$module]))
-                return $this->_channelModules[$chan][$module];
+            if (isset($channelModules[$chan][$module]))
+                return $channelModules[$chan][$module];
         }
 
-        else if (isset($this->_plainModules[$module]))
-            return $this->_plainModules[$module];
+        else if (isset($plainModules[$module]))
+            return $plainModules[$module];
 
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
@@ -820,9 +904,9 @@ implements  Erebot_Interface_Connection
         $instance = new $module($chan);
 
         if ($chan === NULL)
-            $this->_plainModules[$module] = $instance;
+            $plainModules[$module] = $instance;
         else
-            $this->_channelModules[$chan][$module] = $instance;
+            $channelModules[$chan][$module] = $instance;
 
         $metadata   = $instance->getMetadata($module);
         $depends = (isset($metadata['requires']) ?
@@ -850,7 +934,6 @@ implements  Erebot_Interface_Connection
                 }
             }
             catch (Erebot_NotFoundException $e) {
-                unset($instance);
                 // We raise a new exception with the full
                 // dependency specification.
                 throw new Erebot_NotFoundException((string) $depend);
@@ -887,13 +970,23 @@ implements  Erebot_Interface_Connection
             }
         }
 
-        $instance->reload($this, Erebot_Module_Base::RELOAD_ALL);
-
+        $instance->reload($this, $flags);
         $logger->info(
             $this->_bot->gettext("Successfully loaded module '%s'"),
             $module
         );
         return $instance;
+    }
+
+    // Documented in the interface.
+    public function loadModule($module, $chan = NULL)
+    {
+        return $this->_loadModule(
+            $module, $chan,
+            Erebot_Module_Base::RELOAD_ALL,
+            $this->_plainModules,
+            $this->_channelModules
+        );
     }
 
     // Documented in the interface.

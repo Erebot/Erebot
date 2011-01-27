@@ -49,6 +49,16 @@ interface Erebot_Interface_Connection
     );
 
     /**
+     * Returns whether this connection object
+     * is currently connected to a server.
+     *
+     * \retval bool
+     *      TRUE if the connection is really connected,
+     *      FALSE otherwise.
+     */
+    public function isConnected();
+
+    /**
      * Makes the actual connection to an IRC server,
      * using the configuration data passed to the
      * constructor.

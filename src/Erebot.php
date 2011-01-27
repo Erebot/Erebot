@@ -543,8 +543,8 @@ implements  Erebot_Interface_Core
                     // Move it from existing connections to new connections,
                     // marking it as still being in use.
                     $copy = clone $currentConnections[$netName];
-                    $newConnections[] = $copy;
                     $copy->reload($serverCfg);
+                    $newConnections[] = $copy;
                     unset($currentConnections[$netName]);
                     continue;
                 }
