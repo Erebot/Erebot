@@ -40,7 +40,7 @@ implements  Erebot_Interface_Config_Main
     /// A list of Erebot_Config_Network objects.
     protected $_networks;
 
-    /// The bot's version string.
+    /// The configuration file's version string.
     protected $_version;
 
     /// The bot's current timezone.
@@ -162,16 +162,6 @@ implements  Erebot_Interface_Config_Main
             throw new Erebot_InvalidValueException('No version defined');
         $this->_version  = (string) $xml['version'];
 
-        if (!version_compare(
-            $this->_version,
-            Erebot_Interface_Core::VERSION,
-            'eq'
-        ))
-            throw new Erebot_InvalidValueException(sprintf(
-                'Invalid version (expected %s, got %s)',
-                Erebot::VERSION, $this->_version
-            ));
-
         if (!isset($xml['timezone']))
             throw new Erebot_InvalidValueException('No timezone defined');
         $this->_timezone = (string) $xml['timezone'];
@@ -216,8 +206,27 @@ implements  Erebot_Interface_Config_Main
                 NULL,
                 'Plop_Config_Format_XML'
             );
+        else
+            $logging->basicConfig();
 
         $logger = $logging->getLogger(__FILE__);
+
+        if (!version_compare(
+            $this->_version,
+            Erebot_Interface_Core::VERSION,
+            'eq'
+        ))
+            $logger->warning(
+                'This configuration file is meant for '.
+                'Erebot %(config_version)s, while you are '.
+                'running version %(code_version)s. '.
+                'Things may not work as expected.',
+                array(
+                    'config_version'   => $this->_version,
+                    'code_version'     => Erebot_Interface_Core::VERSION,
+                )
+            );
+
         $logger->debug('Loaded configuration data');
 
         $this->_networks = array();

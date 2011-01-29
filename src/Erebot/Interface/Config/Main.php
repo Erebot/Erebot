@@ -109,7 +109,7 @@ extends     Erebot_Interface_Config_Proxy
     public function getNetworks();
 
     /**
-     * Returns the bot's version string.
+     * Returns the configuration file's version string.
      *
      * \retval string
      *      The bot's version, such as '0.20-pre'.
@@ -118,6 +118,11 @@ extends     Erebot_Interface_Config_Proxy
      *      This version string is compatible with PHP's versioning scheme.
      *      Therefore, you may use PHP's version_compare() function to compare
      *      the version strings for different releases of the bot.
+     *
+     * \note
+     *      This is the version string as it was indicated in the configuration
+     *      file (at the time it was written). This may be different from the
+     *      actual version of the code (see also Erebot_Interface_Core::VERSION).
      */
     public function getVersion();
 

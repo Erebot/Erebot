@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<!-- kate: tab-width: 4 -->
+
+<configuration
+    xmlns="http://www.erebot.net/xmlns/erebot"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="0.5.0"
+    language="en-US"
+    timezone="Europe/Paris">
+
+    <xi:include href="xglob://conf.d/logging/logging.xml" />
+
+    <modules>
+        <xi:include href="xglob://conf.d/modules/*.xml" />
+    </modules>
+
+    <networks>
+        <xi:include href="xglob://conf.d/networks/*.xml" />
+    </networks>
+</configuration>
