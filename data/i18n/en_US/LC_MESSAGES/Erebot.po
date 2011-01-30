@@ -101,9 +101,13 @@ msgstr  "Loading modules required for \"%s\"..."
 msgid   "Memory usage:"
 msgstr  "Memory usage:"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 507
-msgid   "No configuration file to reload from"
-msgstr  "No configuration file to reload from"
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 469
+msgid   "No active connections... Aborting."
+msgstr  "No active connections... Aborting."
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 476
+msgid   "No configuration file to reload"
+msgstr  "No configuration file to reload"
 #
 msgid   "No more connections to handle, leaving..."
 msgstr  "No more connections to handle, leaving..."
@@ -119,10 +123,14 @@ msgstr  "Not a valid mask"
 msgid   "Received signal #%(signum)d (%(signame)s)"
 msgstr  "Received signal #%(signum)d (%(signame)s)"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 512
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 465
+msgid   "Reloading the configuration"
+msgstr  "Reloading the configuration"
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 540
 #, php-format
-msgid   "Reloading the configuration (from %s)"
-msgstr  "Reloading the configuration (from %s)"
+msgid   "Reusing existing connection for network \"%s\""
+msgstr  "Reusing existing connection for network \"%s\""
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 186
 #, php-format
@@ -148,8 +156,32 @@ msgstr  "Used:"
 #
 #
 #
+#
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 507
+#~ msgid        "No configuration file to reload from"
+#~ msgstr       "No configuration file to reload from"
+#
+#
+#
+#
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 512
+#~ msgid        "Reloading the configuration (from %s)"
+#~ msgstr       "Reloading the configuration (from %s)"
+#
+#
+#
+#
+#
+#
+#
 #~ msgid        "%(message)s in %(file)s on line %(line)d"
 #~ msgstr       "%(message)s in %(file)s on line %(line)d"
+#
+#
+#
+#
 #
 #
 #
@@ -158,8 +190,16 @@ msgstr  "Used:"
 #
 #
 #
+#
+#
+#
+#
 #~ msgid        "Main event loop"
 #~ msgstr       "Main event loop"
+#
+#
+#
+#
 #
 #
 #
@@ -168,8 +208,16 @@ msgstr  "Used:"
 #
 #
 #
+#
+#
+#
+#
 #~ msgid        "Received out-of-band data"
 #~ msgstr       "Received out-of-band data"
+#
+#
+#
+#
 #
 #
 #

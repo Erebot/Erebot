@@ -1,16 +1,16 @@
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 408
 msgid   "Used:"
-msgstr  ""
+msgstr  "Utilisé :"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 179
 #, php-format
 msgid   "Trying to connect to \"%s\"..."
-msgstr  ""
+msgstr  "Tentative de connexion à \"%s\"..."
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 518
 msgid   "Successfully reloaded the configuration"
-msgstr  ""
+msgstr  "Configuration rechargée avec succès"
 #
 #, php-format
 msgid   "Successfully loaded module '%s'"
@@ -19,12 +19,16 @@ msgstr  "Module '%s' chargé avec succès"
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 186
 #, php-format
 msgid   "Successfully connected to \"%s\"..."
-msgstr  ""
+msgstr  "Connection réussie à \"%s\"..."
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 512
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 540
 #, php-format
-msgid   "Reloading the configuration (from %s)"
-msgstr  ""
+msgid   "Reusing existing connection for network \"%s\""
+msgstr  "Réutilisation de la connexion existante au réseau \"%s\""
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 465
+msgid   "Reloading the configuration"
+msgstr  "Rechargement de la configuration"
 #
 # File: src/core.php, line: 367
 msgid   "Received signal #%(signum)d (%(signame)s)"
@@ -32,28 +36,32 @@ msgstr  "Réception du signal #%(signum)d (%(signame)s)"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1123
 msgid   "Not a valid mask"
-msgstr  ""
+msgstr  "Masque non valide"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1043
 msgid   "No such mapping exists"
-msgstr  ""
+msgstr  "Association inexistante"
 #
 # File: src/core.php, line: 236
 msgid   "No more connections to handle, leaving..."
 msgstr  "Il n'y a plus de connexions à gérer, arrêt en cours..."
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 507
-msgid   "No configuration file to reload from"
-msgstr  ""
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 476
+msgid   "No configuration file to reload"
+msgstr  "Aucun fichier de configuration à recharger"
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 469
+msgid   "No active connections... Aborting."
+msgstr  "Aucune connexion active... Abandon"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 404
 msgid   "Memory usage:"
-msgstr  ""
+msgstr  "Utilisation de la mémoire :"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 173
 #, php-format
 msgid   "Loading modules required for \"%s\"..."
-msgstr  ""
+msgstr  "Chargement des modules requis pour \"%s\"..."
 #
 # File: src/core.php, line: 379
 msgid   "Limit:"
@@ -61,7 +69,7 @@ msgstr  "Limite :"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1037
 msgid   "Invalid mapping name"
-msgstr  ""
+msgstr  "Nom d'association invalide"
 #
 # File: src/core.php, line: 248
 msgid   "Got exception"
@@ -70,7 +78,8 @@ msgstr  "Une exception a été levée"
 # File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 378
 msgid   "Got an exception from the rate-limiter module. Assuming implicit "
         "approval to send the message."
-msgstr  ""
+msgstr  "Une exception a été levée par le module de contrôle du débit. Un "
+        "accord implicite d'envoi du message a été obtenu."
 #
 # File: src/core.php, line: 155
 msgid   "Erebot is starting"
@@ -92,15 +101,15 @@ msgstr  "Échec de la connexion, elle n'est plus sous notre contrôle"
 # File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 992
 # File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1014
 msgid   "Code is not clean!"
-msgstr  ""
+msgstr  "Le code n'est pas propre !"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1095
 msgid   "Bad channel name"
-msgstr  ""
+msgstr  "Nom de canal non valide"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 407
 msgid   "Allocated:"
-msgstr  ""
+msgstr  "Alloué :"
 #
 # File: src/i18n.php, line: 47
 msgid   "\n"
@@ -170,9 +179,13 @@ msgstr  "Project-Id-Version: Erebot 0.20\n"
         "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #
 #
+#
+#
 # File: src/core.php, line: 377
 #~ msgid        "System:"
 #~ msgstr       "Système :"
+#
+#
 #
 #
 # File: src/core.php, line: 259
@@ -180,9 +193,13 @@ msgstr  "Project-Id-Version: Erebot 0.20\n"
 #~ msgstr       "Réception de données hors-bande"
 #
 #
+#
+#
 # File: src/core.php, line: 374
 #~ msgid        "Max. Allocated memory:"
 #~ msgstr       "Mémoire max. allouée :"
+#
+#
 #
 #
 # File: src/core.php, line: 199
@@ -190,9 +207,13 @@ msgstr  "Project-Id-Version: Erebot 0.20\n"
 #~ msgstr       "Boucle principale de traitement des événements"
 #
 #
+#
+#
 # File: src/core.php, line: 378
 #~ msgid        "Internal:"
 #~ msgstr       "Interne :"
+#
+#
 #
 #
 #~ msgid        "%(message)s in %(file)s on line %(line)d"

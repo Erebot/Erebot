@@ -97,6 +97,22 @@ implements  Erebot_Interface_Connection
         );
     }
 
+    /**
+     * Destructor.
+     */
+    public function __destruct()
+    {
+        $this->_socket = NULL;
+        unset(
+            $this->_events,
+            $this->_raws,
+            $this->_config,
+            $this->_bot,
+            $this->_channelModules,
+            $this->_plainModules
+        );
+    }
+
     public function reload(Erebot_Interface_Config_Server $config)
     {
         $this->_loadModules(
@@ -125,15 +141,11 @@ implements  Erebot_Interface_Connection
         foreach ($oldChannels as $chan => $oldChanCfg) {
             try {
                 $newChanCfg = $newNetCfg->getChannelCfg($chan);
-                $newModules = array();
-                foreach ($newChanCfg->getModules(FALSE) as $newModCfg) {
-                    $newModules[$newModCfg->getName()] = $newModCfg;
-                }
-                foreach ($oldChanCfg->getModules(FALSE) as $oldModCfg) {
-                    $module = $oldModCfg->getName();
-                    if (!isset($newModules[$module]))
+                $newModules = $newChanCfg->getModules(FALSE);
+                foreach ($oldChanCfg->getModules(FALSE) as $module) {
+                    if (!in_array($module, $newModules))
                         unset($this->_channelModules[$chan][$module]);
-                    else
+                    else if (isset($this->_channelModules[$chan][$module]))
                         $this->_channelModules[$chan][$module] =
                             clone $this->_channelModules[$chan][$module];
                 }
@@ -145,15 +157,11 @@ implements  Erebot_Interface_Connection
 
         // Keep whatever can be kept from the old
         // generic module configurations.
-        $newModules = array();
-        foreach ($config->getModules(TRUE) as $newModCfg) {
-            $newModules[$newModCfg->getName()] = $newModCfg;
-        }
-        foreach ($this->_config->getModules(TRUE) as $oldModCfg) {
-            $module = $oldModCfg->getName();
-            if (!isset($newModules[$module]))
+        $newModules = $config->getModules(TRUE);
+        foreach ($this->_config->getModules(TRUE) as $module) {
+            if (!in_array($module, $newModules))
                 unset($this->_plainModules[$module]);
-            else
+            else if (isset($this->_plainModules[$module]))
                 $this->_plainModules[$module] =
                     clone $this->_plainModules[$module];
         }
@@ -182,9 +190,9 @@ implements  Erebot_Interface_Connection
             // Unload old module instances.
             foreach ($channelModules as $modules)
                 foreach ($modules as $module)
-                    $this->_unloadModule($module);
+                    $module->unload();
             foreach ($plainModules as $module)
-                $this->_unloadModule($module);
+                $module->unload();
         }
 
         // If something wrong happens, restore the previous configuration.
@@ -194,20 +202,9 @@ implements  Erebot_Interface_Connection
         }
     }
 
-    /**
-     * Destructor.
-     */
-    public function __destruct()
+    protected function _unloadModule($module)
     {
-        $this->_socket = NULL;
-        unset(
-            $this->_events,
-            $this->_raws,
-            $this->_config,
-            $this->_bot,
-            $this->_channelModules,
-            $this->_plainModules
-        );
+        var_dump(gettype($module));
     }
 
     // Documented in the interface.

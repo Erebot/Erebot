@@ -83,6 +83,8 @@ abstract class Erebot_Module_Base
      */
     abstract protected function _reload($flags);
 
+    abstract protected function _unload();
+
     /**
      * Constructor for modules.
      *
@@ -141,6 +143,11 @@ abstract class Erebot_Module_Base
         $this->_mainCfg     = $serverCfg->getMainCfg();
         $this->_translator  = $this->_mainCfg->getTranslator(get_class($this));
         $this->_reload($flags);
+    }
+
+    final public function unload()
+    {
+        return $this->_unload();
     }
 
     /**

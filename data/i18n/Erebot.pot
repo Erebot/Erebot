@@ -1,4 +1,4 @@
-# File: /var/www/Erebot/core/trunk/src/Erebot/I18n.php, line: 116
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/I18n.php, line: 116
 msgid   "\n"
         "%with-words:\n"
         "    0: 0 seconds;\n"
@@ -26,106 +26,114 @@ msgid   "\n"
         "    2: =#0= weeks;\n"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 407
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 355
 msgid   "Allocated:"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1095
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 1179
 msgid   "Bad channel name"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 992
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1014
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 1076
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 1098
 msgid   "Code is not clean!"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 290
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 238
 msgid   "Connection failed, removing it from the pool"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 198
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 596
 #, php-format
 msgid   "Could not connect to \"%s\""
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 357
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 305
 msgid   "Erebot has stopped"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 145
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 145
 msgid   "Erebot is starting"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 378
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 457
 msgid   "Got an exception from the rate-limiter module. Assuming implicit "
         "approval to send the message."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 256
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 204
 msgid   "Got exception"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1037
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 1121
 msgid   "Invalid mapping name"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 409
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 357
 msgid   "Limit:"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 173
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 564
 #, php-format
 msgid   "Loading modules required for \"%s\"..."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 404
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 352
 msgid   "Memory usage:"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 507
-msgid   "No configuration file to reload from"
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 469
+msgid   "No active connections... Aborting."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 242
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 476
+msgid   "No configuration file to reload"
+msgstr  ""
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 190
 msgid   "No more connections to handle, leaving..."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1043
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 1127
 msgid   "No such mapping exists"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1123
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 1207
 msgid   "Not a valid mask"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 394
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 342
 msgid   "Received signal #%(signum)d (%(signame)s)"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 512
-#, php-format
-msgid   "Reloading the configuration (from %s)"
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 465
+msgid   "Reloading the configuration"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 186
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 540
+#, php-format
+msgid   "Reusing existing connection for network \"%s\""
+msgstr  ""
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 584
 #, php-format
 msgid   "Successfully connected to \"%s\"..."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 902
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Connection.php, line: 975
 #, php-format
 msgid   "Successfully loaded module '%s'"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 518
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 490
 msgid   "Successfully reloaded the configuration"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 179
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 577
 #, php-format
 msgid   "Trying to connect to \"%s\"..."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 408
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 356
 msgid   "Used:"
 msgstr  ""
