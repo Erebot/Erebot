@@ -52,6 +52,15 @@ extends     Erebot_Interface_Config_Proxy
     public function getConnectionURL();
 
     /**
+     * Returns the URL used to contact the proxy server
+     * and connect to this IRC server.
+     *
+     * \retval string
+     *      URL for the proxy to this server.
+     */
+    public function getProxyURL();
+
+    /**
      * Returns the IRC network configuration upon which this
      * IRC server configuration depends.
      *

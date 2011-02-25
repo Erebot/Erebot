@@ -167,8 +167,8 @@ msgstr  "\n"
 # Automatically generated, 2009.
 #
 msgid   ""
-msgstr  "Project-Id-Version: Erebot 0.20\n"
-        "Report-Msgid-Bugs-To: missingno@ifrance.com\n"
+msgstr  "Project-Id-Version: Erebot 0.5.0\n"
+        "Report-Msgid-Bugs-To: i18n@erebot.net\n"
         "POT-Creation-Date: 2009-12-12 22:04+0100\n"
         "PO-Revision-Date: 2010-02-13 19:10+0100\n"
         "Last-Translator: Automatically generated\n"
@@ -177,44 +177,4 @@ msgstr  "Project-Id-Version: Erebot 0.20\n"
         "Content-Type: text/plain; charset=utf-8\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#
-#
-#
-#
-# File: src/core.php, line: 377
-#~ msgid        "System:"
-#~ msgstr       "Système :"
-#
-#
-#
-#
-# File: src/core.php, line: 259
-#~ msgid        "Received out-of-band data"
-#~ msgstr       "Réception de données hors-bande"
-#
-#
-#
-#
-# File: src/core.php, line: 374
-#~ msgid        "Max. Allocated memory:"
-#~ msgstr       "Mémoire max. allouée :"
-#
-#
-#
-#
-# File: src/core.php, line: 199
-#~ msgid        "Main event loop"
-#~ msgstr       "Boucle principale de traitement des événements"
-#
-#
-#
-#
-# File: src/core.php, line: 378
-#~ msgid        "Internal:"
-#~ msgstr       "Interne :"
-#
-#
-#
-#
-#~ msgid        "%(message)s in %(file)s on line %(line)d"
-#~ msgstr       "%(message)s dans %(file)s à la ligne %(line)d"
+

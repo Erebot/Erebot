@@ -30,6 +30,9 @@ implements  Erebot_Interface_Config_Server
     /// A URL used to connect to this IRC(S) server.
     protected $_connectionURL;
 
+    /// URL of the proxy server to use to contact the IRC server.
+    protected $_proxyURL;
+
     // Documented in the interface.
     public function __construct(
         Erebot_Interface_Config_Network &$netCfg,
@@ -37,7 +40,11 @@ implements  Erebot_Interface_Config_Server
     )
     {
         parent::__construct($netCfg, $xml);
-        $this->_connectionURL = (string) $xml['url'];
+        $this->_connectionURL   = (string) $xml['url'];
+        $this->_proxyURL        = NULL;
+        if (isset($xml['proxy'])) {
+            $this->_proxyURL = (string) $xml['proxy'];
+        }
     }
 
     /**
@@ -52,6 +59,12 @@ implements  Erebot_Interface_Config_Server
     public function getConnectionURL()
     {
         return $this->_connectionURL;
+    }
+
+    // Documented in the interface.
+    public function getProxyURL()
+    {
+        return $this->_proxyURL;
     }
 
     // Documented in the interface.

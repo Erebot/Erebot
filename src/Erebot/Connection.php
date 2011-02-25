@@ -219,14 +219,18 @@ implements  Erebot_Interface_Connection
         if ($this->_connected)
             return FALSE;
 
-        $url = $this->_config->getConnectionURL();
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(
+            __FILE__ . DIRECTORY_SEPARATOR . 'proxy'
+        );
 
+        $url = $this->_config->getConnectionURL();
         $url    = @parse_url($url);
         try {
             if ($url === FALSE          ||
                 !isset($url['scheme'])  ||
                 !isset($url['host'])) {
-                throw new Erebot_InvalidValueException('Malformed URL');
+                throw new Erebot_InvalidValueException('Malformed connection URL');
             }
 
             $queryString = isset($url['query']) ? $url['query'] : '';
@@ -253,33 +257,138 @@ implements  Erebot_Interface_Connection
                 $ctxOptions['ssl']['ciphers'] = 'HIGH';
 
             $context  = stream_context_create($ctxOptions);
+            $crypto = FALSE;
 
             if (!strcasecmp($url['scheme'], 'ircs')) {
-                $port           = 994;
-                $proto          = 'tls';
+                $port   = 994;
+                $crypto = TRUE;
             }
-            else if (!strcasecmp($url['scheme'], 'irc')) {
-                $port       = 194;
-                $proto      = 'tcp';
-            }
+            else if (!strcasecmp($url['scheme'], 'irc'))
+                $port = 194;
             else
                 throw new Erebot_InvalidValueException('Invalid scheme in URL');
 
             if (isset($url['port']))
                 $port = $url['port'];
 
-            $opened = $proto.'://'.$url['host'].':'.$port;
-            $this->_socket = stream_socket_client(
-                $opened, $errno, $errstr,
-                ini_get('default_socket_timeout'),
-                STREAM_CLIENT_CONNECT,
-                $context
-            );
+            $opened = $url['host'].':'.$port;
+            $scheme = 'tcp://';
+            $this->_socket = NULL;
+
+            $proxyURL = $this->_config->getProxyURL();
+            if ($proxyURL !== NULL) {
+                $proxyURL = @parse_url($proxyURL);
+                if ($proxyURL === FALSE ||
+                    !isset($proxyURL['scheme']) ||
+                    !isset($proxyURL['host']))
+                    throw new Erebot_InvalidValueException('Malformed proxy URL');
+                $proxyScheme = strtolower($proxyURL['scheme']);
+
+                if ($proxyScheme == 'http') {
+                    if (!isset($proxyURL['port']))
+                        throw new Erebot_InvalidValueException(
+                            'You must specify the port for the HTTP proxy'
+                        );
+
+                    $this->_socket = stream_socket_client(
+                        'tcp://'.$proxyURL['host'].':'.$proxyURL['port'],
+                        $errno, $errstr,
+                        ini_get('default_socket_timeout'),
+                        STREAM_CLIENT_CONNECT,
+                        $context
+                    );
+                    if ($this->_socket === FALSE)
+                        throw new Erebot_Exception('Could not connect to proxy');
+
+                    $credentials = NULL;
+                    if (isset($proxyURL['user'])) {
+                        $credentials = $proxyURL['user'];
+                        if (isset($proxyURL['pass']))
+                            $credentials .= ':'.$proxyURL['pass'];
+                        $credentials = base64_encode($credentials);
+                    }
+
+                    $request = "";
+                    $request .= sprintf("CONNECT %s:%d HTTP/1.0\r\n", $url['host'], $port);
+                    $request .= sprintf("User-Agent: Erebot/%s\r\n", Erebot_Interface_Core::VERSION);
+                    if ($credentials !== NULL)
+                        $request .= sprintf("Proxy-Authorization: basic %s\r\n", $credentials);
+                    $request .= "\r\n";
+
+                    for (
+                        $written = 0, $len = strlen($request);
+                        $written < $len;
+                        $written += $fwrite
+                    ) {
+                        $fwrite = fwrite($this->_socket, substr($request, $written));
+                        if ($fwrite === FALSE)
+                            throw new Erebot_Exception('Connection closed by proxy');
+                    }
+
+                    $line = stream_get_line($this->_socket, 4096, "\r\n");
+                    if ($line === FALSE)
+                        throw new Erebot_InvalidValueException('Invalid response from proxy');
+                    $logger->debug("%s", addcslashes($line, "\000..\037"));
+                    $contents = array_filter(explode(" ", $line));
+                    if (strtoupper($contents[0]) != 'HTTP/1.0')
+                        throw new Erebot_InvalidValueException('Bad version in proxy response');
+                    switch ((int) $contents[1]) {
+                        case 200:
+                            break;
+                        case 407:
+                            throw new Erebot_Exception('Proxy authentication required');
+                        default:
+                            throw new Erebot_Exception('Connection rejected by proxy');
+                    }
+
+                    // Avoid an endless loop by limiting the number of headers.
+                    // No HTTP server will send more than 2^10 headers anyway.
+                    $max = (1 << 10);
+                    for ($i = 0; $i < $max; $i++) {
+                        $line = stream_get_line($this->_socket, 4096, "\r\n");
+                        if ($line === FALSE)
+                            throw new Erebot_InvalidValueException('Invalid response from proxy');
+                        if ($line == "")
+                            break;
+                        $logger->debug("%s", addcslashes($line, "\000..\037"));
+                    }
+                    if ($i === $max)
+                        throw new Erebot_InvalidValueException('Endless loop detected in proxy response');
+
+                    // The proxied connection is now ready for use.
+                }
+            }
+
+            // The socket may have already been created,
+            // when dealing with a proxy server.
+            if ($this->_socket === NULL) {
+                $this->_socket = stream_socket_client(
+                    $scheme.$opened, $errno, $errstr,
+                    ini_get('default_socket_timeout'),
+                    STREAM_CLIENT_CONNECT,
+                    $context
+                );
+                if ($this->_socket === FALSE)
+                    throw new Erebot_Exception('Could not connect');
+            }
+
+            // Avoid unnecessary buffers
+            // and activate TLS encryption if required.
             stream_set_write_buffer($this->_socket, 0);
+            if ($crypto) {
+                stream_socket_enable_crypto(
+                    $this->_socket, TRUE,
+                    STREAM_CRYPTO_METHOD_TLS_CLIENT
+                );
+            }
         }
         catch (Exception $e) {
             throw new Erebot_ConnectionFailureException(
-                sprintf("Unable to connect to '%s'", $url));
+                sprintf(
+                    "Unable to connect to '%s' (%s)",
+                    $url, $e->getMessage()
+                )
+            );
         }
 
         $event = new Erebot_Event_Logon($this);
