@@ -310,6 +310,7 @@ implements  Erebot_Interface_Connection
 
                     $request = "";
                     $request .= sprintf("CONNECT %s:%d HTTP/1.0\r\n", $url['host'], $port);
+                    $request .= sprintf("Host: %s:%d\r\n", $url['host'], $port);
                     $request .= sprintf("User-Agent: Erebot/%s\r\n", Erebot_Interface_Core::VERSION);
                     if ($credentials !== NULL)
                         $request .= sprintf("Proxy-Authorization: basic %s\r\n", $credentials);
