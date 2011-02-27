@@ -58,6 +58,7 @@ extends PHPUnit_Framework_TestCase
     public function normalResults()
     {
         return array(
+            # 5.4.1.  Normal Examples
             array("g:h",        "g:h"),
             array("g",          "http://a/b/c/g"),
             array("./g",        "http://a/b/c/g"),
@@ -81,22 +82,8 @@ extends PHPUnit_Framework_TestCase
             array("../..",      "http://a/"),
             array("../../",     "http://a/"),
             array("../../g",    "http://a/g"),
-        );
-    }
 
-    /**
-     * @dataProvider normalResults
-     */
-    public function testNormalResolution($reference, $targetURI)
-    {
-        $base   = new Erebot_URI("http://a/b/c/d;p?q");
-        $target = $base->relative($reference);
-        $this->assertEquals($targetURI, (string) $target, $reference);
-    }
-
-    public function abnormalResults()
-    {
-        return array(
+            # 5.4.2.  Abnormal Examples
             array("../../../g",     "http://a/g"),
             array("../../../../g",  "http://a/g"),
             array("/./g",           "http://a/g"),
@@ -120,13 +107,13 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider abnormalResults
+     * @dataProvider normalResults
      */
-    public function testAbnormalResolution($reference, $abnormal)
+    public function testNormalResolution($reference, $targetURI)
     {
         $base   = new Erebot_URI("http://a/b/c/d;p?q");
         $target = $base->relative($reference);
-        $this->assertNotEquals($abnormal, (string) $target, $reference);
+        $this->assertEquals($targetURI, (string) $target, $reference);
     }
 }
 
