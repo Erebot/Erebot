@@ -19,6 +19,8 @@
 /**
  * This class can be used as both a parser and a generator for
  * Uniform Resource Identifiers (URI) as defined in RFC 3986.
+ * It is primarly meant to deal with with absolute URIs but also
+ * offers methods to deal with relative URIs.
  * It is mostly compatible with parse_url(), but tends to be
  * stricter when validating data.
  *
@@ -28,13 +30,13 @@
  * named "userinfo" instead. Such a pair will be merged upon
  * encounter.
  *
- * All components are normalized when retrieved using any
- * of the getters except asParsedURL(), using the algorithms
- * defined in RFC 3986.
+ * All components are normalized by default when retrieved using
+ * any of the getters except asParsedURL(). You may override this
+ * behaviour by passing $raw=TRUE to said getters.
+ * Normalization is done using the algorithms defined in RFC 3986.
  */
 class   Erebot_URI
 {
-    static protected $_base = NULL;
     protected $_scheme;
     protected $_userinfo;
     protected $_authority;
@@ -45,25 +47,8 @@ class   Erebot_URI
 
     public function __construct($uri)
     {
-        if (self::$_base === NULL) {
-            self::$_base = array(
-                'digit'         =>  '0123456789',
-                'alpha'         =>  'abcdefghijklmnopqrstuvwxyz'.
-                                    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-                'gen-delims'    =>  ':/?#[]@',
-                'sub-delims'    =>  '!$&\'()*+,;=',
-            );
-            self::$_base['hexdig']      =   self::$_base['digit'].
-                                            'abcdefABCDEF';
-            self::$_base['reserved']    =   self::$_base['gen-delims'].
-                                            self::$_base['sub-delims'];
-            self::$_base['unreserved']  =   self::$_base['alpha'].
-                                            self::$_base['digit'].
-                                            '-._~';
-        }
-
         if (is_string($uri))
-            $uri = $this->_parseURI($uri);
+            $uri = $this->_parseURI($uri, FALSE);
         if (!is_array($uri))
             throw new Erebot_InvalidValueException('Invalid URI');
 
@@ -93,23 +78,19 @@ class   Erebot_URI
         }
     }
 
-    protected function _parseURI($uri)
+    protected function _parseURI($uri, $relative)
     {
         $result = array();
 
-        // Parse scheme.
-        $pos = strpos($uri, ':');
-        if (!$pos)  // An URI starting with ":" is also invalid.
-            throw new Erebot_InvalidValueException('No scheme found');
+        if (!$relative) {
+            // Parse scheme.
+            $pos = strpos($uri, ':');
+            if (!$pos)  // An URI starting with ":" is also invalid.
+                throw new Erebot_InvalidValueException('No scheme found');
 
-        $result['scheme'] = substr($uri, 0, $pos);
-        $len = strspn(
-            $result['scheme'],
-            self::$_base['digit'].self::$_base['alpha'].'+-.'
-        );
-        if ($len != strlen($result['scheme']))
-            throw new Erebot_InvalidValueException('Invalid scheme');
-        $uri = (string) substr($uri, $pos + 1);
+            $result['scheme'] = substr($uri, 0, $pos);
+            $uri = (string) substr($uri, $pos + 1);
+        }
 
         // Parse fragment.
         $pos = strpos($uri, '#');
@@ -149,12 +130,7 @@ class   Erebot_URI
             // Parse port.
             $pos = strrpos($uri, ':');
             if ($pos !== FALSE) {
-                $port = (string) substr($uri, $pos + 1);
-                if ($path != '') {
-                    if (strspn($port, self::$_base['digit']) != strlen($port))
-                        throw new Erebot_InvalidValueException('Invalid port');
-                    $result['port'] = (int) $port;
-                }
+                $result['port'] = (string) substr($uri, $pos + 1);
                 $uri = (string) substr($uri, 0, $pos);
             }
 
@@ -167,69 +143,147 @@ class   Erebot_URI
         return $result;
     }
 
-    public function __toString()
+    public function toURI($raw = FALSE)
     {
+        // 5.3.  Component Recomposition
         $result = "";
 
+        // In our case, the scheme will always be set
+        // because we only deal with absolute URIs here.
+        // The condition is checked anyway to keep the code
+        // in line with the algorithm described in RFC 3986.
         if ($this->_scheme !== NULL)
-            $result .= $this->_scheme.':';
+            $result .= $this->getScheme($raw).':';
 
         if ($this->_host !== NULL) {
             $result .= '//';
             if ($this->_userinfo !== NULL)
-                $result .= $this->_userinfo."@";
+                $result .= $this->getUserInfo($raw)."@";
 
-            $result .= $this->_host;
-            $port = $this->getPort();
+            $result    .= $this->getHost($raw);
+            $port       = $this->getPort($raw);
             if ($port !== NULL)
                 $result .= ':'.$port;
         }
 
-        $result .= $this->getPath();
+        $result .= $this->getPath($raw);
 
         if ($this->_query !== NULL)
-            $result .= '?'.$this->_query;
+            $result .= '?'.$this->getQuery($raw);
 
         if ($this->_fragment !== NULL)
-            $result .= '#'.$this->_fragment;
+            $result .= '#'.$this->getFragment($raw);
 
         return $result;
     }
 
-    public function getScheme()
+    public function __toString()
     {
+        return $this->toURI();
+    }
+
+    public function getScheme($raw = FALSE)
+    {
+        if ($raw)
+            return $this->_scheme;
         return ($this->_scheme !== NULL) ? strtolower($this->_scheme) : NULL;
     }
 
     public function setScheme($scheme)
     {
+        // scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+        if (!preg_match('/^[-[:alpha:][:alnum:]+.]$/Di', $scheme))
+            throw new Erebot_InvalidValueException('Invalid scheme');
         $this->_scheme = $scheme;
     }
 
-    public function getUserInfo()
+    public function getUserInfo($raw = FALSE)
     {
         return $this->_userinfo;
     }
 
     public function setUserInfo($userinfo)
     {
+        /*
+        userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
+        pct-encoded   = "%" HEXDIG HEXDIG
+        unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+        sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                      / "*" / "+" / "," / ";" / "="
+        */
+        $pattern =  '(?:'.
+                        '[-[:alnum:]\\._~!\\$&\'\\(\\)\\*\\+,;=:]|'.
+                        '%[[:xdigit:]]{2}'.
+                    ')*';
+        if ($userinfo !== NULL && !preg_match('/^'.$pattern.'$/Di', $userinfo))
+            throw new Erebot_InvalidValueException('Invalid user information');
         $this->_userinfo = $userinfo;
     }
 
-    public function getHost()
+    public function getHost($raw = FALSE)
     {
+        if ($raw)
+            return $this->_host;
         return ($this->_host !== NULL) ? strtolower($this->_host) : NULL;
     }
 
     public function setHost($host)
     {
+        /*
+        host          = IP-literal / IPv4address / reg-name
+        IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
+        IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+        IPv6address   =                            6( h16 ":" ) ls32
+                      /                       "::" 5( h16 ":" ) ls32
+                      / [               h16 ] "::" 4( h16 ":" ) ls32
+                      / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+                      / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+                      / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+                      / [ *4( h16 ":" ) h16 ] "::"              ls32
+                      / [ *5( h16 ":" ) h16 ] "::"              h16
+                      / [ *6( h16 ":" ) h16 ] "::"
+        h16           = 1*4HEXDIG
+        ls32          = ( h16 ":" h16 ) / IPv4address
+        IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+        dec-octet     = DIGIT                 ; 0-9
+                      / %x31-39 DIGIT         ; 10-99
+                      / "1" 2DIGIT            ; 100-199
+                      / "2" %x30-34 DIGIT     ; 200-249
+                      / "25" %x30-35          ; 250-255
+        reg-name      = *( unreserved / pct-encoded / sub-delims )
+        pct-encoded   = "%" HEXDIG HEXDIG
+        unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+        sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                      / "*" / "+" / "," / ";" / "="
+        */
+        $decOctet       = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])'
+        $IPv4address    = $decOctet.'(?:\\.'.$decOctet.'){3}';
+        $h16            = '[[:xdigit:]]{1,4}';
+        $ls32           = '(?:'.$h16.':'.$h16.'|'.$IPv4address.')';
+        $IPv6address    =   '(?:'.
+                                '(?:'$h16.':){6}'.$ls32.'|'.
+                                '::(?:'.$h16.':){5}'.$ls32.'|'.
+                                '(?:'.$h16.')?::(?:'.$h16.':){4}'.$ls32.'|'.
+                                '(?:(?:'.$h16.')?'.$h16.')?::(?:'.$h16.':){3}'.$ls32.'|'.
+                                '(?:(?:'.$h16.'){0,2}'.$h16.')?::(?:'.$h16.':){2}'.$ls32.'|'.
+                                '(?:(?:'.$h16.'){0,3}'.$h16.')?::'.$h16.':'.$ls32.'|'.
+                                '(?:(?:'.$h16.'){0,4}'.$h16.')?::'.$ls32.'|'.
+                                '(?:(?:'.$h16.'){0,5}'.$h16.')?::'.$h16.'|'.
+                                '(?:(?:'.$h16.'){0,6}'.$h16.')?::'.
+                            ')';
+        $IPvFuture      = 'v[[:xdigit:]]+\\.[-[:alnum:]\\._~!\\$&\'\\(\\)*\\+,;=]+';
+        $IPliteral      = '\\[(?:'.$IPv6address.'|'.$IPvFuture.')\\]';
+        $regName        = '(?:[-[:alnum:]\\._~!\\$&\'\\(\\)*\\+,;=]|%[[:xdigit:]]{2})*';
+        $pattern        = '(?:'.$IPliteral.'|'.$IPv4address.'|'.$regName.')';
+        if ($host !== NULL && !preg_match('/^'.$pattern.'$/Di', $host))
+            throw new Erebot_InvalidValueException('Invalid host');
         $this->_host = $host;
     }
 
-    public function getPort()
+    public function getPort($raw = FALSE)
     {
-        if ($this->_port === NULL)
-            return NULL;
+        if ($raw || $this->_port === NULL)
+            return $this->_port;
 
         // Try to canonicalize the port.
         $tcp = getservbyname($this->_scheme, 'tcp');
@@ -242,18 +296,28 @@ class   Erebot_URI
 
     public function setPort($port)
     {
-        if (!is_int($port))
-            throw new Erebot_InvalidValueException('Port should be an integer');
-        if ($port <= 0 || $port > 65535)
-            throw new Erebot_InvalidValueException(
-                'Expected: 0 < port <= 65535'
-            );
+        // port          = *DIGIT
+        if (is_int($port))
+            $port = (string) $port;
+        if ($port !== NULL && strspn($port, '0123456789') != strlen($port))
+            throw new Erebot_InvalidValueException('Invalid port');
         $this->_port = $port;
     }
 
-    public function getPath()
+    protected function _removeDotSegments($path)
     {
+        if ($path === NULL)
+            throw new Erebot_InvalidValueException('Path not set');
+
         // §5.2.4.  Remove Dot Segments
+        // Rewritten using arrays acting as stacks
+        // instead of simple strings for efficiency.
+        $absolute = FALSE;
+        if (substr($path, 0, 1) == '/') {
+            $path       = (string) substr($path, 1);
+            $absolute   = TRUE;
+        }
+
         $input  = explode("/", $this->_path);
         $output = array();
 
@@ -270,33 +334,140 @@ class   Erebot_URI
         }
 
         $path = implode('/', $output);
-        if ($path != '' || $this->_host !== NULL)
+        if ($absolute)
             $path = '/'.$path;
-        return $this->_path;
+        return $path;
+    }
+
+    protected function _merge($path)
+    {
+        // 5.2.3.  Merge Paths
+        if ($this->_host !== NULL && $this->_path == '')
+            return '/'.$path;
+
+        $pos = strrpos($this->_path, '/');
+        if ($pos === FALSE)
+            return $path;
+        return substr($this->_path, 0, $pos + 1).$path;
+    }
+
+    public function getPath($raw = FALSE)
+    {
+        if ($raw)
+            return $this->_path;
+        return $this->_removeDotSegments($this->_path);
+    }
+
+    protected function _validatePath($path, $relative)
+    {
+        /*
+        path          = path-abempty    ; begins with "/" or is empty
+                      / path-absolute   ; begins with "/" but not "//"
+                      / path-noscheme   ; begins with a non-colon segment
+                      / path-rootless   ; begins with a segment
+                      / path-empty      ; zero characters
+        path-abempty  = *( "/" segment )
+        path-absolute = "/" [ segment-nz *( "/" segment ) ]
+        path-noscheme = segment-nz-nc *( "/" segment )
+                      ; only used for a relative URI
+        path-rootless = segment-nz *( "/" segment )
+                      ; only used for an absolute URI
+        path-empty    = 0<pchar>
+        segment       = *pchar
+        segment-nz    = 1*pchar
+        segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+                      ; non-zero-length segment without any colon ":"
+        pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+        unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+        sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                      / "*" / "+" / "," / ";" / "="
+        pct-encoded   = "%" HEXDIG HEXDIG
+        */
+        $pchar          =   '(?:'.
+                                '[-[:alnum:]\\._~!\\$&\'\\(\\)\\*\\+,;=:@]|'.
+                                '%[[:xdigit:]]'.
+                            ')';
+        $segment        = '(?:'.$pchar.'*)';
+        $segmentNz      = '(?:'.$pchar.'+)';
+        $segmentNzNc    =   '(?:'.
+                                '[-[:alnum:]\\._~!\\$&\'\\(\\)\\*\\+,;=@]|'.
+                                '%[[:xdigit:]]'.
+                            ')+';
+        $pathAbempty    = '(?:/'.$segment.')*';
+        $pathAbsolute   = '/(?:'.$segmentNz.'(?:/'.$segment.')*)?';
+        $pathNoscheme   = $segmentNzNc.'(?:/'.$segment.')*';
+        $pathRootless   = $segmentNz.'(?:/'.$segment.')*';
+        $pathEmpty      = '(?!'.$pchar.')';
+
+        $pattern =  $pathAbempty.'|'.$pathAbsolute;
+        if ($relative)
+            $pattern .= '|'.$pathNoscheme;
+        else
+            $pattern .= '|'.$pathRootless;
+        $pattern .= '|'.$pathEmpty;
+
+        return (bool) preg_match('#^'.$pattern.'$#Di', $path);
+    }
+
+    protected function _setPath($path, $relative)
+    {
+        if (!$this->_validatePath($path, $relative))
+            throw new Erebot_InvalidValueException(
+                'Invalid path; use relative() for relative paths'
+            );
+        $this->_path = $path;
     }
 
     public function setPath($path)
     {
-        $this->_path = $path;
+        $this->_setPath($path, FALSE);
     }
 
-    public function getQuery()
+    public function getQuery($raw = FALSE)
     {
         return $this->_query;
     }
 
     public function setQuery($query)
     {
+        /*
+        pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+        query         = *( pchar / "/" / "?" )
+        pct-encoded   = "%" HEXDIG HEXDIG
+        unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+        sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                      / "*" / "+" / "," / ";" / "="
+        */
+        $pattern    =   '(?:'.
+                            '[-[:alnum:]\\._~!\\$&\'\\(\\)\\*\\+,;=/\\?]|'.
+                            '%[[:xdigit:]]{2}'
+                        ')*';
+        if ($query !== NULL && !preg_match('#^'.$pattern.'$#Di', $query))
+            throw new Erebot_InvalidValueException('Invalid query');
         $this->_query = $query;
     }
 
-    public function getFragment()
+    public function getFragment($raw = FALSE)
     {
         return $this->_fragment;
     }
 
     public function setFragment($fragment)
     {
+        /*
+        pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+        fragment      = *( pchar / "/" / "?" )
+        pct-encoded   = "%" HEXDIG HEXDIG
+        unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+        sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                      / "*" / "+" / "," / ";" / "="
+        */
+        $pattern    =   '(?:'.
+                            '[-[:alnum:]\\._~!\\$&\'\\(\\)\\*\\+,;=/\\?]|'.
+                            '%[[:xdigit:]]{2}'
+                        ')*';
+        if ($fragment !== NULL && !preg_match('#^'.$pattern.'$#Di', $fragment))
+            throw new Erebot_InvalidValueException('Invalid fragment');
         $this->_fragment = $fragment;
     }
 
@@ -357,6 +528,54 @@ class   Erebot_URI
 
     public function relative($reference)
     {
+        try {
+            $cls    = __CLASS__;
+            $result = new $cls($reference);
+            return $result;
+        }
+        catch (Erebot_InvalidValueException $e) {
+            // Nothing to do. We will try to interpret
+            // the reference as a relative URI instead.
+        }
+
+        // Use the current (absolute) URI as the base.
+        $result = clone $this;
+
+        // 5.2.2.  Transform References
+        // Our parser is strict.
+        $parsed = $this->_parseURI($reference, TRUE);
+
+        // No need to test the case where the scheme is defined.
+        // This would be an absolute URI and has already been
+        // captured by the previous try..catch block.
+
+        // "host" == "authority" here, see the grammar
+        // for reasons why this always holds true.
+        if (isset($parsed['host'])) {
+            $result->setHost(isset($parsed['host']) ? $parsed['host'] : NULL);
+            $result->setPort(isset($parsed['port']) ? $parsed['port'] : NULL);
+            $result->setUserInfo(isset($parsed['userinfo']) ? $parsed['userinfo'] : NULL);
+            $result->_setPath($parsed['path'], TRUE);
+            $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
+            $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
+            return $result;
+        }
+
+        // No need to copy path/authority because
+        // $result is already a copy of the base.
+
+        if ($parsed['path'] == '') {
+            if (isset($parsed['query']))
+                $result->setResult($parsed['query']);
+            return $result;
+        }
+
+        if (substr($parsed['path'], 0, 1) == '/')
+            $result->_setPath($result->_removeDotSegments($parsed['path']), TRUE);
+        else
+            $result->_setPath($result->_removeDotSegments($result->_merge($parsed['path'])), TRUE);
+        $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
+        return $result;
     }
 }
 
