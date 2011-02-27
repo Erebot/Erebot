@@ -107,11 +107,16 @@ class   Erebot_URI
         }
 
         // Handle "path-empty".
-        if ($uri == '')
+        if ($uri == '') {
+            $result['path'] = '';
             return $result;
+        }
 
         // Handle "hier-part".
         if (substr($uri, 0, 2) == '//') {
+            // Remove leftovers from the scheme field.
+            $uri = (string) substr($uri, 2);
+
             // Parse path.
             $result['path'] = '';
             $pos = strpos($uri, '/');
@@ -192,7 +197,7 @@ class   Erebot_URI
     public function setScheme($scheme)
     {
         // scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
-        if (!preg_match('/^[-[:alpha:][:alnum:]+.]$/Di', $scheme))
+        if (!preg_match('/^[-[:alpha:][:alnum:]\\+\\.]*$/Di', $scheme))
             throw new Erebot_InvalidValueException('Invalid scheme');
         $this->_scheme = $scheme;
     }
@@ -256,12 +261,12 @@ class   Erebot_URI
         sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
                       / "*" / "+" / "," / ";" / "="
         */
-        $decOctet       = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])'
+        $decOctet       = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])';
         $IPv4address    = $decOctet.'(?:\\.'.$decOctet.'){3}';
         $h16            = '[[:xdigit:]]{1,4}';
         $ls32           = '(?:'.$h16.':'.$h16.'|'.$IPv4address.')';
         $IPv6address    =   '(?:'.
-                                '(?:'$h16.':){6}'.$ls32.'|'.
+                                '(?:'.$h16.':){6}'.$ls32.'|'.
                                 '::(?:'.$h16.':){5}'.$ls32.'|'.
                                 '(?:'.$h16.')?::(?:'.$h16.':){4}'.$ls32.'|'.
                                 '(?:(?:'.$h16.')?'.$h16.')?::(?:'.$h16.':){3}'.$ls32.'|'.
@@ -282,15 +287,20 @@ class   Erebot_URI
 
     public function getPort($raw = FALSE)
     {
-        if ($raw || $this->_port === NULL)
+        if ($raw)
             return $this->_port;
+
+        if ($this->_port == '')
+            return NULL;
+
+        $port = (int) $this->_port;
 
         // Try to canonicalize the port.
         $tcp = getservbyname($this->_scheme, 'tcp');
         $udp = getservbyname($this->_scheme, 'udp');
-        if (($tcp != $this->_port && $udp === FALSE) ||
-            ($udp != $this->_port && $tcp === FALSE))
-            return $this->_port;
+        if (($tcp != $port && $udp === FALSE) ||
+            ($udp != $port && $tcp === FALSE))
+            return $port;
         return NULL;
     }
 
@@ -310,33 +320,57 @@ class   Erebot_URI
             throw new Erebot_InvalidValueException('Path not set');
 
         // §5.2.4.  Remove Dot Segments
-        // Rewritten using arrays acting as stacks
-        // instead of simple strings for efficiency.
-        $absolute = FALSE;
-        if (substr($path, 0, 1) == '/') {
-            $path       = (string) substr($path, 1);
-            $absolute   = TRUE;
-        }
+        $input  = $path;
+        $output = '';
 
-        $input  = explode("/", $this->_path);
-        $output = array();
+        while ($input != '') {
+            if (substr($input, 0, 3) == '../')
+                $input = (string) substr($input, 3);
 
-        while (count($input)) {
-            $segment = array_shift($input);
-            if ($segment == '' || $segment == '.')
-                continue;
-            if ($segment == '..')
-                if (count($output))
-                    array_pop($output);
-                continue;
+            else if (substr($input, 0, 2) == './')
+                $input = (string) substr($input, 2);
+
+            else if (substr($input, 0, 3) == '/./')
+                $input = substr($input, 2);
+
+            else if ($input == '/.')
+                $input = '/';
+
+            else if (substr($input, 0, 4) == '/../') {
+                $input  = (string) substr($input, 3);
+                $pos    = strrpos($output, '/');
+                if ($pos === FALSE)
+                    $output = '';
+                else
+                    $output = substr($output, 0, $pos);
             }
-            array_push($output, $segment);
+
+            else if ($input == '/..') {
+                $input  = '/';
+                $pos    = strrpos($output, '/');
+                if ($pos === FALSE)
+                    $output = '';
+                else
+                    $output = substr($output, 0, $pos);
+            }
+
+            else if ($input == '.' || $input == '..')
+                $input = '';
+
+            else {
+                $pos = strpos($input, '/', 1);
+                if ($pos === FALSE) {
+                    $output    .= $input;
+                    $input      = '';
+                }
+                else {
+                    $output    .= substr($input, 0, $pos);
+                    $input      = substr($input, $pos);
+                }
+            }
         }
 
-        $path = implode('/', $output);
-        if ($absolute)
-            $path = '/'.$path;
-        return $path;
+        return $output;
     }
 
     protected function _merge($path)
@@ -440,7 +474,7 @@ class   Erebot_URI
         */
         $pattern    =   '(?:'.
                             '[-[:alnum:]\\._~!\\$&\'\\(\\)\\*\\+,;=/\\?]|'.
-                            '%[[:xdigit:]]{2}'
+                            '%[[:xdigit:]]{2}'.
                         ')*';
         if ($query !== NULL && !preg_match('#^'.$pattern.'$#Di', $query))
             throw new Erebot_InvalidValueException('Invalid query');
@@ -464,7 +498,7 @@ class   Erebot_URI
         */
         $pattern    =   '(?:'.
                             '[-[:alnum:]\\._~!\\$&\'\\(\\)\\*\\+,;=/\\?]|'.
-                            '%[[:xdigit:]]{2}'
+                            '%[[:xdigit:]]{2}'.
                         ')*';
         if ($fragment !== NULL && !preg_match('#^'.$pattern.'$#Di', $fragment))
             throw new Erebot_InvalidValueException('Invalid fragment');
@@ -566,7 +600,8 @@ class   Erebot_URI
 
         if ($parsed['path'] == '') {
             if (isset($parsed['query']))
-                $result->setResult($parsed['query']);
+                $result->setQuery($parsed['query']);
+            $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
             return $result;
         }
 
@@ -575,6 +610,7 @@ class   Erebot_URI
         else
             $result->_setPath($result->_removeDotSegments($result->_merge($parsed['path'])), TRUE);
         $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
+        $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
         return $result;
     }
 }
