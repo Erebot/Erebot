@@ -157,12 +157,13 @@
 
     <define name="server">
         <element name="server">
-            <attribute name="url"><data type="anyURI"/></attribute>
-            <optional>
-                <attribute name="proxy">
-                    <data type="anyURI"/>
-                </attribute>
-            </optional>
+            <attribute name="url">
+                <list>
+                    <oneOrMore>
+                        <data type="anyURI"/>
+                    </oneOrMore>
+                </list>
+            </attribute>
             <ref name="inherited-config"/>
         </element>
     </define>

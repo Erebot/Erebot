@@ -52,13 +52,14 @@ extends     Erebot_Interface_Config_Proxy
     public function getConnectionURL();
 
     /**
-     * Returns the URL used to contact the proxy server
-     * and connect to this IRC server.
+     * Returns a list of all proxy URLs used
+     * before connecting to this IRC server.
      *
-     * \retval string
-     *      URL for the proxy to this server.
+     * \retval list
+     *      List of URLs identifying proxies used
+     *      when connecting to this server.
      */
-    public function getProxyURL();
+    public function getProxies();
 
     /**
      * Returns the IRC network configuration upon which this
