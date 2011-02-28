@@ -25,26 +25,43 @@
  * stricter when validating data.
  *
  * This implementation doesn't assume that the "userinfo" part
- * is made up of a "user:password" pair (contrary to parse_url()
- * which is based on RFC 1738), and provides a single field
- * named "userinfo" instead. Such a pair will be merged upon
+ * is made up of a "username:password" pair (in contrast to
+ * parse_url() which is based on RFC 1738), and provides a single
+ * field named "userinfo" instead. Such pairs will be merged upon
  * encounter.
  *
  * All components are normalized by default when retrieved using
  * any of the getters except asParsedURL(). You may override this
  * behaviour by passing $raw=TRUE to said getters.
- * Normalization is done using the algorithms defined in RFC 3986.
+ * Normalization is done using the rules defined in RFC 3986.
  */
 class   Erebot_URI
 {
+    /// Scheme component (sometimes also erroneously called a "protocol").
     protected $_scheme;
+    /// User information component (such as a "username:password" pair).
     protected $_userinfo;
-    protected $_authority;
+    /// Host component ("authority", even though an authority is more than that).
+    protected $_host;
+    /// Port component.
     protected $_port;
+    /// Path component.
     protected $_path;
+    /// Query component.
     protected $_query;
+    /// Fragment component.
     protected $_fragment;
 
+    /**
+     * Constructs an URI.
+     *
+     * \param mixed $uri
+     *      Either a string representing the URI or an array
+     *      as returned by PHP's parse_url() function.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given URI is invalid.
+     */
     public function __construct($uri)
     {
         if (is_string($uri))
@@ -78,6 +95,26 @@ class   Erebot_URI
         }
     }
 
+    /**
+     * Parses an URI using the grammar defined in RFC 3986.
+     *
+     * \param string $uri
+     *      URI to parse.
+     *
+     * \param bool $relative
+     *      Whether $uri must be considered as an absolute URI (FALSE)
+     *      or a relative reference (TRUE).
+     *
+     * \retval array
+     *      An associative array containing the different components
+     *      that could be parsed out of this URI.
+     *      It uses the same format as parse_url(), except that the
+     *      "user" and "pass" components are merged into a single
+     *      "userinfo" component and only string keys are defined.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $uri is not valid.
+     */
     protected function _parseURI($uri, $relative)
     {
         $result = array();
@@ -148,20 +185,44 @@ class   Erebot_URI
         return $result;
     }
 
+    /**
+     * Performs normalization of percent-encoded characters.
+     *
+     * \param string $data
+     *      Some text containing percent-encoded characters
+     *      that need to be normalized.
+     *
+     * \retval string
+     *      The same text, after percent-encoding normalization.
+     */
     public function _normalizePercent($data)
     {
+        // 6.2.2.1.  Case Normalization
+        // Percent-encoded characters must use uppercase letters.
+        // 6.2.2.2.  Percent-Encoding Normalization
         $unreserved =   'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.
                         'abcdefghijklmnopqrstuvwxyz'.
                         '-._~';
         return preg_replace(
-            '/%([[:xdigit:]])/e',
-            "(strpos(".$unreserved.", chr(hexdec('\\1'))) !== FALSE ".
+            '/%([[:xdigit:]]{2})/e',
+            "(strpos('".$unreserved."', chr(hexdec('\\1'))) !== FALSE ".
             "? chr(hexdec('\\1')) ".
-            ": strtoupper('\\1'))",
+            ": strtoupper('%\\1'))",
             $data
         );
     }
 
+    /**
+     * Returns the current URI as a string.
+     *
+     * \param bool $raw
+     *      (optional) Whether the raw contents of the components
+     *      should be used (TRUE) or a normalized alternative (FALSE).
+     *      The default is to apply normalization.
+     *
+     * \retval string
+     *      The current URI as a string, eventually normalized.
+     */
     public function toURI($raw = FALSE)
     {
         // 5.3.  Component Recomposition
@@ -196,18 +257,48 @@ class   Erebot_URI
         return $result;
     }
 
+    /**
+     * Returns the current URI as a string,
+     * in its normalized form.
+     *
+     * \note
+     *      This method is a shortcut for Erebot_URI::toURI(FALSE).
+     */
     public function __toString()
     {
         return $this->toURI();
     }
 
+    /**
+     * Returns the current URI's scheme.
+     *
+     * \param bool $raw
+     *      (optional) Whether the value should be normalized
+     *      before it's returned (FALSE) or not (TRUE).
+     *      The default is to apply normalization.
+     *
+     * \retval string
+     *      The current URI's scheme as a string,
+     *      eventually normalized.
+     */
     public function getScheme($raw = FALSE)
     {
+        // 6.2.2.1.  Case Normalization
+        // Characters must be normalized to use lowercase letters.
         if ($raw)
             return $this->_scheme;
-        return ($this->_scheme !== NULL) ? strtolower($this->_scheme) : NULL;
+        return strtolower($this->_scheme);
     }
 
+    /**
+     * Sets the current URI's scheme.
+     *
+     * \param string $scheme
+     *      New scheme for this URI, as a string.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $scheme is not valid.
+     */
     public function setScheme($scheme)
     {
         // scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
@@ -216,13 +307,37 @@ class   Erebot_URI
         $this->_scheme = $scheme;
     }
 
+    /**
+     * Returns the current URI's user information.
+     *
+     * \param bool $raw
+     *      (optional) Whether the value should be normalized
+     *      before it's returned (FALSE) or not (TRUE).
+     *      The default is to apply normalization.
+     *
+     * \retval mixed
+     *      The current URI's user information,
+     *      eventually normalized or NULL.
+     */
     public function getUserInfo($raw = FALSE)
     {
         if ($raw)
             return $this->_userinfo;
-        return $this->_normalizePercent($this->_userinfo);
+        return  ($this->_userinfo === NULL)
+                ? NULL
+                : $this->_normalizePercent($this->_userinfo);
     }
 
+    /**
+     * Sets the current URI's user information.
+     *
+     * \param mixed $userinfo
+     *      New user information for this URI
+     *      (either a string or NULL).
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given user information is not valid.
+     */
     public function setUserInfo($userinfo)
     {
         /*
@@ -241,8 +356,22 @@ class   Erebot_URI
         $this->_userinfo = $userinfo;
     }
 
+    /**
+     * Returns the current URI's host.
+     *
+     * \param bool $raw
+     *      (optional) Whether the value should be normalized
+     *      before it's returned (FALSE) or not (TRUE).
+     *      The default is to apply normalization.
+     *
+     * \retval mixed
+     *      The current URI's host as a string,
+     *      eventually normalized or NULL.
+     */
     public function getHost($raw = FALSE)
     {
+        // 6.2.2.1.  Case Normalization
+        // Characters must be normalized to use lowercase letters.
         if ($raw)
             return $this->_host;
         return  ($this->_host !== NULL)
@@ -250,6 +379,15 @@ class   Erebot_URI
                 : NULL;
     }
 
+    /**
+     * Sets the current URI's host.
+     *
+     * \param string $host
+     *      New host for this URI (either a string or NULL).
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $host is not valid.
+     */
     public function setHost($host)
     {
         /*
@@ -303,8 +441,24 @@ class   Erebot_URI
         $this->_host = $host;
     }
 
+    /**
+     * Returns the current URI's port.
+     *
+     * \param bool $raw
+     *      (optional) Whether the value should be normalized
+     *      before it's returned (FALSE) or not (TRUE).
+     *      The default is to apply normalization.
+     *
+     * \retval mixed
+     *      When normalization is in effect, the port for
+     *      the current URI will be returned as an integer,
+     *      or NULL.
+     *      When normalization has been disabled, the port
+     *      will be returned as a string or NULL.
+     */
     public function getPort($raw = FALSE)
     {
+        // 6.2.3.  Scheme-Based Normalization
         if ($raw)
             return $this->_port;
 
@@ -322,6 +476,16 @@ class   Erebot_URI
         return NULL;
     }
 
+    /**
+     * Sets the current URI's port.
+     *
+     * \param mixed $port
+     *      New port for this URI (either a numeric string,
+     *      an integer or NULL).
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $port is not valid.
+     */
     public function setPort($port)
     {
         // port          = *DIGIT
@@ -332,6 +496,16 @@ class   Erebot_URI
         $this->_port = $port;
     }
 
+    /**
+     * Removes "dot segments" ("." and "..") from a path.
+     *
+     * \param string $path
+     *      Path on which to operate.
+     *
+     * \retval string
+     *      The same $path, with all its dot segments
+     *      substituted.
+     */
     protected function _removeDotSegments($path)
     {
         if ($path === NULL)
@@ -391,6 +565,19 @@ class   Erebot_URI
         return $output;
     }
 
+    /**
+     * Merges the given path with the current URI's path.
+     *
+     * \param string $path
+     *      Path to merge into the current path.
+     *
+     * \retval string
+     *      Result of that merge.
+     *
+     * \note
+     *      Despite its name, this method does not modify
+     *      the given $path nor the current object.
+     */
     protected function _merge($path)
     {
         // 5.2.3.  Merge Paths
@@ -403,13 +590,40 @@ class   Erebot_URI
         return substr($this->_path, 0, $pos + 1).$path;
     }
 
+    /**
+     * Returns the current URI's path.
+     *
+     * \param bool $raw
+     *      (optional) Whether the value should be normalized
+     *      before it's returned (FALSE) or not (TRUE).
+     *      The default is to apply normalization.
+     *
+     * \retval string
+     *      The current URI's path as a string,
+     *      eventually normalized.
+     */
     public function getPath($raw = FALSE)
     {
+        // 6.2.2.3.  Path Segment Normalization
         if ($raw)
             return $this->_path;
-        return $this->_normalizePercent($this->_removeDotSegments($this->_path));
+        return $this->_removeDotSegments($this->_normalizePercent($this->_path));
     }
 
+    /**
+     * Validates the given path.
+     *
+     * \param string $path
+     *      Path to validate.
+     *
+     * \param bool $relative
+     *      Whether the given $path is relative (TRUE)
+     *      or not (FAlSE).
+     *
+     * \retval bool
+     *      TRUE if the given $path is valid,
+     *      FALSE otherwise.
+     */
     protected function _validatePath($path, $relative)
     {
         /*
@@ -461,25 +675,74 @@ class   Erebot_URI
         return (bool) preg_match('#^'.$pattern.'$#Di', $path);
     }
 
+    /**
+     * Sets the current URI's path.
+     *
+     * \param string $path
+     *      New path for this URI.
+     *
+     * \param bool $relative
+     *      Whether the given $path is relative (TRUE)
+     *      or not (FALSE).
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $path is not valid.
+     */
     protected function _setPath($path, $relative)
     {
-        if (!$this->_validatePath($path, $relative))
+        if (!is_string($path) || !$this->_validatePath($path, $relative))
             throw new Erebot_InvalidValueException(
                 'Invalid path; use relative() for relative paths'
             );
         $this->_path = $path;
     }
 
+    /**
+     * Sets the current URI's path.
+     *
+     * \param string $path
+     *      New path for this URI.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $path is not valid.
+     *
+     * \note
+     *      This is a very thin wrapper around the internal
+     *      method Erebot_URI::_setPath().
+     */
     public function setPath($path)
     {
         $this->_setPath($path, FALSE);
     }
 
+    /**
+     * Returns the current URI's query.
+     *
+     * \param bool $raw
+     *      (optional) Whether the value should be normalized
+     *      before it's returned (FALSE) or not (TRUE).
+     *      The default is to apply normalization.
+     *
+     * \retval mixed
+     *      The current URI's query as a string,
+     *      eventually normalized or NULL.
+     */
     public function getQuery($raw = FALSE)
     {
-        return $this->_query;
+        if ($raw)
+            return $this->_query;
+        return $this->_normalizePercent($this->_query);
     }
 
+    /**
+     * Sets the current URI's query.
+     *
+     * \param mixed $query
+     *      New query for this URI (either a string or NULL).
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $query is not valid.
+     */
     public function setQuery($query)
     {
         /*
@@ -499,11 +762,34 @@ class   Erebot_URI
         $this->_query = $query;
     }
 
+    /**
+     * Returns the current URI's fragment.
+     *
+     * \param bool $raw
+     *      (optional) Whether the value should be normalized
+     *      before it's returned (FALSE) or not (TRUE).
+     *      The default is to apply normalization.
+     *
+     * \retval mixed
+     *      The current URI's fragment as a string,
+     *      eventually normalized or NULL.
+     */
     public function getFragment($raw = FALSE)
     {
-        return $this->_fragment;
+        if ($raw)
+            return $this->_fragment;
+        return $this->_normalizePercent($this->_fragment);
     }
 
+    /**
+     * Sets the current URI's fragment.
+     *
+     * \param mixed $fragment
+     *      New fragment for this URI (either a string or NULL).
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $fragment is not valid.
+     */
     public function setFragment($fragment)
     {
         /*
@@ -523,34 +809,67 @@ class   Erebot_URI
         $this->_fragment = $fragment;
     }
 
+    /**
+     * Returns information about the current URI,
+     * in the same format as parse_url().
+     *
+     * \param $component
+     *      (optional) A specific component to return.
+     *      Read the documentation about parse_url()
+     *      for more information.
+     *
+     * \retval mixed
+     *      Either an array, a string, an integer or NULL,
+     *      depending on $component and the actual contents
+     *      of this URI.
+     *      Read the documentation about parse_url()
+     *      for more information.
+     */
     public function asParsedURL($component = -1)
     {
         if ($component == -1) {
             $result = array();
             $fields = array(
-                'scheme',
-                'host',
-                'port',
-                'path',
-                'query',
-                'fragment',
+                'scheme'    => PHP_URL_SCHEME,
+                'host'      => PHP_URL_HOST,
+                'port'      => PHP_URL_PORT,
+                'path'      => PHP_URL_PATH,
+                'query'     => PHP_URL_QUERY,
+                'fragment'  => PHP_URL_FRAGMENT,
             );
 
-            foreach ($fields as $field) {
+            foreach ($fields as $field => $alias) {
                 $local = '_'.$field;
-                if ($this->$local !== NULL)
-                    $result[$parseURL] = $this->$local;
+                if ($this->$local !== NULL) {
+                    $result[$field] = $this->$local;
+                    $result[$alias] = $result[$field];
+                }
+            }
+
+            // Cleanup "port" component.
+            if (isset($result['port'])) {
+                if (!ctype_digit($result['port'])) {
+                    unset($result['port']);
+                    unset($result[PHP_URL_PORT]);
+                }
+                else {
+                    $result['port']         =
+                    $result[PHP_URL_PORT]   = (int) $result['port'];
+                }
             }
 
             if ($this->_userinfo !== NULL) {
-                /// @TODO: parse userinfo to fill in the user/pass fields.
-                /*
-                    Quirks from parse_url():
-                    "a" -> user = "a"
-                    "a:" -> user = "a" (even though pass should also be "")
-                    "a:b:c" -> user = "a", pass = "b:c" (invalid)
-                    ":b" -> pass = "b" (invalid)
-                */
+                $limit = strcspn($this->_userinfo, ':');
+                if ($limit > 0) {
+                    $user = substr($this->_userinfo, 0, $limit);
+                    $result['user']         = $user;
+                    $result[PHP_URL_USER]   = $user;
+                }
+                $pass = substr($this->_userinfo, $limit + 1);
+                if ($pass !== FALSE) {
+                    $result['pass']         = $pass;
+                    $result[PHP_URL_PASS]   = $pass;
+                }
             }
 
             return $result;
@@ -562,7 +881,9 @@ class   Erebot_URI
             case PHP_URL_HOST:
                 return $this->_host;
             case PHP_URL_PORT:
-                return $this->_port;
+                return  ($this->_port === NULL || !ctype_digit($this->_port))
+                        ? NULL
+                        : (int) $this->_port;
             case PHP_URL_PATH:
                 return $this->_path;
             case PHP_URL_QUERY:
@@ -570,14 +891,37 @@ class   Erebot_URI
             case PHP_URL_FRAGMENT:
                 return $this->_fragment;
             case PHP_URL_USER:
-                return NULL; /// @TODO
+                $user = substr(
+                    $this->_userinfo, 0,
+                    strcspn($this->_userinfo, ':')
+                );
+                return ($user == "" ? NULL : $user);
             case PHP_URL_PASS:
-                return NULL; /// @TODO
+                $pass = substr(
+                    $this->_userinfo,
+                    strcspn($this->_userinfo, ':') + 1
+                );
+                return ($pass === FALSE ? NULL : $pass);
             default:
                 return NULL;
         }
     }
 
+    /**
+     * Given a relative reference, returns a new absolute URI
+     * matching that reference.
+     *
+     * \param string $reference
+     *      Some relative reference (can be an absolute
+     *      or relative URI). The current absolute URI
+     *      is used as the base to dereference it.
+     *
+     * \retval Erebot_URI
+     *      A new absolute URI matching the given $reference.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $reference is not valid.
+     */
     public function relative($reference)
     {
         try {
@@ -601,6 +945,9 @@ class   Erebot_URI
         // This would be an absolute URI and has already been
         // captured by the previous try..catch block.
 
+        // Always copy the new fragment.
+        $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
+
         // "host" == "authority" here, see the grammar
         // for reasons why this always holds true.
         if (isset($parsed['host'])) {
@@ -609,7 +956,6 @@ class   Erebot_URI
             $result->setUserInfo(isset($parsed['userinfo']) ? $parsed['userinfo'] : NULL);
             $result->_setPath($parsed['path'], TRUE);
             $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
-            $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
             return $result;
         }
 
@@ -619,7 +965,6 @@ class   Erebot_URI
         if ($parsed['path'] == '') {
             if (isset($parsed['query']))
                 $result->setQuery($parsed['query']);
-            $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
             return $result;
         }
 
@@ -628,7 +973,6 @@ class   Erebot_URI
         else
             $result->_setPath($result->_removeDotSegments($result->_merge($parsed['path'])), TRUE);
         $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
-        $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
         return $result;
     }
 }
