@@ -148,6 +148,20 @@ class   Erebot_URI
         return $result;
     }
 
+    public function _normalizePercent($data)
+    {
+        $unreserved =   'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.
+                        'abcdefghijklmnopqrstuvwxyz'.
+                        '-._~';
+        return preg_replace(
+            '/%([[:xdigit:]])/e',
+            "(strpos(".$unreserved.", chr(hexdec('\\1'))) !== FALSE ".
+            "? chr(hexdec('\\1')) ".
+            ": strtoupper('\\1'))",
+            $data
+        );
+    }
+
     public function toURI($raw = FALSE)
     {
         // 5.3.  Component Recomposition
@@ -204,7 +218,9 @@ class   Erebot_URI
 
     public function getUserInfo($raw = FALSE)
     {
-        return $this->_userinfo;
+        if ($raw)
+            return $this->_userinfo;
+        return $this->_normalizePercent($this->_userinfo);
     }
 
     public function setUserInfo($userinfo)
@@ -229,7 +245,9 @@ class   Erebot_URI
     {
         if ($raw)
             return $this->_host;
-        return ($this->_host !== NULL) ? strtolower($this->_host) : NULL;
+        return  ($this->_host !== NULL)
+                ? strtolower($this->_normalizePercent($this->_host))
+                : NULL;
     }
 
     public function setHost($host)
@@ -389,7 +407,7 @@ class   Erebot_URI
     {
         if ($raw)
             return $this->_path;
-        return $this->_removeDotSegments($this->_path);
+        return $this->_normalizePercent($this->_removeDotSegments($this->_path));
     }
 
     protected function _validatePath($path, $relative)
