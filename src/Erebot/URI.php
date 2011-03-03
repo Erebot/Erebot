@@ -220,10 +220,16 @@ class   Erebot_URI
      *      should be used (TRUE) or a normalized alternative (FALSE).
      *      The default is to apply normalization.
      *
+     * \param bool $credentials
+     *      (optional) Whether the content of the "user information"
+     *      component should be part of the returned string (TRUE)
+     *      or not (FALSE). The default is for such credentials to
+     *      appear in the result.
+     *
      * \retval string
      *      The current URI as a string, eventually normalized.
      */
-    public function toURI($raw = FALSE)
+    public function toURI($raw = FALSE, $credentials = TRUE)
     {
         // 5.3.  Component Recomposition
         $result = "";
@@ -237,7 +243,7 @@ class   Erebot_URI
 
         if ($this->_host !== NULL) {
             $result .= '//';
-            if ($this->_userinfo !== NULL)
+            if ($this->_userinfo !== NULL && $credentials)
                 $result .= $this->getUserInfo($raw)."@";
 
             $result    .= $this->getHost($raw);
@@ -470,10 +476,14 @@ class   Erebot_URI
         // Try to canonicalize the port.
         $tcp = getservbyname($this->_scheme, 'tcp');
         $udp = getservbyname($this->_scheme, 'udp');
-        if (($tcp != $port && $udp === FALSE) ||
-            ($udp != $port && $tcp === FALSE))
-            return $port;
-        return NULL;
+
+        if ($tcp == $port && ($udp === FALSE || $udp == $tcp))
+            return NULL;
+
+        if ($udp == $port && ($tcp === FALSE || $udp == $tcp))
+            return NULL;
+
+        return $port;
     }
 
     /**

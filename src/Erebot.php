@@ -524,17 +524,11 @@ implements  Erebot_Interface_Core
             $netName = $network->getName();
             if (isset($currentConnections[$netName])) {
                 try {
-                    $url = parse_url(
-                        $currentConnections[$netName]
-                            ->getConfig(NULL)
-                            ->getConnectionURL()
-                    );
-                    $serverIdentity =
-                        $url['scheme'].'://'.
-                        $url['host'].':'.
-                        $url['port'];
-
-                    $serverCfg = $network->getServerCfg($serverIdentity);
+                    $URIs   = $currentConnections[$netName]
+                                ->getConfig(NULL)
+                                ->getConnectionURI();
+                    $URI    = new Erebot_URI($URIs[count($URIs) - 1]);
+                    $serverCfg = $network->getServerCfg((string) $URI);
 
                     $logger->info(
                         $this->gettext('Reusing existing connection for network "%s"'),
@@ -558,11 +552,12 @@ implements  Erebot_Interface_Core
 
             $servers = $network->getServers();
             foreach ($servers as $server) {
-                $serverURL = $server->getConnectionURL();
+                $URIs       = $server->getConnectionURI();
+                $serverURI  = new Erebot_URI($URIs[count($URIs) - 1]);
                 try {
                     $logger->info(
                         $this->gettext('Loading modules required for "%s"...'),
-                        $serverURL
+                        $serverURI
                     );
                     $connection = new $connectionCls($this, $server);
 
@@ -575,14 +570,14 @@ implements  Erebot_Interface_Core
 
                     $logger->info(
                         $this->gettext('Trying to connect to "%s"...'),
-                        $serverURL
+                        $serverURI
                     );
                     $connection->connect();
                     $newConnections[] = $connection;
 
                     $logger->info(
                         $this->gettext('Successfully connected to "%s"...'),
-                        $serverURL
+                        $serverURI
                     );
 
                     break;
@@ -592,9 +587,9 @@ implements  Erebot_Interface_Core
                     // try the next server on the
                     // list until we successfully
                     // connect or cycle the list.
-                    $logger->warning(
+                    $logger->exception(
                         $this->gettext('Could not connect to "%s"'),
-                        $serverURL
+                        $e, $serverURI
                     );
                 }
             }

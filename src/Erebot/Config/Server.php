@@ -27,11 +27,8 @@ class       Erebot_Config_Server
 extends     Erebot_Config_Proxy
 implements  Erebot_Interface_Config_Server
 {
-    /// A URL used to connect to this IRC(S) server.
-    protected $_connectionURL;
-
-    /// List of URLs identifying proxies used to contact the IRC server.
-    protected $_proxies;
+    /// An array of URI to follow to connect to this IRC(S) server.
+    protected $_connectionURI;
 
     // Documented in the interface.
     public function __construct(
@@ -40,9 +37,7 @@ implements  Erebot_Interface_Config_Server
     )
     {
         parent::__construct($netCfg, $xml);
-        /// @TODO: reintegrate proxy support + proxy chaining.
-        $this->_connectionURL   = (string) $xml['url'];
-        $this->_proxies         = array();
+        $this->_connectionURI = array_filter(explode(' ', (string) $xml['url']));
     }
 
     /**
@@ -54,15 +49,9 @@ implements  Erebot_Interface_Config_Server
     }
 
     // Documented in the interface.
-    public function getConnectionURL()
+    public function getConnectionURI()
     {
-        return $this->_connectionURL;
-    }
-
-    // Documented in the interface.
-    public function getProxies()
-    {
-        return $this->_proxies;
+        return $this->_connectionURI;
     }
 
     // Documented in the interface.
