@@ -16,21 +16,20 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class       Erebot_Proxy_IRCS
-implements  Erebot_Interface_Proxy
+/**
+ * Represents the protocol used at the furthest 
+ * end point of a proxy chain.
+ */
+interface Erebot_Interface_Proxy_EndPoint
 {
-    static public function getDefaultPort()
-    {
-        // As assigned by IANA.
-        return 994;
-    }
-
-    static public function requiresSSL()
-    {
-        return FALSE;
-    }
-
-    static public function proxify(Erebot_URI $proxyURI, Erebot_URI $nextURI, $socket)
-    {
-    }
+    /**
+     * Indicates whether this protocol makes
+     * use of SSL.
+     * 
+     * \retval bool
+     *      If SSL encryption is required by this
+     *      protocol (TRUE) or not (FALSE).
+     */
+    public function requiresSSL();
 }
+

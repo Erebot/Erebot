@@ -16,21 +16,15 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class       Erebot_Proxy_IRC
-implements  Erebot_Interface_Proxy
+/**
+ * The final end point is a secure IRC server.
+ */
+class       Erebot_Proxy_EndPoint_IRCS
+implements  Erebot_Interface_Proxy_EndPoint
 {
-    static public function getDefaultPort()
-    {
-        // As assigned by IANA.
-        return 194;
-    }
-
-    static public function requiresSSL()
+    /// Documented in the interface.
+    public function requiresSSL()
     {
         return FALSE;
-    }
-
-    static public function proxify(Erebot_URI $proxyURI, Erebot_URI $nextURI, $socket)
-    {
     }
 }

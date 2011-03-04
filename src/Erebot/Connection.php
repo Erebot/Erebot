@@ -220,7 +220,7 @@ implements  Erebot_Interface_Connection
             return FALSE;
 
         $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__ . DIRECTORY_SEPARATOR);
+        $logger     = $logging->getLogger(__FILE__);
 
         $URIs           = $this->_config->getConnectionURI();
         $this->_socket  = NULL;
@@ -229,18 +229,20 @@ implements  Erebot_Interface_Connection
             $nbTunnels      = count($URIs);
             for ($i = 0; $i < $nbTunnels; $i++) {
                 $URI        = new Erebot_URI($URIs[$i]);
-                $reflector  = new ReflectionClass(
-                    'Erebot_Proxy_'.strtoupper($URI->getScheme())
-                );
+                $scheme     = $URI->getScheme();
+                $upScheme   = strtoupper($scheme);
 
-                if (!$reflector->implementsInterface('Erebot_Interface_Proxy'))
-                    throw new Erebot_InvalidValueException('Invalid proxy class');
+                if ($i + 1 == $nbTunnels)
+                    $cls = 'Erebot_Proxy_EndPoint_'.$upScheme;
+                else
+                    $cls = 'Erebot_Proxy_'.$upScheme;
 
+                if ($scheme == 'base' || !class_exists($cls))
+                    throw new Erebot_InvalidValueException('Invalid class');
+                
                 $port = $URI->getPort();
                 if ($port === NULL)
-                    $port = call_user_func(
-                        array($reflector->getName(), 'getDefaultPort')
-                    );
+                    $port = getservbyname($scheme, 'tcp');
                 if (!is_int($port) || $port <= 0 || $port > 65535)
                     throw new Erebot_InvalidValueException('Invalid port');
 
@@ -258,19 +260,25 @@ implements  Erebot_Interface_Connection
 
                 // We're not the last link of the chain.
                 if ($i + 1 < $nbTunnels) {
-                    $next = new Erebot_URI($URIs[$i + 1]);
-                    call_user_func(
-                        array($reflector->getName(), 'proxify'),
-                        $URI, $next, $this->_socket
-                    );
+                    $proxy  = new $cls($this->_socket);
+                    if (!($proxy instanceof Erebot_Proxy_Base))
+                        throw new Erebot_InvalidValueException('Invalid class');
+
+                    $next   = new Erebot_URI($URIs[$i + 1]);
+                    $proxy->proxify($URI, $next);
                     $logger->debug(
                         "Successfully established connection through proxy '%s'",
                         $URI->toURI(FALSE, FALSE)
                     );
                 }
+                // That's the endpoint.
                 else {
-                    $query  = $URI->getQuery();
-                    $params = array();
+                    $endPoint   = new $cls();
+                    if (!($endPoint instanceof Erebot_Interface_Proxy_EndPoint))
+                        throw new Erebot_InvalidValueException('Invalid class');
+
+                    $query      = $URI->getQuery();
+                    $params     = array();
                     if ($query !== NULL)
                         parse_str($query, $params);
 
@@ -305,11 +313,12 @@ implements  Erebot_Interface_Connection
                     // Avoid unnecessary buffers
                     // and activate TLS encryption if required.
                     stream_set_write_buffer($this->_socket, 0);
-                    if (call_user_func(array($reflector->getName(), 'requiresSSL')))
+                    if ($endPoint->requiresSSL()) {
                         stream_socket_enable_crypto(
                             $this->_socket, TRUE,
                             STREAM_CRYPTO_METHOD_TLS_CLIENT
                         );
+                    }
                 }
             }
         }

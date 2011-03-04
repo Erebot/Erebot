@@ -556,7 +556,7 @@ implements  Erebot_Interface_Core
                 $serverURI  = new Erebot_URI($URIs[count($URIs) - 1]);
                 try {
                     $logger->info(
-                        $this->gettext('Loading modules required for "%s"...'),
+                        $this->gettext('Loading required modules for "%s"...'),
                         $serverURI
                     );
                     $connection = new $connectionCls($this, $server);

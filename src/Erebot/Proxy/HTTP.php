@@ -16,38 +16,22 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class       Erebot_Proxy_HTTP
-implements  Erebot_Interface_Proxy
+/**
+ * Proxies data through an HTTP proxy.
+ */
+class   Erebot_Proxy_HTTP
+extends Erebot_Proxy_Base
 {
-    static public function getDefaultPort()
+    /// Documented in the interface.
+    public function proxify(Erebot_URI $proxyURI, Erebot_URI $nextURI)
     {
-        // As assigned by IANA.
-        return 80;
-    }
-
-    static public function requiresSSL()
-    {
-        return FALSE;
-    }
-
-    static public function proxify(Erebot_URI $proxyURI, Erebot_URI $nextURI, $socket)
-    {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__ . DIRECTORY_SEPARATOR);
-
-        if (!is_resource($socket))
-            throw new Erebot_InvalidValueException('Not a socket');
-
         $credentials    = $proxyURI->getUserInfo();
         $host           = $nextURI->getHost();
         $port           = $nextURI->getPort();
-        $reflector      = new ReflectionClass(
-            'Erebot_Proxy_'.strtoupper($nextURI->getScheme())
-        );
+        $scheme         = $nextURI->getScheme();
+
         if ($port === NULL)
-            $port = call_user_func(
-                array($reflector->getName(), 'getDefaultPort')
-            );
+            $port = getservbyname($scheme, 'tcp');
         if (!is_int($port) || $port <= 0 || $port > 65535)
             throw new Erebot_InvalidValueException('Invalid port');
 
@@ -69,15 +53,15 @@ implements  Erebot_Interface_Proxy
             $written < $len;
             $written += $fwrite
         ) {
-            $fwrite = fwrite($socket, substr($request, $written));
+            $fwrite = fwrite($this->_socket, substr($request, $written));
             if ($fwrite === FALSE)
                 throw new Erebot_Exception('Connection closed by proxy');
         }
 
-        $line = stream_get_line($socket, 4096, "\r\n");
+        $line = stream_get_line($this->_socket, 4096, "\r\n");
         if ($line === FALSE)
             throw new Erebot_InvalidValueException('Invalid response from proxy');
-        $logger->debug("%s", addcslashes($line, "\000..\037"));
+        $this->_logger->debug("%s", addcslashes($line, "\000..\037"));
         $contents = array_filter(explode(" ", $line));
 
         switch ((int) $contents[1]) {
@@ -93,12 +77,12 @@ implements  Erebot_Interface_Proxy
         // No HTTP server will send more than 2^10 headers anyway.
         $max = (1 << 10);
         for ($i = 0; $i < $max; $i++) {
-            $line = stream_get_line($socket, 4096, "\r\n");
+            $line = stream_get_line($this->_socket, 4096, "\r\n");
             if ($line === FALSE)
                 throw new Erebot_InvalidValueException('Invalid response from proxy');
             if ($line == "")
                 break;
-            $logger->debug("%s", addcslashes($line, "\000..\037"));
+            $this->_logger->debug("%s", addcslashes($line, "\000..\037"));
         }
         if ($i === $max)
             throw new Erebot_InvalidValueException('Endless loop detected in proxy response');

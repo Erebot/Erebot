@@ -16,42 +16,26 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class       Erebot_Proxy_SOCKS
-implements  Erebot_Interface_Proxy
+/**
+ * Proxies data through a SOCKS 5 proxy.
+ */
+class   Erebot_Proxy_SOCKS
+extends Erebot_Proxy_Base
 {
-    static public function getDefaultPort()
+    /// Documented in the interface.
+    public function proxify(Erebot_URI $proxyURI, Erebot_URI $nextURI)
     {
-        // As assigned by IANA.
-        return 1080;
-    }
+        $port       = $nextURI->getPort();
+        $scheme     = $nextURI->getScheme();
 
-    static public function requiresSSL()
-    {
-        return FALSE;
-    }
-
-    static public function proxify(Erebot_URI $proxyURI, Erebot_URI $nextURI, $socket)
-    {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__ . DIRECTORY_SEPARATOR);
-
-        if (!is_resource($socket))
-            throw new Erebot_InvalidValueException('Not a socket');
-
-        $reflector      = new ReflectionClass(
-            'Erebot_Proxy_'.strtoupper($nextURI->getScheme())
-        );
-        $port           = $nextURI->getPort();
         if ($port === NULL)
-            $port = call_user_func(
-                array($reflector->getName(), 'getDefaultPort')
-            );
+            $port = getservbyname($scheme, 'tcp');
         if (!is_int($port) || $port <= 0 || $port > 65535)
             throw new Erebot_InvalidValueException('Invalid port');
 
         // No authentication or username/password-based authentication.
-        self::_write($socket, "\x05\x02\x00\x02");
-        $line = self::_read($socket, 2);
+        $this->_write("\x05\x02\x00\x02");
+        $line = $this->_read(2);
 
         if ($line[0] != "\x05")
             throw new Erebot_InvalidValueException('Bad SOCKS version');
@@ -60,7 +44,7 @@ implements  Erebot_Interface_Proxy
             case 0: // No authentication
                 break;
             case 2: // Username/password-based authentication
-                self::_userpass($proxyURI, $socket);
+                $this->_userpass($proxyURI);
                 break;
             default:
                 throw new Erebot_InvalidValueException('No acceptable method');
@@ -68,13 +52,12 @@ implements  Erebot_Interface_Proxy
 
         // CONNECT.
         $host = $nextURI->getHost();
-        self::_write(
-            $socket,
+        $this->_write(
             "\x05\x01\x00\x03".
             pack("Ca*n", strlen($host), $host, $port)
         );
 
-        $line = self::_read($socket, 4);
+        $line = $this->_read(4);
         if ($line[0] != "\x05")
             throw new Erebot_InvalidValueException('Bad SOCKS version');
 
@@ -112,16 +95,16 @@ implements  Erebot_Interface_Proxy
 
         switch (ord($line[3])) {
             case 1: // IPv4.
-                self::_read($socket, 4);
+                $this->_read(4);
                 break;
 
             case 3: // Domain name.
-                $len = ord(self::_read($socket, 1));
-                self::_read($socket, $len);
+                $len = ord($this->_read(1));
+                $this->_read($len);
                 break;
 
             case 4: // IPv6.
-                self::_read($socket, 16);
+                $this->_read(16);
                 break;
 
             default:
@@ -129,10 +112,10 @@ implements  Erebot_Interface_Proxy
         }
 
         // Consume the port.
-        self::_read($socket, 2);
+        $this->_read(2);
     }
 
-    static protected function _userpass($proxyURI, $socket)
+    protected function _userpass($proxyURI)
     {
         $username = $proxyURI->asParsedURL(PHP_URL_USER);
         $password = $proxyURI->asParsedURL(PHP_URL_PASS);
@@ -148,8 +131,8 @@ implements  Erebot_Interface_Proxy
         if ($plen > 255)
             throw new Erebot_InvalidValueException('Password too long (max. 255)');
 
-        self::_write($socket, "\x01".pack("Ca*Ca*", $ulen, $username, $plen, $password));
-        $line = self::_read($socket, 2);
+        $this->_write("\x01".pack("Ca*Ca*", $ulen, $username, $plen, $password));
+        $line = $this->_read(2);
 
         if ($line[0] != "\x01")
             throw new Erebot_InvalidValueException('Bad subnegociation version');
@@ -158,26 +141,26 @@ implements  Erebot_Interface_Proxy
             throw new Erebot_InvalidValueException('Bad username or password');
     }
 
-    static protected function _write($socket, $line)
+    protected function _write($line)
     {
         for (
             $written = 0, $len = strlen($line);
             $written < $len;
             $written += $fwrite
         ) {
-            $fwrite = fwrite($socket, substr($line, $written));
+            $fwrite = fwrite($this->_socket, substr($line, $written));
             if ($fwrite === FALSE)
                 throw new Erebot_Exception('Connection closed by proxy');
         }
         return $written;
     }
 
-    static protected function _read($socket, $len)
+    protected function _read($len)
     {
         $contents   = "";
         $clen       = 0;
-        while (!feof($socket) && $clen < $len) {
-            $read = fread($socket, $len - $clen);
+        while (!feof($this->_socket) && $clen < $len) {
+            $read = fread($this->_socket, $len - $clen);
             if ($read === FALSE)
                 throw new Erebot_Exception('Connection closed by proxy');
             $contents  .= $read;
