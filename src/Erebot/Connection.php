@@ -1232,14 +1232,14 @@ implements  Erebot_Interface_Connection
         // Restricted characters in channel names,
         // as per RFC 2811 - (2.1) Namespace.
         foreach (array(' ', ',', "\x07", ':') as $token)
-            if (strpos($token, $target) !== FALSE)
+            if (strpos($token, $chan) !== FALSE)
                 return FALSE;
 
         if (strlen($chan) > 50)
             return FALSE;
 
         // As per RFC 2811 - (2.1) Namespace.
-        return (strpos('#&+!', $target[0]) !== FALSE);
+        return (strpos('#&+!', $chan[0]) !== FALSE);
     }
 
     // Documented in the interface.
