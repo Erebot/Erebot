@@ -46,7 +46,7 @@ implements  Erebot_Interface_Timer
 
         $this->_callback    = $callback;
         $this->_delay       = $delay;
-        $this->isRepeated($repeat);
+        $this->setRepetition($repeat);
         $this->_stream      = NULL;
         if ($args === NULL)
             $args = array();
