@@ -89,33 +89,6 @@ interface Erebot_Interface_Timer
     public function getDelay();
 
     /**
-     * Returns the repetition flag of this timer.
-     * It can also be used to change that flag.
-     *
-     * \param bool|int $repeat
-     *      (optional) If given, it can be:
-     *      \arg    An integer indicating the number of times the timer
-     *              will be triggered (with any negative value being
-     *              treated as positive infinity).
-     *      \arg    A boolean which indicates that the timer should call
-     *              the callback periodically (TRUE, same as -1) or just
-     *              once (FALSE, same as 1).
-     *
-     * \retval int
-     *      Returns the repetition state of the timer.
-     *      If the value was changed by means of the $repeat parameter,
-     *      the value before any change was made is returned.
-     *
-     * \deprecated
-     *      This method is only a wrapper around Erebot_Interface_Timer::setRepetition
-     *      and Erebot_Interface_Timer::getRepetition meant to keep the code backward
-     *      compatible. It will be removed as of Erebot 0.5.0.
-     *      Use Erebot_Interface_Timer::setRepetition & Erebot_Interface_Timer::getRepetition
-     *      in new code instead of this method.
-     */
-    public function isRepeated($repeat = NULL);
-
-    /**
      * Returns the number of timer this timer will be restarted.
      *
      * \retval int
@@ -132,7 +105,7 @@ interface Erebot_Interface_Timer
      *              will be triggered (with any negative value being
      *              treated as positive infinity).
      *      \arg    A boolean which indicates that the timer should call
-     *              the callback periodically (TRUE, same as -1) or just
+     *              the callback repeatedly (TRUE, same as -1) or just
      *              once (FALSE, same as 1).
      */
     public function setRepetition($repeat);

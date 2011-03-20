@@ -330,8 +330,8 @@ interface Erebot_Interface_Event_Raw
      *      The raw numeric code of this message.
      *
      * \see
-     *      You may compare the value returned by this method
-     *      with one of the constants defined in raws.php.
+     *      You may compare the value returned by this method with one
+     *      of the constants of the Erebot_Interface_Event_Raw interface.
      *
      * \note
      *      Multiple constants may point to the same code

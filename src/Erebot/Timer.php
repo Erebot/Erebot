@@ -79,15 +79,6 @@ implements  Erebot_Interface_Timer
     }
 
     // Documented in the interface.
-    public function isRepeated($repeat = NULL)
-    {
-        $res = $this->getRepetition();
-        if ($repeat !== NULL)
-            $this->setRepetition($repeat);
-        return $res;
-    }
-
-    // Documented in the interface.
     public function getRepetition()
     {
         return $this->_repeat;
