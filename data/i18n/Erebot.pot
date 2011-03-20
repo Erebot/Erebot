@@ -30,12 +30,12 @@ msgstr  ""
 msgid   "Allocated:"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1284
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1228
 msgid   "Bad channel name"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1181
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1203
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1125
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1147
 msgid   "Code is not clean!"
 msgstr  ""
 #
@@ -43,7 +43,7 @@ msgstr  ""
 msgid   "Connection failed, removing it from the pool"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 596
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 591
 #, php-format
 msgid   "Could not connect to \"%s\""
 msgstr  ""
@@ -56,7 +56,7 @@ msgstr  ""
 msgid   "Erebot is starting"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 562
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 506
 msgid   "Got an exception from the rate-limiter module. Assuming implicit "
         "approval to send the message."
 msgstr  ""
@@ -65,7 +65,7 @@ msgstr  ""
 msgid   "Got exception"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1226
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1170
 msgid   "Invalid mapping name"
 msgstr  ""
 #
@@ -73,9 +73,9 @@ msgstr  ""
 msgid   "Limit:"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 564
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 559
 #, php-format
-msgid   "Loading modules required for \"%s\"..."
+msgid   "Loading required modules for \"%s\"..."
 msgstr  ""
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 352
@@ -94,11 +94,11 @@ msgstr  ""
 msgid   "No more connections to handle, leaving..."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1232
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1176
 msgid   "No such mapping exists"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1312
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1256
 msgid   "Not a valid mask"
 msgstr  ""
 #
@@ -110,17 +110,17 @@ msgstr  ""
 msgid   "Reloading the configuration"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 540
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 534
 #, php-format
 msgid   "Reusing existing connection for network \"%s\""
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 584
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 579
 #, php-format
 msgid   "Successfully connected to \"%s\"..."
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1080
+# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1024
 #, php-format
 msgid   "Successfully loaded module '%s'"
 msgstr  ""
@@ -129,7 +129,7 @@ msgstr  ""
 msgid   "Successfully reloaded the configuration"
 msgstr  ""
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 577
+# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 572
 #, php-format
 msgid   "Trying to connect to \"%s\"..."
 msgstr  ""
