@@ -17,8 +17,9 @@
 */
 
 /**
- * A filter that compares the target channel for an event
- * with some predefined value.
+ * \brief
+ *      A filter that compares the target channel for an event
+ *      with some predefined value.
  *
  * \note
  *      Events that do not relate to a channel never match.

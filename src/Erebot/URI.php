@@ -17,6 +17,10 @@
 */
 
 /**
+ * \brief
+ *      Simple parser/generator for Uniform Resource Identifiers
+ *      as defined in RFC 3986.
+ *
  * This class can be used as both a parser and a generator for
  * Uniform Resource Identifiers (URI) as defined in RFC 3986.
  * It is primarly meant to deal with with absolute URIs but also

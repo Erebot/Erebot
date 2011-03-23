@@ -17,7 +17,9 @@
 */
 
 /**
- * Abstract class for a filter which groups several (sub-)filters together.
+ * \brief
+ *      Abstract class for a filter which groups
+ *      several (sub-)filters together.
  *
  * A "fluent" interface is provided using the addFilter
  * and removeFilter methods.

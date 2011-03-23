@@ -17,8 +17,10 @@
 */
 
 /**
- * A filter that compares the content of events with some static string
- * and matches when the two are equal.
+ * \brief
+ *      A filter that compares the content of events
+ *      with some static string and matches when
+ *      the two are equal.
  */
 class   Erebot_Event_Match_TextStatic
 extends Erebot_Event_Match_TextAbstract

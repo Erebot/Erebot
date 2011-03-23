@@ -17,13 +17,19 @@
 */
 
 /**
- * Represents the identity of an IRC user.
+ * \brief
+ *      Represents the identity of an IRC user.
  */
 class       Erebot_Identity
 implements  Erebot_Interface_Identity
 {
+    /// Nickname for this user identity, either a string or NULL.
     protected $_nick;
+
+    /// Identity string for this user identity, either a string or NULL.
     protected $_ident;
+
+    /// Host part for this user identity, either a string or NULL.
     protected $_host;
 
     /**

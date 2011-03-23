@@ -17,11 +17,13 @@
 */
 
 /**
- * A filter that matches the content of an event
- * based on some wildcard pattern.
+ * \brief
+ *      A filter that matches the content of an event
+ *      based on some wildcard pattern.
  *
- * Valid wildcard characters are "?" (any character),
- * "*" (any string, even an empty one), "&" (any word).
+ * \note
+ *      Valid wildcard characters are "?" (any character),
+ *      "*" (any string, even an empty one), "&" (any word).
  *
  * \note
  *      For the purpose of this filter, a "word" is a

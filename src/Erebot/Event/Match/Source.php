@@ -17,8 +17,9 @@
 */
 
 /**
- * A filter which matches when the source of the event
- * equals some predefined value.
+ * \brief
+ *      A filter which matches when the source of the event
+ *      equals some predefined value.
  *
  * \note
  *      Events that have no "source" never match.

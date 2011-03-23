@@ -17,7 +17,8 @@
 */
 
 /**
- * Abstract filter that matches events based on their content (text).
+ * \brief
+ *      Abstract filter that matches events based on their content (text).
  *
  * Subclasses must provide the logic for the matching algorithm
  * by overriding the _match() method.

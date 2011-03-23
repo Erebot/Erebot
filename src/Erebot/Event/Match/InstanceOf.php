@@ -17,7 +17,8 @@
 */
 
 /**
- * A filter that matches based on the type of event provided.
+ * \brief
+ *      A filter that matches based on the type of event provided.
  */
 class       Erebot_Event_Match_InstanceOf
 implements  Erebot_Interface_Event_Match

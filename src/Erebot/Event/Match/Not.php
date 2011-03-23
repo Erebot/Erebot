@@ -17,7 +17,8 @@
 */
 
 /**
- * A filter that negates the result of a sub-filter.
+ * \brief
+ *      A filter that negates the result of a sub-filter.
  *
  * This filter uses a sub-filter. It does not match whenever
  * the sub-filter matches and vice versa. If can be used as

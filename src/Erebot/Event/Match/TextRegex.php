@@ -17,8 +17,9 @@
 */
 
 /**
- * A filter that matches the content of an event
- * based on a regular expression.
+ * \brief
+ *      A filter that matches the content of an event
+ *      based on a regular expression.
  */
 class   Erebot_Event_Match_TextRegex
 extends Erebot_Event_Match_TextAbstract

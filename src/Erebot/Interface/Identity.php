@@ -17,7 +17,8 @@
 */
 
 /**
- * Represents the identity of an IRC user.
+ * \brief
+ *      Represents the identity of an IRC user.
  */
 interface Erebot_Interface_Identity
 {

@@ -17,7 +17,8 @@
 */
 
 /**
- * A filter that always matches.
+ * \brief
+ *      A filter that always matches.
  */
 class       Erebot_Event_Match_True
 implements  Erebot_Interface_Event_Match

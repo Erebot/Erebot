@@ -17,8 +17,9 @@
 */
 
 /**
- * A filter that groups several (sub-)filters together
- * and matches if any of the sub-filters matches.
+ * \brief
+ *      A filter that groups several (sub-)filters together
+ *      and matches if any of the sub-filters matches.
  */
 class   Erebot_Event_Match_Any
 extends Erebot_Event_Match_CollectionAbstract

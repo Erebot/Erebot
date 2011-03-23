@@ -16,6 +16,11 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface used to implement a rate-limit on the number
+ *      of messages the bot may send to any IRC server.
+ */
 interface   Erebot_Interface_RateLimiter
 {
     /**
