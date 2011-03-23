@@ -16,67 +16,107 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * Abstract class for a filter which groups several (sub-)filters together.
+ *
+ * A "fluent" interface is provided using the addFilter
+ * and removeFilter methods.
+ * This abstract class also implements the ArrayAccess & Countable
+ * interfaces, so that you may count() the number of subfilters
+ * associated with it and/or get/set those subfilters using the usual
+ * array notation.
+ */
 abstract class  Erebot_Event_Match_CollectionAbstract
 implements      Erebot_Interface_Event_Match,
                 ArrayAccess,
                 Countable
 {
-    protected $_matches;
+    /// Subfilters of this filter.
+    protected $_submatchers;
 
+    /**
+     * Creates a new instance of this filter.
+     *
+     * \note
+     *      You may pass instances that implement the
+     *      Erebot_Interface_Event_Match interface as
+     *      initial subfilters of this filter.
+     */
     public function __construct(/* ... */)
     {
         $args = func_get_args();
-        foreach ($args as &$arg) {
+        foreach ($args as $arg) {
             if (!($arg instanceof Erebot_Interface_Event_Match))
                 throw new Erebot_InvalidValueException('Not a valid matcher');
         }
-        unset($arg);
-        $this->_matches = $args;
+        $this->_submatchers = $args;
     }
 
-    // Countable interface.
+    // Documented in the interface (Erebot_Interface_Countable).
     public function count()
     {
-        return count($this->_matches);
+        return count($this->_submatchers);
     }
 
-    // ArrayAccess interface.
+    // Documented in the interface (Erebot_Interface_ArrayAccess).
     public function offsetExists($offset)
     {
-        return isset($this->_matches[$offset]);
+        return isset($this->_submatchers[$offset]);
     }
 
+    // Documented in the interface (Erebot_Interface_ArrayAccess).
     public function offsetGet($offset)
     {
-        return $this->_matches[$offset];
+        return $this->_submatchers[$offset];
     }
 
+    // Documented in the interface (Erebot_Interface_ArrayAccess).
     public function offsetSet($offset, $value)
     {
         if (!($value instanceof Erebot_Interface_Event_Match))
             throw new Erebot_InvalidValueException('Not a valid matcher');
-        $this->_matches[$offset] = $value;
+        $this->_submatchers[$offset] = $value;
     }
 
+    // Documented in the interface (Erebot_Interface_ArrayAccess).
     public function offsetUnset($offset)
     {
-        unset($this->_matches[$offset]);
+        unset($this->_submatchers[$offset]);
     }
 
-    // "Fluent" interface.
-    public function & addFilter(Erebot_Interface_Event_Match $filter)
+    /**
+     * Adds one or more subfilters to this filter.
+     *
+     * \note
+     *      You can pass one or more filters to this method
+     *      to add them to this filter's subfilters.
+     *
+     * \note
+     *      Duplicates of the same subfilter are silently ignored.
+     */
+    public function & add()
     {
-        if (!in_array($filter, $this->_matches, TRUE))
-            $this->_matches[] = $filter;
+        if (!in_array($filter, $this->_submatchers, TRUE))
+            $this->_submatchers[] = $filter;
         return $this;
     }
 
-    // "Fluent" interface.
-    public function & removeFilter(Erebot_Interface_Event_Match $filter)
+    /**
+     * Removes one or more subfilters from this filter.
+     *
+     * \note
+     *      You can pass one or more filters to this method
+     *      to remove them from this filter's subfilters.
+     *
+     * \note
+     *      Attempts to remove a filter which is not a
+     *      subfilter of this one are silently ignored.
+     */
+    public function & remove()
     {
-        $key = array_search($filter, $this->_matches, TRUE);
+        $key = array_search($filter, $this->_submatchers, TRUE);
         if ($key !== FALSE)
-            unset($this->_matches[$key]);
+            unset($this->_submatchers[$key]);
         return $this;
     }
 }

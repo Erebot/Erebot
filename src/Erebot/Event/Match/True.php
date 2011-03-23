@@ -16,10 +16,14 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter that always matches.
+ */
 class       Erebot_Event_Match_True
 implements  Erebot_Interface_Event_Match
 {
-    public function match(Erebot_Interface_Event_Generic &$event)
+    // Documented in the interface.
+    public function match(Erebot_Interface_Event_Generic $event)
     {
         return TRUE;
     }

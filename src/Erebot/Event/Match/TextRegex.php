@@ -16,9 +16,14 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter that matches the content of an event
+ * based on a regular expression.
+ */
 class   Erebot_Event_Match_TextRegex
 extends Erebot_Event_Match_TextAbstract
 {
+    // Documented in the parent class.
     protected function _match($prefix, $text)
     {
         return (preg_match((string) $this->_pattern, $text) == 1);

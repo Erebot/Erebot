@@ -16,12 +16,49 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter that matches based on the type of event provided.
+ */
 class       Erebot_Event_Match_InstanceOf
 implements  Erebot_Interface_Event_Match
 {
+    /// Type to use in comparisons, as a string.
     protected $_type;
 
+    /**
+     * Creates a new instance of this filter.
+     *
+     * \param string|object $type
+     *      Type to match incoming events against.
+     */
     public function __construct($type)
+    {
+        $this->setType($type);
+    }
+
+    /**
+     * Returns the type associated with this filter.
+     *
+     * \retval string
+     *      Type associated with this filter.
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
+
+    /**
+     * Sets the type used in comparisons.
+     *
+     * \param $type string|object
+     *      Type to match incoming events against,
+     *      either as a string or as an instance
+     *      of the type of match against.
+     *
+     * \raise Erebot_InvalidValueException
+     *      The given type is invalid.
+     */
+    public function setType($type)
     {
         if (is_object($type))
             $type = get_class($type);
@@ -32,12 +69,8 @@ implements  Erebot_Interface_Event_Match
         $this->_type = $type;
     }
 
-    public function getType()
-    {
-        return $this->_type;
-    }
-
-    public function match(Erebot_Interface_Event_Generic &$event)
+    // Documented in the interface.
+    public function match(Erebot_Interface_Event_Generic $event)
     {
         return ($event instanceof $this->_type);
     }

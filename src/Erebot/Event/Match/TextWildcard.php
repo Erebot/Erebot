@@ -16,9 +16,24 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter that matches the content of an event
+ * based on some wildcard pattern.
+ *
+ * Valid wildcard characters are "?" (any character),
+ * "*" (any string, even an empty one), "&" (any word).
+ *
+ * \note
+ *      For the purpose of this filter, a "word" is a
+ *      sequence of characters that starts at the beginning
+ *      of the string or is preceded with a space (U+0020)
+ *      and stops at the first space (U+0020) or at the end
+ *      of the string (whichever comes first).
+ */
 class   Erebot_Event_Match_TextWildcard
 extends Erebot_Event_Match_TextAbstract
 {
+    // Documented in the parent class.
     protected function _match($prefix, $text)
     {
         $translationTable = array(

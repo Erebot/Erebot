@@ -16,6 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * Interface for an event filter.
+ *
+ * Subclasses should implement the match() method to provide
+ * an algorithm which decides if a given event matches or not.
+ */
 interface Erebot_Interface_Event_Match
 {
     /**
@@ -28,6 +34,6 @@ interface Erebot_Interface_Event_Match
      * \retval bool
      *      TRUE if the event matches the criterion, FALSE otherwise.
      */
-    public function match(Erebot_Interface_Event_Generic &$event);
+    public function match(Erebot_Interface_Event_Generic $event);
 }
 

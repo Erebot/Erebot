@@ -16,37 +16,72 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter that compares the target channel for an event
+ * with some predefined value.
+ *
+ * \note
+ *      Events that do not relate to a channel never match.
+ */
 class       Erebot_Event_Match_Chan
 implements  Erebot_Interface_Event_Match,
             Erebot_Interface_Event_Chan
 {
+    /// Channel to use in the comparison, as a string.
     protected $_chan;
 
-    public function __construct($chan = NULL)
+    /**
+     * Creates a new instance of the filter.
+     *
+     * \param $chan string|object
+     *      Channel to match incoming events against.
+     *
+     * \raise Erebot_InvalidValueException
+     *      The given chan is invalid.
+     */
+    public function __construct($chan)
     {
-        if ($chan !== NULL && !is_string($chan))
+        $this->setChan($chan);
+    }
+
+    /**
+     * Returns the channel associated with this filter.
+     *
+     * \retval string
+     *      Channel associated with this filter.
+     */
+    public function getChan()
+    {
+        return $this->_chan;
+    }
+
+    /**
+     * Sets the channel used in comparisons.
+     *
+     * \param $chan string|object
+     *      Channel to match incoming events against.
+     *
+     * \raise Erebot_InvalidValueException
+     *      The given chan is invalid.
+     */
+    public function setChan($chan)
+    {
+        if (Erebot_Utils::stringifiable($chan))
             throw new Erebot_InvalidValueException('Not a channel');
 
         $this->_chan = $chan;
     }
 
-    public function & getChan()
-    {
-        return $this->_chan;
-    }
-
-    public function match(Erebot_Interface_Event_Generic &$event)
+    // Documented in the interface.
+    public function match(Erebot_Interface_Event_Generic $event)
     {
         if (!($event instanceof Erebot_Interface_Event_Chan))
             return FALSE;
 
-        if ($this->_chan === NULL)
-            return TRUE;
-
         return (
             $event->getConnection()->irccasecmp(
                 $event->getChan(),
-                $this->_chan
+                (string) $this->_chan
             ) == 0
         );
     }

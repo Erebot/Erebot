@@ -16,27 +16,54 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter that negates the result of a sub-filter.
+ *
+ * This filter uses a sub-filter. It does not match whenever
+ * the sub-filter matches and vice versa. If can be used as
+ * a logical-NOT to express more complex filters.
+ */
 class       Erebot_Event_Match_Not
 implements  Erebot_Interface_Event_Match
 {
+    /// Subfilter to negate.
     protected $_filter;
 
+    /**
+     * Creates a new instance of this filter.
+     *
+     * \param Erebot_Interface_Event_Match $filter
+     *      Subfilter to negate.
+     */
     public function __construct(Erebot_Interface_Event_Match $filter)
     {
         $this->setFilter($filter);
     }
 
+    /**
+     * Returns the negated subfilter.
+     *
+     * \retval Erebot_Interface_Event_Match
+     *      Negated subfilter.
+     */
     public function getFilter()
     {
         return $this->_filter;
     }
 
+    /**
+     * Sets the negated subfilter for this filter.
+     *
+     * \param Erebot_Interface_Event_Match $filter
+     *      Subfilter to negate.
+     */
     public function setFilter(Erebot_Interface_Event_Match $filter)
     {
         $this->_filter = $filter;
     }
 
-    public function match(Erebot_Interface_Event_Generic &$event)
+    // Documented in the interface.
+    public function match(Erebot_Interface_Event_Generic $event)
     {
         return (!$this->_filter->match($event));
     }

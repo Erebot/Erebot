@@ -16,16 +16,20 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter that groups several (sub-)filters together
+ * and only matches when all sub-filters match.
+ */
 class   Erebot_Event_Match_All
 extends Erebot_Event_Match_CollectionAbstract
 {
-    public function match(Erebot_Interface_Event_Generic  &$event)
+    // Documented in the interface.
+    public function match(Erebot_Interface_Event_Generic $event)
     {
-        foreach ($this->_matches as &$match) {
+        foreach ($this->_submatchers as $match) {
             if (!$match->match($event))
                 return FALSE;
         }
-        unset($match);
         return TRUE;
     }
 }

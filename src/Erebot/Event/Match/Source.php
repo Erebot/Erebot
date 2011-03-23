@@ -16,13 +16,55 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * A filter which matches when the source of the event
+ * equals some predefined value.
+ *
+ * \note
+ *      Events that have no "source" never match.
+ */
 class       Erebot_Event_Match_Source
 implements  Erebot_Interface_Event_Match,
             Erebot_Interface_Event_Source
 {
+    /// Source to use in the comparison, as a string.
     protected $_source;
 
-    public function __construct($source = NULL)
+    /**
+     * Creates a new instance of the filter.
+     *
+     * \param $source string|object
+     *      Source to match incoming events against.
+     *
+     * \raise Erebot_InvalidValueException
+     *      The given source is invalid.
+     */
+    public function __construct($source)
+    {
+        $this->setSource($source);
+    }
+
+    /**
+     * Returns the source associated with this filter.
+     *
+     * \retval string
+     *      Source associated with this filter.
+     */
+    public function getSource()
+    {
+        return $this->_source;
+    }
+
+    /**
+     * Sets the source used in comparisons.
+     *
+     * \param $source string|object
+     *      Source to match incoming events against.
+     *
+     * \raise Erebot_InvalidValueException
+     *      The given source is invalid.
+     */
+    public function setSource($source)
     {
         if ($source !== NULL && !Erebot_Utils::stringifiable($source))
             throw new Erebot_InvalidValueException('Not a valid nickname');
@@ -30,12 +72,8 @@ implements  Erebot_Interface_Event_Match,
         $this->_source = $source;
     }
 
-    public function & getSource()
-    {
-        return $this->_source;
-    }
-
-    public function match(Erebot_Interface_Event_Generic &$event)
+    // Documented in the interface.
+    public function match(Erebot_Interface_Event_Generic $event)
     {
         if (!($event instanceof Erebot_Interface_Event_Source))
             return FALSE;
