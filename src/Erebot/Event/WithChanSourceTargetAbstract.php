@@ -35,11 +35,11 @@ implements      Erebot_Interface_Event_Chan
     )
     {
         parent::__construct($connection, $source, $target);
-        $this->_chan =& $chan;
+        $this->_chan = $chan;
     }
 
     // Documented in the interface.
-    public function & getChan()
+    public function getChan()
     {
         return $this->_chan;
     }

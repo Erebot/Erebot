@@ -35,18 +35,18 @@ implements      Erebot_Interface_Event_Source,
     )
     {
         parent::__construct($connection);
-        $this->_source  =   new Erebot_Identity($source);
-        $this->_target  =&  $target;
+        $this->_source = new Erebot_Identity($source);
+        $this->_target = $target;
     }
     
     // Documented in the interface.
-    public function & getSource()
+    public function getSource()
     {
         return $this->_source;
     }
 
     // Documented in the interface.
-    public function & getTarget()
+    public function getTarget()
     {
         return $this->_target;
     }

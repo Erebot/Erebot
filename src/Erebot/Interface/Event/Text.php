@@ -23,6 +23,6 @@
 interface   Erebot_Interface_Event_Text
 extends     Erebot_Interface_Event_Generic
 {
-    public function & getText();
+    public function getText();
 }
 

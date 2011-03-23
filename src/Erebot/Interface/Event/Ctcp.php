@@ -23,6 +23,6 @@
 interface   Erebot_Interface_Event_Ctcp
 extends     Erebot_Interface_Event_Generic
 {
-    public function & getCtcpType();
+    public function getCtcpType();
 }
 

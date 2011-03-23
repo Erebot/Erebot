@@ -40,13 +40,13 @@ implements      Erebot_Interface_Event_Chan,
     }
 
     // Documented in the interface.
-    public function & getChan()
+    public function getChan()
     {
         return $this->_chan;
     }
 
     // Documented in the interface.
-    public function & getSource()
+    public function getSource()
     {
         return $this->_source;
     }

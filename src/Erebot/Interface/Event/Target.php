@@ -23,6 +23,6 @@
 interface   Erebot_Interface_Event_Target
 extends     Erebot_Interface_Event_Generic
 {
-    public function & getTarget();
+    public function getTarget();
 }
 

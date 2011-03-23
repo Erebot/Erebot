@@ -37,7 +37,7 @@ implements      Erebot_Interface_Event_Source
     }
 
     // Documented in the interface.
-    public function & getSource()
+    public function getSource()
     {
         return $this->_source;
     }

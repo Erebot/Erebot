@@ -39,7 +39,7 @@ implements      Erebot_Interface_Event_Text
     }
 
     // Documented in the interface.
-    public function & getText()
+    public function getText()
     {
         return $this->_text;
     }

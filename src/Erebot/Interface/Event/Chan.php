@@ -23,6 +23,6 @@
 interface   Erebot_Interface_Event_Chan
 extends     Erebot_Interface_Event_Generic
 {
-    public function & getChan();
+    public function getChan();
 }
 
