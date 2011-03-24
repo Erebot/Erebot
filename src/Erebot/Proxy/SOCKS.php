@@ -17,7 +17,8 @@
 */
 
 /**
- * Proxies data through a SOCKS 5 proxy.
+ * \brief
+ *      Proxies data through a SOCKS 5 proxy.
  */
 class   Erebot_Proxy_SOCKS
 extends Erebot_Proxy_Base

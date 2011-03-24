@@ -17,7 +17,8 @@
 */
 
 /**
- * Proxies data through an HTTP proxy.
+ * \brief
+ *      Proxies data through an HTTP proxy.
  */
 class   Erebot_Proxy_HTTP
 extends Erebot_Proxy_Base

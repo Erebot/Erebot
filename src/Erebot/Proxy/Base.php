@@ -17,7 +17,8 @@
 */
 
 /**
- * Base class for a proxy client.
+ * \brief
+ *      Base class for a proxy client.
  */
 abstract class Erebot_Proxy_Base
 {

@@ -17,7 +17,8 @@
 */
 
 /**
- * Interface for an event filter.
+ * \brief
+ *      Interface for an event filter.
  *
  * Subclasses should implement the match() method to provide
  * an algorithm which decides if a given event matches or not.

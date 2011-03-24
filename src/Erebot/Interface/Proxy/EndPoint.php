@@ -17,8 +17,9 @@
 */
 
 /**
- * Represents the protocol used at the furthest 
- * end point of a proxy chain.
+ * \brief
+ *      Represents the protocol used at the furthest 
+ *      end point of a proxy chain.
  */
 interface Erebot_Interface_Proxy_EndPoint
 {
