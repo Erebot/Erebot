@@ -43,7 +43,7 @@ implements      Erebot_Interface_Event_Match
      *      allowed (NULL) or disallowed (FALSE).
      *      The default is to prohibit the use of a prefix.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given value for $pattern or $requirePrefix is invalid.
      */
     public function __construct($pattern, $requirePrefix = FALSE)
@@ -69,7 +69,7 @@ implements      Erebot_Interface_Event_Match
      * \param string $pattern
      *      Pattern to use in text comparisons.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given value for $pattern is invalid.
      */
     public function setPattern($pattern)
@@ -101,7 +101,7 @@ implements      Erebot_Interface_Event_Match
      *      allowed (NULL) or disallowed (FALSE).
      *      The default is to prohibit the use of a prefix.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given value for $requirePrefix is invalid.
      */
     public function setPrefixRequirement($requirePrefix = FALSE)

@@ -37,7 +37,7 @@ implements  Erebot_Interface_Event_Match,
      * \param $source string|object
      *      Source to match incoming events against.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given source is invalid.
      */
     public function __construct($source)
@@ -62,7 +62,7 @@ implements  Erebot_Interface_Event_Match,
      * \param $source string|object
      *      Source to match incoming events against.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given source is invalid.
      */
     public function setSource($source)

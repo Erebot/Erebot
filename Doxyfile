@@ -3,6 +3,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = Erebot
 PROJECT_NUMBER         = $(EREBOT_VERSION)
+PROJECT_BRIEF          = "A modular IRC bot written in PHP"
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
@@ -204,7 +205,7 @@ HAVE_DOT               = YES
 DOT_FONTNAME           = FreeSans
 DOT_FONTSIZE           = 10
 DOT_FONTPATH           = 
-DOT_IMAGE_FORMAT       = png
+DOT_IMAGE_FORMAT       = svg
 DOT_PATH               = 
 DOT_GRAPH_MAX_NODES    = 50
 DOT_TRANSPARENT        = NO

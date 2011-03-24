@@ -56,7 +56,7 @@ implements  Erebot_Interface_Event_Match
      *      either as a string or as an instance
      *      of the type of match against.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given type is invalid.
      */
     public function setType($type)

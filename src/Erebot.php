@@ -446,13 +446,13 @@ implements  Erebot_Interface_Core
     }
 
     /**
-     * Handles request yo reload the configuration.
+     * Handles requests to reload the configuration.
      * Such requests are received as signals.
      *
      * \param int $signum
      *      The number of the signal.
      */
-    public function handleSIGHUP()
+    public function handleSIGHUP($signum)
     {
         return $this->reload();
     }

@@ -37,7 +37,7 @@ implements  Erebot_Interface_Event_Match,
      * \param $chan string|object
      *      Channel to match incoming events against.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given chan is invalid.
      */
     public function __construct($chan)
@@ -62,7 +62,7 @@ implements  Erebot_Interface_Event_Match,
      * \param $chan string|object
      *      Channel to match incoming events against.
      *
-     * \raise Erebot_InvalidValueException
+     * \throw Erebot_InvalidValueException
      *      The given chan is invalid.
      */
     public function setChan($chan)
