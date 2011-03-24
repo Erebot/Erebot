@@ -17,7 +17,8 @@
 */
 
 /**
- * End point for a secure IRC server.
+ * \brief
+ *      End point for a secure IRC server.
  */
 class       Erebot_Proxy_EndPoint_IRCS
 implements  Erebot_Interface_Proxy_EndPoint
