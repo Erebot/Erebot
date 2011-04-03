@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when someone joins a channel the bot is already on.
  */
-class   Erebot_Event_Join
-extends Erebot_Event_WithChanSourceAbstract
+class       Erebot_Event_Join
+extends     Erebot_Event_WithChanSourceAbstract
+implements  Erebot_Interface_Event_Join
 {
 }
 

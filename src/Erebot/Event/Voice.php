@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_Voice
 extends     Erebot_Event_ChanUserModeAbstract
-implements  Erebot_Interface_Event_ChanModeGiven,
-            Erebot_Interface_Event_Voice
+implements  Erebot_Interface_Event_Voice
 {
 }
 

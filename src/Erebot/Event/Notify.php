@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when someone on the watch list signs on IRC.
  */
-class   Erebot_Event_Notify
-extends Erebot_Event_NotificationAbstract
+class       Erebot_Event_Notify
+extends     Erebot_Event_NotificationAbstract
+implements  Erebot_Interface_Event_Notify
 {
 }
 

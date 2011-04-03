@@ -22,7 +22,7 @@
  */
 class       Erebot_Event_ChanCtcpReply
 extends     Erebot_Event_WithChanSourceCtcpAbstract
-implements  Erebot_Interface_Event_CtcpReplyMessage
+implements  Erebot_Interface_Event_ChanCtcpReply
 {
 }
 

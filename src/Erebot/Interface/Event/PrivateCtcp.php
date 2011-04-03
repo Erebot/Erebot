@@ -16,12 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for an event capable of conveying a message.
- */
-interface   Erebot_Interface_Event_MessageCapable
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_PrivateCtcp
+extends     Erebot_Interface_Event_Base_Private,
+            Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Text,
+            Erebot_Interface_Event_Base_Ctcp,
+            Erebot_Interface_Event_Base_CtcpMessage
 {
 }
 

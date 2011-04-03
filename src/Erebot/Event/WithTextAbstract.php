@@ -22,11 +22,14 @@
  */
 abstract class  Erebot_Event_WithTextAbstract
 extends         Erebot_Event_Abstract
-implements      Erebot_Interface_Event_Text
+implements      Erebot_Interface_Event_Base_Text
 {
     protected $_text;
 
-    public function __construct(Erebot_Interface_Connection &$connection, $text)
+    public function __construct(
+        Erebot_Interface_Connection $connection,
+                                    $text
+    )
     {
         parent::__construct($connection);
         $this->_text = new Erebot_TextWrapper((string) $text);

@@ -25,8 +25,9 @@
  * Therefore, this event is only a convenient shortcut for the underlying
  * raw event.
  */
-class   Erebot_Event_Connect
-extends Erebot_Event_Abstract
+class       Erebot_Event_Connect
+extends     Erebot_Event_Abstract
+implements  Erebot_Interface_Event_Connect
 {
 }
 

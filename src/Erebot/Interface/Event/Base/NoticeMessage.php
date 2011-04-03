@@ -18,11 +18,10 @@
 
 /**
  * \brief
- *      Interface for an event which contains some text.
+ *      Interface for an event capable of conveying a NOTICE.
  */
-interface   Erebot_Interface_Event_Text
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Base_NoticeMessage
+extends     Erebot_Interface_Event_Base_MessageCapable
 {
-    public function getText();
 }
 

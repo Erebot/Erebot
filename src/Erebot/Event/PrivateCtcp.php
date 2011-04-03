@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_PrivateCtcp
 extends     Erebot_Event_WithSourceCtcpAbstract
-implements  Erebot_Interface_Event_CtcpMessage,
-            Erebot_Interface_Event_Private
+implements  Erebot_Interface_Event_PrivateCtcp
 {
 }
 

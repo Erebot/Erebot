@@ -28,12 +28,12 @@ extends         Erebot_Event_WithSourceTextAbstract
     protected $_timestamp;
 
     public function __construct(
-        Erebot_Interface_Connection    &$connection,
-                                        $source,
-                                        $ident,
-                                        $host,
-        DateTime                       &$timestamp,
-                                        $text
+        Erebot_Interface_Connection $connection,
+                                    $source,
+                                    $ident,
+                                    $host,
+        DateTime                    $timestamp,
+                                    $text
     )
     {
         parent::__construct($connection, $source, $text);

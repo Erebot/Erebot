@@ -322,19 +322,15 @@ interface Erebot_Interface_Connection
      * Dispatches the given event to handlers
      * which have been registered for this type of event.
      *
-     * \param Erebot_Interface_Event_Generic $event
+     * \param Erebot_Interface_Event_Base_Generic $event
      *      An event to dispatch.
-     */
-    public function dispatchEvent(Erebot_Interface_Event_Generic $event);
-
-    /**
-     * Dispatches the given raw to handlers
-     * which have been registered for this type of raw.
      *
-     * \param Erebot_Interface_Event_Raw $raw
-     *      A raw message to dispatch.
+     * \note
+     *      For the purposes of this method, raw messages (objects
+     *      implementing the Erebot_Interface_Event_Raw interface)
+     *      are also considered to be "events".
      */
-    public function dispatchRaw(Erebot_Interface_Event_Raw $raw);
+    public function dispatch(Erebot_Interface_Event_Base_Generic $event);
 
     /**
      * Compares two string in a case-sensitive fashion (like strcmp).

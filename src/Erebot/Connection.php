@@ -50,7 +50,11 @@ implements  Erebot_Interface_Connection
     /// A list of eventHandlers.
     protected $_events;
 
+    /// Whether this connection is actually... well, connected.
     protected $_connected;
+
+    /// 
+    protected $_eventsMapping;
 
     /// Valid mappings for case-insensitive comparisons.
     static protected $_caseMappings = NULL;
@@ -88,6 +92,56 @@ implements  Erebot_Interface_Connection
                     range('A', chr(94))
                 ),
             );
+        }
+
+        $this->_eventsMapping = array();
+        $events = array(
+            'Ban',
+            'ChanAction',
+            'ChanCtcp',
+            'ChanCtcpReply',
+            'ChanNotice',
+            'ChanText',
+            'Connect',
+            'DeHalfop',
+            'DeOp',
+            'DeOwner',
+            'DeProtect',
+            'DeVoice',
+            'Disconnect',
+            'Error',
+            'Except',
+            'Halfop',
+            'Invite',
+            'Join',
+            'Kick',
+            'Kill',
+            'Logon',
+            'Nick',
+            'Notify',
+            'Op',
+            'Owner',
+            'Part',
+            'Ping',
+            'Pong',
+            'PrivateAction',
+            'PrivateCtcp',
+            'PrivateCtcpReply',
+            'PrivateNotice',
+            'PrivateText',
+            'Protect',
+            'Raw',
+            'RawMode',
+            'Topic',
+            'UnBan',
+            'UnExcept',
+            'UnNotify',
+            'UserMode',
+            'Voice',
+        );
+        foreach ($events as $event) {
+            $this->_eventsMapping['Erebot_Interface_Event_'.$event] =
+                'Erebot_Event_'.$event;
         }
 
         $this->_loadModules(
@@ -334,8 +388,7 @@ implements  Erebot_Interface_Connection
             );
         }
 
-        $event = new Erebot_Event_Logon($this);
-        $this->dispatchEvent($event);
+        $this->dispatch($this->_makeEvent('!Logon'));
         return TRUE;
     }
 
@@ -456,8 +509,7 @@ implements  Erebot_Interface_Connection
     {
         $received   = fread($this->_socket, 4096);
         if ($received === FALSE || feof($this->_socket)) {
-            $event = new Erebot_Event_Disconnect($this);
-            $this->dispatchEvent($event);
+            $this->dispatch($this->_makeEvent('!Disconnect'));
 
             if (!$event->preventDefault()) {
                 $logging    = Plop::getInstance();
@@ -561,9 +613,7 @@ implements  Erebot_Interface_Connection
             $msg = implode(' ', $parts);
             if (substr($msg, 0, 1) == ':')
                 $msg = substr($msg, 1);
-            $event = new Erebot_Event_Ping($this, $msg);
-            $this->dispatchEvent($event);
-            return;
+            return $this->dispatch($this->_makeEvent('!Ping', $msg));
         }
 
         $type   = array_shift($parts);
@@ -582,9 +632,7 @@ implements  Erebot_Interface_Connection
                 $parts[0] = substr($parts[0], 1);
 
             $msg = implode(' ', $parts);
-            $event = new Erebot_Event_Error($this, $source, $msg);
-            $this->dispatchEvent($event);
-            return;
+            return $this->dispatch($this->_makeEvent('!Error', $souce, $msg));
         }
 
         $target = array_shift($parts);
@@ -598,13 +646,11 @@ implements  Erebot_Interface_Connection
 
         switch ($type) {
             case 'INVITE':     // :nick1!ident@host INVITE nick2 :#chan
-                $event = new Erebot_Event_Invite($this, $msg, $source, $target);
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Invite', $msg, $source, $target));
                 break;
 
             case 'JOIN':    // :nick1!ident@host JOIN :#chan
-                $event = new Erebot_Event_Join($this, $target, $source);
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Join', $target, $source));
                 break;
 
             case 'KICK':    // :nick1!ident@host KICK #chan nick2 :Reason
@@ -614,39 +660,22 @@ implements  Erebot_Interface_Connection
                 if (strlen($msg) && $msg[0] == ':')
                     $msg = substr($msg, 1);
 
-                $event  = new Erebot_Event_Kick(
-                    $this,
-                    $target,
-                    $source,
-                    $nick,
-                    $msg
-                );
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Kick', $target, $source, $nick, $msg));
                 break;
 
             case 'KILL':    // :nick1!ident@host KILL nick2 :Reason
-                $event  = new Erebot_Event_Kill($this, $target, $source, $msg);
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Kill', $target, $source, $msg));
                 break;
 
             case 'MODE':    // :nick1!ident@host MODE <nick2/#chan> modes
                 if (!$this->isChannel($target)) {
-                    $event = new Erebot_Event_UserMode(
-                        $this,
-                        $source,
-                        $target,
-                        $msg
-                    );
-                    $this->dispatchEvent($event);
+                    $this->dispatch($this->_makeEvent('!UserMode', $source, $target, $msg));
                     break;
                 }
 
-                $event  = new Erebot_Event_RawMode($this, $target, $source, $msg);
-                $this->dispatchEvent($event);
-
-                if ($event->preventDefault(TRUE)) {
+                $this->dispatch($this->_makeEvent('!RawMode', $target, $source, $msg));
+                if ($event->preventDefault(TRUE))
                     break;
-                }
 
                 $wrappedMessage = new Erebot_TextWrapper($msg);
                 $modes  = $wrappedMessage[0];
@@ -657,23 +686,23 @@ implements  Erebot_Interface_Connection
                 $priv     = array(
                     self::MODE_ADD =>
                         array(
-                            'o' => 'Erebot_Event_Op',
-                            'h' => 'Erebot_Event_Halfop',
-                            'v' => 'Erebot_Event_Voice',
-                            'a' => 'Erebot_Event_Protect',
-                            'q' => 'Erebot_Event_Owner',
-                            'b' => 'Erebot_Event_Ban',
-                            'e' => 'Erebot_Event_Except',
+                            'o' => '!Op',
+                            'h' => '!Halfop',
+                            'v' => '!Voice',
+                            'a' => '!Protect',
+                            'q' => '!Owner',
+                            'b' => '!Ban',
+                            'e' => '!Except',
                         ),
                     self::MODE_REMOVE =>
                         array(
-                            'o' => 'Erebot_Event_DeOp',
-                            'h' => 'Erebot_Event_DeHalfop',
-                            'v' => 'Erebot_Event_DeVoice',
-                            'a' => 'Erebot_Event_DeProtect',
-                            'q' => 'Erebot_Event_DeOwner',
-                            'b' => 'Erebot_Event_UnBan',
-                            'e' => 'Erebot_Event_UnExcept',
+                            'o' => '!DeOp',
+                            'h' => '!DeHalfop',
+                            'v' => '!DeVoice',
+                            'a' => '!DeProtect',
+                            'q' => '!DeOwner',
+                            'b' => '!UnBan',
+                            'e' => '!UnExcept',
                         ),
                 );
 
@@ -695,8 +724,7 @@ implements  Erebot_Interface_Connection
                         case 'b':
                             $tnick  = $wrappedMessage[$k++];
                             $cls    = $priv[$mode][$modes[$i]];
-                            $event  = new $cls($this, $target, $source, $tnick);
-                            $this->dispatchEvent($event);
+                            $this->dispatch($this->_makeEvent($cls, $target, $source, $tnick));
                             break;
 
                         default:
@@ -746,8 +774,7 @@ implements  Erebot_Interface_Connection
                 break; // ON_MODE
 
             case 'NICK':    // :oldnick!ident@host NICK newnick
-                $event = new Erebot_Event_Nick($this, $source, $target);
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Nick', $source, $target));
                 break;
 
             case 'NOTICE':    // :nick1!ident@host NOTICE <nick2/#chan> :Message
@@ -761,45 +788,25 @@ implements  Erebot_Interface_Connection
                     $msg    = (string) substr($msg, $pos + 1);
 
                     if ($this->isChannel($target))
-                        $event = new Erebot_Event_ChanCtcpReply(
-                            $this,
-                            $target,
-                            $source,
-                            $ctcp,
-                            $msg
-                        );
+                        $this->dispatch($this->_makeEvent('!ChanCtcpReply', $target, $source, $ctcp, $msg));
                     else
-                        $event = new Erebot_Event_PrivateCtcpReply(
-                            $this,
-                            $source,
-                            $ctcp,
-                            $msg
-                        );
-                    $this->dispatchEvent($event);
+                        $this->dispatch($this->_makeEvent('!PrivateCtcpReply', $source, $ctcp, $msg));
                     break;
                 }
 
                 if ($this->isChannel($target))
-                    $event = new Erebot_Event_ChanNotice(
-                        $this,
-                        $target,
-                        $source,
-                        $msg
-                    );
+                    $this->dispatch($this->_makeEvent('!ChanNotice', $target, $source, $msg));
                 else
-                    $event = new Erebot_Event_PrivateNotice($this, $source, $msg);
-                $this->dispatchEvent($event);
+                    $this->dispatch($this->_makeEvent('!PrivateNotice', $source, $msg));
                 break;
 
             case 'PART':    // :nick1!ident@host PART #chan :Reason
-                $event = new Erebot_Event_Part($this, $target, $source, $msg);
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Part', $target, $source, $msg));
                 break;
 
             /* We sent a PING and got a PONG! :) */
             case 'PONG':    // :origin PONG origin target
-                $event = new Erebot_Event_Pong($this, $source, $msg);
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Pong', $source, $msg));
                 break;
 
             case 'PRIVMSG':    // :nick1!ident@host PRIVMSG <nick2/#chan> :Msg
@@ -814,56 +821,27 @@ implements  Erebot_Interface_Connection
 
                     if ($ctcp == "ACTION") {
                         if ($this->isChannel($target))
-                            $event = new Erebot_Event_ChanAction(
-                                $this,
-                                $target,
-                                $source,
-                                $msg
-                            );
+                            $this->dispatch($this->_makeEvent('!ChanAction', $target, $source, $msg));
                         else
-                            $event = new Erebot_Event_PrivateAction(
-                                $this,
-                                $source,
-                                $msg
-                            );
-                        $this->dispatchEvent($event);
+                            $this->dispatch($this->_makeEvent('!PrivateAction', $source, $msg));
                         break;
                     }
 
                     if ($this->isChannel($target))
-                        $event = new Erebot_Event_ChanCtcp(
-                            $this,
-                            $target,
-                            $source,
-                            $ctcp,
-                            $msg
-                        );
+                        $this->dispatch($this->_makeEvent('!ChanCtcp', $target, $source, $ctcp, $msg));
                     else
-                        $event = new Erebot_Event_PrivateCtcp(
-                            $this,
-                            $source,
-                            $ctcp,
-                            $msg
-                        );
-                    $this->dispatchEvent($event);
+                        $this->dispatch($this->_makeEvent('!PrivateCtcp', $source, $ctcp, $msg));
                     break;
                 }
 
                 if ($this->isChannel($target))
-                    $event = new Erebot_Event_ChanText(
-                        $this,
-                        $target,
-                        $source,
-                        $msg
-                    );
+                    $this->dispatch($this->_makeEvent('!ChanText', $target, $source, $msg));
                 else
-                    $event = new Erebot_Event_PrivateText($this, $source, $msg);
-                $this->dispatchEvent($event);
+                    $this->dispatch($this->_makeEvent('!PrivateText', $source, $msg));
                 break;
 
             case 'TOPIC':    // :nick1!ident@host TOPIC #chan :New topic
-                $event = new Erebot_Event_Topic($this, $target, $source, $msg);
-                $this->dispatchEvent($event);
+                $this->dispatch($this->_makeEvent('!Topic', $target, $source, $msg));
                 break;
 
             default:        // :server numeric parameters
@@ -880,8 +858,7 @@ implements  Erebot_Interface_Connection
                     case Erebot_Interface_Event_Raw::RPL_LUSERME:
                         if ($this->_connected)
                             break;
-                        $event = new Erebot_Event_Connect($this);
-                        $this->dispatchEvent($event);
+                        $this->dispatch($this->_makeEvent('!Connect'));
                         $this->_connected = TRUE;
                         break;
 
@@ -900,29 +877,20 @@ implements  Erebot_Interface_Connection
 
                         $map    = array(
                             Erebot_Interface_Event_Raw::RPL_NOWON   =>
-                                'Erebot_Event_Notify',
+                                '!Notify',
                             Erebot_Interface_Event_Raw::RPL_LOGON   =>
-                                'Erebot_Event_Notify',
+                                '!Notify',
                             Erebot_Interface_Event_Raw::RPL_NOWOFF  =>
-                                'Erebot_Event_UnNotify',
+                                '!UnNotify',
                             Erebot_Interface_Event_Raw::RPL_LOGOFF  =>
-                                'Erebot_Event_UnNotify',
+                                '!UnNotify',
                         );
                         $cls    = $map[$type];
-                        $event  = new $cls($this, $nick, $ident, $host,
-                                            $timestamp, $text);
-                        $this->dispatchEvent($event);
+                        $this->dispatch($this->_makeEvent($cls, $nick, $ident, $host, $timestamp, $text));
                         break;
                 }
 
-                $event  = new Erebot_Event_Raw(
-                    $this,
-                    $type,
-                    $source,
-                    $target,
-                    $msg
-                );
-                $this->dispatchRaw($event);
+                $this->dispatch($this->_makeEvent('!Raw', $type, $source, $target, $msg));
                 break;
         } /* switch ($type) */
     }
@@ -1105,8 +1073,123 @@ implements  Erebot_Interface_Connection
         unset($this->_events[$key]);
     }
 
-    // Documented in the interface.
-    public function dispatchEvent(Erebot_Interface_Event_Generic $event)
+    /**
+     * Factory to create an event matching the given interface,
+     * passing any additional parameters given to this method
+     * to the constructor for that event.
+     *
+     * \param string $iface
+     *      Name of the interface describing
+     *      the type of event to create.
+     *
+     * \note
+     *      You may pass additional parameters to this method.
+     *      They will be passed as is to the event's constructor.
+     *
+     * \note
+     *      It is not necessary to pass "$this" explicitely
+     *      as the first additional parameter to this method,
+     *      this factory already takes care of adding it
+     *      automatically as all event types require it.
+     *
+     * \note
+     *      This method can also use the same shortcuts as
+     *      Erebot_Connection::getEventClass().
+     */
+    protected function _makeEvent($iface /* , ... */)
+    {
+        $args = func_get_args();
+
+        // Shortcuts.
+        $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
+
+        // Replace the first argument (interface) with a reference
+        // to this connection, since all events require it anyway.
+        // This simplifies calls to this method a little bit.
+        $args[0]    = $this;
+        $cls        = new ReflectionClass($this->_eventsMapping[$iface]);
+        return $cls->newInstanceArgs($args);
+    }
+
+    /**
+     * Returns the name of the class used to create
+     * events for a certain interface.
+     *
+     * \param string $iface
+     *      The name of the interface describing
+     *      the type of event.
+     *
+     * \retval string
+     *      Name of the class to use to create events
+     *      for the given interface.
+     *
+     * \retval NULL
+     *      Returned when no class has been registered yet
+     *      to create events for the given interface.
+     *
+     * \note
+     *      As a special shortcut, you may use an exclamation
+     *      point ("!") in the interface name, which will be
+     *      replaced by the text "Erebot_Interface_Event_".
+     *      Hence, to retrieve the class used to create events
+     *      with the "Erebot_Interface_Event_Op" interface,
+     *      it is enough to simply pass "!Op" as the value
+     *      for $iface.
+     */
+    public function getEventClass($iface)
+    {
+        // Shortcuts.
+        $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
+
+        return isset($this->_eventsMapping[$iface])
+            ? $this->_eventsMapping[$iface]
+            : NULL;
+    }
+
+    /**
+     * Sets the class to use when creating events
+     * for a certain interface.
+     *
+     * \param string $iface
+     *      Interface to associate the class with.
+     *
+     * \param string $cls
+     *      Class to use when creating events for that interface.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given class does not implement the given
+     *      interface and therefore cannot be used as a
+     *      factory.
+     *
+     * \note
+     *      As a special shortcut, you may use an exclamation
+     *      point ("!") in the interface name, which will be
+     *      replaced by the text "Erebot_Interface_Event_".
+     *      Hence, to change the class used to create events
+     *      with the "Erebot_Interface_Event_Op" interface,
+     *      it is enough to simply pass "!Op" as the value
+     *      for $iface. The $cls is always left unaffected.
+     */
+    public function setEventClass($iface, $cls)
+    {
+        // Shortcuts.
+        $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
+
+        $reflector = new ReflectionClass($cls);
+        if (!$reflector->implementsInterface($iface))
+            throw new Erebot_InvalidValueException(
+                'The given class does not implement that interface');
+        $this->_eventsMapping[$iface] = $cls;
+    }
+
+    /**
+     * Dispatches the given event to handlers
+     * which have been registered for this type of event.
+     *
+     * \param Erebot_Interface_Event_Base_Generic $event
+     *      An event to dispatch.
+     */
+    protected function _dispatchEvent(Erebot_Interface_Event_Base_Generic $event)
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
@@ -1127,8 +1210,14 @@ implements  Erebot_Interface_Connection
         }
     }
 
-    // Documented in the interface.
-    public function dispatchRaw(Erebot_Interface_Event_Raw $raw)
+    /**
+     * Dispatches the given raw to handlers
+     * which have been registered for this type of raw.
+     *
+     * \param Erebot_Interface_Event_Raw $raw
+     *      A raw message to dispatch.
+     */
+    protected function _dispatchRaw(Erebot_Interface_Event_Raw $raw)
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
@@ -1147,6 +1236,14 @@ implements  Erebot_Interface_Connection
             $logger->exception($this->_bot->gettext('Code is not clean!'), $e);
             $this->disconnect($e->getMessage());
         }
+    }
+
+    // Documented in the interface.
+    public function dispatch(Erebot_Interface_Event_Base_Generic $event)
+    {
+        if ($event instanceof Erebot_Interface_Event_Raw)
+            return $this->_dispatchRaw($event);
+        return $this->_dispatchEvent($event);
     }
 
     protected function _getMapping($mappingName = NULL)

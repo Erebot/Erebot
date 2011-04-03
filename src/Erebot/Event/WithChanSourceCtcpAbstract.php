@@ -23,16 +23,16 @@
  */
 abstract class  Erebot_Event_WithChanSourceCtcpAbstract
 extends         Erebot_Event_WithChanSourceTextAbstract
-implements      Erebot_Interface_Event_Ctcp
+implements      Erebot_Interface_Event_Base_Ctcp
 {
     protected $_ctcpType;
     
     public function __construct(
-        Erebot_Interface_Connection    &$connection,
-                                        $chan,
-                                        $source,
-                                        $ctcpType,
-                                        $text
+        Erebot_Interface_Connection $connection,
+                                    $chan,
+                                    $source,
+                                    $ctcpType,
+                                    $text
     )
     {
         parent::__construct($connection, $chan, $source, $text);

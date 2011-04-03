@@ -16,13 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for ban EXCEPTion mode.
- */
 interface   Erebot_Interface_Event_Except
-extends     Erebot_Interface_Event_Generic
+extends     Erebot_Interface_Event_Base_Chan,
+            Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Target
 {
-    const MODE_LETTER = 'e';
 }
 

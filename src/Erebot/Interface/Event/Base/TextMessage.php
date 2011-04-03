@@ -18,10 +18,10 @@
 
 /**
  * \brief
- *      Interface for an event capable of conveying an ACTION.
+ *      Interface for an event capable of conveying a text message.
  */
-interface   Erebot_Interface_Event_ActionMessage
-extends     Erebot_Interface_Event_MessageCapable
+interface   Erebot_Interface_Event_Base_TextMessage
+extends     Erebot_Interface_Event_Base_MessageCapable
 {
 }
 

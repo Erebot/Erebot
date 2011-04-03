@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_DeHalfop
 extends     Erebot_Event_ChanUserModeAbstract
-implements  Erebot_Interface_Event_ChanModeTaken,
-            Erebot_Interface_Event_Halfop
+implements  Erebot_Interface_Event_DeHalfop
 {
 }
 

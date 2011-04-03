@@ -16,12 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for PROTECTion mode.
- */
 interface   Erebot_Interface_Event_Protect
-extends     Erebot_Interface_Event_Generic
+extends     Erebot_Interface_Event_Base_Chan,
+            Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Target,
+            Erebot_Interface_Event_Base_ChanModeGiven,
+            Erebot_Interface_Event_Base_Protect
 {
-    const MODE_LETTER = 'a';
 }
+

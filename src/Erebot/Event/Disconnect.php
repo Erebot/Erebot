@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when the connection to a server gets dropped.
  */
-class   Erebot_Event_Disconnect
-extends Erebot_Event_Abstract
+class       Erebot_Event_Disconnect
+extends     Erebot_Event_Abstract
+implements  Erebot_Interface_Event_Disconnect
 {
 }
 

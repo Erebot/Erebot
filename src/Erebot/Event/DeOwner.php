@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_DeOwner
 extends     Erebot_Event_ChanUserModeAbstract
-implements  Erebot_Interface_Event_ChanModeTaken,
-            Erebot_Interface_Event_Owner
+implements  Erebot_Interface_Event_DeOwner
 {
 }
 

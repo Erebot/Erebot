@@ -16,13 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for a mode which is taken from someone.
- */
-interface   Erebot_Interface_Event_ChanModeTaken
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_UserMode
+extends     Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Target,
+            Erebot_Interface_Event_Base_Text
 {
-    const MODE_PREFIX = '-';
 }
 

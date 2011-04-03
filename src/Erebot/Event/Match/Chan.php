@@ -25,8 +25,7 @@
  *      Events that do not relate to a channel never match.
  */
 class       Erebot_Event_Match_Chan
-implements  Erebot_Interface_Event_Match,
-            Erebot_Interface_Event_Chan
+implements  Erebot_Interface_Event_Match
 {
     /// Channel to use in the comparison, as a string.
     protected $_chan;
@@ -74,9 +73,9 @@ implements  Erebot_Interface_Event_Match,
     }
 
     // Documented in the interface.
-    public function match(Erebot_Interface_Event_Generic $event)
+    public function match(Erebot_Interface_Event_Base_Generic $event)
     {
-        if (!($event instanceof Erebot_Interface_Event_Chan))
+        if (!($event instanceof Erebot_Interface_Event_Base_Chan))
             return FALSE;
 
         return (

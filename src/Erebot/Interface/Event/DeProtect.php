@@ -16,12 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for an event capable of conveying a NOTICE.
- */
-interface   Erebot_Interface_Event_NoticeMessage
-extends     Erebot_Interface_Event_MessageCapable
+interface   Erebot_Interface_Event_DeProtect
+extends     Erebot_Interface_Event_Base_Chan,
+            Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Target,
+            Erebot_Interface_Event_Base_ChanModeTaken,
+            Erebot_Interface_Event_Base_Protect
 {
 }
 

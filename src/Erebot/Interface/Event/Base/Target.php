@@ -18,10 +18,19 @@
 
 /**
  * \brief
- *      Interface for an event which occurs in a PRIVATE query.
+ *      Interface for an event which has a target.
  */
-interface   Erebot_Interface_Event_Private
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Base_Target
+extends     Erebot_Interface_Event_Base_Generic
 {
+    /**
+     * Returns the target of the current message.
+     * This will generally be the bot's nickname
+     * or some other user's nickname.
+     *
+     * \retval string
+     *      The target of this message.
+     */
+    public function getTarget();
 }
 

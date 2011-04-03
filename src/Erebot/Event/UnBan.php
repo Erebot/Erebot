@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_UnBan
 extends     Erebot_Event_ChanUserModeMaskAbstract
-implements  Erebot_Interface_Event_ChanModeTaken,
-            Erebot_Interface_Event_Ban
+implements  Erebot_Interface_Event_UnBan
 {
 }
 

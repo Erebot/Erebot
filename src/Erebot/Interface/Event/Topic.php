@@ -16,13 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for an event which has a source.
- */
-interface   Erebot_Interface_Event_Source
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Topic
+extends     Erebot_Interface_Event_Base_Chan,
+            Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Text
 {
-    public function getSource();
 }
 

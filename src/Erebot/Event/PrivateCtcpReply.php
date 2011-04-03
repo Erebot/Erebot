@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_PrivateCtcpReply
 extends     Erebot_Event_WithSourceCtcpAbstract
-implements  Erebot_Interface_Event_CtcpReplyMessage,
-            Erebot_Interface_Event_Private
+implements  Erebot_Interface_Event_PrivateCtcpReply
 {
 }
 

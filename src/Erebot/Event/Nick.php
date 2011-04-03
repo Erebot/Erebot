@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when someone changes their IRC nickname.
  */
-class   Erebot_Event_Nick
-extends Erebot_Event_WithSourceTargetAbstract
+class       Erebot_Event_Nick
+extends     Erebot_Event_WithSourceTargetAbstract
+implements  Erebot_Interface_Event_Nick
 {
 }
 

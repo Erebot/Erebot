@@ -31,11 +31,11 @@ implements  Erebot_Interface_Event_Raw
 
     // Documented in the interface.
     public function __construct(
-        Erebot_Interface_Connection     $connection,
-                                        $raw,
-                                        $source,
-                                        $target,
-                                        $text
+        Erebot_Interface_Connection $connection,
+                                    $raw,
+                                    $source,
+                                    $target,
+                                    $text
     )
     {
         $this->_connection  = $connection;

@@ -24,8 +24,9 @@
  * other more specific events, such as ErebotEventBan, etc.
  * The content of the mode change is passed unparsed.
  */
-class   Erebot_Event_RawMode
-extends Erebot_Event_WithChanSourceTextAbstract
+class       Erebot_Event_RawMode
+extends     Erebot_Event_WithChanSourceTextAbstract
+implements  Erebot_Interface_Event_RawMode
 {
 }
 

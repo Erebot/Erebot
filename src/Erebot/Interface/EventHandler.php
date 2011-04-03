@@ -75,7 +75,7 @@ interface Erebot_Interface_EventHandler
     /**
      * Given an event, this method does its best to handler it.
      *
-     * \param Erebot_Interface_Event_Generic $event
+     * \param Erebot_Interface_Event_Base_Generic $event
      *      An event to try to handle.
      *
      * \note
@@ -85,6 +85,6 @@ interface Erebot_Interface_EventHandler
      *      filters (on type, target and/or content) associated
      *      with the handler.
      */
-    public function handleEvent(Erebot_Interface_Event_Generic &$event);
+    public function handleEvent(Erebot_Interface_Event_Base_Generic $event);
 }
 

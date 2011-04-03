@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_Except
 extends     Erebot_Event_ChanUserModeMaskAbstract
-implements  Erebot_Interface_Event_ChanModeGiven,
-            Erebot_Interface_Event_Except
+implements  Erebot_Interface_Event_Except
 {
 }
 

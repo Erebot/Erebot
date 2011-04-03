@@ -16,11 +16,8 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for a generic Event.
- */
-interface Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Logon
+extends     Erebot_Interface_Event_Base_Generic
 {
 }
 

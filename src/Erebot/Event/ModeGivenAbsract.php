@@ -22,7 +22,7 @@
  */
 class       Erebot_Event_ModeGivenAbstract
 extends     Erebot_Event_WithChanSourceTextAbstract
-implements  Erebot_Interface_Event_ChanModeGiven
+implements  Erebot_Interface_Event_Base_ChanModeGiven
 {
 }
 

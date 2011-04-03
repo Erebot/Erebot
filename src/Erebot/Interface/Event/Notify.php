@@ -16,13 +16,9 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for a CTCP event.
- */
-interface   Erebot_Interface_Event_Ctcp
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Notify
+extends     Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Text
 {
-    public function getCtcpType();
 }
 

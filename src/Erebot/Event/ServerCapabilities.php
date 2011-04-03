@@ -27,15 +27,15 @@ extends Erebot_Event_Abstract
     protected $_module;
 
     public function __construct(
-        Erebot_Interface_Connection    &$connection,
-        Erebot_Module_Base             &$module
+        Erebot_Interface_Connection $connection,
+        Erebot_Module_Base          $module
     )
     {
         parent::__construct($connection);
         $this->_module = $module;
     }
 
-    public function & getModule()
+    public function getModule()
     {
         return $this->_module;
     }

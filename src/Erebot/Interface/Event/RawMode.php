@@ -16,13 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for an event which applies to a channel.
- */
-interface   Erebot_Interface_Event_Chan
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_RawMode
+extends     Erebot_Interface_Event_Base_Chan,
+            Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Text
 {
-    public function getChan();
 }
 

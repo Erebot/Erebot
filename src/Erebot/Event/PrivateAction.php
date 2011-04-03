@@ -22,8 +22,7 @@
  */
 class       Erebot_Event_PrivateAction
 extends     Erebot_Event_WithSourceTextAbstract
-implements  Erebot_Interface_Event_ActionMessage,
-            Erebot_Interface_Event_Private
+implements  Erebot_Interface_Event_PrivateAction
 {
 }
 

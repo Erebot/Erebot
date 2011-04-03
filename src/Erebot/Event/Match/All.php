@@ -25,7 +25,7 @@ class   Erebot_Event_Match_All
 extends Erebot_Event_Match_CollectionAbstract
 {
     // Documented in the interface.
-    public function match(Erebot_Interface_Event_Generic $event)
+    public function match(Erebot_Interface_Event_Base_Generic $event)
     {
         foreach ($this->_submatchers as $match) {
             if (!$match->match($event))

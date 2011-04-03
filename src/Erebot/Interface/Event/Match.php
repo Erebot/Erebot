@@ -35,6 +35,6 @@ interface Erebot_Interface_Event_Match
      * \retval bool
      *      TRUE if the event matches the criterion, FALSE otherwise.
      */
-    public function match(Erebot_Interface_Event_Generic $event);
+    public function match(Erebot_Interface_Event_Base_Generic $event);
 }
 

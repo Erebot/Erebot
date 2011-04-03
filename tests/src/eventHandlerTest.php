@@ -28,7 +28,7 @@ extends ErebotModuleTestCase
     protected $_connection = NULL;
     protected $_cb = NULL;
 
-    public function dummyCallback(Erebot_Interface_Event_Generic $event)
+    public function dummyCallback(Erebot_Interface_Event_Base_Generic $event)
     {
         return TRUE;
     }
@@ -115,7 +115,7 @@ extends ErebotModuleTestCase
         $handler    = new Erebot_EventHandler(
             $this->_cb,
             new Erebot_Event_Match_InstanceOf(
-                'Erebot_Interface_Event_TextMessage'
+                'Erebot_Interface_Event_Base_TextMessage'
             )
         );
         $event      = new Erebot_Event_ChanText(
@@ -130,7 +130,7 @@ extends ErebotModuleTestCase
         $handler    = new Erebot_EventHandler(
             $this->_cb,
             new Erebot_Event_Match_InstanceOf(
-                'Erebot_Interface_Event_MessageCapable'
+                'Erebot_Interface_Event_Base_MessageCapable'
             )
         );
         $event      = new Erebot_Event_ChanText(
@@ -144,7 +144,7 @@ extends ErebotModuleTestCase
     {
         $handler    = new Erebot_EventHandler(
             $this->_cb,
-            new Erebot_Event_Match_InstanceOf('Erebot_Interface_Event_Generic')
+            new Erebot_Event_Match_InstanceOf('Erebot_Interface_Event_Base_Generic')
         );
         $event      = new Erebot_Event_ChanText(
             $this->_connection,

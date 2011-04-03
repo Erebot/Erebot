@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when the bot receives a PONG message from a server.
  */
-class   Erebot_Event_Pong
-extends Erebot_Event_WithSourceTextAbstract
+class       Erebot_Event_Pong
+extends     Erebot_Event_WithSourceTextAbstract
+implements  Erebot_Interface_Event_Pong
 {
 }
 

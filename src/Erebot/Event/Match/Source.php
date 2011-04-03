@@ -25,8 +25,7 @@
  *      Events that have no "source" never match.
  */
 class       Erebot_Event_Match_Source
-implements  Erebot_Interface_Event_Match,
-            Erebot_Interface_Event_Source
+implements  Erebot_Interface_Event_Match
 {
     /// Source to use in the comparison, as a string.
     protected $_source;
@@ -74,9 +73,9 @@ implements  Erebot_Interface_Event_Match,
     }
 
     // Documented in the interface.
-    public function match(Erebot_Interface_Event_Generic $event)
+    public function match(Erebot_Interface_Event_Base_Generic $event)
     {
-        if (!($event instanceof Erebot_Interface_Event_Source))
+        if (!($event instanceof Erebot_Interface_Event_Base_Source))
             return FALSE;
 
         if ($this->_source === NULL)

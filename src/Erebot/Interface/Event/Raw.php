@@ -23,7 +23,11 @@
  * This interface provides the necessary methods
  * to represent a raw numeric message from an IRC server.
  */
-interface Erebot_Interface_Event_Raw
+interface   Erebot_Interface_Event_Raw
+extends     Erebot_Interface_Event_Base_Generic,
+            Erebot_Interface_Event_Base_Source,
+            Erebot_Interface_Event_Base_Target,
+            Erebot_Interface_Event_Base_Text
 {
     /// @TODO document each constant...
 
@@ -306,21 +310,12 @@ interface Erebot_Interface_Event_Raw
      *      No attempt is made at parsing the content of the message.
      */
     public function __construct(
-        Erebot_Interface_Connection     $connection,
-                                        $raw,
-                                        $source,
-                                        $target,
-                                        $text
+        Erebot_Interface_Connection $connection,
+                                    $raw,
+                                    $source,
+                                    $target,
+                                    $text
     );
-
-    /**
-     * Returns the connection this raw message came from.
-     * This is the same object as that passed during construction.
-     *
-     * \retval Erebot_Interface_Connection
-     *      The connection this raw message came from.
-     */
-    public function getConnection();
 
     /**
      * Returns the raw numeric code associated with
@@ -339,34 +334,5 @@ interface Erebot_Interface_Event_Raw
      *      depending on the server (IRCd) where it is used.
      */
     public function getRaw();
-
-    /**
-     * Returns the source of the current message.
-     * This will generally be the name of an IRC
-     * server.
-     *
-     * \retval string
-     *      The source of this message.
-     */
-    public function getSource();
-
-    /**
-     * Returns the target of the current message.
-     * This will generally be the bot's nickname.
-     *
-     * \retval string
-     *      The target of this message.
-     */
-    public function getTarget();
-
-    /**
-     * Returns the raw content of the current
-     * message. No attempt is made at parsing
-     * the content.
-     *
-     * \retval string
-     *      The content of this message.
-     */
-    public function getText();
 }
 

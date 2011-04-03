@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when someone leaves a channel the bot is on.
  */
-class   Erebot_Event_Part
-extends Erebot_Event_WithChanSourceTextAbstract
+class       Erebot_Event_Part
+extends     Erebot_Event_WithChanSourceTextAbstract
+implements  Erebot_Interface_Event_Part
 {
 }
 

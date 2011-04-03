@@ -38,7 +38,8 @@ implements  Erebot_Interface_EventHandler
     {
         $reflector  = new ReflectionParameter($callback, 0);
         $cls        = $reflector->getClass();
-        if ($cls === NULL || !$cls->implementsInterface('Erebot_Interface_Event_Generic'))
+        if ($cls === NULL ||
+            !$cls->implementsInterface('Erebot_Interface_Event_Base_Generic'))
             throw new Erebot_InvalidValueException('Invalid callback');
 
         $this->_callback    =&  $callback;
@@ -68,7 +69,7 @@ implements  Erebot_Interface_EventHandler
     }
 
     // Documented in the interface.
-    public function handleEvent(Erebot_Interface_Event_Generic &$event)
+    public function handleEvent(Erebot_Interface_Event_Base_Generic $event)
     {
         $matched = TRUE;
 

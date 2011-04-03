@@ -31,12 +31,12 @@ extends Erebot_Connection
     {
     }
 
-    public function dispatchEvent(Erebot_Interface_Event_Generic $event)
+    protected function _dispatchEvent(Erebot_Interface_Event_Base_Generic $event)
     {
         $this->_dispatched[] = $event;
     }
 
-    public function dispatchRaw(Erebot_Interface_Event_Raw $raw)
+    protected function _dispatchRaw(Erebot_Interface_Event_Raw $raw)
     {
         $this->_dispatched[] = $raw;
     }
@@ -76,7 +76,6 @@ extends PHPUnit_Framework_TestCase
         $this->_networkConfig = $this->getMock('Erebot_Interface_Config_Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE, FALSE);
         $this->_serverConfig = $this->getMock('Erebot_Interface_Config_Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE, FALSE);
         $this->_bot = $this->getMock('ErebotTestCore', array(), array($this->_mainConfig), '', FALSE, FALSE, FALSE);
-
         $this->_connection = new FakeConnection($this->_bot, $this->_serverConfig);
     }
 

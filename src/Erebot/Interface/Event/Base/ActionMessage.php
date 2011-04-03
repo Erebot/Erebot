@@ -18,11 +18,10 @@
 
 /**
  * \brief
- *      Interface for an event which has a target.
+ *      Interface for an event capable of conveying an ACTION.
  */
-interface   Erebot_Interface_Event_Target
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Base_ActionMessage
+extends     Erebot_Interface_Event_Base_MessageCapable
 {
-    public function getTarget();
 }
 

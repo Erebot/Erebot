@@ -22,8 +22,9 @@
  *
  * This usually happen when the bot QUITs or is KILLed, etc.
  */
-class   Erebot_Event_Error
-extends Erebot_Event_WithTextAbstract
+class       Erebot_Event_Error
+extends     Erebot_Event_WithTextAbstract
+implements  Erebot_Interface_Event_Error
 {
 }
 

@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when someone gets kicked out a channel the bot is on.
  */
-class   Erebot_Event_Kick
-extends Erebot_Event_WithChanSourceTargetTextAbstract
+class       Erebot_Event_Kick
+extends     Erebot_Event_WithChanSourceTargetTextAbstract
+implements  Erebot_Interface_Event_Kick
 {
 }
 

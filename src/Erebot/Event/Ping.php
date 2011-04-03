@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when the bot receives a PING message from a server.
  */
-class   Erebot_Event_Ping
-extends Erebot_Event_WithTextAbstract
+class       Erebot_Event_Ping
+extends     Erebot_Event_WithTextAbstract
+implements  Erebot_Interface_Event_Ping
 {
 }
 

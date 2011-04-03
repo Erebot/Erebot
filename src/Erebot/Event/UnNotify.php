@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when someone on the watch list signs off IRC.
  */
-class   Erebot_Event_UnNotify
-extends Erebot_Event_NotificationAbstract
+class       Erebot_Event_UnNotify
+extends     Erebot_Event_NotificationAbstract
+implements  Erebot_Interface_Event_UnNotify
 {
 }
 

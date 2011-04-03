@@ -22,7 +22,7 @@
  */
 class       Erebot_Event_ChanNotice
 extends     Erebot_Event_WithChanSourceTextAbstract
-implements  Erebot_Interface_Event_NoticeMessage
+implements  Erebot_Interface_Event_ChanNotice
 {
 }
 

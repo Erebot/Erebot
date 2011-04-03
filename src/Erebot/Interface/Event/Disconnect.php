@@ -16,16 +16,8 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for an event whose target is an IRC mask.
- *
- * Classes implementing this interface should do their best
- * to resolve the mask to a single nickname.
- */
-interface   Erebot_Interface_Event_TargetNick
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Disconnect
+extends     Erebot_Interface_Event_Base_Generic
 {
-    public function getTargetNick();
 }
 

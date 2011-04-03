@@ -23,15 +23,15 @@
  */
 abstract class  Erebot_Event_WithChanSourceTextAbstract
 extends         Erebot_Event_WithChanSourceAbstract
-implements      Erebot_Interface_Event_Text
+implements      Erebot_Interface_Event_Base_Text
 {
     protected $_text;
 
     public function __construct(
-        Erebot_Interface_Connection    &$connection,
-                                        $chan,
-                                        $source,
-                                        $text
+        Erebot_Interface_Connection $connection,
+                                    $chan,
+                                    $source,
+                                    $text
     )
     {
         parent::__construct($connection, $chan, $source);

@@ -20,8 +20,9 @@
  * \brief
  *      Triggered when someone on a common channel with the bot quits IRC.
  */
-class   Erebot_Event_Quit
-extends Erebot_Event_WithSourceTextAbstract
+class       Erebot_Event_Quit
+extends     Erebot_Event_WithSourceTextAbstract
+implements  Erebot_Interface_Event_Quit
 {
 }
 

@@ -16,13 +16,9 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * \brief
- *      Interface for a mode which is given to someone.
- */
-interface   Erebot_Interface_Event_ChanModeGiven
-extends     Erebot_Interface_Event_Generic
+interface   Erebot_Interface_Event_Join
+extends     Erebot_Interface_Event_Base_Chan,
+            Erebot_Interface_Event_Base_Source
 {
-    const MODE_PREFIX = '+';
 }
 

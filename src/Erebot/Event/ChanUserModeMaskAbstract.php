@@ -22,7 +22,7 @@
  */
 abstract class  Erebot_Event_ChanUserModeMaskAbstract
 extends         Erebot_Event_ChanUserModeAbstract
-implements      Erebot_Interface_Event_TargetNick
+implements      Erebot_Interface_Event_Base_TargetNick
 {
     // Documented in the interface.
     public function getTargetNick()
