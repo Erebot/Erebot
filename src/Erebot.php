@@ -297,8 +297,7 @@ implements  Erebot_Interface_Core
             return;
 
         foreach ($this->_connections as $connection) {
-            $event = new Erebot_Event_Exit($connection);
-            $connection->dispatchEvent($event);
+            $connection->dispatch($connection->makeEvent('!Exit'));
             $connection->disconnect();
         }
 

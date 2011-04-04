@@ -111,6 +111,7 @@ implements  Erebot_Interface_Connection
             'Disconnect',
             'Error',
             'Except',
+            'Exit',
             'Halfop',
             'Invite',
             'Join',
@@ -130,6 +131,7 @@ implements  Erebot_Interface_Connection
             'PrivateNotice',
             'PrivateText',
             'Protect',
+            'Quit',
             'Raw',
             'RawMode',
             'Topic',
@@ -388,7 +390,7 @@ implements  Erebot_Interface_Connection
             );
         }
 
-        $this->dispatch($this->_makeEvent('!Logon'));
+        $this->dispatch($this->makeEvent('!Logon'));
         return TRUE;
     }
 
@@ -509,7 +511,8 @@ implements  Erebot_Interface_Connection
     {
         $received   = fread($this->_socket, 4096);
         if ($received === FALSE || feof($this->_socket)) {
-            $this->dispatch($this->_makeEvent('!Disconnect'));
+            $event = $this->makeEvent('!Disconnect');
+            $this->dispatch($event);
 
             if (!$event->preventDefault()) {
                 $logging    = Plop::getInstance();
@@ -613,7 +616,7 @@ implements  Erebot_Interface_Connection
             $msg = implode(' ', $parts);
             if (substr($msg, 0, 1) == ':')
                 $msg = substr($msg, 1);
-            return $this->dispatch($this->_makeEvent('!Ping', $msg));
+            return $this->dispatch($this->makeEvent('!Ping', $msg));
         }
 
         $type   = array_shift($parts);
@@ -632,7 +635,7 @@ implements  Erebot_Interface_Connection
                 $parts[0] = substr($parts[0], 1);
 
             $msg = implode(' ', $parts);
-            return $this->dispatch($this->_makeEvent('!Error', $souce, $msg));
+            return $this->dispatch($this->makeEvent('!Error', $souce, $msg));
         }
 
         $target = array_shift($parts);
@@ -646,11 +649,11 @@ implements  Erebot_Interface_Connection
 
         switch ($type) {
             case 'INVITE':     // :nick1!ident@host INVITE nick2 :#chan
-                $this->dispatch($this->_makeEvent('!Invite', $msg, $source, $target));
+                $this->dispatch($this->makeEvent('!Invite', $msg, $source, $target));
                 break;
 
             case 'JOIN':    // :nick1!ident@host JOIN :#chan
-                $this->dispatch($this->_makeEvent('!Join', $target, $source));
+                $this->dispatch($this->makeEvent('!Join', $target, $source));
                 break;
 
             case 'KICK':    // :nick1!ident@host KICK #chan nick2 :Reason
@@ -660,20 +663,21 @@ implements  Erebot_Interface_Connection
                 if (strlen($msg) && $msg[0] == ':')
                     $msg = substr($msg, 1);
 
-                $this->dispatch($this->_makeEvent('!Kick', $target, $source, $nick, $msg));
+                $this->dispatch($this->makeEvent('!Kick', $target, $source, $nick, $msg));
                 break;
 
             case 'KILL':    // :nick1!ident@host KILL nick2 :Reason
-                $this->dispatch($this->_makeEvent('!Kill', $target, $source, $msg));
+                $this->dispatch($this->makeEvent('!Kill', $target, $source, $msg));
                 break;
 
             case 'MODE':    // :nick1!ident@host MODE <nick2/#chan> modes
                 if (!$this->isChannel($target)) {
-                    $this->dispatch($this->_makeEvent('!UserMode', $source, $target, $msg));
+                    $this->dispatch($this->makeEvent('!UserMode', $source, $target, $msg));
                     break;
                 }
 
-                $this->dispatch($this->_makeEvent('!RawMode', $target, $source, $msg));
+                $event = $this->makeEvent('!RawMode', $target, $source, $msg);
+                $this->dispatch($event);
                 if ($event->preventDefault(TRUE))
                     break;
 
@@ -724,7 +728,7 @@ implements  Erebot_Interface_Connection
                         case 'b':
                             $tnick  = $wrappedMessage[$k++];
                             $cls    = $priv[$mode][$modes[$i]];
-                            $this->dispatch($this->_makeEvent($cls, $target, $source, $tnick));
+                            $this->dispatch($this->makeEvent($cls, $target, $source, $tnick));
                             break;
 
                         default:
@@ -774,7 +778,7 @@ implements  Erebot_Interface_Connection
                 break; // ON_MODE
 
             case 'NICK':    // :oldnick!ident@host NICK newnick
-                $this->dispatch($this->_makeEvent('!Nick', $source, $target));
+                $this->dispatch($this->makeEvent('!Nick', $source, $target));
                 break;
 
             case 'NOTICE':    // :nick1!ident@host NOTICE <nick2/#chan> :Message
@@ -788,25 +792,25 @@ implements  Erebot_Interface_Connection
                     $msg    = (string) substr($msg, $pos + 1);
 
                     if ($this->isChannel($target))
-                        $this->dispatch($this->_makeEvent('!ChanCtcpReply', $target, $source, $ctcp, $msg));
+                        $this->dispatch($this->makeEvent('!ChanCtcpReply', $target, $source, $ctcp, $msg));
                     else
-                        $this->dispatch($this->_makeEvent('!PrivateCtcpReply', $source, $ctcp, $msg));
+                        $this->dispatch($this->makeEvent('!PrivateCtcpReply', $source, $ctcp, $msg));
                     break;
                 }
 
                 if ($this->isChannel($target))
-                    $this->dispatch($this->_makeEvent('!ChanNotice', $target, $source, $msg));
+                    $this->dispatch($this->makeEvent('!ChanNotice', $target, $source, $msg));
                 else
-                    $this->dispatch($this->_makeEvent('!PrivateNotice', $source, $msg));
+                    $this->dispatch($this->makeEvent('!PrivateNotice', $source, $msg));
                 break;
 
             case 'PART':    // :nick1!ident@host PART #chan :Reason
-                $this->dispatch($this->_makeEvent('!Part', $target, $source, $msg));
+                $this->dispatch($this->makeEvent('!Part', $target, $source, $msg));
                 break;
 
             /* We sent a PING and got a PONG! :) */
             case 'PONG':    // :origin PONG origin target
-                $this->dispatch($this->_makeEvent('!Pong', $source, $msg));
+                $this->dispatch($this->makeEvent('!Pong', $source, $msg));
                 break;
 
             case 'PRIVMSG':    // :nick1!ident@host PRIVMSG <nick2/#chan> :Msg
@@ -821,27 +825,27 @@ implements  Erebot_Interface_Connection
 
                     if ($ctcp == "ACTION") {
                         if ($this->isChannel($target))
-                            $this->dispatch($this->_makeEvent('!ChanAction', $target, $source, $msg));
+                            $this->dispatch($this->makeEvent('!ChanAction', $target, $source, $msg));
                         else
-                            $this->dispatch($this->_makeEvent('!PrivateAction', $source, $msg));
+                            $this->dispatch($this->makeEvent('!PrivateAction', $source, $msg));
                         break;
                     }
 
                     if ($this->isChannel($target))
-                        $this->dispatch($this->_makeEvent('!ChanCtcp', $target, $source, $ctcp, $msg));
+                        $this->dispatch($this->makeEvent('!ChanCtcp', $target, $source, $ctcp, $msg));
                     else
-                        $this->dispatch($this->_makeEvent('!PrivateCtcp', $source, $ctcp, $msg));
+                        $this->dispatch($this->makeEvent('!PrivateCtcp', $source, $ctcp, $msg));
                     break;
                 }
 
                 if ($this->isChannel($target))
-                    $this->dispatch($this->_makeEvent('!ChanText', $target, $source, $msg));
+                    $this->dispatch($this->makeEvent('!ChanText', $target, $source, $msg));
                 else
-                    $this->dispatch($this->_makeEvent('!PrivateText', $source, $msg));
+                    $this->dispatch($this->makeEvent('!PrivateText', $source, $msg));
                 break;
 
             case 'TOPIC':    // :nick1!ident@host TOPIC #chan :New topic
-                $this->dispatch($this->_makeEvent('!Topic', $target, $source, $msg));
+                $this->dispatch($this->makeEvent('!Topic', $target, $source, $msg));
                 break;
 
             default:        // :server numeric parameters
@@ -858,7 +862,7 @@ implements  Erebot_Interface_Connection
                     case Erebot_Interface_Event_Raw::RPL_LUSERME:
                         if ($this->_connected)
                             break;
-                        $this->dispatch($this->_makeEvent('!Connect'));
+                        $this->dispatch($this->makeEvent('!Connect'));
                         $this->_connected = TRUE;
                         break;
 
@@ -886,11 +890,11 @@ implements  Erebot_Interface_Connection
                                 '!UnNotify',
                         );
                         $cls    = $map[$type];
-                        $this->dispatch($this->_makeEvent($cls, $nick, $ident, $host, $timestamp, $text));
+                        $this->dispatch($this->makeEvent($cls, $nick, $ident, $host, $timestamp, $text));
                         break;
                 }
 
-                $this->dispatch($this->_makeEvent('!Raw', $type, $source, $target, $msg));
+                $this->dispatch($this->makeEvent('!Raw', $type, $source, $target, $msg));
                 break;
         } /* switch ($type) */
     }
@@ -1096,7 +1100,7 @@ implements  Erebot_Interface_Connection
      *      This method can also use the same shortcuts as
      *      Erebot_Connection::getEventClass().
      */
-    protected function _makeEvent($iface /* , ... */)
+    public function makeEvent($iface /* , ... */)
     {
         $args = func_get_args();
 
