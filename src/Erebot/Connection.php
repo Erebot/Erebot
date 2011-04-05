@@ -1324,11 +1324,15 @@ implements  Erebot_Interface_Connection
             // Ignore silently.
         }
 
-        if (!is_string($chan) || !strlen($chan)) {
+        if (!Erebot_Utils::stringifiable($chan)) {
             throw new Erebot_InvalidValueException(
                 $this->_bot->gettext('Bad channel name')
             );
         }
+
+        $chan = (string) $chan;
+        if (!strlen($chan))
+            return FALSE;
 
         // Restricted characters in channel names,
         // as per RFC 2811 - (2.1) Namespace.
