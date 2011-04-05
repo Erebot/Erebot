@@ -258,7 +258,7 @@ implements  Erebot_Interface_Core
                             break;
 
                         // Otherwise, restart or remove it as necessary.
-                        if ($restart === TRUE || $timer->isRepeated())
+                        if ($restart === TRUE || $timer->getRepetition())
                             $timer->reset();
                         else
                             unset($this->_timers[$index]);
