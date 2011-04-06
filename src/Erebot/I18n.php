@@ -24,6 +24,7 @@
 class       Erebot_I18n
 implements  Erebot_Interface_I18n
 {
+    /// A cache for translation catalogs, with some additional metadata.
     static protected $_cache = array();
 
     /// The locale for which messages are translated.
@@ -47,7 +48,45 @@ implements  Erebot_Interface_I18n
         return $this->_locale;
     }
 
-    protected function real_gettext($message, $component)
+    protected function _get_translation($file, $message)
+    {
+        $time = time();
+        if (!isset(self::$_cache[$file]) ||
+            $time > (self::$_cache[$file]['added'] + 60)) {
+
+            /**
+             * FIXME: filemtime() raises a warning if the given file
+             * could not be stat'd (such as when is does not exist).
+             * An error_reporting level of E_ALL & ~E_DEPRECATED
+             * would otherwise be fine for File_Gettext.
+             */
+            $oldErrorReporting = error_reporting(0);
+
+            if (version_compare(PHP_VERSION, '5.3.0', '>='))
+                clearstatcache(FALSE, $file);
+            else
+                clearstatcache();
+
+            $mtime = filemtime($file);
+            if (!isset(self::$_cache[$file]) ||
+                $mtime !== self::$_cache[$file]['mtime']) {
+                $parser =& File_Gettext::factory('MO', $file);
+                $parser->load();
+                self::$_cache[$file] = array(
+                    'mtime'     => $mtime,
+                    'strings'   => $parser->strings,
+                    'added'     => $time,
+                );
+            }
+            error_reporting($oldErrorReporting);
+        }
+
+        if (isset(self::$_cache[$file]['strings'][$message]))
+            return self::$_cache[$file]['strings'][$message];
+        return NULL;
+    }
+
+    protected function _real_gettext($message, $component)
     {
         if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk') {
             if ($component == 'Erebot') {
@@ -65,43 +104,31 @@ implements  Erebot_Interface_I18n
         $prefix = dirname(__FILE__) . DIRECTORY_SEPARATOR .
             $base . DIRECTORY_SEPARATOR;
 
+        $mappingFile = $prefix . $component . '.mo';
         $translationFile = $prefix . $this->_locale . DIRECTORY_SEPARATOR .
             'LC_MESSAGES' . DIRECTORY_SEPARATOR . $component . '.mo';
 
-        if (version_compare(PHP_VERSION, '5.3.0', '>='))
-            clearstatcache(FALSE, $translationFile);
-        else
-            clearstatcache();
+        $msgid = $this->_get_translation($mappingFile, $message);
+        if ($msgid === NULL)
+            return $message;
 
-        /**
-         * FIXME: filemtime() raises a warning if the given file
-         * could not be stat'd (such as when is does not exist).
-         * An error_reporting level of E_ALL & ~E_DEPRECATED
-         * would otherwise be fine for File_Gettext.
-         */
-        $oldErrorReporting = error_reporting(0);
-        $mtime = filemtime($translationFile);
-
-        if (!isset(self::$_cache[$translationFile]) ||
-            $mtime !== self::$_cache[$translationFile]['mtime']) {
-            $parser =& File_Gettext::factory('MO', $translationFile);
-            $parser->load();
-            self::$_cache[$translationFile] = array(
-                'mtime'     => $mtime,
-                'strings'   => $parser->strings,
-            );
-        }
-        error_reporting($oldErrorReporting);
-
-        if (isset(self::$_cache[$translationFile]['strings'][$message]))
-            return self::$_cache[$translationFile]['strings'][$message];
-        return $message;
+        $msgstr = $this->_get_translation($translationFile, $msgid);
+        $res = ($msgstr === NULL ? $message : $msgstr);
+        return $res;
     }
 
     // Documented in the interface.
     public function gettext($message)
     {
-        return $this->real_gettext($message, $this->_component);
+        return $this->_real_gettext($message, $this->_component);
+    }
+
+    /**
+     * Clears the cache used for translation catalogs.
+     */
+    static public function clearCache()
+    {
+        self::$_cache = array();
     }
 
     // Documented in the interface.
@@ -113,8 +140,7 @@ implements  Erebot_Interface_I18n
          * extract "Erebot" as the message to translate without this hack.
          */
         $gettext = create_function('$a', 'return $a;');
-        $rule = $gettext("
-%with-words:
+        $rule = $gettext("%with-words:
     0: 0 seconds;
     1: 1 second;
     2: =#0= seconds;
@@ -137,12 +163,11 @@ implements  Erebot_Interface_I18n
     2: =#0= days;
 %%week:
     1: 1 week;
-    2: =#0= weeks;
-");
+    2: =#0= weeks;");
 
         $fmt = new NumberFormatter($this->_locale,
                     NumberFormatter::PATTERN_RULEBASED,
-                    $this->real_gettext($rule, "Erebot"));
+                    $this->_real_gettext($rule, "Erebot"));
         return $fmt->format($duration);
     }
 }
