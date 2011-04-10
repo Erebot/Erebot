@@ -348,7 +348,7 @@ implements  Erebot_Interface_Core
 
         // Print some statistics.
         if (function_exists('memory_get_peak_usage')) {
-            $logger->info($this->gettext('Memory usage:'));
+            $logger->debug($this->gettext('Memory usage:'));
 
             $stats = array(
                 $this->gettext("Allocated:")    => memory_get_peak_usage(TRUE)."B",
@@ -357,7 +357,7 @@ implements  Erebot_Interface_Core
             );
 
             foreach ($stats as $key => $value)
-                $logger->info(
+                $logger->debug(
                     '%(key)-16s%(value)10s',
                     array(
                         'key'   => $key,
