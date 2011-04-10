@@ -1,144 +1,58 @@
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 408
-msgid   "Used:"
-msgstr  "Utilisé :"
-#
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 179
-#, php-format
-msgid   "Trying to connect to \"%s\"..."
-msgstr  "Tentative de connexion à \"%s\"..."
-#
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 518
-msgid   "Successfully reloaded the configuration"
-msgstr  "Configuration rechargée avec succès"
-#
-#, php-format
-msgid   "Successfully loaded module '%s'"
-msgstr  "Module '%s' chargé avec succès"
-#
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 186
-#, php-format
-msgid   "Successfully connected to \"%s\"..."
-msgstr  "Connection réussie à \"%s\"..."
-#
-# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 540
-#, php-format
-msgid   "Reusing existing connection for network \"%s\""
-msgstr  "Réutilisation de la connexion existante au réseau \"%s\""
-#
-# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 465
-msgid   "Reloading the configuration"
-msgstr  "Rechargement de la configuration"
-#
-# File: src/core.php, line: 367
-msgid   "Received signal #%(signum)d (%(signame)s)"
+msgid   "signal"
 msgstr  "Réception du signal #%(signum)d (%(signame)s)"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1123
-msgid   "Not a valid mask"
-msgstr  "Masque non valide"
+msgid   "module.loaded"
+msgstr  "Module '%s' chargé avec succès"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1043
-msgid   "No such mapping exists"
-msgstr  "Association inexistante"
+msgid   "memory.used"
+msgstr  "Utilisée :"
 #
-# File: src/core.php, line: 236
-msgid   "No more connections to handle, leaving..."
-msgstr  "Il n'y a plus de connexions à gérer, arrêt en cours..."
-#
-# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 476
-msgid   "No configuration file to reload"
-msgstr  "Aucun fichier de configuration à recharger"
-#
-# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot.php, line: 469
-msgid   "No active connections... Aborting."
-msgstr  "Aucune connexion active... Abandon"
-#
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 404
-msgid   "Memory usage:"
+msgid   "memory.usage"
 msgstr  "Utilisation de la mémoire :"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 559
-#, php-format
-msgid   "Loading required modules for \"%s\"..."
-msgstr  ""
-#
-# File: src/core.php, line: 379
-msgid   "Limit:"
+msgid   "memory.limit"
 msgstr  "Limite :"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1037
-msgid   "Invalid mapping name"
+msgid   "memory.allocated"
+msgstr  "Allouée :"
+#
+msgid   "mapping.missing"
+msgstr  "Association inexistante"
+#
+msgid   "mapping.invalid"
 msgstr  "Nom d'association invalide"
 #
-# File: src/core.php, line: 248
-msgid   "Got exception"
-msgstr  "Une exception a été levée"
+msgid   "invalid.mask"
+msgstr  "Masque non valide"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 378
-msgid   "Got an exception from the rate-limiter module. Assuming implicit "
-        "approval to send the message."
+msgid   "invalid.code"
+msgstr  "Le code n'est pas propre !"
+#
+msgid   "invalid.channel"
+msgstr  "Nom de canal non valide"
+#
+msgid   "exception.rate-limiter"
 msgstr  "Une exception a été levée par le module de contrôle du débit. Un "
         "accord implicite d'envoi du message a été obtenu."
 #
-# File: src/core.php, line: 155
-msgid   "Erebot is starting"
-msgstr  "Erebot démarre"
+msgid   "exception"
+msgstr  "Une exception a été levée"
 #
-# File: src/core.php, line: 336
-msgid   "Erebot has stopped"
+msgid   "erebot.stopping"
+msgstr  "Il n'y a plus de connexions à gérer, arrêt en cours..."
+#
+msgid   "erebot.stopped"
 msgstr  "Erebot s'est arrêté"
 #
-# File: src/core.php, line: 187
-#, php-format
-msgid   "Could not connect to \"%s\""
-msgstr  "Impossible de se connecter à \"%s\""
+msgid   "erebot.starting"
+msgstr  "Erebot démarre"
 #
-# File: src/core.php, line: 275
-msgid   "Connection failed, removing it from the pool"
-msgstr  "Échec de la connexion, elle n'est plus sous notre contrôle"
+msgid   "erebot.aborting"
+msgstr  "Aucune connexion active... Abandon"
 #
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 992
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1014
-msgid   "Code is not clean!"
-msgstr  "Le code n'est pas propre !"
-#
-# File: /var/www/Erebot/core/trunk/src/Erebot/Connection.php, line: 1095
-msgid   "Bad channel name"
-msgstr  "Nom de canal non valide"
-#
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 407
-msgid   "Allocated:"
-msgstr  "Alloué :"
-#
-# File: src/i18n.php, line: 47
-msgid   "\n"
-        "%with-words:\n"
-        "    0: 0 seconds;\n"
-        "    1: 1 second;\n"
-        "    2: =#0= seconds;\n"
-        "    60/60: <%%min<;\n"
-        "    61/60: <%%min<, >%with-words>;\n"
-        "    3600/60: <%%hr<;\n"
-        "    3601/60: <%%hr<, >%with-words>;\n"
-        "    86400/86400: <%%day<;\n"
-        "    86401/86400: <%%day<, >%with-words>;\n"
-        "    604800/604800: <%%week<;\n"
-        "    604801/604800: <%%week<, >%with-words>;\n"
-        "%%min:\n"
-        "    1: 1 minute;\n"
-        "    2: =#0= minutes;\n"
-        "%%hr:\n"
-        "    1: 1 hour;\n"
-        "    2: =#0= hours;\n"
-        "%%day:\n"
-        "    1: 1 day;\n"
-        "    2: =#0= days;\n"
-        "%%week:\n"
-        "    1: 1 week;\n"
-        "    2: =#0= weeks;\n"
-msgstr  "\n"
-        "%with-words:\n"
+msgid   "duration.pattern"
+msgstr  "%with-words:\n"
         "    0: =#0= seconde;\n"
         "    2: =#0= secondes;\n"
         "    60/60: <%%min<;\n"
@@ -160,7 +74,34 @@ msgstr  "\n"
         "    2: =#0= jours;\n"
         "%%week:\n"
         "    1: 1 semaine;\n"
-        "    2: =#0= semaines;\n"
+        "    2: =#0= semaines;"
+#
+msgid   "connection.successful"
+msgstr  "Connection réussie à \"%s\"..."
+#
+msgid   "connection.reusing"
+msgstr  "Réutilisation de la connexion existante au réseau \"%s\""
+#
+msgid   "connection.modules"
+msgstr  "Chargement des modules nécessaires pour \"%s\"..."
+#
+msgid   "connection.impossible"
+msgstr  "Impossible de se connecter à \"%s\""
+#
+msgid   "connection.failed"
+msgstr  "Échec de la connexion, elle n'est plus sous notre contrôle"
+#
+msgid   "connection.connecting"
+msgstr  "Tentative de connexion à \"%s\"..."
+#
+msgid   "configuration.reloading"
+msgstr  "Rechargement de la configuration"
+#
+msgid   "configuration.reloaded"
+msgstr  "Configuration rechargée avec succès"
+#
+msgid   "configuration.no-file"
+msgstr  "Aucun fichier de configuration à recharger"
 #
 # French translations for PACKAGE package.
 # This file is put in the public domain.
@@ -168,8 +109,8 @@ msgstr  "\n"
 #
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
-        "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2009-12-12 22:04+0100\n"
+        "Report-Msgid-Bugs-To: \n"
+        "POT-Creation-Date: 2011-04-10 18:51+0200\n"
         "PO-Revision-Date: 2010-02-13 19:10+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
@@ -177,8 +118,3 @@ msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Content-Type: text/plain; charset=utf-8\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#
-#
-# File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 173
-#~ msgid        "Loading modules required for \"%s\"..."
-#~ msgstr       "Chargement des modules requis pour \"%s\"..."
