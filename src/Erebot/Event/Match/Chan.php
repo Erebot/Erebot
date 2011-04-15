@@ -66,7 +66,7 @@ implements  Erebot_Interface_Event_Match
      */
     public function setChan($chan)
     {
-        if (Erebot_Utils::stringifiable($chan))
+        if (!Erebot_Utils::stringifiable($chan))
             throw new Erebot_InvalidValueException('Not a channel');
 
         $this->_chan = $chan;
