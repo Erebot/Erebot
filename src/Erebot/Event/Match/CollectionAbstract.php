@@ -98,8 +98,13 @@ implements      Erebot_Interface_Event_Match,
      */
     public function & add()
     {
-        if (!in_array($filter, $this->_submatchers, TRUE))
-            $this->_submatchers[] = $filter;
+        $filters = func_get_args();
+        foreach ($filters as $filter) {
+            if (!($filter instanceof Erebot_Interface_Event_Match))
+                throw new Erebot_InvalidValueException('Not a valid matcher');
+            if (!in_array($filter, $this->_submatchers, TRUE))
+                $this->_submatchers[] = $filter;
+        }
         return $this;
     }
 
@@ -116,9 +121,14 @@ implements      Erebot_Interface_Event_Match,
      */
     public function & remove()
     {
-        $key = array_search($filter, $this->_submatchers, TRUE);
-        if ($key !== FALSE)
-            unset($this->_submatchers[$key]);
+        $filters = func_get_args();
+        foreach ($filters as $filter) {
+            if (!($filter instanceof Erebot_Interface_Event_Match))
+                throw new Erebot_InvalidValueException('Not a valid matcher');
+            $key = array_search($filter, $this->_submatchers, TRUE);
+            if ($key !== FALSE)
+                unset($this->_submatchers[$key]);
+        }
         return $this;
     }
 }
