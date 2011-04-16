@@ -141,6 +141,8 @@ abstract class Erebot_Module_Base
         $this->_connection  = $connection;
         $serverCfg          = $this->_connection->getConfig(NULL);
         $this->_mainCfg     = $serverCfg->getMainCfg();
+        // Passing $this to get_class() is necessary to retrieve the instance's
+        // class instead of the code's definition class (Erebot_Module_Base).
         $this->_translator  = $this->_mainCfg->getTranslator(get_class($this));
         $this->_reload($flags);
     }
@@ -483,6 +485,9 @@ abstract class Erebot_Module_Base
         else if ($chan !== NULL) {
             $config = $this->_connection->getConfig($chan);
             try {
+                // Passing $this to get_class() is necessary to retrieve
+                // the instance's class instead of the code's definition
+                // class (Erebot_Module_Base).
                 return $config->getTranslator(get_class($this));
             }
             catch (Erebot_Exception $e) {
@@ -493,6 +498,9 @@ abstract class Erebot_Module_Base
 
         $config = $this->_connection->getConfig($this->_channel);
         try {
+            // Passing $this to get_class() is necessary to retrieve
+            // the instance's class instead of the code's definition
+            // class (Erebot_Module_Base).
             return $config->getTranslator(get_class($this));
         }
         catch (Erebot_Exception $e) {
