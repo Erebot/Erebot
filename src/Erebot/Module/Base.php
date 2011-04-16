@@ -483,7 +483,7 @@ abstract class Erebot_Module_Base
         else if ($chan !== NULL) {
             $config = $this->_connection->getConfig($chan);
             try {
-                return $config->getTranslator(get_class());
+                return $config->getTranslator(get_class($this));
             }
             catch (Erebot_Exception $e) {
             // The channel lacked a specific config. Use the cascade.
@@ -493,7 +493,7 @@ abstract class Erebot_Module_Base
 
         $config = $this->_connection->getConfig($this->_channel);
         try {
-            return $config->getTranslator(get_class());
+            return $config->getTranslator(get_class($this));
         }
         catch (Erebot_Exception $e) {
             // The channel lacked a specific config. Use the cascade.

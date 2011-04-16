@@ -92,9 +92,9 @@ implements  Erebot_Interface_I18n
             if ($component == 'Erebot') {
                 $base = '../../data/i18n';
             }
-            else if (!strncasecmp($component, 'Erebot_Module', 13)) {
+            else if (!strncasecmp($component, 'Erebot_Module_', 14)) {
                 $base = '../../../../modules/' .
-                    substr($component, 13) .
+                    substr($component, 14) .
                     '/trunk/data/i18n';
             }
         }
