@@ -248,11 +248,13 @@ abstract class Erebot_Module_Base
             $ctcpType .= " ";
 
         $prefix = $type.' '.$targets.' :'.$marker.$ctcpType;
+        // 400 is a rough estimation of how big
+        // a message we may send.
         $messages = explode(
             "\n",
             wordwrap(
                 $message,
-                450 - $prefix - 2,
+                400 - $prefix - 2,
                 "\n",
                 TRUE
             )

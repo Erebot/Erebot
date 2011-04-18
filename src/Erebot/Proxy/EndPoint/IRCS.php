@@ -26,6 +26,6 @@ implements  Erebot_Interface_Proxy_EndPoint
     /// Documented in the interface.
     public function requiresSSL()
     {
-        return FALSE;
+        return TRUE;
     }
 }

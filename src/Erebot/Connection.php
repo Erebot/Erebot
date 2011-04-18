@@ -311,7 +311,7 @@ implements  Erebot_Interface_Connection
                     );
 
                     if ($this->_socket === FALSE)
-                        throw new Erebot_Exception('Could not connect to proxy');
+                        throw new Erebot_Exception('Could not connect');
                 }
 
                 // We're not the last link of the chain.
