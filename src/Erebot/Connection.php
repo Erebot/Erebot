@@ -53,7 +53,7 @@ implements  Erebot_Interface_Connection
     /// Whether this connection is actually... well, connected.
     protected $_connected;
 
-    /// 
+    /// Mappings from (lowercase) interface names to actual classes.
     protected $_eventsMapping;
 
     /// Valid mappings for case-insensitive comparisons.
@@ -142,8 +142,10 @@ implements  Erebot_Interface_Connection
             'Voice',
         );
         foreach ($events as $event) {
-            $this->_eventsMapping['Erebot_Interface_Event_'.$event] =
-                'Erebot_Event_'.$event;
+            $this->setEventClass(
+                'Erebot_Interface_Event_' . $event,
+                'Erebot_Event_' . $event
+            );
         }
 
         $this->_loadModules(
@@ -1099,6 +1101,9 @@ implements  Erebot_Interface_Connection
      * \note
      *      This method can also use the same shortcuts as
      *      Erebot_Connection::getEventClass().
+     *
+     * \note
+     *      The name of the interface to use is case-insensitive.
      */
     public function makeEvent($iface /* , ... */)
     {
@@ -1106,6 +1111,7 @@ implements  Erebot_Interface_Connection
 
         // Shortcuts.
         $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
+        $iface = strtolower($iface);
 
         // Replace the first argument (interface) with a reference
         // to this connection, since all events require it anyway.
@@ -1139,11 +1145,15 @@ implements  Erebot_Interface_Connection
      *      with the "Erebot_Interface_Event_Op" interface,
      *      it is enough to simply pass "!Op" as the value
      *      for $iface.
+     *
+     * \note
+     *      The name of the interface is case-insensitive.
      */
     public function getEventClass($iface)
     {
         // Shortcuts.
         $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
+        $iface = strtolower($iface);
 
         return isset($this->_eventsMapping[$iface])
             ? $this->_eventsMapping[$iface]
@@ -1173,11 +1183,15 @@ implements  Erebot_Interface_Connection
      *      with the "Erebot_Interface_Event_Op" interface,
      *      it is enough to simply pass "!Op" as the value
      *      for $iface. The $cls is always left unaffected.
+     *
+     * \note
+     *      The name of the interface is case-insensitive.
      */
     public function setEventClass($iface, $cls)
     {
         // Shortcuts.
         $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
+        $iface = strtolower($iface);
 
         $reflector = new ReflectionClass($cls);
         if (!$reflector->implementsInterface($iface))
