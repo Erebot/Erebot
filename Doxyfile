@@ -47,7 +47,7 @@ SUBGROUPING            = YES
 TYPEDEF_HIDES_STRUCT   = NO
 SYMBOL_CACHE_SIZE      = 0
 
-EXTRACT_ALL            = YES
+EXTRACT_ALL            = NO
 EXTRACT_PRIVATE        = YES
 EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = YES
@@ -85,7 +85,7 @@ SHOW_FILES             = YES
 SHOW_NAMESPACES        = YES
 
 QUIET                  = NO
-WARNINGS               = NO
+WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = YES
