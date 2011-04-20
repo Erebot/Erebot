@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <project name="Erebot" description="" default="all">
-    <property name="locales"        value="fr_FR,en_US"/>
     <property name="domain"         value="Erebot"/>
     <property name="version"        value="0.3.2"/>
     <property name="email"          value="clicky@erebot.net"/>
