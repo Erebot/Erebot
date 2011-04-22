@@ -410,7 +410,7 @@ implements  Erebot_Interface_Connection
             try {
                 $config         = $this->getConfig(NULL);
                 $quitMessage    = $config->parseString(
-                    'IrcConnector',
+                    'Erebot_Module_IrcConnector',
                     'quit_message'
                 );
             }
