@@ -115,39 +115,64 @@ implements  Countable,
         return $this->_text;
     }
 
-    // Countable interface.
+    /**
+     * \see
+     *      http://php.net/manual/en/class.countable.php
+     **/
     public function count()
     {
         return $this->countTokens();
     }
 
-    // Iterator interface.
+    /**
+     * \see
+     *      http://php.net/manual/en/class.iterator.php
+     */
     public function current()
     {
         return $this->getTokens($this->_position, 1);
     }
 
+    /**
+     * \see
+     *      http://php.net/manual/en/class.iterator.php
+     */
     public function key()
     {
         return $this->_position;
     }
 
+    /**
+     * \see
+     *      http://php.net/manual/en/class.iterator.php
+     */
     public function next()
     {
         $this->_position++;
     }
 
+    /**
+     * \see
+     *      http://php.net/manual/en/class.iterator.php
+     */
     public function rewind()
     {
         $this->_position = 0;
     }
 
+    /**
+     * \see
+     *      http://php.net/manual/en/class.iterator.php
+     */
     public function valid()
     {
         return ($this->_position < $this->countTokens());
     }
 
-    // ArrayAccess interface.
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetExists($offset)
     {
         return (
@@ -157,6 +182,10 @@ implements  Countable,
         );
     }
 
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetGet($offset)
     {
         if (!is_int($offset))
@@ -164,11 +193,19 @@ implements  Countable,
         return $this->getTokens($offset, 1);
     }
 
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetSet($offset, $value)
     {
         throw new RuntimeException('The wrapped text is read-only');
     }
 
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetUnset($offset)
     {
         throw new RuntimeException('The wrapped text is read-only');

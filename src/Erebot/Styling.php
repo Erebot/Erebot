@@ -115,42 +115,81 @@ class   Erebot_Styling
     protected $_variables;
     protected $_dom;
 
+    // Control codes.
+
+    /// Mark the following text as being bold.
     const CODE_BOLD         = "\002";
+    /// Change the color of the following text.
     const CODE_COLOR        = "\003";
+    /// Reset the styles.
     const CODE_RESET        = "\017";
+    /// Swao the foreground & background colors.
     const CODE_REVERSE      = "\026";
+    /// Underline the text that follows.
     const CODE_UNDERLINE    = "\037";
 
-    /* mIRC/PIRCH colors */
+
+    // mIRC/PIRCH colors.
+
+    /// White.
     const COLOR_WHITE       = 0;
+    /// Black.
     const COLOR_BLACK       = 1;
+    /// Blue.
     const COLOR_BLUE        = 2;
+    /// Alias for Erebot_Styling::COLOR_NAVY_BLUE.
     const COLOR_NAVY_BLUE   = 2;
+    /// Alias for Erebot_Styling::COLOR_DARK_BLUE.
     const COLOR_DARK_BLUE   = 2;
+    /// Green.
     const COLOR_GREEN       = 3;
+    /// Alias for Erebot_Styling::COLOR_DARK_GREEN.
     const COLOR_DARK_GREEN  = 3;
+    /// Red.
     const COLOR_RED         = 4;
+    /// Brown.
     const COLOR_BROWN       = 5;
+    /// Purple.
     const COLOR_PURPLE      = 6;
+    /// Orange.
     const COLOR_ORANGE      = 7;
+    /// Alias for Erebot_Styling::COLOR_ORANGE (sounds odd, doesn't it?).
     const COLOR_OLIVE       = 7;
+    /// Yellow.
     const COLOR_YELLOW      = 8;
+    /// Light green.
     const COLOR_LIGHT_GREEN = 9;
+    /// Alias for Erebot_Styling::COLOR_LIGHT_GREEN.
     const COLOR_LIME_GREEN  = 9;
+    /// Cyan.
     const COLOR_CYAN        = 10;
+    /// Alias for Erebot_Styling::COLOR_CYAN.
     const COLOR_TEAL        = 10;
+    /// Alias for Erebot_Styling::COLOR_CYAN.
     const COLOR_DARK_CYAN   = 10;
+    /// Light cyan.
     const COLOR_LIGHT_CYAN  = 11;
+    /// Alias for Erebot_Styling::COLOR_LIGHT_CYAN.
     const COLOR_AQUA_LIGHT  = 11;
+    /// Light blue.
     const COLOR_LIGHT_BLUE  = 12;
+    /// Alias for Erebot_Styling::COLOR_LIGHT_BLUE.
     const COLOR_ROYAL_BLUE  = 12;
+    /// Pink.
     const COLOR_PINK        = 13;
+    /// Alias for Erebot_Styling::COLOR_HOT_PINK.
     const COLOR_HOT_PINK    = 13;
+    /// Gray.
     const COLOR_GRAY        = 14;
+    /// Alias for Erebot_Styling::COLOR_GRAY.
     const COLOR_GREY        = 14;
+    /// Alias for Erebot_Styling::COLOR_GRAY.
     const COLOR_DARK_GRAY   = 14;
+    /// Alias for Erebot_Styling::COLOR_GRAY.
     const COLOR_DARK_GREY   = 14;
+    /// Light gray.
     const COLOR_LIGHT_GRAY  = 15;
+    /// Alias for Erebot_Styling::COLOR_LIGHT_GRAY.
     const COLOR_LIGHT_GREY  = 15;
 
     /**
@@ -337,6 +376,9 @@ class   Erebot_Styling
         return $this->_variables[$varname];
     }
 
+    /**
+     * This is the main parsing method.
+     */
     protected function parseNode($node, &$attributes, $variables)
     {
         $result     = '';
@@ -519,6 +561,10 @@ class   Erebot_Styling
         return $result;
     }
 
+    /**
+     * This method is used to apply the parsing method
+     * to children of an XML node.
+     */
     private function parseChildren($node, &$attributes, $variables)
     {
         $result = '';
