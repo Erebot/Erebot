@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for an action in private.
+ */
 interface   Erebot_Interface_Event_PrivateAction
 extends     Erebot_Interface_Event_Base_Private,
             Erebot_Interface_Event_Base_Source,

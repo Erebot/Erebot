@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for a simple message on a channel.
+ */
 interface   Erebot_Interface_Event_ChanText
 extends     Erebot_Interface_Event_Base_Chan,
             Erebot_Interface_Event_Base_Source,

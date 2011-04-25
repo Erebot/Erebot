@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for voice status removal.
+ */
 interface   Erebot_Interface_Event_DeVoice
 extends     Erebot_Interface_Event_Base_Chan,
             Erebot_Interface_Event_Base_Source,

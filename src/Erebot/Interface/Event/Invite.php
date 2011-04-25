@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for an invitation.
+ */
 interface   Erebot_Interface_Event_Invite
 extends     Erebot_Interface_Event_Base_Chan,
             Erebot_Interface_Event_Base_Source,

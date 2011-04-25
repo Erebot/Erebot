@@ -31,16 +31,29 @@ extends     Erebot_Interface_Event_Base_Generic,
 {
     /// @TODO document each constant...
 
-    /* Define constant names for raw messages. */
+    /*
+        List of supported raw (numeric) messages.
+    */
+
+    /// First raw sent after a connection (welcome message).
     const RPL_WELCOME               =   1;
+    /// Gives the name/version of the server we're connected to.
     const RPL_YOURHOST              =   2;
+    /// Last time the IRC server was restarted.
     const RPL_CREATED               =   3;
+    /// Supported user and channel modes.
     const RPL_MYINFO                =   4;
+    /// Specific commands/options supported by the server.
     const RPL_ISUPPORT              =   5;
+    /// Active PROTOcol ConTroL flags (obsolete).
     const RPL_PROTOCTL              =   5;
+    /// Old raw used to redirect users to another server.
     const RPL_BOUNCE                =   5;
+    /// Map of the network.
     const RPL_MAP                   =   6;
+    /// Alias for ::RPL_MAP.
     const RPL_MAPMORE               =   6;
+    /// End of the network map.
     const RPL_MAPEND                =   7;
     const RPL_SNOMASK               =   8;
     const RPL_STATMEM               =  10;

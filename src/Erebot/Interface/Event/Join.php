@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for a join.
+ */
 interface   Erebot_Interface_Event_Join
 extends     Erebot_Interface_Event_Base_Chan,
             Erebot_Interface_Event_Base_Source

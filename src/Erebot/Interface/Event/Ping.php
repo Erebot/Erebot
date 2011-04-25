@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for a ping.
+ */
 interface   Erebot_Interface_Event_Ping
 extends     Erebot_Interface_Event_Base_Text
 {

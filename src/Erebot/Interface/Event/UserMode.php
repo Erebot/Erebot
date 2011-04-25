@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for a usermode change.
+ */
 interface   Erebot_Interface_Event_UserMode
 extends     Erebot_Interface_Event_Base_Source,
             Erebot_Interface_Event_Base_Target,

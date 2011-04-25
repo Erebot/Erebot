@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Interface for presence notification.
+ */
 interface   Erebot_Interface_Event_Notify
 extends     Erebot_Interface_Event_Base_Source,
             Erebot_Interface_Event_Base_Text
