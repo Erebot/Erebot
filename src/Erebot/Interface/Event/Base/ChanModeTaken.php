@@ -23,6 +23,7 @@
 interface   Erebot_Interface_Event_Base_ChanModeTaken
 extends     Erebot_Interface_Event_Base_Generic
 {
+    /// Prefix issued to remove a channel status from some user.
     const MODE_PREFIX = '-';
 }
 

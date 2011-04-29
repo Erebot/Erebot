@@ -23,6 +23,7 @@
 interface   Erebot_Interface_Event_Base_ChanModeGiven
 extends     Erebot_Interface_Event_Base_Generic
 {
+    /// Prefix issued to add a channel status to some user.
     const MODE_PREFIX = '+';
 }
 

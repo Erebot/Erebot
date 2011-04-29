@@ -54,25 +54,37 @@ implements      Erebot_Interface_Event_Match,
         $this->_submatchers = $args;
     }
 
-    // Documented in the interface (Erebot_Interface_Countable).
+    /**
+     * \see
+     *      http://php.net/manual/en/class.countable.php
+     **/
     public function count()
     {
         return count($this->_submatchers);
     }
 
-    // Documented in the interface (Erebot_Interface_ArrayAccess).
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetExists($offset)
     {
         return isset($this->_submatchers[$offset]);
     }
 
-    // Documented in the interface (Erebot_Interface_ArrayAccess).
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetGet($offset)
     {
         return $this->_submatchers[$offset];
     }
 
-    // Documented in the interface (Erebot_Interface_ArrayAccess).
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetSet($offset, $value)
     {
         if (!($value instanceof Erebot_Interface_Event_Match))
@@ -80,7 +92,10 @@ implements      Erebot_Interface_Event_Match,
         $this->_submatchers[$offset] = $value;
     }
 
-    // Documented in the interface (Erebot_Interface_ArrayAccess).
+    /**
+     * \see
+     *      http://php.net/manual/en/class.arrayaccess.php
+     */
     public function offsetUnset($offset)
     {
         unset($this->_submatchers[$offset]);
@@ -88,6 +103,11 @@ implements      Erebot_Interface_Event_Match,
 
     /**
      * Adds one or more subfilters to this filter.
+     *
+     * \retval Erebot_Event_Match_CollectionAbstract
+     *      Returns this instance, so that multiple called
+     *      to Erebot_Event_Match_CollectionAbstract::add()
+     *      can be chained up together.
      *
      * \note
      *      You can pass one or more filters to this method
@@ -110,6 +130,11 @@ implements      Erebot_Interface_Event_Match,
 
     /**
      * Removes one or more subfilters from this filter.
+     *
+     * \retval Erebot_Event_Match_CollectionAbstract
+     *      Returns this instance, so that multiple called
+     *      to Erebot_Event_Match_CollectionAbstract::remove()
+     *      can be chained up together.
      *
      * \note
      *      You can pass one or more filters to this method

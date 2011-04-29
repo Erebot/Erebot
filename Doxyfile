@@ -31,6 +31,7 @@ ALIASES               += "i{1}=\htmlonly <em>\1</em> \endhtmlonly\latexonly\text
 ALIASES               += "b{1}=\htmlonly <strong>\1</strong> \endhtmlonly\latexonly\textbf{\1}\endlatexonly"
 ALIASES               += "FIXME=\xrefitem FIXME \"Known issues\" \"Known Issues\""
 ALIASES               += "HACK=\xrefitem HACK \"Dirty hacks\" \"Dirty Hacks\""
+ALIASES               += "format{1}=\par Format\n<tt>\1</tt>\n"
 
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO

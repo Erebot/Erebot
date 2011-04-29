@@ -24,7 +24,8 @@
  *
  *  Provides a PHP stream wrapper for files with a glob-like feature.
  */
-class Erebot_XGlobStream
+class   Erebot_XGlobStream
+extends Erebot_StreamWrapperBase
 {
     public      $context;
     protected   $_position;
@@ -33,27 +34,26 @@ class Erebot_XGlobStream
     const XMLNS = 'http://www.erebot.net/xmlns/xglob';
     const TAG   = 'wrapping';
 
-    public function __construct()
-    {
-        $this->matches = FALSE;
-    }
-
+    // Documented in the base class.
     public function stream_tell()
     {
         return $this->_position;
     }
 
+    // Documented in the base class.
     public function stream_eof()
     {
         return ($this->_position >= strlen($this->_content));
     }
 
+    // Documented in the base class.
     public function stream_close()
     {
         $this->_position    = 0;
         $this->_content     = '';
     }
 
+    // Documented in the base class.
     public function stream_open($path, $mode, $options, &$opened)
     {
         $this->_position = 0;
@@ -85,6 +85,7 @@ class Erebot_XGlobStream
         return TRUE;
     }
 
+    // Documented in the base class.
     public function stream_read($count)
     {
         $ret = substr($this->_content, $this->_position, $count);
@@ -92,7 +93,8 @@ class Erebot_XGlobStream
         return $ret;
     }
 
-    function stream_seek($offset, $whence)
+    // Documented in the base class.
+    public function stream_seek($offset, $whence)
     {
         switch ($whence) {
             case SEEK_SET:
@@ -120,17 +122,6 @@ class Erebot_XGlobStream
             default:
                 return FALSE;
         }
-    }
-
-    // Needed under certain circumstances when using PHP 5.2.x.
-    public function stream_stat()
-    {
-        return array();
-    }
-
-    public function url_stat()
-    {
-        return array();
     }
 }
 

@@ -23,6 +23,7 @@
 interface   Erebot_Interface_Event_Base_Owner
 extends     Erebot_Interface_Event_Base_Generic
 {
+    /// Letter associated with this channel status.
     const MODE_LETTER = 'q';
 }
 

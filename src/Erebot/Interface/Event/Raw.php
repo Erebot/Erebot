@@ -43,10 +43,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      First raw sent to a client after its connection (welcome message).
      *
-     *  \par Format
-     *  <tt>
-     *      "Welcome to the Internet Relay Network <nick>!<user>@<host>"
-     *  </tt>
+     *  \format{"Welcome to the Internet Relay Network <nick>!<user>@<host>"}
      */
     const RPL_WELCOME               =   1;
 
@@ -54,10 +51,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Gives the name/version of the server we're connected to.
      *
-     *  \par Format
-     *  <tt>
-     *      "Your host is <servername>, running version <ver>"
-     *  </tt>
+     *  \format{"Your host is <servername>\, running version <ver>"}
      */
     const RPL_YOURHOST              =   2;
 
@@ -65,10 +59,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Last time the IRC server was restarted.
      *
-     *  \par Format
-     *  <tt>
-     *      "This server was created <date>"
-     *  </tt>
+     *  \format{"This server was created <date>"}
      */
     const RPL_CREATED               =   3;
 
@@ -76,11 +67,10 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Supported user and channel modes.
      * 
-     *  \par Format
-     *  <tt>
+     *  \format{
      *      "<servername> <version> <available user modes>
      *      <available channel modes>"
-     *  </tt>
+     *  }
      */
     const RPL_MYINFO                =   4;
 
@@ -94,10 +84,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Obsolete raw used to redirect users to another server.
      *
-     *  \par Format
-     *  <tt>
-     *      "Try server <server name>, port <port number>"
-     *  </tt>
+     *  \format{"Try server <server name>\, port <port number>"}
      */
     const RPL_BOUNCE                =   5;
 
@@ -155,80 +142,131 @@ extends     Erebot_Interface_Event_Base_Generic,
     const RPL_ATTEMPTINGREROUTE     =  51;
 
     /**
-     *  \TODO
+     *  \brief
+     *      RPL_TRACELINK is sent by any server which handles
+     *      a TRACE message and has to pass it on to another
+     *      server.
+     * 
+     *  \format{
+     *      "Link \<version & debug level\> \<destination\>
+     *      \<next server\> V\<protocol version\>
+     *      \<link uptime in seconds\> \<backstream sendq\>
+     *      \<upstream sendq\>"
+     *  }
      */
     const RPL_TRACELINK             = 200;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections which have not been
+     *      fully established and are still attempting to connect.
+     * 
+     *  \format{"Try. <class> <server>"}
      */
     const RPL_TRACECONNECTING       = 201;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections which have not been
+     *      fully established and are in the process of completing
+     *      the "server handshake".
+     * 
+     *  \format{"H.S. <class> <server>"}
      */
     const RPL_TRACEHANDSHAKE        = 202;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections which have not been
+     *      fully established and are unknown.
+     * 
+     *  \format{"???? <class> [<client IP address in dot form>]"}
      */
     const RPL_TRACEUNKNOWN          = 203;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections to give information
+     *      on IRC operators.
+     * 
+     *  \format{"Oper <class> <nick>"}
      */
     const RPL_TRACEOPERATOR         = 204;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections to give information
+     *      on (non-operator) IRC clients.
+     * 
+     *  \format{"User <class> <nick>"}
      */
     const RPL_TRACEUSER             = 205;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections to give information
+     *      on IRC servers.
+     * 
+     *  \format{
+     *      "Serv <class> <int>S <int>C <server>
+     *      <nick!user|*!*>@<host|server> V<protocol version>"
+     *  }
      */
     const RPL_TRACESERVER           = 206;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections to give information
+     *      on IRC services.
+     * 
+     *  \format{"Service <class> <name> <type> <active type>"}
      */
     const RPL_TRACESERVICE          = 207;
 
     /**
-     *  \TODO
+     *  \brief
+     *      RPL_TRACENEWTYPE is to be used for any connection
+     *      which does not fit in the other categories but is
+     *      being displayed anyway.
+     * 
+     *  \format{"<newtype> 0 <client name>"}
      */
     const RPL_TRACENEWTYPE          = 208;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used when tracing connections to give information
+     *      on a class of connections.
+     * 
+     *  \format{"Class <class> <count>"}
      */
     const RPL_TRACECLASS            = 209;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Unused raw.
      */
-    const RPL_TRACECONNECT          = 210;
+    const RPL_TRACERECONNECT        = 210;
 
     /**
      *  \brief
      *      Reports statistics on a connection.
      *
-     *  \par Format
-     *  <tt>
+     *  \format{
      *      "\<linkname\> \<sendq\> \<sent messages\>
      *      \<sent Kbytes\> \<received messages\>
      *      \<received Kbytes\> \<time open\>"
-     *  </tt>
+     *  }
      *
-     *  \<linkname\> identifies the particular connection,
-     *  \<sendq\> is the amount of data that is queued and
-     *  waiting to be sent \<sent messages\> the number of
-     *  messages sent, and \<sent Kbytes\> the amount of
+     *  <tt>\<linkname\></tt> identifies the particular connection,
+     *  <tt>\<sendq\></tt> is the amount of data that is queued and
+     *  waiting to be sent <tt>\<sent messages\></tt> the number of
+     *  messages sent, and <tt>\<sent Kbytes\></tt> the amount of
      *  data sent, in Kbytes.
-     *  \<received messages\> and \<received Kbytes\> are the
-     *  equivalent of \<sent messages\> and \<sent Kbytes\>
+     *  <tt>\<received messages\></tt> and <tt>\<received Kbytes\></tt> are
+     *  the equivalent of <tt>\<sent messages\></tt> and <tt>\<sent Kbytes\></tt>
      *  for received data, respectively.
-     *  \<time open\> indicates how long ago the connection
+     *  <tt>\<time open\></tt> indicates how long ago the connection
      *  was opened, in seconds.
      */
     const RPL_STATSLINKINFO         = 211;
@@ -237,15 +275,17 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Reports statistics on commands usage.
      *
-     *  \par Format
-     *  <tt>
-     *      "<command> <count> <byte count> <remote count>"
-     *  </tt>
+     *  \format{"<command> <count> <byte count> <remote count>"}
      */
     const RPL_STATSCOMMANDS         = 212;
 
     /**
      *  \TODO
+     *  "C <address> * <server> <port> <class>"
+     *
+     *  \note
+     *      The "*" is treated as a litteral, not some
+     *      wildcard character.
      */
     const RPL_STATSCLINE            = 213;
 
@@ -285,7 +325,10 @@ extends     Erebot_Interface_Event_Base_Generic,
     const RPL_STATSYLINE            = 218;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Marks the end of the STATS report.
+     *
+     *  \format{"<stats letter> :End of STATS report"}
      */
     const RPL_ENDOFSTATS            = 219;
 
@@ -299,10 +342,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      To answer a query about a client's own mode,
      *      RPL_UMODEIS is sent back.
      *
-     *  \par Format
-     *  <tt>
-     *      "<user mode string>"
-     *  </tt>
+     *  \format{"<user mode string>"}
      */
     const RPL_UMODEIS               = 221;
 
@@ -352,12 +392,20 @@ extends     Erebot_Interface_Event_Base_Generic,
     const RPL_SERVICE               = 233;
 
     /**
-     *  \TODO
+     *  \brief
+     *      When listing services in reply to a SERVLIST message,
+     *      a separate RPL_SERVLIST is sent for each service.
+     *
+     *  \format{"<name> <server> <mask> <type> <hopcount> <info>"}
      */
     const RPL_SERVLIST              = 234;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Marks the end of the list of services,
+     *      sent in response to a SERVLIST message.
+     *
+     *  \format{"<mask> <type> :End of service listing"}
      */
     const RPL_SERVLISTEND           = 235;
 
@@ -370,10 +418,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Reports the server uptime.
      *
-     *  \par Format
-     *  <tt>
-     *      ":Server Up %d days %d:%02d:%02d"
-     *  </tt>
+     *  \format{":Server Up %d days %d:%02d:%02d"}
      */
     const RPL_STATSUPTIME           = 242;
 
@@ -382,10 +427,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Reports the allowed hosts from where
      *      users may become IRC operators.
      *
-     *  \par Format
-     *  <tt>
-     *      "O <hostmask> * <name>"
-     *  </tt>
+     *  \format{"O <hostmask> * <name>"}
      */
     const RPL_STATSOLINE            = 243;
 
@@ -420,59 +462,116 @@ extends     Erebot_Interface_Event_Base_Generic,
     const RPL_STATSCONN             = 250;
 
     /**
-     *  \TODO
+     *  \brief
+     *      In processing an LUSERS message, the server
+     *      sends this raw to indicate how many clients
+     *      and servers are connected (global count).
+     *
+     *  \format{
+     *      ":There are <integer> users and <integer>
+     *      services on <integer> servers"
+     *  }
      */
     const RPL_LUSERCLIENT           = 251;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Sent in response to a LUSERS message to indicate
+     *      how many IRC operators are currently connected,
+     *      if any.
+     *
+     *  \format{"<integer> :operator(s) online"}
      */
     const RPL_LUSEROP               = 252;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Sent in response to a LUSERS message to indicate
+     *      how many unknown connections there are, if any.
+     *
+     *  \format{"<integer> :unknown connection(s)"}
      */
     const RPL_LUSERUNKNOWN          = 253;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Sent in response to a LUSERS message to indicate
+     *      how many IRC channels have been formed, if any.
+     *
+     *  \format{"<integer> :channels formed"}
      */
     const RPL_LUSERCHANNELS         = 254;
 
     /**
-     *  \TODO
+     *  \brief
+     *      In processing an LUSERS message, the server
+     *      sends this raw to indicate how many clients
+     *      and servers are connected (local count).
+     *
+     *  \format{":I have <integer> clients and <integer> servers"}
      */
     const RPL_LUSERME               = 255;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Returned as the first raw in response to an
+     *      ADMIN message.
+     *
+     *  \format{"<server> :Administrative info"}
      */
     const RPL_ADMINME               = 256;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Returned in response to an ADMIN message,
+     *      usually giving information on the city,
+     *      state and country where the server is located.
+     *
+     *  \format{":<admin info>"}
      */
     const RPL_ADMINLOC1             = 257;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Returned in response to an ADMIN message,
+     *      usually giving information on the institution
+     *      hosting the server.
+     *
+     *  \format{":<admin info>"}
      */
     const RPL_ADMINLOC2             = 258;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Returned as the last raw in response to an
+     *      ADMIN message, giving an email where the server's
+     *      administrator can be reached.
+     *
+     *  \format{":<admin info>"}
+     *
+     *  \note
+     *      RFC 2812 makes it a requirement that this raw
+     *      contain a valid email address.
      */
     const RPL_ADMINEMAIL            = 259;
 
     /**
-     *  \TODO
+     *  \brief
+     *      Used to indicate that TRACE information is being logged
+     *      to a file on the IRC server.
+     *
+     *  \format{"File <logfile> <debug level>"}
      */
     const RPL_TRACELOG              = 261;
 
     /**
-     *  \TODO
+     *  \brief
+     *      RPL_TRACEEND is sent to indicate the end of the list
+     *      of replies to a TRACE command.
+     *
+     *  \format{"<server name> <version & debug level> :End of TRACE"}
      */
-    const RPL_TRACEPING             = 262;
+    const RPL_TRACEEND              = 262;
 
     /**
      *  \brief
@@ -480,10 +579,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      it MUST use the reply RPL_TRYAGAIN to inform the
      *      originating client.
      *
-     *  \par Format
-     *  <tt>
-     *      "<command> :Please wait a while and try again."
-     *  </tt>
+     *  \format{"<command> :Please wait a while and try again."}
      */
     const RPL_TRYAGAIN              = 263;
 
@@ -491,11 +587,10 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Mostly an alias for Erebot_Interface_Event_Raw::RPL_TRYAGAIN.
      *
-     *  \par Format
-     *  <tt>
+     *  \format{
      *      "<command> :Server load is temporarily too heavy.
      *      Please wait a while and try again."
-     *  </tt>
+     *  }
      *
      *  \note
      *      This is mostly the same as Erebot_Interface_Event_Raw::RPL_TRYAGAIN
@@ -598,10 +693,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      RPL_AWAY is sent to any client sending a
      *      PRIVMSG to a client which is away.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :<away message>"
-     *  </tt>
+     *  \format{"<nick> :<away message>"}
      *
      * \note
      *      RPL_AWAY is only sent by the server
@@ -613,10 +705,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Reply format used by USERHOST to list replies to the query list.
      *
-     *  \par Format
-     *  <tt>
-     *      ":*1<reply> *( " " <reply> )"
-     *  </tt>
+     *  \format{":*1<reply> *( " " <reply> )"}
      *
      * The reply string is composed as follows:
      *
@@ -633,10 +722,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Reply format used by ISON to list replies to the query list.
      *
-     *  \par Format
-     *  <tt>
-     *      ":*1<nick> *( " " <nick> )"
-     *  </tt>
+     *  \format{":*1<nick> *( " " <nick> )"}
      */
     const RPL_ISON                  = 303;
 
@@ -644,10 +730,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Sent went the client removes an AWAY message.
      *
-     *  \par Format
-     *  <tt>
-     *      ":You are no longer marked as being away"
-     *  </tt>
+     *  \format{":You are no longer marked as being away"}
      */
     const RPL_UNAWAY                = 305;
 
@@ -655,10 +738,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Sent when the client sets an AWAY message.
      *
-     *  \par Format
-     *  <tt>
-     *      ":You have been marked as being away"
-     *  </tt>
+     *  \format{":You have been marked as being away"}
      */
     const RPL_NOWAWAY               = 306;
 
@@ -697,10 +777,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a WHOIS, giving
      *      a few information on the target user.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> <user> <host> * :<real name>"
-     *  </tt>
+     *  \format{"<nick> <user> <host> * :<real name>"}
      *
      *  \note
      *      The '*' in RPL_WHOISUSER is there as the
@@ -718,10 +795,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a WHOIS, indicating
      *      that the target user is an IRC operator.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :is an IRC operator"
-     *  </tt>
+     *  \format{"<nick> :is an IRC operator"}
      */
     const RPL_WHOISOPERATOR         = 313;
 
@@ -730,10 +804,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a WHOWAS, giving
      *      information on the target user.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> <user> <host> * :<real name>"
-     *  </tt>
+     *  \format{"<nick> <user> <host> * :<real name>"}
      */
     const RPL_WHOWASUSER            = 314;
 
@@ -752,10 +823,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a WHOIS, indicating
      *      how much time the target user has spent idle.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> <integer> :seconds idle"
-     *  </tt>
+     *  \format{"<nick> <integer> :seconds idle"}
      */
     const RPL_WHOISIDLE             = 317;
 
@@ -764,10 +832,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      The RPL_ENDOFWHOIS reply is used to mark
      *      the end of processing a WHOIS message.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :End of WHOIS list"
-     *  </tt>
+     *  \format{"<nick> :End of WHOIS list"}
      */
     const RPL_ENDOFWHOIS            = 318;
 
@@ -776,10 +841,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a WHOIS, listing
      *      the public channels the target user is on.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :*( ( "@" / "+" ) <channel> " " )"
-     *  </tt>
+     *  \format{"\<nick\> :*( ( "@" / "+" ) \<channel\> " " )"}
      *
      *  \note
      *      For each reply set, RPL_WHOISCHANNELS may appear
@@ -805,10 +867,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a LIST command,
      *      contains the actual response data.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> <# visible> :<topic>"
-     *  </tt>
+     *  \format{"<channel> <# visible> :<topic>"}
      */
     const RPL_LIST                  = 322;
 
@@ -817,10 +876,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a LIST command,
      *      marks the end of the server's response.
      *
-     *  \par Format
-     *  <tt>
-     *      ":End of LIST"
-     *  </tt>
+     *  \format{":End of LIST"}
      *
      *  \note
      *      If there are no channels available to return,
@@ -847,13 +903,10 @@ extends     Erebot_Interface_Event_Base_Generic,
     /**
      *  \brief
      *      Sent when joining a channel or issuing
-     *      a TOPIC command and not topic has been
+     *      a TOPIC command and no topic has been
      *      set yet.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :No topic is set"
-     *  </tt>
+     *  \format{"<channel> :No topic is set"}
      */
     const RPL_NOTOPIC               = 331;
 
@@ -863,10 +916,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      a TOPIC command; contains the current
      *      topic.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :<topic>"
-     *  </tt>
+     *  \format{"<channel> :<topic>"}
      */
     const RPL_TOPIC                 = 332;
 
@@ -896,10 +946,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      attempted INVITE message was successful and is
      *      being passed onto the end client.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> <nick>"
-     *  </tt>
+     *  \format{"<channel> <nick>"}
      */
     const RPL_INVITING              = 341;
 
@@ -908,10 +955,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned by a server answering a SUMMON message to
      *      indicate that it is summoning that user.
      *
-     *  \par Format
-     *  <tt>
-     *      "<user> :Summoning user to IRC"
-     *  </tt>
+     *  \format{"<user> :Summoning user to IRC"}
      */
     const RPL_SUMMONING             = 342;
 
@@ -945,14 +989,11 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Reply by the server showing its version details.
      *
-     *  \par Format
-     *  <tt>
-     *      "<version>.<debuglevel> <server> :<comments>"
-     *  </tt>
+     *  \format{"\<version\>.\<debuglevel\> \<server\> :\<comments\>"}
      *
-     *  The <version> is the version of the software being
+     *  The <tt>\<version\></tt> is the version of the software being
      *  used (including any patchlevel revisions) and the
-     *  <debuglevel> is used to indicate if the server is
+     *  <tt>\<debuglevel\></tt> is used to indicate if the server is
      *  running in "debug mode".
      *
      *  The "comments" field may contain any comments about
@@ -1021,10 +1062,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent in response to a WHOWAS, marks
      *      the end of the WHOWAS message processing.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :End of WHOWAS"
-     *  </tt>
+     *  \format{"<nick> :End of WHOWAS"}
      */
     const RPL_ENDOFWHOWAS           = 369;
 
@@ -1069,10 +1107,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      just successfully issued an OPER message and gained
      *      operator status.
      *
-     *  \par Format
-     *  <tt>
-     *      ":You are now an IRC operator"
-     *  </tt>
+     *  \format{":You are now an IRC operator"}
      */
     const RPL_YOUREOPER             = 381;
 
@@ -1082,10 +1117,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      a REHASH message, an RPL_REHASHING is sent back to
      *      the operator.
      *
-     *  \par Format
-     *  <tt>
-     *      "<config file> :Rehashing"
-     *  </tt>
+     *  \format{"<config file> :Rehashing"}
      */
     const RPL_REHASHING             = 382;
 
@@ -1094,10 +1126,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent by the server to a service upon successful
      *      registration.
      *
-     *  \par Format
-     *  <tt>
-     *      "You are service <servicename>"
-     *  </tt>
+     *  \format{"You are service <servicename>"}
      */
     const RPL_YOURESERVICE          = 383;
 
@@ -1111,10 +1140,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      When replying to the TIME message, a server MUST send
      *      the reply using the RPL_TIME format below.
      *
-     *  \par Format
-     *  <tt>
-     *      "<server> :<string showing server's local time>"
-     *  </tt>
+     *  \format{"<server> :<string showing server's local time>"}
      *
      *  \note
      *      The string showing the time need only contain the correct
@@ -1148,10 +1174,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Used to indicate the nickname parameter
      *      supplied to a command is currently unused.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nickname> :No such nick/channel"
-     *  </tt>
+     *  \format{"<nickname> :No such nick/channel"}
      */
     const ERR_NOSUCHNICK            = 401;
 
@@ -1160,10 +1183,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Used to indicate the server name given
      *      currently doesn't exist.
      *
-     *  \par Format
-     *  <tt>
-     *      "<server name> :No such server"
-     *  </tt>
+     *  \format{"<server name> :No such server"}
      */
     const ERR_NOSUCHSERVER          = 402;
 
@@ -1172,10 +1192,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Used to indicate the given channel name
      *      is invalid.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel name> :No such channel"
-     *  </tt>
+     *  \format{"<channel name> :No such channel"}
      */
     const ERR_NOSUCHCHANNEL         = 403;
 
@@ -1185,10 +1202,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      a PRIVMSG on a channel when you're not allowed
      *      to do so.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel name> :Cannot send to channel"
-     *  </tt>
+     *  \format{"<channel name> :Cannot send to channel"}
      *
      *  Sent to a user who is either (a) not on a channel
      *  which is mode +n or (b) not a chanop (or mode +v) on
@@ -1204,10 +1218,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      number of allowed channels and they try to join
      *      another channel.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel name> :You have joined too many channels"
-     *  </tt>
+     *  \format{"<channel name> :You have joined too many channels"}
      */
     const ERR_TOOMANYCHANNELS       = 405;
 
@@ -1216,10 +1227,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned by WHOWAS to indicate there is no history
      *      information for that nickname.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nickname> :There was no such nickname"
-     *  </tt>
+     *  \format{"<nickname> :There was no such nickname"}
      */
     const ERR_WASNOSUCHNICK         = 406;
 
@@ -1228,17 +1236,14 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Used when several targets match the given parameters
      *      for a command.
      *
-     *  \par Format
-     *  <tt>
-     *      "<target> :<error code> recipients. <abort message>"
-     *  </tt>
+     *  \format{"<target> :<error code> recipients. <abort message>"}
      *
      *  There are several occasions when this raw may be used:
      *  -   Returned to a client which is attempting to send a
-     *      PRIVMSG/NOTICE using the user@host destination format
-     *      and for a user@host which has several occurrences.
+     *      PRIVMSG/NOTICE using the user\@host destination format
+     *      and for a user\@host which has several occurrences.
      *
-     *  -   Returned to a client which trying to send a
+     *  -   Returned to a client which tries to send a
      *      PRIVMSG/NOTICE to too many recipients.
      *
      *  -   Returned to a client which is attempting to JOIN a safe
@@ -1256,10 +1261,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned to a client which is attempting to send a SQUERY
      *      to a service which does not exist.
      *
-     *  \par Format
-     *  <tt>
-     *      "<service name> :No such service"
-     *  </tt>
+     *  \format{"<service name> :No such service"}
      */
     const ERR_NOSUCHSERVICE         = 408;
 
@@ -1272,10 +1274,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      PING or PONG message missing the originator parameter.
      *
-     *  \par Format
-     *  <tt>
-     *      ":No origin specified"
-     *  </tt>
+     *  \format{":No origin specified"}
      */
     const ERR_NOORIGIN              = 409;
 
@@ -1284,10 +1283,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Used to indicate a recipient was expected
      *      for the given command.
      *
-     *  \par Format
-     *  <tt>
-     *      ":No recipient given (<command>)"
-     *  </tt>
+     *  \format{":No recipient given (<command>)"}
      */
     const ERR_NORECIPIENT           = 411;
 
@@ -1296,48 +1292,36 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent when a command did not receive any text when it was
      *      expecting some.
      *
-     *  \par Format
-     *  <tt>
-     *      ":No text to send"
-     *  </tt>
+     *  \format{":No text to send"}
      */
     const ERR_NOTEXTTOSEND          = 412;
 
     /**
      *  \brief
-     *      Returned when an invalid use of "PRIVMSG $<server>"
-     *      or "PRIVMSG #<host>" is attempted (when it doesn't
-     *      contain top-level domain).
+     *      Returned when an invalid use of <tt>"PRIVMSG $<server>"</tt>
+     *      or <tt>"PRIVMSG #<host>"</tt> is attempted (when it doesn't
+     *      contain a top-level domain).
      *
-     *  \par Format
-     *  <tt>
-     *      "<mask> :No toplevel domain specified"
-     *  </tt>
+     *  \format{"<mask> :No toplevel domain specified"}
      */
     const ERR_NOTOPLEVEL            = 413;
 
     /**
      *  \brief
-     *      Returned when an invalid use of "PRIVMSG $<server>"
-     *      or "PRIVMSG #<host>" is attempted (when the top-level
+     *      Returned when an invalid use of <tt>"PRIVMSG $<server>"</tt>
+     *      or <tt>"PRIVMSG #<host>"</tt> is attempted (when the top-level
      *      domain contains wildcard characters).
      *
-     *  \par Format
-     *  <tt>
-     *      "<mask> :Wildcard in toplevel domain"
-     *  </tt>
+     *  \format{"<mask> :Wildcard in toplevel domain"}
      */
     const ERR_WILDTOPLEVEL          = 414;
 
     /**
      *  \brief
      *      Returned when an invalid mask was passed to
-     *      "PRIVMSG $<server>" or "PRIVMSG #<host>".
+     *      <tt>"PRIVMSG $<server>"</tt> or <tt>"PRIVMSG #<host>"</tt>.
      *
-     *  \par Format
-     *  <tt>
-     *      "<mask> :Bad Server/host mask"
-     *  </tt>
+     *  \format{"<mask> :Bad Server/host mask"}
      */
     const ERR_BADMASK               = 415;
 
@@ -1351,10 +1335,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned to a registered client to indicate that the
      *      command sent is unknown by the server.
      *
-     *  \par Format
-     *  <tt>
-     *      "<command> :Unknown command"
-     *  </tt>
+     *  \format{"<command> :Unknown command"}
      */
     const ERR_UNKNOWNCOMMAND        = 421;
 
@@ -1362,10 +1343,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Server's MOTD file could not be opened by the server.
      *
-     *  \par Format
-     *  <tt>
-     *      ":MOTD File is missing"
-     *  </tt>
+     *  \format{":MOTD File is missing"}
      */
     const ERR_NOMOTD                = 422;
 
@@ -1375,10 +1353,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      when there is an error in finding the appropriate
      *      information.
      *
-     *  \par Format
-     *  <tt>
-     *      "<server> :No administrative info available"
-     *  </tt>
+     *  \format{"<server> :No administrative info available"}
      */
     const ERR_NOADMININFO           = 423;
 
@@ -1387,10 +1362,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Generic error message used to report a failed file
      *      operation during the processing of a message.
      *
-     *  \par Format
-     *  <tt>
-     *      ":File error doing <file op> on <file>"
-     *  </tt>
+     *  \format{":File error doing <file op> on <file>"}
      */
     const ERR_FILEERROR             = 424;
 
@@ -1404,10 +1376,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when a nickname parameter is expected
      *      for a command and isn't found.
      *
-     *  \par Format
-     *  <tt>
-     *      ":No nickname given"
-     *  </tt>
+     *  \format{":No nickname given"}
      */
     const ERR_NONICKNAMEGIVEN       = 431;
 
@@ -1416,10 +1385,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned after receiving a NICK message which contains
      *      characters which do not fall in the defined set.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :Erroneous nickname"
-     *  </tt>
+     *  \format{"<nick> :Erroneous nickname"}
      */
     const ERR_ERRONEUSNICKNAME      = 432;
 
@@ -1429,10 +1395,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      in an attempt to change to a currently existing
      *      nickname.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :Nickname is already in use"
-     *  </tt>
+     *  \format{"<nick> :Nickname is already in use"}
      */
     const ERR_NICKNAMEINUSE         = 433;
 
@@ -1447,10 +1410,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      a nickname collision (registered of a NICK that
      *      already exists by another server).
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> :Nickname collision KILL from <user>@<host>"
-     *  </tt>
+     *  \format{"<nick> :Nickname collision KILL from <user>@<host>"}
      */
     const ERR_NICKCOLLISION         = 436;
 
@@ -1459,10 +1419,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when a resource needed to perform the given
      *      action is unavailable.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick/channel> :Nick/channel is temporarily unavailable"
-     *  </tt>
+     *  \format{"<nick/channel> :Nick/channel is temporarily unavailable"}
      *
      *  This error is:
      *  -   Returned by a server to a user trying to join a channel
@@ -1499,10 +1456,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned by the server to indicate that the target
      *      user of the command is not on the given channel.
      *
-     *  \par Format
-     *  <tt>
-     *      "<nick> <channel> :They aren't on that channel"
-     *  </tt>
+     *  \format{"<nick> <channel> :They aren't on that channel"}
      */
     const ERR_USERNOTINCHANNEL      = 441;
 
@@ -1512,10 +1466,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      perform a channel affecting command for which the
      *      client isn't a member.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :You're not on that channel"
-     *  </tt>
+     *  \format{"<channel> :You're not on that channel"}
      */
     const ERR_NOTONCHANNEL          = 442;
 
@@ -1524,10 +1475,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when a client tries to invite a user to
      *      a channel they are already on.
      *
-     *  \par Format
-     *  <tt>
-     *      "<user> <channel> :is already on channel"
-     *  </tt>
+     *  \format{"<user> <channel> :is already on channel"}
      */
     const ERR_USERONCHANNEL         = 443;
 
@@ -1537,10 +1485,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      user was unable to be performed since they were not
      *      logged in.
      *
-     *  \par Format
-     *  <tt>
-     *      "<user> :User not logged in"
-     *  </tt>
+     *  \format{"<user> :User not logged in"}
      */
     const ERR_NOLOGIN               = 444;
 
@@ -1550,10 +1495,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      either because it was not implemented or it was disabled (in the
      *      configuration).
      *
-     *  \par Format
-     *  <tt>
-     *      ":SUMMON has been disabled"
-     *  </tt>
+     *  \format{":SUMMON has been disabled"}
      */
     const ERR_SUMMONDISABLED        = 445;
 
@@ -1563,10 +1505,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      either because it was not implemented or it was disabled (in the
      *      configuration).
      *
-     *  \par Format
-     *  <tt>
-     *      ":USERS has been disabled"
-     *  </tt>
+     *  \format{":USERS has been disabled"}
      */
     const ERR_USERSDISABLED         = 446;
 
@@ -1576,10 +1515,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      must be registered before the server will allow it
      *      to be parsed in detail.
      *
-     *  \par Format
-     *  <tt>
-     *      ":You have not registered"
-     *  </tt>
+     *  \format{":You have not registered"}
      */
     const ERR_NOTREGISTERED         = 451;
 
@@ -1594,10 +1530,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      indicate to the client that it didn't supply
      *      enough parameters.
      *
-     *  \par Format
-     *  <tt>
-     *      "<command> :Not enough parameters"
-     *  </tt>
+     *  \format{"<command> :Not enough parameters"}
      */
     const ERR_NEEDMOREPARAMS        = 461;
 
@@ -1607,10 +1540,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      change part of the registered details (such as
      *      password or user details from second USER message).
      *
-     *  \par Format
-     *  <tt>
-     *      ":Unauthorized command (already registered)"
-     *  </tt>
+     *  \format{":Unauthorized command (already registered)"}
      */
     const ERR_ALREADYREGISTRED      = 462;
 
@@ -1621,10 +1551,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      connections from the host the attempted connection
      *      is tried.
      *
-     *  \par Format
-     *  <tt>
-     *      ":Your host isn't among the privileged"
-     *  </tt>
+     *  \format{":Your host isn't among the privileged"}
      */
     const ERR_NOPERMFORHOST         = 463;
 
@@ -1634,10 +1561,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      a connection for which a password was required and
      *      was either not given or incorrect.
      *
-     *  \par Format
-     *  <tt>
-     *      ":Password incorrect"
-     *  </tt>
+     *  \format{":Password incorrect"}
      */
     const ERR_PASSWDMISMATCH        = 464;
 
@@ -1647,10 +1571,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      yourself with a server which has been setup to
      *      explicitly deny connections to you.
      *
-     *  \par Format
-     *  <tt>
-     *      ":You are banned from this server"
-     *  </tt>
+     *  \format{":You are banned from this server"}
      */
     const ERR_YOUREBANNEDCREEP      = 465;
 
@@ -1666,10 +1587,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent when attempting to set a key for a channel
      *      which already has one.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :Channel key already set"
-     *  </tt>
+     *  \format{"<channel> :Channel key already set"}
      */
     const ERR_KEYSET                = 467;
 
@@ -1688,10 +1606,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when trying to JOIN a channel for which
      *      a limit has been set and reached.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :Cannot join channel (+l)"
-     *  </tt>
+     *  \format{"<channel> :Cannot join channel (+l)"}
      */
     const ERR_CHANNELISFULL         = 471;
 
@@ -1700,10 +1615,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when trying to set a mode which is not
      *      recognized by the server on a channel.
      *
-     *  \par Format
-     *  <tt>
-     *      "<char> :is unknown mode char to me for <channel>"
-     *  </tt>
+     *  \format{"<char> :is unknown mode char to me for <channel>"}
      *
      * Sent when the client sets an AWAY message.
      */
@@ -1714,10 +1626,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when trying to JOIN a channel which requires
      *      an invitation and you've not been invited.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :Cannot join channel (+i)"
-     *  </tt>
+     *  \format{"<channel> :Cannot join channel (+i)"}
      */
     const ERR_INVITEONLYCHAN        = 473;
 
@@ -1726,10 +1635,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when trying to JOIN a channel from which
      *      you've been banned.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :Cannot join channel (+b)"
-     *  </tt>
+     *  \format{"<channel> :Cannot join channel (+b)"}
      */
     const ERR_BANNEDFROMCHAN        = 474;
 
@@ -1738,10 +1644,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when trying to JOIN a channel for which
      *      a key was set and was either not given or incorrect.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :Cannot join channel (+k)"
-     *  </tt>
+     *  \format{"<channel> :Cannot join channel (+k)"}
      */
     const ERR_BADCHANNELKEY         = 475;
 
@@ -1755,10 +1658,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when attempting to set modes on a channel
      *      which does not support modes.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> :Channel doesn't support modes"
-     *  </tt>
+     *  \format{"<channel> :Channel doesn't support modes"}
      */
     const ERR_NOCHANMODES           = 477;
 
@@ -1772,10 +1672,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Returned when attempting to add a ban on a channel
      *      for which the banlist is already full.
      *
-     *  \par Format
-     *  <tt>
-     *      "<channel> <char> :Channel list is full"
-     *  </tt>
+     *  \format{"<channel> <char> :Channel list is full"}
      */
     const ERR_BANLISTFULL           = 478;
 
@@ -1790,10 +1687,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      will return this error to indicate the attempt was
      *      unsuccessful.
      *
-     *  \par Format
-     *  <tt>
-     *      ":Permission Denied- You're not an IRC operator"
-     *  </tt>
+     *  \format{":Permission Denied- You're not an IRC operator"}
      */
     const ERR_NOPRIVILEGES          = 481;
 
@@ -1804,10 +1698,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      making the attempt is not a channel operator on the
      *      specified channel.
      *
-     *  \par Format
-     *  <tt>
-     *      <channel> :You're not channel operator"
-     *  </tt>
+     *  \format{"<channel> :You're not channel operator"}
      */
     const ERR_CHANOPPRIVSNEEDED     = 482;
 
@@ -1817,10 +1708,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      will be refused and this error returned directly
      *      to the client.
      *
-     *  \par Format
-     *  <tt>
-     *      ":You can't kill a server!"
-     *  </tt>
+     *  \format{":You can't kill a server!"}
      */
     const ERR_CANTKILLSERVER        = 483;
 
@@ -1829,10 +1717,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Sent by the server to a user upon connection to indicate
      *      the restricted nature of the connection (user mode "+r")
      *
-     *  \par Format
-     *  <tt>
-     *      ":Your connection is restricted!"
-     *  </tt>
+     *  \format{":Your connection is restricted!"}
      */
     const ERR_RESTRICTED            = 484;
 
@@ -1847,10 +1732,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      return this error if the client making the attempt is not
      *      a channel operator on the specified channel.
      *
-     *  \par Format
-     *  <tt>
-     *      ":You're not the original channel operator"
-     *  </tt>
+     *  \format{":You're not the original channel operator"}
      */
     const ERR_UNIQOPPRIVSNEEDED     = 485;
 
@@ -1876,10 +1758,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      the client's host as an operator, this error will
      *      be returned.
      *
-     *  \par Format
-     *  <tt>
-     *      ":No O-lines for your host"
-     *  </tt>
+     *  \format{":No O-lines for your host"}
      */
     const ERR_NOOPERHOST            = 491;
 
@@ -1894,10 +1773,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      message was sent with a nickname parameter and
      *      that the a mode flag sent was not recognized.
      *
-     *  \par Format
-     *  <tt>
-     *      ":Unknown MODE flag"
-     *  </tt>
+     *  \format{":Unknown MODE flag"}
      */
     const ERR_UMODEUNKNOWNFLAG      = 501;
 
@@ -1906,10 +1782,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      Error sent to any user trying to view or change
      *      the user mode for a user other than themselves.
      *
-     *  \par Format
-     *  <tt>
-     *      ":Cannot change mode for other users"
-     *  </tt>
+     *  \format{":Cannot change mode for other users"}
      */
     const ERR_USERSDONTMATCH        = 502;
 
@@ -2022,10 +1895,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      that the server is ready to proceed with data encrypted
      *      using the SSL/TLS protocol.
      *
-     *  \par Format
-     *  <tt>
-     *      ":STARTTLS successful, go ahead with TLS handshake"
-     *  </tt>
+     *  \format{":STARTTLS successful\, go ahead with TLS handshake"}
      *
      *  \note
      *      Upon receiving this message, the client should proceed
@@ -2041,10 +1911,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      that the attempt to negotiate a secure channel for the
      *      communication to take place has failed.
      *
-     *  \par Format
-     *  <tt>
-     *      ":STARTTLS failure"
-     *  </tt>
+     *  \format{":STARTTLS failure"}
      *
      *  \note
      *      Upon receiving this message, the client may proceed with
