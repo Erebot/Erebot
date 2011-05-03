@@ -15,5 +15,18 @@
         <include name="**/*.php"/>
     </fileset>
 
+    <target name="protected_set_version">
+        <!-- Set Erebot_Interface_Core::VERSION. -->
+        <exec command="sed -i &quot;s/define.*EREBOT_VERSION.*/define('EREBOT_VERSION', '${version}');/&quot; src/Erebot/Interface/Core.php" checkreturn="true"/>
+
+        <!-- Set version in example configurations. -->
+        <!-- * Single file configuration -->
+        <exec command="xmlstarlet ed -P -S -u &quot;/configuration/@version&quot; -v ${version} examples/Erebot-single-file.xml.dist > /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
+        <move file="/tmp/${phing.project.name}~" tofile="examples/Erebot-single-file.xml" haltonerror="true" overwrite="true"/>
+        <!-- * Multiple file configuration -->
+        <exec command="xmlstarlet ed -P -S -u &quot;/configuration/@version&quot; -v ${version} examples/Erebot-multiple-files.xml.dist > /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
+        <move file="/tmp/${phing.project.name}~" tofile="examples/Erebot-multiple-files.xml" haltonerror="true" overwrite="true"/>
+    </target>
+
     <import file="buildenv/build.xml"/>
 </project>
