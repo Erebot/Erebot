@@ -116,7 +116,7 @@ implements      Erebot_Interface_Event_Match,
      * \note
      *      Duplicates of the same subfilter are silently ignored.
      */
-    public function & add()
+    public function & add(/* ... */)
     {
         $filters = func_get_args();
         foreach ($filters as $filter) {
@@ -144,7 +144,7 @@ implements      Erebot_Interface_Event_Match,
      *      Attempts to remove a filter which is not a
      *      subfilter of this one are silently ignored.
      */
-    public function & remove()
+    public function & remove(/* ... */)
     {
         $filters = func_get_args();
         foreach ($filters as $filter) {

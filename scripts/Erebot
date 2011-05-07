@@ -69,6 +69,13 @@ if (!function_exists('ctype_digit')) {
     }
 }
 
+function Erebot_startup_sighandler($signum)
+{
+    if (defined('SIGUSR1') && $signum == SIGUSR1)
+        exit(0);
+    exit(1);
+}
+
 function Erebot_cleanup_pidfile($handle, $pidfile)
 {
     $logging    =&  Plop::getInstance();
@@ -211,7 +218,11 @@ function main()
     $logging    =&  Plop::getInstance();
     $logger     =   $logging->getLogger(__FILE__);
 
-    // Handle daemonization.
+    /* Handle daemonization.
+     * See also:
+     * - http://www.itp.uzh.ch/~dpotter/howto/daemonize
+     * - http://andytson.com/blog/2010/05/daemonising-a-php-cli-script
+     */
     if ($parsed->options['daemon']) {
         if (!$hasPosix) {
             $logger->error(
@@ -229,14 +240,34 @@ function main()
             exit(1);
         }
 
+        foreach (array('SIGCHLD', 'SIGUSR1', 'SIGALRM') as $signal)
+            if (defined($signal))
+                pcntl_signal(constant($signal), 'Erebot_startup_sighandler');
+
         $logger->info('Starting the bot in the background...');
         $pid = pcntl_fork();
         if ($pid < 0) {
             $logger->error('Could not start in the background (unable to fork)');
             exit(1);
         }
-        if ($pid > 0)
-            exit(0);
+        if ($pid > 0) {
+            pcntl_alarm(2);
+            pcntl_wait($dummy, WUNTRACED);
+            if (function_exists('pcntl_signal_dispatch'))
+                pcntl_signal_dispatch();
+            exit(1);
+        }
+        $parent = posix_getppid();
+
+        // Ignore some of the signals.
+        foreach (array('SIGTSTP', 'SIGTOU', 'SIGTIN', 'SIGHUP') as $signal)
+            if (defined($signal))
+                pcntl_signal(constant($signal), SIG_IGN);
+
+        // Restore the signal handlers we messed with.
+        foreach (array('SIGCHLD', 'SIGUSR1', 'SIGALRM') as $signal)
+            if (defined($signal))
+                pcntl_signal(constant($signal), SIG_DFL);
 
         umask(0);
         if (umask() != 0)
@@ -257,6 +288,7 @@ function main()
         if ($pid > 0)
             exit(0);
 
+        // Avoid locking up the current directory.
         if (!chdir(DIRECTORY_SEPARATOR))
             $logger->error('Could not chdir to "%s"', DIRECTORY_SEPARATOR);
 
@@ -265,7 +297,18 @@ function main()
             if (defined($stream))
                 fclose(constant($stream));
         }
+        // Re-open them with the system's blackhole.
+        /**
+         * \todo
+         *      should be made portable, but the requirement on the POSIX
+         *      extension prevents this, so this is okay for now.
+         */
+        $stdin  = fopen('/dev/null', 'r');
+        $stdout = fopen('/dev/null', 'w');
+        $stderr = fopen('php://stdout', 'w');
 
+        if (defined('SIGUSR1'))
+            posix_kill($parent, SIGUSR1);
         $logger->info('Successfully started in the background');
     }
 
@@ -472,5 +515,9 @@ function main()
     exit(0);
 }
 
+// For older versions of PHP that support signals
+// but don't support pcntl_signal_dispatch (5.2.x).
+if (!function_exists('pcntl_signal_dispatch'))
+    declare(ticks=1);
 main();
 
