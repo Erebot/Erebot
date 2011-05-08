@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project name="Erebot" description="" default="all">
-    <property name="domain"         value="Erebot"/>
-    <property name="version"        value="0.3.2"/>
-    <property name="email"          value="clicky@erebot.net"/>
+    <property name="domain" value="Erebot"/>
+    <property name="version" value="0.5.0"/>
+    <property name="email" value="clicky@erebot.net"/>
     <property name="qa.coverage.force" value="false"/>
 
     <fileset dir="src/" id="sources">
@@ -21,10 +21,10 @@
 
         <!-- Set version in example configurations. -->
         <!-- * Single file configuration -->
-        <exec command="xmlstarlet ed -P -S -u &quot;/configuration/@version&quot; -v ${version} examples/Erebot-single-file.xml.dist > /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
+        <exec command="xmlstarlet ed -P -S -u &quot;/configuration/@version&quot; -v ${version} examples/Erebot-single-file.xml.dist &gt; /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
         <move file="/tmp/${phing.project.name}~" tofile="examples/Erebot-single-file.xml" haltonerror="true" overwrite="true"/>
         <!-- * Multiple file configuration -->
-        <exec command="xmlstarlet ed -P -S -u &quot;/configuration/@version&quot; -v ${version} examples/Erebot-multiple-files.xml.dist > /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
+        <exec command="xmlstarlet ed -P -S -u &quot;/configuration/@version&quot; -v ${version} examples/Erebot-multiple-files.xml.dist &gt; /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
         <move file="/tmp/${phing.project.name}~" tofile="examples/Erebot-multiple-files.xml" haltonerror="true" overwrite="true"/>
     </target>
 

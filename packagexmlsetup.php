@@ -5,22 +5,31 @@
  * More information: http://pear.php.net/manual/en/pyrus.commands.make.php#pyrus.commands.make.packagexmlsetup
  */
 
-$package->license = 'GPL';
-$compatible->license = 'GPL';
-
 $deps = array(
-    'pear.php.net/Console_CommandLine',
-    'pear.php.net/File_Gettext',
-    'pear.erebot.net/Erebot_Module_IrcConnector',
-    'pear.erebot.net/Erebot_Module_AutoConnect',
-    'pear.erebot.net/Erebot_Module_PingReply',
-    'pear.erebot.net/Plop',
+    'required' => array(
+        'pear.php.net/Console_CommandLine',
+        'pear.php.net/File_Gettext',
+        'pear.erebot.net/Erebot_Module_IrcConnector',
+        'pear.erebot.net/Erebot_Module_AutoConnect',
+        'pear.erebot.net/Erebot_Module_PingReply',
+        'pear.erebot.net/Plop',
+    ),
 );
-$compat_deps = $deps;
 
-foreach ($deps as $dep)
-    $package->dependencies['required']->package[$dep]->save();
-foreach ($compat_deps as $dep)
-    $compatible->dependencies['required']->package[$dep]->save();
+foreach (array($package, $compatible) as $obj) {
+    $obj->dependencies['required']->php = '5.2.0';
+
+    $obj->license['name'] = 'GPL';
+    $obj->license['uri'] = 'http://www.gnu.org/licenses/gpl-3.0.txt';
+    // Pyrus <= 2.0.0a3 has a bug with this, see:
+    // https://github.com/saltybeagle/PEAR2_Pyrus/issues/12
+#    $obj->license['path'] = 'LICENSE';
+
+    foreach ($deps as $req => $data)
+        foreach ($data as $dep)
+            $obj->dependencies[$req]->package[$dep]->save();
+
+    $obj->stability['release'] = 'stable';
+}
 
 ?>
