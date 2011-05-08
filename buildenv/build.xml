@@ -1,0 +1,410 @@
+<?xml version="1.0"?>
+<project name="Erebot_buildenv" description="Same as 'phing all'" default="all">
+    <property name="qa.coverage.force"      value="true"/>
+    <property name="qa.coverage.db"         value="/tmp/${phing.project.name}.db"/>
+    <property name="qa.coverage.tmp"        value="/tmp/${phing.project.name}.xml"/>
+    <property name="i18n.template.tmp"      value="/tmp/${phing.project.name}.pot"/>
+    <property name="release.tmp"            value="/tmp/release-${phing.project.name}"/>
+    <property name="i18n.template.exists"   value="false"/>
+    <property name="build-phar"             value="false"/>
+    <property name="pear.channel"           value="pear.erebot.net"/>
+    <property name="domain"                 value="${phing.project.name}"/>
+
+    <if>
+        <istrue value="${qa.coverage.force}"/>
+        <then>
+            <property name="qa.coverage.min.project" value="75"/>
+            <property name="qa.coverage.min.class"   value="75"/>
+            <property name="qa.coverage.min.method"  value="50"/>
+        </then>
+        <else>
+            <property name="qa.coverage.min.project" value="0"/>
+            <property name="qa.coverage.min.class"   value="0"/>
+            <property name="qa.coverage.min.method"  value="0"/>
+        </else>
+    </if>
+
+    <tstamp>
+        <!-- Format is, e.g. Sat, 03 Oct 2009, 16:31 -->
+        <format property="buildtime" pattern="%a, %d %b %Y, %H:%M"/>
+    </tstamp>
+
+    <adhoc-task name="xgettext"><![CDATA[
+    class XgettextTask extends Task
+    {
+        protected $command = 'xgettext';
+        protected $filesets = array();
+
+        public function setCommand($command)    { $this->command = $command;    }
+        public function getCommand()            { return $this->command;        }
+
+        public function createFileset()
+        {
+            $num = array_push($this->filesets, new FileSet());
+            return $this->filesets[$num-1];
+        }
+
+        function main()
+        {
+            $filesToParse = array();
+            foreach ($this->filesets as $fs) {
+                $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
+                foreach($files as $filename) {
+                     $f = new PhingFile($fs->getDir($this->project), $filename);
+                     $filesToParse[] = $f->getAbsolutePath();
+                }
+            }
+
+            $command = $this->command . " " . join(" ", $filesToParse);
+            $this->log("Executing command: " . $command);
+            exec($command, $output, $return);
+
+            if ($return != 0)
+                throw new BuildException("Could not execute xgettext: " . implode(" ", $output));
+
+            foreach ($output as $line) {
+                $lowerLine = strtolower($line);
+
+                if (strpos($lowerLine, 'warning') !== FALSE) {
+                    $this->log($line, Project::MSG_WARN);
+                    continue;
+                }
+
+                if (strpos($lowerLine, 'notice') !== FALSE) {
+                    $this->log($line, Project::MSG_INFO);
+                    continue;
+                }
+
+                $this->log($line, Project::MSG_VERBOSE);
+            }
+        }
+    }
+    ]]></adhoc-task>
+
+    <adhoc-task name="i18nStats"><![CDATA[
+    class UntranslatedTask extends Task
+    {
+        protected $output = '';
+        protected $file = '';
+
+        public function setOutput($output)  { $this->output = $output;  }
+        public function getOutput()         { return $this->output;     }
+
+        public function setFile($file)  { $this->file = $file;  }
+        public function getFile()       { return $this->file;   }
+
+        function main()
+        {
+            $output = explode("\n", str_replace("\r\n", "\n", $this->output));
+            foreach ($output as $line) {
+                if (strpos($line, "untranslated") !== FALSE)
+                    $this->log($this->file . ":0: Warning: ".$line, Project::MSG_WARN);
+                else if (strpos($line, "translated") !== FALSE)
+                    $this->log($this->file . ":0: Information: ".$line, Project::MSG_INFO);
+                else if (strpos($line, $this->file . ":") === 0) {
+                    $fields = explode(":", $line);
+                    $file = array_shift($fields);
+                    $linr = array_shift($fields);
+                    $msg  = trim(implode(":", $fields));
+                    $this->log($file.":".$linr.": Warning: ".$msg, Project::MSG_ERR);
+                }
+                else
+                    $this->log($line, Project::MSG_ERR);
+            }
+        }
+    }
+    ]]></adhoc-task>
+
+    <!-- Automatically detect existing locales. -->
+    <exec command="ls -1 data/i18n/ -p | grep '/' | xargs echo | sed -e 's^/^^g' -e 's^ ^,^g'" escape="false" outputProperty="locales"/>
+
+    <target name="all" depends="i18n"
+        description="Main target -- Same as 'phing i18n'"/>
+
+    <target name="locales" description="Displays available locales">
+        <echo message="Available locales: '${locales}'"/>
+    </target>
+
+    <!-- Internationalization -->
+    <target name="i18n"
+        depends="extract_messages,update_catalog,compile_catalog"
+        description="Runs several commands to update the translation files"/>
+
+    <target name="extract_messages"
+        description="Extract messages in need of a translation from current code">
+        <xgettext command="xgettext -o ${i18n.template.tmp} --from-code utf-8 --foreign-user --add-location -E -i -w 80 -s -L PHP --strict --force-po --package-name ${domain} --package-version ${version} --msgid-bugs-address ${email}">
+            <fileset refid="sources"/>
+        </xgettext>
+        <available file="data/i18n/${domain}.po" property="i18n.template.exists"/>
+        <if>
+            <equals arg1="${i18n.template.exists}" arg2="true"/>
+            <then>
+                <exec command="msgmerge --backup=off -U -N -e -i --strict -w 80 -q --no-location data/i18n/${domain}.po ${i18n.template.tmp}" logoutput="true" dir="."/>
+            </then>
+            <else>
+                <exec command="msginit --no-translator -w 80 -l en_US  -i ${i18n.template.tmp} -o data/i18n/${domain}.po" logoutput="true" dir="."/>
+            </else>
+        </if>
+        <delete file="${i18n.template.tmp}"/>
+        <exec command="msgfmt --statistics -c -f -o data/i18n/${domain}.mo data/i18n/${domain}.po" logoutput="true" dir="."/>
+    </target>
+
+    <target name="update_catalog"
+        description="Update the translation files based on current code">
+        <foreach list="${locales}" param="locale" target="update_1_catalog"/>
+    </target>
+
+    <target name="update_1_catalog" hidden="true">
+        <exec command="php -r '$f = file_get_contents(&#x22;data/i18n/${domain}.po&#x22;); echo(preg_replace(&#x22;/#\nmsgid\s+\&#x22;\&#x22;\nmsgstr\s+\&#x22;.*?\&#x22;\n[^#]*/s&#x22;, &#x22;&#x22;, $f, 1));' | xgettext -o- -Lshell -kmsgstr -s --no-location --omit-header - | msgmerge --backup=off -U -N -e -i --strict -w 80 -F -q --add-location data/i18n/${locale}/LC_MESSAGES/${domain}.po -" logoutput="true" dir="." escape="false"/>
+    </target>
+
+    <target name="init_catalog"
+        description="Add a new language to translation files">
+        <propertyprompt propertyName="locale" promptText="Name of the locale" useExistingValue="true"/>
+        <mkdir dir="data/i18n/${locale}/LC_MESSAGES"/>
+        <exec command="php -r '$f = file_get_contents(&#x22;data/i18n/${domain}.po&#x22;); echo(preg_replace(&#x22;/#\nmsgid\s+\&#x22;\&#x22;\nmsgstr\s+\&#x22;.*?\&#x22;\n[^#]*/s&#x22;, &#x22;&#x22;, $f, 1));' | xgettext -o- -Lshell -kmsgstr -s --no-location - | msginit --no-translator -w 80 -l ${locale} -i- -o data/i18n/${locale}/LC_MESSAGES/${domain}.po" logoutput="true" escape="false" dir="."/>
+    </target>
+
+    <target name="compile_catalog"
+        description="Compile the translation files">
+        <foreach list="${locales}" param="locale" target="compile_1_catalog"/>
+    </target>
+
+    <target name="compile_1_catalog" hidden="true">
+        <exec command="msgfmt --statistics -c -f -o data/i18n/${locale}/LC_MESSAGES/${domain}.mo data/i18n/${locale}/LC_MESSAGES/${domain}.po" dir="." outputProperty="stats"/>
+        <i18nStats output="${stats}" file="data/i18n/${locale}/LC_MESSAGES/${domain}.po"/>
+    </target>
+
+    <!-- Release process -->
+    <target name="release" depends="all"
+        description="Build a PEAR package from the current code">
+        <delete verbose="true">
+            <fileset dir=".">
+                <include name="package.xml"/>
+                <include name="package_compatible.xml"/>
+            </fileset>
+        </delete>
+        <mkdir dir="${release.tmp}"/>
+        <exec
+            command="pyrus.phar ${release.tmp} channel-discover ${pear.channel} ."
+            passthru="true"
+            checkreturn="true"
+        />
+        <exec
+            command="pyrus.phar ${release.tmp} make ${phing.project.name} ${pear.channel} ."
+            passthru="true"
+            checkreturn="true"
+        />
+        <exec
+            command="pyrus.phar ${release.tmp} package --tgz"
+            passthru="true"
+            checkreturn="true"
+        />
+        <if>
+            <istrue value="${build-phar}"/>
+            <then>
+                <exec
+                    command="pyrus.phar ${release.tmp} package --phar"
+                    passthru="true"
+                    checkreturn="true"
+                />
+            </then>
+        </if>
+        <delete dir="${release.tmp}"/>
+    </target>
+
+    <!-- Tag a release -->
+    <target name="tag" depends="all">
+        <propertyprompt propertyName="tag" promptText="Version for the tag" useExistingValue="true"/>
+        <propertyprompt propertyName="next" promptText="Next trunk version" useExistingValue="true"/>
+
+        <!-- Refuse to tag if the tests don't pass. -->
+        <phing phingFile="build.xml" target="test" haltonfailure="true"/>
+        <!-- Refuse to tag something that doesn't build. -->
+        <phing phingFile="build.xml" target="release" haltonfailure="true"/>
+
+        <!-- The tag must match the latest RELEASE file. -->
+        <exec command="./buildenv/get_version.php -v RELEASE" checkreturn="true" outputProperty="release_version"/>
+        <if>
+            <not><equals arg1="${tag}" arg2="${release_version}"/></not>
+            <then>
+                <echo message="The latest available release is ${release_version}."/>
+                <propertyprompt propertyName="rename" defaultValue="n"
+                    promptText="Rename ${release_version} into ${tag} (y/N)"/>
+                <php function="strtolower" returnProperty="rename">
+                    <param value="${rename}"/>
+                </php>
+                <if>
+                    <not><equals arg1="${rename}" arg2="y"/></not>
+                </if>
+                <then>
+                    <fail message="Latest RELEASE doesn't match the tag (${release_version} != ${tag})"/>
+                </then>
+                <else>
+                    <move file="RELEASE-${release_version}" tofile="RELEASE-${tag}" haltonerror="true"/>
+                </else>
+            </then>
+        </if>
+
+        <!-- Update version for the tag. -->
+        <phingcall target="set_version">
+            <property name="version" value="${tag}"/>
+        </phingcall>
+        <svncommit workingcopy="." message="Prepare tag: ${phing.project.name}-${tag}"/>
+
+        <!-- Create the tag. -->
+        <exec command="svn info --xml | xmlstarlet sel -t -v '/info/entry/url'" escape="false" outputProperty="svn_path"/>
+        <exec command="svn info --xml | xmlstarlet sel -t -v '/info/entry/repository/root'" escape="false" outputProperty="svn_root"/>
+        <exec command="dirname ${svn_path}" outputProperty="svn_component_root"/>
+        <svncopy
+            repositoryurl="${svn_path}"
+            todir="${svn_component_root}/tags/${tag}"
+            message="Tag for ${phing.project.name}-${tag}"
+            ignoreexternals="true"
+        />
+        <svncopy
+            repositoryurl="${svn_root}/buildenv/trunk"
+            todir="${svn_component_root}/tags/${tag}/buildenv"
+            message="Copy build environment for ${phing.project.name}-${tag}"
+        />
+        <phingcall target="protected_freeze_externals">
+            <property name="tag" value="${tag}"/>
+            <property name="next" value="${next}"/>
+            <property name="svn_root" value="${svn_root}"/>
+            <property name="svn_component_root" value="${svn_component_root}"/>
+        </phingcall>
+
+        <!-- Update again for development. -->
+        <phingcall target="set_version">
+            <property name="version" value="${next}"/>
+        </phingcall>
+        <svncommit workingcopy="." message="Bump version: ${phing.project.name}-${next}"/>
+    </target>
+
+    <target name="set_version">
+        <propertyprompt propertyName="version" promptText="New version" useExistingValue="true"/>
+        <exec command="xmlstarlet ed -P -S -u &quot;/project/property[@name='version']/@value&quot; -v ${version} build.xml > /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
+        <move file="/tmp/${phing.project.name}~" tofile="build.xml" haltonerror="true" overwrite="true"/>
+        <phingcall target="protected_set_version">
+            <property name="version" value="${version}"/>
+        </phingcall>
+    </target>
+
+    <!-- Protected targets, meant to facilitate extensions. -->
+    <target name="protected_set_version"></target>
+    <target name="protected_freeze_externals"></target>
+
+    <!-- Documentation -->
+    <target name="doc" depends="doc_html,doc_pdf"
+        description="Generate API documentation in both HTML and PDF format"/>
+
+    <target name="doc_html" description="Generate API documentation in HTML format">
+        <exec command="doxygen" dir="." passthru="true" checkreturn="true" logoutput="true"/>
+    </target>
+
+    <target name="doc_pdf" description="Generate API documentation in PDF format">
+        <exec command="make" dir="docs/latex" passthru="true"/>
+    </target>
+
+
+    <!-- Unit tests and code coverage -->
+    <target name="test" depends="qa_coverage"
+        description="Run tests and generate code coverage reports (same as 'phing qa_coverage')" />
+    <target name="tests" depends="qa_coverage"
+        description="Same as 'phing test'"/>
+    <target name="coverage" depends="qa_coverage"
+        description="Same as 'phing test'"/>
+
+
+    <!-- Quality Assurance -->
+    <target name="qa"
+        depends="qa_lint,qa_codesniffer,qa_depend,qa_mess,qa_duplicates,qa_test"
+        description="Run Qualify-Assurance (QA) tools"/>
+
+    <target name="qa_lint" description="Check QA using phplint">
+        <phplint><fileset refid="sources"/></phplint>
+    </target>
+
+    <target name="qa_codesniffer" description="Check QA using PHP_CodeSniffer">
+        <phpcodesniffer
+            standard="Zend"
+            showWarnings="true"
+            showSniffs="true"
+            tabWidth="4"
+            sniffs="
+Zend_Sniffs_Debug_CodeAnalyzerSniff
+Zend_Sniffs_Files_ClosingTagSniff
+Zend_Sniffs_NamingConventions_ValidVariableNameSniff
+Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff
+Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff
+Generic_Sniffs_PHP_DisallowShortOpenTagSniff
+Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff
+PEAR_Sniffs_Classes_ClassDeclarationSniff
+PEAR_Sniffs_Functions_FunctionCallSignatureSniff
+PEAR_Sniffs_Functions_ValidDefaultValueSniff
+PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff
+Squiz_Sniffs_Functions_GlobalFunctionSniff
+Generic_Sniffs_Files_LineLengthSniff
+Generic_Sniffs_Files_LineEndingsSniff
+"
+            verbosity="1"
+            >
+            <fileset refid="sources"/>
+        </phpcodesniffer>
+    </target>
+
+    <target name="qa_depend"
+        description="Check QA using PHP depend">
+        <phpdepend withoutAnnotations="true" file=".">
+            <fileset refid="sources"/>
+            <analyzer type="coderank-mode" value="method"/>
+            <logger type="phpunit-xml" outfile="/dev/null"/>
+        </phpdepend>
+    </target>
+
+    <target name="qa_mess"
+        description="Check QA using phpmd (PHP Mess Detector)">
+        <phpmd><fileset refid="sources"/></phpmd>
+    </target>
+
+    <target name="qa_duplicates"
+        description="Check QA using phpcpd (PHP Copy/Paste Detector)">
+        <phpcpd>
+            <fileset refid="sources"/>
+            <formatter type="default" outfile="/dev/null"/>
+        </phpcpd>
+    </target>
+
+    <target name="qa_pre_coverage" hidden="true">
+        <coverage-setup database="${qa.coverage.db}">
+            <fileset refid="sources"/>
+        </coverage-setup>
+    </target>
+
+    <target name="qa_test" depends="qa_pre_coverage"
+        description="Run (unit) tests using PHPUnit">
+        <phpunit codecoverage="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest><fileset refid="tests"/></batchtest>
+        </phpunit>
+    </target>
+
+    <target name="qa_coverage" depends="qa_test"
+        description="Run code coverage analysis based on unit tests (see 'phing qa_test')">
+        <mkdir dir="docs"/>
+        <mkdir dir="docs/coverage"/>
+        <coverage-report outfile="${qa.coverage.tmp}">
+            <report
+                todir="docs/coverage"
+                styledir="${project.basedir}/buildenv/coverage"
+            />
+        </coverage-report>
+        <coverage-threshold
+            database="${qa.coverage.db}"
+            perProject="${qa.coverage.min.project}"
+            perClass="${qa.coverage.min.class}"
+            perMethod="${qa.coverage.min.method}"
+            verbose="true"
+            />
+    </target>
+</project>
