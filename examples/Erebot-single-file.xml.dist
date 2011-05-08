@@ -1,12 +1,6 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <!-- kate: tab-width: 4 -->
-
-<configuration
-    xmlns="http://www.erebot.net/xmlns/erebot"
-    version="0.5.0"
-    language="fr-FR"
-    timezone="Europe/Paris"
-    commands-prefix="!">
+<configuration xmlns="http://www.erebot.net/xmlns/erebot" version="0.5.0" language="fr-FR" timezone="Europe/Paris" commands-prefix="!">
 
     <logging xmlns="http://www.erebot.net/xmlns/logging">
         <loggers>
@@ -63,62 +57,62 @@
     </logging>
 
     <modules>
-        <module name="Erebot_Module_PingReply"            />
-        <module name="Erebot_Module_ServerCapabilities"   />
-        <module name="Erebot_Module_TriggerRegistry"      />
-        <module name="Erebot_Module_IrcTracker"          />
+        <module name="Erebot_Module_PingReply"/>
+        <module name="Erebot_Module_ServerCapabilities"/>
+        <module name="Erebot_Module_TriggerRegistry"/>
+        <module name="Erebot_Module_IrcTracker"/>
 
         <module name="Erebot_Module_LagChecker">
-            <param name="check"     value="60" />
-            <param name="timeout"   value="15" />
-            <param name="reconnect" value="60" />
+            <param name="check" value="60"/>
+            <param name="timeout" value="15"/>
+            <param name="reconnect" value="60"/>
         </module>
 
         <module name="Erebot_Module_IrcConnector">
-            <param name="nickname"  value="Erebot"  />
-            <param name="identity"  value="Erebot"  />
-            <param name="hostname"  value="Erebot"  />
-            <param name="realname"  value="Doh!"    />
+            <param name="nickname" value="Erebot"/>
+            <param name="identity" value="Erebot"/>
+            <param name="hostname" value="Erebot"/>
+            <param name="realname" value="Doh!"/>
         </module>
 
         <module name="Erebot_Module_GoF">
-            <param name="start_time"    value="45"  />
-            <param name="pause_time"    value="10"   />
+            <param name="start_time" value="45"/>
+            <param name="pause_time" value="10"/>
         </module>
 
         <module name="Erebot_Module_Uno">
-            <param name="start_time"    value="20"  />
+            <param name="start_time" value="20"/>
         </module>
 
-        <module name="Erebot_Module_TV" />
+        <module name="Erebot_Module_TV"/>
 
-        <module name="Erebot_Module_AutoConnect" />
+        <module name="Erebot_Module_AutoConnect"/>
 
         <module name="Erebot_Module_Countdown">
-            <param name="minimum"   value="100" />
-            <param name="maximum"   value="999" />
-            <param name="numbers"   value="7" />
-            <param name="allowed"   value="1 2 3 4 5 6 7 8 9 10 25 50 75 100" />
-            <param name="delay"     value="60" />
+            <param name="minimum" value="100"/>
+            <param name="maximum" value="999"/>
+            <param name="numbers" value="7"/>
+            <param name="allowed" value="1 2 3 4 5 6 7 8 9 10 25 50 75 100"/>
+            <param name="delay" value="60"/>
         </module>
 
         <module name="Erebot_Module_Roulette">
-            <param name="nb_chambers"  value="6" />
+            <param name="nb_chambers" value="6"/>
         </module>
 
-        <module name="Erebot_Module_Math" />
+        <module name="Erebot_Module_Math"/>
     </modules>
 
     <networks>
         <network name="localhost">
             <servers>
-                <server url="irc://localhost:6667/" />
+                <server url="irc://localhost:6667/"/>
             </servers>
 
             <channels>
                 <channel name="#Erebot" language="en-US">
                     <modules>
-                        <module name="AutoJoin" />
+                        <module name="AutoJoin"/>
                     </modules>
                 </channel>
             </channels>
@@ -126,18 +120,18 @@
 
         <network name="IIEns">
             <modules>
-                <module name="Erebot_Module_AutoConnect" active="false" />
+                <module name="Erebot_Module_AutoConnect" active="false"/>
             </modules>
 
             <servers>
-                <server url="irc://irc.iiens.net:6667/"         />
-                <server url="irc://irc.secours.iiens.net:6667/" />
+                <server url="irc://irc.iiens.net:6667/"/>
+                <server url="irc://irc.secours.iiens.net:6667/"/>
             </servers>
 
             <channels>
                 <channel name="#Erebot">
                     <modules>
-                        <module name="AutoJoin" />
+                        <module name="AutoJoin"/>
                     </modules>
                 </channel>
             </channels>
