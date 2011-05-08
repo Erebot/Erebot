@@ -29,7 +29,8 @@ foreach (array($package, $compatible) as $obj) {
         foreach ($data as $dep)
             $obj->dependencies[$req]->package[$dep]->save();
 
-    $obj->stability['release'] = 'stable';
+    if (strpos($obj->version['release'], "alpha") === FALSE)
+        $obj->stability['release'] = 'stable';
 }
 
 ?>
