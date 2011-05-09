@@ -29,17 +29,16 @@ extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(class_exists('Erebot_XglobStream'));
         $expected = array(
-            '<xglob:wrapping xmlns:xglob="http://www.erebot.net/xmlns/xglob"><?xml version="1.0" ?>',
+            '<xglob:wrapping xmlns:xglob="http://www.erebot.net/xmlns/xglob"><?xml version="1.0"?>',
             '<!-- kate: tab-width: 4 -->',
-            '<configuration',
-            '    xmlns="http://www.erebot.net/xmlns/erebot"',
-            sprintf('    version="%s"', EREBOT_VERSION),
-            '    language="fr-FR"',
-            '    timezone="Europe/Paris">',
+            '<configuration xmlns="http://www.erebot.net/xmlns/erebot" '.
+                sprintf('version="%s"', EREBOT_VERSION).
+                ' language="fr-FR"'.
+                ' timezone="Europe/Paris">',
             '    <networks>',
             '        <network name="localhost">',
             '            <servers>',
-            '                <server url="irc://localhost:6667/" />',
+            '                <server url="irc://localhost:6667/"/>',
             '            </servers>',
             '        </network>',
             '    </networks>',

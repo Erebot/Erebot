@@ -1,16 +1,11 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <!-- kate: tab-width: 4 -->
-
-<configuration
-    xmlns="http://www.erebot.net/xmlns/erebot"
-    version="0.5.0"
-    language="fr-FR"
-    timezone="Europe/Paris">
+<configuration xmlns="http://www.erebot.net/xmlns/erebot" version="0.5.1" language="fr-FR" timezone="Europe/Paris">
 
     <networks>
         <network name="localhost">
             <servers>
-                <server url="irc://localhost:6667/" />
+                <server url="irc://localhost:6667/"/>
             </servers>
         </network>
     </networks>

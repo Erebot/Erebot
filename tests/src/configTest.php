@@ -42,18 +42,13 @@ extends PHPUnit_Framework_TestCase
 
     public function testLoadValidConfigFromString()
     {
-        $data = '<?xml version="1.0" ?'.'>';
+        $data = '<?xml version="1.0"?'.'>';
         $data .=<<<CONFIG
-<configuration
-    xmlns="http://www.erebot.net/xmlns/erebot"
-    version="%s"
-    language="fr-FR"
-    timezone="Europe/Paris">
-
+<configuration xmlns="http://www.erebot.net/xmlns/erebot" version="%s" language="fr-FR" timezone="Europe/Paris">
     <networks>
         <network name="localhost">
             <servers>
-                <server url="irc://localhost:6667/" />
+                <server url="irc://localhost:6667/"/>
             </servers>
         </network>
     </networks>

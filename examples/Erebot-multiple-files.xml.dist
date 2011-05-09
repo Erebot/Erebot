@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- kate: tab-width: 4 -->
-<configuration xmlns="http://www.erebot.net/xmlns/erebot" xmlns:xi="http://www.w3.org/2001/XInclude" version="0.5.0" language="en-US" timezone="Europe/Paris">
+<configuration xmlns="http://www.erebot.net/xmlns/erebot" xmlns:xi="http://www.w3.org/2001/XInclude" version="0.5.1" language="en-US" timezone="Europe/Paris">
 
     <xi:include href="xglob://conf.d/logging/logging.xml"/>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- kate: tab-width: 4 -->
-<configuration xmlns="http://www.erebot.net/xmlns/erebot" version="0.5.0" language="fr-FR" timezone="Europe/Paris" commands-prefix="!">
+<configuration xmlns="http://www.erebot.net/xmlns/erebot" version="0.5.1" language="fr-FR" timezone="Europe/Paris" commands-prefix="!">
 
     <logging xmlns="http://www.erebot.net/xmlns/logging">
         <loggers>
