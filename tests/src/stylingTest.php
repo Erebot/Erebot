@@ -49,7 +49,7 @@ extends PHPUnit_Framework_TestCase
 
     public function testArrayWithOnlyOneElement()
     {
-        $source =   '<for from="names" item="name"><var name="name"/></for>';
+        $source     = '<for from="names" item="name"><var name="name"/></for>';
         $template   = new Erebot_Styling($source, $this->_translator);
         $template->assign('names', array('Clicky'));
         $result     = addcslashes($template->render(), "\000..\037");

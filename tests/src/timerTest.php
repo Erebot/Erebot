@@ -41,12 +41,19 @@ extends PHPUnit_Framework_TestCase
      * We check that each parameter is correctly set before each run.
      * We test whether or not the timer went off roughly at the right time
      * (between 2.5 and 3 seconds, to allow some CPU overhead).
+     *
+     * @covers Erebot_Timer::setRepetition
+     * @covers Erebot_Timer::reset
+     * @covers Erebot_Timer::getStream
+     * @covers Erebot_Timer::activate
+     * @covers Erebot_Timer::__construct
+     * @covers Erebot_Timer::__destruct
      */
     public function testNominalCase()
     {
-        $delay = 2.5;
-        $min = 2.5;
-        $max = 3;
+        $delay  = 2.5;
+        $min    = 2.5;
+        $max    = 3;
 
         $this->_flag = FALSE;
         $callback = array($this, 'helper');
@@ -102,5 +109,24 @@ extends PHPUnit_Framework_TestCase
 
         $this->assertFalse($timer->reset());
     }
+
+    /**
+     * @covers Erebot_Timer::getArgs
+     * @covers Erebot_Timer::getCallback
+     * @covers Erebot_Timer::getDelay
+     * @covers Erebot_Timer::getRepetition
+     * @covers Erebot_Timer::__construct
+     * @covers Erebot_Timer::__destruct
+     */
+    public function testGetters()
+    {
+        $callback   = array($this, 'helper');
+        $args       = array('foo', 'bar');
+        $timer      = new Erebot_Timer($callback, 4.2, 42, $args);
+        $this->assertEquals($args, $timer->getArgs());
+        $this->assertEquals($callback, $timer->getCallback());
+        $this->assertEquals(4.2, $timer->getDelay());
+        $this->assertEquals(42, $timer->getRepetition());
+    }    
 }
 
