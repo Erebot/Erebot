@@ -115,64 +115,50 @@ implements  Countable,
         return $this->_text;
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.countable.php
-     **/
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_Countable.php.
     public function count()
     {
         return $this->countTokens();
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.iterator.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_Iterator.php.
     public function current()
     {
         return $this->getTokens($this->_position, 1);
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.iterator.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_Iterator.php.
     public function key()
     {
         return $this->_position;
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.iterator.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_Iterator.php.
     public function next()
     {
         $this->_position++;
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.iterator.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_Iterator.php.
     public function rewind()
     {
         $this->_position = 0;
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.iterator.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_Iterator.php.
     public function valid()
     {
         return ($this->_position < $this->countTokens());
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.arrayaccess.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_ArrayAccess.php.
     public function offsetExists($offset)
     {
         return (
@@ -182,10 +168,8 @@ implements  Countable,
         );
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.arrayaccess.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_ArrayAccess.php.
     public function offsetGet($offset)
     {
         if (!is_int($offset))
@@ -193,19 +177,15 @@ implements  Countable,
         return $this->getTokens($offset, 1);
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.arrayaccess.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_ArrayAccess.php.
     public function offsetSet($offset, $value)
     {
         throw new RuntimeException('The wrapped text is read-only');
     }
 
-    /**
-     * \see
-     *      http://php.net/manual/en/class.arrayaccess.php
-     */
+    // Documented in the internal PHP interface.
+    // See also docs/additions/iface_ArrayAccess.php.
     public function offsetUnset($offset)
     {
         throw new RuntimeException('The wrapped text is read-only');

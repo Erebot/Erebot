@@ -45,7 +45,8 @@ The following types are used in this documentation:
         <td>
             \c callback<br/>
             \c mixed<br/>
-            \c number
+            \c number<br/>
+            \c scalar
         </td>
         <td>
             Same as the corresponding <a target="_blank" href="http://php.net/manual/en/language.pseudo-types.php">pseudo-type</a> in PHP.
@@ -97,4 +98,3 @@ The following types are used in this documentation:
 </table>
 
 */
-?>
