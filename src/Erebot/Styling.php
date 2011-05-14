@@ -203,7 +203,7 @@ class   Erebot_Styling
      *      A translator object, used to determine the correct
      *      pluralization rules.
      */
-    public function __construct($source, Erebot_Interface_I18n &$translator)
+    public function __construct($source, Erebot_Interface_I18n $translator)
     {
         $source =
             '<msg xmlns="http://www.erebot.net/xmlns/erebot/styling">'.
@@ -220,14 +220,17 @@ class   Erebot_Styling
             DIRECTORY_SEPARATOR . $schemaDir .
             DIRECTORY_SEPARATOR . 'styling.rng';
 
-        $ue     = libxml_use_internal_errors(TRUE);
+        $this->_translator  = $translator;
         $this->_dom         =   new DomDocument();
         $this->_variables   =   array();
+
+        $ue = libxml_use_internal_errors(TRUE);
         $this->_dom->loadXML($source);
         $this->_dom->relaxNGValidate($schema);
+        $errors = libxml_get_errors();
         libxml_clear_errors();
         libxml_use_internal_errors($ue);
-        $errors = libxml_get_errors();
+
         if (count($errors)) {
             // Some unpredicted error occurred,
             // show some (hopefully) useful information.
@@ -238,7 +241,6 @@ class   Erebot_Styling
             throw new Erebot_InvalidValueException(
                 'Error while validating the message');
         }
-        $this->_translator  =&  $translator;
     }
 
     /**
