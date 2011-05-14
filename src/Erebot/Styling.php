@@ -221,17 +221,16 @@ class   Erebot_Styling
             DIRECTORY_SEPARATOR . 'styling.rng';
 
         $this->_translator  = $translator;
-        $this->_dom         =   new DomDocument();
+        $this->_dom         =   new Erebot_DOM();
         $this->_variables   =   array();
 
         $ue = libxml_use_internal_errors(TRUE);
         $this->_dom->loadXML($source);
-        $this->_dom->relaxNGValidate($schema);
-        $errors = libxml_get_errors();
-        libxml_clear_errors();
+        $valid  = $this->_dom->relaxNGValidate($schema);
+        $errors = $this->_dom->getErrors();
         libxml_use_internal_errors($ue);
 
-        if (count($errors)) {
+        if (!$valid || count($errors)) {
             // Some unpredicted error occurred,
             // show some (hopefully) useful information.
             $errmsg     =   print_r($errors, TRUE);

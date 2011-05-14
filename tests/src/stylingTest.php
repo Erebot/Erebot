@@ -93,6 +93,17 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * Tests whether a \<color\> tag without any "fg"
+     * or "bg" attribute is correctly marked as invalid.
+     *
+     * @expectedException Erebot_InvalidValueException
+     */
+    public function testColorMissingAttributes()
+    {
+        new Erebot_Styling('<color>foo</color>', $this->_translator);
+    }
+
     public function testPlural()
     {
         /* We use special characters in the sentence {, }, ' and #

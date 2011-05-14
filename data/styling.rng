@@ -15,8 +15,15 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:sch="http://www.ascc.net/xml/schematron"
     ns="http://www.erebot.net/xmlns/erebot/styling"
     datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+    <!--
+        This is necessary to make Erebot's namespace for the styling API
+        known to Schematron validators (or an XSLT processor).
+    -->
+    <sch:ns uri="http://www.erebot.net/xmlns/erebot/styling" prefix="msg"/>
 
     <define name="type-color">
         <choice>
@@ -161,8 +168,24 @@
 
     <define name="color">
         <element name="color">
-            <attribute name="fg"><ref name="type-color"/></attribute>
-            <attribute name="bg"><ref name="type-color"/></attribute>
+            <sch:pattern name="Validate color attributes">
+                <sch:rule context="msg:color">
+                    <sch:assert test="@fg or @bg">
+                        The "fg" attribute or the "bg" attribute or both
+                        must be supplied when using the &lt;color&gt; tag.
+                    </sch:assert>
+                </sch:rule>
+            </sch:pattern>
+            <optional>
+                <attribute name="fg">
+                    <ref name="type-color"/>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="bg">
+                    <ref name="type-color"/>
+                </attribute>
+            </optional>
 
             <ref name="subtags"/>
         </element>
@@ -210,4 +233,3 @@
         </element>
     </define>
 </grammar>
-
