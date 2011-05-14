@@ -68,8 +68,9 @@ interface Iterator {
      *      TRUE if the current position is valid, FALSE otherwise.
      *
      * \note
-     *      If Iterator::valid() returns FALSE, the foreach() loop
-     *      will be terminated.
+     *      If Iterator::valid() returns FALSE, the
+     *      <a href="http://php.net/foreach">foreach</a>
+     *      loop will be terminated.
      *
      * \see
      *      http://php.net/manual/en/iterator.valid.php

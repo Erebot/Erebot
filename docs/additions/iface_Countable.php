@@ -2,7 +2,8 @@
 
 /**
  * \brief
- *      Classes implementing Countable can be used with the count() function.
+ *      Classes implementing Countable can be used with the 
+ *      <a href="http://php.net/count">count()</a> function.
  *
  * \see
  *      http://php.net/manual/en/class.countable.php
@@ -11,7 +12,8 @@ interface Countable {
     /**
      * Count elements of an object.
      *
-     * This method is executed when using the count() function
+     * This method is executed when using the
+     * <a href="http://php.net/count">count()</a> function
      * on an object implementing the Countable interface. 
      *
      * \retval int

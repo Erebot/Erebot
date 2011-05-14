@@ -11,7 +11,9 @@ interface ArrayAccess {
     /**
      * Whether or not an offset exists.
      *
-     * This method is executed when using isset() or empty()
+     * This method is executed when using
+     * <a href="http://php.net/isset">isset()</a> or
+     * <a href="http://php.net/empty">empty()</a>
      * on objects implementing ArrayAccess.
      *
      * \param mixed $offset
@@ -25,8 +27,9 @@ interface ArrayAccess {
      *      http://php.net/manual/en/arrayaccess.offsetexists.php
      *
      * \note
-     *      When using empty() ArrayAccess::offsetGet() will be called
-     *      and checked if empty only if ArrayAccess::offsetExists()
+     *      When using <a href="http://php.net/empty">empty()</a>
+     *      ArrayAccess::offsetGet() will be called and checked
+     *      for emptyness only if ArrayAccess::offsetExists()
      *      returns TRUE.
      */
     public function offsetExists($offset);
@@ -34,7 +37,8 @@ interface ArrayAccess {
     /**
      * Returns the value at specified offset. 
      *
-     * This method is executed when checking if offset is empty().
+     * This method is executed when checking if offset
+     * is <a href="http://php.net/empty">empty()</a>.
      *
      * \param mixed $offset
      *      The offset to retrieve.
