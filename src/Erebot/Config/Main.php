@@ -135,7 +135,7 @@ implements  Erebot_Interface_Config_Main
             DIRECTORY_SEPARATOR . 'config.rng';
 
         $ue     = libxml_use_internal_errors(TRUE);
-        $domxml = new DomDocument;
+        $domxml = new Erebot_DOM();
         if ($source == self::LOAD_FROM_FILE)
             $domxml->load($file);
         else
@@ -143,10 +143,11 @@ implements  Erebot_Interface_Config_Main
 
         $domxml->xinclude(LIBXML_NOBASEFIX);
         $this->_stripXGlobWrappers($domxml);
-        $ok = $domxml->relaxNGValidate($schema);
+        $ok     = $domxml->relaxNGValidate($schema);
+        $errors = $domxml->getErrors();
+        libxml_use_internal_errors($ue);
 
-        $errors = libxml_get_errors();
-        if (!$ok && count($errors)) {
+        if (!$ok || count($errors)) {
             # Some unpredicted error occurred,
             # show some (hopefully) useful information.
             $errmsg = print_r($errors, TRUE);
@@ -236,10 +237,6 @@ implements  Erebot_Interface_Config_Main
             $this->_networks[$newConfig->getName()] = $newConfig;
             unset($newConfig);
         }
-
-        libxml_clear_errors();
-        libxml_use_internal_errors($ue);
-        unset($domxml);
 
         if ($source == self::LOAD_FROM_FILE)
             $this->_configFile   = $configData;
