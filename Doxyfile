@@ -212,6 +212,9 @@ DOT_GRAPH_MAX_NODES    = 50
 DOT_TRANSPARENT        = NO
 DOT_MULTI_TARGETS      = NO
 DOT_CLEANUP            = YES
+# Because the server is quite
+# limited resource wise.
+DOT_NUM_THREADS        = 1
 DOTFILE_DIRS           = 
 MAX_DOT_GRAPH_DEPTH    = 0
 
