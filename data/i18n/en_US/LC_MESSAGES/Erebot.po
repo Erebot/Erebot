@@ -32,8 +32,8 @@ msgid   "invalid.channel"
 msgstr  "Bad channel name"
 #
 msgid   "exception.rate-limiter"
-msgstr  "Got an exception from the rate-limiter module. Assuming "
-        "implicit approval to send the message."
+msgstr  "Got an exception from the rate-limiter module. Assuming implicit "
+        "approval to send the message."
 #
 msgid   "exception"
 msgstr  "Got exception"
@@ -102,6 +102,14 @@ msgstr  "Successfully reloaded the configuration"
 #
 msgid   "configuration.no-file"
 msgstr  "No configuration file to reload"
+#
+msgid   "configuration.loaded"
+msgstr  "Loaded configuration data"
+#
+msgid   "configuration.bad-version"
+msgstr  "This configuration file is meant for Erebot %(config_version)s, but "
+        "you are running version %(code_version)s. Things may not work as "
+        "expected."
 #
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"

@@ -2,7 +2,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: clicky@erebot.net\n"
-        "POT-Creation-Date: 2011-05-03 20:53+0200\n"
+        "POT-Creation-Date: 2011-05-22 23:32+0200\n"
         "PO-Revision-Date: 2011-02-16 16:43+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
@@ -85,6 +85,10 @@ msgstr  "mapping.invalid"
 msgid   "Limit:"
 msgstr  "memory.limit"
 #
+# File: /var/www/Erebot/core/trunk/src/Erebot/Config/Main.php, line: 237
+msgid   "Loaded configuration data"
+msgstr  "configuration.loaded"
+#
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 559
 #, php-format
 msgid   "Loading required modules for \"%s\"..."
@@ -140,6 +144,12 @@ msgstr  "module.loaded"
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 490
 msgid   "Successfully reloaded the configuration"
 msgstr  "configuration.reloaded"
+#
+# File: /var/www/Erebot/core/trunk/src/Erebot/Config/Main.php, line: 224
+msgid   "This configuration file is meant for Erebot %(config_version)s, but "
+        "you are running version %(code_version)s. Things may not work as "
+        "expected."
+msgstr  "configuration.bad-version"
 #
 # File: /var/www/Erebot/core/trunk/src/Erebot.php, line: 572
 #, php-format

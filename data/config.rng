@@ -41,9 +41,11 @@
                     <param name="pattern">[0-9]+([-\.][0-9]+)*([-\.]?(dev|alpha|beta|RC|rc|pl|[ab#p])[-\.]?[0-9]+)?</param>
                 </data>
             </attribute>
-            <attribute name="language">
-                <data type="language"/>
-            </attribute>
+            <optional>
+                <attribute name="language">
+                    <data type="language"/>
+                </attribute>
+            </optional>
             <attribute name="timezone">
                 <data type="string"/>
             </attribute>

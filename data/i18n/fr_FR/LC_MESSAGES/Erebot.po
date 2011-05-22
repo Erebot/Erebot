@@ -103,6 +103,14 @@ msgstr  "Configuration rechargée avec succès"
 msgid   "configuration.no-file"
 msgstr  "Aucun fichier de configuration à recharger"
 #
+msgid   "configuration.loaded"
+msgstr  "Données de configuration chargées"
+#
+msgid   "configuration.bad-version"
+msgstr  "Ce fichier de configuration est fait pour Erebot %(config_version)s, "
+        "mais vous avez lancé la version %(code_version)s. Certains éléments "
+        "risquent de ne pas fonctionner comme prévu."
+#
 # French translations for PACKAGE package.
 # This file is put in the public domain.
 # Automatically generated, 2009.

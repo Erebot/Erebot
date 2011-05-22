@@ -52,7 +52,11 @@ extends     Erebot_Interface_Config_Proxy
      *      This exception is also thrown when the $source parameter contains
      *      an invalid value.
      */
-    public function __construct($configData, $source);
+    public function __construct(
+                                $configData,
+                                $source,
+        Erebot_Interface_I18n   $translator
+    );
 
     /**
      * Prevents cloning of this class to avoid escape from the

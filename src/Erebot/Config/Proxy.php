@@ -97,8 +97,14 @@ class Erebot_Config_Proxy
     // Documented in the interface.
     public function getTranslator($component)
     {
-        if (isset($this->_locale))
-            return new Erebot_I18n($this->_locale, $component);
+        if (isset($this->_locale)) {
+            $translator = new Erebot_I18n($component);
+            $translator->setLocale(
+                Erebot_Interface_I18n::LC_MESSAGES,
+                $this->_locale
+            );
+            return $translator;
+        }
         if ($this->_proxified === $this)
             throw new Erebot_NotFoundException('No translator associated');
         return $this->_proxified->getTranslator($component);

@@ -87,13 +87,16 @@ implements  Erebot_Interface_Core
     /// Indicates whether the bot is currently running or not.
     protected $_running;
 
+    protected $_translator;
+
     // Documented in the interface.
-    public function __construct(Erebot_Interface_Config_Main $config)
+    public function __construct(Erebot_Interface_Config_Main $config, Erebot_Interface_I18n $translator)
     {
         $this->_connections     =
         $this->_timers          = array();
         $this->_running         = FALSE;
         $this->_mainCfg         = $config;
+        $this->_translator      = $translator;
 
         // If pcntl_signal is not supported,
         // the bot won't be able to stop!
@@ -431,9 +434,7 @@ implements  Erebot_Interface_Core
     // Documented in the interface.
     public function gettext($message)
     {
-        $translator = $this->_mainCfg->getTranslator('Erebot');
-        $function   = 'gettext';
-        return $translator->$function($message);
+        return $this->_translator->gettext($message);
     }
 
     // Documented in the interface.

@@ -61,13 +61,15 @@ implements  Erebot_Interface_Config_Main
     /// File where the bot's PID will be written. 
     protected $_pidfile;
 
-    // Documented in the interface.
-    public function __construct($configData, $source)
-    {
-        $this->_proxified   = NULL;
-        $this->_modules     = array();
+    protected $_coreTranslator;
 
-        $this->_configFile  = NULL;
+    // Documented in the interface.
+    public function __construct($configData, $source, Erebot_Interface_I18n $translator)
+    {
+        $this->_proxified       = NULL;
+        $this->_modules         = array();
+        $this->_configFile      = NULL;
+        $this->_coreTranslator  = $translator;
         $this->load($configData, $source);
     }
 
@@ -153,7 +155,7 @@ implements  Erebot_Interface_Config_Main
             $errmsg = print_r($errors, TRUE);
             fprintf(STDERR, '%s', $errmsg);
             throw new Erebot_InvalidValueException(
-                'Error while validating the configuration file');
+                'Errors were found while validating the configuration file');
         }
 
         $xml = simplexml_import_dom($domxml);
@@ -218,17 +220,23 @@ implements  Erebot_Interface_Config_Main
             'eq'
         ))
             $logger->warning(
-                'This configuration file is meant for '.
-                'Erebot %(config_version)s, while you are '.
-                'running version %(code_version)s. '.
-                'Things may not work as expected.',
+                $this->_coreTranslator->gettext(
+                    'This configuration file is meant for '.
+                    'Erebot %(config_version)s, but you are '.
+                    'running version %(code_version)s. '.
+                    'Things may not work as expected.'
+                ),
                 array(
                     'config_version'   => $this->_version,
                     'code_version'     => Erebot_Interface_Core::VERSION,
                 )
             );
 
-        $logger->debug('Loaded configuration data');
+        $logger->debug(
+            $this->_coreTranslator->gettext(
+                'Loaded configuration data'
+            )
+        );
 
         $this->_networks = array();
         foreach ($xml->networks->network as $netCfg) {
@@ -310,6 +318,17 @@ implements  Erebot_Interface_Config_Main
     public function getPidfile()
     {
         return $this->_pidfile;
+    }
+
+    // Documented in the interface.
+    public function getTranslator($component)
+    {
+        try {
+            return parent::getTranslator($component);
+        }
+        catch (Erebot_NotFoundException $e) {
+            return $this->_coreTranslator;
+        }
     }
 }
 

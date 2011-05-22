@@ -511,7 +511,9 @@ class   Erebot_Styling
                 $pattern .= $form.'{'.$form.'} ';
             }
             $pattern .= '}';
-            $locale = $this->_translator->getLocale();
+            $locale = $this->_translator->getLocale(
+                Erebot_Interface_I18n::LC_MESSAGES
+            );
             $formatter = new MessageFormatter($locale, $pattern);
             // HACK: PHP <= 5.3.3 returns NULL when the pattern in invalid
             // instead of throwing an exception.

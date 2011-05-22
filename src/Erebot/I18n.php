@@ -24,11 +24,15 @@
 class       Erebot_I18n
 implements  Erebot_Interface_I18n
 {
+    const EXPIRE_CACHE = 60;
+
     /// A cache for translation catalogs, with some additional metadata.
     static protected $_cache = array();
 
-    /// The locale for which messages are translated.
-    protected $_locale;
+    /// The actual locales used for i18n.
+    protected $_locales;
+
+    protected $_candidates;
 
     /// The component to get translations from (a module name or "Erebot").
     protected $_component;
@@ -36,23 +40,146 @@ implements  Erebot_Interface_I18n
     protected $_parser;
 
     // Documented in the interface.
-    public function __construct($locale, $component)
+    public function __construct($component)
     {
-        $this->_locale = str_replace('-', '_', $locale);
+        $this->_locales = array();
+        $this->_candidates = array();
+        $categories = array(
+            self::LC_CTYPE,
+            self::LC_NUMERIC,
+            self::LC_TIME,
+            self::LC_COLLATE,
+            self::LC_MONETARY,
+            self::LC_MESSAGES,
+            self::LC_PAPER,
+            self::LC_NAME,
+            self::LC_ADDRESS,
+            self::LC_TELEPHONE,
+            self::LC_MEASUREMENT,
+            self::LC_IDENTIFICATION,
+        );
+        foreach ($categories as $category) {
+            $this->_locales[$category] = "en_US";
+            $this->_candidates[$category] = array();
+        }
         $this->_component = $component;
     }
 
     // Documented in the interface.
-    public function getLocale()
+    public function getLocale($category)
     {
-        return $this->_locale;
+        if (!isset($this->_locales[$category]))
+            throw new Erebot_InvalidValueException('Invalid category');
+        return $this->_locales[$category];
+    }
+
+    public function getCandidates($category)
+    {
+        if (!isset($this->_locales[$category]))
+            throw new Erebot_InvalidValueException('Invalid category');
+        return $this->_candidates[$category];
+    }
+
+    static public function categoryToName($category)
+    {
+        $categories = array(
+            self::LC_CTYPE          => 'LC_CTYPE',
+            self::LC_NUMERIC        => 'LC_NUMERIC',
+            self::LC_TIME           => 'LC_TIME',
+            self::LC_COLLATE        => 'LC_COLLATE',
+            self::LC_MONETARY       => 'LC_MONETARY',
+            self::LC_MESSAGES       => 'LC_MESSAGES',
+            self::LC_PAPER          => 'LC_PAPER',
+            self::LC_NAME           => 'LC_NAME',
+            self::LC_ADDRESS        => 'LC_ADDRESS',
+            self::LC_TELEPHONE      => 'LC_TELEPHONE',
+            self::LC_MEASUREMENT    => 'LC_MEASUREMENT',
+            self::LC_IDENTIFICATION => 'LC_IDENTIFICATION',
+        );
+        if (!isset($categories[$category]))
+            throw new Erebot_InvalidValueException('Invalid category');
+        return $categories[$category];
+    }
+
+    public function setLocale($category, $candidates)
+    {
+        $categoryName = self::categoryToName($category);
+        if (!is_array($candidates))
+            $candidates = array($candidates);
+        if (!count($candidates))
+            throw new Erebot_InvalidValueException('Invalid locale');
+
+        $newLocale = NULL;
+        foreach ($candidates as $candidate) {
+            if (!is_string($candidate))
+                throw new Erebot_InvalidValueException('Invalid locale');
+
+            $locale = Locale::parseLocale($candidate);
+            if (!is_array($locale) || !isset($locale['language']))
+                throw new Erebot_InvalidValueException('Invalid locale');
+
+            if ($newLocale !== NULL)
+                continue;
+
+            if (isset($locale['region'])) {
+                $normLocale = $locale['language'] . '_' . $locale['region'];
+                $file = self::_build_path(
+                    $normLocale,
+                    $categoryName,
+                    $this->_component
+                );
+                if (file_exists($file)) {
+                    $newLocale = $normLocale;
+                    continue;
+                }
+            }
+
+            $file = self::_build_path(
+                $locale['language'],
+                $categoryName,
+                $this->_component
+            );
+            if (file_exists($file)) {
+                $newLocale = $locale['language'];
+                continue;
+            }
+        }
+
+        if ($newLocale === NULL)
+            $newLocale = 'en_US';
+        $this->_locales[$category]      = $newLocale;
+        $this->_candidates[$category]   = $candidates;
+    }
+
+    static protected function _build_path($locale, $category, $domain)
+    {
+        if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk') {
+            if ($domain == 'Erebot') {
+                $base = '../../data/i18n';
+            }
+            else if (!strncasecmp($domain, 'Erebot_Module_', 14)) {
+                $base = '../../../../modules/' .
+                    substr($domain, 14) .
+                    '/trunk/data/i18n';
+            }
+        }
+        else
+            $base = '../../data/pear.erebot.net/' . $domain . '/i18n';
+        $base = str_replace('/', DIRECTORY_SEPARATOR, trim($base, '/'));
+        $prefix = dirname(__FILE__) . DIRECTORY_SEPARATOR .
+            $base . DIRECTORY_SEPARATOR;
+
+        if ($category === NULL)
+            return $prefix . $domain . '.mo';
+        return $prefix . $locale . DIRECTORY_SEPARATOR .
+            $category . DIRECTORY_SEPARATOR . $domain . '.mo';
     }
 
     protected function _get_translation($file, $message)
     {
         $time = time();
         if (!isset(self::$_cache[$file]) ||
-            $time > (self::$_cache[$file]['added'] + 60)) {
+            $time > (self::$_cache[$file]['added'] + self::EXPIRE_CACHE)) {
 
             /**
              * FIXME: filemtime() raises a warning if the given file
@@ -68,7 +195,16 @@ implements  Erebot_Interface_I18n
                 clearstatcache();
 
             $mtime = filemtime($file);
-            if (!isset(self::$_cache[$file]) ||
+            if ($mtime === FALSE) {
+                // We also cache failures to avoid
+                // harassing the CPU too much.
+                self::$_cache[$file] = array(
+                    'mtime'     => $time,
+                    'string'    => array(),
+                    'added'     => $time,
+                );
+            }
+            else if (!isset(self::$_cache[$file]) ||
                 $mtime !== self::$_cache[$file]['mtime']) {
                 $parser =& File_Gettext::factory('MO', $file);
                 $parser->load();
@@ -88,25 +224,12 @@ implements  Erebot_Interface_I18n
 
     protected function _real_gettext($message, $component)
     {
-        if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk') {
-            if ($component == 'Erebot') {
-                $base = '../../data/i18n';
-            }
-            else if (!strncasecmp($component, 'Erebot_Module_', 14)) {
-                $base = '../../../../modules/' .
-                    substr($component, 14) .
-                    '/trunk/data/i18n';
-            }
-        }
-        else
-            $base = '../../data/pear.erebot.net/' . $component . '/i18n';
-        $base = str_replace('/', DIRECTORY_SEPARATOR, trim($base, '/'));
-        $prefix = dirname(__FILE__) . DIRECTORY_SEPARATOR .
-            $base . DIRECTORY_SEPARATOR;
-
-        $mappingFile = $prefix . $component . '.mo';
-        $translationFile = $prefix . $this->_locale . DIRECTORY_SEPARATOR .
-            'LC_MESSAGES' . DIRECTORY_SEPARATOR . $component . '.mo';
+        $mappingFile        = self::_build_path(NULL, NULL, $component);
+        $translationFile    = self::_build_path(
+            $this->_locales[self::LC_MESSAGES],
+            'LC_MESSAGES',
+            $component
+        );
 
         $msgid = $this->_get_translation($mappingFile, $message);
         if ($msgid === NULL)
@@ -165,10 +288,11 @@ implements  Erebot_Interface_I18n
     1: 1 week;
     2: =#0= weeks;");
 
-        $fmt = new NumberFormatter($this->_locale,
-                    NumberFormatter::PATTERN_RULEBASED,
-                    $this->_real_gettext($rule, "Erebot"));
+        $fmt = new NumberFormatter(
+            $this->_locales[self::LC_MESSAGES],
+            NumberFormatter::PATTERN_RULEBASED,
+            $this->_real_gettext($rule, "Erebot")
+        );
         return $fmt->format($duration);
     }
 }
-

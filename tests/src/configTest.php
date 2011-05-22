@@ -25,18 +25,28 @@ require_once(
 class   ConfigTest
 extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->_translator = new Erebot_I18n('Erebot');
+    }
+
     /**
      * @expectedException   Erebot_InvalidValueException
      */
     public function testLoadConfigFromInvalidSource()
     {
-        $config = new Erebot_Config_Main('foo', 'bar');
+        $config = new Erebot_Config_Main('foo', 'bar', $this->_translator);
     }
 
     public function testLoadValidConfigFromFile()
     {
         $file = dirname(dirname(__FILE__)).'/data/valid-config.xml';
-        $config = new Erebot_Config_Main($file, Erebot_Config_Main::LOAD_FROM_FILE);
+        $config = new Erebot_Config_Main(
+            $file,
+            Erebot_Config_Main::LOAD_FROM_FILE,
+            $this->_translator
+        );
         unset($config);
     }
 
@@ -44,7 +54,11 @@ extends PHPUnit_Framework_TestCase
     {
         $data = '<?xml version="1.0"?'.'>';
         $data .=<<<CONFIG
-<configuration xmlns="http://www.erebot.net/xmlns/erebot" version="%s" language="fr-FR" timezone="Europe/Paris">
+<configuration
+    xmlns="http://www.erebot.net/xmlns/erebot"
+    version="%s"
+    timezone="Europe/Paris"
+>
     <networks>
         <network name="localhost">
             <servers>
@@ -56,7 +70,11 @@ extends PHPUnit_Framework_TestCase
 CONFIG;
 
         $data = sprintf($data, EREBOT_VERSION);
-        $config = new Erebot_Config_Main($data, Erebot_Config_Main::LOAD_FROM_STRING);
+        $config = new Erebot_Config_Main(
+            $data,
+            Erebot_Config_Main::LOAD_FROM_STRING,
+            $this->_translator
+        );
         unset($config);
     }
 
@@ -70,7 +88,11 @@ CONFIG;
 <configuration xmlns="http://www.erebot.net/xmlns/erebot"></configuration>
 CONFIG;
 
-        $config = new Erebot_Config_Main($data, Erebot_Config_Main::LOAD_FROM_STRING);
+        $config = new Erebot_Config_Main(
+            $data,
+            Erebot_Config_Main::LOAD_FROM_STRING,
+            $this->_translator
+        );
     }
 }
 

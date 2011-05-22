@@ -32,15 +32,19 @@ extends PHPUnit_Framework_TestCase
             'en_US',
             'fr_FR',
         );
-        foreach ($locales as $locale)
-            $this->translators[$locale] = new Erebot_I18n($locale, "Erebot");
+        foreach ($locales as $locale) {
+            $this->translators[$locale] = new Erebot_I18n("Erebot");
+            $this->translators[$locale]->setLocale(
+                Erebot_Interface_I18n::LC_MESSAGES,
+                $locale
+            );
+        }
     }
 
     public function testGetLocale()
     {
-        foreach ($this->translators as $locale => &$translator)
-            $this->assertEquals($locale, $translator->getLocale());
-        unset($translator);
+        foreach ($this->translators as $locale => $translator)
+            $this->assertEquals($locale, $translator->getLocale(Erebot_Interface_I18n::LC_MESSAGES));
     }
 
     public function testDurationFormatting()

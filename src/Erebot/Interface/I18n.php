@@ -26,19 +26,29 @@
  */
 interface Erebot_Interface_I18n
 {
+    const LC_CTYPE          = 0;
+    const LC_NUMERIC        = 1;
+    const LC_TIME           = 2;
+    const LC_COLLATE        = 3;
+    const LC_MONETARY       = 4;
+    const LC_MESSAGES       = 5;
+    const LC_ALL            = 6;
+    const LC_PAPER          = 7;
+    const LC_NAME           = 8;
+    const LC_ADDRESS        = 9;
+    const LC_TELEPHONE      = 10;
+    const LC_MEASUREMENT    = 11;
+    const LC_IDENTIFICATION = 12;
+
     /**
      * Creates a new translator for messages.
-     *
-     * \param string $locale
-     *      The target locale for messages translated
-     *      by this instance.
      *
      * \param string $component
      *      The name of the component to use for translations.
      *      This should be set to the name of the module
      *      or "Erebot" for the core.
      */
-    public function __construct($locale, $component);
+    public function __construct($component);
 
     /**
      * Returns the target locale of this translator
@@ -48,7 +58,11 @@ interface Erebot_Interface_I18n
      *      The canonical form of the target locale
      *      for this translator. 
      */
-    public function getLocale();
+    public function getLocale($category);
+
+    public function getCandidates($category);
+
+    public function setLocale($category, $candidates);
 
     /**
      * Translates the given message using the translations
