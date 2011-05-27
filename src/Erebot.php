@@ -514,8 +514,13 @@ implements  Erebot_Interface_Core
         $newConnections     =
         $currentConnections = array();
         foreach ($this->_connections as $connection) {
-            $netCfg = $connection->getConfig(NULL)->getNetworkCfg();
-            $currentConnections[$netCfg->getName()] = $connection;
+            $connCfg = $connection->getConfig(NULL);
+            if ($connCfg) {
+                $netCfg = $connCfg->getNetworkCfg();
+                $currentConnections[$netCfg->getName()] = $connection;
+            }
+            else
+                $newConnections[] = $connection;
         }
 
         // Let's establish some contacts.
