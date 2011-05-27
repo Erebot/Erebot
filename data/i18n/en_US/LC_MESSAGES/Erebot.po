@@ -111,6 +111,113 @@ msgstr  "This configuration file is meant for Erebot %(config_version)s, but "
         "you are running version %(code_version)s. Things may not work as "
         "expected."
 #
+msgid   "cli.success.setuid"
+msgstr  "Successfully changed user identity to \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.success.setgid"
+msgstr  "Successfully changed group identity to \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.success.background"
+msgstr  "Successfully started in the background"
+#
+msgid   "cli.starting"
+msgstr  "Starting the bot in the background..."
+#
+msgid   "cli.pid"
+msgstr  "PID (%(pid)d) written into %(pidfile)s"
+#
+msgid   "cli.options.setuid"
+msgstr  "Set user identity to this UID/username during startup. The default is "
+        "to NOT change user identity, unless configured otherwise."
+#
+msgid   "cli.options.setgid"
+msgstr  "Set group identity to this GID/group during startup. The default is "
+        "to NOT change group identity, unless configured otherwise."
+#
+msgid   "cli.options.pidfile"
+msgstr  "Store the bot's PID in this file."
+#
+msgid   "cli.options.foreground"
+msgstr  "Do not run the bot in the background. This is the default, unless the "
+        "-d option is used or the bot is configured otherwise."
+#
+msgid   "cli.options.config"
+msgstr  "Path to the configuration file to use instead of \"Erebot.xml\", "
+        "relative to the current directory."
+#
+msgid   "cli.options.background"
+msgstr  "Run the bot in the background (daemon)."
+#
+msgid   "cli.error.umask"
+msgstr  "Could not change umask"
+#
+msgid   "cli.error.uid.set"
+msgstr  "Could not set user identity to \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.error.uid.root"
+msgstr  "Only root can change user identity! Your current UID is %d"
+#
+msgid   "cli.error.uid.posix"
+msgstr  "The posix extension is needed in order to change user identity."
+#
+msgid   "cli.error.stalled"
+msgstr  "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
+#
+msgid   "cli.error.pidfile.other"
+msgstr  "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". "
+        "Exiting"
+#
+msgid   "cli.error.pidfile.garbage"
+msgstr  "The pidfile (%s) contained garbage. Exiting"
+#
+msgid   "cli.error.pidfile"
+msgstr  "Unable to write PID to pidfile (%s)"
+#
+msgid   "cli.error.other.unknown"
+msgstr  "Unknown error while checking for the existence of another running "
+        "instance of Erebot (%s)"
+#
+msgid   "cli.error.lock"
+msgstr  "Could not lock pidfile (%s). Is the bot already running?"
+#
+msgid   "cli.error.invalid-user"
+msgstr  "No such user \"%s\""
+#
+msgid   "cli.error.invalid-group"
+msgstr  "No such group \"%s\""
+#
+msgid   "cli.error.gid.set"
+msgstr  "Could not set group identity to \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.error.gid.root"
+msgstr  "Only root can change group identity! Your current UID is %d"
+#
+msgid   "cli.error.gid.posix"
+msgstr  "The posix extension is needed in order to change group identity."
+#
+msgid   "cli.error.daemon.setsid"
+msgstr  "Could not start in the background (unable to setsid)"
+#
+msgid   "cli.error.daemon.posix"
+msgstr  "The posix extension is required in order to start the bot in the "
+        "background"
+#
+msgid   "cli.error.daemon.pcntl"
+msgstr  "The pcntl extension is required in order to start the bot in the "
+        "background"
+#
+msgid   "cli.error.daemon.fork"
+msgstr  "Could not start in the background (unable to fork)"
+#
+msgid   "cli.error.chdir"
+msgstr  "Could not chdir to \"%s\""
+#
+msgid   "cli.error.already-running"
+msgstr  "Erebot is already running with PID %d"
+#
+msgid   "cli.description"
+msgstr  "A modular IRC bot written in PHP"
+#
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: \n"

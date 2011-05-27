@@ -111,6 +111,112 @@ msgstr  "Ce fichier de configuration est fait pour Erebot %(config_version)s, "
         "mais vous avez lancé la version %(code_version)s. Certains éléments "
         "risquent de ne pas fonctionner comme prévu."
 #
+msgid   "cli.success.setuid"
+msgstr  "Identité de l'utilisateur changée avec succès en \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.success.setgid"
+msgstr  "Identité du groupe changée avec succès en \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.success.background"
+msgstr  "Démarrage réussi en arrière-plan"
+#
+msgid   "cli.starting"
+msgstr  "Démarrage du bot en arrière-plan..."
+#
+msgid   "cli.pid"
+msgstr  "PID (%(pid)d) écrit dans %(pidfile)s"
+#
+msgid   "cli.options.setuid"
+msgstr  "Assumer l'identité de cet UID/utilisateur au démarrage. L'identité "
+        "de l'utilisateur N'EST PAS modifiée par défaut, sauf configuration "
+        "contraire."
+#
+msgid   "cli.options.setgid"
+msgstr  "Assumer l'identité de ce GID/groupe au démarrage. L'identité "
+        "du groupe N'EST PAS modifiée par défaut, sauf configuration "
+        "contraire."
+#
+msgid   "cli.options.pidfile"
+msgstr  "Enregistrer le PID du bot dans ce fichier."
+#
+msgid   "cli.options.foreground"
+msgstr  "Ne pas lancer le bot en arrière-plan. Il s'agit de la valeur par "
+        "défaut, sauf si l'option -d est utilisée ou configuration contraire."
+#
+msgid   "cli.options.config"
+msgstr  "Chemin vers le fichier de configuration à utiliser au lieu de \"Erebot.xml\", "
+        "relatif par rapport au dossier courant."
+#
+msgid   "cli.options.background"
+msgstr  "Lancer le bot en arrière-plan (démon)."
+#
+msgid   "cli.error.umask"
+msgstr  "Impossible de changer l'umask"
+#
+msgid   "cli.error.uid.set"
+msgstr  "Impossible de changer l'identité de l'utilisateur en \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.error.uid.root"
+msgstr  "Seul root peut changer l'identité de l'utilisateur ! Votre UID actuel est %d"
+#
+msgid   "cli.error.uid.posix"
+msgstr  "L'extension posix est requise pour changer l'identité de l'utilisateur."
+#
+msgid   "cli.error.stalled"
+msgstr  "Un PID obsolète (%(pid)d) a été trouvé dans \"%(pidfile)s\". Suppression"
+#
+msgid   "cli.error.pidfile.other"
+msgstr  "Le PID d'un autre programme (%(pid)d) a été trouvé dans \"%(pidfile)s\". "
+        "Abandon"
+#
+msgid   "cli.error.pidfile.garbage"
+msgstr  "Le fichier de PID (%s) est corrompu. Abandon"
+#
+msgid   "cli.error.pidfile"
+msgstr  "Impossible d'inscrire le PID dans le fichier (%s)"
+#
+msgid   "cli.error.other.unknown"
+msgstr  "Erreur inconnue lors du test d'existence d'une autre instance d'Erebot (%s)"
+#
+msgid   "cli.error.lock"
+msgstr  "Impossible de verrouiller le fichier (%s). Est-ce que le bot est déjà lancé ?"
+#
+msgid   "cli.error.invalid-user"
+msgstr  "Utilisateur introuvable \"%s\""
+#
+msgid   "cli.error.invalid-group"
+msgstr  "Groupe introuvable \"%s\""
+#
+msgid   "cli.error.gid.set"
+msgstr  "Impossible de changer l'identité du groupe en \"%(name)s\" (%(id)d)"
+#
+msgid   "cli.error.gid.root"
+msgstr  "Seul root peut changer l'identité du groupe ! Votre UID actuel est %d"
+#
+msgid   "cli.error.gid.posix"
+msgstr  "L'extension posix est requise pour changer l'identité du groupe."
+#
+msgid   "cli.error.daemon.setsid"
+msgstr  "Impossible de démarrer en arrière-plan (échec de setsid)"
+#
+msgid   "cli.error.daemon.posix"
+msgstr  "L'extension posix est requise pour pouvoir démarrer en arrière-plan"
+#
+msgid   "cli.error.daemon.pcntl"
+msgstr  "L'extension pcntl est requise pour pouvoir démarrer en arrière-plan"
+#
+msgid   "cli.error.daemon.fork"
+msgstr  "Impossible de démarrer en arrière-plan (échec du fork)"
+#
+msgid   "cli.error.chdir"
+msgstr  "Impossible de changer de dossier vers \"%s\""
+#
+msgid   "cli.error.already-running"
+msgstr  "Erebot est déjà lancé avec le PID %d"
+#
+msgid   "cli.description"
+msgstr  "Un bot IRC modulaire écrit en PHP"
+#
 # French translations for PACKAGE package.
 # This file is put in the public domain.
 # Automatically generated, 2009.

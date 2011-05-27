@@ -65,7 +65,9 @@ class   Erebot_CLI
         Console_CommandLine::registerAction('StoreProxy', 'StoreProxy_Action');
         $parser = new Console_CommandLine(array(
             'name'                  => 'Erebot',
-            'description'           => 'A modular IRC bot written in PHP',
+            'description'           => $translator->gettext(
+                'A modular IRC bot written in PHP'
+            ),
             'version'               => Erebot::VERSION,
             'add_help_option'       => TRUE,
             'add_version_option'    => TRUE,
@@ -77,9 +79,11 @@ class   Erebot_CLI
         $parser->addOption('config', array(
             'short_name'    => '-c',
             'long_name'     => '--config',
-            'description'   =>  'Path to the configuration file to use instead '.
-                                'of "Erebot.xml", relative to the current '.
-                                'directory.',
+            'description'   => $translator->gettext(
+                'Path to the configuration file to use instead '.
+                'of "Erebot.xml", relative to the current '.
+                'directory.'
+            ),
             'help_name'     => 'FILE',
             'action'        => 'StoreString',
             'default'       => $defaultConfigFile,
@@ -88,16 +92,20 @@ class   Erebot_CLI
         $parser->addOption('daemon', array(
             'short_name'        => '-d',
             'long_name'         => '--daemon',
-            'description'       =>  'Run the bot in the background (daemon).',
+            'description'       => $translator->gettext(
+                'Run the bot in the background (daemon).'
+            ),
             'action'            => 'StoreTrue',
         ));
 
         $noDaemon = new Console_CommandLine_MyOption('no_daemon', array(
             'short_name'    => '-n',
             'long_name'     => '--no-daemon',
-            'description'   =>  'Do not run the bot in the background. '.
-                                'This is the default, unless the -d option '.
-                                'is used or the bot is configured otherwise',
+            'description'   => $translator->gettext(
+                'Do not run the bot in the background. '.
+                'This is the default, unless the -d option '.
+                'is used or the bot is configured otherwise.'
+            ),
             'action'        => 'StoreProxy',
             'action_params' => array('option' => 'daemon'),
         ));
@@ -106,7 +114,9 @@ class   Erebot_CLI
         $parser->addOption('pidfile', array(
             'short_name'    => '-p',
             'long_name'     => '--pidfile',
-            'description'   =>  'Store the bot\'s PID in this file.',
+            'description'   => $translator->gettext(
+                "Store the bot's PID in this file."
+            ),
             'help_name'     => 'FILE',
             'action'        => 'StoreString',
             'default'       => NULL,
@@ -115,9 +125,11 @@ class   Erebot_CLI
         $parser->addOption('group', array(
             'short_name'    => '-g',
             'long_name'     => '--group',
-            'description'   =>  'Set group identity to this GID/group during '.
-                                'startup. The default is to NOT change group '.
-                                'identity, unless configured otherwise.',
+            'description'   => $translator->gettext(
+                'Set group identity to this GID/group during '.
+                'startup. The default is to NOT change group '.
+                'identity, unless configured otherwise.'
+            ),
             'help_name'     => 'GROUP/GID',
             'action'        => 'StoreString',
             'default'       => NULL,
@@ -126,13 +138,21 @@ class   Erebot_CLI
         $parser->addOption('user', array(
             'short_name'    => '-u',
             'long_name'     => '--user',
-            'description'   =>  'Set user identity to this UID/username during '.
-                                'startup. The default is to NOT change user '.
-                                'identity, unless configured otherwise.',
+            'description'   => $translator->gettext(
+                'Set user identity to this UID/username during '.
+                'startup. The default is to NOT change user '.
+                'identity, unless configured otherwise.'
+            ),
             'help_name'     => 'USER/UID',
             'action'        => 'StoreString',
             'default'       => NULL,
         ));
+
+#        $parser->addOption('identd', array(
+#            'long_name'     => '--identd',
+#            'action'        => 'StoreInt',
+#            'default'       => NULL,
+#        ));
 
         try {
             $parsed = $parser->parse();
@@ -171,18 +191,18 @@ class   Erebot_CLI
          */
         if ($parsed->options['daemon']) {
             if (!$hasPosix) {
-                $logger->error(
+                $logger->error($translator->gettext(
                     'The posix extension is required in order '.
                     'to start the bot in the background'
-                );
+                ));
                 exit(1);
             }
 
             if (!$hasPcntl) {
-                $logger->error(
+                $logger->error($translator->gettext(
                     'The pcntl extension is required in order '.
                     'to start the bot in the background'
-                );
+                ));
                 exit(1);
             }
 
@@ -193,10 +213,14 @@ class   Erebot_CLI
                         array(__CLASS__, '_startup_sighandler')
                     );
 
-            $logger->info('Starting the bot in the background...');
+            $logger->info($translator->gettext(
+                'Starting the bot in the background...'
+            ));
             $pid = pcntl_fork();
             if ($pid < 0) {
-                $logger->error('Could not start in the background (unable to fork)');
+                $logger->error($translator->gettext(
+                    'Could not start in the background (unable to fork)'
+                ));
                 exit(1);
             }
             if ($pid > 0) {
@@ -220,10 +244,14 @@ class   Erebot_CLI
 
             umask(0);
             if (umask() != 0)
-                $logger->warning('Could not change umask');
+                $logger->warning($translator->gettext(
+                    'Could not change umask'
+                ));
 
             if (posix_setsid() == -1) {
-                $logger->error('Could not start in the background (unable to setsid)');
+                $logger->error($translator->gettext(
+                    'Could not start in the background (unable to setsid)'
+                ));
                 exit(1);
             }
 
@@ -231,7 +259,9 @@ class   Erebot_CLI
             // Not required under Linux, but required by at least System V.
             $pid = pcntl_fork();
             if ($pid < 0) {
-                $logger->error('Could not start in the background (unable to fork)');
+                $logger->error($translator->gettext(
+                    'Could not start in the background (unable to fork)'
+                ));
                 exit(1);
             }
             if ($pid > 0)
@@ -239,7 +269,10 @@ class   Erebot_CLI
 
             // Avoid locking up the current directory.
             if (!chdir(DIRECTORY_SEPARATOR))
-                $logger->error('Could not chdir to "%s"', DIRECTORY_SEPARATOR);
+                $logger->error(
+                    $translator->gettext('Could not chdir to "%s"'),
+                    DIRECTORY_SEPARATOR
+                );
 
             // Explicitly close the magic stream-constants (just in case).
             foreach (array('STDIN', 'STDOUT', 'STDERR') as $stream) {
@@ -258,24 +291,36 @@ class   Erebot_CLI
 
             if (defined('SIGUSR1'))
                 posix_kill($parent, SIGUSR1);
-            $logger->info('Successfully started in the background');
+            $logger->info($translator->gettext(
+                'Successfully started in the background'
+            ));
         }
+
+#        $identd = NULL;
+#        if ($parsed->options['identd'] !== NULL) {
+#            $identdURL = $parsed->options['identd'];
+#            if (strpos($identdURL, ':') === FALSE)
+#                $identdURL = '0.0.0.0:' . $identdURL;
+#            $identd = stream_socket_server("tcp://".$identdURL, $errno, $errstr);
+#            if (!$identd)
+#                throw new Exception('');
+#        }
 
         // Change group identity if necessary.
         if ($parsed->options['group'] !== NULL &&
             $parsed->options['group'] != '') {
             if (!$hasPosix) {
-                $logger->warning(
+                $logger->warning($translator->gettext(
                     'The posix extension is needed in order '.
                     'to change group identity.'
-                );
+                ));
             }
             else if (posix_getuid() !== 0) {
-                $logger->warning(
+                $logger->warning($translator->gettext(
                     'Only root can change group identity! '.
                     'Your current UID is %d',
                     posix_getuid()
-                );
+                ));
             }
             else {
                 if (ctype_digit($parsed->options['group']))
@@ -284,13 +329,19 @@ class   Erebot_CLI
                     $info = posix_getgrnam($parsed->options['group']);
 
                 if ($info === FALSE) {
-                    $logger->error('No such group "%s"', $parsed->options['group']);
+                    $logger->error(
+                        $translator->gettext('No such group "%s"'),
+                        $parsed->options['group']
+                    );
                     exit(1);
                 }
 
                 if (!posix_setgid($info['gid'])) {
                     $logger->error(
-                        'Could not set group identity to "%(name)s" (%(id)d)',
+                        $translator->gettext(
+                            'Could not set group identity '.
+                            'to "%(name)s" (%(id)d)'
+                        ),
                         array(
                             'name'  => $info['name'],
                             'id'    => $info['gid'],
@@ -300,7 +351,10 @@ class   Erebot_CLI
                 }
 
                 $logger->debug(
-                    'Successfully changed group identity to "%(name)s" (%(id)d)',
+                    $translator->gettext(
+                        'Successfully changed group identity '.
+                        'to "%(name)s" (%(id)d)'
+                    ),
                     array(
                         'name'  => $info['name'],
                         'id'    => $info['gid'],
@@ -313,15 +367,17 @@ class   Erebot_CLI
         if ($parsed->options['user'] !== NULL ||
             $parsed->options['user'] != '') {
             if (!$hasPosix) {
-                $logger->warning(
+                $logger->warning($translator->gettext(
                     'The posix extension is needed in order '.
                     'to change user identity.'
-                );
+                ));
             }
             else if (posix_getuid() !== 0) {
                 $logger->warning(
-                    'Only root can change user identity! '.
-                    'Your current UID is %d',
+                    $translator->gettext(
+                        'Only root can change user identity! '.
+                        'Your current UID is %d'
+                    ),
                     posix_getuid()
                 );
             }
@@ -332,13 +388,19 @@ class   Erebot_CLI
                     $info = posix_getpwnam($parsed->options['user']);
 
                 if ($info === FALSE) {
-                    $logger->error('No such user "%s"', $parsed->options['user']);
+                    $logger->error(
+                        $translator->gettext('No such user "%s"'),
+                        $parsed->options['user']
+                    );
                     exit(1);
                 }
 
                 if (!posix_setuid($info['uid'])) {
                     $logger->error(
-                        'Could not set user identity to "%(name)s" (%(id)d)',
+                        $translator->gettext(
+                            'Could not set user identity '.
+                            'to "%(name)s" (%(id)d)'
+                        ),
                         array(
                             'name'  => $info['name'],
                             'id'    => $info['uid'],
@@ -347,7 +409,10 @@ class   Erebot_CLI
                     exit(1);
                 }
                 $logger->debug(
-                    'Successfully changed user identity to "%(name)s" (%(id)d)',
+                    $translator->gettext(
+                        'Successfully changed user identity '.
+                        'to "%(name)s" (%(id)d)'
+                    ),
                     array(
                         'name'  => $info['name'],
                         'id'    => $info['uid'],
@@ -366,7 +431,9 @@ class   Erebot_CLI
                 $pid = (int) rtrim($pid);
                 if (!$pid) {
                     $logger->error(
-                        'The pidfile (%s) contained garbage. Exiting',
+                        $translator->gettext(
+                            'The pidfile (%s) contained garbage. Exiting'
+                        ),
                         $parsed->options['pidfile']
                     );
                     exit(1);
@@ -377,15 +444,19 @@ class   Erebot_CLI
                     switch ($res) {
                         case 0: // No error.
                             $logger->error(
-                                'Erebot is already running with PID %d',
+                                $translator->gettext(
+                                    'Erebot is already running with PID %d'
+                                ),
                                 $pid
                             );
                             exit(1);
 
                         case 3: // ESRCH.
                             $logger->warning(
-                                'Found stalled PID %(pid)d in pidfile '.
-                                '"%(pidfile)s". Removing it',
+                                $translator->gettext(
+                                    'Found stalled PID %(pid)d in pidfile '.
+                                    '"%(pidfile)s". Removing it'
+                                ),
                                 array(
                                     'pidfile'   => $parsed->options['pidfile'],
                                     'pid'       => $pid,
@@ -396,8 +467,10 @@ class   Erebot_CLI
 
                         case 1: // EPERM.
                             $logger->error(
-                                'Found another program\'s PID %(pid)d in '.
-                                'pidfile "%(pidfile)s". Exiting',
+                                $translator->gettext(
+                                    'Found another program\'s PID %(pid)d in '.
+                                    'pidfile "%(pidfile)s". Exiting'
+                                ),
                                 array(
                                     'pidfile'   => $parsed->options['pidfile'],
                                     'pid'       => $pid,
@@ -407,8 +480,11 @@ class   Erebot_CLI
 
                         default:
                             $logger->error(
-                                'Unknown error while checking for the existence '.
-                                'of another running instance of Erebot (%s)',
+                                $translator->gettext(
+                                    'Unknown error while checking for '.
+                                    'the existence of another running '.
+                                    'instance of Erebot (%s)'
+                                ),
                                 posix_get_last_error()
                             );
                             exit(1);
@@ -420,8 +496,10 @@ class   Erebot_CLI
             flock($pidfile, LOCK_EX | LOCK_NB, $wouldBlock);
             if ($wouldBlock) {
                 $logger->error(
-                    'Could not lock pidfile (%s). '.
-                    'Is the bot already running?',
+                    $translator->gettext(
+                        'Could not lock pidfile (%s). '.
+                        'Is the bot already running?'
+                    ),
                     $parsed->options['pidfile']
                 );
                 exit(1);
@@ -431,14 +509,16 @@ class   Erebot_CLI
             $res = fwrite($pidfile, $pid);
             if ($res != strlen($pid)) {
                 $logger->error(
-                    'Unable to write PID to pidfile (%s)',
+                    $translator->gettext('Unable to write PID to pidfile (%s)'),
                     $parsed->options['pidfile']
                 );
                 exit(1);
             }
 
             $logger->debug(
-                'Wrote our PID (%(pid)d) into the pidfile (%(pidfile)s)',
+                $translator->gettext(
+                    'PID (%(pid)d) written into %(pidfile)s'
+                ),
                 array(
                     'pidfile'   => $parsed->options['pidfile'],
                     'pid'       => getmypid(),
@@ -454,9 +534,16 @@ class   Erebot_CLI
 
         // Display a desperate warning when run as user root.
         if (getmyuid() === 0)
-            $logger->warning('You SHOULD NOT run Erebot as root !');
+            $logger->warning($translator->gettext(
+                'You SHOULD NOT run Erebot as root !'
+            ));
 
         $bot = new Erebot($config, $translator);
+
+#        if ($identd !== NULL) {
+#            $identdServer = new Erebot_Identd_Server($bot);
+#            $identdServer->setSocket($identd);
+#        }
 
         // This doesn't return until we purposely
         // make the bot drop all active connections.
