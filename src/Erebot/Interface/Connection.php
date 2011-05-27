@@ -319,6 +319,34 @@ interface Erebot_Interface_Connection
     public function removeEventHandler(Erebot_Interface_EventHandler $handler);
 
     /**
+     * Factory to create an event matching the given interface,
+     * passing any additional parameters given to this method
+     * to the constructor for that event.
+     *
+     * \param string $iface
+     *      Name of the interface describing
+     *      the type of event to create.
+     *
+     * \note
+     *      You may pass additional parameters to this method.
+     *      They will be passed as is to the event's constructor.
+     *
+     * \note
+     *      It is not necessary to pass "$this" explicitely
+     *      as the first additional parameter to this method,
+     *      this factory already takes care of adding it
+     *      automatically as all event types require it.
+     *
+     * \note
+     *      This method can also use the same shortcuts as
+     *      Erebot_Connection::getEventClass().
+     *
+     * \note
+     *      The name of the interface to use is case-insensitive.
+     */
+    public function makeEvent($iface /* , ... */);
+
+    /**
      * Dispatches the given event to handlers
      * which have been registered for this type of event.
      *
