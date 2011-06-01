@@ -106,4 +106,13 @@ implements  Erebot_Interface_Identity
     {
         return $this->_nick;
     }
+
+    public function match($filter)
+    {
+        $filter = strtr(preg_quote($filter, '#'), array(
+            '\\?'   => '.?',
+            '\\*'   => '.*',
+        ));
+        return (bool) preg_match('#^'.$filter.'$#iD', $this->getMask());
+    }
 }
