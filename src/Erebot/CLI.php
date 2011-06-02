@@ -16,7 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class   Erebot_CLI
+require('vendor/dependency-injection/sfServiceContainerAutoloader.php');
+sfServiceContainerAutoloader::register();
+
+class Erebot_CLI
 {
     static public function _startup_sighandler($signum)
     {
@@ -37,12 +40,17 @@ class   Erebot_CLI
 
     static public function run()
     {
+        $dic    = new sfServiceContainerBuilder();
+        $loader = new sfServiceContainerLoaderFileXml($dic);
+        $loader->load('defaults.xml');
+
         // Determine availability of PHP extensions
         // needed by some of the command-line options.
         $hasPosix = in_array('posix', get_loaded_extensions());
         $hasPcntl = in_array('pcntl', get_loaded_extensions());
 
-        $locales = Locale::getDefault();
+        $localeGetter = $dic['i18n.default_getter'];
+        $locales = call_user_func($localeGetter);
         $locales = empty($locales) ? array() : array($locales);
         $localeSources = array(
             'LANGUAGE'      => TRUE,
@@ -59,7 +67,8 @@ class   Erebot_CLI
                 $locales = array($_SERVER[$source]);
             break;
         }
-        $translator = new Erebot_I18n("Erebot");
+        $coreI18nCls    = $dic['core.classes.i18n'];
+        $translator     = new $coreI18nCls("Erebot");
         $translator->setLocale(Erebot_Interface_I18n::LC_MESSAGES, $locales);
 
         Console_CommandLine::registerAction('StoreProxy', 'StoreProxy_Action');
@@ -148,13 +157,8 @@ class   Erebot_CLI
             'default'       => NULL,
         ));
 
-#        $parser->addOption('identd', array(
-#            'long_name'     => '--identd',
-#            'action'        => 'StoreInt',
-#            'default'       => NULL,
-#        ));
-
         try {
+            /// @TODO: Check the interface or something like that.
             $parsed = $parser->parse();
         }
         catch (Exception $exc) {
@@ -168,6 +172,10 @@ class   Erebot_CLI
             Erebot_Config_Main::LOAD_FROM_FILE,
             $translator
         );
+
+        $coreCls = $dic['core.classes.core'];
+        $bot = new $coreCls($config, $translator);
+        $dic->Erebot = $bot;
 
         // Use values from the XML configuration file
         // if there is no override from the command line.
@@ -296,15 +304,19 @@ class   Erebot_CLI
             ));
         }
 
-#        $identd = NULL;
-#        if ($parsed->options['identd'] !== NULL) {
-#            $identdURL = $parsed->options['identd'];
-#            if (strpos($identdURL, ':') === FALSE)
-#                $identdURL = '0.0.0.0:' . $identdURL;
-#            $identd = stream_socket_server("tcp://".$identdURL, $errno, $errstr);
-#            if (!$identd)
-#                throw new Exception('');
-#        }
+        try {
+            $identd = $dic->identd;
+        }
+        catch (InvalidArgumentException $e) {
+            $identd = NULL;
+        }
+
+        try {
+            $console = $dic->console;
+        }
+        catch (InvalidArgumentException $e) {
+            $console = NULL;
+        }
 
         // Change group identity if necessary.
         if ($parsed->options['group'] !== NULL &&
@@ -538,16 +550,15 @@ class   Erebot_CLI
                 'You SHOULD NOT run Erebot as root !'
             ));
 
-        $bot = new Erebot($config, $translator);
+        if ($identd !== NULL)
+            $identd->connect();
 
-#        if ($identd !== NULL) {
-#            $identdServer = new Erebot_Identd_Server($bot);
-#            $identdServer->setSocket($identd);
-#        }
+        if ($console !== NULL)
+            $console->connect();
 
         // This doesn't return until we purposely
         // make the bot drop all active connections.
-        $bot->start();
+        $bot->start($dic->getService('factory.connection'));
         exit(0);
     }
 }

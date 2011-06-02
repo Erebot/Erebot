@@ -20,7 +20,8 @@
  * \brief
  *      Represents a dependency on some item.
  */
-class Erebot_Dependency
+class       Erebot_Dependency
+implements  Erebot_Interface_Dependency
 {
     /// Name of the item we depend on.
     protected $_name;

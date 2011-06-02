@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony-project.org/2.0/container">
+    <parameters>
+        <parameter key="general.version">0.5.0</parameter>
+        <parameter key="general.timezone">Europe/Paris</parameter>
+
+        <parameter key="logging.classes.formatter">Plop_Formatter</parameter>
+        <parameter key="logging.classes.handler">Plop_Handler_Stream</parameter>
+        <parameter key="logging.classes.logger">Plop_Logger</parameter>
+
+        <parameter key="i18n.default_getter" type="collection">
+            <parameter>Locale</parameter>
+            <parameter>getDefault</parameter>
+        </parameter>
+
+        <parameter key="core.classes.core">Erebot</parameter>
+        <parameter key="core.classes.connection">Erebot_Connection</parameter>
+        <parameter key="core.classes.connection_factory">Erebot_ConnectionFactory</parameter>
+        <parameter key="core.classes.i18n">Erebot_I18n</parameter>
+        <parameter key="core.classes.identity">Erebot_Identity</parameter>
+        <parameter key="core.classes.timer">Erebot_Timer</parameter>
+        <parameter key="core.classes.eventhandler">Erebot_EventHandler</parameter>
+        <parameter key="core.classes.rawhandler">Erebot_RawHandler</parameter>
+    </parameters>
+
+    <services>
+        <service id="logging.formatter.detailed" class="%logging.classes.formatter%">
+            <argument>%(asctime)s - %(levelname)s - %(message)s</argument>
+            <argument>%H:%M:%S</argument>
+        </service>
+
+        <service id="logging.formatter.input" class="%logging.classes.formatter%">
+            <argument>%(asctime)s - &#8592; %(message)s</argument>
+            <argument>%H:%M:%S</argument>
+        </service>
+
+        <service id="logging.formatter.output" class="%logging.classes.formatter%">
+            <argument>%(asctime)s - &#8594; %(message)s</argument>
+            <argument>%H:%M:%S</argument>
+        </service>
+
+        <service id="logging.handler.input" class="%logging.classes.handler%">
+            <argument type="service" id="logging.formatter.input"/>
+            <argument type="const">Plop::DEBUG</argument>
+        </service>
+
+        <service id="logging.handler.output" class="%logging.classes.handler%">
+            <argument type="service" id="logging.formatter.output"/>
+            <argument type="const">Plop::DEBUG</argument>
+        </service>
+
+        <service id="logging.handler.stderr" class="%logging.classes.handler%">
+            <argument type="service" id="logging.formatter.detailed"/>
+            <argument type="const">Plop::DEBUG</argument>
+        </service>
+
+        <service id="logging.logger.root" class="Plop_RootLogger">
+            <argument type="service" id="logging.handler.stderr"/>
+            <argument type="const">Plop::DEBUG</argument>
+        </service>
+
+        <service id="logging.logger.input" class="%logging.classes.logger%">
+            <argument type="service" id="logging.handler.input"/>
+            <argument type="const">Plop::DEBUG</argument>
+            <argument type="collection">
+                <argument key="%core.class.connection%" type="collection">
+                    <argument>_getSingleLine</argument>
+                </argument>
+            </argument>
+            <argument>0</argument>
+        </service>
+
+        <service id="logging.logger.output" class="%logging.classes.logger%">
+            <argument type="service" id="logging.handler.output"/>
+            <argument type="const">Plop::DEBUG</argument>
+            <argument type="collection">
+                <argument key="%core.classes.connection%" type="collection">
+                    <argument>processOutgoingData</argument>
+                </argument>
+            </argument>
+            <argument>0</argument>
+        </service>
+
+        <service id="logging" class="Plop">
+            <!-- The 1st argument MUST be the root logger. -->
+            <argument type="service" id="logging.logger.root"/>
+            <argument type="service" id="logging.logger.input"/>
+            <argument type="service" id="logging.logger.output"/>
+        </service>
+
+        <service id="factory.connection" class="%core.classes.connection_factory%">
+            <argument>%core.classes.connection%</argument>
+            <argument type="collection">
+                <argument key="Erebot_Interface_Event_Ban">Erebot_Event_Ban</argument>
+                <argument key="Erebot_Interface_Event_ChanAction">Erebot_Event_ChanAction</argument>
+                <argument key="Erebot_Interface_Event_ChanAction">Erebot_Event_ChanAction</argument>
+                <argument key="Erebot_Interface_Event_ChanCtcp">Erebot_Event_ChanCtcp</argument>
+                <argument key="Erebot_Interface_Event_ChanCtcpReply">Erebot_Event_ChanCtcpReply</argument>
+                <argument key="Erebot_Interface_Event_ChanNotice">Erebot_Event_ChanNotice</argument>
+                <argument key="Erebot_Interface_Event_ChanText">Erebot_Event_ChanText</argument>
+                <argument key="Erebot_Interface_Event_Connect">Erebot_Event_Connect</argument>
+                <argument key="Erebot_Interface_Event_DeHalfop">Erebot_Event_DeHalfop</argument>
+                <argument key="Erebot_Interface_Event_DeOp">Erebot_Event_DeOp</argument>
+                <argument key="Erebot_Interface_Event_DeOwner">Erebot_Event_DeOwner</argument>
+                <argument key="Erebot_Interface_Event_DeProtect">Erebot_Event_DeProtect</argument>
+                <argument key="Erebot_Interface_Event_DeVoice">Erebot_Event_DeVoice</argument>
+                <argument key="Erebot_Interface_Event_Disconnect">Erebot_Event_Disconnect</argument>
+                <argument key="Erebot_Interface_Event_Error">Erebot_Event_Error</argument>
+                <argument key="Erebot_Interface_Event_Except">Erebot_Event_Except</argument>
+                <argument key="Erebot_Interface_Event_Exit">Erebot_Event_Exit</argument>
+                <argument key="Erebot_Interface_Event_Halfop">Erebot_Event_Halfop</argument>
+                <argument key="Erebot_Interface_Event_Invite">Erebot_Event_Invite</argument>
+                <argument key="Erebot_Interface_Event_Join">Erebot_Event_Join</argument>
+                <argument key="Erebot_Interface_Event_Kick">Erebot_Event_Kick</argument>
+                <argument key="Erebot_Interface_Event_Kill">Erebot_Event_Kill</argument>
+                <argument key="Erebot_Interface_Event_Logon">Erebot_Event_Logon</argument>
+                <argument key="Erebot_Interface_Event_Nick">Erebot_Event_Nick</argument>
+                <argument key="Erebot_Interface_Event_Notify">Erebot_Event_Notify</argument>
+                <argument key="Erebot_Interface_Event_Op">Erebot_Event_Op</argument>
+                <argument key="Erebot_Interface_Event_Owner">Erebot_Event_Owner</argument>
+                <argument key="Erebot_Interface_Event_Part">Erebot_Event_Part</argument>
+                <argument key="Erebot_Interface_Event_Ping">Erebot_Event_Ping</argument>
+                <argument key="Erebot_Interface_Event_Pong">Erebot_Event_Pong</argument>
+                <argument key="Erebot_Interface_Event_PrivateAction">Erebot_Event_PrivateAction</argument>
+                <argument key="Erebot_Interface_Event_PrivateCtcp">Erebot_Event_PrivateCtcp</argument>
+                <argument key="Erebot_Interface_Event_PrivateCtcpReply">Erebot_Event_PrivateCtcpReply</argument>
+                <argument key="Erebot_Interface_Event_PrivateNotice">Erebot_Event_PrivateNotice</argument>
+                <argument key="Erebot_Interface_Event_PrivateText">Erebot_Event_PrivateText</argument>
+                <argument key="Erebot_Interface_Event_Protect">Erebot_Event_Protect</argument>
+                <argument key="Erebot_Interface_Event_Quit">Erebot_Event_Quit</argument>
+                <argument key="Erebot_Interface_Event_Raw">Erebot_Event_Raw</argument>
+                <argument key="Erebot_Interface_Event_RawMode">Erebot_Event_RawMode</argument>
+                <argument key="Erebot_Interface_Event_Topic">Erebot_Event_Topic</argument>
+                <argument key="Erebot_Interface_Event_UnBan">Erebot_Event_UnBan</argument>
+                <argument key="Erebot_Interface_Event_UnExcept">Erebot_Event_UnExcept</argument>
+                <argument key="Erebot_Interface_Event_UnNotify">Erebot_Event_UnNotify</argument>
+                <argument key="Erebot_Interface_Event_UserMode">Erebot_Event_UserMode</argument>
+                <argument key="Erebot_Interface_Event_Voice">Erebot_Event_Voice</argument>
+            </argument>
+        </service>
+
+<!--        <service id="identd" class="Erebot_Identd_Server">-->
+<!--            <argument type="service" id="Erebot"/>-->
+<!--            <argument>0.0.0.0:113</argument>-->
+<!--            <argument>Erebot_Identd_Worker</argument>-->
+<!--        </service>-->
+
+        <service id="console" class="Erebot_Console">
+            <argument type="service" id="Erebot"/>
+        </service>
+    </services>
+</container>

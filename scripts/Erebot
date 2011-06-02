@@ -72,14 +72,14 @@ if (!function_exists('ctype_digit')) {
 class   StoreProxy_Action
 extends Console_CommandLine_Action
 {
-    public function setResult($option, $result)
+    public function setResult($result, $option = NULL)
     {
         $this->result->options[$option] = $result;
     }
 
     public function execute($value = FALSE, $params = array())
     {
-        $this->setResult($params['option'], FALSE);
+        $this->setResult(FALSE, $params['option']);
     }
 }
 

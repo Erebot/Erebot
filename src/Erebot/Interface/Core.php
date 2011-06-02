@@ -77,7 +77,7 @@ interface Erebot_Interface_Core
      *      This method does not return until the bot drops its connections.
      *      Therefore, this MUST be the last method you call in your script.
      */
-    public function start($connectionCls = NULL);
+    public function start(Erebot_Interface_ConnectionFactory $factory);
 
     /**
      * Stops the bot.

@@ -21,7 +21,12 @@
  *      Handles a (possibly encrypted) connection to an IRC server.
  */
 class       Erebot_Connection
-implements  Erebot_Interface_Connection
+implements  Erebot_Interface_ModuleContainer,
+            Erebot_Interface_IrcComparator,
+            Erebot_Interface_EventDispatcher,
+            Erebot_Interface_EventFactory,
+            Erebot_Interface_ReceivingConnection,
+            Erebot_Interface_SendingConnection
 {
     /**
      * A configuration object implementing
@@ -60,12 +65,10 @@ implements  Erebot_Interface_Connection
     static protected $_caseMappings = NULL;
 
     // Documented in the interface.
-    public function __construct(
-        Erebot_Interface_Core           $bot,
-        Erebot_Interface_Config_Server  $config)
+    public function __construct(Erebot_Interface_Core $bot, $config = NULL, $events = array())
     {
-        $this->_config  = $config;
-        $this->_bot     = $bot;
+        $this->_config      = $config;
+        $this->_bot         = $bot;
 
         $this->_channelModules  = array();
         $this->_plainModules    = array();
@@ -95,64 +98,9 @@ implements  Erebot_Interface_Connection
         }
 
         $this->_eventsMapping = array();
-        $events = array(
-            'Ban',
-            'ChanAction',
-            'ChanCtcp',
-            'ChanCtcpReply',
-            'ChanNotice',
-            'ChanText',
-            'Connect',
-            'DeHalfop',
-            'DeOp',
-            'DeOwner',
-            'DeProtect',
-            'DeVoice',
-            'Disconnect',
-            'Error',
-            'Except',
-            'Exit',
-            'Halfop',
-            'Invite',
-            'Join',
-            'Kick',
-            'Kill',
-            'Logon',
-            'Nick',
-            'Notify',
-            'Op',
-            'Owner',
-            'Part',
-            'Ping',
-            'Pong',
-            'PrivateAction',
-            'PrivateCtcp',
-            'PrivateCtcpReply',
-            'PrivateNotice',
-            'PrivateText',
-            'Protect',
-            'Quit',
-            'Raw',
-            'RawMode',
-            'Topic',
-            'UnBan',
-            'UnExcept',
-            'UnNotify',
-            'UserMode',
-            'Voice',
-        );
-        foreach ($events as $event) {
-            $this->setEventClass(
-                'Erebot_Interface_Event_' . $event,
-                'Erebot_Event_' . $event
-            );
-        }
-
-        $this->_loadModules(
-            $config,
-            Erebot_Module_Base::RELOAD_ALL |
-            Erebot_Module_Base::RELOAD_INIT
-        );
+        $this->setEventClasses($events);
+        $this->setURIFactory('Erebot_URI');
+        $this->setDependencyFactory('Erebot_Dependency');
     }
 
     /**
@@ -167,8 +115,38 @@ implements  Erebot_Interface_Connection
             $this->_config,
             $this->_bot,
             $this->_channelModules,
-            $this->_plainModules
+            $this->_plainModules,
+            $this->_URIFactory,
+            $this->_depFactory
         );
+    }
+
+    public function getURIFactory()
+    {
+        return $this->_URIFactory;
+    }
+
+    public function setURIFactory($factory)
+    {
+        $reflector = new ReflectionClass($factory);
+        if (!$reflector->implementsInterface('Erebot_Interface_URI'))
+            throw new Erebot_InvalidValueException(
+                'The factory must implement Erebot_Interface_URI');
+        $this->_URIFactory = $factory;
+    }
+
+    public function getDependencyFactory()
+    {
+        return $this->_depFactory;
+    }
+
+    public function setDependencyFactory($factory)
+    {
+        $reflector = new ReflectionClass($factory);
+        if (!$reflector->implementsInterface('Erebot_Interface_Dependency'))
+            throw new Erebot_InvalidValueException(
+                'The factory must implement Erebot_Interface_Dependency');
+        $this->_depFactory = $factory;
     }
 
     public function reload(Erebot_Interface_Config_Server $config)
@@ -281,12 +259,24 @@ implements  Erebot_Interface_Connection
         $logger     = $logging->getLogger(__FILE__);
 
         $URIs           = $this->_config->getConnectionURI();
+        $serverURI      = new Erebot_URI($URIs[count($URIs) - 1]);
         $this->_socket  = NULL;
+
+        $logger->info(
+            $this->_bot->gettext('Loading required modules for "%s"...'),
+            $serverURI
+        );
+        $this->_loadModules(
+            $this->_config,
+            Erebot_Module_Base::RELOAD_ALL |
+            Erebot_Module_Base::RELOAD_INIT
+        );
 
         try {
             $nbTunnels      = count($URIs);
+            $factory        = $this->_URIFactory;
             for ($i = 0; $i < $nbTunnels; $i++) {
-                $URI        = new Erebot_URI($URIs[$i]);
+                $URI        = new $factory($URIs[$i]);
                 $scheme     = $URI->getScheme();
                 $upScheme   = strtoupper($scheme);
 
@@ -322,7 +312,7 @@ implements  Erebot_Interface_Connection
                     if (!($proxy instanceof Erebot_Proxy_Base))
                         throw new Erebot_InvalidValueException('Invalid class');
 
-                    $next   = new Erebot_URI($URIs[$i + 1]);
+                    $next   = new $factory($URIs[$i + 1]);
                     $proxy->proxify($URI, $next);
                     $logger->debug(
                         "Successfully established connection through proxy '%s'",
@@ -686,11 +676,11 @@ implements  Erebot_Interface_Connection
                 $wrappedMessage = new Erebot_TextWrapper($msg);
                 $modes  = $wrappedMessage[0];
                 $len    = strlen($modes);
-                $mode   = self::MODE_ADD;
+                $mode   = 'add';
                 $k      = 1;
 
                 $priv     = array(
-                    self::MODE_ADD =>
+                    'add' =>
                         array(
                             'o' => '!Op',
                             'h' => '!Halfop',
@@ -700,7 +690,7 @@ implements  Erebot_Interface_Connection
                             'b' => '!Ban',
                             'e' => '!Except',
                         ),
-                    self::MODE_REMOVE =>
+                    'remove' =>
                         array(
                             'o' => '!DeOp',
                             'h' => '!DeHalfop',
@@ -716,10 +706,10 @@ implements  Erebot_Interface_Connection
                 for ($i = 0; $i < $len; $i++) {
                     switch ($modes[$i]) {
                         case '+':
-                            $mode = self::MODE_ADD;
+                            $mode = 'add';
                             break;
                         case '-':
-                            $mode = self::MODE_REMOVE;
+                            $mode = 'remove';
                             break;
 
                         case 'o':
@@ -935,9 +925,11 @@ implements  Erebot_Interface_Connection
         $depends = (isset($metadata['requires']) ?
                     $metadata['requires'] : array());
 
+        $factory = $this->_depFactory;
+
         foreach ($depends as $depend) {
             /// @TODO use dependency injection instead.
-            $depend = new Erebot_Dependency($depend);
+            $depend = new $factory($depend);
             try {
                 $depVer     = $depend->getVersion();
                 $depended   = $this->getModule($depend->getName(), $chan);
@@ -968,7 +960,7 @@ implements  Erebot_Interface_Connection
 
         foreach ($depends as $depend) {
             /// @TODO use dependency injection instead.
-            $depend = new Erebot_Dependency($depend);
+            $depend = new $factory($depend);
             try {
                 $depVer     = $depend->getVersion();
                 $depended   = $this->getModule($depend->getName(), $chan);
@@ -1088,6 +1080,9 @@ implements  Erebot_Interface_Connection
         $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
         $iface = strtolower($iface);
 
+        if (!isset($this->_eventsMapping[$iface]))
+            throw new Erebot_NotFoundException('No such declared interface');
+
         // Replace the first argument (interface) with a reference
         // to this connection, since all events require it anyway.
         // This simplifies calls to this method a little bit.
@@ -1097,20 +1092,8 @@ implements  Erebot_Interface_Connection
     }
 
     /**
-     * Returns the name of the class used to create
-     * events for a certain interface.
-     *
-     * \param string $iface
-     *      The name of the interface describing
-     *      the type of event.
-     *
-     * \retval string
-     *      Name of the class to use to create events
-     *      for the given interface.
-     *
-     * \retval NULL
-     *      Returned when no class has been registered yet
-     *      to create events for the given interface.
+     * \copydoc
+     *      Erebot_Interface_EventFactory::getEventClass($iface)
      *
      * \note
      *      As a special shortcut, you may use an exclamation
@@ -1120,9 +1103,6 @@ implements  Erebot_Interface_Connection
      *      with the "Erebot_Interface_Event_Op" interface,
      *      it is enough to simply pass "!Op" as the value
      *      for $iface.
-     *
-     * \note
-     *      The name of the interface is case-insensitive.
      */
     public function getEventClass($iface)
     {
@@ -1135,20 +1115,21 @@ implements  Erebot_Interface_Connection
             : NULL;
     }
 
+    public function getEventClasses()
+    {
+        return $this->_eventsMapping;
+    }
+
+    public function setEventClasses($events)
+    {
+        foreach ($events as $iface => $cls) {
+            $this->setEventClass($iface, $cls);
+        }
+    }
+
     /**
-     * Sets the class to use when creating events
-     * for a certain interface.
-     *
-     * \param string $iface
-     *      Interface to associate the class with.
-     *
-     * \param string $cls
-     *      Class to use when creating events for that interface.
-     *
-     * \throw Erebot_InvalidValueException
-     *      The given class does not implement the given
-     *      interface and therefore cannot be used as a
-     *      factory.
+     * \copydoc
+     *      Erebot_Interface_EventFactory::setEventClass($iface, $cls)
      *
      * \note
      *      As a special shortcut, you may use an exclamation
@@ -1158,9 +1139,6 @@ implements  Erebot_Interface_Connection
      *      with the "Erebot_Interface_Event_Op" interface,
      *      it is enough to simply pass "!Op" as the value
      *      for $iface. The $cls is always left unaffected.
-     *
-     * \note
-     *      The name of the interface is case-insensitive.
      */
     public function setEventClass($iface, $cls)
     {

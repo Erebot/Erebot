@@ -16,12 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// We want maximum verbosity! (or just a clean code :)
-error_reporting(E_ALL | E_STRICT);
-
-// The bot may run indefinitely, avoid the default 30 seconds time limit.
-set_time_limit(0);
-
 // Define the __DIR__ magic-constant for pre-5.3.0.
 // Many thanks to the anonymous person who posted this trick on:
 // http://php.net/manual/en/language.constants.predefined.php#99278
@@ -141,7 +135,7 @@ implements  Erebot_Interface_Core
     }
 
     // Documented in the interface.
-    public function start($connectionCls = 'Erebot_Connection')
+    public function start(Erebot_Interface_ConnectionFactory $factory)
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
@@ -151,7 +145,7 @@ implements  Erebot_Interface_Core
         // when the bot should stop.
         $this->_running = time();
 
-        $this->_createConnections($connectionCls, $this->_mainCfg);
+        $this->_createConnections($factory, $this->_mainCfg);
 
         // PHP 5.3 way of handling signals.
         $hasSignalDispatch = function_exists('pcntl_signal_dispatch');
@@ -171,11 +165,14 @@ implements  Erebot_Interface_Core
             foreach ($this->_connections as $index => $connection) {
                 $socket = $connection->getSocket();
 
-                if (!$connection->emptySendQueue())
+                if ($connection instanceof Erebot_Interface_SendingConnection &&
+                    !$connection->emptySendQueue())
                     $write[]    = $socket;
 
+                if ($connection instanceof Erebot_Interface_ReceivingConnection)
+                    $read[] = $socket;
+
                 $except[]                       = $socket;
-                $read[]                         = $socket;
                 $actives['connections'][$index] = $socket;
             }
 
@@ -221,6 +218,7 @@ implements  Erebot_Interface_Core
             if (count($except))
                 continue;
 
+#var_dump($read, $write, $except);
             // Handle read-ready "sockets"
             foreach ($read as $socket) {
                 do {
@@ -276,7 +274,8 @@ implements  Erebot_Interface_Core
             // Take care of incoming data waiting for processing.
             if (is_array($this->_connections)) {
                 foreach ($this->_connections as $connection) {
-                    $connection->processQueuedData();
+                    if ($connection instanceof Erebot_Interface_ReceivingConnection)
+                        $connection->processQueuedData();
                 }
             }
 
@@ -284,7 +283,7 @@ implements  Erebot_Interface_Core
             foreach ($write as $socket) {
                 $index = array_search($socket, $actives['connections']);
                 if ($index !== FALSE && isset($this->_connections[$index]) &&
-                    $this->_connections[$index] instanceof $connectionCls)
+                    $this->_connections[$index] instanceof Erebot_Interface_SendingConnection)
                     $this->_connections[$index]->processOutgoingData();
             }
         }
@@ -300,7 +299,9 @@ implements  Erebot_Interface_Core
             return;
 
         foreach ($this->_connections as $connection) {
-            $connection->dispatch($connection->makeEvent('!Exit'));
+            if ($connection instanceof Erebot_Interface_EventFactory &&
+                $connection instanceof Erebot_Interface_EventDispatcher)
+                $connection->dispatch($connection->makeEvent('!Exit'));
             $connection->disconnect();
         }
 
@@ -492,22 +493,12 @@ implements  Erebot_Interface_Core
     }
 
     protected function _createConnections(
-                                        $connectionCls,
-        Erebot_Interface_Config_Main    $config
+        Erebot_Interface_ConnectionFactory  $factory,
+        Erebot_Interface_Config_Main        $config
     )
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
-
-        if (!is_string($connectionCls) || !class_exists($connectionCls))
-            throw new Erebot_InvalidValueException('Not a valid class name '.
-                $connectionCls);
-        else {
-            $reflect = new ReflectionClass($connectionCls);
-            if (!$reflect->implementsInterface('Erebot_Interface_Connection'))
-                throw new Erebot_InvalidValueException($connectionCls.' does not '.
-                    'implement the Erebot_Interface_Connection interface');
-        }
 
         // List existing connections so they
         // can eventually be reused.
@@ -560,11 +551,7 @@ implements  Erebot_Interface_Core
                 $URIs       = $server->getConnectionURI();
                 $serverURI  = new Erebot_URI($URIs[count($URIs) - 1]);
                 try {
-                    $logger->info(
-                        $this->gettext('Loading required modules for "%s"...'),
-                        $serverURI
-                    );
-                    $connection = new $connectionCls($this, $server);
+                    $connection = $factory->newConnection($this, $server);
 
                     // Drop connection to a (now-)unconfigured
                     // server on that network.

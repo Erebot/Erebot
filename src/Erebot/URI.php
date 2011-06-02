@@ -39,7 +39,8 @@
  * behaviour by passing $raw=TRUE to said getters.
  * Normalization is done using the rules defined in RFC 3986.
  */
-class   Erebot_URI
+class       Erebot_URI
+implements  Erebot_Interface_URI
 {
     /// Scheme component (sometimes also erroneously called a "protocol").
     protected $_scheme;
@@ -199,7 +200,7 @@ class   Erebot_URI
      * \retval string
      *      The same text, after percent-encoding normalization.
      */
-    public function _normalizePercent($data)
+    protected function _normalizePercent($data)
     {
         // 6.2.2.1.  Case Normalization
         // Percent-encoded characters must use uppercase letters.

@@ -76,7 +76,14 @@ extends PHPUnit_Framework_TestCase
         $this->_networkConfig = $this->getMock('Erebot_Interface_Config_Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE, FALSE);
         $this->_serverConfig = $this->getMock('Erebot_Interface_Config_Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE, FALSE);
         $this->_bot = $this->getMock('ErebotTestCore', array(), array($this->_mainConfig), '', FALSE, FALSE, FALSE);
-        $this->_connection = new FakeConnection($this->_bot, $this->_serverConfig);
+        $events = array(
+            '!Ping'     => 'Erebot_Event_Ping',
+            '!Connect'  => 'Erebot_Event_Connect',
+            '!Raw'      => 'Erebot_Event_Raw',
+            '!Notify'   => 'Erebot_Event_Notify',
+            '!UnNotify' => 'Erebot_Event_UnNotify',
+        );
+        $this->_connection = new FakeConnection($this->_bot, $this->_serverConfig, $events);
     }
 
     public function tearDown()
