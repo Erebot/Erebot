@@ -169,8 +169,6 @@ implements  Erebot_Interface_I18n
         $prefix = dirname(__FILE__) . DIRECTORY_SEPARATOR .
             $base . DIRECTORY_SEPARATOR;
 
-        if ($category === NULL)
-            return $prefix . $domain . '.mo';
         return $prefix . $locale . DIRECTORY_SEPARATOR .
             $category . DIRECTORY_SEPARATOR . $domain . '.mo';
     }
@@ -224,20 +222,14 @@ implements  Erebot_Interface_I18n
 
     protected function _real_gettext($message, $component)
     {
-        $mappingFile        = self::_build_path(NULL, NULL, $component);
         $translationFile    = self::_build_path(
             $this->_locales[self::LC_MESSAGES],
             'LC_MESSAGES',
             $component
         );
 
-        $msgid = $this->_get_translation($mappingFile, $message);
-        if ($msgid === NULL)
-            return $message;
-
-        $msgstr = $this->_get_translation($translationFile, $msgid);
-        $res = ($msgstr === NULL ? $message : $msgstr);
-        return $res;
+        $translation = $this->_get_translation($mappingFile, $message);
+        return ($translation === NULL) ? $message : $translation;
     }
 
     // Documented in the interface.

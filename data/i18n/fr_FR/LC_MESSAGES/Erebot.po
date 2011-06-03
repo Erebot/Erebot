@@ -1,57 +1,262 @@
 #
-msgid   "signal"
-msgstr  "Réception du signal #%(signum)d (%(signame)s)"
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/CLI.php, line: 550
+msgid   "You SHOULD NOT run Erebot as root!"
+msgstr  "Vous NE DEVRIEZ PAS lancer Erebot en tant que root !"
 #
-msgid   "module.loaded"
-msgstr  "Module '%s' chargé avec succès"
-#
-msgid   "memory.used"
+msgid   "Used:"
 msgstr  "Utilisée :"
 #
-msgid   "memory.usage"
-msgstr  "Utilisation de la mémoire :"
+#, php-format
+msgid   "Unknown error while checking for the existence of another running "
+        "instance of Erebot (%s)"
+msgstr  "Erreur inconnue lors du test d'existence d'une autre instance "
+        "d'Erebot (%s)"
 #
-msgid   "memory.limit"
-msgstr  "Limite :"
+#, php-format
+msgid   "Unable to write PID to pidfile (%s)"
+msgstr  "Impossible d'inscrire le PID dans le fichier (%s)"
 #
-msgid   "memory.allocated"
-msgstr  "Allouée :"
+#, php-format
+msgid   "Trying to connect to \"%s\"..."
+msgstr  "Tentative de connexion à \"%s\"..."
 #
-msgid   "mapping.missing"
-msgstr  "Association inexistante"
+msgid   "This configuration file is meant for Erebot %(config_version)s, but "
+        "you are running version %(code_version)s. Things may not work as "
+        "expected."
+msgstr  "Ce fichier de configuration est fait pour Erebot %(config_version)s, "
+        "mais vous avez lancé la version %(code_version)s. Certains éléments "
+        "risquent de ne pas fonctionner comme prévu."
 #
-msgid   "mapping.invalid"
-msgstr  "Nom d'association invalide"
+msgid   "The posix extension is required in order to start the bot in the "
+        "background"
+msgstr  "L'extension posix est requise pour pouvoir démarrer en arrière-plan"
 #
-msgid   "invalid.mask"
+msgid   "The posix extension is needed in order to change user identity."
+msgstr  "L'extension posix est requise pour changer l'identité de "
+        "l'utilisateur."
+#
+msgid   "The posix extension is needed in order to change group identity."
+msgstr  "L'extension posix est requise pour changer l'identité du groupe."
+#
+#, php-format
+msgid   "The pidfile (%s) contained garbage. Exiting"
+msgstr  "Le fichier de PID (%s) est corrompu. Abandon"
+#
+msgid   "The pcntl extension is required in order to start the bot in the "
+        "background"
+msgstr  "L'extension pcntl est requise pour pouvoir démarrer en arrière-plan"
+#
+msgid   "Successfully started in the background"
+msgstr  "Démarrage réussi en arrière-plan"
+#
+msgid   "Successfully reloaded the configuration"
+msgstr  "Configuration rechargée avec succès"
+#
+#, php-format
+msgid   "Successfully loaded module '%s'"
+msgstr  "Module '%s' chargé avec succès"
+#
+#, php-format
+msgid   "Successfully connected to \"%s\"..."
+msgstr  "Connection réussie à \"%s\"..."
+#
+msgid   "Successfully changed user identity to \"%(name)s\" (%(id)d)"
+msgstr  "Identité de l'utilisateur changée avec succès en \"%(name)s\" (%(id)d)"
+#
+msgid   "Successfully changed group identity to \"%(name)s\" (%(id)d)"
+msgstr  "Identité du groupe changée avec succès en \"%(name)s\" (%(id)d)"
+#
+msgid   "Store the bot's PID in this file."
+msgstr  "Enregistrer le PID du bot dans ce fichier."
+#
+msgid   "Starting the bot in the background..."
+msgstr  "Démarrage du bot en arrière-plan..."
+#
+msgid   "Set user identity to this UID/username during startup. The default is "
+        "to NOT change user identity, unless configured otherwise."
+msgstr  "Assumer l'identité de cet UID/utilisateur au démarrage. L'identité de "
+        "l'utilisateur N'EST PAS modifiée par défaut, sauf configuration "
+        "contraire."
+#
+msgid   "Set group identity to this GID/group during startup. The default is "
+        "to NOT change group identity, unless configured otherwise."
+msgstr  "Assumer l'identité de ce GID/groupe au démarrage. L'identité du "
+        "groupe N'EST PAS modifiée par défaut, sauf configuration contraire."
+#
+msgid   "Run the bot in the background (daemon)."
+msgstr  "Lancer le bot en arrière-plan (démon)."
+#
+#, php-format
+msgid   "Reusing existing connection for network \"%s\""
+msgstr  "Réutilisation de la connexion existante au réseau \"%s\""
+#
+msgid   "Reloading the configuration"
+msgstr  "Rechargement de la configuration"
+#
+msgid   "Received signal #%(signum)d (%(signame)s)"
+msgstr  "Réception du signal #%(signum)d (%(signame)s)"
+#
+msgid   "Path to the configuration file to use instead of \"Erebot.xml\", "
+        "relative to the current directory."
+msgstr  "Chemin vers le fichier de configuration à utiliser au lieu de "
+        "\"Erebot.xml\", relatif par rapport au dossier courant."
+#
+msgid   "PID (%(pid)d) written into %(pidfile)s"
+msgstr  "PID (%(pid)d) écrit dans %(pidfile)s"
+#
+#, php-format
+msgid   "Only root can change user identity! Your current UID is %d"
+msgstr  "Seul root peut changer l'identité de l'utilisateur ! Votre UID actuel "
+        "est %d"
+#
+#, php-format
+msgid   "Only root can change group identity! Your current UID is %d"
+msgstr  "Seul root peut changer l'identité du groupe ! Votre UID actuel est %d"
+#
+msgid   "Not a valid mask"
 msgstr  "Masque non valide"
 #
-msgid   "invalid.code"
-msgstr  "Le code n'est pas propre !"
+#, php-format
+msgid   "No such user \"%s\""
+msgstr  "Utilisateur introuvable \"%s\""
 #
-msgid   "invalid.channel"
-msgstr  "Nom de canal non valide"
+msgid   "No such mapping exists"
+msgstr  "Association inexistante"
 #
-msgid   "exception.rate-limiter"
+#, php-format
+msgid   "No such group \"%s\""
+msgstr  "Groupe introuvable \"%s\""
+#
+msgid   "No more connections to handle, leaving..."
+msgstr  "Il n'y a plus de connexions à gérer, arrêt en cours..."
+#
+msgid   "No configuration file to reload"
+msgstr  "Aucun fichier de configuration à recharger"
+#
+msgid   "No active connections... Aborting."
+msgstr  "Aucune connexion active... Abandon"
+#
+msgid   "Memory usage:"
+msgstr  "Utilisation de la mémoire :"
+#
+#, php-format
+msgid   "Loading required modules for \"%s\"..."
+msgstr  "Chargement des modules nécessaires pour \"%s\"..."
+#
+msgid   "Loaded configuration data"
+msgstr  "Données de configuration chargées"
+#
+msgid   "Limit:"
+msgstr  "Limite :"
+#
+msgid   "Invalid mapping name"
+msgstr  "Nom d'association invalide"
+#
+msgid   "Got exception"
+msgstr  "Une exception a été levée"
+#
+msgid   "Got an exception from the rate-limiter module. Assuming implicit "
+        "approval to send the message."
 msgstr  "Une exception a été levée par le module de contrôle du débit. Un "
         "accord implicite d'envoi du message a été obtenu."
 #
-msgid   "exception"
-msgstr  "Une exception a été levée"
+msgid   "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
+msgstr  "Un PID obsolète (%(pid)d) a été trouvé dans \"%(pidfile)s\". "
+        "Suppression"
 #
-msgid   "erebot.stopping"
-msgstr  "Il n'y a plus de connexions à gérer, arrêt en cours..."
+msgid   "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". "
+        "Exiting"
+msgstr  "Le PID d'un autre programme (%(pid)d) a été trouvé dans \"%(pidfile)s"
+        "\". Abandon"
 #
-msgid   "erebot.stopped"
-msgstr  "Erebot s'est arrêté"
-#
-msgid   "erebot.starting"
+msgid   "Erebot is starting"
 msgstr  "Erebot démarre"
 #
-msgid   "erebot.aborting"
-msgstr  "Aucune connexion active... Abandon"
+#, php-format
+msgid   "Erebot is already running with PID %d"
+msgstr  "Erebot est déjà lancé avec le PID %d"
 #
-msgid   "duration.pattern"
+msgid   "Erebot has stopped"
+msgstr  "Erebot s'est arrêté"
+#
+msgid   "Do not run the bot in the background. This is the default, unless the "
+        "-d option is used or the bot is configured otherwise."
+msgstr  "Ne pas lancer le bot en arrière-plan. Il s'agit de la valeur par "
+        "défaut, sauf si l'option -d est utilisée ou configuration contraire."
+#
+msgid   "Could not start in the background (unable to setsid)"
+msgstr  "Impossible de démarrer en arrière-plan (échec de setsid)"
+#
+msgid   "Could not start in the background (unable to fork)"
+msgstr  "Impossible de démarrer en arrière-plan (échec du fork)"
+#
+msgid   "Could not set user identity to \"%(name)s\" (%(id)d)"
+msgstr  "Impossible de changer l'identité de l'utilisateur en \"%(name)s\" (%"
+        "(id)d)"
+#
+msgid   "Could not set group identity to \"%(name)s\" (%(id)d)"
+msgstr  "Impossible de changer l'identité du groupe en \"%(name)s\" (%(id)d)"
+#
+#, php-format
+msgid   "Could not lock pidfile (%s). Is the bot already running?"
+msgstr  "Impossible de verrouiller le fichier (%s). Est-ce que le bot est déjà "
+        "lancé ?"
+#
+#, php-format
+msgid   "Could not connect to \"%s\""
+msgstr  "Impossible de se connecter à \"%s\""
+#
+#, php-format
+msgid   "Could not chdir to \"%s\""
+msgstr  "Impossible de changer de dossier vers \"%s\""
+#
+msgid   "Could not change umask"
+msgstr  "Impossible de changer l'umask"
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Console.php, line: 27
+#, php-format
+msgid   "Console started in \"%s\""
+msgstr  "Console démarrée dans \"%s\""
+#
+msgid   "Connection failed, removing it from the pool"
+msgstr  "Échec de la connexion, elle n'est plus sous notre contrôle"
+#
+msgid   "Code is not clean!"
+msgstr  "Le code n'est pas propre !"
+#
+msgid   "Bad channel name"
+msgstr  "Nom de canal non valide"
+#
+msgid   "Allocated:"
+msgstr  "Allouée :"
+#
+msgid   "A modular IRC bot written in PHP"
+msgstr  "Un bot IRC modulaire écrit en PHP"
+#
+msgid   "%with-words:\n"
+        "    0: 0 seconds;\n"
+        "    1: 1 second;\n"
+        "    2: =#0= seconds;\n"
+        "    60/60: <%%min<;\n"
+        "    61/60: <%%min<, >%with-words>;\n"
+        "    3600/60: <%%hr<;\n"
+        "    3601/60: <%%hr<, >%with-words>;\n"
+        "    86400/86400: <%%day<;\n"
+        "    86401/86400: <%%day<, >%with-words>;\n"
+        "    604800/604800: <%%week<;\n"
+        "    604801/604800: <%%week<, >%with-words>;\n"
+        "%%min:\n"
+        "    1: 1 minute;\n"
+        "    2: =#0= minutes;\n"
+        "%%hr:\n"
+        "    1: 1 hour;\n"
+        "    2: =#0= hours;\n"
+        "%%day:\n"
+        "    1: 1 day;\n"
+        "    2: =#0= days;\n"
+        "%%week:\n"
+        "    1: 1 week;\n"
+        "    2: =#0= weeks;"
 msgstr  "%with-words:\n"
         "    0: =#0= seconde;\n"
         "    2: =#0= secondes;\n"
@@ -76,155 +281,10 @@ msgstr  "%with-words:\n"
         "    1: 1 semaine;\n"
         "    2: =#0= semaines;"
 #
-msgid   "connection.successful"
-msgstr  "Connection réussie à \"%s\"..."
-#
-msgid   "connection.reusing"
-msgstr  "Réutilisation de la connexion existante au réseau \"%s\""
-#
-msgid   "connection.modules"
-msgstr  "Chargement des modules nécessaires pour \"%s\"..."
-#
-msgid   "connection.impossible"
-msgstr  "Impossible de se connecter à \"%s\""
-#
-msgid   "connection.failed"
-msgstr  "Échec de la connexion, elle n'est plus sous notre contrôle"
-#
-msgid   "connection.connecting"
-msgstr  "Tentative de connexion à \"%s\"..."
-#
-msgid   "configuration.reloading"
-msgstr  "Rechargement de la configuration"
-#
-msgid   "configuration.reloaded"
-msgstr  "Configuration rechargée avec succès"
-#
-msgid   "configuration.no-file"
-msgstr  "Aucun fichier de configuration à recharger"
-#
-msgid   "configuration.loaded"
-msgstr  "Données de configuration chargées"
-#
-msgid   "configuration.bad-version"
-msgstr  "Ce fichier de configuration est fait pour Erebot %(config_version)s, "
-        "mais vous avez lancé la version %(code_version)s. Certains éléments "
-        "risquent de ne pas fonctionner comme prévu."
-#
-msgid   "cli.success.setuid"
-msgstr  "Identité de l'utilisateur changée avec succès en \"%(name)s\" (%(id)d)"
-#
-msgid   "cli.success.setgid"
-msgstr  "Identité du groupe changée avec succès en \"%(name)s\" (%(id)d)"
-#
-msgid   "cli.success.background"
-msgstr  "Démarrage réussi en arrière-plan"
-#
-msgid   "cli.starting"
-msgstr  "Démarrage du bot en arrière-plan..."
-#
-msgid   "cli.pid"
-msgstr  "PID (%(pid)d) écrit dans %(pidfile)s"
-#
-msgid   "cli.options.setuid"
-msgstr  "Assumer l'identité de cet UID/utilisateur au démarrage. L'identité "
-        "de l'utilisateur N'EST PAS modifiée par défaut, sauf configuration "
-        "contraire."
-#
-msgid   "cli.options.setgid"
-msgstr  "Assumer l'identité de ce GID/groupe au démarrage. L'identité "
-        "du groupe N'EST PAS modifiée par défaut, sauf configuration "
-        "contraire."
-#
-msgid   "cli.options.pidfile"
-msgstr  "Enregistrer le PID du bot dans ce fichier."
-#
-msgid   "cli.options.foreground"
-msgstr  "Ne pas lancer le bot en arrière-plan. Il s'agit de la valeur par "
-        "défaut, sauf si l'option -d est utilisée ou configuration contraire."
-#
-msgid   "cli.options.config"
-msgstr  "Chemin vers le fichier de configuration à utiliser au lieu de \"Erebot.xml\", "
-        "relatif par rapport au dossier courant."
-#
-msgid   "cli.options.background"
-msgstr  "Lancer le bot en arrière-plan (démon)."
-#
-msgid   "cli.error.umask"
-msgstr  "Impossible de changer l'umask"
-#
-msgid   "cli.error.uid.set"
-msgstr  "Impossible de changer l'identité de l'utilisateur en \"%(name)s\" (%(id)d)"
-#
-msgid   "cli.error.uid.root"
-msgstr  "Seul root peut changer l'identité de l'utilisateur ! Votre UID actuel est %d"
-#
-msgid   "cli.error.uid.posix"
-msgstr  "L'extension posix est requise pour changer l'identité de l'utilisateur."
-#
-msgid   "cli.error.stalled"
-msgstr  "Un PID obsolète (%(pid)d) a été trouvé dans \"%(pidfile)s\". Suppression"
-#
-msgid   "cli.error.pidfile.other"
-msgstr  "Le PID d'un autre programme (%(pid)d) a été trouvé dans \"%(pidfile)s\". "
-        "Abandon"
-#
-msgid   "cli.error.pidfile.garbage"
-msgstr  "Le fichier de PID (%s) est corrompu. Abandon"
-#
-msgid   "cli.error.pidfile"
-msgstr  "Impossible d'inscrire le PID dans le fichier (%s)"
-#
-msgid   "cli.error.other.unknown"
-msgstr  "Erreur inconnue lors du test d'existence d'une autre instance d'Erebot (%s)"
-#
-msgid   "cli.error.lock"
-msgstr  "Impossible de verrouiller le fichier (%s). Est-ce que le bot est déjà lancé ?"
-#
-msgid   "cli.error.invalid-user"
-msgstr  "Utilisateur introuvable \"%s\""
-#
-msgid   "cli.error.invalid-group"
-msgstr  "Groupe introuvable \"%s\""
-#
-msgid   "cli.error.gid.set"
-msgstr  "Impossible de changer l'identité du groupe en \"%(name)s\" (%(id)d)"
-#
-msgid   "cli.error.gid.root"
-msgstr  "Seul root peut changer l'identité du groupe ! Votre UID actuel est %d"
-#
-msgid   "cli.error.gid.posix"
-msgstr  "L'extension posix est requise pour changer l'identité du groupe."
-#
-msgid   "cli.error.daemon.setsid"
-msgstr  "Impossible de démarrer en arrière-plan (échec de setsid)"
-#
-msgid   "cli.error.daemon.posix"
-msgstr  "L'extension posix est requise pour pouvoir démarrer en arrière-plan"
-#
-msgid   "cli.error.daemon.pcntl"
-msgstr  "L'extension pcntl est requise pour pouvoir démarrer en arrière-plan"
-#
-msgid   "cli.error.daemon.fork"
-msgstr  "Impossible de démarrer en arrière-plan (échec du fork)"
-#
-msgid   "cli.error.chdir"
-msgstr  "Impossible de changer de dossier vers \"%s\""
-#
-msgid   "cli.error.already-running"
-msgstr  "Erebot est déjà lancé avec le PID %d"
-#
-msgid   "cli.description"
-msgstr  "Un bot IRC modulaire écrit en PHP"
-#
-# French translations for PACKAGE package.
-# This file is put in the public domain.
-# Automatically generated, 2009.
-#
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
-        "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2011-04-10 18:51+0200\n"
+        "Report-Msgid-Bugs-To: clicky@erebot.net\n"
+        "POT-Creation-Date: 2011-06-03 20:08+0200\n"
         "PO-Revision-Date: 2010-02-13 19:10+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"

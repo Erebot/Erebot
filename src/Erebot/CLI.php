@@ -547,7 +547,7 @@ class Erebot_CLI
         // Display a desperate warning when run as user root.
         if (getmyuid() === 0)
             $logger->warning($translator->gettext(
-                'You SHOULD NOT run Erebot as root !'
+                'You SHOULD NOT run Erebot as root!'
             ));
 
         if ($identd !== NULL)
