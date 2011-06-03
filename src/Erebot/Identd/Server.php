@@ -51,6 +51,6 @@ implements  Erebot_Interface_ReceivingConnection
     }
     public function processQueuedData() {}
     public function getBot() { return $this->_bot; }
-    public function getConfig() { return NULL; }
+    public function getConfig($chan) { return NULL; }
 }
 
