@@ -25,17 +25,18 @@
  */
 interface Erebot_Interface_Connection
 {
-#    /**
-#     * Constructs the object which will hold a connection.
-#     *
-#     * \param Erebot_Interface_Core $bot
-#     *      A bot instance.
-#     *
-#     * \note
-#     *      There is no actual connection until Erebot_Connection::connect()
-#     *      is used.
-#     */
-#    public function __construct(Erebot_Interface_Core $bot);
+    /**
+     * Constructs the object which will hold a connection.
+     *
+     * \param Erebot_Interface_Core $bot
+     *      A bot instance.
+     *
+     * \note
+     *      There is no actual connection until
+     *      Erebot_Interface_Connection::connect()
+     *      is called.
+     */
+    public function __construct(Erebot_Interface_Core $bot);
 
     /**
      * Returns whether this connection object
@@ -88,7 +89,7 @@ interface Erebot_Interface_Connection
      * \throw Erebot_NotFoundException
      *      No ErebotChannelConfig object exists for the given channel.
      */
-#    public function getConfig($chan);
+    public function getConfig($chan);
 
     /**
      * Returns the underlying transport implementation

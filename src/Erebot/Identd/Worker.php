@@ -137,5 +137,6 @@ implements  Erebot_Interface_ReceivingConnection,
     public function pushLine($line) {}
     public function getBot() { return $this->_bot; }
     public function processOutgoingData() {}
+    public function getConfig() { return NULL; }
 }
 
