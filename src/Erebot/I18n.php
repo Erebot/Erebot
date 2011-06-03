@@ -228,7 +228,7 @@ implements  Erebot_Interface_I18n
             $component
         );
 
-        $translation = $this->_get_translation($mappingFile, $message);
+        $translation = $this->_get_translation($translationFile, $message);
         return ($translation === NULL) ? $message : $translation;
     }
 
