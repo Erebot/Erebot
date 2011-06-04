@@ -17,20 +17,32 @@ $deps = array(
 );
 
 foreach (array($package, $compatible) as $obj) {
-    $obj->dependencies['required']->php = '5.2.0';
+    if (strpos($obj->version['release'], "alpha") === FALSE) {
+        $obj->stability['release'] = 'stable';
+        $stability = '';
+    }
+    else
+        $stability = '-alpha';
 
+    $obj->dependencies['required']->php = '5.2.0';
     $obj->license['name'] = 'GPL';
     $obj->license['uri'] = 'http://www.gnu.org/licenses/gpl-3.0.txt';
     // Pyrus <= 2.0.0a3 has a bug with this, see:
     // https://github.com/saltybeagle/PEAR2_Pyrus/issues/12
 #    $obj->license['path'] = 'LICENSE';
 
-    foreach ($deps as $req => $data)
-        foreach ($data as $dep)
+    /* Add dependencies.
+     * For packages provided by Erebot's pear channel,
+     * make sure the dependencies' stability follows
+     * that of Erebot itself.
+     */
+    foreach ($deps as $req => $data) {
+        foreach ($data as $dep) {
+            if (substr($dep, 0, strpos($dep, '/')) == 'pear.erebot.net')
+                $dep .= $stability;
             $obj->dependencies[$req]->package[$dep]->save();
-
-    if (strpos($obj->version['release'], "alpha") === FALSE)
-        $obj->stability['release'] = 'stable';
+        }
+    }
 }
 
 ?>
