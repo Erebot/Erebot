@@ -41,7 +41,7 @@ implements  Erebot_Interface_Config_Network
     /// A list of ErebotChannelConfig objects which apply on this network.
     protected $_channels;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Network::__construct()
     public function __construct(
         Erebot_Interface_Config_Main    $mainCfg,
         SimpleXMLElement                $xml
@@ -84,13 +84,13 @@ implements  Erebot_Interface_Config_Network
         parent::__destruct();
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Network::getName()
     public function getName()
     {
         return $this->_name;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Network::getServerCfg()
     public function getServerCfg($server)
     {
         if (!isset($this->_servers[$server]))
@@ -98,13 +98,13 @@ implements  Erebot_Interface_Config_Network
         return $this->_servers[$server];
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Network::getServers()
     public function getServers()
     {
         return $this->_servers;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Network::getChannelCfg()
     public function getChannelCfg($channel)
     {
         if (!isset($this->_channels[$channel]))
@@ -112,7 +112,7 @@ implements  Erebot_Interface_Config_Network
         return $this->_channels[$channel];
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Network::getChannels()
     public function getChannels()
     {
         return $this->_channels;

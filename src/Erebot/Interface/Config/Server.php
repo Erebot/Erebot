@@ -39,8 +39,8 @@ extends     Erebot_Interface_Config_Proxy
      *      for this server.
      */
     public function __construct(
-        Erebot_Interface_Config_Network &$netCfg,
-        SimpleXMLElement                &$xml
+        Erebot_Interface_Config_Network $netCfg,
+        SimpleXMLElement                $xml
     );
 
     /**
@@ -59,6 +59,6 @@ extends     Erebot_Interface_Config_Proxy
      *      The network configuration associated with this server
      *      configuration.
      */
-    public function & getNetworkCfg();
+    public function getNetworkCfg();
 }
 

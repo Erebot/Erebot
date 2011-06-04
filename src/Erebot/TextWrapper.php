@@ -115,50 +115,71 @@ implements  Countable,
         return $this->_text;
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_Countable.php.
+    /**
+     * \copydoc Countable::activate()
+     * \see
+     *      docs/additions/iface_Countable.php
+     */
     public function count()
     {
         return $this->countTokens();
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_Iterator.php.
+    /**
+     * \copydoc Iterator::current()
+     * \see
+     *      docs/additions/iface_Iterator.php
+     */
     public function current()
     {
         return $this->getTokens($this->_position, 1);
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_Iterator.php.
+    /**
+     * \copydoc Iterator::key()
+     * \see
+     *      docs/additions/iface_Iterator.php
+     */
     public function key()
     {
         return $this->_position;
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_Iterator.php.
+    /**
+     * \copydoc Iterator::next()
+     * \see
+     *      docs/additions/iface_Iterator.php
+     */
     public function next()
     {
         $this->_position++;
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_Iterator.php.
+    /**
+     * \copydoc Iterator::rewind()
+     * \see
+     *      docs/additions/iface_Iterator.php
+     */
     public function rewind()
     {
         $this->_position = 0;
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_Iterator.php.
+    /**
+     * \copydoc Iterator::valid()
+     * \see
+     *      docs/additions/iface_Iterator.php
+     */
     public function valid()
     {
         return ($this->_position < $this->countTokens());
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetExists()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetExists($offset)
     {
         return (
@@ -168,8 +189,11 @@ implements  Countable,
         );
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetGet()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetGet($offset)
     {
         if (!is_int($offset))
@@ -177,15 +201,21 @@ implements  Countable,
         return $this->getTokens($offset, 1);
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetSet()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetSet($offset, $value)
     {
         throw new RuntimeException('The wrapped text is read-only');
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetUnset()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetUnset($offset)
     {
         throw new RuntimeException('The wrapped text is read-only');

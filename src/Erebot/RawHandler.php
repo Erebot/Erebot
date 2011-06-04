@@ -30,7 +30,7 @@ implements  Erebot_Interface_RawHandler
     protected $_raw;
     protected $_callback;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_RawHandler::__construct()
     public function __construct($callback, $raw)
     {
         $reflector  = new ReflectionParameter($callback, 0);
@@ -46,19 +46,19 @@ implements  Erebot_Interface_RawHandler
     {
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_RawHandler::getRaw()
     public function getRaw()
     {
         return $this->_raw;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_RawHandler::getCallback()
     public function getCallback()
     {
         return $this->_callback;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_RawHandler::handleRaw()
     public function handleRaw(Erebot_Interface_Event_Raw $raw)
     {
         if ($raw->getRaw() != $this->_raw)

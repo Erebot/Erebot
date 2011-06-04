@@ -38,7 +38,7 @@ implements      Erebot_Interface_Event_Base_Ctcp
         $this->_ctcpType = $ctcpType;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Ctcp::getCtcpType()
     public function getCtcpType()
     {
         return $this->_ctcpType;

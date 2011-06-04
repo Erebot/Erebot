@@ -94,7 +94,7 @@ class Erebot_Config_Proxy
         throw new Exception("Cloning forbidden!");
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::getTranslator()
     public function getTranslator($component)
     {
         if (isset($this->_locale)) {
@@ -110,7 +110,7 @@ class Erebot_Config_Proxy
         return $this->_proxified->getTranslator($component);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::getMainCfg()
     public function getMainCfg()
     {
         if ($this->_proxified === $this)
@@ -118,7 +118,7 @@ class Erebot_Config_Proxy
         return $this->_proxified->getMainCfg();
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::getModules()
     public function getModules($recursive)
     {
         if (!is_bool($recursive))
@@ -142,7 +142,7 @@ class Erebot_Config_Proxy
         return array_merge($added, $inherited);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::getModule()
     public function getModule($moduleName)
     {
         if (!isset($this->_modules[$moduleName])) {
@@ -271,7 +271,7 @@ class Erebot_Config_Proxy
         }
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::parseBool()
     public function parseBool($module, $param, $default = NULL)
     {
         return $this->_parseSomething(
@@ -284,7 +284,7 @@ class Erebot_Config_Proxy
         );
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::parseString()
     public function parseString($module, $param, $default = NULL)
     {
         return $this->_parseSomething(
@@ -297,7 +297,7 @@ class Erebot_Config_Proxy
         );
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::parseInt()
     public function parseInt($module, $param, $default = NULL)
     {
         return $this->_parseSomething(
@@ -310,7 +310,7 @@ class Erebot_Config_Proxy
         );
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Proxy::parseReal()
     public function parseReal($module, $param, $default = NULL)
     {
         return $this->_parseSomething(

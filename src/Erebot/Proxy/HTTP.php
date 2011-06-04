@@ -23,7 +23,7 @@
 class   Erebot_Proxy_HTTP
 extends Erebot_Proxy_Base
 {
-    /// Documented in the interface.
+    /// \copydoc Erebot_Proxy_Base::proxify()
     public function proxify(Erebot_URI $proxyURI, Erebot_URI $nextURI)
     {
         $credentials    = $proxyURI->getUserInfo();

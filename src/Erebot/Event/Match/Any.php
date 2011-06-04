@@ -24,7 +24,7 @@
 class   Erebot_Event_Match_Any
 extends Erebot_Event_Match_CollectionAbstract
 {
-    // Documented in the interface.
+    /// \copydoc Erebot_Event_Match_CollectionAbstract::match()
     public function match(Erebot_Interface_Event_Base_Generic $event)
     {
         foreach ($this->_submatchers as $match) {

@@ -49,13 +49,13 @@ implements      Erebot_Interface_Event_Base_Generic
         $this->_connection  = $connection;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Generic::getConnection()
     public function getConnection()
     {
         return $this->_connection;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Generic::preventDefault()
     public function preventDefault($prevent = NULL)
     {
         $res = $this->_halt;

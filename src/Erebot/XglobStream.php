@@ -34,26 +34,26 @@ extends Erebot_StreamWrapperBase
     const XMLNS = 'http://www.erebot.net/xmlns/xglob';
     const TAG   = 'wrapping';
 
-    // Documented in the base class.
+    /// \copydoc Erebot_StreamWrapperBase::stream_tell()
     public function stream_tell()
     {
         return $this->_position;
     }
 
-    // Documented in the base class.
+    /// \copydoc Erebot_StreamWrapperBase::stream_eof()
     public function stream_eof()
     {
         return ($this->_position >= strlen($this->_content));
     }
 
-    // Documented in the base class.
+    /// \copydoc Erebot_StreamWrapperBase::stream_close()
     public function stream_close()
     {
         $this->_position    = 0;
         $this->_content     = '';
     }
 
-    // Documented in the base class.
+    /// \copydoc Erebot_StreamWrapperBase::stream_open()
     public function stream_open($path, $mode, $options, &$opened)
     {
         $this->_position = 0;
@@ -85,7 +85,7 @@ extends Erebot_StreamWrapperBase
         return TRUE;
     }
 
-    // Documented in the base class.
+    /// \copydoc Erebot_StreamWrapperBase::stream_read()
     public function stream_read($count)
     {
         $ret = substr($this->_content, $this->_position, $count);
@@ -93,7 +93,7 @@ extends Erebot_StreamWrapperBase
         return $ret;
     }
 
-    // Documented in the base class.
+    /// \copydoc Erebot_StreamWrapperBase::stream_seek()
     public function stream_seek($offset, $whence)
     {
         switch ($whence) {

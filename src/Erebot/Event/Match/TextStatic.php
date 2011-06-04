@@ -25,7 +25,7 @@
 class   Erebot_Event_Match_TextStatic
 extends Erebot_Event_Match_TextAbstract
 {
-    // Documented in the parent class.
+    /// \copydoc Erebot_Event_Match_TextAbstract::_match()
     protected function _match($prefix, $text)
     {
         $text       = preg_replace('/\s+/', ' ', $text);

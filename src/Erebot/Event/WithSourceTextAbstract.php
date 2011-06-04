@@ -36,7 +36,7 @@ implements      Erebot_Interface_Event_Base_Source
         $this->_source = new Erebot_Identity($source);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Source::getSource()
     public function getSource()
     {
         return $this->_source;

@@ -75,25 +75,25 @@ implements  Erebot_Interface_Identity
         $this->_host    = $host;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Identity::getNick()
     public function getNick()
     {
         return $this->_nick;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Identity::getIdent()
     public function getIdent()
     {
         return $this->_ident;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Identity::getHost()
     public function getHost()
     {
         return $this->_host;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Identity::getMask()
     public function getMask()
     {
         $ident  = ($this->_ident === NULL) ? '*' : $this->_ident;
@@ -101,7 +101,7 @@ implements  Erebot_Interface_Identity
         return $this->_nick.'!'.$ident.'@'.$host;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Identity::__toString()
     public function __toString()
     {
         return $this->_nick;

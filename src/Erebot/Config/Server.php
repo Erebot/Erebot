@@ -30,10 +30,10 @@ implements  Erebot_Interface_Config_Server
     /// An array of URI to follow to connect to this IRC(S) server.
     protected $_connectionURI;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Server::__construct()
     public function __construct(
-        Erebot_Interface_Config_Network &$netCfg,
-        SimpleXMLElement                &$xml
+        Erebot_Interface_Config_Network $netCfg,
+        SimpleXMLElement                $xml
     )
     {
         parent::__construct($netCfg, $xml);
@@ -48,14 +48,14 @@ implements  Erebot_Interface_Config_Server
         parent::__destruct();
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Server::getConnectionURI()
     public function getConnectionURI()
     {
         return $this->_connectionURI;
     }
 
-    // Documented in the interface.
-    public function & getNetworkCfg()
+    /// \copydoc Erebot_Interface_Config_Server::getNetworkCfg()
+    public function getNetworkCfg()
     {
         return $this->_proxified;
     }

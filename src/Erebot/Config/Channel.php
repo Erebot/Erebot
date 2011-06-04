@@ -33,7 +33,7 @@ implements  Erebot_Interface_Config_Channel
     /// A reference to the ErebotNetworkConfig this instance depends on. 
     protected $_netCfg;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Channel::__construct()
     public function __construct(
         Erebot_Interface_Config_Network $netCfg,
         SimpleXMLElement                $xml
@@ -52,13 +52,13 @@ implements  Erebot_Interface_Config_Channel
         parent::__destruct();
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Channel::getName()
     public function getName()
     {
         return $this->_name;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Channel::getNetworkCfg()
     public function getNetworkCfg()
     {
         return $this->_netCfg;

@@ -64,7 +64,7 @@ implements  Erebot_Interface_ModuleContainer,
     /// Valid mappings for case-insensitive comparisons.
     static protected $_caseMappings = NULL;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Connection::__construct()
     public function __construct(Erebot_Interface_Core $bot, $config = NULL, $events = array())
     {
         $this->_config      = $config;
@@ -243,13 +243,13 @@ implements  Erebot_Interface_ModuleContainer,
         var_dump(gettype($module));
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Connection::isConnected()
     public function isConnected()
     {
         return $this->_connected;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Connection::connect()
     public function connect()
     {
         if ($this->_connected)
@@ -386,7 +386,7 @@ implements  Erebot_Interface_ModuleContainer,
         return TRUE;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Connection::disconnect()
     public function disconnect($quitMessage = NULL)
     {
         $logging    = Plop::getInstance();
@@ -421,7 +421,7 @@ implements  Erebot_Interface_ModuleContainer,
         $this->_connected   = FALSE;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_SendingConnection::pushLine()
     public function pushLine($line)
     {
         $chars = array("\r", "\n");
@@ -432,7 +432,7 @@ implements  Erebot_Interface_ModuleContainer,
         $this->_sndQueue[] = $line;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Connection::getConfig()
     public function getConfig($chan)
     {
         if ($chan === NULL)
@@ -449,19 +449,19 @@ implements  Erebot_Interface_ModuleContainer,
         }
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Connection::getSocket()
     public function getSocket()
     {
         return $this->_socket;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_ReceivingConnection::emptyReadQueue()
     public function emptyReadQueue()
     {
         return (count($this->_rcvQueue) == 0);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_SendingConnection::emptySendQueue()
     public function emptySendQueue()
     {
         return (count($this->_sndQueue) == 0);
@@ -498,7 +498,7 @@ implements  Erebot_Interface_ModuleContainer,
         return TRUE;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
     public function processIncomingData()
     {
         $received   = fread($this->_socket, 4096);
@@ -520,7 +520,7 @@ implements  Erebot_Interface_ModuleContainer,
             ;   // Read messages.
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_SendingConnection::processOutgoingData()
     public function processOutgoingData()
     {
         if ($this->emptySendQueue())
@@ -578,7 +578,7 @@ implements  Erebot_Interface_ModuleContainer,
         return $written;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_ReceivingConnection::processQueuedData()
     public function processQueuedData()
     {
         if (!count($this->_rcvQueue))
@@ -891,7 +891,7 @@ implements  Erebot_Interface_ModuleContainer,
         } /* switch ($type) */
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Connection::getBot()
     public function getBot()
     {
         return $this->_bot;
@@ -993,7 +993,7 @@ implements  Erebot_Interface_ModuleContainer,
         return $instance;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_ModuleContainer::loadModule()
     public function loadModule($module, $chan = NULL)
     {
         return $this->_loadModule(
@@ -1004,7 +1004,7 @@ implements  Erebot_Interface_ModuleContainer,
         );
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_ModuleContainer::getModules()
     public function getModules($chan = NULL)
     {
         if ($chan !== NULL) {
@@ -1014,7 +1014,7 @@ implements  Erebot_Interface_ModuleContainer,
         return $this->_plainModules;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_ModuleContainer::getModule()
     public function getModule($name, $chan = NULL, $autoload = TRUE)
     {
         if ($chan !== NULL) {
@@ -1041,13 +1041,13 @@ implements  Erebot_Interface_ModuleContainer,
         return $this->loadModule($name, NULL);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventDispatcher::addRawHandler()
     public function addRawHandler(Erebot_Interface_RawHandler $handler)
     {
         $this->_raws[] = $handler;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventDispatcher::removeRawHandler()
     public function removeRawHandler(Erebot_Interface_RawHandler $handler)
     {
         $key = array_search($handler, $this->_raws);
@@ -1056,13 +1056,13 @@ implements  Erebot_Interface_ModuleContainer,
         unset($this->_raws[$key]);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventDispatcher::addEventHandler()
     public function addEventHandler(Erebot_Interface_EventHandler $handler)
     {
         $this->_events[] = $handler;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventDispatcher::removeEventHandler()
     public function removeEventHandler(Erebot_Interface_EventHandler $handler)
     {
         $key = array_search($handler, $this->_events);
@@ -1071,7 +1071,7 @@ implements  Erebot_Interface_ModuleContainer,
         unset($this->_events[$key]);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventFactory::makeEvent()
     public function makeEvent($iface /* , ... */)
     {
         $args = func_get_args();
@@ -1209,7 +1209,7 @@ implements  Erebot_Interface_ModuleContainer,
         }
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventDispatcher::dispatch()
     public function dispatch(Erebot_Interface_Event_Base_Generic $event)
     {
         if ($event instanceof Erebot_Interface_Event_Raw)
@@ -1246,19 +1246,19 @@ implements  Erebot_Interface_ModuleContainer,
         return self::$_caseMappings[$mappingName];
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_IrcComparator::irccmp()
     public function irccmp($a, $b)
     {
         return strcmp($a, $b);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_IrcComparator::ircncmp()
     public function ircncmp($a, $b, $len)
     {
         return strncmp($a, $b, $len);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_IrcComparator::irccasecmp()
     public function irccasecmp($a, $b, $mappingName = NULL)
     {
         return strcmp(
@@ -1267,7 +1267,7 @@ implements  Erebot_Interface_ModuleContainer,
         );
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_IrcComparator::ircncasecmp()
     public function ircncasecmp($a, $b, $len, $mappingName = NULL)
     {
         return strncmp(
@@ -1277,7 +1277,7 @@ implements  Erebot_Interface_ModuleContainer,
         );
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_IrcComparator::isChannel()
     public function isChannel($chan)
     {
         try {
@@ -1314,7 +1314,7 @@ implements  Erebot_Interface_ModuleContainer,
         return (strpos('#&+!', $chan[0]) !== FALSE);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_IrcComparator::normalizeNick()
     public function normalizeNick($nick, $mappingName = NULL)
     {
         $mapping = $this->_getMapping($mappingName);

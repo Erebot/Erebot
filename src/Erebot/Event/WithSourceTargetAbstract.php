@@ -39,13 +39,13 @@ implements      Erebot_Interface_Event_Base_Source,
         $this->_target = $target;
     }
     
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Source::getSource()
     public function getSource()
     {
         return $this->_source;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Target::getTarget()
     public function getTarget()
     {
         return $this->_target;

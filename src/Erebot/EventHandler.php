@@ -30,7 +30,7 @@ implements  Erebot_Interface_EventHandler
     protected $_callback;
     protected $_filter;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventHandler::__construct()
     public function __construct(
                                         $callback,
         Erebot_Interface_Event_Match    $filter = NULL
@@ -50,25 +50,25 @@ implements  Erebot_Interface_EventHandler
     {
     }
 
-    // Documented in the interface.
-    public function & getCallback()
+    /// \copydoc Erebot_Interface_EventHandler::getCallback()
+    public function getCallback()
     {
         return $this->_callback;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventHandler::setFilter()
     public function setFilter(Erebot_Interface_Event_Match $filter = NULL)
     {
         $this->_filter = $filter;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventHandler::getFilter()
     public function getFilter()
     {
         return $this->_filter;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_EventHandler::handleEvent()
     public function handleEvent(Erebot_Interface_Event_Base_Generic $event)
     {
         $matched = TRUE;

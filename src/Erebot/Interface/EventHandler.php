@@ -50,7 +50,7 @@ interface Erebot_Interface_EventHandler
      * \retval callback
      *      The callback associated with this handler.
      */
-    public function & getCallback();
+    public function getCallback();
 
     /**
      * Sets the filter associated with this event handler.

@@ -63,7 +63,7 @@ implements  Erebot_Interface_Event_Match
         $this->_filter = $filter;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Match::match()
     public function match(Erebot_Interface_Event_Base_Generic $event)
     {
         return (!$this->_filter->match($event));

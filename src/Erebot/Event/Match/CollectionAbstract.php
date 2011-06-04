@@ -54,29 +54,41 @@ implements      Erebot_Interface_Event_Match,
         $this->_submatchers = $args;
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_Countable.php.
+    /**
+     * \copydoc Countable::count()
+     * \see
+     *      docs/additions/iface_Countable.php
+     */
     public function count()
     {
         return count($this->_submatchers);
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetExists()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetExists($offset)
     {
         return isset($this->_submatchers[$offset]);
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetGet()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetGet($offset)
     {
         return $this->_submatchers[$offset];
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetSet()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetSet($offset, $value)
     {
         if (!($value instanceof Erebot_Interface_Event_Match))
@@ -84,8 +96,11 @@ implements      Erebot_Interface_Event_Match,
         $this->_submatchers[$offset] = $value;
     }
 
-    // Documented in the internal PHP interface.
-    // See also docs/additions/iface_ArrayAccess.php.
+    /**
+     * \copydoc ArrayAccess::offsetUnset()
+     * \see
+     *      docs/additions/iface_ArrayAccess.php
+     */
     public function offsetUnset($offset)
     {
         unset($this->_submatchers[$offset]);

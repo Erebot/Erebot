@@ -72,7 +72,7 @@ implements  Erebot_Interface_Event_Match
         $this->_chan = $chan;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Match::match()
     public function match(Erebot_Interface_Event_Base_Generic $event)
     {
         if (!($event instanceof Erebot_Interface_Event_Base_Chan))

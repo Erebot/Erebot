@@ -38,7 +38,7 @@ implements  Erebot_Interface_Timer
     /// Additional arguments to call the callback function with.
     protected $_args;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::__construct()
     public function __construct($callback, $delay, $repeat, $args = NULL)
     {
         if (!is_callable($callback))
@@ -60,31 +60,31 @@ implements  Erebot_Interface_Timer
         $this->_stream = NULL;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::getCallback()
     public function getCallback()
     {
         return $this->_callback;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::getArgs()
     public function getArgs()
     {
         return $this->_args;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::getDelay()
     public function getDelay()
     {
         return $this->_delay;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::getRepetition()
     public function getRepetition()
     {
         return $this->_repeat;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::setRepetition()
     public function setRepetition($repeat)
     {
         // If repeat = FALSE, then repeat = 1 (once)
@@ -99,13 +99,13 @@ implements  Erebot_Interface_Timer
         $this->_repeat = $repeat;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::getStream()
     public function getStream()
     {
         return $this->_stream;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::reset()
     public function reset()
     {
         if ($this->_repeat > 0)
@@ -127,7 +127,7 @@ implements  Erebot_Interface_Timer
         return TRUE;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Timer::activate()
     public function activate()
     {
         return (bool) call_user_func_array(

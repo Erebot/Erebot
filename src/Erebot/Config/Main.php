@@ -63,7 +63,7 @@ implements  Erebot_Interface_Config_Main
 
     protected $_coreTranslator;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::__construct()
     public function __construct($configData, $source, Erebot_Interface_I18n $translator)
     {
         $this->_proxified       = NULL;
@@ -84,7 +84,7 @@ implements  Erebot_Interface_Config_Main
         );
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::__clone()
     public function __clone()
     {
         throw new Exception('Cloning is forbidden');
@@ -106,7 +106,7 @@ implements  Erebot_Interface_Config_Main
         }
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::load()
     public function load($configData, $source)
     {
         $possibleSources =     array(
@@ -258,7 +258,7 @@ implements  Erebot_Interface_Config_Main
         $this->_pidfile         = $pidfile;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getNetworkCfg()
     public function getNetworkCfg($network)
     {
         if (!isset($this->_networks[$network]))
@@ -266,61 +266,61 @@ implements  Erebot_Interface_Config_Main
         return $this->_networks[$network];
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getNetworks()
     public function getNetworks()
     {
         return $this->_networks;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getVersion()
     public function getVersion()
     {
         return $this->_version;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getTimezone()
     public function getTimezone()
     {
         return $this->_timezone;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getCommandsPrefix()
     public function getCommandsPrefix()
     {
         return $this->_commandsPrefix;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getConfigFile()
     public function getConfigFile()
     {
         return $this->_configFile;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::mustDaemonize()
     public function mustDaemonize()
     {
         return $this->_daemonize;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getGroupIdentity()
     public function getGroupIdentity()
     {
         return $this->_groupIdentity;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getUserIdentity()
     public function getUserIdentity()
     {
         return $this->_userIdentity;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getPidfile()
     public function getPidfile()
     {
         return $this->_pidfile;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Main::getTranslator()
     public function getTranslator($component)
     {
         try {

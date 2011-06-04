@@ -39,13 +39,13 @@ implements      Erebot_Interface_Event_Base_Chan,
         $this->_source  = new Erebot_Identity($source);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Chan::getChan()
     public function getChan()
     {
         return $this->_chan;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Source::getSource()
     public function getSource()
     {
         return $this->_source;

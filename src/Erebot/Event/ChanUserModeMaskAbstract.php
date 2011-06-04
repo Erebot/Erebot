@@ -24,7 +24,7 @@ abstract class  Erebot_Event_ChanUserModeMaskAbstract
 extends         Erebot_Event_ChanUserModeAbstract
 implements      Erebot_Interface_Event_Base_TargetNick
 {
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_TargetNick::getTargetNick()
     public function getTargetNick()
     {
         $identity = new Erebot_Identity($this->_target);

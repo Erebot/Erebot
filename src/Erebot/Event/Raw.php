@@ -29,7 +29,7 @@ implements  Erebot_Interface_Event_Raw
     protected $_target;
     protected $_text;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Raw::__construct()
     public function __construct(
         Erebot_Interface_Connection $connection,
                                     $raw,
@@ -49,31 +49,31 @@ implements  Erebot_Interface_Event_Raw
     {
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Raw::getConnection()
     public function getConnection()
     {
         return $this->_connection;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Raw::getRaw()
     public function getRaw()
     {
         return $this->_raw;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Raw::getSource()
     public function getSource()
     {
         return $this->_source;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Raw::getTarget()
     public function getTarget()
     {
         return $this->_target;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Raw::getText()
     public function getText()
     {
         return $this->_text;

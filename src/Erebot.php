@@ -83,7 +83,7 @@ implements  Erebot_Interface_Core
 
     protected $_translator;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::__construct()
     public function __construct(Erebot_Interface_Config_Main $config, Erebot_Interface_I18n $translator)
     {
         $this->_connections     =
@@ -128,13 +128,13 @@ implements  Erebot_Interface_Core
         throw new Exception("Cloning forbidden!");
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::getConnections()
     public function getConnections()
     {
         return $this->_connections;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::start()
     public function start(Erebot_Interface_ConnectionFactory $factory)
     {
         $logging    = Plop::getInstance();
@@ -289,7 +289,7 @@ implements  Erebot_Interface_Core
         }
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::stop()
     public function stop()
     {
         $logging    = Plop::getInstance();
@@ -373,13 +373,13 @@ implements  Erebot_Interface_Core
         $this->stop();
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::getTimers()
     public function getTimers()
     {
         return $this->_timers;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::addTimer()
     public function addTimer(Erebot_Interface_Timer $timer)
     {
         $key = array_search($timer, $this->_timers);
@@ -390,7 +390,7 @@ implements  Erebot_Interface_Core
         $this->_timers[] =  $timer;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::removeTimer()
     public function removeTimer(Erebot_Interface_Timer $timer)
     {
         $key = array_search($timer, $this->_timers);
@@ -400,13 +400,13 @@ implements  Erebot_Interface_Core
         unset($this->_timers[$key]);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::getVersion()
     public static function getVersion()
     {
         return 'Erebot v'.self::VERSION;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::addConnection()
     public function addConnection(Erebot_Interface_Connection $connection)
     {
         $key = array_search($connection, $this->_connections);
@@ -416,7 +416,7 @@ implements  Erebot_Interface_Core
         $this->_connections[] = $connection;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::removeConnection()
     public function removeConnection(Erebot_Interface_Connection $connection)
     {
         /* $this->_connections is unset during destructor call,
@@ -432,13 +432,13 @@ implements  Erebot_Interface_Core
         unset($this->_connections[$key]);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::gettext()
     public function gettext($message)
     {
         return $this->_translator->gettext($message);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Core::getRunningTime()
     public function getRunningTime()
     {
         if (!$this->_running)

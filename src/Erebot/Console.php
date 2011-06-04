@@ -88,7 +88,7 @@ implements  Erebot_Interface_ReceivingConnection
         return TRUE;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
     public function processIncomingData()
     {
         $received   = fread($this->_socket, 4096);

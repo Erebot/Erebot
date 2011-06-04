@@ -23,7 +23,7 @@
 class       Erebot_Proxy_EndPoint_IRC
 implements  Erebot_Interface_Proxy_EndPoint
 {
-    /// Documented in the interface.
+    /// \copydoc Erebot_Interface_Proxy_EndPoint::requiresSSL()
     public function requiresSSL()
     {
         return FALSE;

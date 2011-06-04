@@ -35,7 +35,7 @@
 class   Erebot_Event_Match_TextWildcard
 extends Erebot_Event_Match_TextAbstract
 {
-    // Documented in the parent class.
+    /// \copydoc Erebot_Event_Match_TextAbstract::_match()
     protected function _match($prefix, $text)
     {
         $translationTable = array(

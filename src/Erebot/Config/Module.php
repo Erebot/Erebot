@@ -35,7 +35,7 @@ implements  Erebot_Interface_Config_Module
     /// The name of the module.
     protected $_name;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Module::__construct()
     public function __construct(SimpleXMLElement $xml)
     {
         $this->_name    = (string) $xml['name'];
@@ -61,7 +61,7 @@ implements  Erebot_Interface_Config_Module
     {
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Module::isActive()
     public function isActive($active = NULL)
     {
         $res = $this->_active;
@@ -73,13 +73,13 @@ implements  Erebot_Interface_Config_Module
         return $res;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Module::getName()
     public function getName()
     {
         return $this->_name;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Module::getParam()
     public function getParam($param)
     {
         if (!is_string($param))
@@ -89,7 +89,7 @@ implements  Erebot_Interface_Config_Module
         return $this->_params[$param];
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Config_Module::getParamsNames()
     public function getParamsNames()
     {
         return array_keys($this->_params);

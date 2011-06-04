@@ -39,7 +39,7 @@ implements      Erebot_Interface_Event_Base_Text
         $this->_text = new Erebot_TextWrapper((string) $text);
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_Event_Base_Text::getText()
     public function getText()
     {
         return $this->_text;

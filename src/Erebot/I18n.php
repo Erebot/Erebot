@@ -39,7 +39,7 @@ implements  Erebot_Interface_I18n
 
     protected $_parser;
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_I18n::__construct()
     public function __construct($component)
     {
         $this->_locales = array();
@@ -65,7 +65,7 @@ implements  Erebot_Interface_I18n
         $this->_component = $component;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_I18n::getLocale()
     public function getLocale($category)
     {
         if (!isset($this->_locales[$category]))
@@ -232,7 +232,7 @@ implements  Erebot_Interface_I18n
         return ($translation === NULL) ? $message : $translation;
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_I18n::gettext()
     public function gettext($message)
     {
         return $this->_real_gettext($message, $this->_component);
@@ -246,7 +246,7 @@ implements  Erebot_Interface_I18n
         self::$_cache = array();
     }
 
-    // Documented in the interface.
+    /// \copydoc Erebot_Interface_I18n::formatDuration()
     public function formatDuration($duration)
     {
         /**
