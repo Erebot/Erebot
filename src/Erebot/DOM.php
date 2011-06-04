@@ -88,10 +88,11 @@ extends DomDocument
         $schematron
     )
     {
-        if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk')
-            $xslDir = 'data';
+        $xslDir = dirname(dirname(dirname(__FILE__)));
+        if (basename($xslDir) == 'trunk')
+            $xslDir .= '/data';
         else
-            $xslDir = 'data/pear.erebot.net/Erebot';
+            $xslDir .= '/data/pear.erebot.net/Erebot';
 
         $xslDir     = str_replace('/', DIRECTORY_SEPARATOR, $xslDir);
         $quiet      = !libxml_use_internal_errors(); 
