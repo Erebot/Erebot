@@ -1,9 +1,9 @@
 # Doxyfile 1.5.8
 
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = Erebot
-PROJECT_NUMBER         = $(EREBOT_VERSION)
-PROJECT_BRIEF          = "A modular IRC bot written in PHP"
+PROJECT_NAME           = $(COMPONENT_NAME)
+PROJECT_NUMBER         = $(COMPONENT_VERSION)
+PROJECT_BRIEF          = $(COMPONENT_BRIEF)
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
