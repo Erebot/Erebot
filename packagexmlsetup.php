@@ -17,12 +17,8 @@ $deps = array(
 );
 
 foreach (array($package, $compatible) as $obj) {
-    if (strpos($obj->version['release'], "alpha") === FALSE) {
+    if (strpos($obj->version['release'], "alpha") === FALSE)
         $obj->stability['release'] = 'stable';
-        $stability = '';
-    }
-    else
-        $stability = '-alpha';
 
     $obj->dependencies['required']->php = '5.2.0';
     $obj->license['name'] = 'GPL';
@@ -36,13 +32,9 @@ foreach (array($package, $compatible) as $obj) {
      * make sure the dependencies' stability follows
      * that of Erebot itself.
      */
-    foreach ($deps as $req => $data) {
-        foreach ($data as $dep) {
-            if (substr($dep, 0, strpos($dep, '/')) == 'pear.erebot.net')
-                $dep .= $stability;
+    foreach ($deps as $req => $data)
+        foreach ($data as $dep)
             $obj->dependencies[$req]->package[$dep]->save();
-        }
-    }
 }
 
 ?>
