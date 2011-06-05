@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <project name="Erebot" description="" default="all">
-    <property name="domain" value="Erebot"/>
-    <property name="version" value="0.5.1"/>
-    <property name="email" value="clicky@erebot.net"/>
     <property name="qa.coverage.force" value="false"/>
 
     <fileset dir="src/" id="sources">
