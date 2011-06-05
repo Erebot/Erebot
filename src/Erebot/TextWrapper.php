@@ -116,7 +116,7 @@ implements  Countable,
     }
 
     /**
-     * \copydoc Countable::activate()
+     * \copydoc Countable::count()
      * \see
      *      docs/additions/iface_Countable.php
      */

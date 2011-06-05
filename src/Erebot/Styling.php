@@ -111,8 +111,13 @@
  */
 class   Erebot_Styling
 {
+    /// Translator to use for plurals.
     protected $_translator;
+
+    /// Associative array of variables to pass to the template.
     protected $_variables;
+
+    /// Parser used to interpret the template.
     protected $_dom;
 
     // Control codes.
@@ -243,7 +248,23 @@ class   Erebot_Styling
     }
 
     /**
-     * \TODO incomplete...
+     * Add a value to a variable which will be passed
+     * to the template as an array.
+     * Unlike Erebot_Styling::append_by_ref(),
+     * this method assigns the variable by value.
+     *
+     * \param string $varname
+     *      Name of the array variable to set.
+     *
+     * \param mixed $var
+     *      Value to append to the array.
+     *
+     * \param mixed $merge
+     *      Whether to merge the values (TRUE)
+     *      or not (FALSE).
+     *
+     * \TODO
+     *      Implement merging.
      */
     public function append($varname, $var, $merge = NULL)
     {
@@ -254,7 +275,23 @@ class   Erebot_Styling
     }
 
     /**
-     * \TODO incomplete...
+     * Add a value to a variable which will be passed
+     * to the template as an array.
+     * Unlike Erebot_Styling::append(), this method
+     * assigns the variable by reference.
+     *
+     * \param string $varname
+     *      Name of the array variable to set.
+     *
+     * \param mixed $var
+     *      Value to append to the array.
+     *
+     * \param mixed $merge
+     *      Whether to merge the values (TRUE)
+     *      or not (FALSE).
+     *
+     * \TODO
+     *      Implement merging.
      */
     public function append_by_ref($varname, &$var, $merge = NULL)
     {
@@ -266,7 +303,7 @@ class   Erebot_Styling
     /**
      * Assign a value to a variable which will be
      * passed to the template.
-     * Unlike ErebotStyling::assign_by_ref(), this
+     * Unlike Erebot_Styling::assign_by_ref(), this
      * method assigns the variable by value.
      *
      * \param string $name
@@ -283,7 +320,7 @@ class   Erebot_Styling
     /**
      * Assign a value to a variable which will be
      * passed to the template.
-     * Unlike ErebotStyling::assign(), this method
+     * Unlike Erebot_Styling::assign(), this method
      * assigns the variable by reference.
      *
      * \param string $name

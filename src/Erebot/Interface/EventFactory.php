@@ -23,6 +23,14 @@
  */
 interface Erebot_Interface_EventFactory
 {
+    /**
+     * Returns the mapping of interface names
+     * to their factory.
+     *
+     * \retval array
+     *      Mapping of event interfaces names
+     *      to their factory.
+     */
     public function getEventClasses();
 
     /**
@@ -46,6 +54,13 @@ interface Erebot_Interface_EventFactory
      */
     public function getEventClass($iface);
 
+    /**
+     * Sets the mapping from event interfaces names
+     * to their factory.
+     *
+     * \param array $events
+     *      Mapping from interfaces names to their factory.
+     */
     public function setEventClasses($events);
 
     /**

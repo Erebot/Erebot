@@ -26,18 +26,46 @@
  */
 interface Erebot_Interface_I18n
 {
+    /// Character classification and case conversion.
     const LC_CTYPE          = 0;
+
+    /// Non-monetary numeric formats.
     const LC_NUMERIC        = 1;
+
+    /// Date and time formats.
     const LC_TIME           = 2;
+
+    /// Collation order.
     const LC_COLLATE        = 3;
+
+    /// Monetary formats.
     const LC_MONETARY       = 4;
+
+    /**
+     * Formats of informative and diagnostic messages
+     * and interfactive responses.
+     */
     const LC_MESSAGES       = 5;
+
+    /// Overrides the value for all the other LC_* constants.
     const LC_ALL            = 6;
+
+    /// Paper size.
     const LC_PAPER          = 7;
+
+    /// Name formats.
     const LC_NAME           = 8;
+
+    /// Address formats and location information.
     const LC_ADDRESS        = 9;
+
+    /// Telephone number formats.
     const LC_TELEPHONE      = 10;
+
+    /// Measurement units (Metric or Other).
     const LC_MEASUREMENT    = 11;
+
+    /// Metadata about the locale information.
     const LC_IDENTIFICATION = 12;
 
     /**
