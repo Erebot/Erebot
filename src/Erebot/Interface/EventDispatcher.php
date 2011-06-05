@@ -17,6 +17,9 @@
 */
 
 /**
+ * \brief
+ *      Interface for a class that can
+ *      dispatch events to event handlers.
  */
 interface Erebot_Interface_EventDispatcher
 {

@@ -17,6 +17,8 @@
 */
 
 /**
+ * \brief
+ *      Interface for a connection that sends data.
  */
 interface   Erebot_Interface_SendingConnection
 extends     Erebot_Interface_Connection

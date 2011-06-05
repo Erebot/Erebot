@@ -27,11 +27,18 @@
 class   Erebot_XGlobStream
 extends Erebot_StreamWrapperBase
 {
+    /// Stream context, set automatically by PHP.
     public      $context;
+
+    /// Current position in the stream.
     protected   $_position;
+
+    /// Content of the stream.
     protected   $_content;
 
+    /// The XML namespace the content will be wrapped into.
     const XMLNS = 'http://www.erebot.net/xmlns/xglob';
+    /// The XML tag used to wrap the content.
     const TAG   = 'wrapping';
 
     /// \copydoc Erebot_StreamWrapperBase::stream_tell()
@@ -54,7 +61,7 @@ extends Erebot_StreamWrapperBase
     }
 
     /// \copydoc Erebot_StreamWrapperBase::stream_open()
-    public function stream_open($path, $mode, $options, &$opened)
+    public function stream_open($path, $mode, $options, &$opened_path)
     {
         $this->_position = 0;
         $pos        = strpos($path, '://');
@@ -126,7 +133,7 @@ extends Erebot_StreamWrapperBase
 }
 
 // The name "glob" is already used internally as of PHP 5.3.0.
-// Moreover, we need extra stuff (XML validity), hence "xglob".
+// Moreover, the wrapper returns an XML document, hence "xglob".
 if (!in_array("xglob", stream_get_wrappers())) {
     stream_wrapper_register('xglob', 'Erebot_XGlobStream', STREAM_IS_URL);
 }

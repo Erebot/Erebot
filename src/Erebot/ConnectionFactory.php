@@ -17,19 +17,36 @@
 */
 
 /**
+ * \brief
+ *      Connection factory.
  */
 class       Erebot_ConnectionFactory
 implements  Erebot_Interface_ConnectionFactory
 {
+    /// Class to use to create connections.
     protected $_connectionCls;
+
+    /// Mapping of event interfaces to their factory.
     protected $_eventClasses;
 
+    /**
+     * Initializes the factory.
+     *
+     * \param string $connectionCls
+     *      The name of the class to use to create new connections.
+     *
+     * \param array $eventClasses
+     *      An associative array which maps interface names
+     *      to the class to use to create events with that
+     *      interface.
+     */
     public function __construct($connectionCls, $eventClasses)
     {
         $this->_connectionCls   = $connectionCls;
         $this->_eventClasses    = $eventClasses;
     }
 
+    /// \copydoc Erebot_Interface_ConnectionFactory::newConnection()
     public function newConnection($bot, $config)
     {
         $connectionCls = $this->_connectionCls;

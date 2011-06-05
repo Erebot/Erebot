@@ -17,6 +17,9 @@
 */
 
 /**
+ * \brief
+ *      Interface for a class that can be used
+ *      to create events.
  */
 interface Erebot_Interface_EventFactory
 {

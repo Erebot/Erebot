@@ -1,5 +1,28 @@
 <?php
+/*
+    This file is part of Erebot.
 
+    Erebot is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Erebot is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/**
+ * \brief
+ *      A worker process for the Identification Protocol (RFC 1413).
+ *
+ * \see
+ *      http://www.ietf.org/rfc/rfc1413.txt
+ */
 class       Erebot_Identd_Worker
 implements  Erebot_Interface_ReceivingConnection,
             Erebot_Interface_SendingConnection
@@ -9,6 +32,7 @@ implements  Erebot_Interface_ReceivingConnection,
     protected $_incomingData;
     protected $_rcvQueue;
 
+    /// \copydoc Erebot_Interface_Connection::__construct()
     public function __construct(Erebot_Interface_Core $bot, $socket = NULL)
     {
         if (!is_resource($socket))
@@ -24,7 +48,10 @@ implements  Erebot_Interface_ReceivingConnection,
         $this->_disconnect();
     }
 
+    /// \copydoc Erebot_Interface_Connection::connect()
     public function connect() {}
+
+    /// \copydoc Erebot_Interface_Connection::disconnect()
     public function disconnect($quitMessage = NULL)
     {
         $this->_bot->removeConnection($this);
@@ -45,6 +72,7 @@ implements  Erebot_Interface_ReceivingConnection,
         return TRUE;
     }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
     public function processIncomingData() {
         $received   = fread($this->_socket, 4096);
         if ($received === FALSE || feof($this->_socket))
@@ -55,6 +83,7 @@ implements  Erebot_Interface_ReceivingConnection,
             ;   // Read messages.
     }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::processQueuedData()
     public function processQueuedData()
     {
         if (!count($this->_rcvQueue))
@@ -130,13 +159,50 @@ implements  Erebot_Interface_ReceivingConnection,
         return $line . " : ERROR : NO-USER";
     }
 
-    public function isConnected() { return TRUE; }
-    public function getSocket() { return $this->_socket; }
-    public function emptyReadQueue() { return TRUE; }
-    public function emptySendQueue() { return TRUE; }
-    public function pushLine($line) {}
-    public function getBot() { return $this->_bot; }
-    public function processOutgoingData() {}
-    public function getConfig($chan) { return NULL; }
+    /// \copydoc Erebot_Interface_Connection::isConnected()
+    public function isConnected()
+    {
+        return TRUE;
+    }
+
+    /// \copydoc Erebot_Interface_Connection::getSocket()
+    public function getSocket()
+    {
+        return $this->_socket;
+    }
+
+    /// \copydoc Erebot_Interface_ReceivingConnection::emptyReadQueue()
+    public function emptyReadQueue()
+    {
+        return TRUE;
+    }
+
+    /// \copydoc Erebot_Interface_SendingConnection::emptySendQueue()
+    public function emptySendQueue()
+    {
+        return TRUE;
+    }
+
+    /// \copydoc Erebot_Interface_SendingConnection::pushLine()
+    public function pushLine($line)
+    {
+    }
+
+    /// \copydoc Erebot_Interface_SendingConnection::processOutgoingData()
+    public function processOutgoingData()
+    {
+    }
+
+    /// \copydoc Erebot_Interface_Connection::getBot()
+    public function getBot()
+    {
+        return $this->_bot;
+    }
+
+    /// \copydoc Erebot_Interface_Connection::getConfig()
+    public function getConfig($chan)
+    {
+        return NULL;
+    }
 }
 

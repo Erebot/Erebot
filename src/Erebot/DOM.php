@@ -16,11 +16,34 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      An extension of PHP's DomDocument class that implements
+ *      Schematron validation on top of RelaxNG/XML Schema.
+ *
+ * This class also makes it easier to deal with libxml errors,
+ * by providing methods to clear or retrieve errors directly.
+ *
+ * \see
+ *      http://php.net/domdocument
+ *
+ * \see
+ *      http://www.schematron.com/
+ */
 class   Erebot_DOM
 extends DomDocument
 {
     protected $_errors;
 
+    /**
+     * Constructs a new DOM document.
+     *
+     * \param string $version
+     *      (optional) XML version to use.
+     *
+     * \param string $encoding
+     *      (optional) Encoding for the document.
+     */
     public function __construct($version = NULL, $encoding = NULL)
     {
         $this->clearErrors();
@@ -32,6 +55,21 @@ extends DomDocument
             parent::__construct($version, $encoding);
     }
 
+    /**
+     * Validates the current document against a RelaxNG schema,
+     * optionally validates embedded Schematron rules too.
+     *
+     * \param string $filename
+     *      Path to the RelaxNG schema to use for validation.
+     *
+     * \param bool $schematron
+     *      (optional) Whether embedded Schematron rules
+     *      should be validated too (TRUE) or not (FALSE).
+     *      The default is to also do $schematron validation.
+     *
+     * \retval bool
+     *      Returns TRUE if the document validates, FALSE otherwise.
+     */
     public function relaxNGValidate($filename, $schematron=TRUE)
     {
         $success = parent::relaxNGValidate($filename);
@@ -44,6 +82,21 @@ extends DomDocument
         );
     }
 
+    /**
+     * Validates the current document against a RelaxNG schema,
+     * optionally validates embedded Schematron rules too.
+     *
+     * \param string $source
+     *      Source of the RelaxNG schema to use for validation.
+     *
+     * \param bool $schematron
+     *      (optional) Whether embedded Schematron rules
+     *      should be validated too (TRUE) or not (FALSE).
+     *      The default is to also do $schematron validation.
+     *
+     * \retval bool
+     *      Returns TRUE if the document validates, FALSE otherwise.
+     */
     public function relaxNGValidateSource($source, $schematron=TRUE)
     {
         $success = parent::relaxNGValidateSource($source);
@@ -56,6 +109,21 @@ extends DomDocument
         );
     }
 
+    /**
+     * Validates the current document against an XML schema,
+     * optionally validates embedded Schematron rules too.
+     *
+     * \param string $filename
+     *      Path to the XML schema to use for validation.
+     *
+     * \param bool $schematron
+     *      (optional) Whether embedded Schematron rules
+     *      should be validated too (TRUE) or not (FALSE).
+     *      The default is to also do $schematron validation.
+     *
+     * \retval bool
+     *      Returns TRUE if the document validates, FALSE otherwise.
+     */
     public function schemaValidate($filename, $schematron=TRUE)
     {
         $success = parent::schemaValidate($filename);
@@ -68,6 +136,21 @@ extends DomDocument
         );
     }
 
+    /**
+     * Validates the current document against an XML schema,
+     * optionally validates embedded Schematron rules too.
+     *
+     * \param string $source
+     *      Source of the XML schema to use for validation.
+     *
+     * \param bool $schematron
+     *      (optional) Whether embedded Schematron rules
+     *      should be validated too (TRUE) or not (FALSE).
+     *      The default is to also do $schematron validation.
+     *
+     * \retval bool
+     *      Returns TRUE if the document validates, FALSE otherwise.
+     */
     public function schemaValidateSource($source, $schematron=TRUE)
     {
         $success = parent::schemaValidateSource($source);
@@ -192,6 +275,12 @@ extends DomDocument
         return $valid;
     }
 
+    /**
+     * Validates the document against its DTD.
+     *
+     * \retval bool
+     *      Returns TRUE if the document validates, FALSE otherwise.
+     */
     public function validate()
     {
         $success    = parent::validate();
@@ -203,11 +292,20 @@ extends DomDocument
         return $success;
     }
 
+    /**
+     * Returns an array of errors raised during validation.
+     *
+     * \param array
+     *      Array of LibXMLError objets raised during validation.
+     */
     public function getErrors()
     {
         return $this->_errors;
     }
 
+    /**
+     * Clears all validation errors.
+     */
     public function clearErrors()
     {
         $this->_errors = array();

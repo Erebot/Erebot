@@ -17,6 +17,9 @@
 */
 
 /**
+ * \brief
+ *      Interface to an object which makes it easier
+ *      to work with IRC entities (nicks, channels, etc.).
  */
 interface Erebot_Interface_IrcComparator
 {

@@ -17,8 +17,22 @@
 */
 
 /**
+ * \brief
+ *      Interface for a \link Erebot_Interface_Connection connection \endlink factory.
  */
 interface Erebot_Interface_ConnectionFactory
 {
+    /**
+     * Create a new connection.
+     *
+     * \param Erebot_Interface_Core $bot
+     *      An instance of the bot.
+     *
+     * \param Erebot_Interface_Config_Server
+     *      An instance of a server configuration.
+     *
+     * \retval Erebot_Interface_Connection
+     *      The new connection.
+     */
     public function newConnection($bot, $config);
 }

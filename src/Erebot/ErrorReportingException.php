@@ -31,8 +31,26 @@
 class   Erebot_ErrorReportingException
 extends Erebot_Exception
 {
+    /// A mapping of PHP's error levels' names to their numeric value.
     static protected $_map = NULL;
 
+    /**
+     * Constructs a new exception from a PHP error/warning/notice.
+     *
+     * \param string $message
+     *      The error/warning/notice message.
+     *
+     * \param int $code
+     *      A code indicating whether this exception was created
+     *      from an error, a warning or a notice.
+     *
+     * \param string $filename
+     *      The file that raised the error/warning/notice.
+     *
+     * \param int $lineno
+     *      Line number in $filename where the
+     *      error/warning/notice was issued.
+     */
     public function __construct($message, $code, $filename, $lineno)
     {
         if (self::$_map === NULL) {
@@ -57,6 +75,12 @@ extends Erebot_Exception
         $this->line = $lineno;
     }
 
+    /**
+     * Returns a textual representation of this exception.
+     *
+     * \retval string
+     *      Textual representation of the exception.
+     */
     public function __toString()
     {
         if (isset(self::$_map[$this->code]))

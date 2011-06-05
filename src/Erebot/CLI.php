@@ -16,9 +16,19 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/// @TODO: don't hard-code this!
 require('vendor/dependency-injection/sfServiceContainerAutoloader.php');
 sfServiceContainerAutoloader::register();
 
+/**
+ * \brief
+ *      Provides the entry-point for Erebot.
+ *
+ * Erebot_CLI::run() is called statically by the "Erebot" script.
+ * This class then takes care of loading every configuration file
+ * and module required and connects the bot to the different IRC
+ * servers.
+ */
 class Erebot_CLI
 {
     static public function _startup_sighandler($signum)
@@ -38,6 +48,9 @@ class Erebot_CLI
         $logger->debug('Removed lock on pidfile (%s)', $pidfile);
     }
 
+    /**
+     * Entry-point for Erebot.
+     */
     static public function run()
     {
         $dic    = new sfServiceContainerBuilder();
@@ -158,7 +171,6 @@ class Erebot_CLI
         ));
 
         try {
-            /// @TODO: Check the interface or something like that.
             $parsed = $parser->parse();
         }
         catch (Exception $exc) {
@@ -305,6 +317,7 @@ class Erebot_CLI
         }
 
         try {
+            /// @TODO: Check the interface or something like that.
             $identd = $dic->identd;
         }
         catch (InvalidArgumentException $e) {
@@ -312,6 +325,7 @@ class Erebot_CLI
         }
 
         try {
+            /// @TODO: Check the interface or something like that.
             $console = $dic->console;
         }
         catch (InvalidArgumentException $e) {

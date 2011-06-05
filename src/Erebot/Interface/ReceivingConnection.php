@@ -17,6 +17,8 @@
 */
 
 /**
+ * \brief
+ *      Interface for a connection that receives data.
  */
 interface   Erebot_Interface_ReceivingConnection
 extends     Erebot_Interface_Connection

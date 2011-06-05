@@ -335,7 +335,7 @@ class   Erebot_Styling
             'fg'        => NULL,
         );
         $variables  = $this->_variables;
-        $result     = $this->parseNode(
+        $result     = $this->_parseNode(
             $this->_dom->documentElement,
             $attributes,
             $variables
@@ -380,7 +380,7 @@ class   Erebot_Styling
     /**
      * This is the main parsing method.
      */
-    protected function parseNode($node, &$attributes, $variables)
+    protected function _parseNode($node, &$attributes, $variables)
     {
         $result     = '';
         $saved      = $attributes;
@@ -470,7 +470,7 @@ class   Erebot_Styling
                     $variables[$loopKey] = $item['key'];
                 $variables[$loopItem] = $item['value'];
 
-                $result .= $this->parseChildren($node, $attributes, $variables);
+                $result .= $this->_parseChildren($node, $attributes, $variables);
             }
 
             $item = each($variables[$loopFrom]);
@@ -480,7 +480,7 @@ class   Erebot_Styling
             if ($count > 1)
                 $result .= $separator[1];
 
-            $result .= $this->parseChildren($node, $attributes, $variables);
+            $result .= $this->_parseChildren($node, $attributes, $variables);
             $variables = $savedVariables;
         }
 
@@ -505,7 +505,7 @@ class   Erebot_Styling
                 // See this class documentation for a link
                 // which lists available forms for each language.
                 $form = $child->getAttribute('form');
-                $subcontents[$form] = $this->parseNode(
+                $subcontents[$form] = $this->_parseNode(
                     $child, $attributes, $variables
                 );
                 $pattern .= $form.'{'.$form.'} ';
@@ -526,7 +526,7 @@ class   Erebot_Styling
 
         // Handle childrens.
         else
-            $result .= $this->parseChildren($node, $attributes, $variables);
+            $result .= $this->_parseChildren($node, $attributes, $variables);
 
         // Post-handling : restore old state.
         switch ($node->tagName) {
@@ -568,13 +568,13 @@ class   Erebot_Styling
      * This method is used to apply the parsing method
      * to children of an XML node.
      */
-    private function parseChildren($node, &$attributes, $variables)
+    private function _parseChildren($node, &$attributes, $variables)
     {
         $result = '';
         for (   $child = $node->firstChild;
                 $child != NULL;
                 $child = $child->nextSibling) {
-            $result .=  $this->parseNode($child, $attributes, $variables);
+            $result .=  $this->_parseNode($child, $attributes, $variables);
         }
         return $result;
     }

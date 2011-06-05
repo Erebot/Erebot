@@ -17,6 +17,9 @@
 */
 
 /**
+ * \brief
+ *      An interface for an object capable
+ *      of managing modules.
  */
 interface Erebot_Interface_ModuleContainer
 {
