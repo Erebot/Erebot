@@ -1,13 +1,38 @@
 <?php
+/*
+    This file is part of Erebot.
 
+    Erebot is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Erebot is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/**
+ * \brief
+ *      A simple console which can be used to send commands to the bot.
+ */
 class       Erebot_Console
 implements  Erebot_Interface_ReceivingConnection
 {
+    /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
+    /// The underlying socket, represented as a stream.
     protected $_socket;
+    /// A FIFO queue for incoming messages.
     protected $_rcvQueue;
+    /// A raw buffer for incoming data.
     protected $_incomingData;
 
+    /// \copydoc Erebot_Interface_Connection::__construct()
     public function __construct(
         Erebot_Interface_Core   $bot,
                                 $connector  = '/tmp/Erebot.sock',
@@ -32,16 +57,21 @@ implements  Erebot_Interface_ReceivingConnection
         );
     }
 
+    /**
+     * Destructor.
+     */
     public function __destruct()
     {
         $this->disconnect();
     }
 
+    /// \copydoc Erebot_Interface_Connection::connect()
     public function connect()
     {
         $this->_bot->addConnection($this);
     }
 
+    /// \copydoc Erebot_Interface_Connection::disconnect()
     public function disconnect($quitMessage = NULL)
     {
         $this->_bot->removeConnection($this);
@@ -50,9 +80,13 @@ implements  Erebot_Interface_ReceivingConnection
         $this->_socket = NULL;
     }
 
+    /// \copydoc Erebot_Interface_Connection::isConnected()
     public function isConnected() { return TRUE; }
+
+    /// \copydoc Erebot_Interface_Connection::getSocket()
     public function getSocket() { return $this->_socket; }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::emptyReadQueue()
     public function emptyReadQueue() {
         return (count($this->_rcvQueue) == 0);
     }
@@ -101,6 +135,7 @@ implements  Erebot_Interface_ReceivingConnection
             ;   // Read messages.
     }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::processQueuedData()
     public function processQueuedData()
     {
         if (!count($this->_rcvQueue))
@@ -118,7 +153,10 @@ implements  Erebot_Interface_ReceivingConnection
                 $connection->pushLine($line);
     }
 
+    /// \copydoc Erebot_Interface_Connection::getBot()
     public function getBot() { return $this->_bot; }
+
+    /// \copydoc Erebot_Interface_Connection::getConfig()
     public function getConfig($chan) { return NULL; }
 
     static public function _cleanup_socket($socket)
