@@ -21,7 +21,7 @@
  *      Triggered when a ban exception is set on a channel.
  */
 class       Erebot_Event_Except
-extends     Erebot_Event_ChanUserModeMaskAbstract
+extends     Erebot_Event_ChanUserModeAbstract
 implements  Erebot_Interface_Event_Except
 {
 }

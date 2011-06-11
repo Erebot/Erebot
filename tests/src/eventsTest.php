@@ -129,7 +129,10 @@ extends PHPUnit_Framework_TestCase
         $dispatched = $this->_connection->resetDispatched();
         $this->assertSame(2, count($dispatched));
         $this->assertTrue($dispatched[0] instanceof Erebot_Event_Notify);
-        $this->assertEquals("foo!bar@baz", $dispatched[0]->getMask());
+        $this->assertEquals(
+            "foo!bar@baz",
+            $dispatched[0]->getSource()->getMask()
+        );
         $ts = $dispatched[0]->getTimestamp();
         $this->assertEquals(42, $ts->format('U'));
         $this->assertEquals(
@@ -148,7 +151,10 @@ extends PHPUnit_Framework_TestCase
         $dispatched = $this->_connection->resetDispatched();
         $this->assertSame(2, count($dispatched));
         $this->assertTrue($dispatched[0] instanceof Erebot_Event_UnNotify);
-        $this->assertEquals("foo!bar@baz", $dispatched[0]->getMask());
+        $this->assertEquals(
+            "foo!bar@baz",
+            $dispatched[0]->getSource()->getMask()
+        );
         $ts = $dispatched[0]->getTimestamp();
         $this->assertEquals(42, $ts->format('U'));
         $this->assertEquals(

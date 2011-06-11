@@ -62,16 +62,8 @@ interface Erebot_Interface_Core
     /**
      * Starts the bot.
      *
-     * \param string $connectionCls
-     *      The name of the class to use to create new connections.
-     *      This class must implement the Erebot_Interface_Connection interface.
-     *
-     * \note
-     *      If no connection class is given, it defaults to ErebotConnection.
-     *
-     * \throw Erebot_InvalidValueException
-     *      The given value for $connectionCls is invalid (not a class name,
-     *      a class with a bad interface, etc.).
+     * \param Erebot_Interface_ConnectionFactory $factory
+     *      Factory to use to create new connections.
      *
      * \attention
      *      This method does not return until the bot drops its connections.

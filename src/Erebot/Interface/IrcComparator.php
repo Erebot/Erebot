@@ -142,5 +142,36 @@ interface Erebot_Interface_IrcComparator
      */
     public function isChannel($chan);
 
+    /**
+     * Normalize (canonicalize) some IRC nickname.
+     *
+     * This method can be used to compare two IRC nicknames like this:
+     * \code
+     *      if ($conn->normalizeNick($nick1) == $conn->normalizeNick($nick2)) {
+     *          // The two nicknames are considered equal.
+     *      }
+     * \endcode
+     *
+     * \param string $nick
+     *      The nickname to canonicalize.
+     *
+     * \param string $mappingName
+     *      (optional) Name of the mapping used to do the normalization.
+     *      The default is to use the mapping of the IRC network
+     *      this connection refers to.
+     *
+     * \retval string
+     *      A canonical representation of the nickname.
+     *
+     * \warning
+     *      Make sure you use the same $mappingName when comparing
+     *      two nicknames or the result may be unpredictable.
+     *      Relying on the default value is safe as long as this
+     *      method is called from the SAME connection,
+     *      ie. the following IS NOT safe:
+     *      \code
+     *          if ($c1->normalizeNick($nick1) == $c2->normalizeNick($nick2))
+     *      \endcode
+     */
     public function normalizeNick($nick, $mappingName = NULL);
 }

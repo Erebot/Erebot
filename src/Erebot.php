@@ -81,6 +81,7 @@ implements  Erebot_Interface_Core
     /// Indicates whether the bot is currently running or not.
     protected $_running;
 
+    /// Translator object for messages the bot may display.
     protected $_translator;
 
     /// \copydoc Erebot_Interface_Core::__construct()

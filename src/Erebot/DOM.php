@@ -33,6 +33,7 @@
 class   Erebot_DOM
 extends DomDocument
 {
+    /// Stores the LibXMLError errors raised during validation.
     protected $_errors;
 
     /**
@@ -295,7 +296,7 @@ extends DomDocument
     /**
      * Returns an array of errors raised during validation.
      *
-     * \param array
+     * \retval array
      *      Array of LibXMLError objets raised during validation.
      */
     public function getErrors()

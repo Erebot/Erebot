@@ -21,7 +21,7 @@
  *      Triggered when a ban is removed from a channel.
  */
 class       Erebot_Event_UnBan
-extends     Erebot_Event_ChanUserModeMaskAbstract
+extends     Erebot_Event_ChanUserModeAbstract
 implements  Erebot_Interface_Event_UnBan
 {
 }

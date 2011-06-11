@@ -27,7 +27,9 @@
 class       Erebot_RawHandler
 implements  Erebot_Interface_RawHandler
 {
+    /// Raw numeric handled by this instance.
     protected $_raw;
+    /// Method/function to call when this handler is triggered.
     protected $_callback;
 
     /// \copydoc Erebot_Interface_RawHandler::__construct()
@@ -42,6 +44,9 @@ implements  Erebot_Interface_RawHandler
         $this->_callback    = $callback;
     }
 
+    /**
+     * Destructor.
+     */
     public function __destruct()
     {
     }

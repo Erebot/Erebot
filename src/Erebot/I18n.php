@@ -32,18 +32,13 @@ implements  Erebot_Interface_I18n
     /// The actual locales used for i18n.
     protected $_locales;
 
-    protected $_candidates;
-
     /// The component to get translations from (a module name or "Erebot").
     protected $_component;
-
-    protected $_parser;
 
     /// \copydoc Erebot_Interface_I18n::__construct()
     public function __construct($component)
     {
         $this->_locales = array();
-        $this->_candidates = array();
         $categories = array(
             self::LC_CTYPE,
             self::LC_NUMERIC,
@@ -58,28 +53,34 @@ implements  Erebot_Interface_I18n
             self::LC_MEASUREMENT,
             self::LC_IDENTIFICATION,
         );
-        foreach ($categories as $category) {
+        foreach ($categories as $category)
             $this->_locales[$category] = "en_US";
-            $this->_candidates[$category] = array();
-        }
         $this->_component = $component;
     }
 
-    /// \copydoc Erebot_Interface_I18n::getLocale()
-    public function getLocale($category)
+    /// \copydoc Erebot_Interface_I18n::nameToCategory()
+    static public function nameToCategory($name)
     {
-        if (!isset($this->_locales[$category]))
-            throw new Erebot_InvalidValueException('Invalid category');
-        return $this->_locales[$category];
+        $categories = array_flip(array(
+            self::LC_CTYPE          => 'LC_CTYPE',
+            self::LC_NUMERIC        => 'LC_NUMERIC',
+            self::LC_TIME           => 'LC_TIME',
+            self::LC_COLLATE        => 'LC_COLLATE',
+            self::LC_MONETARY       => 'LC_MONETARY',
+            self::LC_MESSAGES       => 'LC_MESSAGES',
+            self::LC_PAPER          => 'LC_PAPER',
+            self::LC_NAME           => 'LC_NAME',
+            self::LC_ADDRESS        => 'LC_ADDRESS',
+            self::LC_TELEPHONE      => 'LC_TELEPHONE',
+            self::LC_MEASUREMENT    => 'LC_MEASUREMENT',
+            self::LC_IDENTIFICATION => 'LC_IDENTIFICATION',
+        ));
+        if (!isset($categories[$name]))
+            throw new Erebot_InvalidValueException('Invalid category name');
+        return $categories[$category];
     }
 
-    public function getCandidates($category)
-    {
-        if (!isset($this->_locales[$category]))
-            throw new Erebot_InvalidValueException('Invalid category');
-        return $this->_candidates[$category];
-    }
-
+    /// \copydoc Erebot_Interface_I18n::categoryToName()
     static public function categoryToName($category)
     {
         $categories = array(
@@ -101,6 +102,15 @@ implements  Erebot_Interface_I18n
         return $categories[$category];
     }
 
+    /// \copydoc Erebot_Interface_I18n::getLocale()
+    public function getLocale($category)
+    {
+        if (!isset($this->_locales[$category]))
+            throw new Erebot_InvalidValueException('Invalid category');
+        return $this->_locales[$category];
+    }
+
+    /// \copydoc Erebot_Interface_I18n::setLocale()
     public function setLocale($category, $candidates)
     {
         $categoryName = self::categoryToName($category);
@@ -147,8 +157,8 @@ implements  Erebot_Interface_I18n
 
         if ($newLocale === NULL)
             $newLocale = 'en_US';
-        $this->_locales[$category]      = $newLocale;
-        $this->_candidates[$category]   = $candidates;
+        $this->_locales[$category] = $newLocale;
+        return $newLocale;
     }
 
     static protected function _build_path($locale, $category, $domain)

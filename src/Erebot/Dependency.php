@@ -18,7 +18,7 @@
 
 /**
  * \brief
- *      Represents a dependency on some item.
+ *      A dependency on a versioned item.
  */
 class       Erebot_Dependency
 implements  Erebot_Interface_Dependency

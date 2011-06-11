@@ -17,6 +17,8 @@
 */
 
 /**
+ * \brief
+ *      Interface to express a dependency on a versioned item.
  */
 interface Erebot_Interface_Dependency
 {

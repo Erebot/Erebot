@@ -17,6 +17,9 @@
 */
 
 /**
+ * \brief
+ *      Interface for a Uniform Resource Identifier
+ *      parser/generator compatible with RFC 3986.
  */
 interface Erebot_Interface_URI
 {

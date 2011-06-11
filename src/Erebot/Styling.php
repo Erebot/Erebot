@@ -416,6 +416,18 @@ class   Erebot_Styling
 
     /**
      * This is the main parsing method.
+     *
+     * \param DOMNode $node
+     *      The node being parsed.
+     *
+     * \param array $attributes
+     *      Array of styling attributes.
+     *
+     * \param array $variables
+     *      Template variables that can be injected in the return.
+     *
+     * \retval string
+     *      Parsing result, with styles applied as appropriate.
      */
     protected function _parseNode($node, &$attributes, $variables)
     {
@@ -604,6 +616,18 @@ class   Erebot_Styling
     /**
      * This method is used to apply the parsing method
      * to children of an XML node.
+     *
+     * \param DOMNode $node
+     *      The node being parsed.
+     *
+     * \param array $attributes
+     *      Array of styling attributes.
+     *
+     * \param array $variables
+     *      Template variables that can be injected in the result.
+     *
+     * \retval string
+     *      Parsing result, with styles applied as appropriate.
      */
     private function _parseChildren($node, &$attributes, $variables)
     {

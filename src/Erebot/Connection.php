@@ -121,11 +121,25 @@ implements  Erebot_Interface_ModuleContainer,
         );
     }
 
+    /**
+     * Returns the name of the class used
+     * to parse Uniform Resource Identifiers.
+     *
+     * \retval string
+     *      Name of the class used to parse an URI.
+     */
     public function getURIFactory()
     {
         return $this->_URIFactory;
     }
 
+    /**
+     * Sets the class to use as a factory
+     * to parse Uniform Resource Identifiers.
+     *
+     * \param string $factory
+     *      Name of the class to use to parse an URI.
+     */
     public function setURIFactory($factory)
     {
         $reflector = new ReflectionClass($factory);
@@ -135,11 +149,25 @@ implements  Erebot_Interface_ModuleContainer,
         $this->_URIFactory = $factory;
     }
 
+    /**
+     * Returns the name of the class used
+     * to parse inter-modules dependencies.
+     *
+     * \retval string
+     *      Name of the class used to parse dependencies.
+     */
     public function getDependencyFactory()
     {
         return $this->_depFactory;
     }
 
+    /**
+     * Sets the class to use as a factory
+     * to parse inter-modules dependencies.
+     *
+     * \param string $factory
+     *      Name of the class to use to parse dependencies.
+     */
     public function setDependencyFactory($factory)
     {
         $reflector = new ReflectionClass($factory);

@@ -116,7 +116,15 @@ extends Erebot_Proxy_Base
         $this->_read(2);
     }
 
-    protected function _userpass($proxyURI)
+    /**
+     * Does the authentication step.
+     *
+     * \param Erebot_Interface_URI $proxyURI
+     *      An object representing the URI of this SOCKS proxy server,
+     *      containing the credentials that will be sent during the
+     *      authentication step.
+     */
+    protected function _userpass(Erebot_Interface_URI $proxyURI)
     {
         $username = $proxyURI->asParsedURL(PHP_URL_USER);
         $password = $proxyURI->asParsedURL(PHP_URL_PASS);
@@ -142,6 +150,17 @@ extends Erebot_Proxy_Base
             throw new Erebot_InvalidValueException('Bad username or password');
     }
 
+    /**
+     * Passes some data to the proxy server.
+     *
+     * \param string $line
+     *      Data to send.
+     *
+     * \retval int
+     *      Number of bytes actually sent (this may be lower
+     *      that the length of the initial $line if some bytes
+     *      could not be sent).
+     */
     protected function _write($line)
     {
         for (
@@ -156,6 +175,15 @@ extends Erebot_Proxy_Base
         return $written;
     }
 
+    /**
+     * Reads some data from the proxy server.
+     *
+     * \param int $len
+     *      Number of bytes to read from the proxy server.
+     *
+     * \retval string
+     *      Actual data read.
+     */
     protected function _read($len)
     {
         $contents   = "";

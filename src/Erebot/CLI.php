@@ -50,6 +50,11 @@ class Erebot_CLI
 
     /**
      * Entry-point for Erebot.
+     *
+     * \return
+     *      This method never returns.
+     *      Instead, the program exits with an appropriate
+     *      return code when Erebot is stopped.
      */
     static public function run()
     {

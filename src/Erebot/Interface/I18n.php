@@ -79,8 +79,39 @@ interface Erebot_Interface_I18n
     public function __construct($component);
 
     /**
+     * Returns the value of the category matching the given name.
+     *
+     * \param string $name
+     *      A category name, such as "LC_MESSAGES".
+     *
+     * \retval opaque
+     *      The corresponding category, returned as a
+     *      Erebot_Interface_I18n::LC_* constant,
+     *      eg. Erebot_Interface_I18n::LC_MESSAGES.
+     */
+    static public function nameToCategory($name);
+
+    /**
+     * Returns the name associated with a given category.
+     *
+     * \param opaque $category
+     *      One of the Erebot_Interface_I18n::LC_* constants,
+     *      eg. Erebot_Interface_I18n::LC_MESSAGES.
+     *
+     * \retval string
+     *      The name of that category (eg. "LC_MESSAGES").
+     */
+    static public function categoryToName($category);
+
+    /**
      * Returns the target locale of this translator
-     * in canonical form.
+     * in canonical form for a given catergory.
+     *
+     * \param opaque $category
+     *      One of the Erebot_Interface_I18n::LC_* constants
+     *      indicating the category we're interested in querying.
+     *      For the most basic usage, you should pass
+     *      Erebot_Interface_I18n::LC_MESSAGES as the category.
      *
      * \retval string
      *      The canonical form of the target locale
@@ -88,8 +119,32 @@ interface Erebot_Interface_I18n
      */
     public function getLocale($category);
 
-    public function getCandidates($category);
-
+    /**
+     * Sets the target locale of this translator
+     * for a given catergory.
+     *
+     * \param opaque $category
+     *      One of the Erebot_Interface_I18n::LC_* constants
+     *      indicating the category we're interested in setting.
+     *      For the most basic usage, you should pass
+     *      Erebot_Interface_I18n::LC_MESSAGES as the category.
+     *
+     * \param array $candidates
+     *      Array of locales that can be used.
+     *      The candidate locales will be reviewed in order
+     *      and the first one to match a locale available
+     *      to the bot will be used as the effective locale.
+     *
+     * \retval string
+     *      The locale effectively in use after this method
+     *      has been called, in its canonical form.
+     *
+     * \note
+     *      The bot assumes the "en_US" locale is always available.
+     *      If none of the given candidates matches a locale
+     *      available to the bot, "en_US" will automatically
+     *      be selected as the locale to use.
+     */
     public function setLocale($category, $candidates);
 
     /**

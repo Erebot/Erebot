@@ -159,6 +159,13 @@ implements  Erebot_Interface_ReceivingConnection
     /// \copydoc Erebot_Interface_Connection::getConfig()
     public function getConfig($chan) { return NULL; }
 
+    /**
+     * Destroys the socket used by the console
+     * whenever Erebot exits.
+     *
+     * \param string $socket
+     *      Path to the UNIX socket used to control Erebot.
+     */
     static public function _cleanup_socket($socket)
     {
         @unlink($socket);

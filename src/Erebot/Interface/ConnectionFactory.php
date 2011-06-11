@@ -28,7 +28,7 @@ interface Erebot_Interface_ConnectionFactory
      * \param Erebot_Interface_Core $bot
      *      An instance of the bot.
      *
-     * \param Erebot_Interface_Config_Server
+     * \param Erebot_Interface_Config_Server $config
      *      An instance of a server configuration.
      *
      * \retval Erebot_Interface_Connection

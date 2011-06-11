@@ -23,8 +23,6 @@
 abstract class  Erebot_Event_NotificationAbstract
 extends         Erebot_Event_WithSourceTextAbstract
 {
-    protected $_ident;
-    protected $_host;
     protected $_timestamp;
 
     public function __construct(
@@ -36,25 +34,9 @@ extends         Erebot_Event_WithSourceTextAbstract
                                     $text
     )
     {
+        $source .= '!'.$ident.'@'.$host;
         parent::__construct($connection, $source, $text);
-        $this->_ident       = $ident;
-        $this->_host        = $host;
         $this->_timestamp   = $timestamp;
-    }
-
-    public function getIdent()
-    {
-        return $this->_ident;
-    }
-
-    public function getHostname()
-    {
-        return $this->_host;
-    }
-
-    public function getMask()
-    {
-        return $this->_source.'!'.$this->_ident.'@'.$this->_host;
     }
 
     public function getTimestamp()
