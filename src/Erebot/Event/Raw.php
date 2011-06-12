@@ -33,6 +33,8 @@ implements  Erebot_Interface_Event_Raw
     protected $_target;
     /// Content of the raw event.
     protected $_text;
+    /// Whether the default action should be prevented or not.
+    protected $_halt;
 
     /// \copydoc Erebot_Interface_Event_Raw::__construct()
     public function __construct(
@@ -43,6 +45,7 @@ implements  Erebot_Interface_Event_Raw
                                     $text
     )
     {
+        $this->_halt        = FALSE;
         $this->_connection  = $connection;
         $this->_raw         = $raw;
         $this->_source      = $source;
@@ -83,6 +86,19 @@ implements  Erebot_Interface_Event_Raw
     public function getText()
     {
         return $this->_text;
+    }
+
+    /// \copydoc Erebot_Interface_Event_Base_Generic::preventDefault()
+    public function preventDefault($prevent = NULL)
+    {
+        $res = $this->_halt;
+        if ($prevent !== NULL) {
+            if (!is_bool($prevent))
+                throw new Erebot_InvalidValueException('Bad prevention value');
+
+            $this->_halt = $prevent;
+        }
+        return $res;
     }
 }
 
