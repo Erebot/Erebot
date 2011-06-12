@@ -40,7 +40,9 @@ implements      Erebot_Interface_Event_Base_Generic
 #    const ON_SNOTICE        = 390;
 #    const ON_WALLOPS        = 440;
 
+    /// Whether the default action should be prevented or not.
     protected $_halt;
+    /// Connection the event originated from.
     protected $_connection;
 
     public function __construct(Erebot_Interface_Connection $connection)

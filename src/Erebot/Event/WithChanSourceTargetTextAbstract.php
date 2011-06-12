@@ -25,6 +25,7 @@ abstract class  Erebot_Event_WithChanSourceTargetTextAbstract
 extends         Erebot_Event_WithChanSourceTargetAbstract
 implements      Erebot_Interface_Event_Base_Text
 {
+    /// Content of this event.
     protected $_text;
 
     public function __construct(

@@ -26,8 +26,11 @@
 class       Erebot_Identd_Server
 implements  Erebot_Interface_ReceivingConnection
 {
+    /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
+    /// The underlying socket, represented as a stream.
     protected $_socket;
+    /// Class to use to process IdentD requests.
     protected $_workerCls;
 
     /// \copydoc Erebot_Interface_Connection::__construct()

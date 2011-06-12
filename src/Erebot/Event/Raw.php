@@ -23,10 +23,15 @@
 class       Erebot_Event_Raw
 implements  Erebot_Interface_Event_Raw
 {
+    /// The connection object this raw event came from.
     protected $_connection;
+    /// Raw numeric code.
     protected $_raw;
+    /// Source of the raw event.
     protected $_source;
+    /// Target of the raw event; this is usually the bot.
     protected $_target;
+    /// Content of the raw event.
     protected $_text;
 
     /// \copydoc Erebot_Interface_Event_Raw::__construct()
@@ -45,6 +50,7 @@ implements  Erebot_Interface_Event_Raw
         $this->_text        = new Erebot_TextWrapper((string) $text);
     }
 
+    /// Destructor.
     public function __destruct()
     {
     }

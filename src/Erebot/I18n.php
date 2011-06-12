@@ -24,6 +24,7 @@
 class       Erebot_I18n
 implements  Erebot_Interface_I18n
 {
+    /// Expiration time of entries in the cache (in seconds).
     const EXPIRE_CACHE = 60;
 
     /// A cache for translation catalogs, with some additional metadata.
@@ -250,6 +251,9 @@ implements  Erebot_Interface_I18n
 
     /**
      * Clears the cache used for translation catalogs.
+     *
+     * \retval
+     *      This method does not return any value.
      */
     static public function clearCache()
     {

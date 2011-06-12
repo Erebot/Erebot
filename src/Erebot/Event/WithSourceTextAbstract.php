@@ -24,6 +24,7 @@ abstract class  Erebot_Event_WithSourceTextAbstract
 extends         Erebot_Event_WithTextAbstract
 implements      Erebot_Interface_Event_Base_Source
 {
+    /// Source the event originated from.
     protected $_source;
     
     public function __construct(

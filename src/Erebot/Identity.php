@@ -107,12 +107,23 @@ implements  Erebot_Interface_Identity
         return $this->_nick;
     }
 
-    public function match($filter)
+    /**
+     * Indicates whether this identity matches a given pattern.
+     *
+     * \param string $pattern
+     *      The pattern this identity should be tested against.
+     *      The '?' and '*' wildcard characters are supported.
+     *
+     * \retval bool
+     *      TRUE if this identity matches the given pattern,
+     *      FALSE otherwise.
+     */
+    public function match($pattern)
     {
-        $filter = strtr(preg_quote($filter, '#'), array(
+        $pattern = strtr(preg_quote($pattern, '#'), array(
             '\\?'   => '.?',
             '\\*'   => '.*',
         ));
-        return (bool) preg_match('#^'.$filter.'$#iD', $this->getMask());
+        return (bool) preg_match('#^'.$pattern.'$#iD', $this->getMask());
     }
 }

@@ -27,7 +27,9 @@
 class       Erebot_EventHandler
 implements  Erebot_Interface_EventHandler
 {
+    /// Method/function to call when this handler is triggered.
     protected $_callback;
+    /// Filtering object to decide whether some event can be handled or not.
     protected $_filter;
 
     /// \copydoc Erebot_Interface_EventHandler::__construct()

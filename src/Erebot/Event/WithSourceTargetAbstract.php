@@ -25,7 +25,9 @@ extends         Erebot_Event_Abstract
 implements      Erebot_Interface_Event_Base_Source,
                 Erebot_Interface_Event_Base_Target
 {
+    /// Source the event originated from.
     protected $_source;
+    /// Target of the event (usually the bot).
     protected $_target;
 
     public function __construct(

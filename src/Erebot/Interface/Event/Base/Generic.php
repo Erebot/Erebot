@@ -30,5 +30,20 @@ interface Erebot_Interface_Event_Base_Generic
      *      The connection this event came from.
      */
     public function getConnection();
+
+    /**
+     * Prevents the default action associated
+     * with this type of event from occuring.
+     *
+     * \param mixed $prevent
+     *      (optional) Whether the default action should be prevented (TRUE)
+     *      or not (FALSE). You may also pass the value NULL to retrieve
+     *      the current value without modifying it.
+     *
+     * \retval bool
+     *      Previous value (if modified by this call), or current value
+     *      (if the value NULL was passed to $prevent).
+     */
+    public function preventDefault($prevent = NULL);
 }
 

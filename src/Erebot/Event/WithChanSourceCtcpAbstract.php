@@ -25,6 +25,7 @@ abstract class  Erebot_Event_WithChanSourceCtcpAbstract
 extends         Erebot_Event_WithChanSourceTextAbstract
 implements      Erebot_Interface_Event_Base_Ctcp
 {
+    /// The type of CTCP message represented by this event.
     protected $_ctcpType;
     
     public function __construct(

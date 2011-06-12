@@ -24,6 +24,7 @@ abstract class  Erebot_Event_WithTextAbstract
 extends         Erebot_Event_Abstract
 implements      Erebot_Interface_Event_Base_Text
 {
+    /// Content of this event.
     protected $_text;
 
     public function __construct(

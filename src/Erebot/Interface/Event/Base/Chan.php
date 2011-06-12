@@ -23,6 +23,13 @@
 interface   Erebot_Interface_Event_Base_Chan
 extends     Erebot_Interface_Event_Base_Generic
 {
+    /**
+     * Returns the name of the channel
+     * this event relates to.
+     *
+     * \retval string
+     *      Name of the channel affected by the event.
+     */
     public function getChan();
 }
 

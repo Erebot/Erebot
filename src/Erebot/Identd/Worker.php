@@ -27,9 +27,13 @@ class       Erebot_Identd_Worker
 implements  Erebot_Interface_ReceivingConnection,
             Erebot_Interface_SendingConnection
 {
+    /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
+    /// The underlying socket, represented as a stream.
     protected $_socket;
+    /// A raw buffer for incoming data.
     protected $_incomingData;
+    /// A FIFO queue for incoming messages.
     protected $_rcvQueue;
 
     /// \copydoc Erebot_Interface_Connection::__construct()

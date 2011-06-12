@@ -25,7 +25,9 @@ extends         Erebot_Event_Abstract
 implements      Erebot_Interface_Event_Base_Chan,
                 Erebot_Interface_Event_Base_Source
 {
+    /// IRC channel this event relates to.
     protected $_chan;
+    /// Source the event originated from.
     protected $_source;
 
     public function __construct(

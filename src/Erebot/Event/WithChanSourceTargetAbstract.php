@@ -25,6 +25,7 @@ abstract class  Erebot_Event_WithChanSourceTargetAbstract
 extends         Erebot_Event_WithSourceTargetAbstract
 implements      Erebot_Interface_Event_Base_Chan
 {
+    /// IRC channel this event relates to.
     protected $_chan;
 
     public function __construct(
