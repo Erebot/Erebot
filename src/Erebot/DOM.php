@@ -164,6 +164,41 @@ extends DomDocument
         );
     }
 
+    /**
+     * Proceed to the actual Schematron validation.
+     *
+     * \param string $source
+     *      Source of the Schematron rules:
+     *      - 'file' when $data refers to a filename.
+     *      - 'string' when $data refers to an in-memory string.
+     *
+     * \param string $data
+     *      Schematron data. The interpretation of this parameter
+     *      depends on the value of the $source parameter.
+     *
+     * \param string $schemaSource
+     *      The original schema type used to validate the document.
+     *      This is "XSD" for XML Schema documents or "RNG" for
+     *      RelaxNG schemas.
+     *
+     * \param bool $success
+     *      Whether the original validation process succeeded
+     *      (TRUE) or not (FALSE). This is used to abort the
+     *      Schematron validation process earlier.
+     *
+     * \param bool $schematron
+     *      Whether a Schematron validation pass should occur
+     *      (TRUE) or not (FALSE).
+     *
+     * \retval bool
+     *      Whether the overall validation passed (TRUE)
+     *      or not (FALSE).
+     *
+     * \note
+     *      In case validation failed, Erebot_DOM::getErrors()
+     *      may be used to retrieve further information on why
+     *      it failed.
+     */
     protected function _schematronValidation(
         $source,
         $data,
@@ -279,10 +314,27 @@ extends DomDocument
     /**
      * Validates the document against its DTD.
      *
+     * \param bool $schematron
+     *      (optional) The value of this parameter is currently
+     *      unused as there is no way to embed Schematron rules
+     *      into a DTD. This parameter is provided only to make
+     *      the API uniform accross the different methods of this
+     *      class.
+     *
      * \retval bool
      *      Returns TRUE if the document validates, FALSE otherwise.
+     *
+     * \note
+     *      This method is the same as the regular DomDocument::validate()
+     *      method excepts that it captures errors so they can be later
+     *      retrieved with the Erebot_DOM::getErrors() method.
+     *
+     * \note
+     *      There is currently no way to embed Schematron rules
+     *      into a Document Type Declaration. Therefore, the
+     *      value of the $schematron parameter is always ignored.
      */
-    public function validate()
+    public function validate($schematron=FALSE)
     {
         $success    = parent::validate();
         $quiet      = !libxml_use_internal_errors(); 

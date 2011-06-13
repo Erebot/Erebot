@@ -44,7 +44,10 @@ extends PHPUnit_Framework_TestCase
     public function testGetLocale()
     {
         foreach ($this->translators as $locale => $translator)
-            $this->assertEquals($locale, $translator->getLocale(Erebot_Interface_I18n::LC_MESSAGES));
+            $this->assertEquals(
+                $locale,
+                $translator->getLocale(Erebot_Interface_I18n::LC_MESSAGES)
+            );
     }
 
     public function testDurationFormatting()

@@ -47,6 +47,7 @@ implements  Erebot_Interface_ReceivingConnection,
         $this->_rcvQueue        = array();
     }
 
+    /// Destructor.
     public function __destruct()
     {
         $this->_disconnect();
@@ -66,6 +67,12 @@ implements  Erebot_Interface_ReceivingConnection,
         $this->_socket = NULL;
     }
 
+    /**
+     * Reads a single line to data from the worker's socket.
+     *
+     * \retval bool
+     *      TRUE if a line could be read, FALSE otherwise.
+     */
     protected function _getSingleLine()
     {
         $pos = strpos($this->_incomingData, "\r\n");
@@ -117,8 +124,24 @@ implements  Erebot_Interface_ReceivingConnection,
         $this->disconnect();
     }
 
+    /**
+     * Handles an IdentD request.
+     *
+     * \param string $line
+     *      IdentD request to handle.
+     *
+     * \retval string
+     *      Message to send as the response
+     *      to this request.
+     *
+     * \retval FALSE
+     *      The request was malformed.
+     */
     protected function _handleMessage($line)
     {
+        if (!is_string($line))
+            return FALSE;
+
         $parts = array_map('trim', explode(',', $line));
         if (count($parts) != 2)
             return FALSE;

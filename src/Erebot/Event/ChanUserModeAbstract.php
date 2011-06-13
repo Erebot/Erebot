@@ -24,6 +24,14 @@
 abstract class  Erebot_Event_ChanUserModeAbstract
 extends         Erebot_Event_WithChanSourceTargetAbstract
 {
+    /**
+     * Returns a description of the mode this event
+     * refers to, including any leading operator.
+     *
+     * \retval string
+     *      Textual representation of this mode,
+     *      eg. "+o".
+     */
     public function getMode()
     {
         return self::MODE_PREFIX . self::MODE_LETTER;

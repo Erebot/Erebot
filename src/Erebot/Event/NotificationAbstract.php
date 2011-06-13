@@ -23,6 +23,7 @@
 abstract class  Erebot_Event_NotificationAbstract
 extends         Erebot_Event_WithSourceTextAbstract
 {
+    /// Timestamp the notification was issued at.
     protected $_timestamp;
 
     public function __construct(
@@ -39,6 +40,13 @@ extends         Erebot_Event_WithSourceTextAbstract
         $this->_timestamp   = $timestamp;
     }
 
+    /**
+     * Returns the timestamp at which the notification
+     * was issued.
+     *
+     * \retval DateTime
+     *      Timestamp of the notification.
+     */
     public function getTimestamp()
     {
         return $this->_timestamp;

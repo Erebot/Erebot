@@ -23,19 +23,13 @@ require_once(
 );
 
 class   StylingTest
-extends PHPUnit_Framework_TestCase
+extends ErebotModuleTestCase
 {
     protected $_translator = NULL;
 
     public function setUp()
     {
         parent::setUp();
-        $this->_translator = $this->getMock(
-            'Erebot_Interface_I18n',
-            array(), array('', ''), '',
-            FALSE, FALSE, FALSE
-        );
-
         $this->_translator
             ->expects($this->any())
             ->method('getLocale')

@@ -120,7 +120,7 @@ abstract class Erebot_StreamWrapperBase
      *      Holds additional flags set by the streams API. It can hold one
      *      or more of the flags defined in thisinterface, OR'd together.
      *
-     * \param string $opened_path
+     * \param string $openedPath
      *      If the path is opened successfully, and
      *      Erebot_StreamWrapperBase::STREAM_USE_PATH
      *      is set in $options, $opened_path should be set to the full
