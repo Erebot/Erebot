@@ -23,6 +23,13 @@
 interface   Erebot_Interface_Event_Base_Ctcp
 extends     Erebot_Interface_Event_Base_Generic
 {
+    /**
+     * Returns the type of CTCP message
+     * conveyed by this event.
+     *
+     * \retval string
+     *      Type of this CTCP message.
+     */
     public function getCtcpType();
 }
 
