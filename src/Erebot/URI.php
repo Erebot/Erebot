@@ -430,24 +430,27 @@ implements  Erebot_Interface_URI
                       / "*" / "+" / "," / ";" / "="
         */
         $decOctet       = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])';
-        $IPv4address    = $decOctet.'(?:\\.'.$decOctet.'){3}';
-        $h16            = '[[:xdigit:]]{1,4}';
-        $ls32           = '(?:'.$h16.':'.$h16.'|'.$IPv4address.')';
-        $IPv6address    =   '(?:'.
-                                '(?:'.$h16.':){6}'.$ls32.'|'.
-                                '::(?:'.$h16.':){5}'.$ls32.'|'.
-                                '(?:'.$h16.')?::(?:'.$h16.':){4}'.$ls32.'|'.
-                                '(?:(?:'.$h16.':)?'.$h16.')?::(?:'.$h16.':){3}'.$ls32.'|'.
-                                '(?:(?:'.$h16.':){0,2}'.$h16.')?::(?:'.$h16.':){2}'.$ls32.'|'.
-                                '(?:(?:'.$h16.':){0,3}'.$h16.')?::'.$h16.':'.$ls32.'|'.
-                                '(?:(?:'.$h16.':){0,4}'.$h16.')?::'.$ls32.'|'.
-                                '(?:(?:'.$h16.':){0,5}'.$h16.')?::'.$h16.'|'.
-                                '(?:(?:'.$h16.':){0,6}'.$h16.')?::'.
-                            ')';
-        $IPvFuture      = 'v[[:xdigit:]]+\\.[-[:alnum:]\\._~!\\$&\'\\(\\)*\\+,;=]+';
-        $IPliteral      = '\\[(?:'.$IPv6address.'|'.$IPvFuture.')\\]';
-        $regName        = '(?:[-[:alnum:]\\._~!\\$&\'\\(\\)*\\+,;=]|%[[:xdigit:]]{2})*';
-        $pattern        = '(?:'.$IPliteral.'|'.$IPv4address.'|'.$regName.')';
+        $dotAddress     = $decOctet.'(?:\\.'.$decOctet.'){3}';
+        $half           = '[[:xdigit:]]{1,4}';
+        $long           = '(?:'.$half.':'.$half.'|'.$dotAddress.')';
+        $colonAddress   =
+            '(?:'.
+            '(?:'.$half.':){6}'.$long.'|'.
+            '::(?:'.$half.':){5}'.$long.'|'.
+            '(?:'.$half.')?::(?:'.$half.':){4}'.$long.'|'.
+            '(?:(?:'.$half.':)?'.$half.')?::(?:'.$half.':){3}'.$long.'|'.
+            '(?:(?:'.$half.':){0,2}'.$half.')?::(?:'.$half.':){2}'.$long.'|'.
+            '(?:(?:'.$half.':){0,3}'.$half.')?::'.$half.':'.$long.'|'.
+            '(?:(?:'.$half.':){0,4}'.$half.')?::'.$long.'|'.
+            '(?:(?:'.$half.':){0,5}'.$half.')?::'.$half.'|'.
+            '(?:(?:'.$half.':){0,6}'.$half.')?::'.
+            ')';
+        $ipFuture       =   'v[[:xdigit:]]+\\.'.
+                            '[-[:alnum:]\\._~!\\$&\'\\(\\)*\\+,;=]+';
+        $ipLiteral      =   '\\[(?:'.$colonAddress.'|'.$ipFuture.')\\]';
+        $regName        =   '(?:[-[:alnum:]\\._~!\\$&\'\\(\\)*\\+,;=]|'.
+                            '%[[:xdigit:]]{2})*';
+        $pattern        =   '(?:'.$ipLiteral.'|'.$dotAddress.'|'.$regName.')';
         if ($host !== NULL && !preg_match('/^'.$pattern.'$/Di', $host))
             throw new Erebot_InvalidValueException('Invalid host');
         $this->_host = $host;

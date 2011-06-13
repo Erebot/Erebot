@@ -53,7 +53,9 @@ implements  Erebot_Interface_ReceivingConnection,
     }
 
     /// \copydoc Erebot_Interface_Connection::connect()
-    public function connect() {}
+    public function connect()
+    {
+    }
 
     /// \copydoc Erebot_Interface_Connection::disconnect()
     public function disconnect($quitMessage = NULL)
@@ -77,7 +79,8 @@ implements  Erebot_Interface_ReceivingConnection,
     }
 
     /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
-    public function processIncomingData() {
+    public function processIncomingData()
+    {
         $received   = fread($this->_socket, 4096);
         if ($received === FALSE || feof($this->_socket))
             return;
@@ -136,13 +139,15 @@ implements  Erebot_Interface_ReceivingConnection,
 
             $socket = $connection->getSocket();
 
-            $rport = (int) substr(strrchr(
-                stream_socket_get_name($socket, TRUE), ':'), 1);
+            $rport = (int) substr(
+                strrchr(stream_socket_get_name($socket, TRUE), ':'), 1
+            );
             if ($rport != $sport)
                 continue;
 
-            $lport = (int) substr(strrchr(
-                stream_socket_get_name($socket, FALSE), ':'), 1);
+            $lport = (int) substr(
+                strrchr(stream_socket_get_name($socket, FALSE), ':'), 1
+            );
             if ($lport != $cport)
                 continue;
 

@@ -120,10 +120,13 @@ implements  Erebot_Interface_Identity
      */
     public function match($pattern)
     {
-        $pattern = strtr(preg_quote($pattern, '#'), array(
-            '\\?'   => '.?',
-            '\\*'   => '.*',
-        ));
+        $pattern = strtr(
+            preg_quote($pattern, '#'),
+            array(
+                '\\?'   => '.?',
+                '\\*'   => '.*',
+            )
+        );
         return (bool) preg_match('#^'.$pattern.'$#iD', $this->getMask());
     }
 }

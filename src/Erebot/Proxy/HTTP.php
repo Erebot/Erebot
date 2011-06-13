@@ -87,5 +87,5 @@ extends Erebot_Proxy_Base
         }
         if ($i === $max)
             throw new Erebot_InvalidValueException('Endless loop detected in proxy response');
-   }
+    }
 }

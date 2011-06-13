@@ -81,13 +81,20 @@ implements  Erebot_Interface_ReceivingConnection
     }
 
     /// \copydoc Erebot_Interface_Connection::isConnected()
-    public function isConnected() { return TRUE; }
+    public function isConnected()
+    {
+        return TRUE;
+    }
 
     /// \copydoc Erebot_Interface_Connection::getSocket()
-    public function getSocket() { return $this->_socket; }
+    public function getSocket()
+    {
+        return $this->_socket;
+    }
 
     /// \copydoc Erebot_Interface_ReceivingConnection::emptyReadQueue()
-    public function emptyReadQueue() {
+    public function emptyReadQueue()
+    {
         return (count($this->_rcvQueue) == 0);
     }
 
@@ -154,10 +161,16 @@ implements  Erebot_Interface_ReceivingConnection
     }
 
     /// \copydoc Erebot_Interface_Connection::getBot()
-    public function getBot() { return $this->_bot; }
+    public function getBot()
+    {
+        return $this->_bot;
+    }
 
     /// \copydoc Erebot_Interface_Connection::getConfig()
-    public function getConfig($chan) { return NULL; }
+    public function getConfig($chan)
+    {
+        return NULL;
+    }
 
     /**
      * Destroys the socket used by the console

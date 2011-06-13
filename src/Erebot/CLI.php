@@ -85,95 +85,115 @@ class Erebot_CLI
                 $locales = array($_SERVER[$source]);
             break;
         }
-        $coreI18nCls    = $dic['core.classes.i18n'];
-        $translator     = new $coreI18nCls("Erebot");
+        $coreTranslatorCls  = $dic['core.classes.i18n'];
+        $translator         = new $coreTranslatorCls("Erebot");
         $translator->setLocale(Erebot_Interface_I18n::LC_MESSAGES, $locales);
 
         Console_CommandLine::registerAction('StoreProxy', 'StoreProxy_Action');
-        $parser = new Console_CommandLine(array(
-            'name'                  => 'Erebot',
-            'description'           => $translator->gettext(
-                'A modular IRC bot written in PHP'
-            ),
-            'version'               => Erebot::VERSION,
-            'add_help_option'       => TRUE,
-            'add_version_option'    => TRUE,
-            'force_posix'           => FALSE,
-        ));
+        $parser = new Console_CommandLine(
+            array(
+                'name'                  => 'Erebot',
+                'description'           => $translator->gettext(
+                    'A modular IRC bot written in PHP'
+                ),
+                'version'               => Erebot::VERSION,
+                'add_help_option'       => TRUE,
+                'add_version_option'    => TRUE,
+                'force_posix'           => FALSE,
+            )
+        );
         $parser->renderer->options_on_different_lines = TRUE;
 
         $defaultConfigFile = getcwd() . DIRECTORY_SEPARATOR . 'Erebot.xml';
-        $parser->addOption('config', array(
-            'short_name'    => '-c',
-            'long_name'     => '--config',
-            'description'   => $translator->gettext(
-                'Path to the configuration file to use instead '.
-                'of "Erebot.xml", relative to the current '.
-                'directory.'
-            ),
-            'help_name'     => 'FILE',
-            'action'        => 'StoreString',
-            'default'       => $defaultConfigFile,
-        ));
+        $parser->addOption(
+            'config',
+            array(
+                'short_name'    => '-c',
+                'long_name'     => '--config',
+                'description'   => $translator->gettext(
+                    'Path to the configuration file to use instead '.
+                    'of "Erebot.xml", relative to the current '.
+                    'directory.'
+                ),
+                'help_name'     => 'FILE',
+                'action'        => 'StoreString',
+                'default'       => $defaultConfigFile,
+            )
+        );
 
-        $parser->addOption('daemon', array(
-            'short_name'        => '-d',
-            'long_name'         => '--daemon',
-            'description'       => $translator->gettext(
-                'Run the bot in the background (daemon).'
-            ),
-            'action'            => 'StoreTrue',
-        ));
+        $parser->addOption(
+            'daemon',
+            array(
+                'short_name'        => '-d',
+                'long_name'         => '--daemon',
+                'description'       => $translator->gettext(
+                    'Run the bot in the background (daemon).'
+                ),
+                'action'            => 'StoreTrue',
+            )
+        );
 
-        $noDaemon = new Console_CommandLine_MyOption('no_daemon', array(
-            'short_name'    => '-n',
-            'long_name'     => '--no-daemon',
-            'description'   => $translator->gettext(
-                'Do not run the bot in the background. '.
-                'This is the default, unless the -d option '.
-                'is used or the bot is configured otherwise.'
-            ),
-            'action'        => 'StoreProxy',
-            'action_params' => array('option' => 'daemon'),
-        ));
+        $noDaemon = new Console_CommandLine_MyOption(
+            'no_daemon',
+            array(
+                'short_name'    => '-n',
+                'long_name'     => '--no-daemon',
+                'description'   => $translator->gettext(
+                    'Do not run the bot in the background. '.
+                    'This is the default, unless the -d option '.
+                    'is used or the bot is configured otherwise.'
+                ),
+                'action'        => 'StoreProxy',
+                'action_params' => array('option' => 'daemon'),
+            )
+        );
         $parser->addOption($noDaemon);
 
-        $parser->addOption('pidfile', array(
-            'short_name'    => '-p',
-            'long_name'     => '--pidfile',
-            'description'   => $translator->gettext(
-                "Store the bot's PID in this file."
-            ),
-            'help_name'     => 'FILE',
-            'action'        => 'StoreString',
-            'default'       => NULL,
-        ));
+        $parser->addOption(
+            'pidfile',
+            array(
+                'short_name'    => '-p',
+                'long_name'     => '--pidfile',
+                'description'   => $translator->gettext(
+                    "Store the bot's PID in this file."
+                ),
+                'help_name'     => 'FILE',
+                'action'        => 'StoreString',
+                'default'       => NULL,
+            )
+        );
 
-        $parser->addOption('group', array(
-            'short_name'    => '-g',
-            'long_name'     => '--group',
-            'description'   => $translator->gettext(
-                'Set group identity to this GID/group during '.
-                'startup. The default is to NOT change group '.
-                'identity, unless configured otherwise.'
-            ),
-            'help_name'     => 'GROUP/GID',
-            'action'        => 'StoreString',
-            'default'       => NULL,
-        ));
+        $parser->addOption(
+            'group',
+            array(
+                'short_name'    => '-g',
+                'long_name'     => '--group',
+                'description'   => $translator->gettext(
+                    'Set group identity to this GID/group during '.
+                    'startup. The default is to NOT change group '.
+                    'identity, unless configured otherwise.'
+                ),
+                'help_name'     => 'GROUP/GID',
+                'action'        => 'StoreString',
+                'default'       => NULL,
+            )
+        );
 
-        $parser->addOption('user', array(
-            'short_name'    => '-u',
-            'long_name'     => '--user',
-            'description'   => $translator->gettext(
-                'Set user identity to this UID/username during '.
-                'startup. The default is to NOT change user '.
-                'identity, unless configured otherwise.'
-            ),
-            'help_name'     => 'USER/UID',
-            'action'        => 'StoreString',
-            'default'       => NULL,
-        ));
+        $parser->addOption(
+            'user',
+            array(
+                'short_name'    => '-u',
+                'long_name'     => '--user',
+                'description'   => $translator->gettext(
+                    'Set user identity to this UID/username during '.
+                    'startup. The default is to NOT change user '.
+                    'identity, unless configured otherwise.'
+                ),
+                'help_name'     => 'USER/UID',
+                'action'        => 'StoreString',
+                'default'       => NULL,
+            )
+        );
 
         try {
             $parsed = $parser->parse();
@@ -192,7 +212,7 @@ class Erebot_CLI
 
         $coreCls = $dic['core.classes.core'];
         $bot = new $coreCls($config, $translator);
-        $dic->Erebot = $bot;
+        $dic->bot = $bot;
 
         // Use values from the XML configuration file
         // if there is no override from the command line.
@@ -216,18 +236,22 @@ class Erebot_CLI
          */
         if ($parsed->options['daemon']) {
             if (!$hasPosix) {
-                $logger->error($translator->gettext(
-                    'The posix extension is required in order '.
-                    'to start the bot in the background'
-                ));
+                $logger->error(
+                    $translator->gettext(
+                        'The posix extension is required in order '.
+                        'to start the bot in the background'
+                    )
+                );
                 exit(1);
             }
 
             if (!$hasPcntl) {
-                $logger->error($translator->gettext(
-                    'The pcntl extension is required in order '.
-                    'to start the bot in the background'
-                ));
+                $logger->error(
+                    $translator->gettext(
+                        'The pcntl extension is required in order '.
+                        'to start the bot in the background'
+                    )
+                );
                 exit(1);
             }
 
@@ -238,19 +262,21 @@ class Erebot_CLI
                         array(__CLASS__, '_startup_sighandler')
                     );
 
-            $logger->info($translator->gettext(
-                'Starting the bot in the background...'
-            ));
+            $logger->info(
+                $translator->gettext('Starting the bot in the background...')
+            );
             $pid = pcntl_fork();
             if ($pid < 0) {
-                $logger->error($translator->gettext(
-                    'Could not start in the background (unable to fork)'
-                ));
+                $logger->error(
+                    $translator->gettext(
+                        'Could not start in the background (unable to fork)'
+                    )
+                );
                 exit(1);
             }
             if ($pid > 0) {
-                pcntl_alarm(2);
                 pcntl_wait($dummy, WUNTRACED);
+                pcntl_alarm(2);
                 if (function_exists('pcntl_signal_dispatch'))
                     pcntl_signal_dispatch();
                 exit(1);
@@ -269,14 +295,16 @@ class Erebot_CLI
 
             umask(0);
             if (umask() != 0)
-                $logger->warning($translator->gettext(
-                    'Could not change umask'
-                ));
+                $logger->warning(
+                    $translator->gettext('Could not change umask')
+                );
 
             if (posix_setsid() == -1) {
-                $logger->error($translator->gettext(
-                    'Could not start in the background (unable to setsid)'
-                ));
+                $logger->error(
+                    $translator->gettext(
+                        'Could not start in the background (unable to setsid)'
+                    )
+                );
                 exit(1);
             }
 
@@ -284,9 +312,11 @@ class Erebot_CLI
             // Not required under Linux, but required by at least System V.
             $pid = pcntl_fork();
             if ($pid < 0) {
-                $logger->error($translator->gettext(
-                    'Could not start in the background (unable to fork)'
-                ));
+                $logger->error(
+                    $translator->gettext(
+                        'Could not start in the background (unable to fork)'
+                    )
+                );
                 exit(1);
             }
             if ($pid > 0)
@@ -316,9 +346,9 @@ class Erebot_CLI
 
             if (defined('SIGUSR1'))
                 posix_kill($parent, SIGUSR1);
-            $logger->info($translator->gettext(
-                'Successfully started in the background'
-            ));
+            $logger->info(
+                $translator->gettext('Successfully started in the background')
+            );
         }
 
         try {
@@ -341,17 +371,21 @@ class Erebot_CLI
         if ($parsed->options['group'] !== NULL &&
             $parsed->options['group'] != '') {
             if (!$hasPosix) {
-                $logger->warning($translator->gettext(
-                    'The posix extension is needed in order '.
-                    'to change group identity.'
-                ));
+                $logger->warning(
+                    $translator->gettext(
+                        'The posix extension is needed in order '.
+                        'to change group identity.'
+                    )
+                );
             }
             else if (posix_getuid() !== 0) {
-                $logger->warning($translator->gettext(
-                    'Only root can change group identity! '.
-                    'Your current UID is %d',
-                    posix_getuid()
-                ));
+                $logger->warning(
+                    $translator->gettext(
+                        'Only root can change group identity! '.
+                        'Your current UID is %d',
+                        posix_getuid()
+                    )
+                );
             }
             else {
                 if (ctype_digit($parsed->options['group']))
@@ -374,8 +408,8 @@ class Erebot_CLI
                             'to "%(name)s" (%(id)d)'
                         ),
                         array(
-                            'name'  => $info['name'],
                             'id'    => $info['gid'],
+                            'name'  => $info['name'],
                         )
                     );
                     exit(1);
@@ -398,10 +432,12 @@ class Erebot_CLI
         if ($parsed->options['user'] !== NULL ||
             $parsed->options['user'] != '') {
             if (!$hasPosix) {
-                $logger->warning($translator->gettext(
-                    'The posix extension is needed in order '.
-                    'to change user identity.'
-                ));
+                $logger->warning(
+                    $translator->gettext(
+                        'The posix extension is needed in order '.
+                        'to change user identity.'
+                    )
+                );
             }
             else if (posix_getuid() !== 0) {
                 $logger->warning(
@@ -565,9 +601,9 @@ class Erebot_CLI
 
         // Display a desperate warning when run as user root.
         if (getmyuid() === 0)
-            $logger->warning($translator->gettext(
-                'You SHOULD NOT run Erebot as root!'
-            ));
+            $logger->warning(
+                $translator->gettext('You SHOULD NOT run Erebot as root!')
+            );
 
         if ($identd !== NULL)
             $identd->connect();

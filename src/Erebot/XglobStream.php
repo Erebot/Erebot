@@ -61,7 +61,7 @@ extends Erebot_StreamWrapperBase
     }
 
     /// \copydoc Erebot_StreamWrapperBase::stream_open()
-    public function stream_open($path, $mode, $options, &$opened_path)
+    public function stream_open($path, $mode, $options, &$openedPath)
     {
         $this->_position = 0;
         $pos        = strpos($path, '://');

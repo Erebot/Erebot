@@ -76,7 +76,8 @@ abstract class Erebot_StreamWrapperBase
      * This method is called when opening the stream wrapper,
      * right before Erebot_StreamWrapperBase::stream_open().
      */
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -136,7 +137,7 @@ abstract class Erebot_StreamWrapperBase
      * \attention
      *      Remember to check if the mode is valid for the path requested.
      */
-    abstract public function stream_open($path, $mode, $options, &$opened_path);
+    abstract public function stream_open($path, $mode, $options, &$openedPath);
 
     /**
      * \brief
@@ -167,7 +168,8 @@ abstract class Erebot_StreamWrapperBase
      *      after calling Erebot_StreamWrapperBase::stream_read() to check
      *      if EOF has been reached. If not implemented, EOF is assumed.
      */
-    public function stream_read($count) {
+    public function stream_read($count)
+    {
         return FALSE;
     }
 
@@ -200,7 +202,8 @@ abstract class Erebot_StreamWrapperBase
      *      If Erebot_StreamWrapperBase::stream_tell() fails,
      *      the return value to the caller function will be set to FALSE.
      */
-    public function stream_seek($offset, $whence) {
+    public function stream_seek($offset, $whence)
+    {
         return FALSE;
     }
 
@@ -218,7 +221,8 @@ abstract class Erebot_StreamWrapperBase
      *      automatically on the stream. For backward compatibility,
      *      this method should always be implemented.
      */
-    public function stream_stat() {
+    public function stream_stat()
+    {
         return array();
     }
 
@@ -254,7 +258,8 @@ abstract class Erebot_StreamWrapperBase
      *      http://php.net/manual/en/streamwrapper.url-stat.php for a
      *      complete list of all stat() related functions.
      */
-    public function url_stat($path, $flags) {
+    public function url_stat($path, $flags)
+    {
         return array();
     }
 }

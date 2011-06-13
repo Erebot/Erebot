@@ -72,7 +72,7 @@ implements  Erebot_Interface_Core
     /// List of \link Erebot_Interface_Connection connections\endlink to handle.
     protected $_connections;
 
-    /// List of \link Erebot_Interface_Timer timers\endlink to trigger, eventually.
+    /// List of \link Erebot_Interface_Timer timers\endlink to trigger.
     protected $_timers;
 
     /// Main configuration for the bot.
@@ -85,7 +85,10 @@ implements  Erebot_Interface_Core
     protected $_translator;
 
     /// \copydoc Erebot_Interface_Core::__construct()
-    public function __construct(Erebot_Interface_Config_Main $config, Erebot_Interface_I18n $translator)
+    public function __construct(
+        Erebot_Interface_Config_Main    $config,
+        Erebot_Interface_I18n           $translator
+    )
     {
         $this->_connections     =
         $this->_timers          = array();
@@ -275,7 +278,8 @@ implements  Erebot_Interface_Core
             // Take care of incoming data waiting for processing.
             if (is_array($this->_connections)) {
                 foreach ($this->_connections as $connection) {
-                    if ($connection instanceof Erebot_Interface_ReceivingConnection)
+                    if ($connection instanceof
+                        Erebot_Interface_ReceivingConnection)
                         $connection->processQueuedData();
                 }
             }
@@ -284,7 +288,8 @@ implements  Erebot_Interface_Core
             foreach ($write as $socket) {
                 $index = array_search($socket, $actives['connections']);
                 if ($index !== FALSE && isset($this->_connections[$index]) &&
-                    $this->_connections[$index] instanceof Erebot_Interface_SendingConnection)
+                    $this->_connections[$index] instanceof
+                    Erebot_Interface_SendingConnection)
                     $this->_connections[$index]->processOutgoingData();
             }
         }
@@ -356,9 +361,12 @@ implements  Erebot_Interface_Core
             $logger->debug($this->gettext('Memory usage:'));
 
             $stats = array(
-                $this->gettext("Allocated:")    => memory_get_peak_usage(TRUE)."B",
-                $this->gettext("Used:")         => memory_get_peak_usage(FALSE)."B",
-                $this->gettext("Limit:")        => ini_get('memory_limit'),
+                $this->gettext("Allocated:") =>
+                    memory_get_peak_usage(TRUE)."B",
+                $this->gettext("Used:") =>
+                    memory_get_peak_usage(FALSE)."B",
+                $this->gettext("Limit:") =>
+                    ini_get('memory_limit'),
             );
 
             foreach ($stats as $key => $value)
@@ -412,7 +420,9 @@ implements  Erebot_Interface_Core
     {
         $key = array_search($connection, $this->_connections);
         if ($key !== FALSE)
-            throw new Erebot_InvalidValueException('Already handling this connection');
+            throw new Erebot_InvalidValueException(
+                'Already handling this connection'
+            );
 
         $this->_connections[] = $connection;
     }
@@ -521,14 +531,16 @@ implements  Erebot_Interface_Core
             $netName = $network->getName();
             if (isset($currentConnections[$netName])) {
                 try {
-                    $URIs   = $currentConnections[$netName]
+                    $uris   = $currentConnections[$netName]
                                 ->getConfig(NULL)
                                 ->getConnectionURI();
-                    $URI    = new Erebot_URI($URIs[count($URIs) - 1]);
-                    $serverCfg = $network->getServerCfg((string) $URI);
+                    $uri    = new Erebot_URI($uris[count($uris) - 1]);
+                    $serverCfg = $network->getServerCfg((string) $uri);
 
                     $logger->info(
-                        $this->gettext('Reusing existing connection for network "%s"'),
+                        $this->gettext(
+                            'Reusing existing connection for network "%s"'
+                        ),
                         $netName
                     );
                     // Move it from existing connections to new connections,
@@ -544,13 +556,16 @@ implements  Erebot_Interface_Core
                 }
             }
 
-            if (!in_array('Erebot_Module_AutoConnect', $network->getModules(TRUE)))
+            if (!in_array(
+                'Erebot_Module_AutoConnect',
+                $network->getModules(TRUE)
+            ))
                 continue;
 
             $servers = $network->getServers();
             foreach ($servers as $server) {
-                $URIs       = $server->getConnectionURI();
-                $serverURI  = new Erebot_URI($URIs[count($URIs) - 1]);
+                $uris       = $server->getConnectionURI();
+                $serverUri  = new Erebot_URI($uris[count($uris) - 1]);
                 try {
                     $connection = $factory->newConnection($this, $server);
 
@@ -563,14 +578,14 @@ implements  Erebot_Interface_Core
 
                     $logger->info(
                         $this->gettext('Trying to connect to "%s"...'),
-                        $serverURI
+                        $serverUri
                     );
                     $connection->connect();
                     $newConnections[] = $connection;
 
                     $logger->info(
                         $this->gettext('Successfully connected to "%s"...'),
-                        $serverURI
+                        $serverUri
                     );
 
                     break;
@@ -582,7 +597,7 @@ implements  Erebot_Interface_Core
                     // connect or cycle the list.
                     $logger->exception(
                         $this->gettext('Could not connect to "%s"'),
-                        $e, $serverURI
+                        $e, $serverUri
                     );
                 }
             }

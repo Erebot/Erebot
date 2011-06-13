@@ -116,7 +116,7 @@ implements  Erebot_Interface_ModuleContainer,
             $this->_bot,
             $this->_channelModules,
             $this->_plainModules,
-            $this->_URIFactory,
+            $this->_uriFactory,
             $this->_depFactory
         );
     }
@@ -130,7 +130,7 @@ implements  Erebot_Interface_ModuleContainer,
      */
     public function getURIFactory()
     {
-        return $this->_URIFactory;
+        return $this->_uriFactory;
     }
 
     /**
@@ -146,7 +146,7 @@ implements  Erebot_Interface_ModuleContainer,
         if (!$reflector->implementsInterface('Erebot_Interface_URI'))
             throw new Erebot_InvalidValueException(
                 'The factory must implement Erebot_Interface_URI');
-        $this->_URIFactory = $factory;
+        $this->_uriFactory = $factory;
     }
 
     /**
@@ -286,13 +286,13 @@ implements  Erebot_Interface_ModuleContainer,
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
 
-        $URIs           = $this->_config->getConnectionURI();
-        $serverURI      = new Erebot_URI($URIs[count($URIs) - 1]);
+        $uris           = $this->_config->getConnectionURI();
+        $serverUri      = new Erebot_URI($uris[count($uris) - 1]);
         $this->_socket  = NULL;
 
         $logger->info(
             $this->_bot->gettext('Loading required modules for "%s"...'),
-            $serverURI
+            $serverUri
         );
         $this->_loadModules(
             $this->_config,
@@ -301,11 +301,11 @@ implements  Erebot_Interface_ModuleContainer,
         );
 
         try {
-            $nbTunnels      = count($URIs);
-            $factory        = $this->_URIFactory;
+            $nbTunnels      = count($uris);
+            $factory        = $this->_uriFactory;
             for ($i = 0; $i < $nbTunnels; $i++) {
-                $URI        = new $factory($URIs[$i]);
-                $scheme     = $URI->getScheme();
+                $uri        = new $factory($uris[$i]);
+                $scheme     = $uri->getScheme();
                 $upScheme   = strtoupper($scheme);
 
                 if ($i + 1 == $nbTunnels)
@@ -316,7 +316,7 @@ implements  Erebot_Interface_ModuleContainer,
                 if ($scheme == 'base' || !class_exists($cls))
                     throw new Erebot_InvalidValueException('Invalid class');
                 
-                $port = $URI->getPort();
+                $port = $uri->getPort();
                 if ($port === NULL)
                     $port = getservbyname($scheme, 'tcp');
                 if (!is_int($port) || $port <= 0 || $port > 65535)
@@ -324,7 +324,7 @@ implements  Erebot_Interface_ModuleContainer,
 
                 if ($this->_socket === NULL) {
                     $this->_socket = stream_socket_client(
-                        'tcp://'.$URI->getHost().':'.$port,
+                        'tcp://'.$uri->getHost().':'.$port,
                         $errno, $errstr,
                         ini_get('default_socket_timeout'),
                         STREAM_CLIENT_CONNECT
@@ -340,11 +340,11 @@ implements  Erebot_Interface_ModuleContainer,
                     if (!($proxy instanceof Erebot_Proxy_Base))
                         throw new Erebot_InvalidValueException('Invalid class');
 
-                    $next   = new $factory($URIs[$i + 1]);
-                    $proxy->proxify($URI, $next);
+                    $next   = new $factory($uris[$i + 1]);
+                    $proxy->proxify($uri, $next);
                     $logger->debug(
                         "Successfully established connection through proxy '%s'",
-                        $URI->toURI(FALSE, FALSE)
+                        $uri->toURI(FALSE, FALSE)
                     );
                 }
                 // That's the endpoint.
@@ -353,7 +353,7 @@ implements  Erebot_Interface_ModuleContainer,
                     if (!($endPoint instanceof Erebot_Interface_Proxy_EndPoint))
                         throw new Erebot_InvalidValueException('Invalid class');
 
-                    $query      = $URI->getQuery();
+                    $query      = $uri->getQuery();
                     $params     = array();
                     if ($query !== NULL)
                         parse_str($query, $params);
@@ -362,9 +362,9 @@ implements  Erebot_Interface_ModuleContainer,
                         $this->_socket,
                         'ssl', 'verify_peer',
                         isset($params['verify_peer'])
-                        ?   Erebot_Config_Proxy::_parseBool(
-                                $params['verify_peer']
-                            )
+                        ? Erebot_Config_Proxy::_parseBool(
+                            $params['verify_peer']
+                        )
                         : TRUE
                     );
 
@@ -372,9 +372,9 @@ implements  Erebot_Interface_ModuleContainer,
                         $this->_socket,
                         'ssl', 'allow_self_signed',
                         isset($params['allow_self_signed'])
-                        ?   Erebot_Config_Proxy::_parseBool(
-                                $params['allow_self_signed']
-                            )
+                        ? Erebot_Config_Proxy::_parseBool(
+                            $params['allow_self_signed']
+                        )
                         : TRUE
                     );
 
@@ -405,7 +405,7 @@ implements  Erebot_Interface_ModuleContainer,
             throw new Erebot_ConnectionFailureException(
                 sprintf(
                     "Unable to connect to '%s' (%s)",
-                    $URIs[count($URIs) - 1], $e->getMessage()
+                    $uris[count($uris) - 1], $e->getMessage()
                 )
             );
         }
@@ -419,8 +419,8 @@ implements  Erebot_Interface_ModuleContainer,
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
-        $URIs       = $this->_config->getConnectionURI();
-        $logger->info("Disconnecting from '%s' ...", $URIs[count($URIs) - 1]);
+        $uris       = $this->_config->getConnectionURI();
+        $logger->info("Disconnecting from '%s' ...", $uris[count($uris) - 1]);
 
         // Purge send queue and send QUIT message to notify server.
         $this->_sndQueue = array();
@@ -698,8 +698,9 @@ implements  Erebot_Interface_ModuleContainer,
 
                 $event = $this->makeEvent('!RawMode', $target, $source, $msg);
                 $this->dispatch($event);
-                if ($event->preventDefault(TRUE))
+                if ($event->preventDefault(TRUE)) {
                     break;
+                }
 
                 $wrappedMessage = new Erebot_TextWrapper($msg);
                 $modes  = $wrappedMessage[0];
@@ -870,8 +871,9 @@ implements  Erebot_Interface_ModuleContainer,
 
             default:        // :server numeric parameters
                 /* RAW (numeric) events */
-                if (!ctype_digit($type))
+                if (!ctype_digit($type)) {
                     break;
+                }
 
                 $type   = intval($type, 10);
                 switch ($type) {
@@ -880,8 +882,9 @@ implements  Erebot_Interface_ModuleContainer,
                      * So, we delay detection of the connection for as
                      * long as we can (while keeping portability). */
                     case Erebot_Interface_Event_Raw::RPL_LUSERME:
-                        if ($this->_connected)
+                        if ($this->_connected) {
                             break;
+                        }
                         $this->dispatch($this->makeEvent('!Connect'));
                         $this->_connected = TRUE;
                         break;

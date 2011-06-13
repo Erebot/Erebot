@@ -140,13 +140,13 @@
         </service>
 
 <!--        <service id="identd" class="Erebot_Identd_Server">-->
-<!--            <argument type="service" id="Erebot"/>-->
+<!--            <argument type="service" id="bot"/>-->
 <!--            <argument>0.0.0.0:113</argument>-->
 <!--            <argument>Erebot_Identd_Worker</argument>-->
 <!--        </service>-->
 
         <service id="console" class="Erebot_Console">
-            <argument type="service" id="Erebot"/>
+            <argument type="service" id="bot"/>
         </service>
     </services>
 </container>

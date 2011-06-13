@@ -62,20 +62,22 @@ implements  Erebot_Interface_I18n
     /// \copydoc Erebot_Interface_I18n::nameToCategory()
     static public function nameToCategory($name)
     {
-        $categories = array_flip(array(
-            self::LC_CTYPE          => 'LC_CTYPE',
-            self::LC_NUMERIC        => 'LC_NUMERIC',
-            self::LC_TIME           => 'LC_TIME',
-            self::LC_COLLATE        => 'LC_COLLATE',
-            self::LC_MONETARY       => 'LC_MONETARY',
-            self::LC_MESSAGES       => 'LC_MESSAGES',
-            self::LC_PAPER          => 'LC_PAPER',
-            self::LC_NAME           => 'LC_NAME',
-            self::LC_ADDRESS        => 'LC_ADDRESS',
-            self::LC_TELEPHONE      => 'LC_TELEPHONE',
-            self::LC_MEASUREMENT    => 'LC_MEASUREMENT',
-            self::LC_IDENTIFICATION => 'LC_IDENTIFICATION',
-        ));
+        $categories = array_flip(
+            array(
+                self::LC_CTYPE          => 'LC_CTYPE',
+                self::LC_NUMERIC        => 'LC_NUMERIC',
+                self::LC_TIME           => 'LC_TIME',
+                self::LC_COLLATE        => 'LC_COLLATE',
+                self::LC_MONETARY       => 'LC_MONETARY',
+                self::LC_MESSAGES       => 'LC_MESSAGES',
+                self::LC_PAPER          => 'LC_PAPER',
+                self::LC_NAME           => 'LC_NAME',
+                self::LC_ADDRESS        => 'LC_ADDRESS',
+                self::LC_TELEPHONE      => 'LC_TELEPHONE',
+                self::LC_MEASUREMENT    => 'LC_MEASUREMENT',
+                self::LC_IDENTIFICATION => 'LC_IDENTIFICATION',
+            )
+        );
         if (!isset($categories[$name]))
             throw new Erebot_InvalidValueException('Invalid category name');
         return $categories[$category];
