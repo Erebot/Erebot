@@ -68,9 +68,7 @@ abstract class Erebot_Module_Base
     const MSG_TYPE_ACTION       = 'ACTION';
 
     /**
-     * An abstract method which is called whenever the module
-     * is (re)loaded. You should perform whatever operations
-     * you need to do, depending on the given $flags.
+     * This method is called whenever the module is (re)loaded.
      *
      * \param int $flags
      *      A bitwise OR of the Erebot_Module_Base::RELOAD_*
@@ -83,6 +81,10 @@ abstract class Erebot_Module_Base
      */
     abstract protected function _reload($flags);
 
+    /**
+     * This method is called whenever the module
+     * should be unloaded.
+     */
     abstract protected function _unload();
 
     /**
