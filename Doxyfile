@@ -1,1 +1,2 @@
 @INCLUDE = buildenv/Doxyfile
+INPUT += docs/additions
