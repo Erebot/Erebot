@@ -54,6 +54,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \format{"Your host is <servername>\, running version <ver>"}
      */
     const RPL_YOURHOST              =   2;
+    const RPL_YOURHOSTIS            =   2;
 
     /**
      *  \brief
@@ -62,6 +63,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \format{"This server was created <date>"}
      */
     const RPL_CREATED               =   3;
+    const RPL_SERVERCREATED         =   3;
 
     /**
      *  \brief
@@ -73,6 +75,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  }
      */
     const RPL_MYINFO                =   4;
+    const RPL_SERVERVERSION         =   4;
 
     /// Specific commands/options supported by the server.
     const RPL_ISUPPORT              =   5;
@@ -100,11 +103,13 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_MAPEND                =   7;
+    const RPL_ENDMAP                =   7;
 
     /**
      *  \TODO
      */
     const RPL_SNOMASK               =   8;
+    const RPL_SNOMASKIS             =   8;
 
     /**
      *  \TODO
@@ -116,6 +121,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_STATMEMTOT            =  10;
 
+    const RPL_REDIR                 =  10;  // UnrealIRCd
+
     /**
      *  \TODO
      */
@@ -125,6 +132,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_YOURID                =  42;
+    const RPL_YOURUUID              =  42;  // InspIRCd, ircnet
 
     /**
      *  \TODO
@@ -140,6 +148,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_ATTEMPTINGREROUTE     =  51;
+
+    const RPL_REMOTEISUPPORT        = 105;
 
     /**
      *  \brief
@@ -248,6 +258,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_TRACERECONNECT        = 210;
 
+    const RPL_STATSHELP             = 210;  // UnrealIRCd
+
     /**
      *  \brief
      *      Reports statistics on a connection.
@@ -337,6 +349,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_STATSBLINE            = 220;
 
+    const RPL_NMODEIS               = 220;
+
     /**
      *  \brief
      *      To answer a query about a client's own mode,
@@ -356,15 +370,23 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_STATS_E               = 223;
 
+    const RPL_STATSELINE            = 223;  // Bahamut
+
     /**
      *  \TODO
      */
     const RPL_STATS_D               = 224;
 
+    const RPL_STATSTLINE            = 224;  // UnrealIRCd
+
+    const RPL_STATSFLINE            = 224;  // UltimateIRCd
+
     /**
      *  \TODO
      */
     const RPL_STATSCLONE            = 225;
+
+    const RPL_STATSZLINE            = 225;  // UltimateIRCd
 
     /**
      *  \TODO
@@ -376,6 +398,14 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_STATSGLINE            = 227;
 
+    const RPL_STATSVLINE            = 227;  // UnrealIRCd
+
+    const RPL_STATSBANVER           = 228;  // UnrealIRCd
+
+    const RPL_STATSSPAMF            = 229;  // UnrealIRCd
+
+    const RPL_STATSEXCEPTTKL        = 230;  // UnrealIRCd
+
     /**
      *  \TODO
      */
@@ -385,6 +415,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_ENDOFSERVICES         = 232;
+
+    const RPL_RULES                 = 232;  // UnrealIRCd
 
     /**
      *  \TODO
@@ -573,6 +605,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_TRACEEND              = 262;
 
+    const RPL_ENDOFTRACE            = 262; // Bahamut
+
     /**
      *  \brief
      *      When a server drops a command without processing it,
@@ -625,6 +659,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_LUSERSG               = 266;
 
+    const RPL_MAPUSERS              = 270;
+
     /**
      *  \TODO
      */
@@ -639,6 +675,11 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_STATSDLINE            = 275;
+
+    /**
+     *  \TODO
+     */
+    const RPL_USINGSSL              = 275;
 
     /**
      *  \TODO
@@ -727,6 +768,13 @@ extends     Erebot_Interface_Event_Base_Generic,
     const RPL_ISON                  = 303;
 
     /**
+     *  \TODO
+     */
+    const RPL_TEXT                  = 304;
+
+    const RPL_SYNTAX                = 304;  // InspIRCd
+
+    /**
      *  \brief
      *      Sent went the client removes an AWAY message.
      *
@@ -757,10 +805,16 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_WHOISADMIN            = 308;
 
+    const RPL_RULESTART             = 308;  // InspIRCd
+    const RPL_RULESSTART            = 308;  // UnrealIRCd
+
     /**
      *  \TODO
      */
     const RPL_WHOISSADMIN           = 309;
+
+    const RPL_ENDOFRULES            = 309;  // UnrealIRCd
+    const RPL_RULESEND              = 309;  // InspIRCd
 
     /**
      *  \TODO
@@ -855,6 +909,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_WHOISCHANNELS         = 319;
 
+    const RPL_WHOISSPECIAL          = 320;  // UnrealIRCd
+
     /**
      *  \brief
      *      Obsolete raw used to mark the beginning
@@ -899,6 +955,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_CREATIONTIME          = 329;
+    const RPL_CHANNELCREATED        = 329;
 
     /**
      *  \brief
@@ -909,6 +966,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \format{"<channel> :No topic is set"}
      */
     const RPL_NOTOPIC               = 331;
+    const RPL_NOTOPICSET            = 331;
 
     /**
      *  \brief
@@ -924,11 +982,15 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_TOPICWHOTIME          = 333;
+    const RPL_TOPICTIME             = 333;
 
     /**
      *  \TODO
      */
     const RPL_COMMANDSYNTAX         = 334;
+    const RPL_LISTSYNTAX            = 334;
+
+    const RPL_WHOISBOT              = 335;
 
     /**
      *  \TODO
@@ -939,6 +1001,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_WHOISACTUALLY         = 338;
+
+    const RPL_USERIP                = 340;
 
     /**
      *  \brief
@@ -963,16 +1027,19 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_INVITELIST            = 346;
+    const RPL_INVEXLIST             = 346;  // UnrealIRCd
 
     /**
      *  \TODO
      */
     const RPL_ENDOFINVITELIST       = 347;
+    const RPL_ENDOFINVEXLIST        = 347;  // UnrealIRCd
 
     /**
      *  \TODO
      */
     const RPL_EXCEPTLIST            = 348;
+    const RPL_EXLIST                = 348;  // UnrealIRCd
 
     ///  Alias for Erebot_Interface_Event_Raw::RPL_EXCEPTLIST.
     const RPL_EXEMPTLIST            = 348;
@@ -981,6 +1048,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_ENDOFEXCEPTLIST       = 349;
+    const RPL_ENDOFEXLIST           = 349;  // UnrealIRCd
 
     ///  Alias for Erebot_Interface_Event_Raw::RPL_ENDOFEXCEPTLIST.
     const RPL_ENDOFEXEMPTLIST       = 349;
@@ -989,7 +1057,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \brief
      *      Reply by the server showing its version details.
      *
-     *  \format{"\<version\>.\<debuglevel\> \<server\> :\<comments\>"}
+     *  \format{"<version>.<debuglevel> <server> :<comments>"}
      *
      *  The <tt>\<version\></tt> is the version of the software being
      *  used (including any patchlevel revisions) and the
@@ -1021,6 +1089,11 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_RWHOREPLY             = 354;
+
+    /**
+     *  \TODO
+     */
+    const RPL_KILLDONE              = 361;
 
     /**
      *  \TODO
@@ -1079,6 +1152,11 @@ extends     Erebot_Interface_Event_Base_Generic,
     /**
      *  \TODO
      */
+    const RPL_INFOSTART             = 373;
+
+    /**
+     *  \TODO
+     */
     const RPL_ENDOFINFO             = 374;
 
     /**
@@ -1101,6 +1179,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_WHOISHOST             = 378;
 
+    const RPL_WHOISMODES            = 379;  // UnrealIRCd
+
     /**
      *  \brief
      *      RPL_YOUREOPER is sent back to a client which has
@@ -1110,6 +1190,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \format{":You are now an IRC operator"}
      */
     const RPL_YOUREOPER             = 381;
+    const RPL_YOUAREOPER            = 381;
 
     /**
      *  \brief
@@ -1134,6 +1215,19 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_MYPORTIS              = 384;
+
+    /**
+     *  \TODO
+     */
+    const RPL_NOTOPERANYMORE        = 385;
+
+    const RPL_QLIST                 = 386;  // UnrealIRCd
+
+    const RPL_ENDOFQLIST            = 387;  // UnrealIRCd
+
+    const RPL_ALIST                 = 388;  // UnrealIRCd
+
+    const RPL_ENDOFALIST            = 389;  // UnrealIRCd
 
     /**
      *  \brief
@@ -1168,6 +1262,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const RPL_NOUSERS               = 395;
+
+    const RPL_YOURDISPLAYEDHOST     = 396;  // charybdis
 
     /**
      *  \brief
@@ -1265,6 +1361,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_NOSUCHSERVICE         = 408;
 
+    const ERR_NOCOLORSONCHAN        = 408;  // UltimateIRCd
+
     /**
      *  \TODO
      */
@@ -1277,6 +1375,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \format{":No origin specified"}
      */
     const ERR_NOORIGIN              = 409;
+
+    const ERR_INVALIDCAPSUBCOMMAND  = 410;
 
     /**
      *  \brief
@@ -1366,6 +1466,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_FILEERROR             = 424;
 
+    const ERR_NOOPERMOTD            = 425;  // UnrealIRCd
+
     /**
      *  \TODO
      */
@@ -1399,10 +1501,14 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_NICKNAMEINUSE         = 433;
 
+    const ERR_NORULES               = 434;  // InspIRCd
+
     /**
      *  \TODO
      */
     const ERR_BANONCHAN             = 435;
+
+    const ERR_SERVICECONFUSED       = 435;  // UnrealIRCd
 
     /**
      *  \brief
@@ -1440,11 +1546,13 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const ERR_NICKTOOFAST           = 438;
+    const ERR_NCHANGETOOFAST        = 438;
 
     /**
      *  \TODO
      */
     const ERR_TARGETTOOFAST         = 439;
+    const ERR_TARGETTOFAST          = 439;  // Bahamut
 
     /**
      *  \TODO
@@ -1509,6 +1617,9 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_USERSDISABLED         = 446;
 
+    const ERR_CANTCHANGENICK        = 447;
+    const ERR_NONICKCHANGE          = 447;  // UnrealIRCd
+
     /**
      *  \brief
      *      Returned by the server to indicate that the client
@@ -1523,6 +1634,10 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const ERR_HOSTILENAME           = 455;
+
+    const ERR_NOHIDING              = 459;  // UnrealIRCd
+
+    const ERR_NOTFORHALFOPS         = 460;  // UnrealIRCd
 
     /**
      *  \brief
@@ -1543,6 +1658,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \format{":Unauthorized command (already registered)"}
      */
     const ERR_ALREADYREGISTRED      = 462;
+    const ERR_ALREADYREGISTERED     = 462;  // InspIRCd
 
     /**
      *  \brief
@@ -1600,6 +1716,10 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const ERR_ONLYSERVERSCANCHANGE  = 468;
+
+    const ERR_LINKSET               = 469;  // UnrealIRCd
+
+    const ERR_LINKCHANNEL           = 470;  // UnrealIRCd
 
     /**
      *  \brief
@@ -1681,6 +1801,12 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_BADCHANNAME           = 479;
 
+    const ERR_LINKFAIL              = 479;  // UnrealIRCd
+
+    const ERR_CANNOTKNOCK           = 480;  // UnrealIRCd
+
+    const ERR_SERVERONLY            = 480;  // UltimateIRCd
+
     /**
      *  \brief
      *      Any command requiring operator privileges to operate
@@ -1700,6 +1826,7 @@ extends     Erebot_Interface_Event_Base_Generic,
      *
      *  \format{"<channel> :You're not channel operator"}
      */
+    const ERR_CHANOPRIVSNEEDED      = 482;  // Bahamut
     const ERR_CHANOPPRIVSNEEDED     = 482;
 
     /**
@@ -1721,10 +1848,14 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_RESTRICTED            = 484;
 
+    const ERR_DESYNC                = 484;
+
     /**
      *  \TODO
      */
     const ERR_ISCHANSERVICE         = 484;
+
+    const ERR_ATTACKDENY            = 484;
 
     /**
      *  \brief
@@ -1741,15 +1872,32 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_CHANBANREASON         = 485;
 
-    /**
-     *  \TODO
-     */
-    const ERR_NONONREG              = 486;
+    const ERR_KILLDENY              = 485;
+
+    const ERR_SSLCLIENTSONLY        = 486;  // UltimateIRCd
 
     /**
      *  \TODO
      */
+    const ERR_NONONREG              = 487;  // UltimateIRCd
+
     const ERR_MSGSERVICES           = 487;
+
+    const ERR_NOTFORUSERS           = 487;  // UnrealIRCd
+
+    /**
+     *  \TODO
+     */
+    const ERR_NOSSL                 = 488;
+    const ERR_NOTSSLCLIENT          = 488;  // UltimateIRCd
+
+    const ERR_HTMDISABLED           = 488;  // UnrealIRCd
+
+    const ERR_SECUREONLYCHAN        = 489;  // UnrealIRCd
+
+    const ERR_ALLMUSTSSL            = 490;  // InspIRCd
+
+    const ERR_NOSWEAR               = 490;  // UnrealIRCd
 
     /**
      *  \brief
@@ -1762,10 +1910,24 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_NOOPERHOST            = 491;
 
+    const ERR_NOCTCPALLOWED         = 492;
+    const ERR_NOCTCP                = 492;
+
+    /**
+     *  \TODO
+     */
+    const ERR_NOSHAREDCHAN          = 493;
+
     /**
      *  \TODO
      */
     const ERR_OWNMODE               = 494;
+
+    const ERR_DELAYREJOIN           = 495;
+
+    const ERR_CHANOWNPRIVNEEDED     = 499;  // UnrealIRCd
+
+    const ERR_TOOMANYJOINS          = 500;  // UnrealIRCd
 
     /**
      *  \brief
@@ -1777,6 +1939,8 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const ERR_UMODEUNKNOWNFLAG      = 501;
 
+    const ERR_UNKNOWNSNOMASK        = 501;  // InspIRCd
+
     /**
      *  \brief
      *      Error sent to any user trying to view or change
@@ -1785,6 +1949,16 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \format{":Cannot change mode for other users"}
      */
     const ERR_USERSDONTMATCH        = 502;
+
+    /**
+     *  \TODO
+     */
+    const ERR_GHOSTEDCLIENT         = 503;
+
+    /**
+     *  \TODO
+     */
+    const ERR_LAST_ERR_MSG          = 504;
 
     /**
      *  \TODO
@@ -1805,11 +1979,24 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const ERR_BADPING               = 513;
+    const ERR_NEEDPONG              = 513;  // UnrealIRCd
 
     /**
      *  \TODO
      */
     const ERR_TOOMANYDCC            = 514;
+
+    const ERR_DISABLED              = 517;  // UnrealIRCd
+
+    const ERR_NOINVITE              = 518;  // UnrealIRCd
+
+    const ERR_ADMONLY               = 519;
+
+    /**
+     *  \TODO
+     */
+    const ERR_CANTJOINOPERSONLY     = 520;
+    const ERR_OPERONLY              = 520;  // UnrealIRCd
 
     /**
      *  \TODO
@@ -1825,6 +2012,16 @@ extends     Erebot_Interface_Event_Base_Generic,
      *  \TODO
      */
     const ERR_WHOLIMEXCEED          = 523;
+
+    const ERR_OPERSPVERIFY          = 524;  // UnrealIRCd
+
+    const ERR_CANTSENDTOUSER        = 531;
+
+    const RPL_REAWAY                = 597;  // UnrealIRCd
+
+    const RPL_GONEAWAY              = 598;  // UnrealIRCd
+
+    const RPL_NOTAWAY               = 599;  // UnrealIRCd
 
     /**
      *  \TODO
@@ -1866,6 +2063,12 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_ENDOFWATCHLIST        = 607;
 
+    const RPL_CLEARWATCH            = 608;  // UnrealIRCd
+
+    const RPL_NOWISAWAY             = 609;  // UnrealIRCd
+
+    const RPL_WHOISSERVICES         = 613;  // UltimateIRCd
+
     /**
      *  \TODO
      */
@@ -1886,8 +2089,29 @@ extends     Erebot_Interface_Event_Base_Generic,
      */
     const RPL_DCCINFO               = 620;
 
+    const RPL_SETTINGS              = 630;  // UltimateIRCd
 
-    // Those are unofficial raws for InspIRCd's STARTTLS extension.
+    const RPL_ENDOFSETTINGS         = 631;  // UltimateIRCd
+
+    const RPL_IRCOPS                = 632;  // UltimateIRCd
+
+    const RPL_ENDOFIRCOPS           = 633;  // UltimateIRCd
+
+    const RPL_DUMPING               = 640;  // UnrealIRCd
+
+    const RPL_OPERMOTDSTART         = 640;  // UltimateIRCd
+
+    const RPL_DUMPRPL               = 641;  // UnrealIRCd
+
+    const RPL_OPERMOTD              = 641;  // UltimateIRCd
+
+    const RPL_EODUMP                = 642;  // UnrealIRCd
+
+    const RPL_ENDOFOPERMOTD         = 642;  // UltimateIRCd
+
+#    const RPL_MAPMORE               = 650;  // UltimateIRCd
+
+    const RPL_SPAMCMDFWD            = 659;  // UnrealIRCd
 
     /**
      *  \brief
@@ -1904,6 +2128,11 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      the client.
      */
     const RPL_STARTTLSOK            = 670;
+    const RPL_STARTTLS              = 670;
+
+    const RPL_WHOISSECURE           = 671;  // UnrealIRCd
+
+    const RPL_WHOHOST               = 671;  // UltimateIRCd
 
     /**
      *  \brief
@@ -1920,7 +2149,30 @@ extends     Erebot_Interface_Event_Base_Generic,
      *      entirely.
      */
     const ERR_STARTTLSFAIL          = 691;
+    const ERR_STARTTLS              = 691;
 
+    const ERR_EXEMPTLISTFULL        = 700;  // UltimateIRCd
+
+    const RPL_COMMANDS              = 702;  // InspIRCd
+
+    const RPL_COMMANDSEND           = 703;  // InspIRCd
+
+    const ERR_WORDFILTERED          = 936;  // InspIRCd
+
+    const ERR_CANTUNLOADMODULE      = 972;  // InspIRCd
+
+    const ERR_CANNOTDOCOMMAND       = 972;  // UnrealIRCd
+
+    const RPL_UNLOADEDMODULE        = 973;  // InspIRCd
+
+    const ERR_CANTLOADMODULE        = 974;  // InspIRCd
+
+    const ERR_CANNOTCHANGECHANMODE  = 974;  // UnrealIRCd
+
+    const RPL_LOADEDMODULE          = 975;  // InspIRCd
+
+    const ERR_NUMERIC_ERR           = 999;
+    const ERR_NUMERICERR            = 999;
 
     /**
      * Constructs a raw message.

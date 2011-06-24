@@ -9,6 +9,7 @@ $deps = array(
     'required' => array(
         'pear.php.net/Console_CommandLine',
         'pear.php.net/File_Gettext',
+        'pear.erebot.net/DependencyInjection',
         'pear.erebot.net/Erebot_Module_IrcConnector',
         'pear.erebot.net/Erebot_Module_AutoConnect',
         'pear.erebot.net/Erebot_Module_PingReply',

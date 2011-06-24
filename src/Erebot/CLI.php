@@ -16,8 +16,7 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/// @TODO: don't hard-code this!
-require('vendor/dependency-injection/sfServiceContainerAutoloader.php');
+require('SymfonyComponents/DependencyInjection/sfServiceContainerAutoloader.php');
 sfServiceContainerAutoloader::register();
 
 /**
