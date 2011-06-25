@@ -116,7 +116,7 @@ extends PHPUnit_Framework_TestCase
         $this->assertTrue($dispatched[0] instanceof Erebot_Event_Connect);
         $this->assertTrue($dispatched[1] instanceof Erebot_Event_Raw);
         $this->assertEquals(
-            Erebot_Interface_Event_Raw::RPL_LUSERME,
+            Erebot_Interface_RawProfile_RFC1459::RPL_LUSERME,
             $dispatched[1]->getRaw()
         );
     }
