@@ -61,6 +61,12 @@ implements  Erebot_Interface_ModuleContainer,
     /// Mappings from (lowercase) interface names to actual classes.
     protected $_eventsMapping;
 
+    protected $_uriFactory;
+
+    protected $_depFactory;
+
+    protected $_rawProfileLoader;
+
     /// Valid mappings for case-insensitive comparisons.
     static protected $_caseMappings = NULL;
 
@@ -101,6 +107,9 @@ implements  Erebot_Interface_ModuleContainer,
         $this->setEventClasses($events);
         $this->setURIFactory('Erebot_URI');
         $this->setDependencyFactory('Erebot_Dependency');
+        $this->setRawProfileLoader(
+            new Erebot_RawProfileLoader('Erebot_Interface_RawProfile_RFC2812')
+        );
     }
 
     /**
@@ -175,6 +184,18 @@ implements  Erebot_Interface_ModuleContainer,
             throw new Erebot_InvalidValueException(
                 'The factory must implement Erebot_Interface_Dependency');
         $this->_depFactory = $factory;
+    }
+
+    public function getRawProfileLoader()
+    {
+        return $this->_rawProfileLoader;
+    }
+
+    public function setRawProfileLoader(
+        Erebot_Interface_RawProfileLoader $loader
+    )
+    {
+        $this->_rawProfileLoader = $loader;
     }
 
     public function reload(Erebot_Interface_Config_Server $config)
@@ -881,7 +902,7 @@ implements  Erebot_Interface_ModuleContainer,
                      * to detect the server's capabilities first.
                      * So, we delay detection of the connection for as
                      * long as we can (while keeping portability). */
-                    case Erebot_Interface_Event_Raw::RPL_LUSERME:
+                    case Erebot_Interface_RawProfile_RFC1459::RPL_LUSERME:
                         if ($this->_connected) {
                             break;
                         }

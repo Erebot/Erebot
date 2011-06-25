@@ -66,7 +66,11 @@ implements  Erebot_Interface_RawHandler
     /// \copydoc Erebot_Interface_RawHandler::handleRaw()
     public function handleRaw(Erebot_Interface_Event_Raw $raw)
     {
-        if ($raw->getRaw() != $this->_raw)
+        $ourRaw = ($this->_raw instanceof Erebot_RawReference)
+            ? $this->_raw->getValue()
+            : $this->_raw;
+
+        if ($raw->getRaw() !== $ourRaw)
             return NULL;
 
         return call_user_func($this->_callback, $raw);

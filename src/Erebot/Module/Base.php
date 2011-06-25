@@ -515,5 +515,10 @@ abstract class Erebot_Module_Base
         $config = $this->_connection->getConfig(NULL);
         return $config->getTranslator(get_class());
     }
+
+    public function getRawRef($rawName)
+    {
+        return new Erebot_RawReference($this->_connection, $rawName);
+    }
 }
 
