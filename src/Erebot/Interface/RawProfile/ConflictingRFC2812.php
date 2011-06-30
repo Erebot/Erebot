@@ -16,11 +16,16 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface Erebot_Interface_RawProfileLoader
+interface   Erebot_Interface_RawProfile_ConflictingRFC2812
+extends     Erebot_Interface_RawProfile
 {
-    public function setProfiles($profiles);
-
-    public function getProfiles();
-
-    public function getRawByName($rawName);
+    /**
+     *  \brief
+     *      Redirect user to another server.
+     *
+     *  \format{"Try server <server name>\, port <port number>"}
+     */
+    const RPL_BOUNCE                =   5;
+    const RPL_REDIR                 =   5;
 }
+

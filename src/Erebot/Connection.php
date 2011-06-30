@@ -910,10 +910,10 @@ implements  Erebot_Interface_ModuleContainer,
                         $this->_connected = TRUE;
                         break;
 
-                    case Erebot_Interface_Event_Raw::RPL_NOWON:
-                    case Erebot_Interface_Event_Raw::RPL_NOWOFF:
-                    case Erebot_Interface_Event_Raw::RPL_LOGON:
-                    case Erebot_Interface_Event_Raw::RPL_LOGOFF:
+                    case Erebot_Interface_RawProfile_ISON::RPL_NOWON:
+                    case Erebot_Interface_RawProfile_ISON::RPL_NOWOFF:
+                    case Erebot_Interface_RawProfile_ISON::RPL_LOGON:
+                    case Erebot_Interface_RawProfile_ISON::RPL_LOGOFF:
                         $nick       = array_shift($parts);
                         $ident      = array_shift($parts);
                         $host       = array_shift($parts);
@@ -924,13 +924,13 @@ implements  Erebot_Interface_ModuleContainer,
                             $text = substr($text, 1);
 
                         $map    = array(
-                            Erebot_Interface_Event_Raw::RPL_NOWON   =>
+                            Erebot_Interface_RawProfile_ISON::RPL_NOWON   =>
                                 '!Notify',
-                            Erebot_Interface_Event_Raw::RPL_LOGON   =>
+                            Erebot_Interface_RawProfile_ISON::RPL_LOGON   =>
                                 '!Notify',
-                            Erebot_Interface_Event_Raw::RPL_NOWOFF  =>
+                            Erebot_Interface_RawProfile_ISON::RPL_NOWOFF  =>
                                 '!UnNotify',
-                            Erebot_Interface_Event_Raw::RPL_LOGOFF  =>
+                            Erebot_Interface_RawProfile_ISON::RPL_LOGOFF  =>
                                 '!UnNotify',
                         );
                         $cls    = $map[$type];

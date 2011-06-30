@@ -16,11 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface Erebot_Interface_RawProfileLoader
+interface   Erebot_Interface_RawProfile_NumericError
+extends     Erebot_Interface_RawProfile
 {
-    public function setProfiles($profiles);
-
-    public function getProfiles();
-
-    public function getRawByName($rawName);
+    const ERR_NUMERIC_ERR           = 999;
+    const ERR_NUMERICERR            = 999;
+    const ERR_LAST_ERR_MSG          = 999;
 }

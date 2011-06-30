@@ -16,11 +16,32 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface Erebot_Interface_RawProfileLoader
+interface   Erebot_Interface_RawProfile_DCCINFO
+extends     Erebot_Interface_RawProfile
 {
-    public function setProfiles($profiles);
+    /**
+     *  \TODO
+     */
+    const ERR_TOOMANYDCC            = 514;
 
-    public function getProfiles();
+    /**
+     *  \TODO
+     */
+    const RPL_DCCSTATUS             = 617;
 
-    public function getRawByName($rawName);
+    /**
+     *  \TODO
+     */
+    const RPL_DCCLIST               = 618;
+
+    /**
+     *  \TODO
+     */
+    const RPL_ENDOFDCCLIST          = 619;
+
+    /**
+     *  \TODO
+     */
+    const RPL_DCCINFO               = 620;
 }
+

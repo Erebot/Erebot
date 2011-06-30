@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \see
+ *      RFC 2812 (http://www.faqs.org/rfcs/rfc2812.html)
+ */
 interface   Erebot_Interface_RawProfile_RFC2812
 extends     Erebot_Interface_RawProfile_RFC1459
 {
@@ -56,14 +60,6 @@ extends     Erebot_Interface_RawProfile_RFC1459
      */
     const RPL_MYINFO                =   4;
     const RPL_SERVERVERSION         =   4;
-
-    /**
-     *  \brief
-     *      Obsolete raw used to redirect users to another server.
-     *
-     *  \format{"Try server <server name>\, port <port number>"}
-     */
-    const RPL_BOUNCE                =   5;
 
     /**
      *  \brief

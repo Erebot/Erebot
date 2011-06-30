@@ -16,11 +16,17 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface Erebot_Interface_RawProfileLoader
+interface   Erebot_Interface_RawProfile_GLIST
+extends     Erebot_Interface_RawProfile
 {
-    public function setProfiles($profiles);
+    /**
+     *  \TODO
+     */
+    const RPL_GLIST                 = 280;
 
-    public function getProfiles();
-
-    public function getRawByName($rawName);
+    /**
+     *  \TODO
+     */
+    const RPL_ENDOFGLIST            = 281;
 }
+

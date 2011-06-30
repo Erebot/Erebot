@@ -16,11 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface Erebot_Interface_RawProfileLoader
+interface   Erebot_Interface_RawProfile_AwayLimit
+extends     Erebot_Interface_RawProfile
 {
-    public function setProfiles($profiles);
-
-    public function getProfiles();
-
-    public function getRawByName($rawName);
+    /**
+     *  \TODO
+     */
+    const ERR_TOOMANYAWAY           = 429;
 }
+

@@ -16,11 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface Erebot_Interface_RawProfileLoader
+interface   Erebot_Interface_RawProfile_Bounce
+extends     Erebot_Interface_RawProfile
 {
-    public function setProfiles($profiles);
-
-    public function getProfiles();
-
-    public function getRawByName($rawName);
+    const RPL_BOUNCE                =  10;
+    const RPL_REDIR                 =  10;
 }
+

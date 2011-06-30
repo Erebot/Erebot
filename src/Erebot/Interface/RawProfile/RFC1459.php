@@ -16,6 +16,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \see
+ *      RFC 1459 (http://www.faqs.org/rfcs/rfc1459.html)
+ */
 interface   Erebot_Interface_RawProfile_RFC1459
 extends     Erebot_Interface_RawProfile
 {
