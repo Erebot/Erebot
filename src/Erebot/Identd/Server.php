@@ -48,6 +48,7 @@ implements  Erebot_Interface_ReceivingConnection
             throw new Exception("Could not create identd server (".$errstr.")");
     }
 
+    /// Destructor.
     public function __destruct()
     {
         $this->disconnect();

@@ -50,7 +50,6 @@ implements  Erebot_Interface_ReceivingConnection,
     /// Destructor.
     public function __destruct()
     {
-        $this->_disconnect();
     }
 
     /// \copydoc Erebot_Interface_Connection::connect()
