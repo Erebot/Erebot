@@ -154,10 +154,27 @@ implements  Erebot_Interface_ReceivingConnection
 
     protected function _handleMessage($line)
     {
-        foreach ($this->_bot->getConnections() as $connection)
-            if ($connection instanceof Erebot_Interface_SendingConnection &&
-                $connection != $this)
+        $pos = strpos($line, ' ');
+        if ($pos === FALSE)
+            return;
+
+        $line       = substr($line, $pos + 1);
+        if ($line === FALSE)
+            return;
+
+        $pattern    = preg_quote(substr($line, 0, $pos), '@');
+        $pattern    = strtr($pattern, array('\\?' => '.?', '\\*' => '.*'));
+
+        foreach ($this->_bot->getConnections() as $connection) {
+            if (!($connection instanceof Erebot_Interface_SendingConnection) ||
+                $connection == $this)
+                continue;
+
+            $config = $connection->getConfig(NULL);
+            $netConfig = $config->getNetworkCfg();
+            if (preg_match('@^'.$pattern.'$@Di', $netConfig->getName()))
                 $connection->pushLine($line);
+        }
     }
 
     /// \copydoc Erebot_Interface_Connection::getBot()
