@@ -32,9 +32,6 @@ abstract class Erebot_Module_Base
     /// The translator to use for messages coming from this instance.
     protected   $_translator;
 
-    /// The module's metadata.
-    static protected $_metadata = array();
-
 
     /// Passed when the module is loaded (instead of reloaded).
     const RELOAD_INIT       = 0x01;
@@ -152,32 +149,6 @@ abstract class Erebot_Module_Base
     final public function unload()
     {
         return $this->_unload();
-    }
-
-    /**
-     * \internal
-     * Returns metadata associated with this module.
-     *
-     * \param string $className
-     *      The class whose metadata should be returned.
-     *
-     * \retval array
-     *      The module's metadata.
-     */
-    static public function getMetadata($className)
-    {
-        if (!class_exists($className))
-            throw new Erebot_InvalidValueException('Invalid class name');
-        for ($obj = $className; $obj; $obj = get_parent_class($obj)) {
-            $refl = new ReflectionClass($obj);
-            try {
-                $reflProp = $refl->getProperty('_metadata');
-                return $reflProp->getValue();
-            }
-            catch (ReflectionException $e) {
-            }
-        }
-        return array();
     }
 
     public function install()

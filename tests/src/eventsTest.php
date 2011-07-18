@@ -97,6 +97,9 @@ extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers Erebot_Event_Ping
+     */
     public function testPing()
     {
         $this->_connection->handleMessage('PING :foo');
@@ -106,6 +109,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals("foo", (string) $dispatched[0]->getText());
     }
 
+    /**
+     * @covers Erebot_Event_Connect
+     */
     public function testConnectAndRaw255()
     {
         $this->_connection->handleMessage(
@@ -121,6 +127,10 @@ extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers Erebot_Event_Notify
+     * @covers Erebot_Event_UnNotify
+     */
     public function testWatchUnwatch()
     {
         $this->_connection->handleMessage(

@@ -80,72 +80,54 @@ extends ErebotModuleTestCase
         $this->_cb = array($this, 'dummyCallback');
     }
 
-    public function testMatchByDirectClass()
+    public function classProvider()
     {
-        $handler    = new Erebot_EventHandler(
-            $this->_cb,
-            new Erebot_Event_Match_InstanceOf('Erebot_Event_Logon')
+        return array(
+            // Direct class
+            array('Erebot_Event_Ping'),
+            // Inherited class
+            array('Erebot_Event_WithTextAbstract'),
+            // Top class
+            array('Erebot_Event_Abstract'),
         );
-        $event      = new Erebot_Event_Logon($this->_connection);
-        $this->assertTrue($handler->handleEvent($event));
     }
 
-    public function testMatchByInheritedClass()
+    public function interfaceProvider()
     {
-        $handler    = new Erebot_EventHandler(
-            $this->_cb,
-            new Erebot_Event_Match_InstanceOf('Erebot_Event_WithTextAbstract')
+        return array(
+            // Direct interface
+            array('Erebot_Interface_Event_Base_TextMessage'),
+            // Inherited interface
+            array('Erebot_Interface_Event_Base_MessageCapable'),
+            // Top interface
+            array('Erebot_Interface_Event_Base_Generic'),
         );
+    }
+
+    /**
+     * @dataProvider classProvider
+     * @covers Erebot_Event_Match_InstanceOf
+     * @covers Erebot_EventHandler
+     */
+    public function testMatchInstanceOfClass($cls)
+    {
+        $matcher    = new Erebot_Event_Match_InstanceOf($cls);
+        $this->assertEquals($cls, $matcher->getType());
+        $handler    = new Erebot_EventHandler($this->_cb, $matcher);
         $event      = new Erebot_Event_Ping($this->_connection, 'foo');
         $this->assertTrue($handler->handleEvent($event));
     }
 
-    public function testMatchByTopClass()
+    /**
+     * @dataProvider interfaceProvider
+     * @covers Erebot_Event_Match_InstanceOf
+     * @covers Erebot_EventHandler
+     */
+    public function testMatchInstanceOfInterface($iface)
     {
-        $handler    = new Erebot_EventHandler(
-            $this->_cb,
-            new Erebot_Event_Match_InstanceOf('Erebot_Event_Abstract')
-        );
-        $event      = new Erebot_Event_Ping($this->_connection, 'foo');
-        $this->assertTrue($handler->handleEvent($event));
-    }
-
-    public function testMatchByDirectInterface()
-    {
-        $handler    = new Erebot_EventHandler(
-            $this->_cb,
-            new Erebot_Event_Match_InstanceOf(
-                'Erebot_Interface_Event_Base_TextMessage'
-            )
-        );
-        $event      = new Erebot_Event_ChanText(
-            $this->_connection,
-            '#foo', 'bar', 'baz'
-        );
-        $this->assertTrue($handler->handleEvent($event));
-    }
-
-    public function testMatchByInheritedInterface()
-    {
-        $handler    = new Erebot_EventHandler(
-            $this->_cb,
-            new Erebot_Event_Match_InstanceOf(
-                'Erebot_Interface_Event_Base_MessageCapable'
-            )
-        );
-        $event      = new Erebot_Event_ChanText(
-            $this->_connection,
-            '#foo', 'bar', 'baz'
-        );
-        $this->assertTrue($handler->handleEvent($event));
-    }
-
-    public function testMatchByTopInterface()
-    {
-        $handler    = new Erebot_EventHandler(
-            $this->_cb,
-            new Erebot_Event_Match_InstanceOf('Erebot_Interface_Event_Base_Generic')
-        );
+        $matcher    = new Erebot_Event_Match_InstanceOf($iface);
+        $this->assertEquals($iface, $matcher->getType());
+        $handler    = new Erebot_EventHandler($this->_cb, $matcher);
         $event      = new Erebot_Event_ChanText(
             $this->_connection,
             '#foo', 'bar', 'baz'

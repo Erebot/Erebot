@@ -25,6 +25,9 @@ require_once(
 class   IdentityTest
 extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Erebot_Identity
+     */
     public function testNominalCase()
     {
         $identity = new Erebot_Identity('foo!ident@host');
@@ -34,6 +37,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertSame('host',   $identity->getHost());
     }
 
+    /**
+     * @covers Erebot_Identity
+     */
     public function testNominalCase2()
     {
         $identity = new Erebot_Identity('foo');
@@ -67,6 +73,7 @@ extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider        invalidMasksProvider
      * @expectedException   Erebot_InvalidValueException
+     * @covers              Erebot_Identity
      */
     public function testInvalidMasks($mask)
     {

@@ -25,6 +25,9 @@ require_once(
 class   XglobStreamTest
 extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Erebot_XGlobStream<extended>
+     */
     public function testXglobStream()
     {
         $this->assertTrue(class_exists('Erebot_XglobStream'));

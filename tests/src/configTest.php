@@ -33,12 +33,16 @@ extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException   Erebot_InvalidValueException
+     * @covers              Erebot_Config_Main
      */
     public function testLoadConfigFromInvalidSource()
     {
         $config = new Erebot_Config_Main('foo', 'bar', $this->_translator);
     }
 
+    /**
+     * @covers Erebot_Config_Main
+     */
     public function testLoadValidConfigFromFile()
     {
         $file = dirname(dirname(__FILE__)).'/data/valid-config.xml';
@@ -50,6 +54,9 @@ extends PHPUnit_Framework_TestCase
         unset($config);
     }
 
+    /**
+     * @covers Erebot_Config_Main
+     */
     public function testLoadValidConfigFromString()
     {
         $data = '<?xml version="1.0"?'.'>';
@@ -80,6 +87,7 @@ CONFIG;
 
     /**
      * @expectedException   Erebot_InvalidValueException
+     * @covers              Erebot_Config_Main
      */
     public function testLoadInvalidConfigFromString()
     {

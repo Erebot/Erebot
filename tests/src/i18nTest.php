@@ -41,6 +41,9 @@ extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @covers Erebot_I18n
+     */
     public function testGetLocale()
     {
         foreach ($this->translators as $locale => $translator)
@@ -50,6 +53,9 @@ extends PHPUnit_Framework_TestCase
             );
     }
 
+    /**
+     * @covers Erebot_I18n
+     */
     public function testDurationFormatting()
     {
         // English
@@ -87,6 +93,9 @@ extends PHPUnit_Framework_TestCase
             $this->translators['fr_FR']->formatDuration(1389722));
     }
 
+    /**
+     * @covers Erebot_I18n
+     */
     public function testCoreTranslation()
     {
         $message = "Erebot is starting";

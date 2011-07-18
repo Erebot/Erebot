@@ -30,12 +30,18 @@ extends PHPUnit_Framework_TestCase
         return Erebot_Utils::getCallerObject();
     }
 
+    /**
+     * @covers Erebot_Utils::getCallerObject
+     */
     public function testGetCallerObject()
     {
         $this->assertSame($this, $this->getCallerObjectHelper());
         $this->assertNotSame($this, Erebot_Utils::getCallerObject());
     }
 
+    /**
+     * @covers Erebot_Utils::stripCodes
+     */
     public function testStripCodes()
     {
         /*
@@ -71,6 +77,9 @@ extends PHPUnit_Framework_TestCase
             Erebot_Utils::stripCodes($message));
     }
 
+    /**
+     * @covers Erebot_Utils::extractNick
+     */
     public function testExtractNick()
     {
         $extracted = Erebot_Utils::extractNick('foo!bar@foobar.baz');
@@ -190,13 +199,17 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider invalidUTF8Sequences
+     * @dataProvider    invalidUTF8Sequences
+     * @covers          Erebot_Utils::isUTF8
      */
     public function testIsUTF8($sequence)
     {
         $this->assertFalse(Erebot_Utils::isUTF8($sequence));
     }
 
+    /**
+     * @covers Erebot_Utils::isUTF8
+     */
     public function testIsUTF8SimpleSequences()
     {
         // U+00E9 (LATIN SMALL LETTER E WITH ACUTE) - UTF-8 encoded.
@@ -205,6 +218,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertFalse(Erebot_Utils::isUTF8("\xE9"));
     }
 
+    /**
+     * @covers Erebot_Utils::toUTF8
+     */
     public function testToUTF8()
     {
         // U+00E9 (LATIN SMALL LETTER E WITH ACUTE).

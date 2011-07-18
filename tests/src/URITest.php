@@ -25,6 +25,9 @@ require_once(
 class   URITest
 extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers Erebot_URI
+     */
     public function testParsing()
     {
         $base   = new Erebot_URI("http://u:p@a:8080/b/c/d;p?q#r");
@@ -37,6 +40,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals("r",        $base->getFragment());
     }
 
+    /**
+     * @covers Erebot_URI::__toString
+     */
     public function testToString()
     {
         $original   = "http://u:p@a:8080/b/c/d;p?q#r";
@@ -44,6 +50,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals($original, (string) $base);
     }
 
+    /**
+     * @covers Erebot_URI
+     */
     public function testCaseNormalization()
     {
         // The scheme and host components must be lowercased.
@@ -57,6 +66,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals($normed, (string) $uri);
     }
 
+    /**
+     * @covers Erebot_URI
+     */
     public function testPercentEncodingNormalisation()
     {
         // The hexadecimal digits used for percent-encoded characters
@@ -130,7 +142,8 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider normalResults
+     * @dataProvider    normalResults
+     * @covers          Erebot_URI::relative
      */
     public function testNormalResolution($reference, $targetURI)
     {
@@ -154,7 +167,8 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider userinfoProvider
+     * @dataProvider    userinfoProvider
+     * @covers          Erebot_URI::asParsedURL
      */
     public function testParseURLCompatibilityQuirks($userinfo, $user, $pass)
     {
@@ -213,7 +227,8 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider validProvider
+     * @dataProvider    validProvider
+     * @covers          Erebot_URI
      */
     public function testNoPort($host)
     {
@@ -226,7 +241,8 @@ extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider validProvider
+     * @dataProvider    validProvider
+     * @covers          Erebot_URI
      */
     public function testWithPort($host)
     {

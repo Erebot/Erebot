@@ -41,6 +41,9 @@ extends ErebotModuleTestCase
         parent::tearDown();
     }
 
+    /**
+     * @covers Erebot_Styling
+     */
     public function testArrayWithOnlyOneElement()
     {
         $source     = '<for from="names" item="name"><var name="name"/></for>';
@@ -51,6 +54,9 @@ extends ErebotModuleTestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @covers Erebot_Styling
+     */
     public function testBeatlesTest()
     {
         $source =   'The Beatles: <for from="Beatles" item="Beatle">'.
@@ -65,6 +71,9 @@ extends ErebotModuleTestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @covers Erebot_Styling
+     */
     public function testScoreTest()
     {
         $source =   '<b>Scores</b>: <for item="score" key="nick" '.
@@ -91,13 +100,18 @@ extends ErebotModuleTestCase
      * Tests whether a \<color\> tag without any "fg"
      * or "bg" attribute is correctly marked as invalid.
      *
-     * @expectedException Erebot_InvalidValueException
+     * @expectedException   Erebot_InvalidValueException
+     * @covers              Erebot_Styling
      */
     public function testColorMissingAttributes()
     {
         new Erebot_Styling('<color>foo</color>', $this->_translator);
     }
 
+    /**
+     * @covers Erebot_Styling
+     * @covers Erebot_I18n
+     */
     public function testPlural()
     {
         /* We use special characters in the sentence {, }, ' and #

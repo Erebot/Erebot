@@ -106,7 +106,6 @@ implements  Erebot_Interface_ModuleContainer,
         $this->_eventsMapping = array();
         $this->setEventClasses($events);
         $this->setURIFactory('Erebot_URI');
-        $this->setDependencyFactory('Erebot_Dependency');
         $this->setRawProfileLoader(
             new Erebot_RawProfileLoader('Erebot_Interface_RawProfile_RFC2812')
         );
@@ -156,34 +155,6 @@ implements  Erebot_Interface_ModuleContainer,
             throw new Erebot_InvalidValueException(
                 'The factory must implement Erebot_Interface_URI');
         $this->_uriFactory = $factory;
-    }
-
-    /**
-     * Returns the name of the class used
-     * to parse inter-modules dependencies.
-     *
-     * \retval string
-     *      Name of the class used to parse dependencies.
-     */
-    public function getDependencyFactory()
-    {
-        return $this->_depFactory;
-    }
-
-    /**
-     * Sets the class to use as a factory
-     * to parse inter-modules dependencies.
-     *
-     * \param string $factory
-     *      Name of the class to use to parse dependencies.
-     */
-    public function setDependencyFactory($factory)
-    {
-        $reflector = new ReflectionClass($factory);
-        if (!$reflector->implementsInterface('Erebot_Interface_Dependency'))
-            throw new Erebot_InvalidValueException(
-                'The factory must implement Erebot_Interface_Dependency');
-        $this->_depFactory = $factory;
     }
 
     public function getRawProfileLoader()
@@ -967,75 +938,10 @@ implements  Erebot_Interface_ModuleContainer,
                 "Invalid module! Not a subclass of Erebot_Module_Base.");
 
         $instance = new $module($chan);
-
         if ($chan === NULL)
             $plainModules[$module] = $instance;
         else
             $channelModules[$chan][$module] = $instance;
-
-        $metadata   = $instance->getMetadata($module);
-        $depends = (isset($metadata['requires']) ?
-                    $metadata['requires'] : array());
-
-        $factory = $this->_depFactory;
-
-        foreach ($depends as $depend) {
-            /// @TODO use dependency injection instead.
-            $depend = new $factory($depend);
-            try {
-                $depVer     = $depend->getVersion();
-                $depended   = $this->getModule($depend->getName(), $chan);
-
-                // Check version of the module.
-                if ($depVer !== NULL) {
-                    $metadata   = $depended->getMetadata($depend->getName());
-                    $depEffVer = (isset($metadata['version']) ?
-                                    $metadata['version'] : NULL);
-                    if ($depEffVer === NULL ||
-                        !version_compare(
-                            $depEffVer,
-                            $depVer,
-                            $depend->getOperator()
-                        ))
-                        throw new Erebot_NotFoundException();
-                }
-            }
-            catch (Erebot_NotFoundException $e) {
-                // We raise a new exception with the full
-                // dependency specification.
-                throw new Erebot_NotFoundException((string) $depend);
-            }
-        }
-
-        $depends = (isset($metadata['recommends']) ?
-                    $metadata['recommends'] : array());
-
-        foreach ($depends as $depend) {
-            /// @TODO use dependency injection instead.
-            $depend = new $factory($depend);
-            try {
-                $depVer     = $depend->getVersion();
-                $depended   = $this->getModule($depend->getName(), $chan);
-
-                // Check version of the module.
-                if ($depVer !== NULL) {
-                    $metadata   = $depended->getMetadata($depend->getName());
-                    $depEffVer = (isset($metadata['version']) ?
-                                    $metadata['version'] : NULL);
-                    if ($depEffVer === NULL ||
-                        !version_compare(
-                            $depEffVer,
-                            $depVer,
-                            $depend->getOperator()
-                        ))
-                        throw new Erebot_NotFoundException();
-                }
-            }
-            catch (Erebot_NotFoundException $e) {
-                // This is only a recommendation,
-                // so we silently ignore failures.
-            }
-        }
 
         $instance->reload($this, $flags);
         $logger->info(
