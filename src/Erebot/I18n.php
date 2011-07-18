@@ -271,6 +271,11 @@ implements  Erebot_Interface_I18n
          * extract "Erebot" as the message to translate without this hack.
          */
         $gettext = create_function('$a', 'return $a;');
+
+        // I18N: Rule used to format durations (with words), using ICU's syntax.
+        // I18N: Eg. "12345" becomes "3 hours, 25 minutes, 45 seconds" (in english).
+        // I18N: See also http://userguide.icu-project.org/formatparse/numbers/rbnf-examples for examples
+        // I18N: and http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html for the complete syntax
         $rule = $gettext("%with-words:
     0: 0 seconds;
     1: 1 second;

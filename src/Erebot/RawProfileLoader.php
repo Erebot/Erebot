@@ -74,11 +74,11 @@ implements  Erebot_Interface_RawProfileLoader,
             if (!$profile->hasConstant($rawName))
                 continue;
 
-            $const_value = $profile->getConstant($rawName);
-            if (!is_int($const_value) || $const_value < 0 || $const_value > 999)
+            $constValue = $profile->getConstant($rawName);
+            if (!is_int($constValue) || $constValue < 0 || $constValue > 999)
                 continue;
 
-            return $const_value;
+            return $constValue;
         }
         return NULL;
     }

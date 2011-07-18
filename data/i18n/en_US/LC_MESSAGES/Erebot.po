@@ -2,7 +2,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2011-06-19 21:08+0200\n"
+        "POT-Creation-Date: 2011-07-18 16:15+0200\n"
         "PO-Revision-Date: 2011-02-16 16:43+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
@@ -11,6 +11,10 @@ msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #
+#. I18N: Rule used to format durations (with words), using ICU's syntax.
+#. I18N: Eg. "12345" becomes "3 hours, 25 minutes, 45 seconds" (in english).
+#. I18N: See also http://userguide.icu-project.org/formatparse/numbers/rbnf-examples for examples
+#. I18N: and http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html for the complete syntax
 msgid   "%with-words:\n"
         "    0: 0 seconds;\n"
         "    1: 1 second;\n"
