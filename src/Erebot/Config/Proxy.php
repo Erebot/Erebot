@@ -236,24 +236,19 @@ class Erebot_Config_Proxy
     }
 
     protected function _parseSomething(
-        $module,
-        $param,
-        $default,
-        $parser,
-        $origin,
-        $checker
+                                    $module,
+                                    $param,
+                                    $default,
+        Erebot_Interface_Callable   $parser,
+                                    $origin,
+        Erebot_Interface_Callable   $checker
     )
     {
-        if (!is_callable($parser))
-            throw new Erebot_InvalidValueException('Invalid parser');
-        if (!is_callable($checker))
-            throw new Erebot_InvalidValueException('Invalid checker');
-
         try {
             if (!isset($this->_modules[$module]))
                 throw new Erebot_NotFoundException('No such module');
             $value  = $this->_modules[$module]->getParam($param);
-            $value  = call_user_func($parser, $value);
+            $value  = $parser->invoke($value);
             if ($value !== NULL)
                 return $value;
             throw new Erebot_InvalidValueException('Bad value in configuration');
@@ -265,7 +260,7 @@ class Erebot_Config_Proxy
             if ($default === NULL)
                 throw new Erebot_NotFoundException('No such parameter');
 
-            if (call_user_func($checker, $default))
+            if ($checker->invoke($default))
                 return $default;
             throw new Erebot_InvalidValueException('Bad default value');
         }
@@ -278,9 +273,9 @@ class Erebot_Config_Proxy
             $module,
             $param,
             $default,
-            array($this, '_parseBool'),
+            new Erebot_Callable(array($this, '_parseBool')),
             __FUNCTION__,
-            'is_bool'
+            new Erebot_Callable('is_bool')
         );
     }
 
@@ -291,9 +286,9 @@ class Erebot_Config_Proxy
             $module,
             $param,
             $default,
-            'strval',
+            new Erebot_Callable('strval'),
             __FUNCTION__,
-            'is_string'
+            new Erebot_Callable('is_string')
         );
     }
 
@@ -304,9 +299,9 @@ class Erebot_Config_Proxy
             $module,
             $param,
             $default,
-            array($this, '_parseInt'),
+            new Erebot_Callable(array($this, '_parseInt')),
             __FUNCTION__,
-            'is_int'
+            new Erebot_Callable('is_int')
         );
     }
 
@@ -317,9 +312,9 @@ class Erebot_Config_Proxy
             $module,
             $param,
             $default,
-            array($this, '_parseReal'),
+            new Erebot_Callable(array($this, '_parseReal')),
             __FUNCTION__,
-            'is_real'
+            new Erebot_Callable('is_real')
         );
     }
 }

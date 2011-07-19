@@ -40,7 +40,7 @@ extends PHPUnit_Framework_TestCase
      * We create a timer set to go off twice with a delay of 2.5 seconds.
      * We check that each parameter is correctly set before each run.
      * We test whether or not the timer went off roughly at the right time
-     * (between 2.5 and 3.2 seconds, to allow some CPU overhead).
+     * (between 2.5 and 3.5 seconds, to allow some CPU overhead).
      *
      * @covers Erebot_Timer::setRepetition
      * @covers Erebot_Timer::reset
@@ -53,12 +53,12 @@ extends PHPUnit_Framework_TestCase
     {
         $delay  = 2.5;
         $min    = 2.5;
-        $max    = 3.2;
+        $max    = 3.5;
 
         $this->_flag = FALSE;
-        $callback = array($this, 'helper');
-        $timer = new Erebot_Timer($callback, $delay, FALSE, array('foo', 'bar'));
-        $this->assertEquals($callback, $timer->getCallback());
+        $callback   = new Erebot_Callable(array($this, 'helper'));
+        $timer      = new Erebot_Timer($callback, $delay, FALSE, array('foo', 'bar'));
+        $this->assertEquals((string) $callback, (string) $timer->getCallback());
         $this->assertSame($delay, $timer->getDelay());
 
         $this->assertEquals(1, $timer->getRepetition());
@@ -120,7 +120,7 @@ extends PHPUnit_Framework_TestCase
      */
     public function testGetters()
     {
-        $callback   = array($this, 'helper');
+        $callback   = new Erebot_Callable(array($this, 'helper'));
         $args       = array('foo', 'bar');
         $timer      = new Erebot_Timer($callback, 4.2, 42, $args);
         $this->assertEquals($args, $timer->getArgs());

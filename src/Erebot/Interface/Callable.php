@@ -26,7 +26,7 @@ interface Erebot_Interface_Callable
 
     public function invoke(/* ... */);
 
-    public function invokeArgs($args);
+    public function invokeArgs(&$args);
 
     public function __toString();
 }

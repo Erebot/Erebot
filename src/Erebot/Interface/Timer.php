@@ -52,7 +52,14 @@ interface Erebot_Interface_Timer
      *      (optional) Additional arguments to pass to the callback
      *      when it is called.
      */
-    public function __construct($callback, $delay, $repeat, $args = NULL);
+    public function __construct(
+        Erebot_Interface_Callable   $callback,
+                                    $delay,
+                                    $repeat,
+                                    $args = NULL
+    );
+
+    public function setCallback(Erebot_Interface_Callable $callback);
 
     /**
      * Returns a reference to the callback associated with this timer.
@@ -61,6 +68,8 @@ interface Erebot_Interface_Timer
      *      The callback for this timer.
      */
     public function getCallback();
+
+    public function setArgs($args);
 
     /**
      * Returns an array of additional arguments to pass to the callback.

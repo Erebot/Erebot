@@ -46,12 +46,29 @@ implements  Erebot_Interface_Callable
     /// \copydoc Erebot_Interface_Callable::invoke()
     public function invoke(/* ... */)
     {
-        $args = func_get_args();
-        return $this->invokeArgs($args);
+        // HACK:    we use debug_backtrace() to get (and pass along)
+        //          references for call_user_func_array().
+
+        // Starting with PHP 5.4.0, it is possible to limit
+        // the number of stack frames returned.
+        if (version_compare(PHP_VERSION, '5.4', '>='))
+            $bt = debug_backtrace(0, 1);
+        // Starting with PHP 5.3.6, the first argument
+        // to debug_backtrace() is a bitmask of options.
+        else if (version_compare(PHP_VERSION, '5.3.6', '>='))
+            $bt = debug_backtrace(0);
+        else
+            $bt = debug_backtrace(FALSE);
+
+        if (isset($bt[0]['args']))
+            $args =& $bt[0]['args'];
+        else
+            $args = array();
+        return call_user_func_array($this->_callable, $args);
     }
 
     /// \copydoc Erebot_Interface_Callable::invokeArgs()
-    public function invokeArgs($args)
+    public function invokeArgs(&$args)
     {
         return call_user_func_array($this->_callable, $args);
     }

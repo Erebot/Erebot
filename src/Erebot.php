@@ -222,7 +222,6 @@ implements  Erebot_Interface_Core
             if (count($except))
                 continue;
 
-#var_dump($read, $write, $except);
             // Handle read-ready "sockets"
             foreach ($read as $socket) {
                 do {

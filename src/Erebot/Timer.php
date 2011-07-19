@@ -39,18 +39,18 @@ implements  Erebot_Interface_Timer
     protected $_args;
 
     /// \copydoc Erebot_Interface_Timer::__construct()
-    public function __construct($callback, $delay, $repeat, $args = NULL)
+    public function __construct(
+        Erebot_Interface_Callable   $callback,
+                                    $delay,
+                                    $repeat,
+                                    $args = array()
+    )
     {
-        if (!is_callable($callback))
-            throw new Erebot_InvalidValueException('Invalid callback');
-
-        $this->_callback    = $callback;
         $this->_delay       = $delay;
-        $this->setRepetition($repeat);
         $this->_stream      = NULL;
-        if ($args === NULL)
-            $args = array();
-        $this->_args        = $args;
+        $this->setCallback($callback);
+        $this->setRepetition($repeat);
+        $this->setArgs($args);
     }
 
     public function __destruct()
@@ -60,10 +60,22 @@ implements  Erebot_Interface_Timer
         $this->_stream = NULL;
     }
 
+    public function setCallback(Erebot_Interface_Callable $callback)
+    {
+        $this->_callback = $callback;
+    }
+
     /// \copydoc Erebot_Interface_Timer::getCallback()
     public function getCallback()
     {
         return $this->_callback;
+    }
+
+    public function setArgs($args)
+    {
+        if (!is_array($args))
+            throw new Erebot_InvalidValueException('Expected an array');
+        $this->_args = $args;
     }
 
     /// \copydoc Erebot_Interface_Timer::getArgs()
@@ -135,10 +147,8 @@ implements  Erebot_Interface_Timer
     /// \copydoc Erebot_Interface_Timer::activate()
     public function activate()
     {
-        return (bool) call_user_func_array(
-            $this->_callback,
-            array_merge(array(&$this), $this->_args)
-        );
+        $args = array_merge(array(&$this), $this->_args);
+        return (bool) $this->_callback->invokeArgs($args);
     }
 }
 
