@@ -116,13 +116,18 @@ implements  Erebot_Interface_Timer
         if ($this->_stream)
             pclose($this->_stream);
 
-        # "Windows Server 2003 Resource Kit Tools" is needed under Windows.
-        # Grab it from: http://www.microsoft.com/downloads/details.aspx
-        #               ?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd
         if (!strncasecmp(PHP_OS, 'WIN', 3))
-            $command    = 'start /B sleep.exe -m '.($this->_delay * 1000);
-        else
-            $command    = 'sleep '.$this->_delay.' &';
+            $command    = "start /B php-win.exe -r 'usleep(".
+                ((int) ($this->_delay * 1000000)).
+                "); // foobar";
+        else {
+            $binary = '@php_bin@';
+            if ($binary == '@'.'php_bin'.'@')
+                $binary = '/usr/bin/php';
+            $command = $binary." -r 'usleep(".
+                ((int) ($this->_delay * 1000000)).
+                "); // foobar' &";
+        }
         $this->_stream = popen($command, 'r');
         return TRUE;
     }

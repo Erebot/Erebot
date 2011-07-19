@@ -27,7 +27,7 @@ extends PHPUnit_Framework_TestCase
 {
     private $_flag;
 
-    public function helper(Erebot_Interface_Timer &$timer, $foo, $bar)
+    public function helper(Erebot_Interface_Timer $timer, $foo, $bar)
     {
         $this->assertNotEquals('bar', $foo);
         $this->assertEquals('bar', $bar);
@@ -40,7 +40,7 @@ extends PHPUnit_Framework_TestCase
      * We create a timer set to go off twice with a delay of 2.5 seconds.
      * We check that each parameter is correctly set before each run.
      * We test whether or not the timer went off roughly at the right time
-     * (between 2.5 and 3 seconds, to allow some CPU overhead).
+     * (between 2.5 and 3.2 seconds, to allow some CPU overhead).
      *
      * @covers Erebot_Timer::setRepetition
      * @covers Erebot_Timer::reset
@@ -53,7 +53,7 @@ extends PHPUnit_Framework_TestCase
     {
         $delay  = 2.5;
         $min    = 2.5;
-        $max    = 3;
+        $max    = 3.2;
 
         $this->_flag = FALSE;
         $callback = array($this, 'helper');
@@ -77,7 +77,7 @@ extends PHPUnit_Framework_TestCase
             $null,
             $null,
             intval($max),
-            ($max - intval($max)) * 100000
+            ((int) ($max * 100000)) % 100000
         );
         $this->assertEquals(1, $nb);
         $this->assertSame($timer->getStream(), $read[0]);
@@ -98,7 +98,7 @@ extends PHPUnit_Framework_TestCase
             $null,
             $null,
             intval($max),
-            ($max - intval($max)) * 100000
+            ((int) ($max * 100000)) % 100000
         );
         $this->assertEquals(1, $nb);
         $this->assertSame($timer->getStream(), $read[0]);
