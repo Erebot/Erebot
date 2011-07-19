@@ -308,7 +308,6 @@ implements  Erebot_Interface_Core
             if ($connection instanceof Erebot_Interface_EventFactory &&
                 $connection instanceof Erebot_Interface_EventDispatcher)
                 $connection->dispatch($connection->makeEvent('!Exit'));
-            $connection->disconnect();
         }
 
         $logger->info($this->gettext('Erebot has stopped'));

@@ -107,7 +107,19 @@ implements  Erebot_Interface_ModuleContainer,
         $this->setEventClasses($events);
         $this->setURIFactory('Erebot_URI');
         $this->setRawProfileLoader(
-            new Erebot_RawProfileLoader('Erebot_Interface_RawProfile_RFC2812')
+            new Erebot_RawProfileLoader(
+                array(
+                    'Erebot_Interface_RawProfile_RFC2812',
+                    'Erebot_Interface_RawProfile_005',
+                )
+            )
+        );
+
+        $this->addEventHandler(
+            new Erebot_EventHandler(
+                array($this, 'handleCapabilities'),
+                new Erebot_Event_Match_InstanceOf('Erebot_Event_ServerCapabilities')
+            )
         );
     }
 
@@ -416,20 +428,10 @@ implements  Erebot_Interface_ModuleContainer,
 
         // Purge send queue and send QUIT message to notify server.
         $this->_sndQueue = array();
-        if ($quitMessage === NULL) {
-            try {
-                $config         = $this->getConfig(NULL);
-                $quitMessage    = $config->parseString(
-                    'Erebot_Module_IrcConnector',
-                    'quit_message'
-                );
-            }
-            catch (Erebot_Exception $e) {
-                // No default quit message configured.
-            }
-            unset($config);
-        }
-        $quitMessage    = ($quitMessage !== NULL ? ' :'.$quitMessage : '');
+        $quitMessage =
+            Erebot_Utils::stringifiable($quitMessage)
+            ? ' :'.$quitMessage
+            : '';
         $this->pushLine('QUIT'.$quitMessage);
         $this->processOutgoingData();
 
@@ -881,10 +883,10 @@ implements  Erebot_Interface_ModuleContainer,
                         $this->_connected = TRUE;
                         break;
 
-                    case Erebot_Interface_RawProfile_ISON::RPL_NOWON:
-                    case Erebot_Interface_RawProfile_ISON::RPL_NOWOFF:
-                    case Erebot_Interface_RawProfile_ISON::RPL_LOGON:
-                    case Erebot_Interface_RawProfile_ISON::RPL_LOGOFF:
+                    case Erebot_Interface_RawProfile_WATCH::RPL_NOWON:
+                    case Erebot_Interface_RawProfile_WATCH::RPL_NOWOFF:
+                    case Erebot_Interface_RawProfile_WATCH::RPL_LOGON:
+                    case Erebot_Interface_RawProfile_WATCH::RPL_LOGOFF:
                         $nick       = array_shift($parts);
                         $ident      = array_shift($parts);
                         $host       = array_shift($parts);
@@ -895,13 +897,13 @@ implements  Erebot_Interface_ModuleContainer,
                             $text = substr($text, 1);
 
                         $map    = array(
-                            Erebot_Interface_RawProfile_ISON::RPL_NOWON   =>
+                            Erebot_Interface_RawProfile_WATCH::RPL_NOWON   =>
                                 '!Notify',
-                            Erebot_Interface_RawProfile_ISON::RPL_LOGON   =>
+                            Erebot_Interface_RawProfile_WATCH::RPL_LOGON   =>
                                 '!Notify',
-                            Erebot_Interface_RawProfile_ISON::RPL_NOWOFF  =>
+                            Erebot_Interface_RawProfile_WATCH::RPL_NOWOFF  =>
                                 '!UnNotify',
-                            Erebot_Interface_RawProfile_ISON::RPL_LOGOFF  =>
+                            Erebot_Interface_RawProfile_WATCH::RPL_LOGOFF  =>
                                 '!UnNotify',
                         );
                         $cls    = $map[$type];
@@ -1289,6 +1291,28 @@ implements  Erebot_Interface_ModuleContainer,
 
         $nick = strtr($nick, $mapping);
         return $nick.$suffix;
+    }
+
+    public function handleCapabilities(Erebot_Event_ServerCapabilities $event)
+    {
+        $module = $event->getModule();
+        $cmds   = array(
+            'WATCH'     => '!WATCH',
+            'ISON'      => '!ISON',
+            'JUPE'      => '!JUPE',
+            'MAP'       => '!MAP',
+            'DCCLIST'   => '!DCCLIST',
+            'GLIST'     => '!GLIST',
+            'RULES'     => '!RULES',
+            'SILENCE'   => '!SILENCE',
+            'STARTTLS'  => '!STARTTLS',
+        );
+
+        foreach ($cmds as $cmd => $profile) {
+            if ($module->hasCommand($cmd))
+                $this->_rawProfileLoader[] =
+                    str_replace('!', 'Erebot_Interface_RawProfile_', $profile);
+        }
     }
 }
 
