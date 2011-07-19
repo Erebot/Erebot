@@ -20,23 +20,11 @@ interface   Erebot_Interface_RawProfile_ISON
 extends     Erebot_Interface_RawProfile
 {
     /**
-     *  \TODO
+     *  \brief
+     *      Reply format used by ISON to list replies to the query list.
+     *
+     *  \format{":*1<nick> *( " " <nick> )"}
      */
-    const RPL_LOGON                 = 600;
-
-    /**
-     *  \TODO
-     */
-    const RPL_LOGOFF                = 601;
-
-    /**
-     *  \TODO
-     */
-    const RPL_NOWON                 = 604;
-
-    /**
-     *  \TODO
-     */
-    const RPL_NOWOFF                = 605;
+    const RPL_ISON                  = 303;
 }
 

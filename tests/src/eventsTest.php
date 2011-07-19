@@ -151,7 +151,7 @@ extends PHPUnit_Framework_TestCase
         );
         $this->assertTrue($dispatched[1] instanceof Erebot_Event_Raw);
         $this->assertEquals(
-            Erebot_Interface_RawProfile_ISON::RPL_NOWON,
+            Erebot_Interface_RawProfile_WATCH::RPL_NOWON,
             $dispatched[1]->getRaw()
         );
 
@@ -173,7 +173,7 @@ extends PHPUnit_Framework_TestCase
         );
         $this->assertTrue($dispatched[1] instanceof Erebot_Event_Raw);
         $this->assertEquals(
-            Erebot_Interface_RawProfile_ISON::RPL_NOWOFF,
+            Erebot_Interface_RawProfile_WATCH::RPL_NOWOFF,
             $dispatched[1]->getRaw()
         );
     }

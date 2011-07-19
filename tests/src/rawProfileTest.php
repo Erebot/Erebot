@@ -65,15 +65,12 @@ extends RawProfileTestHelper
      */
     public function testProfileOverride()
     {
-        // We need to fill two slots as the loader uses a foreach loop
-        // which doesn't sort the array first...
-        $this->_loader[0] = 'Erebot_Interface_RawProfile_ConflictingRFC2812';
-        $this->_loader[1] = 'Erebot_Interface_RawProfile_ConflictingRFC2812';
+        $this->_loader[] = 'Erebot_Interface_RawProfile_ConflictingRFC2812';
         $this->assertSame(0x005, $this->_loader->getRawByName('RPL_BOUNCE'));
 
         // Replace the profile in the first slot with one that overrides
         // the raws and has higher priority.
-        $this->_loader[0] = 'Erebot_Interface_RawProfile_Bounce';
+        $this->_loader[] = 'Erebot_Interface_RawProfile_Bounce';
         $this->assertSame(0x00A, $this->_loader->getRawByName('RPL_BOUNCE'));
     }
 }

@@ -27,12 +27,32 @@ extends     Erebot_Interface_RawProfile
     /**
      *  \TODO
      */
+    const RPL_LOGON                 = 600;
+
+    /**
+     *  \TODO
+     */
+    const RPL_LOGOFF                = 601;
+
+    /**
+     *  \TODO
+     */
     const RPL_WATCHOFF              = 602;
 
     /**
      *  \TODO
      */
     const RPL_WATCHSTAT             = 603;
+
+    /**
+     *  \TODO
+     */
+    const RPL_NOWON                 = 604;
+
+    /**
+     *  \TODO
+     */
+    const RPL_NOWOFF                = 605;
 
     /**
      *  \TODO

@@ -17,9 +17,7 @@
 */
 
 class       Erebot_RawProfileLoader
-implements  Erebot_Interface_RawProfileLoader,
-            ArrayAccess,
-            Countable
+implements  Erebot_Interface_RawProfileLoader
 {
     protected $_profiles;
 
@@ -45,7 +43,7 @@ implements  Erebot_Interface_RawProfileLoader,
         return $refl;
     }
 
-    public function setProfiles($profiles)
+    public function setProfiles($profiles = array())
     {
         $this->_profiles = array();
         if (!is_array($profiles))
@@ -70,7 +68,7 @@ implements  Erebot_Interface_RawProfileLoader,
         if (!is_string($rawName))
             throw new Erebot_InvalidValueException('Not a valid name');
 
-        foreach ($this->_profiles as $profile) {
+        foreach (array_reverse($this->_profiles) as $profile) {
             if (!$profile->hasConstant($rawName))
                 continue;
 

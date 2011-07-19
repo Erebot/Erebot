@@ -18,9 +18,9 @@
 
 interface   Erebot_Interface_RawProfile_UltimateIRCd
 extends     Erebot_Interface_RawProfile_RFC2812,
+            Erebot_Interface_RawProfile_ISON,
             Erebot_Interface_RawProfile_NumericError,
             Erebot_Interface_RawProfile_SILENCE,
-            Erebot_Interface_RawProfile_ISON,
             Erebot_Interface_RawProfile_DCCINFO,
             Erebot_Interface_RawProfile_MAP
 {

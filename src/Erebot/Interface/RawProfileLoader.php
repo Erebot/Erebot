@@ -16,9 +16,11 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface Erebot_Interface_RawProfileLoader
+interface   Erebot_Interface_RawProfileLoader
+extends     ArrayAccess,
+            Countable
 {
-    public function setProfiles($profiles);
+    public function setProfiles($profiles = array());
 
     public function getProfiles();
 

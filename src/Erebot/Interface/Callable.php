@@ -16,28 +16,17 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class Erebot_RawReference
+interface Erebot_Interface_Callable
 {
-    protected $_connection;
-    protected $_rawName;
+    public function __construct($callable);
 
-    public function __construct(
-        Erebot_Interface_Connection $connection,
-                                    $rawName
-    )
-    {
-        $this->_connection  = $connection;
-        $this->_rawName     = $rawName;
-    }
+    public function getCallable();
 
-    public function getName()
-    {
-        return $this->_rawName;
-    }
+    public function getRepresentation();
 
-    public function getValue()
-    {
-        $loader = $this->_connection->getRawProfileLoader();
-        return $loader->getRawByName($this->_rawName);
-    }
+    public function invoke(/* ... */);
+
+    public function invokeArgs($args);
+
+    public function __toString();
 }
