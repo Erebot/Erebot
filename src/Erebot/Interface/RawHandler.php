@@ -28,24 +28,28 @@ interface Erebot_Interface_RawHandler
     /**
      * Constructs a raw event handler.
      *
-     * \param callback $callback
+     * \param Erebot_Interface_Callable $callback
      *      A callback function/method which will be called
      *      whenever the bot receives a message of the given
      *      $raw numeric.
      *
-     * \param int $raw
+     * \param int|Erebot_RawReference $raw
      *      The particular raw numeric code this raw handler will
-     *      react to.
+     *      react to, or a reference to it.
      */
-    public function __construct($callback, $raw);
+    public function __construct(Erebot_Interface_Callable $callback, $raw);
+
+    public function setRaw($raw);
 
     /**
      * Returns the raw numeric code associated with this handler.
      *
-     * \retval int
-     *      The raw numeric code for this handler.
+     * \retval int|Erebot_RawReference
+     *      The raw numeric code for this handler, or a reference to it.
      */
     public function getRaw();
+
+    public function setCallback(Erebot_Interface_Callable $callback);
 
     /**
      * Returns the callback function/method associated with

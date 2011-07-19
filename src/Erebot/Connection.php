@@ -117,7 +117,7 @@ implements  Erebot_Interface_ModuleContainer,
 
         $this->addEventHandler(
             new Erebot_EventHandler(
-                array($this, 'handleCapabilities'),
+                new Erebot_Callable(array($this, 'handleCapabilities')),
                 new Erebot_Event_Match_InstanceOf('Erebot_Event_ServerCapabilities')
             )
         );
@@ -433,7 +433,14 @@ implements  Erebot_Interface_ModuleContainer,
             ? ' :'.$quitMessage
             : '';
         $this->pushLine('QUIT'.$quitMessage);
-        $this->processOutgoingData();
+
+        // Send any pending data in the outgoing buffer.
+        while (1) {
+            $this->processOutgoingData();
+            if ($this->emptySendQueue())
+                break;
+            usleep(50000); // Sleep for 50ms.
+        }
 
         // Then kill the connection for real.
         $this->_bot->removeConnection($this);
@@ -547,6 +554,7 @@ implements  Erebot_Interface_ModuleContainer,
     {
         if ($this->emptySendQueue())
             throw new Erebot_NotFoundException('No outgoing data needs to be handled');
+
         $line       = array_shift($this->_sndQueue);
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(
@@ -583,8 +591,6 @@ implements  Erebot_Interface_ModuleContainer,
             // No rate-limit in effect, send away!
         }
 
-        $logger->debug("%s", addcslashes($line, "\000..\037"));
-
         // Make sure we send the whole line,
         // with a trailing CR LF sequence.
         $line .= "\r\n";
@@ -593,10 +599,11 @@ implements  Erebot_Interface_ModuleContainer,
             $written < $len;
             $written += $fwrite
         ) {
-            $fwrite = fwrite($this->_socket, substr($line, $written));
+            $fwrite = @fwrite($this->_socket, substr($line, $written));
             if ($fwrite === FALSE)
                 return FALSE;
         }
+        $logger->debug("%s", addcslashes($line, "\000..\037"));
         return $written;
     }
 

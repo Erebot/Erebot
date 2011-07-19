@@ -77,7 +77,7 @@ extends ErebotModuleTestCase
             FALSE,
             FALSE
         );
-        $this->_cb = array($this, 'dummyCallback');
+        $this->_cb = new Erebot_Callable(array($this, 'dummyCallback'));
     }
 
     public function classProvider()

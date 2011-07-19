@@ -34,22 +34,22 @@ implements  Erebot_Interface_EventHandler
 
     /// \copydoc Erebot_Interface_EventHandler::__construct()
     public function __construct(
-                                        $callback,
+        Erebot_Interface_Callable       $callback,
         Erebot_Interface_Event_Match    $filter = NULL
     )
     {
-        $reflector  = new ReflectionParameter($callback, 0);
-        $cls        = $reflector->getClass();
-        if ($cls === NULL ||
-            !$cls->implementsInterface('Erebot_Interface_Event_Base_Generic'))
-            throw new Erebot_InvalidValueException('Invalid callback');
-
-        $this->_callback    =&  $callback;
-        $this->_filter      =&  $filter;
+        $this->setCallback($callback);
+        $this->setFilter($filter);
     }
 
+    /// Destructor.
     public function __destruct()
     {
+    }
+
+    public function setCallback(Erebot_Interface_Callable $callback)
+    {
+        $this->_callback = $callback;
     }
 
     /// \copydoc Erebot_Interface_EventHandler::getCallback()
@@ -78,7 +78,7 @@ implements  Erebot_Interface_EventHandler
         if ($this->_filter !== NULL)
             $matched = $this->_filter->match($event);
 
-        return ($matched ? call_user_func($this->_callback, $event) : NULL);
+        return ($matched ? $this->_callback->invoke($event) : NULL);
     }
 }
 

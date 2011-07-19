@@ -39,9 +39,11 @@ interface Erebot_Interface_EventHandler
      *      associated with this handler to be called.
      */
     public function __construct(
-                                        $callback,
+        Erebot_Interface_Callable       $callback,
         Erebot_Interface_Event_Match    $filter = NULL
     );
+
+    public function setCallback(Erebot_Interface_Callable $callback);
 
     /**
      * Returns a reference to the callback which was associated

@@ -33,15 +33,10 @@ implements  Erebot_Interface_RawHandler
     protected $_callback;
 
     /// \copydoc Erebot_Interface_RawHandler::__construct()
-    public function __construct($callback, $raw)
+    public function __construct(Erebot_Interface_Callable $callback, $raw)
     {
-        $reflector  = new ReflectionParameter($callback, 0);
-        $cls        = $reflector->getClass();
-        if ($cls === NULL || !$cls->implementsInterface('Erebot_Interface_Event_Raw'))
-            throw new Erebot_InvalidValueException('Invalid signature');
-
-        $this->_raw         = $raw;
-        $this->_callback    = $callback;
+        $this->setCallback($callback);
+        $this->setRaw($raw);
     }
 
     /**
@@ -51,10 +46,22 @@ implements  Erebot_Interface_RawHandler
     {
     }
 
+    /// \copydoc Erebot_Interface_RawHandler::setRaw()
+    public function setRaw($raw)
+    {
+        $this->_raw = $raw;
+    }
+
     /// \copydoc Erebot_Interface_RawHandler::getRaw()
     public function getRaw()
     {
         return $this->_raw;
+    }
+
+    /// \copydoc Erebot_Interface_RawHandler::setCallback()
+    public function setCallback(Erebot_Interface_Callable $callback)
+    {
+        $this->_callback = $callback;
     }
 
     /// \copydoc Erebot_Interface_RawHandler::getCallback()
@@ -73,7 +80,7 @@ implements  Erebot_Interface_RawHandler
         if ($raw->getRaw() !== $ourRaw)
             return NULL;
 
-        return call_user_func($this->_callback, $raw);
+        return $this->_callback->invoke($raw);
     }
 }
 
