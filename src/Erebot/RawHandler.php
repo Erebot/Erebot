@@ -80,7 +80,7 @@ implements  Erebot_Interface_RawHandler
         if ($raw->getRaw() !== $ourRaw)
             return NULL;
 
-        return $this->_callback->invoke($raw);
+        return $this->_callback->invoke($this, $raw);
     }
 }
 

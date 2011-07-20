@@ -1300,7 +1300,10 @@ implements  Erebot_Interface_ModuleContainer,
         return $nick.$suffix;
     }
 
-    public function handleCapabilities(Erebot_Event_ServerCapabilities $event)
+    public function handleCapabilities(
+        Erebot_Interface_EventHandler   $handler,
+        Erebot_Event_ServerCapabilities $event
+    )
     {
         $module = $event->getModule();
         $cmds   = array(

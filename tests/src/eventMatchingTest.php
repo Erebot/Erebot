@@ -28,7 +28,10 @@ extends ErebotModuleTestCase
     protected $_connection = NULL;
     protected $_cb = NULL;
 
-    public function dummyCallback(Erebot_Interface_Event_Base_Generic $event)
+    public function dummyCallback(
+        Erebot_Interface_EventHandler       $handler,
+        Erebot_Interface_Event_Base_Generic $event
+    )
     {
         return TRUE;
     }

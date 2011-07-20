@@ -78,7 +78,7 @@ implements  Erebot_Interface_EventHandler
         if ($this->_filter !== NULL)
             $matched = $this->_filter->match($event);
 
-        return ($matched ? $this->_callback->invoke($event) : NULL);
+        return ($matched ? $this->_callback->invoke($this, $event) : NULL);
     }
 }
 
