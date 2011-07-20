@@ -603,7 +603,7 @@ implements  Erebot_Interface_ModuleContainer,
             if ($fwrite === FALSE)
                 return FALSE;
         }
-        $logger->debug("%s", addcslashes($line, "\000..\037"));
+        $logger->debug("%s", addcslashes(substr($line, 0, -2), "\000..\037"));
         return $written;
     }
 
