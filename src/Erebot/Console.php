@@ -37,7 +37,7 @@ implements  Erebot_Interface_ReceivingConnection
         Erebot_Interface_Core   $bot,
                                 $connector  = '/tmp/Erebot.sock',
                                 $group      = NULL,
-                                $perms      = 0777
+                                $perms      = 0660
     )
     {
         $this->_bot         = $bot;
@@ -158,12 +158,11 @@ implements  Erebot_Interface_ReceivingConnection
         if ($pos === FALSE)
             return;
 
+        $pattern    = preg_quote(substr($line, 0, $pos), '@');
+        $pattern    = strtr($pattern, array('\\?' => '.?', '\\*' => '.*'));
         $line       = substr($line, $pos + 1);
         if ($line === FALSE)
             return;
-
-        $pattern    = preg_quote(substr($line, 0, $pos), '@');
-        $pattern    = strtr($pattern, array('\\?' => '.?', '\\*' => '.*'));
 
         foreach ($this->_bot->getConnections() as $connection) {
             if (!($connection instanceof Erebot_Interface_SendingConnection) ||
