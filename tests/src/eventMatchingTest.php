@@ -115,7 +115,7 @@ extends ErebotModuleTestCase
     public function testMatchInstanceOfClass($cls)
     {
         $matcher    = new Erebot_Event_Match_InstanceOf($cls);
-        $this->assertEquals($cls, $matcher->getType());
+        $this->assertEquals(array($cls), $matcher->getType());
         $handler    = new Erebot_EventHandler($this->_cb, $matcher);
         $event      = new Erebot_Event_Ping($this->_connection, 'foo');
         $this->assertTrue($handler->handleEvent($event));
@@ -129,7 +129,7 @@ extends ErebotModuleTestCase
     public function testMatchInstanceOfInterface($iface)
     {
         $matcher    = new Erebot_Event_Match_InstanceOf($iface);
-        $this->assertEquals($iface, $matcher->getType());
+        $this->assertEquals(array($iface), $matcher->getType());
         $handler    = new Erebot_EventHandler($this->_cb, $matcher);
         $event      = new Erebot_Event_ChanText(
             $this->_connection,

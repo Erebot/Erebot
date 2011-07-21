@@ -40,8 +40,8 @@ implements  Erebot_Interface_Event_Match
     /**
      * Returns the type associated with this filter.
      *
-     * \retval string
-     *      Type associated with this filter.
+     * \retval array
+     *      Array of types (as strings) associated with this filter.
      */
     public function getType()
     {
@@ -51,29 +51,42 @@ implements  Erebot_Interface_Event_Match
     /**
      * Sets the type used in comparisons.
      *
-     * \param $type string|object
-     *      Type to match incoming events against,
+     * \param $types string|object|array
+     *      Type(s) to match incoming events against,
      *      either as a string or as an instance
      *      of the type of match against.
+     *      An array of strings/objects may also be passed;
+     *      The filter will match if the incoming event
+     *      is of any of the types given.
      *
      * \throw Erebot_InvalidValueException
      *      The given type is invalid.
      */
-    public function setType($type)
+    public function setType($types)
     {
-        if (is_object($type))
-            $type = get_class($type);
+        if (!is_array($types))
+            $types = array($types);
 
-        if (!is_string($type))
-            throw new Erebot_InvalidValueException('Not a valid type');
+        $this->_type = array();
+        foreach ($types as $type) {
+            if (is_object($type))
+                $type = get_class($type);
 
-        $this->_type = $type;
+            if (!is_string($type))
+                throw new Erebot_InvalidValueException('Not a valid type');
+
+            $this->_type[] = $type;
+        }
     }
 
     /// \copydoc Erebot_Interface_Event_Match::match()
     public function match(Erebot_Interface_Event_Base_Generic $event)
     {
-        return ($event instanceof $this->_type);
+        foreach ($this->_type as $type) {
+            if ($event instanceof $type)
+                return TRUE;
+        }
+        return FALSE;
     }
 }
 
