@@ -25,7 +25,7 @@ implements  Erebot_Interface_ModuleContainer,
             Erebot_Interface_IrcComparator,
             Erebot_Interface_EventDispatcher,
             Erebot_Interface_EventFactory,
-            Erebot_Interface_BidirectionnalConnection
+            Erebot_Interface_BidirectionalConnection
 {
     /**
      * A configuration object implementing

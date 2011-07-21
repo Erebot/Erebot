@@ -20,7 +20,7 @@
  * \brief
  *      Interface for a connection that both sends and receives data.
  */
-interface   Erebot_Interface_BidirectionnalConnection
+interface   Erebot_Interface_BidirectionalConnection
 extends     Erebot_Interface_ReceivingConnection,
             Erebot_Interface_SendingConnection
 {
