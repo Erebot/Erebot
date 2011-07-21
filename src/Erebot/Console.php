@@ -44,17 +44,37 @@ implements  Erebot_Interface_ReceivingConnection
         $this->_socket      = stream_socket_server("udg://".$connector, $errno, $errstr, STREAM_SERVER_BIND);
         if (!$this->_socket)
             throw new Exception("Could not create console (".$errstr.")");
+
+        register_shutdown_function(
+            array(__CLASS__, '_cleanup_socket'),
+            $connector
+        );
+
+        // Change group.
+        if ($group !== NULL) {
+            if (!@chgrp($connector, $group))
+                throw new Exception("Could not change group to '$group' for '$connector'");
+        }
+
+        if (!chmod($connector, $perms))
+            throw new Exception("Could not set permissions to $perms on '$connector'");
+
+        // Flush any received data on the socket, because
+        // any data sent before the group and permissions
+        // were set may have come from an untrusted source.
+        $flush = array($this->_socket);
+        $dummy = NULL;
+        while (stream_select($flush, $dummy, $dummy, 0) == 1) {
+            if (fread($this->_socket, 8192) === FALSE)
+                throw new Exception("Error while flushing the socket");
+        }
+
         $this->_rcvQueue        = array();
         $this->_incomingData    = '';
 
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
         $logger->info($bot->gettext('Console started in "%s"'), $connector);
-
-        register_shutdown_function(
-            array(__CLASS__, '_cleanup_socket'),
-            $connector
-        );
     }
 
     /**
