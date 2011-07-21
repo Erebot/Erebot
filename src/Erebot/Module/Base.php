@@ -217,8 +217,10 @@ abstract class Erebot_Module_Base
                 $message    = implode(' ', $parts);
         }
 
-        if ($ctcpType != "" && $message != "")
+        if ($ctcpType != "" && $message != "") {
             $ctcpType .= " ";
+            $message = self::_ctcpQuote($message);
+        }
 
         $prefix = $type.' '.$targets.' :'.$marker.$ctcpType;
         // 400 is a rough estimation of how big
@@ -234,6 +236,28 @@ abstract class Erebot_Module_Base
         );
         foreach ($messages as $msg)
             $this->_connection->pushLine($prefix.$msg.$marker);
+    }
+
+    static protected function _ctcpQuote($message)
+    {
+        // Apply quoting.
+        // See http://www.irchelp.org/irchelp/rfc/ctcpspec.html
+        // First comes low-level quoting.
+        $quoting = array(
+            "\000"  => "\0200",
+            "\n"    => "\020n",
+            "\r"    => "\020r",
+            "\020"  => "\020\020",
+        );
+        $message = strtr($message, $quoting);
+
+        // Next some CTCP-level quoting and we're done.
+        $quoting = array(
+            "\001"  => "\\a",
+            "\\"    => "\\\\",
+        );
+        $message = strtr($message, $quoting);
+        return $message;
     }
 
     /**

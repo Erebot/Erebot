@@ -804,10 +804,14 @@ implements  Erebot_Interface_ModuleContainer,
 
             case 'NOTICE':    // :nick1!ident@host NOTICE <nick2/#chan> :Message
                 if (($len = strlen($msg)) > 1 &&
-                    $msg[$len-1] == "\x01" &&
-                    $msg[0] == "\x01") {
+                    $msg[$len-1] == "\001" &&
+                    $msg[0] == "\001") {
 
-                    $msg    = substr($msg, 1, -1);
+                    // Remove the markers.
+                    $msg    = (string) substr($msg, 1, -1);
+                    // Unquote the message.
+                    $msg    = self::_ctcpUnquote($msg);
+                    // Extract the tag from the rest of the message.
                     $pos    = strcspn($msg, " ");
                     $ctcp   = substr($msg, 0, $pos);
                     $msg    = (string) substr($msg, $pos + 1);
@@ -839,7 +843,11 @@ implements  Erebot_Interface_ModuleContainer,
                     $msg[$len-1] == "\x01" &&
                     $msg[0] == "\x01") {
 
-                    $msg    = substr($msg, 1, -1);
+                    // Remove the markers.
+                    $msg    = (string) substr($msg, 1, -1);
+                    // Unquote the message.
+                    $msg    = self::_ctcpUnquote($msg);
+                    // Extract the tag from the rest of the message.
                     $pos    = strcspn($msg, " ");
                     $ctcp   = substr($msg, 0, $pos);
                     $msg    = (string) substr($msg, $pos + 1);
@@ -1322,6 +1330,31 @@ implements  Erebot_Interface_ModuleContainer,
                 $this->_rawProfileLoader[] =
                     str_replace('!', 'Erebot_Interface_RawProfile_', $profile);
         }
+    }
+
+    static protected function _ctcpUnquote($msg)
+    {
+        // See http://www.irchelp.org/irchelp/rfc/ctcpspec.html
+        // CTCP-level unquoting
+        $quoting = array(
+            "\\a"   => "\001",
+            "\\\\"  => "\\",
+            "\\"    => "",  // Ignore quoting character
+                            // for invalid sequences.
+        );
+        $msg = strtr($msg, $quoting);
+
+        // Low-level unquoting
+        $quoting = array(
+            "\0200"     => "\000",
+            "\020n"     => "\n",
+            "\020r"     => "\r",
+            "\020\020"  => "\020",
+            "\020"      => "",  // Ignore quoting character
+                                // for invalid sequences.
+        );
+        $msg = strtr($msg, $quoting);
+        return $msg;
     }
 }
 
