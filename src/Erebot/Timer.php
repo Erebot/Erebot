@@ -131,14 +131,14 @@ implements  Erebot_Interface_Timer
         if (!strncasecmp(PHP_OS, 'WIN', 3))
             $command    = "start /B php-win.exe -r 'usleep(".
                 ((int) ($this->_delay * 1000000)).
-                "); // foobar";
+                "); // ".$this->_callback."'";
         else {
             $binary = '@php_bin@';
             if ($binary == '@'.'php_bin'.'@')
                 $binary = '/usr/bin/php';
             $command = $binary." -r 'usleep(".
                 ((int) ($this->_delay * 1000000)).
-                "); // foobar' &";
+                "); // ".$this->_callback."' &";
         }
         $this->_stream = popen($command, 'r');
         return TRUE;
