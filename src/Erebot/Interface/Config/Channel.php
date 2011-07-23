@@ -28,22 +28,6 @@ interface   Erebot_Interface_Config_Channel
 extends     Erebot_Interface_Config_Proxy
 {
     /**
-     * Creates a new configuration object for an IRC channel.
-     *
-     * \param Erebot_Interface_Config_Network $netCfg
-     *      An object which contains the network configuration
-     *      for this channel.
-     *
-     * \param SimpleXMLElement $xml
-     *      An XML node containing the configuration data
-     *      for this network.
-     */
-    public function __construct(
-        Erebot_Interface_Config_Network $netCfg,
-        SimpleXMLElement                $xml
-    );
-
-    /**
      * Returns the name of this IRC channel.
      *
      * \retval string

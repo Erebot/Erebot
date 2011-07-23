@@ -69,16 +69,6 @@ interface Erebot_Interface_I18n
     const LC_IDENTIFICATION = 12;
 
     /**
-     * Creates a new translator for messages.
-     *
-     * \param string $component
-     *      The name of the component to use for translations.
-     *      This should be set to the name of the module
-     *      or "Erebot" for the core.
-     */
-    public function __construct($component);
-
-    /**
      * Returns the value of the category matching the given name.
      *
      * \param string $name

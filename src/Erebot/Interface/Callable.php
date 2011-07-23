@@ -18,8 +18,6 @@
 
 interface Erebot_Interface_Callable
 {
-    public function __construct($callable);
-
     public function getCallable();
 
     public function getRepresentation();

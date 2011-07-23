@@ -33,7 +33,6 @@ implements  Erebot_Interface_ReceivingConnection
     /// Class to use to process IdentD requests.
     protected $_workerCls;
 
-    /// \copydoc Erebot_Interface_Connection::__construct()
     public function __construct(
         Erebot_Interface_Core   $bot,
                                 $connector  = '0.0.0.0:113',

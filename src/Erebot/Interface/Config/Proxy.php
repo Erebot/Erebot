@@ -43,7 +43,7 @@ interface Erebot_Interface_Config_Proxy
     public function getTranslator($component);
 
     /**
-     * Returns the ErebotMainConfig object associated with this hierarchy
+     * Returns the root configuration associated with this hierarchy
      * of configurations.
      *
      * \retval Erebot_Interface_Config_Main

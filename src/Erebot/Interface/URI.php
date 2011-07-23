@@ -24,18 +24,6 @@
 interface Erebot_Interface_URI
 {
     /**
-     * Constructs an URI.
-     *
-     * \param mixed $uri
-     *      Either a string representing the URI or an array
-     *      as returned by PHP's parse_url() function.
-     *
-     * \throw Erebot_InvalidValueException
-     *      The given URI is invalid.
-     */
-    public function __construct($uri);
-
-    /**
      * Returns the current URI as a string.
      *
      * \param bool $raw

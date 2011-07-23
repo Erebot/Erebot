@@ -222,37 +222,6 @@ extends     Erebot_Interface_Event_Base_Generic,
     const RPL_WHOHOST               = 671;  // UltimateIRCd
 
     /**
-     * Constructs a raw message.
-     *
-     * \param Erebot_Interface_Connection $connection
-     *      The connection this message came from.
-     *
-     * \param int $raw
-     *      The raw numeric code.
-     *
-     * \param string $source
-     *      The source of the raw message. This will generally be
-     *      the name of an IRC server.
-     *
-     * \param string $target
-     *      The target of the raw message. This will generally be
-     *      the bot's nickname.
-     *
-     * \param string $text
-     *      The raw content of the message.
-     *
-     * \note
-     *      No attempt is made at parsing the content of the message.
-     */
-    public function __construct(
-        Erebot_Interface_Connection $connection,
-                                    $raw,
-                                    $source,
-                                    $target,
-                                    $text
-    );
-
-    /**
      * Returns the raw numeric code associated with
      * the current message.
      *

@@ -32,7 +32,6 @@ implements  Erebot_Interface_ReceivingConnection
     /// A raw buffer for incoming data.
     protected $_incomingData;
 
-    /// \copydoc Erebot_Interface_Connection::__construct()
     public function __construct(
         Erebot_Interface_Core   $bot,
                                 $connector  = '/tmp/Erebot.sock',

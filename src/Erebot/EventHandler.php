@@ -32,7 +32,19 @@ implements  Erebot_Interface_EventHandler
     /// Filtering object to decide whether some event can be handled or not.
     protected $_filter;
 
-    /// \copydoc Erebot_Interface_EventHandler::__construct()
+    /**
+     * Constructs an event handler.
+     *
+     * \param callback $callback
+     *      The callback function/method which will be called
+     *      when an event is received which meets the $constraints,
+     *      is part of valid $targets and passed the $filters
+     *      successfully.
+     *
+     * \param NULL|Erebot_Interface_Event_Match $filter
+     *      (optional) A filter which must be matched for the callback
+     *      associated with this handler to be called.
+     */
     public function __construct(
         Erebot_Interface_Callable       $callback,
         Erebot_Interface_Event_Match    $filter = NULL

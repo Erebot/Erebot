@@ -42,7 +42,7 @@ class Erebot_Config_Proxy
     protected $_modules;
 
     /**
-     * Creates new instance of a ErebotConfigProxy object.
+     * Creates a new Erebot_Proxy_Config object.
      *
      * \param Erebot_Interface_Config_Proxy $proxified
      *      A configuration object which should be proxied through

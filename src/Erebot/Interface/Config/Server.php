@@ -28,22 +28,6 @@ interface   Erebot_Interface_Config_Server
 extends     Erebot_Interface_Config_Proxy
 {
     /**
-     * Creates a new ErebotServerConfig instance.
-     *
-     * \param Erebot_Interface_Config_Network $netCfg
-     *      A reference to an object which contains the configuration
-     *      for the IRC network this server is a part of.
-     *
-     * \param SimpleXMLElement $xml
-     *      An XML node containing the configuration data
-     *      for this server.
-     */
-    public function __construct(
-        Erebot_Interface_Config_Network $netCfg,
-        SimpleXMLElement                $xml
-    );
-
-    /**
      * Returns the URL to use to connect to this IRC server.
      *
      * \retval string
@@ -55,7 +39,7 @@ extends     Erebot_Interface_Config_Proxy
      * Returns the IRC network configuration upon which this
      * IRC server configuration depends.
      *
-     * \retval ErebotNetworkConfig
+     * \retval Erebot_Interface_Config_Network
      *      The network configuration associated with this server
      *      configuration.
      */

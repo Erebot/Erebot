@@ -30,7 +30,17 @@ implements  Erebot_Interface_Config_Server
     /// An array of URI to follow to connect to this IRC(S) server.
     protected $_connectionURI;
 
-    /// \copydoc Erebot_Interface_Config_Server::__construct()
+    /**
+     * Creates a new Erebot_Config_Server instance.
+     *
+     * \param Erebot_Interface_Config_Network $netCfg
+     *      A reference to an object which contains the configuration
+     *      for the IRC network this server is a part of.
+     *
+     * \param SimpleXMLElement $xml
+     *      An XML node containing the configuration data
+     *      for this server.
+     */
     public function __construct(
         Erebot_Interface_Config_Network $netCfg,
         SimpleXMLElement                $xml
@@ -40,9 +50,7 @@ implements  Erebot_Interface_Config_Server
         $this->_connectionURI = array_filter(explode(' ', (string) $xml['url']));
     }
 
-    /**
-     * Destructs ErebotServerConfig instances.
-     */
+    /// Destructor.
     public function __destruct()
     {
         parent::__destruct();

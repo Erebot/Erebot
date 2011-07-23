@@ -26,39 +26,6 @@
  */
 interface Erebot_Interface_Timer
 {
-    /**
-     * Creates a new timer, set off to call the given callback
-     * (optionally, repeatedly) when the associated delay passed.
-     *
-     * \param callback $callback
-     *      The callback to call when the timer expires.
-     *      See http://php.net/manual/en/language.pseudo-types.php
-     *      for acceptable callback values.
-     *
-     * \param number $delay
-     *      The number of seconds to wait for before calling the
-     *      callback. This may be a float/double or an int, but
-     *      the implementation may choose to round it up to the
-     *      nearest integer if sub-second precision is impossible
-     *      to get (eg. on Windows).
-     *
-     * \param bool|int $repeat
-     *      Either a boolean indicating whether the callback should
-     *      be called repeatedly every $delay seconds or just once,
-     *      or an integer specifying the exact number of times the
-     *      callback will be called.
-     *
-     * \param array $args
-     *      (optional) Additional arguments to pass to the callback
-     *      when it is called.
-     */
-    public function __construct(
-        Erebot_Interface_Callable   $callback,
-                                    $delay,
-                                    $repeat,
-                                    $args = NULL
-    );
-
     public function setCallback(Erebot_Interface_Callable $callback);
 
     /**

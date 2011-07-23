@@ -35,8 +35,7 @@ implements  Erebot_Interface_BidirectionalConnection
     /// A FIFO queue for incoming messages.
     protected $_rcvQueue;
 
-    /// \copydoc Erebot_Interface_Connection::__construct()
-    public function __construct(Erebot_Interface_Core $bot, $socket = NULL)
+    public function __construct(Erebot_Interface_Core $bot, $socket)
     {
         if (!is_resource($socket))
             throw new Erebot_InvalidValueException('Not a valid socket');

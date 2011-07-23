@@ -26,19 +26,6 @@
 interface Erebot_Interface_Connection
 {
     /**
-     * Constructs the object which will hold a connection.
-     *
-     * \param Erebot_Interface_Core $bot
-     *      A bot instance.
-     *
-     * \note
-     *      There is no actual connection until
-     *      Erebot_Interface_Connection::connect()
-     *      is called.
-     */
-    public function __construct(Erebot_Interface_Core $bot);
-
-    /**
      * Returns whether this connection object
      * is currently connected to a server.
      *
@@ -77,8 +64,9 @@ interface Erebot_Interface_Connection
      *
      * \param NULL|string $chan
      *      The name of the IRC channel for which a configuration
-     *      must be retrieved. If $chan is NULL, the ErebotServerConfig
-     *      instance associated with this object is returned instead.
+     *      must be retrieved. If $chan is NULL, the configuration
+     *      associated with this object is returned instead
+     *      (an instance of the Erebot_Interface_Config_Server).
      *
      * \retval Erebot_Interface_Config_Channel
      *      The configuration for the given channel, if there is one.
@@ -87,7 +75,8 @@ interface Erebot_Interface_Connection
      *      Otherwise, the configuration for the associated IRC server.
      *
      * \throw Erebot_NotFoundException
-     *      No ErebotChannelConfig object exists for the given channel.
+     *      No Erebot_Interface_Config_Channel object exists
+     *      for the given channel.
      */
     public function getConfig($chan);
 

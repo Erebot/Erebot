@@ -36,7 +36,14 @@ implements  Erebot_Interface_I18n
     /// The component to get translations from (a module name or "Erebot").
     protected $_component;
 
-    /// \copydoc Erebot_Interface_I18n::__construct()
+    /**
+     * Creates a new translator for messages.
+     *
+     * \param string $component
+     *      The name of the component to use for translations.
+     *      This should be set to the name of the module
+     *      or "Erebot" for the core.
+     */
     public function __construct($component)
     {
         $this->_locales = array();

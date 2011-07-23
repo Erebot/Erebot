@@ -22,7 +22,6 @@ implements  Erebot_Interface_Callable
     protected $_callable;
     protected $_representation;
 
-    /// \copydoc Erebot_Interface_Callable::__construct()
     public function __construct($callable)
     {
         if (!is_callable($callable, FALSE, $representation))

@@ -69,7 +69,17 @@ implements  Erebot_Interface_ModuleContainer,
     /// Valid mappings for case-insensitive comparisons.
     static protected $_caseMappings = NULL;
 
-    /// \copydoc Erebot_Interface_Connection::__construct()
+    /**
+     * Constructs the object which will hold a connection.
+     *
+     * \param Erebot_Interface_Core $bot
+     *      A bot instance.
+     *
+     * \note
+     *      There is no actual connection until
+     *      Erebot_Interface_Connection::connect()
+     *      is called.
+     */
     public function __construct(Erebot_Interface_Core $bot, $config = NULL, $events = array())
     {
         $this->_config      = $config;

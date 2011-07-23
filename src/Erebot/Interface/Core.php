@@ -35,17 +35,6 @@ interface Erebot_Interface_Core
     const VERSION = EREBOT_VERSION;
 
     /**
-     * Creates a new Erebot instance.
-     *
-     * \param Erebot_Interface_Config_MainInterface $config
-     *      The (main) configuration to use.
-     */
-    public function __construct(
-        Erebot_Interface_Config_Main    $config,
-        Erebot_Interface_I18n           $translator
-    );
-
-    /**
      * Returns a list of all connections handled by the bot.
      *
      * \retval list(Erebot_Interface_ConnectionInterface)

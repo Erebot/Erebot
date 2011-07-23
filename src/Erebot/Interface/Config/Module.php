@@ -27,15 +27,6 @@
 interface Erebot_Interface_Config_Module
 {
     /**
-     * Creates a new configuration object for a module.
-     *
-     * \param SimpleXMLElement $xml
-     *      An XML node containing the configuration
-     *      settings for the module.
-     */
-    public function __construct(SimpleXMLElement $xml);
-
-    /**
      * Gets/sets the active flag on this module.
      *
      * \param NULL|bool $active

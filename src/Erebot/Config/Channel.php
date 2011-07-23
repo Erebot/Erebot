@@ -30,10 +30,20 @@ implements  Erebot_Interface_Config_Channel
     /// The name of the channel this configuration refers to.
     protected $_name;
 
-    /// A reference to the ErebotNetworkConfig this instance depends on. 
+    /// Netword configuration configuration this object depends on.
     protected $_netCfg;
 
-    /// \copydoc Erebot_Interface_Config_Channel::__construct()
+    /**
+     * Creates a new configuration object for an IRC channel.
+     *
+     * \param Erebot_Interface_Config_Network $netCfg
+     *      An object which contains the network configuration
+     *      for this channel.
+     *
+     * \param SimpleXMLElement $xml
+     *      An XML node containing the configuration data
+     *      for this network.
+     */
     public function __construct(
         Erebot_Interface_Config_Network $netCfg,
         SimpleXMLElement                $xml
@@ -44,9 +54,7 @@ implements  Erebot_Interface_Config_Channel
         $this->_netCfg   = $netCfg;
     }
 
-    /**
-     * Destructs ErebotChannelConfig instances.
-     */
+    /// Destructor.
     public function __destruct()
     {
         parent::__destruct();

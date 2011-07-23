@@ -32,7 +32,18 @@ implements  Erebot_Interface_RawHandler
     /// Method/function to call when this handler is triggered.
     protected $_callback;
 
-    /// \copydoc Erebot_Interface_RawHandler::__construct()
+    /**
+     * Constructs a raw event handler.
+     *
+     * \param Erebot_Interface_Callable $callback
+     *      A callback function/method which will be called
+     *      whenever the bot receives a message of the given
+     *      $raw numeric.
+     *
+     * \param int|Erebot_RawReference $raw
+     *      The particular raw numeric code this raw handler will
+     *      react to, or a reference to it.
+     */
     public function __construct(Erebot_Interface_Callable $callback, $raw)
     {
         $this->setCallback($callback);

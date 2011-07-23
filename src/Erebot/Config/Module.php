@@ -21,7 +21,7 @@
  *      This class stores configuration data about modules.
  *
  * For each module at any configuration level, an instance of
- * ErebotModuleConfig will be created.
+ * Erebot_Config_Module will be created.
  */
 class       Erebot_Config_Module
 implements  Erebot_Interface_Config_Module
@@ -35,7 +35,13 @@ implements  Erebot_Interface_Config_Module
     /// The name of the module.
     protected $_name;
 
-    /// \copydoc Erebot_Interface_Config_Module::__construct()
+    /**
+     * Creates a new configuration object for a module.
+     *
+     * \param SimpleXMLElement $xml
+     *      An XML node containing the configuration
+     *      settings for the module.
+     */
     public function __construct(SimpleXMLElement $xml)
     {
         $this->_name    = (string) $xml['name'];

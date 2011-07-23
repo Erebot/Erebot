@@ -34,31 +34,6 @@ extends     Erebot_Interface_Config_Proxy
     const LOAD_FROM_STRING = 2;
 
     /**
-     * Creates a new instance of the ErebotMainConfig class.
-     *
-     * \param string $configData
-     *      Either a (relative or absolute) path to the configuration file
-     *      to load or a string representation of the configuration, 
-     *      depending on the value of the $source parameter.
-     *
-     * \param opaque $source
-     *      Erebot_Interface_Config_Main::LOAD_FROM_FILE or
-     *      Erebot_Interface_Config_Main::LOAD_FROM_STRING, depending on
-     *      whether $configData contains a filename or the string
-     *      representation of the configuration data, respectively.
-     *
-     * \throw Erebot_InvalidValueException
-     *      The configuration file did not exist or contained invalid values.
-     *      This exception is also thrown when the $source parameter contains
-     *      an invalid value.
-     */
-    public function __construct(
-                                $configData,
-                                $source,
-        Erebot_Interface_I18n   $translator
-    );
-
-    /**
      * Prevents cloning of this class to avoid escape from the
      * singleton design pattern.
      */
