@@ -670,11 +670,11 @@ implements  Erebot_Interface_ModuleContainer,
 
         $target = array_shift($parts);
 
-        if (count($parts) && $parts[0][0] == ':')
-            $parts[0] = substr($parts[0], 1);
+        if (count($parts) && substr($parts[1], 0, 1) == ':')
+            $parts[1] = substr($parts[1], 1);
         $msg = implode(' ', $parts);
 
-        if (isset($target[0]) && $target[0] == ':')
+        if (substr($target, 0, 1) == ':')
             $target = substr($target, 1);
 
         switch ($type) {
