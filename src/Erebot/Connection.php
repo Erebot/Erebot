@@ -670,8 +670,8 @@ implements  Erebot_Interface_ModuleContainer,
 
         $target = array_shift($parts);
 
-        if (count($parts) && substr($parts[1], 0, 1) == ':')
-            $parts[1] = substr($parts[1], 1);
+        if (count($parts) && substr($parts[0], 0, 1) == ':')
+            $parts[0] = substr($parts[0], 1);
         $msg = implode(' ', $parts);
 
         if (substr($target, 0, 1) == ':')
