@@ -17,47 +17,46 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function Erebot_autoloader($className)
-{
-    $class = ltrim($className, '\\');
-    $path = str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class);
+// When running from a clone.
+if ('@php_dir@' == '@'.'php_dir'.'@') {
+    require(
+        dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .
+        'vendor' . DIRECTORY_SEPARATOR .
+        'Erebot_API' . DIRECTORY_SEPARATOR .
+        'src' . DIRECTORY_SEPARATOR .
+        'Erebot' . DIRECTORY_SEPARATOR .
+        'Autoload.php'
+    );
 
-    // When running from the trunk.
-    if ('@php_dir@' == '@'.'php_dir'.'@') {
-        $parts = explode(DIRECTORY_SEPARATOR, $path);
-        $repos_root = dirname(dirname(dirname(dirname(__FILE__))));
-        if (count($parts) > 2 && $parts[2] != 'Base' &&
-            array_slice($parts, 0, 2) == array('Erebot', 'Module'))
-            array_unshift($parts, $repos_root, 'modules', $parts[2], 'trunk', 'src');
-        else if ($parts[0] == 'Plop')
-            array_unshift($parts, $repos_root, 'logging', 'trunk', 'src');
-        else if ($parts[0] == 'Erebot')
-            array_unshift($parts, $repos_root, 'core', 'trunk', 'src');
-        // Otherwise, the path gets restored to its previous state,
-        // where PHP uses the usual include_path to locate the file.
-        $path = implode(DIRECTORY_SEPARATOR, $parts);
-    }
-    // When running from a pear/pyrus installation.
-    else array_unshift($parts, '@php_dir@');
+    // Add Erebot's sources to the Autoloader.
+    $base = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR;
+    Erebot_Autoload::initialize($base . "src");
 
-    $path .= '.php';
-    if (($fp = @fopen($path, 'rb', TRUE)) !== FALSE) {
-        fclose($fp);
-        unset($fp);
-        include_once($path);
+    // Add vendor sources too.
+    $base .= "vendor";
+    foreach (scandir($base) as $path) {
+        if (trim($path, '.') == '')
+            continue;
+        $path = $base . DIRECTORY_SEPARATOR .
+                $path . DIRECTORY_SEPARATOR;
+        if (is_dir($path . 'src'))
+            Erebot_Autoload::initialize($path . 'src');
+        if (is_dir($path . 'lib'))  // for sfService.
+            Erebot_Autoload::initialize($path . 'lib');
     }
+    // Register include_path with the Autoloader.
+    foreach (explode(PATH_SEPARATOR, get_include_path()) as $path)
+        Erebot_Autoload::initialize($path);
 }
-
-// Register the autoloader, using whatever's available.
-if (function_exists('spl_autoload_register'))
-    spl_autoload_register('Erebot_autoloader');
+// Otherwise, we're probably in Pyrus/PEAR.
 else {
-    function __autoload($class)
-    {
-        return Erebot_autoloader($class);
-    }
+    require('Erebot/Autoload.php');
+    $incs = get_included_files();
+    Erebot_Autoload::initialize(dirname(dirname($incs[1])));
 }
 
+// Quick replacement for ctype_digit in case
+// PHP was compiled with --disable-ctype.
 if (!function_exists('ctype_digit')) {
     function ctype_digit($s) {
         if (!is_string($s))
