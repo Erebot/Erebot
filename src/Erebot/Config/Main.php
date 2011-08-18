@@ -144,16 +144,24 @@ implements  Erebot_Interface_Config_Main
         else
             throw new Erebot_InvalidValueException('Invalid configuration file');
 
-        if (basename(dirname(dirname(dirname(dirname(__FILE__))))) == 'trunk')
-            $schemaDir = '../../../data';
-        else
-            $schemaDir = '../../../data/pear.erebot.net/Erebot';
+        $dataDir = '@data_dir@';
+        // Running from the repository.
+        if ($dataDir == '@'.'data_dir'.'@') {
+            $schemaPath = dirname(dirname(dirname(dirname(__FILE__)))) .
+                DIRECTORY_SEPARATOR . 'data';
+            $plopSchemaPath = dirname(dirname(dirname(dirname(__FILE__)))) .
+                DIRECTORY_SEPARATOR . 'vendor' .
+                DIRECTORY_SEPARATOR . 'Plop' .
+                DIRECTORY_SEPARATOR . 'data';
+        }
+        else {
+            $schemaPath = $dataDir . 'pear.erebot.net' .
+                DIRECTORY_SEPARATOR . 'Erebot';
+            $plopSchemaPath = $dataDir . 'pear.erebot.net' .
+                DIRECTORY_SEPARATOR . 'Plop';
+        }
 
-        $schemaDir = str_replace('/', DIRECTORY_SEPARATOR, $schemaDir);
-        $schema = dirname(__FILE__) .
-            DIRECTORY_SEPARATOR . $schemaDir .
-            DIRECTORY_SEPARATOR . 'config.rng';
-
+        $schema = file_get_contents($schemaPath . DIRECTORY_SEPARATOR . 'config.rng');
         $ue     = libxml_use_internal_errors(TRUE);
         $domxml = new Erebot_DOM();
         if ($source == self::LOAD_FROM_FILE)
@@ -163,7 +171,13 @@ implements  Erebot_Interface_Config_Main
 
         $domxml->xinclude(LIBXML_NOBASEFIX);
         $this->_stripXGlobWrappers($domxml);
-        $ok     = $domxml->relaxNGValidate($schema);
+        $ok     = $domxml->relaxNGValidateSource(
+            str_replace(
+                '@plop_schema@',
+                $plopSchemaPath . DIRECTORY_SEPARATOR . 'config.rng',
+                $schema
+            )
+        );
         $errors = $domxml->getErrors();
         libxml_use_internal_errors($ue);
 

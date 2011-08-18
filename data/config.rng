@@ -77,7 +77,7 @@
 
             <interleave>
                 <optional>
-                    <externalRef href="../../pear.erebot.net/Plop/config.rng">
+                    <externalRef href="@plop_schema@">
                         <ref name="logging"/>
                     </externalRef>
                 </optional>

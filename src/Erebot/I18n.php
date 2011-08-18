@@ -173,24 +173,26 @@ implements  Erebot_Interface_I18n
 
     static protected function _build_path($locale, $category, $domain)
     {
-        if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk') {
-            if ($domain == 'Erebot') {
-                $base = '../../data/i18n';
-            }
-            else if (!strncasecmp($domain, 'Erebot_Module_', 14)) {
-                $base = '../../../../modules/' .
-                    substr($domain, 14) .
-                    '/trunk/data/i18n';
-            }
+        $base = '@data_dir@';
+        // Running from the repository.
+        if ($base == '@'.'data_dir'.'@') {
+            $base = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
+            if ($domain == 'Erebot')
+                $base .= 'data';
+            else
+                $base .= 'vendor' .
+                    DIRECTORY_SEPARATOR . $domain .
+                    DIRECTORY_SEPARATOR . 'data';
         }
         else
-            $base = '../../data/pear.erebot.net/' . $domain . '/i18n';
-        $base = str_replace('/', DIRECTORY_SEPARATOR, trim($base, '/'));
-        $prefix = dirname(__FILE__) . DIRECTORY_SEPARATOR .
-            $base . DIRECTORY_SEPARATOR;
+            $base .=    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
+                        DIRECTORY_SEPARATOR . $domain;
 
-        return $prefix . $locale . DIRECTORY_SEPARATOR .
-            $category . DIRECTORY_SEPARATOR . $domain . '.mo';
+        return $base .
+            DIRECTORY_SEPARATOR . 'i18n' .
+            DIRECTORY_SEPARATOR . $locale .
+            DIRECTORY_SEPARATOR . $category .
+            DIRECTORY_SEPARATOR . $domain . '.mo';
     }
 
     protected function _get_translation($file, $message)

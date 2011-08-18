@@ -215,15 +215,17 @@ class   Erebot_Styling
             $source.
             '</msg>';
 
-        if (basename(dirname(dirname(dirname(__FILE__)))) == 'trunk')
-            $schemaDir = '../../data';
+        $dataDir = '@data_dir@';
+        // Running from the repository.
+        if ($dataDir == '@'.'data_dir'.'@')
+            $dataDir = dirname(dirname(dirname(__FILE__))) .
+                        DIRECTORY_SEPARATOR . 'data';
         else
-            $schemaDir = '../../data/pear.erebot.net/Erebot';
+            $dataDir .= DIRECTORY_SEPARATOR . 'peat.erebot.net' .
+                        DIRECTORY_SEPARATOR . 'Erebot';
 
         $schemaDir = str_replace('/', DIRECTORY_SEPARATOR, $schemaDir);
-        $schema = dirname(__FILE__) .
-            DIRECTORY_SEPARATOR . $schemaDir .
-            DIRECTORY_SEPARATOR . 'styling.rng';
+        $schema = $schemaDir . DIRECTORY_SEPARATOR . 'styling.rng';
 
         $this->_translator  = $translator;
         $this->_dom         =   new Erebot_DOM();
@@ -566,7 +568,7 @@ class   Erebot_Styling
             $formatter = new MessageFormatter($locale, $pattern);
             // HACK: PHP <= 5.3.3 returns NULL when the pattern in invalid
             // instead of throwing an exception.
-            // See http://bugs.php.net/bug.php?id=52776 
+            // See http://bugs.php.net/bug.php?id=52776
             if ($formatter === NULL)
                 throw new Erebot_InvalidValueException('Invalid plural forms');
             $correctForm = $formatter->format(array($value));

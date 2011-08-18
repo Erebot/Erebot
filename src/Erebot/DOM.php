@@ -207,13 +207,15 @@ extends DomDocument
         $schematron
     )
     {
-        $xslDir = dirname(dirname(dirname(__FILE__)));
-        if (basename($xslDir) == 'trunk')
-            $xslDir .= '/data';
+        $dataDir = '@data_dir@';
+        if ($dataDir == '@'.'data_dir'.'@')
+            $xslDir = dirname(dirname(dirname(__FILE__))) .
+                DIRECTORY_SEPARATOR . 'data';
         else
-            $xslDir .= '/data/pear.erebot.net/Erebot';
+            $xslDir .=  DIRECTORY_SEPARATOR . 'pear.erebot.net' .
+                        DIRECTORY_SEPARATOR . 'Erebot';
 
-        $xslDir     = str_replace('/', DIRECTORY_SEPARATOR, $xslDir);
+        $xslDir    .= DIRECTORY_SEPARATOR;
         $quiet      = !libxml_use_internal_errors(); 
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
