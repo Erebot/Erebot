@@ -1,2 +1,2 @@
 @INCLUDE = buildenv/Doxyfile
-INPUT += docs/additions
+INPUT += docs/additions vendor/Erebot_API/src/
