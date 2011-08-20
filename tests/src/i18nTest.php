@@ -16,11 +16,12 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(
-    dirname(dirname(__FILE__)) .
-    DIRECTORY_SEPARATOR . 'testenv' .
-    DIRECTORY_SEPARATOR . 'bootstrap.php'
-);
+if (!defined('TESTENV_DIR'))
+    define(
+        'TESTENV_DIR',
+        dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'testenv'
+    );
+require_once(TESTENV_DIR . DIRECTORY_SEPARATOR . 'bootstrap.php');
 
 class   I18nTest
 extends PHPUnit_Framework_TestCase

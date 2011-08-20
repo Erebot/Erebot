@@ -88,3 +88,9 @@
 [submodule "vendor/dependency-injection"]
 	path = vendor/dependency-injection
 	url = git://github.com/fpoirotte/dependency-injection.git
+[submodule "buildenv"]
+	path = buildenv
+	url = git://github.com/fpoirotte/Erebot_Buildenv.git
+[submodule "tests/testenv"]
+	path = tests/testenv
+	url = git://github.com/fpoirotte/Erebot_Testenv.git

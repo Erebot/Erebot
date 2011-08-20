@@ -51,8 +51,7 @@ if ('@php_dir@' == '@'.'php_dir'.'@') {
 // Otherwise, we're probably in Pyrus/PEAR.
 else {
     require('Erebot/Autoload.php');
-    $incs = get_included_files();
-    Erebot_Autoload::initialize(dirname(dirname($incs[1])));
+    Erebot_Autoload::initialize('@php_dir@');
 }
 
 // Quick replacement for ctype_digit in case
