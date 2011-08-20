@@ -224,8 +224,7 @@ class   Erebot_Styling
             $dataDir .= DIRECTORY_SEPARATOR . 'peat.erebot.net' .
                         DIRECTORY_SEPARATOR . 'Erebot';
 
-        $schemaDir = str_replace('/', DIRECTORY_SEPARATOR, $schemaDir);
-        $schema = $schemaDir . DIRECTORY_SEPARATOR . 'styling.rng';
+        $schema = $dataDir . DIRECTORY_SEPARATOR . 'styling.rng';
 
         $this->_translator  = $translator;
         $this->_dom         =   new Erebot_DOM();
