@@ -37,6 +37,13 @@ extends         ErebotModuleTestCase
             ->method('getRawProfileLoader')
             ->will($this->returnValue($this->_loader));
     }
+
+    protected function _createMocks()
+    {
+        parent::_createMocks();
+        // Mock a real connection instead of the interface.
+        $this->_connection = $this->getMock('Erebot_Connection', array(), array($this->_bot, $this->_serverConfig), '', FALSE, FALSE);
+    }
 }
 
 class   RawReferenceTest
