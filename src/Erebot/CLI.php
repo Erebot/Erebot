@@ -16,7 +16,8 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require('SymfonyComponents/DependencyInjection/sfServiceContainerAutoloader.php');
+// Don't require it : during development, we can't rely on PEAR.
+@include('SymfonyComponents/DependencyInjection/sfServiceContainerAutoloader.php');
 sfServiceContainerAutoloader::register();
 
 /**
