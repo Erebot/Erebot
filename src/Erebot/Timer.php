@@ -160,7 +160,7 @@ implements  Erebot_Interface_Timer
         else {
             $binary = '@php_bin@';
             if ($binary == '@'.'php_bin'.'@')
-                $binary = '/usr/bin/php';
+                $binary = '/usr/bin/env php';
             $command = $binary." -r 'usleep(".
                 ((int) ($this->_delay * 1000000)).
                 "); // ".$this->_callback."' &";
