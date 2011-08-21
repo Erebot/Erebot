@@ -122,7 +122,10 @@ extends PHPUnit_Framework_TestCase
             $wait = $max - (microtime(TRUE) - $start);
             if ($wait <= 0)
                 return array(0, NULL);
-            $nb   = stream_select(
+            /** The silencer is required to avoid PHPUnit choking
+             *  when the syscall is interrupted by a signal and
+             *  this function displays a warning as a result. */
+            $nb   = @stream_select(
                 $read,
                 $null,
                 $null,
