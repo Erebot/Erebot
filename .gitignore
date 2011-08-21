@@ -1,6 +1,6 @@
 /conf.d
 /Erebot.xml
-/vendor/Erebot_Module_*/
+/vendor/Erebot_Module_*
 
 /data/i18n/*/LC_MESSAGES/*.mo
 /docs
