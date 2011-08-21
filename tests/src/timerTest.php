@@ -70,18 +70,9 @@ extends PHPUnit_Framework_TestCase
 
         $start = microtime(TRUE);
         $this->assertTrue($timer->reset());
-        $read = array($timer->getStream());
-        $null = array();
-
-        $nb = stream_select(
-            $read,
-            $null,
-            $null,
-            intval($max),
-            ((int) ($max * 100000)) % 100000
-        );
+        list($nb, $read) = self::_select($timer, $max);
         $this->assertEquals(1, $nb);
-        $this->assertSame($timer->getStream(), $read[0]);
+        $this->assertSame($timer->getStream(), $read);
 
         $timer->activate();
         $this->assertTrue($this->_flag);
@@ -91,18 +82,9 @@ extends PHPUnit_Framework_TestCase
         $this->_flag = FALSE;
         $start = microtime(TRUE);
         $this->assertTrue($timer->reset());
-        $read = array($timer->getStream());
-        $null = array();
-
-        $nb = stream_select(
-            $read,
-            $null,
-            $null,
-            intval($max),
-            ((int) ($max * 100000)) % 100000
-        );
+        list($nb, $read) = self::_select($timer, $max);
         $this->assertEquals(1, $nb);
-        $this->assertSame($timer->getStream(), $read[0]);
+        $this->assertSame($timer->getStream(), $read);
 
         $timer->activate();
         $this->assertTrue($this->_flag);
@@ -128,6 +110,27 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals($callback, $timer->getCallback());
         $this->assertEquals(4.2, $timer->getDelay());
         $this->assertEquals(42, $timer->getRepetition());
+    }
+
+    static protected function _select($timer, $max)
+    {
+        $start  = microtime(TRUE);
+        $stream = $timer->getStream();
+        do {
+            $read = array($stream);
+            $null = array();
+            $wait = $max - (microtime(TRUE) - $start);
+            if ($wait <= 0)
+                return array(0, NULL);
+            $nb   = stream_select(
+                $read,
+                $null,
+                $null,
+                intval($wait),
+                ((int) ($wait * 100000)) % 100000
+            );
+        } while ($nb === FALSE);
+        return array($nb, $read[0]);
     }
 }
 
