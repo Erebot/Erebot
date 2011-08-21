@@ -959,6 +959,9 @@ implements  Erebot_Interface_ModuleContainer,
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
 
+        if (!class_exists($module, TRUE))
+            throw new Erebot_InvalidValueException("No such class '$module'");
+
         if (!is_subclass_of($module, 'Erebot_Module_Base'))
             throw new Erebot_InvalidValueException(
                 "Invalid module! Not a subclass of Erebot_Module_Base.");
