@@ -20,15 +20,15 @@
 
         <!-- Set version in example configurations. -->
         <!-- * Single file configuration -->
-        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} examples/Erebot-single-file.xml.dist &gt; /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
-        <move file="/tmp/${phing.project.name}~" tofile="examples/Erebot-single-file.xml.dist" haltonerror="true" overwrite="true"/>
+        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} examples/Erebot-single-file.xml.dist &gt; ${file.tmp}" escape="false" checkreturn="true" logoutput="true"/>
+        <move file="${file.tmp}" tofile="examples/Erebot-single-file.xml.dist" haltonerror="true" overwrite="true"/>
         <!-- * Multiple file configuration -->
-        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} examples/Erebot-multiple-files.xml.dist &gt; /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
-        <move file="/tmp/${phing.project.name}~" tofile="examples/Erebot-multiple-files.xml.dist" haltonerror="true" overwrite="true"/>
+        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} examples/Erebot-multiple-files.xml.dist &gt; ${file.tmp}" escape="false" checkreturn="true" logoutput="true"/>
+        <move file="${file.tmp}" tofile="examples/Erebot-multiple-files.xml.dist" haltonerror="true" overwrite="true"/>
 
         <!-- Test data. -->
-        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} tests/data/valid-config.xml &gt; /tmp/${phing.project.name}~" escape="false" checkreturn="true" logoutput="true"/>
-        <move file="/tmp/${phing.project.name}~" tofile="tests/data/valid-config.xml" haltonerror="true" overwrite="true"/>
+        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} tests/data/valid-config.xml &gt; ${file.tmp}" escape="false" checkreturn="true" logoutput="true"/>
+        <move file="${file.tmp}" tofile="tests/data/valid-config.xml" haltonerror="true" overwrite="true"/>
     </target>
 
     <import file="buildenv/build.xml"/>
