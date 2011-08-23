@@ -23,7 +23,7 @@
  */
 class       Erebot_Event_ServerCapabilities
 extends     Erebot_Event_Abstract
-implements  Erebot_Interface_Event_ServerCapabitilies
+implements  Erebot_Interface_Event_ServerCapabilities
 {
     protected $_module;
 
