@@ -21,8 +21,9 @@
  *      Triggered when the ServerCapabilities finishes determining
  *      what features the IRC server supports.
  */
-class   Erebot_Event_ServerCapabilities
-extends Erebot_Event_Abstract
+class       Erebot_Event_ServerCapabilities
+extends     Erebot_Event_Abstract
+implements  Erebot_Interface_Event_ServerCapabitilies
 {
     protected $_module;
 
