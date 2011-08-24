@@ -110,7 +110,7 @@
  *  </table>
  */
 class       Erebot_Styling
-interface   Erebot_Interface_Styling
+implements  Erebot_Interface_Styling
 {
     /// Translator to use for plurals.
     protected $_translator;
