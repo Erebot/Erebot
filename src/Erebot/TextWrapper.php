@@ -22,9 +22,7 @@
  *      deal with other operations related to separators.
  */
 class       Erebot_TextWrapper
-implements  Countable,
-            ArrayAccess,
-            Iterator
+implements  Erebot_Interface_TextWrapper
 {
     /// The text wrapped by this instance.
     protected $_text;
