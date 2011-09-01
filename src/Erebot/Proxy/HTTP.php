@@ -39,7 +39,10 @@ extends Erebot_Proxy_Base
         $request = "";
         $request .= sprintf("CONNECT %s:%d HTTP/1.0\r\n", $host, $port);
         $request .= sprintf("Host: %s:%d\r\n", $host, $port);
-        $request .= sprintf("User-Agent: Erebot/%s\r\n", Erebot_Interface_Core::VERSION);
+        $request .= sprintf(
+            "User-Agent: Erebot/%s\r\n",
+            Erebot_Interface_Core::VERSION
+        );
 
         if ($credentials !== NULL) {
             $request .= sprintf(
@@ -61,7 +64,10 @@ extends Erebot_Proxy_Base
 
         $line = stream_get_line($this->_socket, 4096, "\r\n");
         if ($line === FALSE)
-            throw new Erebot_InvalidValueException('Invalid response from proxy');
+            throw new Erebot_InvalidValueException(
+                'Invalid response from proxy'
+            );
+
         $this->_logger->debug("%s", addcslashes($line, "\000..\037"));
         $contents = array_filter(explode(" ", $line));
 
@@ -75,17 +81,21 @@ extends Erebot_Proxy_Base
         }
 
         // Avoid an endless loop by limiting the number of headers.
-        // No HTTP server will send more than 2^10 headers anyway.
+        // No HTTP server is likely to send more than 2^10 headers anyway.
         $max = (1 << 10);
         for ($i = 0; $i < $max; $i++) {
             $line = stream_get_line($this->_socket, 4096, "\r\n");
             if ($line === FALSE)
-                throw new Erebot_InvalidValueException('Invalid response from proxy');
+                throw new Erebot_InvalidValueException(
+                    'Invalid response from proxy'
+                );
             if ($line == "")
                 break;
             $this->_logger->debug("%s", addcslashes($line, "\000..\037"));
         }
         if ($i === $max)
-            throw new Erebot_InvalidValueException('Endless loop detected in proxy response');
+            throw new Erebot_InvalidValueException(
+                'Endless loop detected in proxy response'
+            );
     }
 }

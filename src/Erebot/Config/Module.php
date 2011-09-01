@@ -72,8 +72,11 @@ implements  Erebot_Interface_Config_Module
     {
         $res = $this->_active;
         if ($active !== NULL) {
-            if (!is_bool($active))
-                throw new Erebot_InvalidValueException('Invalid activation value');
+            if (!is_bool($active)) {
+                throw new Erebot_InvalidValueException(
+                    'Invalid activation value'
+                );
+            }
             $this->_active = $active;
         }
         return $res;

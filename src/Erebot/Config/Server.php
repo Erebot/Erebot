@@ -47,7 +47,9 @@ implements  Erebot_Interface_Config_Server
     )
     {
         parent::__construct($netCfg, $xml);
-        $this->_connectionURI = array_filter(explode(' ', (string) $xml['url']));
+        $this->_connectionURI = array_filter(
+            explode(' ', (string) $xml['url'])
+        );
     }
 
     /// Destructor.

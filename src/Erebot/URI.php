@@ -46,7 +46,7 @@ implements  Erebot_Interface_URI
     protected $_scheme;
     /// User information component (such as a "username:password" pair).
     protected $_userinfo;
-    /// Host component ("authority", even though an authority is more than that).
+    /// Host component ("authority", even though "authority" is more general).
     protected $_host;
     /// Port component.
     protected $_port;
@@ -626,7 +626,10 @@ implements  Erebot_Interface_URI
         // 6.2.2.3.  Path Segment Normalization
         if ($raw)
             return $this->_path;
-        return $this->_removeDotSegments($this->_normalizePercent($this->_path));
+
+        return $this->_removeDotSegments(
+            $this->_normalizePercent($this->_path)
+        );
     }
 
     /**
@@ -965,16 +968,28 @@ implements  Erebot_Interface_URI
         // captured by the previous try..catch block.
 
         // Always copy the new fragment.
-        $result->setFragment(isset($parsed['fragment']) ? $parsed['fragment'] : NULL);
+        $result->setFragment(
+            isset($parsed['fragment'])
+            ? $parsed['fragment']
+            : NULL
+        );
 
         // "host" == "authority" here, see the grammar
         // for reasons why this always holds true.
         if (isset($parsed['host'])) {
             $result->setHost(isset($parsed['host']) ? $parsed['host'] : NULL);
             $result->setPort(isset($parsed['port']) ? $parsed['port'] : NULL);
-            $result->setUserInfo(isset($parsed['userinfo']) ? $parsed['userinfo'] : NULL);
+            $result->setUserInfo(
+                isset($parsed['userinfo'])
+                ? $parsed['userinfo']
+                : NULL
+            );
             $result->_setPath($parsed['path'], TRUE);
-            $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
+            $result->setQuery(
+                isset($parsed['query'])
+                ? $parsed['query']
+                : NULL
+            );
             return $result;
         }
 
@@ -988,9 +1003,15 @@ implements  Erebot_Interface_URI
         }
 
         if (substr($parsed['path'], 0, 1) == '/')
-            $result->_setPath($result->_removeDotSegments($parsed['path']), TRUE);
+            $result->_setPath(
+                $result->_removeDotSegments($parsed['path']),
+                TRUE
+            );
         else
-            $result->_setPath($result->_removeDotSegments($result->_merge($parsed['path'])), TRUE);
+            $result->_setPath(
+                $result->_removeDotSegments($result->_merge($parsed['path'])),
+                TRUE
+            );
         $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
         return $result;
     }

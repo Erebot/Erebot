@@ -80,7 +80,11 @@ implements  Erebot_Interface_ModuleContainer,
      *      Erebot_Interface_Connection::connect()
      *      is called.
      */
-    public function __construct(Erebot_Interface_Core $bot, $config = NULL, $events = array())
+    public function __construct(
+        Erebot_Interface_Core   $bot,
+                                $config = NULL,
+                                $events = array()
+    )
     {
         $this->_config      = $config;
         $this->_bot         = $bot;
@@ -127,7 +131,9 @@ implements  Erebot_Interface_ModuleContainer,
         $this->addEventHandler(
             new Erebot_EventHandler(
                 new Erebot_Callable(array($this, 'handleCapabilities')),
-                new Erebot_Event_Match_InstanceOf('Erebot_Event_ServerCapabilities')
+                new Erebot_Event_Match_InstanceOf(
+                    'Erebot_Event_ServerCapabilities'
+                )
             )
         );
     }
@@ -172,9 +178,11 @@ implements  Erebot_Interface_ModuleContainer,
     public function setURIFactory($factory)
     {
         $reflector = new ReflectionClass($factory);
-        if (!$reflector->implementsInterface('Erebot_Interface_URI'))
+        if (!$reflector->implementsInterface('Erebot_Interface_URI')) {
             throw new Erebot_InvalidValueException(
-                'The factory must implement Erebot_Interface_URI');
+                'The factory must implement Erebot_Interface_URI'
+            );
+        }
         $this->_uriFactory = $factory;
     }
 
@@ -328,7 +336,7 @@ implements  Erebot_Interface_ModuleContainer,
 
                 if ($scheme == 'base' || !class_exists($cls))
                     throw new Erebot_InvalidValueException('Invalid class');
-                
+
                 $port = $uri->getPort();
                 if ($port === NULL)
                     $port = getservbyname($scheme, 'tcp');
@@ -356,7 +364,8 @@ implements  Erebot_Interface_ModuleContainer,
                     $next   = new $factory($uris[$i + 1]);
                     $proxy->proxify($uri, $next);
                     $logger->debug(
-                        "Successfully established connection through proxy '%s'",
+                        "Successfully established connection ".
+                        "through proxy '%s'",
                         $uri->toURI(FALSE, FALSE)
                     );
                 }
@@ -464,9 +473,11 @@ implements  Erebot_Interface_ModuleContainer,
     {
         $chars = array("\r", "\n");
         foreach ($chars as $char)
-            if (strpos($line, $char) !== FALSE)
+            if (strpos($line, $char) !== FALSE) {
                 throw new Erebot_InvalidValueException(
-                    'Line contains forbidden characters');
+                    'Line contains forbidden characters'
+                );
+            }
         $this->_sndQueue[] = $line;
     }
 
@@ -561,8 +572,11 @@ implements  Erebot_Interface_ModuleContainer,
     /// \copydoc Erebot_Interface_SendingConnection::processOutgoingData()
     public function processOutgoingData()
     {
-        if ($this->emptySendQueue())
-            throw new Erebot_NotFoundException('No outgoing data needs to be handled');
+        if ($this->emptySendQueue()) {
+            throw new Erebot_NotFoundException(
+                'No outgoing data needs to be handled'
+            );
+        }
 
         $line       = array_shift($this->_sndQueue);
         $logging    = Plop::getInstance();
@@ -679,7 +693,9 @@ implements  Erebot_Interface_ModuleContainer,
 
         switch ($type) {
             case 'INVITE':     // :nick1!ident@host INVITE nick2 :#chan
-                $this->dispatch($this->makeEvent('!Invite', $msg, $source, $target));
+                $this->dispatch(
+                    $this->makeEvent('!Invite', $msg, $source, $target)
+                );
                 break;
 
             case 'JOIN':    // :nick1!ident@host JOIN :#chan
@@ -693,16 +709,22 @@ implements  Erebot_Interface_ModuleContainer,
                 if (strlen($msg) && $msg[0] == ':')
                     $msg = substr($msg, 1);
 
-                $this->dispatch($this->makeEvent('!Kick', $target, $source, $nick, $msg));
+                $this->dispatch(
+                    $this->makeEvent('!Kick', $target, $source, $nick, $msg)
+                );
                 break;
 
             case 'KILL':    // :nick1!ident@host KILL nick2 :Reason
-                $this->dispatch($this->makeEvent('!Kill', $target, $source, $msg));
+                $this->dispatch(
+                    $this->makeEvent('!Kill', $target, $source, $msg)
+                );
                 break;
 
             case 'MODE':    // :nick1!ident@host MODE <nick2/#chan> modes
                 if (!$this->isChannel($target)) {
-                    $this->dispatch($this->makeEvent('!UserMode', $source, $target, $msg));
+                    $this->dispatch(
+                        $this->makeEvent('!UserMode', $source, $target, $msg)
+                    );
                     break;
                 }
 
@@ -759,7 +781,9 @@ implements  Erebot_Interface_ModuleContainer,
                         case 'b':
                             $tnick  = $wrappedMessage[$k++];
                             $cls    = $priv[$mode][$modes[$i]];
-                            $this->dispatch($this->makeEvent($cls, $target, $source, $tnick));
+                            $this->dispatch(
+                                $this->makeEvent($cls, $target, $source, $tnick)
+                            );
                             break;
 
                         default:
@@ -812,7 +836,7 @@ implements  Erebot_Interface_ModuleContainer,
                 $this->dispatch($this->makeEvent('!Nick', $source, $target));
                 break;
 
-            case 'NOTICE':    // :nick1!ident@host NOTICE <nick2/#chan> :Message
+            case 'NOTICE':  // :nick1!ident@host NOTICE <nick2/#chan> :Message
                 if (($len = strlen($msg)) > 1 &&
                     $msg[$len-1] == "\001" &&
                     $msg[0] == "\001") {
@@ -827,20 +851,36 @@ implements  Erebot_Interface_ModuleContainer,
                     $msg    = (string) substr($msg, $pos + 1);
 
                     if ($this->isChannel($target))
-                        $this->dispatch($this->makeEvent('!ChanCtcpReply', $target, $source, $ctcp, $msg));
+                        $this->dispatch(
+                            $this->makeEvent(
+                                '!ChanCtcpReply',
+                                $target, $source, $ctcp, $msg
+                            )
+                        );
                     else
-                        $this->dispatch($this->makeEvent('!PrivateCtcpReply', $source, $ctcp, $msg));
+                        $this->dispatch(
+                            $this->makeEvent(
+                                '!PrivateCtcpReply',
+                                $source, $ctcp, $msg
+                            )
+                        );
                     break;
                 }
 
                 if ($this->isChannel($target))
-                    $this->dispatch($this->makeEvent('!ChanNotice', $target, $source, $msg));
+                    $this->dispatch(
+                        $this->makeEvent('!ChanNotice', $target, $source, $msg)
+                    );
                 else
-                    $this->dispatch($this->makeEvent('!PrivateNotice', $source, $msg));
+                    $this->dispatch(
+                        $this->makeEvent('!PrivateNotice', $source, $msg)
+                    );
                 break;
 
             case 'PART':    // :nick1!ident@host PART #chan :Reason
-                $this->dispatch($this->makeEvent('!Part', $target, $source, $msg));
+                $this->dispatch(
+                    $this->makeEvent('!Part', $target, $source, $msg)
+                );
                 break;
 
             /* We sent a PING and got a PONG! :) */
@@ -864,27 +904,53 @@ implements  Erebot_Interface_ModuleContainer,
 
                     if ($ctcp == "ACTION") {
                         if ($this->isChannel($target))
-                            $this->dispatch($this->makeEvent('!ChanAction', $target, $source, $msg));
+                            $this->dispatch(
+                                $this->makeEvent(
+                                    '!ChanAction',
+                                    $target, $source, $msg
+                                )
+                            );
                         else
-                            $this->dispatch($this->makeEvent('!PrivateAction', $source, $msg));
+                            $this->dispatch(
+                                $this->makeEvent(
+                                    '!PrivateAction',
+                                    $source, $msg
+                                )
+                            );
                         break;
                     }
 
                     if ($this->isChannel($target))
-                        $this->dispatch($this->makeEvent('!ChanCtcp', $target, $source, $ctcp, $msg));
+                        $this->dispatch(
+                            $this->makeEvent(
+                                '!ChanCtcp',
+                                $target, $source, $ctcp, $msg
+                            )
+                        );
                     else
-                        $this->dispatch($this->makeEvent('!PrivateCtcp', $source, $ctcp, $msg));
+                        $this->dispatch(
+                            $this->makeEvent(
+                                '!PrivateCtcp',
+                                $source, $ctcp, $msg
+                            )
+                        );
                     break;
                 }
 
                 if ($this->isChannel($target))
-                    $this->dispatch($this->makeEvent('!ChanText', $target, $source, $msg));
+                    $this->dispatch(
+                        $this->makeEvent('!ChanText', $target, $source, $msg)
+                    );
                 else
-                    $this->dispatch($this->makeEvent('!PrivateText', $source, $msg));
+                    $this->dispatch(
+                        $this->makeEvent('!PrivateText', $source, $msg)
+                    );
                 break;
 
             case 'TOPIC':    // :nick1!ident@host TOPIC #chan :New topic
-                $this->dispatch($this->makeEvent('!Topic', $target, $source, $msg));
+                $this->dispatch(
+                    $this->makeEvent('!Topic', $target, $source, $msg)
+                );
                 break;
 
             default:        // :server numeric parameters
@@ -931,11 +997,18 @@ implements  Erebot_Interface_ModuleContainer,
                                 '!UnNotify',
                         );
                         $cls    = $map[$type];
-                        $this->dispatch($this->makeEvent($cls, $nick, $ident, $host, $timestamp, $text));
+                        $this->dispatch(
+                            $this->makeEvent(
+                                $cls, $nick, $ident, $host,
+                                $timestamp, $text
+                            )
+                        );
                         break;
                 }
 
-                $this->dispatch($this->makeEvent('!Raw', $type, $source, $target, $msg));
+                $this->dispatch(
+                    $this->makeEvent('!Raw', $type, $source, $target, $msg)
+                );
                 break;
         } /* switch ($type) */
     }
@@ -946,7 +1019,13 @@ implements  Erebot_Interface_ModuleContainer,
         return $this->_bot;
     }
 
-    protected function _loadModule($module, $chan, $flags, &$plainModules, &$channelModules)
+    protected function _loadModule(
+        $module,
+        $chan,
+        $flags,
+       &$plainModules,
+       &$channelModules
+    )
     {
         if ($chan !== NULL) {
             if (isset($channelModules[$chan][$module]))
@@ -962,9 +1041,11 @@ implements  Erebot_Interface_ModuleContainer,
         if (!class_exists($module, TRUE))
             throw new Erebot_InvalidValueException("No such class '$module'");
 
-        if (!is_subclass_of($module, 'Erebot_Module_Base'))
+        if (!is_subclass_of($module, 'Erebot_Module_Base')) {
             throw new Erebot_InvalidValueException(
-                "Invalid module! Not a subclass of Erebot_Module_Base.");
+                "Invalid module! Not a subclass of Erebot_Module_Base."
+            );
+        }
 
         $instance = new $module($chan);
         if ($chan === NULL)
@@ -1134,9 +1215,11 @@ implements  Erebot_Interface_ModuleContainer,
         $iface = strtolower($iface);
 
         $reflector = new ReflectionClass($cls);
-        if (!$reflector->implementsInterface($iface))
+        if (!$reflector->implementsInterface($iface)) {
             throw new Erebot_InvalidValueException(
-                'The given class does not implement that interface');
+                'The given class does not implement that interface'
+            );
+        }
         $this->_eventsMapping[$iface] = $cls;
     }
 
@@ -1147,7 +1230,9 @@ implements  Erebot_Interface_ModuleContainer,
      * \param Erebot_Interface_Event_Base_Generic $event
      *      An event to dispatch.
      */
-    protected function _dispatchEvent(Erebot_Interface_Event_Base_Generic $event)
+    protected function _dispatchEvent(
+        Erebot_Interface_Event_Base_Generic $event
+    )
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);

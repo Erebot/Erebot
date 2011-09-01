@@ -62,36 +62,23 @@ extends Erebot_Proxy_Base
         if ($line[0] != "\x05")
             throw new Erebot_InvalidValueException('Bad SOCKS version');
 
-        switch (ord($line[1])) {
-            case 0:
-                break;
-
-            case 1:
-                throw new Erebot_InvalidValueException('General SOCKS server failure');
-
-            case 2:
-                throw new Erebot_InvalidValueException('Connection not allowed by ruleset');
-
-            case 3:
-                throw new Erebot_InvalidValueException('Network unreachable');
-
-            case 4:
-                throw new Erebot_InvalidValueException('Host unreachable');
-
-            case 5:
-                throw new Erebot_InvalidValueException('Connection refused');
-
-            case 6:
-                throw new Erebot_InvalidValueException('TTL expired');
-
-            case 7:
-                throw new Erebot_InvalidValueException('Command not supported');
-
-            case 8:
-                throw new Erebot_InvalidValueException('Address type not supported');
-
-            default:
+        $error = ord($line[1]);
+        if ($error) {
+            // Taken fromt eh RFC.
+            $errors = array(
+                1 =>
+                'General SOCKS server failure',
+                'Connection not allowed by ruleset',
+                'Network unreachable',
+                'Host unreachable',
+                'Connection refused',
+                'TTL expired',
+                'Command not supported',
+                'Address type not supported',
+            );
+            if (!isset($errors[$error]))
                 throw new Erebot_InvalidValueException('Unknown error');
+            throw new Erebot_InvalidValueException($errors[$error]);
         }
 
         switch (ord($line[3])) {
@@ -109,7 +96,9 @@ extends Erebot_Proxy_Base
                 break;
 
             default:
-                throw new Erebot_InvalidValueException('Address type not supported');
+                throw new Erebot_InvalidValueException(
+                    'Address type not supported'
+                );
         }
 
         // Consume the port.
@@ -130,21 +119,37 @@ extends Erebot_Proxy_Base
         $password = $proxyURI->asParsedURL(PHP_URL_PASS);
 
         if ($username === NULL || $password === NULL)
-            throw new Erebot_InvalidValueException('No username or password supplied');
+            throw new Erebot_InvalidValueException(
+                'No username or password supplied'
+            );
 
         $ulen = strlen($username);
         $plen = strlen($password);
         if ($ulen > 255)
-            throw new Erebot_InvalidValueException('Username too long (max. 255)');
+            throw new Erebot_InvalidValueException(
+                'Username too long (max. 255)'
+            );
 
         if ($plen > 255)
-            throw new Erebot_InvalidValueException('Password too long (max. 255)');
+            throw new Erebot_InvalidValueException(
+                'Password too long (max. 255)'
+            );
 
-        $this->_write("\x01".pack("Ca*Ca*", $ulen, $username, $plen, $password));
+        $this->_write(
+            "\x01".pack(
+                "Ca*Ca*",
+                $ulen,
+                $username,
+                $plen,
+                $password
+            )
+        );
         $line = $this->_read(2);
 
         if ($line[0] != "\x01")
-            throw new Erebot_InvalidValueException('Bad subnegociation version');
+            throw new Erebot_InvalidValueException(
+                'Bad subnegociation version'
+            );
 
         if ($line[1] != "\x00")
             throw new Erebot_InvalidValueException('Bad username or password');

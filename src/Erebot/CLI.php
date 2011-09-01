@@ -17,7 +17,11 @@
 */
 
 // Don't require it : during development, we can't rely on PEAR.
-@include('SymfonyComponents/DependencyInjection/sfServiceContainerAutoloader.php');
+@include(
+    'SymfonyComponents'.DIRECTORY_SEPARATOR.
+    'DependencyInjection'.DIRECTORY_SEPARATOR.
+    'sfServiceContainerAutoloader.php'
+);
 sfServiceContainerAutoloader::register();
 
 /**

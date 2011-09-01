@@ -39,12 +39,17 @@ implements  Erebot_Interface_ReceivingConnection
                                 $workerCls  = 'Erebot_Identd_Worker'
     )
     {
-        
+
         $this->_bot         = $bot;
         $this->_workerCls   = $workerCls;
-        $this->_socket      = stream_socket_server("tcp://".$connector, $errno, $errstr);
+        $this->_socket      = stream_socket_server(
+            "tcp://".$connector,
+            $errno, $errstr
+        );
         if (!$this->_socket)
-            throw new Exception("Could not create identd server (".$errstr.")");
+            throw new Exception(
+                "Could not create identd server (".$errstr.")"
+            );
     }
 
     /// Destructor.

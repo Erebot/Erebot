@@ -77,7 +77,8 @@
  *                  &nbsp;&nbsp;item="..."<br/>
  *                  &nbsp;&nbsp;key="..."<br/>
  *                  &nbsp;&nbsp;separator=&quot;,&nbsp;&quot;<br/>
- *                  &nbsp;&nbsp;last_separator=&quot;&nbsp;&amp;amp;&nbsp;&quot;&gt;<br/>
+ *                  &nbsp;&nbsp;last_separator=\
+ *                      &quot;&nbsp;&amp;amp;&nbsp;&quot;&gt;<br/>
  *                  &nbsp;&nbsp;&nbsp;&nbsp;...<br/>
  *              &lt;/for&gt;
  *          </td>
@@ -245,7 +246,8 @@ implements  Erebot_Interface_Styling
             $logger     =   $logging->getLogger(__FILE__);
             $logger->error($errmsg);
             throw new Erebot_InvalidValueException(
-                'Error while validating the message');
+                'Error while validating the message'
+            );
         }
     }
 
@@ -479,7 +481,8 @@ implements  Erebot_Interface_Styling
                         }
                         catch (Erebot_NotFoundException $e) {
                             throw new Erebot_InvalidValueException(
-                                        'Invalid color "'.$value.'"');
+                                'Invalid color "'.$value.'"'
+                            );
                         }
                     }
                 }
@@ -521,7 +524,11 @@ implements  Erebot_Interface_Styling
                     $variables[$loopKey] = $item['key'];
                 $variables[$loopItem] = $item['value'];
 
-                $result .= $this->_parseChildren($node, $attributes, $variables);
+                $result .= $this->_parseChildren(
+                    $node,
+                    $attributes,
+                    $variables
+                );
             }
 
             $item = each($variables[$loopFrom]);
@@ -543,7 +550,9 @@ implements  Erebot_Interface_Styling
              * steps are done before without using ICU. */
             $attrNode = $node->getAttributeNode('var');
             if ($attrNode === FALSE)
-                throw new Erebot_InvalidValueException('No variable name given');
+                throw new Erebot_InvalidValueException(
+                    'No variable name given'
+                );
             $value = (int) $variables[$attrNode->nodeValue];
             $subcontents = array();
             $pattern = '{0,plural,';

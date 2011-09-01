@@ -40,7 +40,11 @@ implements  Erebot_Interface_ReceivingConnection
     )
     {
         $this->_bot         = $bot;
-        $this->_socket      = stream_socket_server("udg://".$connector, $errno, $errstr, STREAM_SERVER_BIND);
+        $this->_socket      = stream_socket_server(
+            "udg://".$connector,
+            $errno, $errstr,
+            STREAM_SERVER_BIND
+        );
         if (!$this->_socket)
             throw new Exception("Could not create console (".$errstr.")");
 
@@ -51,12 +55,18 @@ implements  Erebot_Interface_ReceivingConnection
 
         // Change group.
         if ($group !== NULL) {
-            if (!@chgrp($connector, $group))
-                throw new Exception("Could not change group to '$group' for '$connector'");
+            if (!@chgrp($connector, $group)) {
+                throw new Exception(
+                    "Could not change group to '$group' for '$connector'"
+                );
+            }
         }
 
-        if (!chmod($connector, $perms))
-            throw new Exception("Could not set permissions to $perms on '$connector'");
+        if (!chmod($connector, $perms)) {
+            throw new Exception(
+                "Could not set permissions to $perms on '$connector'"
+            );
+        }
 
         // Flush any received data on the socket, because
         // any data sent before the group and permissions

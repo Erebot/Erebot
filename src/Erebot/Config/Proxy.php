@@ -121,8 +121,11 @@ class Erebot_Config_Proxy
     /// \copydoc Erebot_Interface_Config_Proxy::getModules()
     public function getModules($recursive)
     {
-        if (!is_bool($recursive))
-            throw new Erebot_InvalidValueException('Invalid value for recursion');
+        if (!is_bool($recursive)) {
+            throw new Erebot_InvalidValueException(
+                'Invalid value for recursion'
+            );
+        }
 
         if ($recursive && $this->_proxified !== $this)
             $inherited = $this->_proxified->getModules(TRUE);
@@ -148,7 +151,7 @@ class Erebot_Config_Proxy
         if (!isset($this->_modules[$moduleName])) {
             if ($this->_proxified !== $this)
                 return $this->_proxified->getModule($moduleName);
-            throw new Erebot_NotFoundException('No such module');        
+            throw new Erebot_NotFoundException('No such module');
         }
         return $this->_modules[$moduleName];
     }
@@ -251,7 +254,9 @@ class Erebot_Config_Proxy
             $value  = $parser->invoke($value);
             if ($value !== NULL)
                 return $value;
-            throw new Erebot_InvalidValueException('Bad value in configuration');
+            throw new Erebot_InvalidValueException(
+                'Bad value in configuration'
+            );
         }
         catch (Erebot_NotFoundException $e) {
             if ($this->_proxified !== $this)

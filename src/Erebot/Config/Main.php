@@ -58,7 +58,7 @@ implements  Erebot_Interface_Config_Main
     /// Group identity to switch to.
     protected $_groupIdentity;
 
-    /// File where the bot's PID will be written. 
+    /// File where the bot's PID will be written.
     protected $_pidfile;
 
     protected $_coreTranslator;
@@ -68,7 +68,7 @@ implements  Erebot_Interface_Config_Main
      *
      * \param string $configData
      *      Either a (relative or absolute) path to the configuration file
-     *      to load or a string representation of the configuration, 
+     *      to load or a string representation of the configuration,
      *      depending on the value of the $source parameter.
      *
      * \param opaque $source
@@ -82,7 +82,11 @@ implements  Erebot_Interface_Config_Main
      *      This exception is also thrown when the $source parameter contains
      *      an invalid value.
      */
-    public function __construct($configData, $source, Erebot_Interface_I18n $translator)
+    public function __construct(
+                                $configData,
+                                $source,
+        Erebot_Interface_I18n   $translator
+    )
     {
         $this->_proxified       = NULL;
         $this->_modules         = array();
@@ -141,8 +145,11 @@ implements  Erebot_Interface_Config_Main
             else
                 $file = NULL;
         }
-        else
-            throw new Erebot_InvalidValueException('Invalid configuration file');
+        else {
+            throw new Erebot_InvalidValueException(
+                'Invalid configuration file'
+            );
+        }
 
         $dataDir = '@data_dir@';
         // Running from the repository.
@@ -161,7 +168,9 @@ implements  Erebot_Interface_Config_Main
                 DIRECTORY_SEPARATOR . 'Plop';
         }
 
-        $schema = file_get_contents($schemaPath . DIRECTORY_SEPARATOR . 'config.rng');
+        $schema = file_get_contents(
+            $schemaPath . DIRECTORY_SEPARATOR . 'config.rng'
+        );
         $ue     = libxml_use_internal_errors(TRUE);
         $domxml = new Erebot_DOM();
         if ($source == self::LOAD_FROM_FILE)
@@ -187,7 +196,8 @@ implements  Erebot_Interface_Config_Main
             $errmsg = print_r($errors, TRUE);
             fprintf(STDERR, '%s', $errmsg);
             throw new Erebot_InvalidValueException(
-                'Errors were found while validating the configuration file');
+                'Errors were found while validating the configuration file'
+            );
         }
 
         $xml = simplexml_import_dom($domxml);
@@ -230,8 +240,11 @@ implements  Erebot_Interface_Config_Main
         else {
             $this->_commandsPrefix = (string) $xml['commands-prefix'];
             if (strcspn($this->_commandsPrefix, " \r\n\t") !=
-                strlen($this->_commandsPrefix))
-                throw new Erebot_InvalidValueException('Invalid command prefix');
+                strlen($this->_commandsPrefix)) {
+                throw new Erebot_InvalidValueException(
+                    'Invalid command prefix'
+                );
+            }
         }
 
         $logging = Plop::getInstance();
