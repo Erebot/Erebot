@@ -199,7 +199,15 @@
                 <attribute name="key"><ref name="type-identifier"/></attribute>
             </optional>
             <optional>
+                <!-- Alias for "separator". -->
+                <attribute name="sep"><text/></attribute>
+            </optional>
+            <optional>
                 <attribute name="separator"><text/></attribute>
+            </optional>
+            <optional>
+                <!-- Alias for "last_separator". -->
+                <attribute name="last"><text/></attribute>
             </optional>
             <optional>
                 <attribute name="last_separator"><text/></attribute>
