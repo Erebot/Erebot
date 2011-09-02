@@ -76,9 +76,8 @@
  *                  &nbsp;&nbsp;from="..."<br/>
  *                  &nbsp;&nbsp;item="..."<br/>
  *                  &nbsp;&nbsp;key="..."<br/>
- *                  &nbsp;&nbsp;separator=&quot;,&nbsp;&quot;<br/>
- *                  &nbsp;&nbsp;last_separator=\
- *                      &quot;&nbsp;&amp;amp;&nbsp;&quot;&gt;<br/>
+ *                  &nbsp;&nbsp;sep=&quot;,&nbsp;&quot;<br/>
+ *                  &nbsp;&nbsp;last=&quot;&nbsp;&amp;amp;&nbsp;&quot;&gt;<br/>
  *                  &nbsp;&nbsp;&nbsp;&nbsp;...<br/>
  *              &lt;/for&gt;
  *          </td>
@@ -86,10 +85,11 @@
  *              The key for each entry in that array is stored in the
  *              temporary variable named by the \a key attribute if given,
  *              while the associated value is stored in the temporary
- *              variable named by \a item. The value of \a separator is
- *              appended automatically between each entry of the array,
- *              except between the last two entries. The value of
- *              \a last_separator is used to separate the last two entries.
+ *              variable named by \a item. The value of \a sep (alias
+ *              \a separator) is appended automatically between each entry
+ *              of the array, except between the last two entries.
+ *              The value of \a last (alias \a last_separator) is used
+ *              to separate the last two entries.
  *              By default, no temporary variable is created for the key,
  *              ", " is used as the main \a separator and " & " is used as
  *              the \a last_separator.</td>
@@ -501,20 +501,28 @@ implements  Erebot_Interface_Styling
             $savedVariables = $variables;
             $separator      = array(', ', ' & ');
 
-            $attrNode       = $node->getAttributeNode('separator');
-            if ($attrNode !== FALSE)
-                $separator[0] = $separator[1] = $attrNode->nodeValue;
+            foreach (array('separator', 'sep') as $attr) {
+                $attrNode       = $node->getAttributeNode($attr);
+                if ($attrNode !== FALSE) {
+                    $separator[0] = $separator[1] = $attrNode->nodeValue;
+                    break;
+                }
+            }
 
-            $attrNode       = $node->getAttributeNode('last_separator');
-            if ($attrNode !== FALSE)
-                $separator[1] = $attrNode->nodeValue;
+            foreach (array('last_separator', 'last') as $attr) {
+                $attrNode       = $node->getAttributeNode($attr);
+                if ($attrNode !== FALSE) {
+                    $separator[1] = $attrNode->nodeValue;
+                    break;
+                }
+            }
 
-            $loopKey        = $node->getAttribute('key');
-            $loopItem       = $node->getAttribute('item');
-            $loopFrom       = $node->getAttribute('from');
-
-            $count          = count($variables[$loopFrom]);
+            $loopKey    = $node->getAttribute('key');
+            $loopItem   = $node->getAttribute('item');
+            $loopFrom   = $node->getAttribute('from');
+            $count      = count($variables[$loopFrom]);
             reset($variables[$loopFrom]);
+
             for ($i = 1; $i < $count; $i++) {
                 if ($i > 1)
                     $result .= $separator[0];
