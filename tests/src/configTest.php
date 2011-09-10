@@ -39,7 +39,9 @@ extends PHPUnit_Framework_TestCase
      */
     public function testLoadValidConfigFromFile()
     {
-        $file = dirname(dirname(__FILE__)).'/data/valid-config.xml';
+        $file = dirname(dirname(__FILE__)).
+                DIRECTORY_SEPARATOR.'data'.
+                DIRECTORY_SEPARATOR.'valid-config.xml';
         $config = new Erebot_Config_Main(
             $file,
             Erebot_Config_Main::LOAD_FROM_FILE,
