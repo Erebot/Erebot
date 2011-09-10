@@ -1022,7 +1022,7 @@ implements  Erebot_Interface_URI
             $isUnc = (substr($abspath, 0, 2) == '\\\\');
             if ($isUnc)
                 $abspath = ltrim($abspath, '\\');
-            $parts = explode('\\', $parts);
+            $parts = explode('\\', $abspath);
 
             // This is actually UNCW -- "Long UNC".
             if ($isUnc && $parts[0] == '?') {
