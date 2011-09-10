@@ -180,13 +180,12 @@ implements  Erebot_Interface_Config_Main
 
         $domxml->xinclude(LIBXML_NOBASEFIX);
         $this->_stripXGlobWrappers($domxml);
-        $ok     = $domxml->relaxNGValidateSource(
-            str_replace(
-                '@plop_schema@',
-                $plopSchemaPath . DIRECTORY_SEPARATOR . 'config.rng',
-                $schema
-            )
+
+        $plopSchema = Erebot_URI::fromAbsPath(
+            $plopSchemaPath . DIRECTORY_SEPARATOR . 'config.rng'
         );
+        $schema = str_replace('@plop_schema@', (string) $plopSchema, $schema);
+        $ok = $domxml->relaxNGValidateSource($schema);
         $errors = $domxml->getErrors();
         libxml_use_internal_errors($ue);
 

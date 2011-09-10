@@ -201,7 +201,7 @@ implements  Erebot_Interface_URI
      * \retval string
      *      The same text, after percent-encoding normalization.
      */
-    protected function _normalizePercent($data)
+    static protected function _normalizePercent($data)
     {
         // 6.2.2.1.  Case Normalization
         // Percent-encoded characters must use uppercase letters.
@@ -1014,6 +1014,67 @@ implements  Erebot_Interface_URI
             );
         $result->setQuery(isset($parsed['query']) ? $parsed['query'] : NULL);
         return $result;
+    }
+
+    static public function fromAbsPath($abspath, $strict = TRUE)
+    {
+        if (!strncasecmp(PHP_OS, "Win", 3)) {
+            $isUnc = (substr($abspath, 0, 2) == '\\\\');
+            if ($isUnc)
+                $abspath = ltrim($abspath, '\\');
+            $parts = explode('\\', $parts);
+
+            // This is actually UNCW -- "Long UNC".
+            if ($isUnc && $parts[0] == '?') {
+                array_shift($parts);
+                if (strpos($parts[0], ':') !== FALSE) {
+                    $host = 'localhost';
+                    $path = implode('\\', $parts);
+                }
+                else if ($parts[0] != 'UNC')
+                    throw new Erebot_InvalidValueException('Invalid UNC path');
+                else {
+                    array_shift($parts[0]);         // shift the "UNC" token.
+                    $host = array_shift($parts[0]); // shift ServerName.
+                    $path = implode('\\', $parts);
+                }
+            }
+
+            // Regular UNC path.
+            else if ($isUnc) {
+                $host = array_shift($parts[0]); // shift ServerName.
+                $path = implode('\\', $parts);
+            }
+
+            // Regular local path.
+            else {
+                $host = 'localhost';
+                $path = implode('\\', $parts);
+            }
+
+            if (!$strict)
+                $path = str_replace('/', '\\', $path);
+            $path = str_replace('/', '%2F', $path);
+            $path = str_replace('\\', '/', $path);
+            $path = ltrim($path, '/');
+        }
+
+        else {
+            $host = 'localhost';
+
+            if (DIRECTORY_SEPARATOR != '/') {
+                if (!$strict)
+                    $abspath = str_replace('/', DIRECTORY_SEPARATOR, $abspath);
+                $path = str_replace('/', '%2F', $path);
+                $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+            }
+            $path = ltrim($abspath, '/');
+        }
+
+        $host = strtolower(self::_normalizePercent($host));
+        $cls = __CLASS__;
+        $url = 'file://' . ($host == 'localhost' ? '' : $host) . '/' . $path;
+        return new $cls($url);
     }
 }
 
