@@ -346,7 +346,7 @@ class Erebot_CLI
              */
             $stdin  = fopen('/dev/null', 'r');
             $stdout = fopen('/dev/null', 'w');
-            $stderr = fopen('php://stdout', 'w');
+            $stderr = fopen('/dev/null', 'w');
 
             if (defined('SIGUSR1'))
                 posix_kill($parent, SIGUSR1);
