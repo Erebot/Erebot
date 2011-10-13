@@ -21,7 +21,10 @@ extends Erebot_Connection
 {
     protected $_dispatched = array();
 
-    protected function _loadModules()
+    protected function _loadModules(
+        Erebot_Interface_Config_Server  $config,
+                                        $flags
+    )
     {
     }
 
