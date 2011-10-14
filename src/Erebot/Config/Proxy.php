@@ -238,6 +238,48 @@ class Erebot_Config_Proxy
         return (double) $value;
     }
 
+    /**
+     * Returns the typed value for a module's parameter.
+     *
+     * \param string $module
+     *      The name of the module.
+     *
+     * \param string $param
+     *      The name of the parameter to fetch
+     *      from the module's settings.
+     *
+     * \param mixed $default
+     *      Default value if no value has been
+     *      defined in the module's settings,
+     *      or NULL if there is no default value.
+     *
+     * \param Erebot_Interface_Callable $parser
+     *      Object that will be used to parse the parameter.
+     *      It will receive the value of that parameter as a
+     *      string and should convert it to the proper type.
+     *
+     * \param string $origin
+     *      Name of the method the request to parse
+     *      the parameter originated from.
+     *
+     * \param Erebot_Interface_Callable $checker
+     *      Object that will be passed the parsed value
+     *      and should return TRUE if it respects the
+     *      type constraints defined by this checker,
+     *      or FALSE if it does not.
+     *
+     * \retval mixed
+     *      Value as parsed from the module's settings,
+     *      or the default value if no value existed in
+     *      the settings and it passed the type check.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The value parsed or the default value did not
+     *      pass the type check.
+     *
+     * \throw Erebot_NotFoundException
+     *
+     */
     protected function _parseSomething(
                                     $module,
                                     $param,

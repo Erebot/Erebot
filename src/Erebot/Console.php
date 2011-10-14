@@ -25,13 +25,59 @@ implements  Erebot_Interface_ReceivingConnection
 {
     /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
+
     /// The underlying socket, represented as a stream.
     protected $_socket;
+
     /// A FIFO queue for incoming messages.
     protected $_rcvQueue;
+
     /// A raw buffer for incoming data.
     protected $_incomingData;
 
+    /**
+     * Constructs the UNIX socket that represents the console.
+     *
+     * \param Erebot_Interface_Core $bot
+     *      Instance of the bot to operate on.
+     *
+     * \param string $connector
+     *      (optional) Path where the newly-created UNIX socket
+     *      will be made accessible. The default is to create
+     *      a UNIX socket named "Erebot.sock" in the system's
+     *      temporary directory.
+     *
+     * \param mixed $group
+     *      (optional) Either the name or the identifier
+     *      of the UNIX group the socket will belong to.
+     *      The default is to not change the group of the
+     *      socket (i.e. to keep whatever is the main group
+     *      for the user running Erebot).
+     *
+     * \param int $perms
+     *      (optional) UNIX permissions the newly-created
+     *      socket will receive. The default is to give
+     *      read/write access to the user running Erebot and
+     *      to the group the socket belongs to (see $group).
+     *
+     * \note
+     *      On most systems, only the superuser may change
+     *      the group of a file arbitrarily, while other
+     *      users may only change it to a group they are
+     *      a member of.
+     *
+     * \warning
+     *      Using the wrong combination of $group and $perms
+     *      may lead to security issues. Use with caution.
+     *      The default values are safe as long as you trust
+     *      users belonging to the same group as the main
+     *      group of the user running Erebot.
+     *
+     * \see
+     *      http://php.net/chmod provides more information
+     *      on the meaning of $perms' value
+     *      (see the description for \c mode).
+     */
     public function __construct(
         Erebot_Interface_Core   $bot,
                                 $connector  = '/tmp/Erebot.sock',
@@ -62,6 +108,7 @@ implements  Erebot_Interface_ReceivingConnection
             }
         }
 
+        // Change permissions.
         if (!chmod($connector, $perms)) {
             throw new Exception(
                 "Could not set permissions to $perms on '$connector'"
@@ -86,9 +133,7 @@ implements  Erebot_Interface_ReceivingConnection
         $logger->info($bot->gettext('Console started in "%s"'), $connector);
     }
 
-    /**
-     * Destructor.
-     */
+    /// Destructor.
     public function __destruct()
     {
         $this->disconnect();
@@ -181,6 +226,13 @@ implements  Erebot_Interface_ReceivingConnection
             $this->_handleMessage(array_shift($this->_rcvQueue));
     }
 
+    /**
+     * Handles a line received from the console.
+     *
+     * \param string $line
+     *      A single line of text received from the console,
+     *      with the end-of-line sequence stripped.
+     */
     protected function _handleMessage($line)
     {
         $pos = strpos($line, ' ');

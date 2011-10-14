@@ -61,6 +61,7 @@ implements  Erebot_Interface_Config_Main
     /// File where the bot's PID will be written.
     protected $_pidfile;
 
+    /// Translator used by core files.
     protected $_coreTranslator;
 
     /**
@@ -76,6 +77,9 @@ implements  Erebot_Interface_Config_Main
      *      Erebot_Interface_Config_Main::LOAD_FROM_STRING, depending on
      *      whether $configData contains a filename or the string
      *      representation of the configuration data, respectively.
+     *
+     * \param Erebot_Interface_I18n $translator
+     *      Translator to use for messages coming from core files.
      *
      * \throw Erebot_InvalidValueException
      *      The configuration file did not exist or contained invalid values.
@@ -112,6 +116,16 @@ implements  Erebot_Interface_Config_Main
         throw new Exception('Cloning is forbidden');
     }
 
+    /**
+     * \internal
+     * Removes wrapping xglob tags that were automatically
+     * added by the Erebot_XGlobStream wrapper.
+     *
+     * \param DOMDocument $domxml
+     *      A DOM node with the document resulting from
+     *      the parsing and interpretation of the configuration
+     *      file.
+     */
     private function _stripXGlobWrappers(&$domxml)
     {
         $xpath = new DOMXPath($domxml);
@@ -259,10 +273,10 @@ implements  Erebot_Interface_Config_Main
         $logger = $logging->getLogger(__FILE__);
 
         if (!version_compare(
-            $this->_version,
-            Erebot_Interface_Core::VERSION,
-            'eq'
-        ))
+                $this->_version,
+                Erebot_Interface_Core::VERSION,
+                'eq'
+            ))
             $logger->warning(
                 $this->_coreTranslator->gettext(
                     'This configuration file is meant for '.

@@ -35,6 +35,16 @@ sfServiceContainerAutoloader::register();
  */
 class Erebot_CLI
 {
+    /**
+     * Signal handler used during startup.
+     *
+     * \param int $signum
+     *      Number of the signal received.
+     *
+     * \post
+     *      The current process exits with an exit code
+     *      of 0 or 1, depending on the signal received.
+     */
     static public function _startup_sighandler($signum)
     {
         if (defined('SIGUSR1') && $signum == SIGUSR1)
@@ -42,6 +52,16 @@ class Erebot_CLI
         exit(1);
     }
 
+    /**
+     * Called after the bot has finished its execution
+     * to perform cleanup tasks.
+     *
+     * \param resource $handle
+     *      Open file handle on the pidfile.
+     *
+     * \param string $pidfile
+     *      Name of the pidfile.
+     */
     static public function _cleanup_pidfile($handle, $pidfile)
     {
         $logging    =&  Plop::getInstance();

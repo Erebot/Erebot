@@ -16,16 +16,49 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Class used to represent anything that is callable.
+ *
+ * This class can represent a wild range of callable items
+ * supported by PHP (functions, lambdas, methods, closures, etc.).
+ */
 class       Erebot_Callable
-implements  Erebot_Interface_Callable
+extends     Erebot_CallableAbstract
 {
+    /// Inner callable object, as used by PHP.
     protected $_callable;
+
+    /// Human representation of the inner callable.
     protected $_representation;
 
+    /**
+     * Constructs a new callable object, abstracting
+     * differences between the different constructs
+     * PHP supports.
+     *
+     * \param mixed $callable
+     *      A callable item. It must be compatible
+     *      with the PHP callback pseudo-type.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given item is not compatible
+     *      with the PHP callback pseudo-type.
+     *
+     * \see
+     *      More information on the callback pseudo-type can be found here:
+     *      http://php.net/language.pseudo-types.php#language.types.callback
+     */
     public function __construct($callable)
     {
         if (!is_callable($callable, FALSE, $representation))
             throw new Erebot_InvalidValueException('Not a valid callable');
+
+        // This happens for anonymous functions
+        // created with create_function().
+        if (is_string($callable) && $representation == "")
+            $representation = $callable;
+
         $this->_callable        = $callable;
         $this->_representation  = $representation;
     }
