@@ -260,6 +260,12 @@ implements  Erebot_Interface_I18n
         return $this->_real_gettext($message, $this->_component);
     }
 
+    /// \copydoc Erebot_Interface_I18n::_()
+    public function _($message)
+    {
+        return $this->_real_gettext($message, $this->_component);
+    }
+
     /**
      * Clears the cache used for translation catalogs.
      *
