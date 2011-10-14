@@ -272,11 +272,8 @@ implements  Erebot_Interface_Config_Main
 
         $logger = $logging->getLogger(__FILE__);
 
-        if (!version_compare(
-                $this->_version,
-                Erebot_Interface_Core::VERSION,
-                'eq'
-            ))
+        $currentVersion = Erebot_Interface_Core::VERSION;
+        if (!version_compare($this->_version, $currentVersion, 'eq'))
             $logger->warning(
                 $this->_coreTranslator->gettext(
                     'This configuration file is meant for '.
