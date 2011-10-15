@@ -45,7 +45,7 @@ implements  Erebot_Interface_ReceivingConnection
      *      (optional) Path where the newly-created UNIX socket
      *      will be made accessible. The default is to create
      *      a UNIX socket named "Erebot.sock" in the system's
-     *      temporary directory.
+     *      temporary directory (usually "/tmp/").
      *
      * \param mixed $group
      *      (optional) Either the name or the identifier
@@ -80,12 +80,17 @@ implements  Erebot_Interface_ReceivingConnection
      */
     public function __construct(
         Erebot_Interface_Core   $bot,
-                                $connector  = '/tmp/Erebot.sock',
+                                $connector  = NULL,
                                 $group      = NULL,
                                 $perms      = 0660
     )
     {
         $this->_bot         = $bot;
+
+        if ($connector === NULL)
+            $connector = sys_get_temp_dir() .
+                        DIRECTORY_SEPARATOR .
+                        'Erebot.sock';
         $this->_socket      = stream_socket_server(
             "udg://".$connector,
             $errno, $errstr,
