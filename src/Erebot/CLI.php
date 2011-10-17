@@ -16,6 +16,29 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+class   StoreProxy_Action
+extends Console_CommandLine_Action
+{
+    public function setResult($result, $option = NULL)
+    {
+        $this->result->options[$option] = $result;
+    }
+
+    public function execute($value = FALSE, $params = array())
+    {
+        $this->setResult(FALSE, $params['option']);
+    }
+}
+
+class   Console_CommandLine_MyOption
+extends Console_CommandLine_Option
+{
+    public function expectsArgument()
+    {
+        return FALSE;
+    }
+}
+
 // Don't require it : during development, we can't rely on PEAR.
 @include(
     'SymfonyComponents'.DIRECTORY_SEPARATOR.
@@ -82,9 +105,25 @@ class Erebot_CLI
      */
     static public function run()
     {
+        $dataDir = '@data_dir@';
+        // Running from the repository or PHAR.
+        if ($dataDir == '@'.'data_dir'.'@') {
+            $dataDir = dirname(dirname(dirname(__FILE__))) .
+                        DIRECTORY_SEPARATOR . 'data';
+            // Running from PHAR.
+            if (!strncmp(__FILE__, 'phar://', 7)) {
+                $dataDir .=
+                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
+                    DIRECTORY_SEPARATOR . 'Erebot';
+            }
+        }
+        else
+            $dataDir .= DIRECTORY_SEPARATOR . 'peat.erebot.net' .
+                        DIRECTORY_SEPARATOR . 'Erebot';
+
         $dic    = new sfServiceContainerBuilder();
         $loader = new sfServiceContainerLoaderFileXml($dic);
-        $loader->load('defaults.xml');
+        $loader->load($dataDir . DIRECTORY_SEPARATOR . 'defaults.xml');
 
         // Determine availability of PHP extensions
         // needed by some of the command-line options.

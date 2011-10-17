@@ -212,6 +212,9 @@ implements  Erebot_Interface_ModuleContainer,
                                         $flags
     )
     {
+        $logging        = Plop::getInstance();
+        $logger         = $logging->getLogger(__FILE__);
+
         $channelModules = $this->_channelModules;
         $plainModules   = $this->_plainModules;
 
@@ -253,38 +256,42 @@ implements  Erebot_Interface_ModuleContainer,
 
         // Configure new modules, both channel-related
         // and generic ones.
-        try {
-            foreach ($newChannels as $chanCfg) {
-                $modules    = $chanCfg->getModules(FALSE);
-                $chan       = $chanCfg->getName();
-                foreach ($modules as $module)
+        foreach ($newChannels as $chanCfg) {
+            $modules    = $chanCfg->getModules(FALSE);
+            $chan       = $chanCfg->getName();
+            foreach ($modules as $module) {
+                try {
                     $this->_loadModule(
                         $module, $chan, $flags,
                         $this->_plainModules,
                         $this->_channelModules
                     );
+                }
+                catch (Exception $e) {
+                    $logger->warning($e->getMessage());
+                }
             }
+        }
 
-            foreach ($newModules as $module)
+        foreach ($newModules as $module) {
+            try {
                 $this->_loadModule(
                     $module, NULL, $flags,
                     $this->_plainModules,
                     $this->_channelModules
                 );
+            }
+            catch (Exception $e) {
+                    $logger->warning($e->getMessage());
+            }
+        }
 
-            // Unload old module instances.
-            foreach ($channelModules as $modules)
-                foreach ($modules as $module)
-                    $module->unload();
-            foreach ($plainModules as $module)
+        // Unload old module instances.
+        foreach ($channelModules as $modules)
+            foreach ($modules as $module)
                 $module->unload();
-        }
-
-        // If something wrong happens, restore the previous configuration.
-        catch (Exception $e) {
-            $this->_plainModules    = $plainModules;
-            $this->_channelModules  = $channelModules;
-        }
+        foreach ($plainModules as $module)
+            $module->unload();
     }
 
     protected function _unloadModule($module)
@@ -1038,8 +1045,9 @@ implements  Erebot_Interface_ModuleContainer,
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
 
-        if (!class_exists($module, TRUE))
+        if (!class_exists($module, TRUE)) {
             throw new Erebot_InvalidValueException("No such class '$module'");
+        }
 
         if (!is_subclass_of($module, 'Erebot_Module_Base')) {
             throw new Erebot_InvalidValueException(

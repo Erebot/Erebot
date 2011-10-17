@@ -218,10 +218,17 @@ implements  Erebot_Interface_Styling
             '</msg>';
 
         $dataDir = '@data_dir@';
-        // Running from the repository.
-        if ($dataDir == '@'.'data_dir'.'@')
+        // Running from the repository or PHAR.
+        if ($dataDir == '@'.'data_dir'.'@') {
             $dataDir = dirname(dirname(dirname(__FILE__))) .
                         DIRECTORY_SEPARATOR . 'data';
+            // Running from PHAR.
+            if (!strncmp(__FILE__, 'phar://', 7)) {
+                $dataDir .=
+                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
+                    DIRECTORY_SEPARATOR . 'Erebot';
+            }
+        }
         else
             $dataDir .= DIRECTORY_SEPARATOR . 'peat.erebot.net' .
                         DIRECTORY_SEPARATOR . 'Erebot';

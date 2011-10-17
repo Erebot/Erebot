@@ -208,15 +208,22 @@ extends DomDocument
     )
     {
         $dataDir = '@data_dir@';
-        if ($dataDir == '@'.'data_dir'.'@')
+        if ($dataDir == '@'.'data_dir'.'@') {
             $xslDir = dirname(dirname(dirname(__FILE__))) .
                 DIRECTORY_SEPARATOR . 'data';
+            // Running from PHAR.
+            if (!strncmp(__FILE__, 'phar://', 7)) {
+                $xslDir .=
+                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
+                    DIRECTORY_SEPARATOR . 'Erebot';
+            }
+        }
         else
             $xslDir .=  DIRECTORY_SEPARATOR . 'pear.erebot.net' .
                         DIRECTORY_SEPARATOR . 'Erebot';
 
         $xslDir    .= DIRECTORY_SEPARATOR;
-        $quiet      = !libxml_use_internal_errors(); 
+        $quiet      = !libxml_use_internal_errors();
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
             libxml_clear_errors();
@@ -339,7 +346,7 @@ extends DomDocument
     public function validate($schematron=FALSE)
     {
         $success    = parent::validate();
-        $quiet      = !libxml_use_internal_errors(); 
+        $quiet      = !libxml_use_internal_errors();
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
             libxml_clear_errors();
