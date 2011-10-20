@@ -2,7 +2,9 @@
 <?php
 
 if (realpath($_SERVER['PATH_TRANSLATED']) == realpath(__FILE__))
-    ini_set('include_path', '.');
+    // Don't use any external file
+    // (eg. from a PEAR repository).
+    ini_set('include_path', PATH_SEPARATOR);
 
 if (version_compare(phpversion(), '5.3.1', '<')) {
     if (substr(phpversion(), 0, 5) != '5.3.1') {

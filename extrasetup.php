@@ -3,14 +3,42 @@
  * This file is used to provide extra files/packages outside package.xml
  * More information: http://pear.php.net/manual/en/pyrus.commands.package.php#pyrus.commands.package.extrasetup
  */
+
 $extrafiles = array();
+$targets    =   (int) $options['phar']  +
+                (int) $options['tgz']   +
+                (int) $options['tar']   +
+                (int) $options['zip'];
+
+if ($targets != 1) {
+    echo    "Don't try to be smart about creating multiple " .
+            "types of packages at once, I won't let you!" . PHP_EOL;
+    exit(-1);
+}
+
 $deps = array(
     'pear.erebot.net/Erebot_API',
-    'pear.erebot.net/Plop',
 );
 
+if ($options['phar']) {
+    // Only for ".phar" packages.
+    $deps = array_unique(
+        array_merge(
+            $deps,
+            array(
+                'pear.erebot.net/Erebot_Module_IrcConnector',
+                'pear.erebot.net/Erebot_Module_AutoConnect',
+                'pear.erebot.net/Erebot_Module_PingReply',
+                'pear.erebot.net/Plop',
+            )
+        )
+    );
+}
+
+// Only for ".phar" packages (ignored for other types).
 $pearDeps = array(
     'pear.php.net/Console_CommandLine',
+    'pear.php.net/File_Gettext',
 );
 
 // Add (data & php) files from dependencies
@@ -52,6 +80,9 @@ foreach ($deps as $dep) {
         }
     }
 }
+
+if (!$options['phar'])
+    return;
 
 // Add (data & php) files from installed PEAR packages.
 /// @FIXME: what about @*_dir@ substitutions?...
