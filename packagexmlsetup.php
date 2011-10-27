@@ -44,7 +44,7 @@ foreach (array($package, $compatible) as $obj) {
     $obj->dependencies['required']->php->min = '5.2.2';
     $obj->license['name'] = 'GPL';
     $obj->license['uri'] = 'http://www.gnu.org/licenses/gpl-3.0.txt';
-#    $obj->license['filesource'] = 'LICENSE';
+    $obj->license['filesource'] = 'LICENSE';
 
     // Add dependencies...
     // ...on packages.

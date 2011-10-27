@@ -4,7 +4,6 @@
  * More information: http://pear.php.net/manual/en/pyrus.commands.package.php#pyrus.commands.package.extrasetup
  */
 
-$extrafiles = array();
 $targets    =   (int) $options['phar']  +
                 (int) $options['tgz']   +
                 (int) $options['tar']   +
@@ -16,6 +15,12 @@ if ($targets != 1) {
     exit(-1);
 }
 
+$extrafiles = array();
+include(
+    __DIR__ .
+    DIRECTORY_SEPARATOR . 'buildenv' .
+    DIRECTORY_SEPARATOR . 'extrafiles.php'
+);
 $deps = array(
     'pear.erebot.net/Erebot_API',
 );
