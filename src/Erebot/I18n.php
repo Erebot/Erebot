@@ -285,7 +285,9 @@ implements  Erebot_Interface_I18n
          * while specifying "Erebot" as the application. xgettext would
          * extract "Erebot" as the message to translate without this hack.
          */
-        $gettext = create_function('$a', 'return $a;');
+        static $gettext = NULL;
+        if ($gettext === NULL)
+            $gettext = create_function('$a', 'return $a;');
 
         // I18N: Rule used to format durations (with words), using ICU's syntax.
         // I18N: Eg. "12345" becomes "3 hours, 25 minutes, 45 seconds" (in english).
