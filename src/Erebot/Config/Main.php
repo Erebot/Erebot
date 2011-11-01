@@ -224,7 +224,7 @@ implements  Erebot_Interface_Config_Main
         $ue         = libxml_use_internal_errors(TRUE);
         $domxml     = new Erebot_DOM();
         if ($source == self::LOAD_FROM_FILE)
-            $domxml->load($file);
+            $domxml->load((string) $file);
         else
             $domxml->loadXML($configData);
 
@@ -243,7 +243,8 @@ implements  Erebot_Interface_Config_Main
             );
         }
 
-        $schema = str_replace('@plop_schema@', $plopSchema, $schema);
+        $plopNormSchema = (string) Erebot_URI::fromAbsPath($plopSchema, TRUE);
+        $schema = str_replace('@plop_schema@', $plopNormSchema, $schema);
         $ok = $domxml->relaxNGValidateSource($schema);
         $errors = $domxml->getErrors();
         libxml_use_internal_errors($ue);
