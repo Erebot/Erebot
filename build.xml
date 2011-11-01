@@ -15,8 +15,8 @@
     <target name="protected_set_version">
         <property name="xmlstarlet" value="xmlstarlet ed -P -S -N erebot=http://www.erebot.net/xmlns/erebot"/>
 
-        <!-- Set Erebot_Interface_Core::VERSION. -->
-        <exec command="sed -i &quot;s/define.*EREBOT_VERSION.*/define('EREBOT_VERSION', '${version}');/&quot; src/Erebot/Interface/Core.php" checkreturn="true"/>
+        <!-- Set Erebot_Interface_Core::VERSION in API submodule. -->
+        <exec command="sed -i &quot;s/define.*EREBOT_VERSION.*/define('EREBOT_VERSION', '${version}');/&quot; vendor/Erebot_API/src/Erebot/Interface/Core.php" checkreturn="true"/>
 
         <!-- Set version in example configurations. -->
         <!-- * Single file configuration -->
