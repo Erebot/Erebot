@@ -25,7 +25,7 @@
     -->
     <sch:ns uri="http://www.erebot.net/xmlns/erebot/styling" prefix="msg"/>
 
-    <define name="type-color">
+    <define name="color-type">
         <choice>
             <data type="integer"/>
 
@@ -120,7 +120,7 @@
         </choice>
     </define>
 
-    <define name="type-identifier">
+    <define name="identifier-type">
         <text/>
     </define>
 
@@ -148,7 +148,7 @@
 
     <define name="var">
         <element name="var">
-            <attribute name="name"><ref name="type-identifier"/></attribute>
+            <attribute name="name"><ref name="identifier-type"/></attribute>
 
             <empty/>
         </element>
@@ -178,12 +178,12 @@
             </sch:pattern>
             <optional>
                 <attribute name="fg">
-                    <ref name="type-color"/>
+                    <ref name="color-type"/>
                 </attribute>
             </optional>
             <optional>
                 <attribute name="bg">
-                    <ref name="type-color"/>
+                    <ref name="color-type"/>
                 </attribute>
             </optional>
 
@@ -193,10 +193,10 @@
 
     <define name="for">
         <element name="for">
-            <attribute name="from"><ref name="type-identifier"/></attribute>
-            <attribute name="item"><ref name="type-identifier"/></attribute>
+            <attribute name="from"><ref name="identifier-type"/></attribute>
+            <attribute name="item"><ref name="identifier-type"/></attribute>
             <optional>
-                <attribute name="key"><ref name="type-identifier"/></attribute>
+                <attribute name="key"><ref name="identifier-type"/></attribute>
             </optional>
             <optional>
                 <!-- Alias for "separator". -->
@@ -219,7 +219,7 @@
 
     <define name="plural">
         <element name="plural">
-            <attribute name="var"><ref name="type-identifier"/></attribute>
+            <attribute name="var"><ref name="identifier-type"/></attribute>
 
             <oneOrMore>
                 <element name="case">
