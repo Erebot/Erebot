@@ -152,18 +152,37 @@ implements  Erebot_Interface_Config_Main
         if (!in_array($source, $possibleSources, TRUE))
             throw new Erebot_InvalidValueException('Invalid $source');
 
-        if (is_string($configData) && $configData != '') {
-            if ($source == self::LOAD_FROM_FILE)
-                $file = $configData[0] == '/' ? $configData :
-                        dirname(dirname(__FILE__)).'/'.$configData;
-            else
-                $file = NULL;
+        if ($source == self::LOAD_FROM_FILE) {
+            if (is_string($configData) && $configData != "") {
+                if (!strncasecmp(PHP_OS, "Win", 3)) {
+                    if (!in_array($configData[0], array("/", "\\")) &&
+                        strlen($configData) > 1 && $configData[1] != ":") {
+                        $configData = getcwd() . DIRECTORY_SEPARATOR .
+                                        $configData;
+                    }
+                }
+                else if ($configData[0] != DIRECTORY_SEPARATOR) {
+                    $configData = getcwd() . DIRECTORY_SEPARATOR . $configData;
+                }
+                $file = Erebot_URI::fromAbsPath($configData, FALSE);
+            }
+            else if (is_object($configData) &&
+                $configData instanceof Erebot_URI) {
+                $file = $configData;
+            }
+            else {
+                throw new Erebot_InvalidValueException(
+                    "Invalid configuration file"
+                );
+            }
         }
-        else {
+        else if (!is_string($configData)) {
             throw new Erebot_InvalidValueException(
-                'Invalid configuration file'
+                "Invalid configuration file"
             );
         }
+        else
+            $file = NULL;
 
         $dataDir = '@data_dir@';
         // Running from the repository.
