@@ -153,17 +153,20 @@ implements  Erebot_Interface_Timer
         if ($this->_stream)
             pclose($this->_stream);
 
-        if (!strncasecmp(PHP_OS, 'WIN', 3))
-            $command    = "start /B php-win.exe -r 'usleep(".
+        $binary = '@php_bin@';
+        if (!strncasecmp(PHP_OS, 'WIN', 3)) {
+            if ($binary == '@'.'php_bin'.'@')
+                $binary = 'php.exe';
+            $command = $binary.' -r "usleep('.
                 ((int) ($this->_delay * 1000000)).
-                "); // ".$this->_callback."'";
+                '); // '.addslashes($this->_callback).'"';
+        }
         else {
-            $binary = '@php_bin@';
             if ($binary == '@'.'php_bin'.'@')
                 $binary = '/usr/bin/env php';
             $command = $binary." -r 'usleep(".
                 ((int) ($this->_delay * 1000000)).
-                "); // ".$this->_callback."' &";
+                "); // ".addslashes($this->_callback)."' &";
         }
         $this->_stream = popen($command, 'r');
         return TRUE;

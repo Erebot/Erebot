@@ -64,18 +64,25 @@ extends Erebot_StreamWrapperBase
     public function stream_open($path, $mode, $options, &$openedPath)
     {
         $this->_position = 0;
-        $pos        = strpos($path, '://');
+        $pos = strpos($path, '://');
         if ($pos === FALSE)
             return FALSE;
 
         $path   = substr($path, $pos + 3);
-        $first  = substr($path, 0, 1);
-        $abs    = '';
 
-        if ($first != '/')
-            $abs = getcwd().DIRECTORY_SEPARATOR;
+        if (strlen($path) < 1)
+            return FALSE;
 
-        $matches    = glob($abs.$path, 0);
+        if (in_array($path[0], array("/", DIRECTORY_SEPARATOR)))
+            $abs = '';
+        else if (!strncasecmp(PHP_OS, "Win", 3) &&
+                strlen($path) > 1 && $path[1] == ':')
+            $abs = '';
+        else
+            $abs = getcwd() . DIRECTORY_SEPARATOR;
+
+        $abs .= str_replace("/", DIRECTORY_SEPARATOR, $path);
+        $matches    = glob($abs, 0);
         if ($matches === FALSE)
             $matches = array();
 
@@ -87,7 +94,7 @@ extends Erebot_StreamWrapperBase
             if ($cnt !== FALSE)
                 $content .= $cnt;
         }
-        $content        .= '</xglob:'.self::TAG.'>'; 
+        $content        .= '</xglob:'.self::TAG.'>';
         $this->_content  = $content;
         return TRUE;
     }
