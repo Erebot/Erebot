@@ -207,7 +207,7 @@ implements  Erebot_Interface_I18n
              * An error_reporting level of E_ALL & ~E_DEPRECATED
              * would otherwise be fine for File_Gettext.
              */
-            $oldErrorReporting = error_reporting(0);
+            $oldErrorReporting = error_reporting(E_ERROR);
 
             if (version_compare(PHP_VERSION, '5.3.0', '>='))
                 clearstatcache(FALSE, $file);
@@ -226,7 +226,7 @@ implements  Erebot_Interface_I18n
             }
             else if (!isset(self::$_cache[$file]) ||
                 $mtime !== self::$_cache[$file]['mtime']) {
-                $parser =& File_Gettext::factory('MO', $file);
+                $parser = File_Gettext::factory('MO', $file);
                 $parser->load();
                 self::$_cache[$file] = array(
                     'mtime'     => $mtime,
@@ -293,30 +293,33 @@ implements  Erebot_Interface_I18n
         // I18N: Eg. "12345" becomes "3 hours, 25 minutes, 45 seconds" (in english).
         // I18N: See also http://userguide.icu-project.org/formatparse/numbers/rbnf-examples for examples
         // I18N: and http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html for the complete syntax
-        $rule = $gettext("%with-words:
-    0: 0 seconds;
-    1: 1 second;
-    2: =#0= seconds;
-    60/60: <%%min<;
-    61/60: <%%min<, >%with-words>;
-    3600/60: <%%hr<;
-    3601/60: <%%hr<, >%with-words>;
-    86400/86400: <%%day<;
-    86401/86400: <%%day<, >%with-words>;
-    604800/604800: <%%week<;
-    604801/604800: <%%week<, >%with-words>;
-%%min:
-    1: 1 minute;
-    2: =#0= minutes;
-%%hr:
-    1: 1 hour;
-    2: =#0= hours;
-%%day:
-    1: 1 day;
-    2: =#0= days;
-%%week:
-    1: 1 week;
-    2: =#0= weeks;");
+        // We avoid relying on the OS' line-endings here (for portability).
+        $rule = $gettext(
+            "%with-words:\n".
+            "    0: 0 seconds;\n".
+            "    1: 1 second;\n".
+            "    2: =#0= seconds;\n".
+            "    60/60: <%%min<;\n".
+            "    61/60: <%%min<, >%with-words>;\n".
+            "    3600/60: <%%hr<;\n".
+            "    3601/60: <%%hr<, >%with-words>;\n".
+            "    86400/86400: <%%day<;\n".
+            "    86401/86400: <%%day<, >%with-words>;\n".
+            "    604800/604800: <%%week<;\n".
+            "    604801/604800: <%%week<, >%with-words>;\n".
+            "%%min:\n".
+            "    1: 1 minute;\n".
+            "    2: =#0= minutes;\n".
+            "%%hr:\n".
+            "    1: 1 hour;\n".
+            "    2: =#0= hours;\n".
+            "%%day:\n".
+            "    1: 1 day;\n".
+            "    2: =#0= days;\n".
+            "%%week:\n".
+            "    1: 1 week;\n".
+            "    2: =#0= weeks;"
+        );
 
         $fmt = new NumberFormatter(
             $this->_locales[self::LC_MESSAGES],

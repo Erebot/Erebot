@@ -105,7 +105,10 @@ extends PHPUnit_Framework_TestCase
 
         $w = $e = NULL;
         $r = array($this->_sockets[1]);
-        $nb = stream_select($r, $w, $e, 1);
+        // The call gets silenced to work around
+        // <https://bugs.php.net/bug.php?id=54563>,
+        // <https://bugs.php.net/bug.php?id=49948>.
+        $nb = @stream_select($r, $w, $e, 1);
         if ($nb <= 0)
             return NULL;
         return rtrim(fgets($this->_sockets[1], 1024));

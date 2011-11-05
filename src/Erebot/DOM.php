@@ -300,9 +300,9 @@ extends DomDocument
             $error->level   = LIBXML_ERR_ERROR;
             $error->code    = 0;
             $error->column  = 0;
+            $error->message = '';
             $error->file    = $this->documentURI;
             $error->line    = 0;
-            $error->message = '';
             $error->path    = '';
 
             foreach ($child->childNodes as $subchild) {

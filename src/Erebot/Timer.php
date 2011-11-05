@@ -169,6 +169,13 @@ implements  Erebot_Interface_Timer
                 "); // ".addslashes($this->_callback)."' &";
         }
         $this->_stream = popen($command, 'r');
+
+        // For some reason, on Windows the stream is marked as read-ready
+        // as soon as the subprocess has been created. We must read from
+        // the stream before it properly serves as a timer.
+        if (!strncasecmp(PHP_OS, 'WIN', 3))
+            fgets($this->_stream);
+
         return TRUE;
     }
 
