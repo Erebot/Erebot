@@ -23,8 +23,11 @@
 class       Erebot_Timer
 implements  Erebot_Interface_Timer
 {
-    /// Internal stream used to implement a timer.
-    protected $_stream;
+    /// A file descriptor which is used to implement timers.
+    protected $_handle;
+
+    /// Internal resource used to implement timers.
+    protected $_resource;
 
     /// Function or method to call when the timer expires.
     protected $_callback;
@@ -37,6 +40,9 @@ implements  Erebot_Interface_Timer
 
     /// Additional arguments to call the callback function with.
     protected $_args;
+
+    static protected $_binary   = NULL;
+    static protected $_isWin    = FALSE;
 
     /**
      * Creates a new timer, set off to call the given callback
@@ -71,8 +77,22 @@ implements  Erebot_Interface_Timer
                                     $args = array()
     )
     {
+        if (self::$_binary === NULL) {
+            $binary = '@php_bin@';
+            if ($binary == '@'.'php_bin'.'@') {
+                if (!strncasecmp(PHP_OS, 'WIN', 3)) {
+                    $binary = 'php.exe';
+                    self::$_isWin = TRUE;
+                }
+                else
+                    $binary = '/usr/bin/env php';
+            }
+            self::$_binary = $binary;
+        }
+
         $this->_delay       = $delay;
-        $this->_stream      = NULL;
+        $this->_handle      = NULL;
+        $this->_resource    = NULL;
         $this->setCallback($callback);
         $this->setRepetition($repeat);
         $this->setArgs($args);
@@ -80,9 +100,17 @@ implements  Erebot_Interface_Timer
 
     public function __destruct()
     {
-        if ($this->_stream)
-            pclose($this->_stream);
-        $this->_stream = NULL;
+        $this->_cleanup();
+    }
+
+    protected function _cleanup()
+    {
+        if ($this->_resource)
+            proc_close($this->_resource);
+        if (is_resource($this->_handle))
+            fclose($this->_handle);
+        $this->_handle      = NULL;
+        $this->_resource    = NULL;
     }
 
     public function setCallback(Erebot_Interface_Callable $callback)
@@ -139,7 +167,7 @@ implements  Erebot_Interface_Timer
     /// \copydoc Erebot_Interface_Timer::getStream()
     public function getStream()
     {
-        return $this->_stream;
+        return $this->_handle;
     }
 
     /// \copydoc Erebot_Interface_Timer::reset()
@@ -150,31 +178,45 @@ implements  Erebot_Interface_Timer
         else if (!$this->_repeat)
             return FALSE;
 
-        if ($this->_stream)
-            pclose($this->_stream);
+        $this->_cleanup();
 
-        $binary = '@php_bin@';
-        if (!strncasecmp(PHP_OS, 'WIN', 3)) {
-            if ($binary == '@'.'php_bin'.'@')
-                $binary = 'php.exe';
-            $command = $binary.' -r "usleep('.
-                ((int) ($this->_delay * 1000000)).
-                '); // '.addslashes($this->_callback).'"';
+        if (self::$_isWin) {
+            // We create a temporary file to which the subprocess will write to.
+            // This makes it possible to wait for the delay to pass by using
+            // select() on this file descriptor.
+            // Simpler approaches don't work on Windows because the underlying
+            // php_select() implementation doesn't seem to support pipes.
+            $this->_handle = tmpfile();
+            $descriptors = $this->_handle;
         }
         else {
-            if ($binary == '@'.'php_bin'.'@')
-                $binary = '/usr/bin/env php';
-            $command = $binary." -r 'usleep(".
-                ((int) ($this->_delay * 1000000)).
-                "); // ".addslashes($this->_callback)."' &";
+            // On other OSes, we just use a pipe to communicate.
+            $descriptors = array('pipe', 'w');
         }
-        $this->_stream = popen($command, 'r');
 
-        // For some reason, on Windows the stream is marked as read-ready
-        // as soon as the subprocess has been created. We must read from
-        // the stream before it properly serves as a timer.
-        if (!strncasecmp(PHP_OS, 'WIN', 3))
-            fgets($this->_stream);
+        // Build the command that will be executed by the subprocess.
+        $command = self::$_binary . ' -r "usleep('.
+            ((int) ($this->_delay * 1000000)).
+            '); ' .
+            'var_dump(42); ' .  // Required to make the subprocess send
+                                // a completion notification back to us.
+            // We add the name of the callback used to ease debugging.
+            '// '.addslashes($this->_callback).'"';
+
+        $this->_resource = proc_open(
+            $command,
+            array(1 => $descriptors),
+            $pipes
+        );
+
+        if (self::$_isWin) {
+            // Required to remove the "read-ready" flag from the fd.
+            // The call will always return FALSE since no data has
+            // been written to the temporary file yet.
+            fgets($this->_handle);
+        }
+        else
+            $this->_handle = $pipes[1];
 
         return TRUE;
     }
@@ -182,6 +224,7 @@ implements  Erebot_Interface_Timer
     /// \copydoc Erebot_Interface_Timer::activate()
     public function activate()
     {
+        $this->_cleanup();
         $args = array_merge(array(&$this), $this->_args);
         return (bool) $this->_callback->invokeArgs($args);
     }
