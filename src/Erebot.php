@@ -29,7 +29,7 @@ class __FILE_CLASS__
     }
 }
 define('__DIR__', new __FILE_CLASS__);
-} 
+}
 
 /*
 /// @TODO re-think integration of Doctrine a little...

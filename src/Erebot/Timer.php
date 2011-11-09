@@ -106,7 +106,7 @@ implements  Erebot_Interface_Timer
     protected function _cleanup()
     {
         if ($this->_resource)
-            proc_close($this->_resource);
+            proc_terminate($this->_resource);
         if (is_resource($this->_handle))
             fclose($this->_handle);
         $this->_handle      = NULL;
