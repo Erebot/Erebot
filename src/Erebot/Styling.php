@@ -373,8 +373,31 @@ implements  Erebot_Interface_Styling
      *
      * \retval string
      *      The formatted result for this template.
+     *
+     * \deprecated
+     *      Use Erebot_Styling::__toString() instead.
      */
     public function render()
+    {
+        return (string) $this;
+    }
+
+    /**
+     * Returns the template, rendered using the values
+     * previously assigned to its variables.
+     *
+     * \retval string
+     *      The formatted result for this template.
+     *
+     * \note
+     *      This method is magical: it is called automatically
+     *      by PHP whenever the template is used in a string
+     *      context. Hence, you may use it like this:
+     *      <code>
+     *          var_dump((string) $tpl);
+     *      </code>
+     */
+    public function __toString()
     {
         $attributes = array(
             'underline' => 0,
