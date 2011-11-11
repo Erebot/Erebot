@@ -192,12 +192,12 @@ implements  Erebot_Interface_ReceivingConnection
      */
     protected function _getSingleLine()
     {
-        $pos = strpos($this->_incomingData, "\r\n");
+        $pos = strpos($this->_incomingData, "\n");
         if ($pos === FALSE)
             return FALSE;
 
         $line = Erebot_Utils::toUTF8(substr($this->_incomingData, 0, $pos));
-        $this->_incomingData    = substr($this->_incomingData, $pos + 2);
+        $this->_incomingData    = substr($this->_incomingData, $pos + 1);
         $this->_rcvQueue[]      = $line;
 
         $logging    = Plop::getInstance();
@@ -216,7 +216,7 @@ implements  Erebot_Interface_ReceivingConnection
             throw new Erebot_ConnectionFailureException('Disconnected');
         }
 
-        $this->_incomingData .= $received;
+        $this->_incomingData .= preg_replace('/\\r\\n?/', "\n", $received);
         while ($this->_getSingleLine())
             ;   // Read messages.
     }
