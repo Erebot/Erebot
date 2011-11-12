@@ -30,7 +30,7 @@ extends Console_CommandLine_Action
     }
 }
 
-class   Console_CommandLine_MyOption
+class   Console_CommandLine_ParallelOption
 extends Console_CommandLine_Option
 {
     public function expectsArgument()
@@ -196,7 +196,7 @@ class Erebot_CLI
             )
         );
 
-        $noDaemon = new Console_CommandLine_MyOption(
+        $noDaemon = new Console_CommandLine_ParallelOption(
             'no_daemon',
             array(
                 'short_name'    => '-n',
@@ -424,10 +424,10 @@ class Erebot_CLI
 
         try {
             /// @TODO: Check the interface or something like that.
-            $console = $dic->console;
+            $prompt = $dic->prompt;
         }
         catch (InvalidArgumentException $e) {
-            $console = NULL;
+            $prompt = NULL;
         }
 
         // Change group identity if necessary.
@@ -671,8 +671,8 @@ class Erebot_CLI
         if ($identd !== NULL)
             $identd->connect();
 
-        if ($console !== NULL)
-            $console->connect();
+        if ($prompt !== NULL)
+            $prompt->connect();
 
         // This doesn't return until we purposely
         // make the bot drop all active connections.

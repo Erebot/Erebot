@@ -145,7 +145,7 @@
 <!--            <argument>Erebot_Identd_Worker</argument>-->
 <!--        </service>-->
 
-        <service id="console" class="Erebot_Console">
+        <service id="prompt" class="Erebot_Prompt">
             <argument type="service" id="bot"/>
         </service>
     </services>
