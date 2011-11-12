@@ -18,9 +18,27 @@
 
 /**
  * \brief
- *      A simple console which can be used to send commands to the bot.
+ *      A simple prompt which can be used to send commands remotely.
+ *
+ * This class can be used by external processes to send commands through
+ * the bot. It creates a UNIX socket other programs can send commands to
+ * whenever they want the bot to send certain commands to an IRC server.
+ *
+ * Such commands must be prefixed by a pattern (which accepts '*' and '?'
+ * as wildcards, but not the full grammar of regular expressions) to
+ * indicate which server(s) the command must be sent to (hint: '*' can
+ * be used to refer to all servers the bot is connected to).
+ *
+ * This makes in possible to display the output of some shell script
+ * on IRC. For example, the following command would display the output
+ * of \a /some/command.sh to #Erebot on all servers the bot is currently
+ * connected to:
+ * <code>
+ *      /some/command.sh | sed 's/^/* PRIVMSG #Erebot :/' | \
+ *          socat - UNIX-SENDTO:/path/to/the/prompt.sock
+ * </endcode>
  */
-class       Erebot_Console
+class       Erebot_Prompt
 implements  Erebot_Interface_ReceivingConnection
 {
     /// A bot object implementing the Erebot_Interface_Core interface.
@@ -36,7 +54,7 @@ implements  Erebot_Interface_ReceivingConnection
     protected $_incomingData;
 
     /**
-     * Constructs the UNIX socket that represents the console.
+     * Constructs the UNIX socket that represents the prompt.
      *
      * \param Erebot_Interface_Core $bot
      *      Instance of the bot to operate on.
@@ -97,7 +115,7 @@ implements  Erebot_Interface_ReceivingConnection
             STREAM_SERVER_BIND
         );
         if (!$this->_socket)
-            throw new Exception("Could not create console (".$errstr.")");
+            throw new Exception("Could not create prompt (".$errstr.")");
 
         register_shutdown_function(
             array(__CLASS__, '_cleanup_socket'),
@@ -135,7 +153,7 @@ implements  Erebot_Interface_ReceivingConnection
 
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
-        $logger->info($bot->gettext('Console started in "%s"'), $connector);
+        $logger->info($bot->gettext('Prompt started in "%s"'), $connector);
     }
 
     /// Destructor.
@@ -232,10 +250,10 @@ implements  Erebot_Interface_ReceivingConnection
     }
 
     /**
-     * Handles a line received from the console.
+     * Handles a line received from the prompt.
      *
      * \param string $line
-     *      A single line of text received from the console,
+     *      A single line of text received from the prompt,
      *      with the end-of-line sequence stripped.
      */
     protected function _handleMessage($line)
@@ -275,7 +293,7 @@ implements  Erebot_Interface_ReceivingConnection
     }
 
     /**
-     * Destroys the socket used by the console
+     * Destroys the socket used by the prompt
      * whenever Erebot exits.
      *
      * \param string $socket
