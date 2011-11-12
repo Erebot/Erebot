@@ -20,15 +20,15 @@
 // Many thanks to the anonymous person who posted this trick on:
 // http://php.net/manual/en/language.constants.predefined.php#99278
 if (!defined('__DIR__')) {
-class __FILE_CLASS__
-{
-    public function __toString()
+    class __FILE_CLASS__
     {
-        $x = debug_backtrace();
-        return dirname($x[1]['file']);
+        public function __toString()
+        {
+            $x = debug_backtrace();
+            return dirname($x[1]['file']);
+        }
     }
-}
-define('__DIR__', new __FILE_CLASS__);
+    define('__DIR__', new __FILE_CLASS__);
 }
 
 /*
