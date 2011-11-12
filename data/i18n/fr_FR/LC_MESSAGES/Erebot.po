@@ -96,6 +96,11 @@ msgstr  "Rechargement de la configuration"
 msgid   "Received signal #%(signum)d (%(signame)s)"
 msgstr  "Réception du signal #%(signum)d (%(signame)s)"
 #
+# File: src/Erebot/Prompt.php, line: 156
+#, php-format
+msgid   "Prompt started in \"%s\""
+msgstr  "Récepteur de commandes démarré dans \"%s\""
+#
 msgid   "Path to the configuration file to use instead of \"Erebot.xml\", "
         "relative to the current directory."
 msgstr  "Chemin vers le fichier de configuration à utiliser au lieu de "
@@ -191,8 +196,8 @@ msgid   "Could not start in the background (unable to fork)"
 msgstr  "Impossible de démarrer en arrière-plan (échec du fork)"
 #
 msgid   "Could not set user identity to \"%(name)s\" (%(id)d)"
-msgstr  "Impossible de changer l'identité de l'utilisateur en \"%(name)s"
-        "\" (%(id)d)"
+msgstr  "Impossible de changer l'identité de l'utilisateur en \"%(name)s\" (%"
+        "(id)d)"
 #
 msgid   "Could not set group identity to \"%(name)s\" (%(id)d)"
 msgstr  "Impossible de changer l'identité du groupe en \"%(name)s\" (%(id)d)"
@@ -213,11 +218,6 @@ msgstr  "Impossible de changer de dossier vers \"%s\""
 msgid   "Could not change umask"
 msgstr  "Impossible de changer l'umask"
 #
-# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Console.php, line: 27
-#, php-format
-msgid   "Console started in \"%s\""
-msgstr  "Console démarrée dans \"%s\""
-#
 msgid   "Connection failed, removing it from the pool"
 msgstr  "Échec de la connexion, elle n'est plus sous notre contrôle"
 #
@@ -233,10 +233,6 @@ msgstr  "Allouée :"
 msgid   "A modular IRC bot written in PHP"
 msgstr  "Un bot IRC modulaire écrit en PHP"
 #
-#. I18N: Rule used to format durations (with words), using ICU's syntax.
-#. I18N: Eg. "12345" becomes "3 hours, 25 minutes, 45 seconds" (in english).
-#. I18N: See also http://userguide.icu-project.org/formatparse/numbers/rbnf-examples for examples
-#. I18N: and http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html for the complete syntax
 msgid   "%with-words:\n"
         "    0: 0 seconds;\n"
         "    1: 1 second;\n"
@@ -288,12 +284,17 @@ msgstr  "%with-words:\n"
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2011-08-19 21:58+0200\n"
+        "POT-Creation-Date: 2011-11-12 22:46+0100\n"
         "PO-Revision-Date: 2010-02-13 19:10+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
-        "Language: \n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=utf-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Language: \n"
         "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Console.php, line: 27
+#~ msgid        "Console started in \"%s\""
+#~ msgstr       "Console démarrée dans \"%s\""

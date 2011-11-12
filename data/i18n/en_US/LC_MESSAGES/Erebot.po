@@ -2,20 +2,16 @@
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2011-10-20 22:10+0200\n"
+        "POT-Creation-Date: 2011-11-12 22:49+0100\n"
         "PO-Revision-Date: 2011-02-16 16:43+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
-        "Language: \n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=utf-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Language: \n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #
-#. I18N: Rule used to format durations (with words), using ICU's syntax.
-#. I18N: Eg. "12345" becomes "3 hours, 25 minutes, 45 seconds" (in english).
-#. I18N: See also http://userguide.icu-project.org/formatparse/numbers/rbnf-examples for examples
-#. I18N: and http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html for the complete syntax
 msgid   "%with-words:\n"
         "    0: 0 seconds;\n"
         "    1: 1 second;\n"
@@ -79,11 +75,6 @@ msgstr  "Code is not clean!"
 #
 msgid   "Connection failed, removing it from the pool"
 msgstr  "Connection failed, removing it from the pool"
-#
-# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Console.php, line: 27
-#, php-format
-msgid   "Console started in \"%s\""
-msgstr  "Console started in \"%s\""
 #
 msgid   "Could not change umask"
 msgstr  "Could not change umask"
@@ -198,6 +189,11 @@ msgid   "Path to the configuration file to use instead of \"Erebot.xml\", "
 msgstr  "Path to the configuration file to use instead of \"Erebot.xml\", "
         "relative to the current directory."
 #
+# File: src/Erebot/Prompt.php, line: 156
+#, php-format
+msgid   "Prompt started in \"%s\""
+msgstr  "Prompt started in \"%s\""
+#
 msgid   "Received signal #%(signum)d (%(signame)s)"
 msgstr  "Received signal #%(signum)d (%(signame)s)"
 #
@@ -294,3 +290,11 @@ msgstr  "Used:"
 # File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/CLI.php, line: 550
 msgid   "You SHOULD NOT run Erebot as root!"
 msgstr  "You SHOULD NOT run Erebot as root!"
+#
+#
+#
+#
+#
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Console.php, line: 27
+#~ msgid        "Console started in \"%s\""
+#~ msgstr       "Console started in \"%s\""
