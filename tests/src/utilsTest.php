@@ -222,7 +222,16 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals("\xC3\xA9", Erebot_Utils::toUTF8("\xC3\xA9"));
         // Encoded with the default charset (ISO-8859-1).
         $this->assertEquals("\xC3\xA9", Erebot_Utils::toUTF8("\xE9"));
-        $this->assertEquals("\xC3\xA9", Erebot_Utils::toUTF8("\xE9", "iso-8859-1"));
+        $this->assertEquals(
+            "\xC3\xA9",
+            Erebot_Utils::toUTF8("\xE9", "iso-8859-1")
+        );
+
+        $this->assertEquals(
+            "\xE2\x82\xAC",
+            // Euro sign, double-encoded.
+            Erebot_Utils::toUTF8("\xC3\xA2\xC2\x82\xC2\xAC", "__double")
+        );
     }
 }
 
