@@ -289,12 +289,14 @@ implements  Erebot_Interface_I18n
         if ($gettext === NULL)
             $gettext = create_function('$a', 'return $a;');
 
-        // I18N: Rule used to format durations (with words), using ICU's syntax.
-        // I18N: Eg. "12345" becomes "3 hours, 25 minutes, 45 seconds" (in english).
-        // I18N: See also http://userguide.icu-project.org/formatparse/numbers/rbnf-examples for examples
-        // I18N: and http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html for the complete syntax
         // We avoid relying on the OS' line-endings here (for portability).
-        $rule = $gettext(
+        // I18N: ICU rule used to format durations (with words).
+        $rule = $gettext( //
+        // Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
+        // For examples of valid rules, see:
+        // http://userguide.icu-project.org/formatparse/numbers/rbnf-examples
+        // For the complete syntaxe, see also:
+        // http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html
             "%with-words:\n".
             "    0: 0 seconds;\n".
             "    1: 1 second;\n".

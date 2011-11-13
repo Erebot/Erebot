@@ -2,7 +2,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2011-11-12 22:49+0100\n"
+        "POT-Creation-Date: 2011-11-13 02:51+0100\n"
         "PO-Revision-Date: 2011-02-16 16:43+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
@@ -12,6 +12,13 @@ msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Language: \n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #
+#. I18N: ICU rule used to format durations (with words).
+#.
+#. Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
+#. For examples of valid rules, see:
+#. http://userguide.icu-project.org/formatparse/numbers/rbnf-examples
+#. For the complete syntaxe, see also:
+#. http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html
 msgid   "%with-words:\n"
         "    0: 0 seconds;\n"
         "    1: 1 second;\n"
@@ -290,6 +297,70 @@ msgstr  "Used:"
 # File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/CLI.php, line: 550
 msgid   "You SHOULD NOT run Erebot as root!"
 msgstr  "You SHOULD NOT run Erebot as root!"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/Erebot/I18n.php, line: 324
+#~ msgid        "foobar"
+#~ msgstr       "foobar"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
