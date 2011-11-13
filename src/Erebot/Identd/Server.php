@@ -33,6 +33,28 @@ implements  Erebot_Interface_ReceivingConnection
     /// Class to use to process IdentD requests.
     protected $_workerCls;
 
+    /**
+     * Create a new instance of the IdentD server.
+     *
+     * \param Erebot_Interface_Core $bot
+     *      Instance of the bot to operate on.
+     *
+     * \param string $connector
+     *      (optional) A string of the form "address:port"
+     *      describing the IP address and port the server
+     *      should listen on. The default is to listen on
+     *      port 113 (as per RFC 1413) on all available
+     *      interfaces (ie. "0.0.0.0:113").
+     *
+     * \param string $workerCls
+     *      (optional) Instances of this class will be created
+     *      to handle identification requests. The default is
+     *      "Erebot_Identd_Worker".
+     *
+     * \see
+     *      http://www.ietf.org/rfc/rfc1413.txt for information
+     *      on the identification protocol.
+     */
     public function __construct(
         Erebot_Interface_Core   $bot,
                                 $connector  = '0.0.0.0:113',

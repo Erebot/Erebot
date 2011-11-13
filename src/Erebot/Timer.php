@@ -41,7 +41,10 @@ implements  Erebot_Interface_Timer
     /// Additional arguments to call the callback function with.
     protected $_args;
 
+    /// Path to the PHP binary to use to launch timers.
     static protected $_binary   = NULL;
+
+    /// Flag that indicates whether we're running on a Windows platform or not.
     static protected $_isWin    = FALSE;
 
     /**
@@ -98,11 +101,16 @@ implements  Erebot_Interface_Timer
         $this->setArgs($args);
     }
 
+    /// Destroys the timer.
     public function __destruct()
     {
         $this->_cleanup();
     }
 
+    /**
+     * Performs cleanup duties so that no traces
+     * of this timer having ever been used remain.
+     */
     protected function _cleanup()
     {
         if ($this->_resource)
@@ -113,6 +121,7 @@ implements  Erebot_Interface_Timer
         $this->_resource    = NULL;
     }
 
+    /// \copydoc Erebot_Interface_Timer::setCallback()
     public function setCallback(Erebot_Interface_Callable $callback)
     {
         $this->_callback = $callback;
@@ -124,10 +133,9 @@ implements  Erebot_Interface_Timer
         return $this->_callback;
     }
 
-    public function setArgs($args)
+    /// \copydoc Erebot_Interface_Timer::setArgs()
+    public function setArgs(array $args)
     {
-        if (!is_array($args))
-            throw new Erebot_InvalidValueException('Expected an array');
         $this->_args = $args;
     }
 

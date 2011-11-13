@@ -27,9 +27,10 @@
 class       Erebot_EventHandler
 implements  Erebot_Interface_EventHandler
 {
-    /// Method/function to call when this handler is triggered.
+    /// Callable object to use when this handler is triggered.
     protected $_callback;
-    /// Filtering object to decide whether some event can be handled or not.
+
+    /// Filtering object to decide whether the callback must be called or not.
     protected $_filter;
 
     /**
@@ -59,6 +60,7 @@ implements  Erebot_Interface_EventHandler
     {
     }
 
+    /// \copydoc Erebot_Interface_EventHandler::setCallback()
     public function setCallback(Erebot_Interface_Callable $callback)
     {
         $this->_callback = $callback;

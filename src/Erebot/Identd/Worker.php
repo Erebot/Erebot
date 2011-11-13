@@ -28,13 +28,30 @@ implements  Erebot_Interface_BidirectionalConnection
 {
     /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
+
     /// The underlying socket, represented as a stream.
     protected $_socket;
+
     /// A raw buffer for incoming data.
     protected $_incomingData;
+
     /// A FIFO queue for incoming messages.
     protected $_rcvQueue;
 
+    /**
+     * Creates a worker object capable of handling
+     * a single identification request.
+     * As soon as the request has been handled and
+     * a response has been sent, this worker will
+     * destroy itself.
+     *
+     * \param Erebot_Interface_Core $bot
+     *      Instance of the bot to operate on.
+     *
+     * \param resource $socket
+     *      A socket connected to a client requesting
+     *      an identification from our IdentD server.
+     */
     public function __construct(Erebot_Interface_Core $bot, $socket)
     {
         if (!is_resource($socket))

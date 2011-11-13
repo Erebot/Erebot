@@ -16,23 +16,72 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Custom action which acts as a proxy.
+ *
+ * This class can be used in conjunction with
+ * Console_CommandLine_ParallelOption to have
+ * multiple options that act on the same variable.
+ */
 class   StoreProxy_Action
 extends Console_CommandLine_Action
 {
+    /**
+     * Sets the result of this action.
+     * In our case, this actually changes
+     * the value of another option.
+     *
+     * \param mixed $result
+     *      Result to assign to the other option.
+     *
+     * \param mixed $option
+     *      (optional) Name of the option this proxy
+     *      will operate on. The default is NULL.
+     */
     public function setResult($result, $option = NULL)
     {
         $this->result->options[$option] = $result;
     }
 
+    /**
+     * Executes this action whenever the associated
+     * option has been passed on the command-line.
+     *
+     * \param mixed $value
+     *      (optional) Value given to this option.
+     *      The default is FALSE.
+     *
+     * \param array $params
+     *      (optional) Parameters associated with
+     *      this action. The default is an empty
+     *      set of parameters (empty array).
+     */
     public function execute($value = FALSE, $params = array())
     {
         $this->setResult(FALSE, $params['option']);
     }
 }
 
+/**
+ * \brief
+ *      Custom option that can be used in parallel with regular options.
+ *
+ * The Console_CommandLine package usually prevents
+ * options from acting on the same variable. This
+ * specific type of option can be used with the
+ * StoreProxy_Action to work around this.
+ */
 class   Console_CommandLine_ParallelOption
 extends Console_CommandLine_Option
 {
+    /**
+     * Overrides the parent method so that
+     * this option never expects an argument.
+     *
+     * \retval bool
+     *      Always returns FALSE.
+     */
     public function expectsArgument()
     {
         return FALSE;

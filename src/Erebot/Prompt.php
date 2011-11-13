@@ -33,10 +33,10 @@
  * on IRC. For example, the following command would display the output
  * of \a /some/command.sh to #Erebot on all servers the bot is currently
  * connected to:
- * <code>
+ * \code
  *      /some/command.sh | sed 's/^/* PRIVMSG #Erebot :/' | \
  *          socat - UNIX-SENDTO:/path/to/the/prompt.sock
- * </endcode>
+ * \endcode
  */
 class       Erebot_Prompt
 implements  Erebot_Interface_ReceivingConnection
@@ -109,7 +109,7 @@ implements  Erebot_Interface_ReceivingConnection
             $connector = sys_get_temp_dir() .
                         DIRECTORY_SEPARATOR .
                         'Erebot.sock';
-        $this->_socket      = stream_socket_server(
+        $this->_socket = stream_socket_server(
             "udg://".$connector,
             $errno, $errstr,
             STREAM_SERVER_BIND
@@ -298,6 +298,9 @@ implements  Erebot_Interface_ReceivingConnection
      *
      * \param string $socket
      *      Path to the UNIX socket used to control Erebot.
+     *
+     * \return
+     *      This method does not have a return value.
      */
     static public function _cleanup_socket($socket)
     {
