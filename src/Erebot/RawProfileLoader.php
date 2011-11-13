@@ -16,16 +16,65 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      Class that loads raw profiles.
+ *
+ * This class can be used to load/unload/swap raw profiles
+ * on the fly. This class implements the Countable and
+ * ArrayAccess magical interfaces, so you may use count()
+ * and the array access operator on it for ease of use.
+ *
+ * Usually, you never pass instances as the profiles to load,
+ * instead relying only on interfaces' names:
+ * \code
+ *      $p1         = 'RawProfile1_Interface';
+ *      $loader     = new Erebot_RawProfileLoader($1);
+ *      $loader[]   = 'RawProfile2_Interface';
+ *      unset($loader[0]);
+ * \endcode
+ */
 class       Erebot_RawProfileLoader
 implements  Erebot_Interface_RawProfileLoader
 {
+    /// Array of profiles currently loaded.
     protected $_profiles;
 
+    /**
+     * Constructs a new raw profile loader and initializes
+     * it with a set of profiles.
+     *
+     * \param mixed $profiles
+     *      Either a single profile or an array of profiles
+     *      to load. A profile can be expressed using either
+     *      the name of the class/interface where it resides
+     *      (as a string) or by passing an instance of the
+     *      profile's class (as an object).
+     */
     public function __construct($profiles)
     {
         $this->setProfiles($profiles);
     }
 
+    /**
+     * Returns a reflection object representing
+     * the given profile.
+     *
+     * \param mixed $profile
+     *      A single profile, expressed using either the name
+     *      of the class/interface where it resides (a string)
+     *      or by passing an instance of the profile's class
+     *      (an object).
+     *
+     * \retval Reflector
+     *      A ReflectionClass object matching
+     *      the given profile.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given $profile is invalid, either because it
+     *      does not represent a profile at all or because
+     *      it does not conform to the expected interface.
+     */
     protected function _getReflect($profile)
     {
         if (is_object($profile))
@@ -43,17 +92,20 @@ implements  Erebot_Interface_RawProfileLoader
         return $refl;
     }
 
+    /// \copydoc Erebot_Interface_RawProfileLoader::setProfiles()
     public function setProfiles($profiles = array())
     {
-        $this->_profiles = array();
         if (!is_array($profiles))
             $profiles = array($profiles);
 
+        $newProfiles = array();
         foreach ($profiles as $profile) {
-            $this->_profiles[] = $this->_getReflect($profile);
+            $newProfiles[] = $this->_getReflect($profile);
         }
+        $this->_profiles = $newProfiles;
     }
 
+    /// \copydoc Erebot_Interface_RawProfileLoader::getProfiles()
     public function getProfiles()
     {
         $names = array();
@@ -63,6 +115,7 @@ implements  Erebot_Interface_RawProfileLoader
         return $names;
     }
 
+    /// \copydoc Erebot_Interface_RawProfileLoader::getRawByName()
     public function getRawByName($rawName)
     {
         if (!is_string($rawName))
@@ -125,6 +178,11 @@ implements  Erebot_Interface_RawProfileLoader
      * \copydoc ArrayAccess::offsetUnset()
      * \see
      *      docs/additions/iface_ArrayAccess.php
+     *
+     * \note
+     *      The profiles are reordered internally
+     *      each time one of the profiles has been
+     *      removed from the loader.
      */
     public function offsetUnset($offset)
     {
