@@ -289,7 +289,11 @@ implements  Erebot_Interface_I18n
         if ($gettext === NULL)
             $gettext = create_function('$a', 'return $a;');
 
-        // We avoid relying on the OS' line-endings here (for portability).
+        // DO NOT CHANGE THE CODE BELOW, ESPECIALLY COMMENTS & WHITESPACES.
+        // It has all been carefully crafted to make both xgettext and
+        // PHP_CodeSniffer happy! Also, it avoids relying on OS line endings
+        // as it breaks xgettext on at least Windows platforms.
+
         // I18N: ICU rule used to format durations (with words).
         $rule = $gettext( //
         // Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
