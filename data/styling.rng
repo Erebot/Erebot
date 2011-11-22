@@ -25,6 +25,10 @@
     -->
     <sch:ns uri="http://www.erebot.net/xmlns/erebot/styling" prefix="msg"/>
 
+    <!--
+        Valid colors: either an integer or the name of a predefined color.
+        Colors are handled in a case-insensitive fashion.
+    -->
     <define name="color-type">
         <choice>
             <data type="integer"/>
@@ -120,20 +124,32 @@
         </choice>
     </define>
 
+    <!-- Valid variable identifiers (for use in the "var" tag). -->
     <define name="identifier-type">
         <text/>
     </define>
 
+    <!-- Entry point. -->
     <start>
         <ref name="msg"/>
     </start>
 
+    <!--
+        Root tag for templates.
+        The styling API adds this tag automatically to the string
+        you pass, so you don't need to worry about it.
+    -->
     <define name="msg">
+        <!--
+            A message may contain any number
+            of subtags, in any order.
+        -->
         <element name="msg">
             <ref name="subtags"/>
         </element>
     </define>
 
+    <!-- Special tags that may appear in a message. -->
     <define name="subtags">
         <interleave>
             <zeroOrMore><ref name="var"/></zeroOrMore>
@@ -146,28 +162,50 @@
         </interleave>
     </define>
 
+    <!--
+        The "var" tag can be used to embed the value
+        of a template variable in the final message.
+    -->
     <define name="var">
         <element name="var">
+            <!-- Name of the variable to embed. -->
             <attribute name="name"><ref name="identifier-type"/></attribute>
 
             <empty/>
         </element>
     </define>
 
+    <!--
+        The "u" tag can be used to underline some part
+        of the message, hence it has the same role as
+        its HTML counterpart.
+    -->
     <define name="u">
         <element name="u">
             <ref name="subtags"/>
         </element>
     </define>
 
+    <!--
+        The "u" tag can be used to put some part of the message
+        in bold, hence it has the same role as its HTML counterpart.
+    -->
     <define name="b">
         <element name="b">
             <ref name="subtags"/>
         </element>
     </define>
 
+    <!--
+        The "color" tag can be used to change the foreground or
+        background color of some part of the message.
+    -->
     <define name="color">
         <element name="color">
+            <!--
+                You MUST provide at least one of the "fg"
+                or "bg" attribute when using this tag.
+            -->
             <sch:pattern name="Validate color attributes">
                 <sch:rule context="msg:color">
                     <sch:assert test="@fg or @bg">
@@ -177,11 +215,19 @@
                 </sch:rule>
             </sch:pattern>
             <optional>
+                <!--
+                    Set the foreground color of this tag's
+                    content to the color in this attribute.
+                -->
                 <attribute name="fg">
                     <ref name="color-type"/>
                 </attribute>
             </optional>
             <optional>
+                <!--
+                    Set the background color of this tag's
+                    content to the color in this attribute.
+                -->
                 <attribute name="bg">
                     <ref name="color-type"/>
                 </attribute>
@@ -191,17 +237,35 @@
         </element>
     </define>
 
+    <!--
+        The "for" tag can be used to loop over an array
+        that has been previously assigned to a variable
+        in this template.
+    -->
     <define name="for">
         <element name="for">
+            <!-- Name of the variable containing the array to loop over. -->
             <attribute name="from"><ref name="identifier-type"/></attribute>
+            <!--
+                Name of the variable that will store each value
+                in turn as the array is looped over.
+            -->
             <attribute name="item"><ref name="identifier-type"/></attribute>
             <optional>
+                <!--
+                    Name of the variable that will store each key
+                    in turn as the array is looped over.
+                -->
                 <attribute name="key"><ref name="identifier-type"/></attribute>
             </optional>
             <optional>
                 <!-- Alias for "separator". -->
                 <attribute name="sep"><text/></attribute>
             </optional>
+            <!--
+                Separator to use between entries as they are
+                rendered, except between the last two entries.
+            -->
             <optional>
                 <attribute name="separator"><text/></attribute>
             </optional>
@@ -209,6 +273,10 @@
                 <!-- Alias for "last_separator". -->
                 <attribute name="last"><text/></attribute>
             </optional>
+            <!--
+                Separator used for the last
+                two entries in the array.
+            -->
             <optional>
                 <attribute name="last_separator"><text/></attribute>
             </optional>
@@ -217,13 +285,39 @@
         </element>
     </define>
 
+    <!--
+        The "plural" tag can be used to have a group of words
+        rendered with the correct plural form depending on the
+        value of a template variable.
+    -->
     <define name="plural">
         <element name="plural">
+            <!--
+                Name of the variable that indicates
+                the correct plural form to use.
+
+                The value this points to MUST be an integer.
+            -->
             <attribute name="var"><ref name="identifier-type"/></attribute>
 
             <oneOrMore>
+                <!--
+                    Each valid plural form is described in terms
+                    of a "case" subtag.
+                -->
                 <element name="case">
-                    <!-- From http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html -->
+                    <!--
+                        The "case" subtag MUST have a "form" attribute
+                        dictating what plural form is currently being
+                        described. Valid values for this attribute are
+                        defined by the Unicode Consortium.
+
+                        Translators can redefine the plural forms in
+                        their translations so that they match the rules
+                        in use in their country.
+
+                        See http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
+                    -->
                     <attribute name="form">
                         <choice>
                             <value>zero</value>
