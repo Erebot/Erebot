@@ -34,7 +34,7 @@ extends AbstractTimerTest
 {
     private $_delay = 2.5;
     private $_min   = 2.5;
-    private $_max   = 3.5;
+    private $_max   = 4.0;
     private $_timer;
 
     /**
@@ -126,6 +126,8 @@ extends AbstractTimerTest
                 ((int) ($wait * 100000)) % 100000
             );
         } while ($nb === FALSE);
+        if (!$nb)
+            return array(0, NULL);
         return array($nb, $read[0]);
     }
 }
