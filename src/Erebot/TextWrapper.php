@@ -42,30 +42,7 @@ implements  Erebot_Interface_TextWrapper
         $this->_position    = 0;
     }
 
-    /**
-     * Splits the wrapped text using the given separator
-     * and returns only some of the chunks (tokens) as a
-     * new string.
-     * Whitespaces are squeezed together in the process,
-     * no matter what separator is actually used.
-     *
-     * \param int $start
-     *      Offset of the first chunk to return (starting at 0).
-     *      If negative, it starts at the end of the wrapped text.
-     *
-     * \param NULL|int $length
-     *      (optional) Number of chunks to return in the new string.
-     *      If set to 0 (the default), returns all chunks from
-     *      $start onward until the end of the wrapped text.
-     *
-     * \param NULL|string $separator
-     *      (optional) The separator to use while splitting the text.
-     *      The default is to split it on whitespaces (' ').
-     *
-     * \retval string
-     *      At most $length chunks (if $length > 0)
-     *      and its whitespaces squeezed.
-     */
+    /// \copydoc Erebot_Interface_TextWrapper::getTokens()
     public function getTokens($start, $length = 0, $separator = ' ')
     {
         $string = preg_replace('/\\s+/', ' ', trim($this->_text, $separator));
@@ -82,32 +59,14 @@ implements  Erebot_Interface_TextWrapper
         return implode($separator, $parts);
     }
 
-    /**
-     * Returns the number of chunks (tokens) obtained
-     * by splitting the wrapped text using the given
-     * separator.
-     * Whitespaces are squeezed together in the process,
-     * no matter what separator is actually used.
-     *
-     * \param NULL|string $separator
-     *      (optional) The separator to use while splitting the text.
-     *      The default is to split it on whitespaces (' ').
-     *
-     * \retval int
-     *      The number of tokens in the string.
-     */
+    /// \copydoc Erebot_Interface_TextWrapper::countTokens()
     public function countTokens($separator = ' ')
     {
         $string = preg_replace('/\\s+/', ' ', trim($this->_text, $separator));
         return count(explode($separator, $string));
     }
 
-    /**
-     * Returns the wrapped text (untouched).
-     *
-     * \retval string
-     *      The text wrapped by this instance.
-     */
+    /// \copydoc Erebot_Interface_TextWrapper::__toString()
     public function __toString()
     {
         return $this->_text;
