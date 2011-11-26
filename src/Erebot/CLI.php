@@ -116,6 +116,9 @@ class Erebot_CLI
      * \post
      *      The current process exits with an exit code
      *      of 0 or 1, depending on the signal received.
+     *
+     * \return
+     *      This method does not return anything.
      */
     static public function _startup_sighandler($signum)
     {
@@ -133,6 +136,9 @@ class Erebot_CLI
      *
      * \param string $pidfile
      *      Name of the pidfile.
+     *
+     * \return
+     *      This method does not return anything.
      */
     static public function _cleanup_pidfile($handle, $pidfile)
     {
@@ -239,7 +245,8 @@ class Erebot_CLI
                 'short_name'        => '-d',
                 'long_name'         => '--daemon',
                 'description'       => $translator->gettext(
-                    'Run the bot in the background (daemon).'
+                    'Run the bot in the background (daemon).'.
+                    ' [requires the POSIX and pcntl extensions]'
                 ),
                 'action'            => 'StoreTrue',
             )
@@ -283,7 +290,8 @@ class Erebot_CLI
                 'description'   => $translator->gettext(
                     'Set group identity to this GID/group during '.
                     'startup. The default is to NOT change group '.
-                    'identity, unless configured otherwise.'
+                    'identity, unless configured otherwise.'.
+                    ' [requires the POSIX extension]'
                 ),
                 'help_name'     => 'GROUP/GID',
                 'action'        => 'StoreString',
@@ -299,7 +307,8 @@ class Erebot_CLI
                 'description'   => $translator->gettext(
                     'Set user identity to this UID/username during '.
                     'startup. The default is to NOT change user '.
-                    'identity, unless configured otherwise.'
+                    'identity, unless configured otherwise.'.
+                    ' [requires the POSIX extension]'
                 ),
                 'help_name'     => 'USER/UID',
                 'action'        => 'StoreString',

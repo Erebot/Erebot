@@ -2,14 +2,14 @@
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2011-11-13 02:51+0100\n"
+        "POT-Creation-Date: 2011-11-26 11:19+0100\n"
         "PO-Revision-Date: 2011-02-16 16:43+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
+        "Language: \n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=utf-8\n"
         "Content-Transfer-Encoding: 8bit\n"
-        "Language: \n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #
 #. I18N: ICU rule used to format durations (with words).
@@ -211,18 +211,27 @@ msgstr  "Reloading the configuration"
 msgid   "Reusing existing connection for network \"%s\""
 msgstr  "Reusing existing connection for network \"%s\""
 #
-msgid   "Run the bot in the background (daemon)."
-msgstr  "Run the bot in the background (daemon)."
+# File: src/Erebot/CLI.php, line: 248
+msgid   "Run the bot in the background (daemon). [requires the POSIX and pcntl "
+        "extensions]"
+msgstr  "Run the bot in the background (daemon). [requires the POSIX and pcntl "
+        "extensions]"
 #
+# File: src/Erebot/CLI.php, line: 291
 msgid   "Set group identity to this GID/group during startup. The default is "
-        "to NOT change group identity, unless configured otherwise."
+        "to NOT change group identity, unless configured otherwise. [requires "
+        "the POSIX extension]"
 msgstr  "Set group identity to this GID/group during startup. The default is "
-        "to NOT change group identity, unless configured otherwise."
+        "to NOT change group identity, unless configured otherwise. [requires "
+        "the POSIX extension]"
 #
+# File: src/Erebot/CLI.php, line: 308
 msgid   "Set user identity to this UID/username during startup. The default is "
-        "to NOT change user identity, unless configured otherwise."
+        "to NOT change user identity, unless configured otherwise. [requires "
+        "the POSIX extension]"
 msgstr  "Set user identity to this UID/username during startup. The default is "
-        "to NOT change user identity, unless configured otherwise."
+        "to NOT change user identity, unless configured otherwise. [requires "
+        "the POSIX extension]"
 #
 msgid   "Starting the bot in the background..."
 msgstr  "Starting the bot in the background..."
@@ -302,6 +311,35 @@ msgstr  "You SHOULD NOT run Erebot as root!"
 #
 #
 #
+#~ msgid        "Run the bot in the background (daemon)."
+#~ msgstr       "Run the bot in the background (daemon)."
+#
+#
+#
+#
+#
+#~ msgid        "Set group identity to this GID/group during startup. The "
+#~      "default is to NOT change group identity, unless configured otherwise."
+#~ msgstr       "Set group identity to this GID/group during startup. The "
+#~      "default is to NOT change group identity, unless configured otherwise."
+#
+#
+#
+#
+#
+#~ msgid        "Set user identity to this UID/username during startup. The "
+#~      "default is to NOT change user identity, unless configured otherwise."
+#~ msgstr       "Set user identity to this UID/username during startup. The "
+#~      "default is to NOT change user identity, unless configured otherwise."
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -319,6 +357,10 @@ msgstr  "You SHOULD NOT run Erebot as root!"
 # File: src/Erebot/I18n.php, line: 324
 #~ msgid        "foobar"
 #~ msgstr       "foobar"
+#
+#
+#
+#
 #
 #
 #
