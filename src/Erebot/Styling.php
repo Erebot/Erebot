@@ -186,8 +186,8 @@ implements  Erebot_Interface_Styling
         $this->_cls[$type] = $cls;
     }
 
-    /// \copydoc Erebot_Interface_Styling::gettext()
-    public function gettext($template, array $vars = array())
+    /// \copydoc Erebot_Interface_Styling::_()
+    public function _($template, array $vars = array())
     {
         $source = $this->_translator->_($template);
         return $this->render($source, $vars);
