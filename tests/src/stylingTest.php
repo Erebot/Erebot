@@ -171,10 +171,11 @@ extends ErebotModuleTestCase
         $formatter  = new Erebot_Styling_DateTime(
             $date,
             IntlDateFormatter::FULL,
-            IntlDateFormatter::MEDIUM
+            IntlDateFormatter::LONG,
+            'Europe/Paris'
         );
         $result     = $tpl->render($source, array('foo' => $formatter));
-        $expected   = 'Thursday, November 28, 1985 1:10:00 PM';
+        $expected   = 'Thursday, November 28, 1985 2:10:00 PM GMT+01:00';
         $this->assertEquals($expected, $result);
     }
 
