@@ -37,11 +37,6 @@ implements  Erebot_Interface_Styling_Variable
         $this->_value       = $value;
     }
 
-    static protected function gettext($a)
-    {
-        return $a;
-    }
-
     public function render(Erebot_Interface_I18n $translator)
     {
         $locale = $translator->getLocale(Erebot_Interface_I18n::LC_MESSAGES);
@@ -53,7 +48,7 @@ implements  Erebot_Interface_Styling_Variable
         // PHP_CodeSniffer happy! Also, it avoids relying on OS line endings
         // as it breaks xgettext on at least Windows platforms.
 
-        $rule = self::gettext(
+        $rule = $coreTranslator->_(
             # I18N: ICU rule used to format durations (with words).
             #Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
             #For examples of valid rules, see:
@@ -89,7 +84,7 @@ implements  Erebot_Interface_Styling_Variable
         $formatter = new NumberFormatter(
             $locale,
             NumberFormatter::PATTERN_RULEBASED,
-            $coreTranslator->gettext($rule)
+            $rule
         );
         return (string) $formatter->format($this->_value);
     }
