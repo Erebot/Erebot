@@ -37,7 +37,8 @@ implements  Erebot_Interface_Styling_Variable
         $this->_value       = $value;
     }
 
-    static protected function gettext($a) {
+    static protected function gettext($a)
+    {
         return $a;
     }
 
@@ -52,13 +53,13 @@ implements  Erebot_Interface_Styling_Variable
         // PHP_CodeSniffer happy! Also, it avoids relying on OS line endings
         // as it breaks xgettext on at least Windows platforms.
 
-        // I18N: ICU rule used to format durations (with words).
-        $rule = self::gettext( //
-        // Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
-        // For examples of valid rules, see:
-        // http://userguide.icu-project.org/formatparse/numbers/rbnf-examples
-        // For the complete syntaxe, see also:
-        // http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html
+        $rule = self::gettext(
+            # I18N: ICU rule used to format durations (with words).
+            #Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
+            #For examples of valid rules, see:
+            #http://userguide.icu-project.org/formatparse/numbers/rbnf-examples
+            #For the complete syntax, see also:
+            #http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html
             "%with-words:\n".
             "    0: 0 seconds;\n".
             "    1: 1 second;\n".

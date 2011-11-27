@@ -171,7 +171,7 @@ extends ErebotModuleTestCase
         $formatter  = new Erebot_Styling_DateTime(
             $date,
             IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL
+            IntlDateFormatter::LONG
         );
         $result     = $tpl->render($source, array('foo' => $formatter));
         $expected   = 'Thursday, November 28, 1985 1:10:00 PM GMT+00:00';
