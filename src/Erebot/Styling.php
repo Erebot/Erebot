@@ -207,12 +207,13 @@ implements  Erebot_Interface_Styling
         foreach ($vars as $name => $var)
             $variables[$name] = $this->_wrapScalar($var);
 
-        $dom = $this->_parseTemplate($template);
-        $result     = $this->_parseNode(
+        $dom = self::_parseTemplate($template);
+        $result = $this->_parseNode(
             $dom->documentElement,
             $attributes,
             $variables
         );
+
         $pattern =  '@'.
                     '\\003,(?![01])'.
                     '|'.
@@ -251,7 +252,7 @@ implements  Erebot_Interface_Styling
         return new $cls($var);
     }
 
-    protected function _parseTemplate($source)
+    static protected function _parseTemplate($source)
     {
         $source =
             '<msg xmlns="http://www.erebot.net/xmlns/erebot/styling">'.
