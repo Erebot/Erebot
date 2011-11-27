@@ -16,21 +16,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Define the __DIR__ magic-constant for pre-5.3.0.
-// Many thanks to the anonymous person who posted this trick on:
-// http://php.net/manual/en/language.constants.predefined.php#99278
-if (!defined('__DIR__')) {
-class __FILE_CLASS__
-{
-    public function __toString()
-    {
-        $x = debug_backtrace();
-        return dirname($x[1]['file']);
-    }
-}
-define('__DIR__', new __FILE_CLASS__);
-}
-
 /*
 /// @TODO re-think integration of Doctrine a little...
 // Especially, we don't want to depend on it too much.
