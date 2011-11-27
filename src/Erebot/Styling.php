@@ -109,14 +109,11 @@
 class       Erebot_Styling
 implements  Erebot_Interface_Styling
 {
-    /// Translator to use for plurals.
+    /// Translator to use to improve rendering.
     protected $_translator;
 
-    /// Associative array of variables to pass to the template.
-    protected $_variables;
-
-    /// Parser used to interpret the template.
-    protected $_dom;
+    /// Maps some scalar types to a typed variable.
+    protected $_cls;
 
     /**
      * Construct a new styling object.
@@ -129,7 +126,132 @@ implements  Erebot_Interface_Styling
      *      A translator object, used to determine the correct
      *      pluralization rules.
      */
-    public function __construct($source, Erebot_Interface_I18n $translator)
+    public function __construct(Erebot_Interface_I18n $translator)
+    {
+        $this->_translator  = $translator;
+        $this->_cls = array(
+            'int'       => 'Erebot_Styling_Integer',
+            'float'     => 'Erebot_Styling_Float',
+            'string'    => 'Erebot_Styling_String',
+        );
+    }
+
+    /**
+     * Returns the class used to wrap scalar types.
+     *
+     * \param string $type
+     *      Name of a scalar type that can be wrapped
+     *      by this class automatically. Must be one
+     *      of "int", "string" or "float".
+     *
+     * \retval string
+     *      Name of the class that can be used to wrap
+     *      variables of the given type.
+     */
+    public function getClass($type)
+    {
+        if (!isset($this->_cls[$type]))
+            throw new Erebot_InvalidValueException('Invalid type');
+        return $this->_cls[$type];
+    }
+
+    /**
+     * Sets the class to use to wrap a certain scalar type.
+     *
+     * \param string $type
+     *      Name of a scalar type that can be wrapped
+     *      by this class automatically. Must be one
+     *      of "int", "string" or "float".
+     *
+     * \param string $cls
+     *      Name of the class that can be used to wrap
+     *      variables of the given type.
+     */
+    public function setClass($type, $cls)
+    {
+        if (!isset($this->_cls[$type]))
+            throw new Erebot_InvalidValueException('Invalid type');
+        if (!is_string($cls)) {
+            throw new Erebot_InvalidValueException(
+                'Expected a string for the class'
+            );
+        }
+        if (!class_exists($cls))
+            throw new Erebot_InvalidValueException('Class not found');
+        if (!($cls instanceof Erebot_Interface_Styling_Variable)) {
+            throw new Erebot_InvalidValueException(
+                'Must be a subclass of Erebot_Interface_Styling_Variable'
+            );
+        }
+        $this->_cls[$type] = $cls;
+    }
+
+    /// \copydoc Erebot_Interface_Styling::gettext()
+    public function gettext($template, array $vars = array())
+    {
+        $source = $this->_translator->_($template);
+        return $this->render($source, $vars);
+    }
+
+    /// \copydoc Erebot_Interface_Styling::render()
+    public function render($template, array $vars = array())
+    {
+        $attributes = array(
+            'underline' => 0,
+            'bold'      => 0,
+            'bg'        => NULL,
+            'fg'        => NULL,
+        );
+
+        $variables = array();
+        foreach ($vars as $name => $var)
+            $variables[$name] = $this->_wrapScalar($var);
+
+        $dom = $this->_parseTemplate($template);
+        $result     = $this->_parseNode(
+            $dom->documentElement,
+            $attributes,
+            $variables
+        );
+        $pattern =  '@'.
+                    '\\003,(?![01])'.
+                    '|'.
+                    '\\003(?:[0-9]{2})?,(?:[0-9]{2})?(?:\\002\\002)?(?=\\003)'.
+                    '|'.
+                    '(\\003(?:[0-9]{2})?,)\\002\\002(?![0-9])'.
+                    '|'.
+                    '(\\003[0-9]{2})\\002\\002(?!,)'.
+                    '@';
+        $replace    = '\\1\\2';
+        $result     = preg_replace($pattern, $replace, $result);
+        return $result;
+    }
+
+    protected function _wrapScalar($var)
+    {
+        if (is_object($var)) {
+            if ($var instanceof Erebot_Interface_Styling_Variable)
+                return $var;
+
+            throw new Erebot_InvalidValueException(
+                'Variables must be scalars or instances of '.
+                'Erebot_Interface_Styling_Variable'
+            );
+        }
+
+        if (is_array($var))
+            return $var;
+
+        if (is_string($var))
+            $cls = $this->_cls['string'];
+        else if (is_int($var))
+            $cls = $this->_cls['int'];
+        else if (is_float($var))
+            $cls = $this->_cls['float'];
+        return new $cls($var);
+    }
+
+    protected function _parseTemplate($source)
     {
         $source =
             '<msg xmlns="http://www.erebot.net/xmlns/erebot/styling">'.
@@ -154,14 +276,11 @@ implements  Erebot_Interface_Styling
 
         $schema = $dataDir . DIRECTORY_SEPARATOR . 'styling.rng';
 
-        $this->_translator  = $translator;
-        $this->_dom         =   new Erebot_DOM();
-        $this->_variables   =   array();
-
-        $ue = libxml_use_internal_errors(TRUE);
-        $this->_dom->loadXML($source);
-        $valid  = $this->_dom->relaxNGValidate($schema);
-        $errors = $this->_dom->getErrors();
+        $dom    =   new Erebot_DOM();
+        $ue     = libxml_use_internal_errors(TRUE);
+        $dom->loadXML($source);
+        $valid  = $dom->relaxNGValidate($schema);
+        $errors = $dom->getErrors();
         libxml_use_internal_errors($ue);
 
         if (!$valid || count($errors)) {
@@ -175,101 +294,7 @@ implements  Erebot_Interface_Styling
                 'Error while validating the message'
             );
         }
-    }
-
-    /**
-     * \copydoc Erebot_Interface_Styling::append()
-     *
-     * \TODO
-     *      Implement merging.
-     */
-    public function append($varname, $var, $merge = NULL)
-    {
-        if (!is_array($var)) {
-            $this->_variables[$varname][] = $var;
-            return;
-        }
-    }
-
-    /**
-    /// \copydoc Erebot_Interface_Styling::append_by_ref()
-     *
-     * \TODO
-     *      Implement merging.
-     */
-    public function append_by_ref($varname, &$var, $merge = NULL)
-    {
-        if (!is_array($var)) {
-            $this->_variables[$varname][] =& $var;
-        }
-    }
-
-    /// \copydoc Erebot_Interface_Styling::assign()
-    public function assign($name, $value)
-    {
-        $this->_variables[$name] = $value;
-    }
-
-    /// \copydoc Erebot_Interface_Styling::assign_by_ref()
-    public function assign_by_ref($name, &$value)
-    {
-        $this->_variables[$name] =& $value;
-    }
-
-    /// \copydoc Erebot_Interface_Styling::clear_all_assign()
-    public function clear_all_assign()
-    {
-        unset($this->_variables);
-        $this->_variables = array();
-    }
-
-    /// \copydoc Erebot_Interface_Styling::clear_assign()
-    public function clear_assign($varname)
-    {
-        unset($this->_variables[$varname]);
-    }
-
-    /// \copydoc Erebot_Interface_Styling::render()
-    public function render()
-    {
-        return (string) $this;
-    }
-
-    /// \copydoc Erebot_Interface_Styling::__toString()
-    public function __toString()
-    {
-        $attributes = array(
-            'underline' => 0,
-            'bold'      => 0,
-            'bg'        => NULL,
-            'fg'        => NULL,
-        );
-        $variables  = $this->_variables;
-        $result     = $this->_parseNode(
-            $this->_dom->documentElement,
-            $attributes,
-            $variables
-        );
-        $pattern =  '@'.
-                    '\\003,(?![01])'.
-                    '|'.
-                    '\\003(?:[0-9]{2})?,(?:[0-9]{2})?(?:\\002\\002)?(?=\\003)'.
-                    '|'.
-                    '(\\003(?:[0-9]{2})?,)\\002\\002(?![0-9])'.
-                    '|'.
-                    '(\\003[0-9]{2})\\002\\002(?!,)'.
-                    '@';
-        $replace    = '\\1\\2';
-        $result     = preg_replace($pattern, $replace, $result);
-        return $result;
-    }
-
-    /// \copydoc Erebot_Interface_Styling::get_template_vars()
-    public function get_template_vars($varname = NULL)
-    {
-        if ($varname === NULL)
-            return $this->_variables;
-        return $this->_variables[$varname];
+        return $dom;
     }
 
     /**
@@ -281,13 +306,13 @@ implements  Erebot_Interface_Styling
      * \param array $attributes
      *      Array of styling attributes.
      *
-     * \param array $variables
+     * \param array $vars
      *      Template variables that can be injected in the return.
      *
      * \retval string
      *      Parsing result, with styles applied as appropriate.
      */
-    protected function _parseNode($node, &$attributes, $variables)
+    protected function _parseNode($node, &$attributes, $vars)
     {
         $result     = '';
         $saved      = $attributes;
@@ -302,7 +327,10 @@ implements  Erebot_Interface_Styling
         switch ($node->tagName) {
             case 'var':
                 $varname = $node->getAttribute('name');
-                return (string) $variables[$varname];
+                if (!($vars[$varname] instanceof
+                    Erebot_Interface_Styling_Variable))
+                    return (string) $vars[$varname];
+                return $vars[$varname]->render($this->_translator);
 
             case 'u':
                 if (!$attributes['underline'])
@@ -352,7 +380,7 @@ implements  Erebot_Interface_Styling
 
         // Handle loops.
         if ($node->tagName == 'for') {
-            $savedVariables = $variables;
+            $savedVariables = $vars;
             $separator      = array(', ', ' & ');
 
             foreach (array('separator', 'sep') as $attr) {
@@ -374,34 +402,38 @@ implements  Erebot_Interface_Styling
             $loopKey    = $node->getAttribute('key');
             $loopItem   = $node->getAttribute('item');
             $loopFrom   = $node->getAttribute('from');
-            $count      = count($variables[$loopFrom]);
-            reset($variables[$loopFrom]);
+            $count      = count($vars[$loopFrom]);
+            reset($vars[$loopFrom]);
 
             for ($i = 1; $i < $count; $i++) {
                 if ($i > 1)
                     $result .= $separator[0];
 
-                $item = each($variables[$loopFrom]);
-                if ($loopKey !== NULL)
-                    $variables[$loopKey] = $item['key'];
-                $variables[$loopItem] = $item['value'];
+                $item = each($vars[$loopFrom]);
+                if ($loopKey !== NULL) {
+                    $cls = $this->_cls['string'];
+                    $vars[$loopKey] = new $cls($item['key']);
+                }
+                $vars[$loopItem] = $this->_wrapScalar($item['value']);
 
                 $result .= $this->_parseChildren(
                     $node,
                     $attributes,
-                    $variables
+                    $vars
                 );
             }
 
-            $item = each($variables[$loopFrom]);
-            if ($loopKey !== NULL)
-                $variables[$loopKey] = $item['key'];
-            $variables[$loopItem] = $item['value'];
+            $item = each($vars[$loopFrom]);
+            if ($loopKey !== NULL) {
+                $cls = $this->_cls['string'];
+                $vars[$loopKey] = new $cls($item['key']);
+            }
+            $vars[$loopItem] = $this->_wrapScalar($item['value']);
             if ($count > 1)
                 $result .= $separator[1];
 
-            $result .= $this->_parseChildren($node, $attributes, $variables);
-            $variables = $savedVariables;
+            $result .= $this->_parseChildren($node, $attributes, $vars);
+            $vars = $savedVariables;
         }
 
         // Handle plurals.
@@ -415,7 +447,7 @@ implements  Erebot_Interface_Styling
                 throw new Erebot_InvalidValueException(
                     'No variable name given'
                 );
-            $value = (int) $variables[$attrNode->nodeValue];
+            $value = (int) $vars[$attrNode->nodeValue]->getValue();
             $subcontents = array();
             $pattern = '{0,plural,';
             for (   $child = $node->firstChild;
@@ -428,7 +460,7 @@ implements  Erebot_Interface_Styling
                 // which lists available forms for each language.
                 $form = $child->getAttribute('form');
                 $subcontents[$form] = $this->_parseNode(
-                    $child, $attributes, $variables
+                    $child, $attributes, $vars
                 );
                 $pattern .= $form.'{'.$form.'} ';
             }
@@ -448,7 +480,7 @@ implements  Erebot_Interface_Styling
 
         // Handle childrens.
         else
-            $result .= $this->_parseChildren($node, $attributes, $variables);
+            $result .= $this->_parseChildren($node, $attributes, $vars);
 
         // Post-handling : restore old state.
         switch ($node->tagName) {
@@ -496,19 +528,19 @@ implements  Erebot_Interface_Styling
      * \param array $attributes
      *      Array of styling attributes.
      *
-     * \param array $variables
+     * \param array $vars
      *      Template variables that can be injected in the result.
      *
      * \retval string
      *      Parsing result, with styles applied as appropriate.
      */
-    private function _parseChildren($node, &$attributes, $variables)
+    private function _parseChildren($node, &$attributes, $vars)
     {
         $result = '';
         for (   $child = $node->firstChild;
                 $child != NULL;
                 $child = $child->nextSibling) {
-            $result .=  $this->_parseNode($child, $attributes, $variables);
+            $result .=  $this->_parseNode($child, $attributes, $vars);
         }
         return $result;
     }
