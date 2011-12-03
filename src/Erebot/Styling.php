@@ -196,6 +196,11 @@ implements  Erebot_Interface_Styling
     /// \copydoc Erebot_Interface_Styling::render()
     public function render($template, array $vars = array())
     {
+        // For basic strings that don't contain any markup,
+        // we try to be as efficient as possible.
+        if (strpos($template, '<') === FALSE)
+            return $template;
+
         $attributes = array(
             'underline' => 0,
             'bold'      => 0,
@@ -226,6 +231,12 @@ implements  Erebot_Interface_Styling
         $replace    = '\\1\\2';
         $result     = preg_replace($pattern, $replace, $result);
         return $result;
+    }
+
+    /// \copydoc Erebot_Interface_Styling::getTranslator
+    public function getTranslator()
+    {
+        return $this->_translator;
     }
 
     protected function _wrapScalar($var)

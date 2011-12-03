@@ -52,34 +52,13 @@ class Erebot_RawReference
         $this->_rawName     = $rawName;
     }
 
-    /**
-     * Returns the name of the raw numeric
-     * this object holds a reference for.
-     *
-     * \retval string
-     *      Name of the raw numeric, such
-     *      as "RPL_WELCOME".
-     */
+    /// \copydoc Erebot_Interface_RawReference::getName()
     public function getName()
     {
         return $this->_rawName;
     }
 
-    /**
-     * Retrieve the actual numeric code currently
-     * associated with this raw reference.
-     *
-     * \retval int
-     *      Numeric code associated with this raw
-     *      reference, such as 001 for "RPL_WELCOME".
-     *
-     * \note
-     *      The actual value may vary through time
-     *      as different raw profiles are loaded
-     *      for the connection associated with this
-     *      reference. Do not use a cache for this
-     *      value.
-     */
+    /// \copydoc Erebot_Interface_RawReference::getValue()
     public function getValue()
     {
         $loader = $this->_connection->getRawProfileLoader();
