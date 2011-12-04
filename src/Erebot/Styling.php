@@ -210,7 +210,7 @@ implements  Erebot_Interface_Styling
 
         $variables = array();
         foreach ($vars as $name => $var)
-            $variables[$name] = $this->_wrapScalar($var);
+            $variables[$name] = $this->_wrapScalar($var, $name);
 
         $dom = self::_parseTemplate($template);
         $result = $this->_parseNode(
@@ -239,22 +239,24 @@ implements  Erebot_Interface_Styling
         return $this->_translator;
     }
 
-    protected function _wrapScalar($var)
+    protected function _wrapScalar($var, $name)
     {
         if (is_object($var)) {
             if ($var instanceof Erebot_Interface_Styling_Variable)
                 return $var;
 
-            throw new Erebot_InvalidValueException(
-                'Variables must be scalars or instances of '.
-                'Erebot_Interface_Styling_Variable'
-            );
+            if (!Erebot_Utils::stringifiable($var)) {
+                throw new Erebot_InvalidValueException(
+                    $name.' must be a scalar or an instance of '.
+                    'Erebot_Interface_Styling_Variable'
+                );
+            }
         }
 
         if (is_array($var))
             return $var;
 
-        if (is_string($var))
+        if (Erebot_Utils::stringifiable($var))
             $cls = $this->_cls['string'];
         else if (is_int($var))
             $cls = $this->_cls['int'];
@@ -426,7 +428,10 @@ implements  Erebot_Interface_Styling
                     $cls = $this->_cls['string'];
                     $vars[$loopKey] = new $cls($item['key']);
                 }
-                $vars[$loopItem] = $this->_wrapScalar($item['value']);
+                $vars[$loopItem] = $this->_wrapScalar(
+                    $item['value'],
+                    $loopItem
+                );
 
                 $result .= $this->_parseChildren(
                     $node,
@@ -440,7 +445,7 @@ implements  Erebot_Interface_Styling
                 $cls = $this->_cls['string'];
                 $vars[$loopKey] = new $cls($item['key']);
             }
-            $vars[$loopItem] = $this->_wrapScalar($item['value']);
+            $vars[$loopItem] = $this->_wrapScalar($item['value'], $loopItem);
             if ($count > 1)
                 $result .= $separator[1];
 
