@@ -34,12 +34,12 @@ implements  Erebot_Interface_Styling_DateTime
 
     public function render(Erebot_Interface_I18n $translator)
     {
-        $locale     = $translator->getLocale(Erebot_Interface_I18n::LC_TIME);
-        $timezone   = ($this->_timezone !== NULL)
+        $timezone   =   ($this->_timezone !== NULL)
                         ? $this->_timezone
                         : date_default_timezone_get();
+
         $formatter  = new IntlDateFormatter(
-            $locale,
+            $translator->getLocale(Erebot_Interface_I18n::LC_TIME),
             $this->_datetype,
             $this->_timetype,
             $timezone

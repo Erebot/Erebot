@@ -185,27 +185,40 @@ class Erebot_CLI
         $hasPosix = in_array('posix', get_loaded_extensions());
         $hasPcntl = in_array('pcntl', get_loaded_extensions());
 
-        $localeGetter = $dic['i18n.default_getter'];
-        $locales = call_user_func($localeGetter);
-        $locales = empty($locales) ? array() : array($locales);
-        $localeSources = array(
-            'LANGUAGE'      => TRUE,
-            'LC_ALL'        => FALSE,
-            'LC_MESSAGES'   => FALSE,
-            'LANG'          => FALSE,
-        );
-        foreach ($localeSources as $source => $multiple) {
-            if (!isset($_SERVER[$source]))
-                continue;
-            if ($multiple)
-                $locales = explode(':', $_SERVER[$source]);
-            else
-                $locales = array($_SERVER[$source]);
-            break;
-        }
+        $localeGetter       = $dic['i18n.default_getter'];
         $coreTranslatorCls  = $dic['core.classes.i18n'];
         $translator         = new $coreTranslatorCls("Erebot");
-        $translator->setLocale(Erebot_Interface_I18n::LC_MESSAGES, $locales);
+
+        $categories = array(
+            'LC_MESSAGES',
+            'LC_MONETARY',
+            'LC_TIME',
+            'LC_NUMERIC',
+        );
+        foreach ($categories as $category) {
+            $locales = call_user_func($localeGetter);
+            $locales = empty($locales) ? array() : array($locales);
+            $localeSources = array(
+                'LANGUAGE'      => TRUE,
+                'LC_ALL'        => FALSE,
+                $category       => FALSE,
+                'LANG'          => FALSE,
+            );
+            foreach ($localeSources as $source => $multiple) {
+                if (!isset($_SERVER[$source]))
+                    continue;
+                if ($multiple)
+                    $locales = explode(':', $_SERVER[$source]);
+                else
+                    $locales = array($_SERVER[$source]);
+                break;
+            }
+
+            $translator->setLocale(
+                $translator->nameToCategory($category),
+                $locales
+            );
+        }
 
         Console_CommandLine::registerAction('StoreProxy', 'StoreProxy_Action');
         $parser = new Console_CommandLine(

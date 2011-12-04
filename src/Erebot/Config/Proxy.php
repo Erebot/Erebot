@@ -103,6 +103,18 @@ class Erebot_Config_Proxy
                 Erebot_Interface_I18n::LC_MESSAGES,
                 $this->_locale
             );
+            $categories = array(
+                Erebot_Interface_I18n::LC_MONETARY,
+                Erebot_Interface_I18n::LC_NUMERIC,
+                Erebot_Interface_I18n::LC_TIME,
+            );
+            $proxiedTranslator = $this->_proxified->getTranslator($component);
+            foreach ($categories as $category) {
+                $translator->setLocale(
+                    $category,
+                    $proxiedTranslator->getLocale($category)
+                );
+            }
             return $translator;
         }
         if ($this->_proxified === $this)

@@ -87,7 +87,7 @@ implements  Erebot_Interface_I18n
         );
         if (!isset($categories[$name]))
             throw new Erebot_InvalidValueException('Invalid category name');
-        return $categories[$category];
+        return $categories[$name];
     }
 
     /// \copydoc Erebot_Interface_I18n::categoryToName()
@@ -137,6 +137,11 @@ implements  Erebot_Interface_I18n
             $locale = Locale::parseLocale($candidate);
             if (!is_array($locale) || !isset($locale['language']))
                 throw new Erebot_InvalidValueException('Invalid locale');
+
+            // For anything else than LC_MESSAGES,
+            // we take the first candidate as is.
+            if ($categoryName != 'LC_MESSAGES')
+                $newLocale = $candidate;
 
             if ($newLocale !== NULL)
                 continue;

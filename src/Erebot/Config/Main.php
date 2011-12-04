@@ -427,12 +427,27 @@ implements  Erebot_Interface_Config_Main
     /// \copydoc Erebot_Interface_Config_Main::getTranslator()
     public function getTranslator($component)
     {
-        try {
-            return parent::getTranslator($component);
+        if (isset($this->_locale)) {
+            $translator = new Erebot_I18n($component);
+            $translator->setLocale(
+                Erebot_Interface_I18n::LC_MESSAGES,
+                $this->_locale
+            );
+            $categories = array(
+                Erebot_Interface_I18n::LC_MONETARY,
+                Erebot_Interface_I18n::LC_NUMERIC,
+                Erebot_Interface_I18n::LC_TIME,
+            );
+            foreach ($categories as $category) {
+                $translator->setLocale(
+                    $category,
+                    $this->_coreTranslator->getLocale($category)
+                );
+            }
+            return $translator;
         }
-        catch (Erebot_NotFoundException $e) {
-            return $this->_coreTranslator;
-        }
+
+        return $this->_coreTranslator;
     }
 }
 
