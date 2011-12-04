@@ -17,7 +17,7 @@
 */
 
 class       Erebot_Styling_Float
-implements  Erebot_Interface_Styling_Variable
+implements  Erebot_Interface_Styling_Float
 {
     protected $_value;
 

@@ -17,7 +17,7 @@
 */
 
 class       Erebot_Styling_Currency
-implements  Erebot_Interface_Styling_Variable
+implements  Erebot_Interface_Styling_Currency
 {
     protected $_value;
     protected $_currency;

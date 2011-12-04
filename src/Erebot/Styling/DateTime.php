@@ -17,7 +17,7 @@
 */
 
 class       Erebot_Styling_DateTime
-implements  Erebot_Interface_Styling_Variable
+implements  Erebot_Interface_Styling_DateTime
 {
     protected $_value;
     protected $_datetype;

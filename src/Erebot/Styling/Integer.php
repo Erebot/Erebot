@@ -17,7 +17,7 @@
 */
 
 class       Erebot_Styling_Integer
-implements  Erebot_Interface_Styling_Variable
+implements  Erebot_Interface_Styling_Integer
 {
     protected $_value;
 
