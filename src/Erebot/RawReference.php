@@ -25,7 +25,8 @@
  * associated with this reference may vary dynamically depending
  * on the raw profiles currently loaded for the connection.
  */
-class Erebot_RawReference
+class       Erebot_RawReference
+implements  Erebot_Interface_RawReference
 {
     /// IRC connection this reference is valid for.
     protected $_connection;
