@@ -262,6 +262,11 @@ implements  Erebot_Interface_Styling
             $cls = $this->_cls['int'];
         else if (is_float($var))
             $cls = $this->_cls['float'];
+        else {
+            throw new Erebot_InvalidValueException(
+                'Unsupported scalar type ('.gettype($var).') for "'.$name.'"'
+            );
+        }
         return new $cls($var);
     }
 
@@ -441,6 +446,8 @@ implements  Erebot_Interface_Styling
             }
 
             $item = each($vars[$loopFrom]);
+            if ($item === FALSE)
+                $item = array('key' => '', 'value' => '');
             if ($loopKey !== NULL) {
                 $cls = $this->_cls['string'];
                 $vars[$loopKey] = new $cls($item['key']);
