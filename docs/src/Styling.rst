@@ -444,7 +444,7 @@ showcases (please `open a ticket`_ if you notice any discrepancy!).
 ..  _`Erebot_Interface_I18n`:
     https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__I18n.html
 ..  _`Internationalization`:
-    https://github.com/fpoirotte/Erebot/wiki/Internationalization
+    Internationalization.html
 ..  _`open a ticket`:
     https://github.com/fpoirotte/Erebot/issues/new
 ..  _`gettext's syntax for plurals`:

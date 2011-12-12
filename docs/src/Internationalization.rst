@@ -117,6 +117,6 @@ the `styling API`_. Readers may be interested in the documentation on
 ..  _`styling API`:
     https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__Styling.html
 ..  _`styling`:
-    https://github.com/fpoirotte/Erebot/wiki/Styling
+    Styling.html
 
-
+.. vim: ts=4 et

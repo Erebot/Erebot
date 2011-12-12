@@ -500,6 +500,6 @@ available for each dependency.
 ..  _`Apache Ant`:
     http://ant.apache.org/
 ..  _`Erebot's coding standard`:
-    https://github.com/fpoirotte/Erebot/wiki/Coding_Standard
+    Coding_Standard.html
 
 .. vim: ts=4 et

@@ -26,10 +26,11 @@ documentation on the `coding standard`_ used by Erebot developers first.
 ..  _`sending pull requests`:
     https://github.com/fpoirotte/Erebot/pulls
 ..  _`providing a test machine`:
-    https://github.com/fpoirotte/Erebot/wiki/Buildslaves
+    Buildslaves.html
 ..  _`joining our IRC channel`:
     irc://irc.iiens.net/Erebot
 
 ..  _`coding standard`:
-    https://github.com/fpoirotte/Erebot/wiki/Coding_Standard
+    Coding_Standard.html
 
+.. vim: ts=4 et
