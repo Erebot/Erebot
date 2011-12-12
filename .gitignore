@@ -3,7 +3,9 @@
 /vendor/Erebot_Module_*
 
 /data/i18n/*/LC_MESSAGES/*.mo
-/docs
+/docs/api
+/docs/enduser
+/docs/coverage
 /*.pem
 /*.phar
 /*.pubkey
