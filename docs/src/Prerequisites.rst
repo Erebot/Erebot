@@ -52,7 +52,7 @@ which contains the dependency:
 
 *   For apt-based distributions (eg. Debian, Ubuntu)::
 
-    # apt install <package>
+    # apt-get install <package>
 
 *   For urpmi-based distributions (eg. Mandriva)::
 
@@ -80,7 +80,7 @@ URI scheme).
     |               |                                   |           |           |           | program used to extract messages  |
     |               |                                   |           |           |           | marked for translation.           |
     |               |                                   |           |           |           | **Note**: this is **NOT** the     |
-    |               |                                   |           |           |           | same as the ``gettext`` PHP       |
+    |               |                                   |           |           |           | same as the PHP ``gettext``       |
     |               |                                   |           |           |           | extension.                        |
     +---------------+-----------------------------------+-----------+-----------+-----------+-----------------------------------+
     | doxygen       | `Debian/Ubuntu <apt:doxygen>`__   | yes       | yes       |           | doxygen is needed if you plan to  |
@@ -181,11 +181,11 @@ There are currently two of them:
     `go-pear.phar <http://pear.php.net/go-pear.phar>`_ and run this command
     from a shell::
 
-        php go-pear.phar
+        # php go-pear.phar
 
     Then, to install a dependency using `pear`_, run the following command::
 
-        pear install <dependency>
+        # pear install <dependency>
 
 `Pyrus`_
     Successor for `pear`_, meant to replace it someday.
@@ -198,7 +198,7 @@ There are currently two of them:
 
     To install a dependency using `Pyrus`_, run the following command::
 
-        php pyrus.phar install <dependency>
+        # php pyrus.phar install <dependency>
 
 
 ..  note::

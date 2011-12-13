@@ -58,8 +58,8 @@ This sections contains a list of third-party modules:
 
 *No third-party module has been submitted yet.*
 
-.. warning:: No support is provided by Erebot developpers for those third-party
-modules.
+..  warning:: No support is provided by Erebot developpers for those third-party
+    modules.
 
 ..  _`Erebot_Module_Admin`:
     /Erebot_Module_Admin/

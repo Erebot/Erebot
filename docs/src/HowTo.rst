@@ -1,11 +1,12 @@
-List of tutorials
-=================
+Tutorials
+=========
 
-This page lists tutorials for miscellaneous setups you may be interested in.
+This page lists various tutorials on how to configure Erebot to suit
+your needs:
 
-#.  `Interact with Erebot from an external process`_
+..  toctree::
+    :maxdepth: 2
 
-..  _`Interact with Erebot from an external process`:
-    HowTo_External_Process_Interaction.html
+    HowTo_External_Process_Interaction
 
 .. vim: ts=4 et
