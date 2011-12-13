@@ -1,9 +1,9 @@
 Styling
 =======
 
-This page is only meant to guide through using formatting codes with Erebot,
-it is not meant as a complete documentation of how styles work with IRC.
-If you want more, ask your favourite search engine ;)
+This page is only meant to guide you through the use of formatting codes with
+Erebot, it is not meant as a complete documentation of how styles work with IRC.
+If you want more, ask your favourite search engine ;-)
 
 Erebot provides two ways to format messages. Both methods are described here.
 
@@ -143,12 +143,12 @@ Currently, the following tags are available:
     Also, please note that although gettext is used to store translations,
     the plural handling mechanism from gettext is never used by Erebot
     (ie. Erebot never calls ``ngettext`` or its variants).
-    Instead, each message embeds both the singular and plural form
+    Instead, each message embeds both the singular and plural forms
     and an algorithm is used at runtime to decide which of the forms
     should be used.
 
 ..  note::
-    See also the documentation for the `styling API`_ for more information.
+    See also the documentation on the `styling API`_ for more information.
 
 
 ..  _`type of variable`:
@@ -307,21 +307,20 @@ a designer) must add a few lines in your code in order to use it.
 
 This is usually done with the following steps:
 
-1.  Create an instance of the `Erebot_Styling`_ class passing it the
-    format string and a translator class (an object implementing the
-    `Erebot_Interface_I18n`_ interface) as its arguments.
-    This is the creation step, where the template is, well, created.
+1.  Create an instance of `Erebot_Styling`_ by passing a translator object
+    (an object implementing the `Erebot_Interface_I18n`_ interface) to its
+    constructor.
+    This is the creation step, where a formatter is created and bound to a
+    translator.
 
-2.  Optionally, assign values (either scalar types or arrays) to the
-    variables used in the template.
-    The simplest way to do that is to call the template's ``assign()``
-    method, passing it the name of variable and its value
-    (eg. ``$tpl->assign("nickname", "Clicky")``).
-    This is the binding step, where values are bound to the variables
-    used in the template.
+2.  Prepare the values (either scalar types, objects implementing the
+    `Erebot_Interface_Styling_Variable`_ interface or arrays made of
+    scalar types/objects) that will be used in the template.
+    This is the preparation step, where everything is setup for the final
+    step.
 
-3.  Render the template (with ``$tpl->render()``) and use the result
-    of that process in your code (eg. send it to an IRC channel).
+3.  Render the template (with ``$fmt->render()`` or ``$fmt->_()``) and use
+    the result of that process in your code (eg. send it to an IRC channel).
     This is the rendering step.
 
 ..  code-block:: php
@@ -340,19 +339,30 @@ This is usually done with the following steps:
                         ': <var name="score"/>'.
                     '</b>'.
                 '</for>';
-    $scores = array('Clicky' => 42, 'Looksup' => 23, 'MiSsInGnO' => 16);
 
+    // Step 1:
     // Create a new translator and a new template from it.
     // By default, the locale for the translator is "en_US".
     $translator = new Erebot_I18n();
     $formatter  = new Erebot_Styling($translator);
 
+    // Step 2:
+    // Prepare some variables for the template.
+    $vars = array(
+        'scores' => array('Clicky' => 42, 'Looksup' => 23, 'MiSsInGnO' => 16)
+    );
+
+    // Step 3:
     // Render the template with the given scores.
+    //
     // This results in something like:
     // "Scores: Clicky: 42, Looksup: 23 & MiSsInGnO: 16"
     // with most of the words represented in bold
     // and the nicknames in green and underlined.
-    echo $formatter->render($source, array('scores' => $scores)) . PHP_EOL;
+    //
+    // Note: since we used "_()" to render the template,
+    //       a translation is automatically selected (if available).
+    echo $formatter->_($source, array('scores' => $scores)) . PHP_EOL;
     ?>
 
 Here, ``$source`` has been split over many lines to make it easier to
@@ -370,7 +380,8 @@ Also, the format string could be retrieved from anywhere:
 * etc.
 
 We prefer to have customizable format strings in a translation catalog,
-that way translators may "fix" the styles if they think it's necessary.
+as this gives more control to translators over the result and it is a format
+they are used to working with.
 
 
 .. _`correct form for each word`:
@@ -378,7 +389,7 @@ that way translators may "fix" the styles if they think it's necessary.
 Plurals
 ~~~~~~~
 
-Plurals are handled gracefully in Erebot using the ``<plural>`` and ``<case>``
+Plurals are handled gracefully by Erebot using the ``<plural>`` and ``<case>``
 tags.
 
 Taking the sentence from earlier as an example::
@@ -406,27 +417,26 @@ The equivalent as a template would be:
     $formatter = new Erebot_Styling(new Erebot_I18n());
 
     // Displays "There are 2 girls and one boy in this classroom".
-    echo $formatter->render($msg, array('girls' => 2, 'boys' => 1)) . PHP_EOL;
+    echo $formatter->_($msg, array('girls' => 2, 'boys' => 1)) . PHP_EOL;
 
     // Displays "There is one girl and 2 boys in this classroom".
-    echo $formatter->render($msg, array('girls' => 1, 'boys' => 2)) . PHP_EOL;
+    echo $formatter->_($msg, array('girls' => 1, 'boys' => 2)) . PHP_EOL;
     ?>
 
 Notice how we represented the actual counts using either a spelled out form
 ("one girl" / "one boy") or an actual number ("2 girls" / "2 bots"), simply
 by specifying different words for the different ``<cases>``.
 
-You'll also notice that if this string was added to a translation catalog
-using the instructions given in the `Internationalization`_ guide,
-translators could easily adapt the sentence to the plural forms actually
-used in their country (a single form in Japanese, 4 forms in Russian, etc.).
+You'll also notice that this string is electable for `Internationalization`_.
+Translators have full control over the template used to render the sentence
+and could easily adapt it to the plural rules used in their country.
 
 ..  note::
     There are often many different ways to represent the same message
     using templates. Here, we grouped words that were affected by the
-    same variable together. We could also have separated them instead,
-    requiring additional markup to add an "s" to "girl" / "boy" where
-    necessary.
+    same variable together. Once again, **translators are the ones
+    in charge** here. This is very important because they know better
+    than you how the sentence should look like in their language.
 
 Further reading
 ~~~~~~~~~~~~~~~
