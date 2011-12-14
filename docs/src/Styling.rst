@@ -97,13 +97,14 @@ Currently, the following tags are available:
         our example above).
 
       - ``separator`` (optional) = a separator to add between all entries
-        in the array, except for the last two. Defaults to ``, `'``.
+        in the array, except for the last two. Defaults to ``, `` (a comma
+        followed by a single space).
       - ``sep`` (optional) = alias for ``separator``.
 
       - ``last_separator`` (optional) = a separator to add between
-        the last 2 entries of the array. If no ``separator`` attribute
-        has been set, defaults to `` & ``. Otherwise, defaults to the
-        value of the ``separator`` attribute.
+        the last 2 entries of the array. If no ``separator`` attribute has
+        been set, defaults to `` & `` (an ampersand between two single spaces).
+        Otherwise, defaults to the value of the ``separator`` attribute.
       - ``last_sep`` (optional) = alias for ``last_separator``.
 
     * ``<var>`` = insert the value of the given variable at this point.
@@ -172,7 +173,7 @@ common types:
 
         // This may be rendered as "1 337",
         // depending on the translator's locale.
-        echo $formatter->render($source, $vars) . PHP_EOL;
+        echo $formatter->_($source, $vars) . PHP_EOL;
     ?>
 
 ``Erebot_Styling_String``
@@ -184,7 +185,7 @@ common types:
         $formatter = new Erebot_Styling($translator);
         $source = '<var name="name"/>';
         $vars = array('name' => new Erebot_Styling_String('Clicky'));
-        echo $formatter->render($source, $vars) . PHP_EOL;
+        echo $formatter->_($source, $vars) . PHP_EOL;
     ?>
 
 ``Erebot_Styling_Float``
@@ -198,7 +199,7 @@ common types:
         $vars = array('avg' => new Erebot_Styling_Float(1234.56));
 
         // This would be rendered as "1 234,56" in french.
-        echo $formatter->render($source, $vars) . PHP_EOL;
+        echo $formatter->_($source, $vars) . PHP_EOL;
     ?>
 
 ``Erebot_Styling_Currency``
@@ -217,7 +218,7 @@ common types:
 
         // This would be rendered as "€1,234.57" for US english.
         // Note that monetary values are rounded to two places.
-        echo $formatter->render($source, $vars) . PHP_EOL;
+        echo $formatter->_($source, $vars) . PHP_EOL;
     ?>
 
 ``Erebot_Styling_DateTime``
@@ -264,7 +265,7 @@ common types:
 
         // This would be rendered as "€1,234.57" for US english.
         // Note that monetary values are rounded to two places.
-        echo $formatter->render($source, $vars) . PHP_EOL;
+        echo $formatter->_($source, $vars) . PHP_EOL;
     ?>
 
 ``Erebot_Styling_Duration``
@@ -280,7 +281,7 @@ common types:
 
         // This would be rendered as:
         // "2 weeks, 2 days, 2 hours, 2 minutes, 2 seconds" in english.
-        echo $formatter->render($source, $vars) . PHP_EOL;
+        echo $formatter->_($source, $vars) . PHP_EOL;
     ?>
 
 
@@ -403,12 +404,16 @@ The equivalent as a template would be:
     <?php
 
     $msg = 'There '.
+            '<plural var="sum"/>'.
+                '<case form="one">is</case>'.
+                '<case form="other">are</case>'.
+            '</plural> '.
             '<plural var="girls"/>'.
-                '<case form="one">is one girl</case>'.
-                '<case form="other">are <var name="girls"/> girls</case>'.
+                '<case form="one">one girl</case>'.
+                '<case form="other"><var name="girls"/> girls</case>'.
             '</plural> '.
             'and '.
-            '<plural var="girls"/>'.
+            '<plural var="boys"/>'.
                 '<case form="one">one boy</case>'.
                 '<case form="other"><var name="boys"/> boys</case>'.
             '</plural> '.
@@ -416,11 +421,14 @@ The equivalent as a template would be:
 
     $formatter = new Erebot_Styling(new Erebot_I18n());
 
-    // Displays "There are 2 girls and one boy in this classroom".
-    echo $formatter->_($msg, array('girls' => 2, 'boys' => 1)) . PHP_EOL;
+    // Displays "There is one girl and 0 boys in this classroom".
+    echo $formatter->_($msg, array('girls' => 1, 'boys' => 0, 'sum' => 1)) . PHP_EOL;
 
-    // Displays "There is one girl and 2 boys in this classroom".
-    echo $formatter->_($msg, array('girls' => 1, 'boys' => 2)) . PHP_EOL;
+    // Displays "There are 2 girls and one boy in this classroom".
+    echo $formatter->_($msg, array('girls' => 2, 'boys' => 1, 'sum' => 3)) . PHP_EOL;
+
+    // Displays "There are one girl and 2 boys in this classroom".
+    echo $formatter->_($msg, array('girls' => 1, 'boys' => 2, 'sum' => 3)) . PHP_EOL;
     ?>
 
 Notice how we represented the actual counts using either a spelled out form
