@@ -202,14 +202,14 @@ This paragraph lists the most common problems you may encounter while following
 this tutorial, as well as explanations as to why they appear and possible
 solutions or workarounds.
 
-..  _``PHP Warning: stream_socket_server(): unable to connect to udg:///... (Unknown error) in .../Erebot/Prompt.php on line ...``:
+..  _`PHP Warning: stream_socket_server(): unable to connect to udg:///... (Unknown error) in .../Erebot/Prompt.php on line ...`:
 
 ``PHP Warning: stream_socket_server(): unable to connect to udg:///... (Unknown error) in .../Erebot/Prompt.php on line ...``
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 **Example**:
 
-..  sourcecode:: shell
+..  sourcecode:: text
     :linenos:
 
     PHP Warning:  stream_socket_server(): unable to connect to udg:///tmp/Erebot.sock (Unknown error) in /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php on line 44
@@ -243,7 +243,7 @@ Issue the following command (adapt the path depending on the content of the erro
 
 **Example**:
 
-..  sourcecode:: shell
+..  sourcecode:: text
     :linenos:
 
     PHP Fatal error:  Uncaught exception 'Exception' with message 'Could not change group to 'nogroup' for '/tmp/Erebot.sock'' in /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php:56

@@ -31,18 +31,24 @@ Just use whatever tool your distribution provides to manage PEAR packages:
 * or `pyrus`_ (new experimental tool meant to replace pear someday)
 
 ..  warning::
-    Pyrus currently has issues to install some PEAR packages.
+    Pyrus currently has issues with some PEAR packages. It is thus recommended
+    that you use the regular pear tool to install Erebot.
     See https://github.com/pyrus/Pyrus/issues/26 for more information.
 
-You can install either the latest stable release using a command such as::
+You can install (**as a privileged user**) either the latest stable release
+using a command such as:
 
-    # pear channel-discover pear.erebot.net
-    # pear install erebot/Erebot
+..  sourcecode:: bash
 
-... or you can install the latest unstable version instead, using::
+    $ pear channel-discover pear.erebot.net
+    $ pear install erebot/Erebot
 
-    # pear channel-discover pear.erebot.net
-    # pear install erebot/Erebot-alpha
+... or you can install the latest unstable version instead, using:
+
+..  sourcecode:: bash
+
+    $ pear channel-discover pear.erebot.net
+    $ pear install erebot/Erebot-alpha
 
 Please note that the ``channel-discover`` command needs to be run only once
 (pear and pyrus will refuse to discover a PEAR channel more than once anyway).
@@ -78,17 +84,20 @@ Be sure to read the section on `final steps`_ for a summary of what to do next.
 Installation from source
 ------------------------
 
-First, make sure a git client is installed on your machine::
+First, make sure a git client is installed on your machine.
+Under Linux, **from a root shell**, run the command that most closely matches
+the tools provided by your distribution:
 
-    # apt-get install git   # for apt-based distributions such as Debian or Ubuntu
+..  sourcecode:: bash
 
-or::
+    # For apt-based distributions such as Debian or Ubuntu
+    $ apt-get install git   
 
-    # yum install git       # for yum-based distributions such as Fedora / RHEL (RedHat)
+    # For yum-based distributions such as Fedora / RHEL (RedHat)
+    $ yum install git
 
-or::
-
-    # urpmi git             # for urpmi-based distributions such as SLES (SuSE) or MES (Mandriva)
+    # For urpmi-based distributions such as SLES (SuSE) or MES (Mandriva)
+    $ urpmi git
 
 ..  note::
     Windows users may be interested in installing `Git for Windows`_ to get
@@ -98,7 +107,9 @@ or::
     (eg. ``"C:\Program Files\Git\bin\git.exe" clone ...``)
 
 Also, make sure you have all the `required dependencies`_ installed as well.
-Now, retrieve the bot's code from the repository, using the following command::
+Now, retrieve the bot's code from the repository, using the following command:
+
+..  sourcecode:: bash
 
     $ git clone --recursive git://github.com/fpoirotte/Erebot.git
     $ cd Erebot/vendor/
@@ -110,7 +121,9 @@ Now, retrieve the bot's code from the repository, using the following command::
 ..  note::
     Linux users (especially Erebot developers) may prefer to create a separate
     checkout for each component and then use symbolic links to join them
-    together, like this::
+    together, like this:
+
+    ..  sourcecode:: bash
 
         $ git clone --recursive git://github.com/fpoirotte/Erebot.git
         $ git clone --recursive git://github.com/fpoirotte/Erebot_Module_IrcConnector.git
@@ -128,7 +141,9 @@ as well. See the documentation on Erebot's `prerequisites`_ for additional
 information on how to install these tools depending on your system.
 
 Once you got those two up and running, the translation files can be compiled,
-assuming you're currently in Erebot's folder, using these commands::
+assuming you're currently in Erebot's folder, using these commands:
+
+..  sourcecode:: bash
 
     $ phing
     $ cd vendor/Erebot_Module_IrcConnector/
@@ -145,32 +160,32 @@ Be sure to read the section on `final steps`_ for a summary of what to do next.
 Final steps
 -----------
 
-Once Erebot (core files + a few modules) has been installed, you can write a
-configuration file (usually named ``Erebot.xml``) in the same folder where
-the bot was installed.
+Once Erebot (core files + a few modules) has been installed, you can
+`write a configuration file`_ for Erebot (usually named ``Erebot.xml``).
 
 When this is done, the bot can be started, assuming that PHP can be found on the
 ``PATH`` using one of the following commands. Exactly what command must be used
 depends on the installation method.
 
-For an installation using PEAR packages, simply run::
+..  sourcecode:: bash
 
+    # For an installation using PEAR packages.
     $ php /path/to/PEAR/bin_dir/Erebot
 
-For an installation using PHAR archives, from the folder in which you installed
-Erebot, run::
-
+    # For an installation using PHAR archives.
+    # Must be run from the folder in which Erebot was installed.
     $ php ./Erebot-<version>.phar
 
-And finally, for an installation using the source code, from the folder where
-you installed Erebot, run::
-
+    # For an installation using the source code.
+    # Must be run from the folder in which Erebot was installed.
     $ php ./scripts/Erebot
 
 Let's call this command ``%EREBOT%``.
 
 In each case, the bot reacts to a few command-line options.
-Use the following command to get help on those options::
+Use the following command to get help on those options.
+
+..  sourcecode:: bash
 
     $ %EREBOT% --help
 
@@ -210,5 +225,7 @@ Use the following command to get help on those options::
     /Erebot_Module_IrcConnector/
 ..  _`Erebot_Module_PingReply`:
     /Erebot_Module_PingReply/
+..  _`write a configuration file`:
+    Configuration.html
 
 .. vim: ts=4 et

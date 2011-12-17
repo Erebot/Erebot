@@ -97,13 +97,13 @@ Currently, the following tags are available:
         our example above).
 
       - ``separator`` (optional) = a separator to add between all entries
-        in the array, except for the last two. Defaults to ``, `` (a comma
-        followed by a single space).
+        in the array, except for the last two. Defaults to a comma followed
+        by a single space.
       - ``sep`` (optional) = alias for ``separator``.
 
       - ``last_separator`` (optional) = a separator to add between
         the last 2 entries of the array. If no ``separator`` attribute has
-        been set, defaults to `` & `` (an ampersand between two single spaces).
+        been set, defaults to an ampersand between two spaces.
         Otherwise, defaults to the value of the ``separator`` attribute.
       - ``last_sep`` (optional) = alias for ``last_separator``.
 
@@ -453,12 +453,17 @@ The documentation on the `styling API`_ always reflects the latest features
 implemented, while this page may sometime fall a little behind in what it
 showcases (please `open a ticket`_ if you notice any discrepancy!).
 
+..  |comma|     unicode:: U+002C .. comma
+..  |ampersand| unicode:: U+0026 .. ampersand
+
 ..  _`styling API`:
     https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__Styling.html
 ..  _`RelaxNG schema`:
     https://github.com/fpoirotte/Erebot/blob/master/data/styling.rng
 ..  _`Erebot_Styling`:
     https://buildbot.erebot.net/doc/html/Erebot/classErebot__Styling.html
+..  _`Erebot_Interface_Styling_Variable`:
+    https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__Styling__Variable.html
 ..  _`Erebot_Interface_I18n`:
     https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__I18n.html
 ..  _`Internationalization`:

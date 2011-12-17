@@ -14,5 +14,6 @@ Contents:
     FAQ
     Contribute
     Developer_Zone
+    TODO
 
 .. vim: ts=4 et
