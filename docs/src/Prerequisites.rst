@@ -10,7 +10,10 @@ information).
 
 As of this writing, Erebot is known to work on PHP versions ranging from
 PHP 5.2.1 up to PHP 5.4.0RC1. Also, Erebot should run correctly on both
-Windows and Linux, as reflected by our `Continuous Integration server`_.
+Windows (XP or later) and Linux (most distros).
+The code is tested using an automated process on both Windows XP (32 bits)
+and Linux Debian Stable (64 bits), as reflected by our
+`Continuous Integration server`_.
 
 ..  contents::
 
@@ -62,6 +65,9 @@ which contains the dependency:
 
     # yum install <package>
 
+*   For Windows systems, please refer to the special instructions given
+    below.
+
 For each profile, a "yes" on a dependency's row indicates that users of the
 given profile **MUST** install that dependency (requirement). Optional
 dependencies are indicated using footnotes which state when the dependency
@@ -91,6 +97,24 @@ URI scheme).
     |               |                                   |           |           |           | of PHP type-hinting and doxygen   |
     |               |                                   |           |           |           | did not support that until 1.7.2. |
     +---------------+-----------------------------------+-----------+-----------+-----------+-----------------------------------+
+
+
+Special instructions for Windows users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As Windows lacks a central package manager, a different set of instructions is
+necessary.
+
+I have yet to find a gettext binary for Windows that ships with a recent version
+of gettext and hence can support all the options used by Erebot.
+For now, a workaround is to `install Cygwin`_ and its gettext package on your
+machine. Refer to `Cygwin's website`_ for additional information.
+
+Hopefully, installing Doxygen on Windows is a lot simpler. Just grab the binary
+release relevant for your system from `Doxygen's download page`_.
+
+This setup is what we use (combined with PHP 5.3.8) to test Erebot with our
+`Continuous Integration server`_.
 
 
 PHP dependencies
@@ -501,5 +525,11 @@ available for each dependency.
     http://ant.apache.org/
 ..  _`Erebot's coding standard`:
     Coding_Standard.html
+..  _`install Cygwin`:
+    http://cygwin.com/setup.exe
+..  _`Cygwin's website`:
+    http://www.cygwin.com/
+..  _`Doxygen's download page`:
+    http://www.stack.nl/~dimitri/doxygen/download.html#latestsrc
 
 .. vim: ts=4 et

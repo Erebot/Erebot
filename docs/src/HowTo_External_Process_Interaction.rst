@@ -114,19 +114,19 @@ You may now send commands using the following format::
 
     <pattern> <command> <line ending>
 
-where:
+where each token is described below:
 
 ``<pattern>``
-    This is a pattern that will be used to match the network's name (as
-    declared in Erebot's configuration file). You may use wildcard characters
-    here (``?`` to match 0 or exactly 1 character, ``*`` to match 0 or more
+    A pattern that will be used to match the network's name (as declared
+    in Erebot's configuration file). You may use wildcard characters here
+    (``?`` to match 0 or exactly 1 character, ``*`` to match 0 or more
     characters).
     The simplest way to target a specific IRC network is to simply pass
     that network's name as the ``<pattern>``.
 
 ``<command>``
-    This is the IRC command you wish to send (eg. ``AWAY :Gone to sleep``).
-    Please refer to RFC 2812 for information on valid commands.
+    The IRC command you wish to send (eg. ``AWAY :Gone to sleep``).
+    Please refer to :rfc:`2812` for information on valid commands.
 
 ``<line ending>``
     One of the 3 common line endings accepted by Erebot and noted below
