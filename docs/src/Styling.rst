@@ -453,9 +453,6 @@ The documentation on the `styling API`_ always reflects the latest features
 implemented, while this page may sometime fall a little behind in what it
 showcases (please `open a ticket`_ if you notice any discrepancy!).
 
-..  |comma|     unicode:: U+002C .. comma
-..  |ampersand| unicode:: U+0026 .. ampersand
-
 ..  _`styling API`:
     https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__Styling.html
 ..  _`RelaxNG schema`:

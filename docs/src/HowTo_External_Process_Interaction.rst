@@ -9,8 +9,6 @@ can be used to receive feedback from the bot for commands we sent to it.
 ..  contents::
 
 
-..  _`Sending commands through the bot`:
-
 Sending commands through the bot
 --------------------------------
 
@@ -27,15 +25,13 @@ too.
 ..  note::
     If you need bidirectional communications, you can combine this feature
     with Erebot's logging mechanism to intercept messages as the bot sends or
-    receives them. See the section on `Intercepting messages`_ for more
-    information.
+    receives them. See the section entitled « `Intercepting messages`_ »
+    for more information.
 
 ..  warning::
     This feature is only available on platforms that implement UNIX
     sockets (especially, it is **not** available on Windows platforms).
 
-
-..  _`Setting things up`:
 
 Setting things up
 +++++++++++++++++
@@ -77,12 +73,8 @@ configuration file may look like this:
     </service>
 
 
-..  _`Passing commands to Erebot`:
-
 Passing commands to Erebot
 ++++++++++++++++++++++++++
-
-..  _`What you need to know`:
 
 What you need to know
 ~~~~~~~~~~~~~~~~~~~~~
@@ -97,8 +89,6 @@ To send commands to Erebot, you need two pieces of information:
     The latter is actually optional if you want to execute the command
     on all IRC networks (eg. an ``AWAY`` command before going to sleep),
     as we will see below.
-
-..  _`A simple example`:
 
 A simple example
 ~~~~~~~~~~~~~~~~
@@ -145,13 +135,11 @@ where each token is described below:
 Here is an example using the socat command from a cron task to make
 the bot quit the "``iiens``" IRC network every day at midnight:
 
-..  sourcecode:: cron
+..  sourcecode:: bash
     :linenos:
 
     # m h  dom mon dow   command
       0 0  *   *   *     echo 'iiens QUIT :Time to sleep!' | socat - UNIX-SENDTO:/tmp/Erebot.sock
-
-..  _`Targeting multiple IRC networks at once`:
 
 Targeting multiple IRC networks at once
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,8 +155,6 @@ Following the same logic, it is possible to send a command to **all**
 the servers the bot is currently connected to by using "``*``" as the
 pattern, since this will match any network, regardless of its name.
 
-
-..  _`Intercepting messages`:
 
 Intercepting messages
 ---------------------
@@ -190,10 +176,9 @@ because:
     more efficient to write a module for Erebot directly (using the assets
     provided by the PHP toolbox).
 
-@TODO
+..  todo::
+    Explain how to do that with Erebot.
 
-
-..  _`Troubleshooting`:
 
 Troubleshooting
 ---------------
@@ -202,15 +187,10 @@ This paragraph lists the most common problems you may encounter while following
 this tutorial, as well as explanations as to why they appear and possible
 solutions or workarounds.
 
-..  _`PHP Warning: stream_socket_server(): unable to connect to udg:///... (Unknown error) in .../Erebot/Prompt.php on line ...`:
-
 ``PHP Warning: stream_socket_server(): unable to connect to udg:///... (Unknown error) in .../Erebot/Prompt.php on line ...``
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-**Example**:
-
-..  sourcecode:: text
-    :linenos:
+**Example**::
 
     PHP Warning:  stream_socket_server(): unable to connect to udg:///tmp/Erebot.sock (Unknown error) in /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php on line 44
     PHP Stack trace:
@@ -236,15 +216,10 @@ Issue the following command (adapt the path depending on the content of the erro
 
     rm -f /tmp/Erebot.sock
 
-..  _`PHP Fatal error: Uncaught exception 'Exception' with message 'Could not change group to '...' for '...'' in ...`:
-
 ``PHP Fatal error: Uncaught exception 'Exception' with message 'Could not change group to '...' for '...'' in ...``
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-**Example**:
-
-..  sourcecode:: text
-    :linenos:
+**Example**::
 
     PHP Fatal error:  Uncaught exception 'Exception' with message 'Could not change group to 'nogroup' for '/tmp/Erebot.sock'' in /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php:56
     Stack trace:

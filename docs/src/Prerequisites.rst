@@ -53,17 +53,18 @@ has a working package manager which can be used to install those dependencies,
 usually by issuing one of these commands, followed by the name of the package
 which contains the dependency:
 
-*   For apt-based distributions (eg. Debian, Ubuntu)::
+*   For Linux distributions
 
-    # apt-get install <package>
+    ..  sourcecode:: bash
 
-*   For urpmi-based distributions (eg. Mandriva)::
+        # For apt-based distributions (eg. Debian, Ubuntu).
+        $ apt-get install <package>
 
-    # urpmi <package>
+        # For urpmi-based distributions (eg. Mandriva).
+        $ urpmi <package>
 
-*   For yum-based distributions (eg. RedHat, CentOS)::
-
-    # yum install <package>
+        # For yum-based distributions (eg. RedHat, CentOS).
+        $ yum install <package>
 
 *   For Windows systems, please refer to the special instructions given
     below.
@@ -203,13 +204,17 @@ There are currently two of them:
     The original installer, meant to install both PEAR and PECL packages.
     The simplest way to `install pear`_ is to grab a copy of
     `go-pear.phar <http://pear.php.net/go-pear.phar>`_ and run this command
-    from a shell::
+    from a shell:
 
-        # php go-pear.phar
+    ..  sourcecode:: bash
 
-    Then, to install a dependency using `pear`_, run the following command::
+        $ php go-pear.phar
 
-        # pear install <dependency>
+    Then, to install a dependency using `pear`_, run the following command:
+
+    ..  sourcecode:: bash
+
+        $ pear install <dependency>
 
 `Pyrus`_
     Successor for `pear`_, meant to replace it someday.
@@ -220,9 +225,11 @@ There are currently two of them:
     The latest version can be downloaded from
     `this link <http://pear2.php.net/pyrus.phar>`_.
 
-    To install a dependency using `Pyrus`_, run the following command::
+    To install a dependency using `Pyrus`_, run the following command:
 
-        # php pyrus.phar install <dependency>
+    ..  sourcecode:: bash
+
+        $ php pyrus.phar install <dependency>
 
 
 ..  note::

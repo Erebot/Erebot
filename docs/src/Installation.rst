@@ -91,7 +91,7 @@ the tools provided by your distribution:
 ..  sourcecode:: bash
 
     # For apt-based distributions such as Debian or Ubuntu
-    $ apt-get install git   
+    $ apt-get install git
 
     # For yum-based distributions such as Fedora / RHEL (RedHat)
     $ yum install git
