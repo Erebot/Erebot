@@ -25,20 +25,24 @@ styles. There are also constants for colors, see the source code for details.
 
 For example:
 
-..  code-block:: php
+..  sourcecode:: php
 
     <?php
-    $message = Erebot_Styling::CODE_BOLD.
-                    "Hi ".
-                    Erebot_Styling::CODE_UNDERLINE.
-                        $user.
-                    Erebot_Styling::CODE_UNDERLINE.
-                Erebot_Styling::CODE_BOLD;
+        $user = "Foobar";
+
+        // Using pseudo-HTML, this is the same as:
+        // "<b>Hi <u>$user</u></b>"
+        $message =  Erebot_Styling::CODE_BOLD.
+                        "Hi ".
+                        Erebot_Styling::CODE_UNDERLINE.
+                            $user.
+                        Erebot_Styling::CODE_UNDERLINE.
+                    Erebot_Styling::CODE_BOLD;
+        print $message . PHP_EOL;
     ?>
 
-The example above would display ``Hi <user>`` where ``<user>`` is some user's
-nickname. The message would be displayed in bold, with the user's nickname
-underlined.
+The example above would display ``Hi Foobar``. The message would be displayed
+in bold, with the user's nickname underlined when sent to an IRC server.
 
 ..  _`second method`:
 
@@ -128,7 +132,8 @@ Currently, the following tags are available:
       ``other``. This special form will be used when no specific rule
       applies for this word's plural.
 
-..  [#] The page at http://unicode.org/cldr/data/charts/supplemental/language_plural_rules.html lists all available forms.
+..  [#] The page at http://unicode.org/cldr/data/charts/supplemental/language_plural_rules.html
+    lists all available forms.
 
 ..  warning::
     If you're used to `gettext's syntax for plurals`_ (using a predicate
@@ -164,62 +169,62 @@ common types:
 ``Erebot_Styling_Integer``
     Represents an integer.
 
-..  code-block:: php
+    ..  sourcecode:: php
 
-    <?php
-        $formatter = new Erebot_Styling($translator);
-        $source = '<var name="leet"/>';
-        $vars = array('leet' => new Erebot_Styling_Integer(1337));
+        <?php
+            $formatter = new Erebot_Styling($translator);
+            $source = '<var name="leet"/>';
+            $vars = array('leet' => new Erebot_Styling_Integer(1337));
 
-        // This may be rendered as "1 337",
-        // depending on the translator's locale.
-        echo $formatter->_($source, $vars) . PHP_EOL;
-    ?>
+            // This may be rendered as "1 337",
+            // depending on the translator's locale.
+            echo $formatter->_($source, $vars) . PHP_EOL;
+        ?>
 
 ``Erebot_Styling_String``
     Represents a string. The value will be passed as is.
 
-..  code-block:: php
+    ..  sourcecode:: php
 
-    <?php
-        $formatter = new Erebot_Styling($translator);
-        $source = '<var name="name"/>';
-        $vars = array('name' => new Erebot_Styling_String('Clicky'));
-        echo $formatter->_($source, $vars) . PHP_EOL;
-    ?>
+        <?php
+            $formatter = new Erebot_Styling($translator);
+            $source = '<var name="name"/>';
+            $vars = array('name' => new Erebot_Styling_String('Clicky'));
+            echo $formatter->_($source, $vars) . PHP_EOL;
+        ?>
 
 ``Erebot_Styling_Float``
     Represents a floating-point value.
 
-..  code-block:: php
+    ..  sourcecode:: php
 
-    <?php
-        $formatter = new Erebot_Styling($translator);
-        $source = '<var name="avg"/>';
-        $vars = array('avg' => new Erebot_Styling_Float(1234.56));
+        <?php
+            $formatter = new Erebot_Styling($translator);
+            $source = '<var name="avg"/>';
+            $vars = array('avg' => new Erebot_Styling_Float(1234.56));
 
-        // This would be rendered as "1 234,56" in french.
-        echo $formatter->_($source, $vars) . PHP_EOL;
-    ?>
+            // This would be rendered as "1 234,56" in french.
+            echo $formatter->_($source, $vars) . PHP_EOL;
+        ?>
 
 ``Erebot_Styling_Currency``
     Represents a monetary value expressed in some currency.
 
-..  code-block:: php
+    ..  sourcecode:: php
 
-    <?php
-        $formatter = new Erebot_Styling($translator);
-        $source = '<var name="price"/>';
+            <?php
+                $formatter = new Erebot_Styling($translator);
+                $source = '<var name="price"/>';
 
-        // Note: the currency can be passed as an additional parameter.
-        // If omitted, the currency from the locale configured in the
-        // $transator is used.
-        $vars = array('price' => new Erebot_Styling_Currency(1234.567, 'EUR'));
+                // Note: the currency can be passed as an additional parameter.
+                // If omitted, the currency from the locale configured in the
+                // $transator is used.
+                $vars = array('price' => new Erebot_Styling_Currency(1234.567, 'EUR'));
 
-        // This would be rendered as "€1,234.57" for US english.
-        // Note that monetary values are rounded to two places.
-        echo $formatter->_($source, $vars) . PHP_EOL;
-    ?>
+                // This would be rendered as "€1,234.57" for US english.
+                // Note that monetary values are rounded to two places.
+                echo $formatter->_($source, $vars) . PHP_EOL;
+            ?>
 
 ``Erebot_Styling_DateTime``
     Represents a date and/or time.
@@ -256,33 +261,39 @@ common types:
         A timezone identifier (such as "Europe/Paris"). This value is
         ignored when a Unix timestamp is passed as the ``$value``.
 
-..  code-block:: php
+    ..  sourcecode:: php
 
-    <?php
-        $formatter = new Erebot_Styling($translator);
-        $source = '<var name="price"/>';
-        $vars = array('price' => new Erebot_Styling_Currency(1234.567, 'EUR'));
+        <?php
+            $formatter = new Erebot_Styling($translator);
+            $source = '<var name="now"/>';
+            $vars = array(
+                'now' => new Erebot_Styling_DateTime(
+                    time(),
+                    IntlDateFormatter::FULL,
+                    IntlDateFormatter::FULL
+                )
+            );
 
-        // This would be rendered as "€1,234.57" for US english.
-        // Note that monetary values are rounded to two places.
-        echo $formatter->_($source, $vars) . PHP_EOL;
-    ?>
+            // In US English, this may be rendered like this:
+            // "Wednesday, December 31, 1969 4:00:00 PM PT".
+            echo $formatter->_($source, $vars) . PHP_EOL;
+        ?>
 
 ``Erebot_Styling_Duration``
     Represents a duration in spelled out form, with a precision up to the
     seconds.
 
-..  code-block:: php
+    ..  sourcecode:: php
 
-    <?php
-        $formatter = new Erebot_Styling($translator);
-        $source = '<var name="duration"/>';
-        $vars = array('duration' => new Erebot_Styling_Duration(1389722));
+        <?php
+            $formatter = new Erebot_Styling($translator);
+            $source = '<var name="duration"/>';
+            $vars = array('duration' => new Erebot_Styling_Duration(1389722));
 
-        // This would be rendered as:
-        // "2 weeks, 2 days, 2 hours, 2 minutes, 2 seconds" in english.
-        echo $formatter->_($source, $vars) . PHP_EOL;
-    ?>
+            // This would be rendered as:
+            // "2 weeks, 2 days, 2 hours, 2 minutes, 2 seconds" in english.
+            echo $formatter->_($source, $vars) . PHP_EOL;
+        ?>
 
 
 ..  note::
@@ -324,47 +335,55 @@ This is usually done with the following steps:
     the result of that process in your code (eg. send it to an IRC channel).
     This is the rendering step.
 
-..  code-block:: php
+    ..  sourcecode:: php
 
-    <?php
-    // The source for a template meant to display
-    // the scores of each player in a fictitious game.
-    $source =   '<b>Scores</b>: '.
-                '<for item="score" key="nick" from="scores" separator=", " last_separator=" &amp; ">'.
-                    '<b>'.
-                        '<u>'.
-                            '<color fg="green">'.
-                                '<var name="nick"/>'.
-                            '</color>'.
-                        '</u>'.
-                        ': <var name="score"/>'.
-                    '</b>'.
-                '</for>';
+        <?php
+            // The source for a template meant to display
+            // the scores of each player in a fictitious game.
+            $source =   '<b>Scores</b>: '.
+                        '<for item="score" key="nick" from="scores" '.
+                            'separator=", " last_separator=" &amp; ">'.
+                            '<b>'.
+                                '<u>'.
+                                    '<color fg="green">'.
+                                        '<var name="nick"/>'.
+                                    '</color>'.
+                                '</u>'.
+                                ': <var name="score"/>'.
+                            '</b>'.
+                        '</for>';
 
-    // Step 1:
-    // Create a new translator and a new template from it.
-    // By default, the locale for the translator is "en_US".
-    $translator = new Erebot_I18n();
-    $formatter  = new Erebot_Styling($translator);
+            // Step 1:
+            // Create a new translator and a new template from it.
+            // By default, the locale for the translator is "en_US".
+            $translator = new Erebot_I18n();
+            $formatter  = new Erebot_Styling($translator);
 
-    // Step 2:
-    // Prepare some variables for the template.
-    $vars = array(
-        'scores' => array('Clicky' => 42, 'Looksup' => 23, 'MiSsInGnO' => 16)
-    );
+            // Step 2:
+            // Prepare some variables for the template.
+            $vars = array(
+                'scores' => array(
+                    'Foo' => 42,
+                    'Bar' => 23,
+                    'Baz' => 16,
+                    'Qux' => 15,
+                    'Toto' => 8,
+                    'Tata' => 4,
+                ),
+            );
 
-    // Step 3:
-    // Render the template with the given scores.
-    //
-    // This results in something like:
-    // "Scores: Clicky: 42, Looksup: 23 & MiSsInGnO: 16"
-    // with most of the words represented in bold
-    // and the nicknames in green and underlined.
-    //
-    // Note: since we used "_()" to render the template,
-    //       a translation is automatically selected (if available).
-    echo $formatter->_($source, array('scores' => $scores)) . PHP_EOL;
-    ?>
+            // Step 3:
+            // Render the template with the given scores.
+            //
+            // This results in something like:
+            // "Scores: Foo: 42, Bar: 23, Baz: 16, Qux: 15, Toto: 8 & Tata: 4"
+            // with most of the words represented in bold
+            // and the nicknames in green and underlined.
+            //
+            // Note: since we used "_()" to render the template,
+            //       a translation is automatically selected (if available).
+            echo $formatter->_($source, array('scores' => $scores)) . PHP_EOL;
+        ?>
 
 Here, ``$source`` has been split over many lines to make it easier to
 figure out how the final message will look like. The template could actually
@@ -399,36 +418,36 @@ Taking the sentence from earlier as an example::
 
 The equivalent as a template would be:
 
-..  code-block:: php
+..  sourcecode:: php
 
     <?php
 
-    $msg = 'There '.
-            '<plural var="sum"/>'.
-                '<case form="one">is</case>'.
-                '<case form="other">are</case>'.
-            '</plural> '.
-            '<plural var="girls"/>'.
-                '<case form="one">one girl</case>'.
-                '<case form="other"><var name="girls"/> girls</case>'.
-            '</plural> '.
-            'and '.
-            '<plural var="boys"/>'.
-                '<case form="one">one boy</case>'.
-                '<case form="other"><var name="boys"/> boys</case>'.
-            '</plural> '.
-            'in this classroom';
+        $msg = 'There '.
+                '<plural var="sum"/>'.
+                    '<case form="one">is</case>'.
+                    '<case form="other">are</case>'.
+                '</plural> '.
+                '<plural var="girls"/>'.
+                    '<case form="one">one girl</case>'.
+                    '<case form="other"><var name="girls"/> girls</case>'.
+                '</plural> '.
+                'and '.
+                '<plural var="boys"/>'.
+                    '<case form="one">one boy</case>'.
+                    '<case form="other"><var name="boys"/> boys</case>'.
+                '</plural> '.
+                'in this classroom';
 
-    $formatter = new Erebot_Styling(new Erebot_I18n());
+        $formatter = new Erebot_Styling(new Erebot_I18n());
 
-    // Displays "There is one girl and 0 boys in this classroom".
-    echo $formatter->_($msg, array('girls' => 1, 'boys' => 0, 'sum' => 1)) . PHP_EOL;
+        // Displays "There is one girl and 0 boys in this classroom".
+        echo $formatter->_($msg, array('girls' => 1, 'boys' => 0, 'sum' => 1)) . PHP_EOL;
 
-    // Displays "There are 2 girls and one boy in this classroom".
-    echo $formatter->_($msg, array('girls' => 2, 'boys' => 1, 'sum' => 3)) . PHP_EOL;
+        // Displays "There are 2 girls and one boy in this classroom".
+        echo $formatter->_($msg, array('girls' => 2, 'boys' => 1, 'sum' => 3)) . PHP_EOL;
 
-    // Displays "There are one girl and 2 boys in this classroom".
-    echo $formatter->_($msg, array('girls' => 1, 'boys' => 2, 'sum' => 3)) . PHP_EOL;
+        // Displays "There are one girl and 2 boys in this classroom".
+        echo $formatter->_($msg, array('girls' => 1, 'boys' => 2, 'sum' => 3)) . PHP_EOL;
     ?>
 
 Notice how we represented the actual counts using either a spelled out form

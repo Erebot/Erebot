@@ -17,7 +17,7 @@ Once equipped with a translator, just call its ``gettext()`` method, passing
 the string to translate to it.
 Therefore, translating a string is as simple as the following snippet:
 
-..  code-block:: php
+..  sourcecode:: php
 
     <?php
         $translator = $this->getTranslator($chan);
@@ -36,19 +36,20 @@ Managing translations
 In the previous section, we saw how to integrate strings that will be
 translated. So... how does Erebot finds out the correct translation?
 
-There is another special file in ``data/i18n/<module>.po`` where ``<module>``
+There is another special file in :samp:`data/i18n/{module}.po` where
+:samp:`{module}`
 is the name of your module (eg. ``Erebot_Module_XYZ``).
 This file uses the `gettext`_ format and lists all messages marked as requiring
 a translation (as extracted from your source code when running ``phing i18n``).
 
 Also, every Erebot module contains a set of translations in
-``data/i18n/<locale>/LC_MESSAGES/<module>.po``, where ``<locale>`` is some
-locale identifier, expressed using the following format: ``xx_YY``
+:samp:`data/i18n/{locale}/LC_MESSAGES/{module}.po`, where :samp:`{locale}`
+is some locale identifier, expressed using the following format: ``xx_YY``
 (where ``xx`` is the ISO 639-1 code for the language [#]_ and ``yy`` is the
-code for the country, eg. ``en_US``) and ``<module>`` is the name of your
+code for the country, eg. ``en_US``) and :samp:`{module}` is the name of your
 module (eg. ``Erebot_Module_XYZ``).
 Those files use the same format as the previous file and provide the
-translations for the messages listed in ``data/i18n/<module>.po``.
+translations for the messages listed in :samp:`data/i18n/{module}.po`.
 
 To ease management of the translations, and especially the PO files (also
 called "catalogs"), a few tools are provided by Erebot as `phing`_ targets.
@@ -61,34 +62,43 @@ Extracting strings marked for translation
 
 The ``extract_messages`` target can be used to parse the code of your module
 and extract strings marked for translation. This will write out every string
-marked for translation into ``data/i18n/<module>.po``.
-Example::
+marked for translation into :samp:`data/i18n/{module}.po`.
+Example:
 
-    phing extract_messages
+..  sourcecode:: bash
+
+    $ phing extract_messages
 
 
 Adding translations for a new locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Translations for a new locale can be added by using the ``init_catalog``
-target and passing a ``locale`` parameter, like so::
+target and passing a ``locale`` parameter, like so:
 
-    phing init_catalog -Dlocale=de_DE
+..  sourcecode:: bash
+
+    # Creates a new translation catalog for the "de_DE" locale (german).
+    $ phing init_catalog -Dlocale=de_DE
 
 Updating existing catalogs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Updating the catalogs is quite simple, just use the ``update_catalog`` target::
+Updating the catalogs is quite simple, just use the ``update_catalog`` target:
 
-    phing update_catalog
+..  sourcecode:: bash
+
+    $ phing update_catalog
 
 Compiling the catalogs
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Last but not least, the catalog files cannot be used directly by the bot.
-You first need to compile them using the ``compile_catalog`` phing target::
+You first need to compile them using the ``compile_catalog`` phing target:
 
-    phing compile_catalog
+..  sourcecode:: bash
+
+    $ phing compile_catalog
 
 
 This will generate MO files for the miscellaneous PO files described above.

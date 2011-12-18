@@ -62,7 +62,7 @@ parameter. It also accepts a few parameters, listed in the following table.
 Therefore, a potential configuration for the prompt in the ``defaults.xml``
 configuration file may look like this:
 
-..  code-block:: xml
+..  sourcecode:: xml
     :linenos:
 
     <service id="prompt" class="Erebot_Prompt">
