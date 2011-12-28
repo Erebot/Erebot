@@ -28,7 +28,10 @@ extends PHPUnit_Framework_TestCase
         $this->assertSame('foo',    (string) $identity);
         $this->assertSame('foo',    $identity->getNick());
         $this->assertSame('ident',  $identity->getIdent());
-        $this->assertSame('host',   $identity->getHost());
+        $this->assertSame(
+            'host',
+            $identity->getHost(Erebot_Interface_Identity::CANON_IPV4)
+        );
     }
 
     /**
@@ -40,7 +43,10 @@ extends PHPUnit_Framework_TestCase
         $this->assertSame('foo',    (string) $identity);
         $this->assertSame('foo',    $identity->getNick());
         $this->assertSame(NULL,     $identity->getIdent());
-        $this->assertSame(NULL,     $identity->getHost());
+        $this->assertSame(
+            NULL,
+            $identity->getHost(Erebot_Interface_Identity::CANON_IPV4)
+        );
     }
 }
 
@@ -59,6 +65,10 @@ extends PHPUnit_Framework_TestCase
             'foo@host!ident',
             'foo!ident',
             'foo@host',
+            'foo!ident@ho$t',
+            'foo!ident@host.42',
+            'foo!ident@1.2.3.4.5',
+            'foo!ident@1:2:3:4:5:6:7:8:9',
         );
         $masks = array_map(create_function('$a', 'return array($a);'), $masks);
         return $masks;
@@ -74,3 +84,28 @@ extends PHPUnit_Framework_TestCase
         new Erebot_Identity($mask);
     }
 }
+
+class   IdentityMatchingTest
+extends PHPUnit_Framework_TestCase
+{
+    public function testMatching()
+    {
+        $identity = new Erebot_Identity('foo!bar@127.0.0.1');
+        $patterns = array(
+            'foo!bar@127.0.0.1',
+            'foo!bar@127.0.0.1/32',
+            'foo!bar@127.0.0.*',
+            'foo!bar@::ffff:127.0.0.1',
+            'foo!bar@::ffff:127.0.0.1/128',
+            'foo!bar@::ffff:127.0.0.*',
+            '*!*@*',
+        );
+        foreach ($patterns as $pattern) {
+            $this->assertTrue(
+                $identity->match($pattern),
+                "Did not match '$pattern'"
+            );
+        }
+    }
+}
+

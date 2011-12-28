@@ -72,7 +72,16 @@ implements  Erebot_Interface_Identity
 
         $this->_nick    = $nick;
         $this->_ident   = $ident;
-        $this->_host    = $host;
+
+        if ($host === NULL)
+            $this->_host = NULL;
+        else {
+            $this->_host    = self::_canonicalizeHost(
+                $host,
+                Erebot_Interface_Identity::CANON_IPV6,
+                FALSE
+            );
+        }
     }
 
     /// \copydoc Erebot_Interface_Identity::getNick()
@@ -87,17 +96,136 @@ implements  Erebot_Interface_Identity
         return $this->_ident;
     }
 
-    /// \copydoc Erebot_Interface_Identity::getHost()
-    public function getHost()
+    static protected function _stripLeading(&$number, $key)
     {
-        return $this->_host;
+        $stripped = ltrim($number, '0');
+        $number = ($stripped == '' ? '0' : $stripped);
+    }
+
+    static protected function _canonicalizeHost($host, $c10n, $uncompressed)
+    {
+        if ($c10n != Erebot_Interface_Identity::CANON_IPV4 &&
+            $c10n != Erebot_Interface_Identity::CANON_IPV6) {
+            throw new Erebot_InvalidValueException(
+                'Invalid canonicalization value'
+            );
+        }
+
+        // Adapted from the grammar & rules in RFC 1034, section 3.5.
+        $label      = '[A-Za-z](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?';
+        $hostname   = '(?:'.$label.'\.)*'.$label;
+
+        // If this is some hostname, we simply lowercase it.
+        if (preg_match('/^'.$hostname.'$/Di', $host))
+            return strtolower($host);
+
+        $decOctet       = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])';
+        $dotAddress     = $decOctet.'(?:\\.'.$decOctet.'){3}';
+
+        // If it's an IPv4 address, handle it here.
+        if (preg_match('/^'.$dotAddress.'$/Di', $host)) {
+            $parts  = explode('.', $host, 4);
+            $prefix = ($uncompressed ? '0:0:0:0:0' : ':');
+            if ($c10n == Erebot_Interface_Identity::CANON_IPV4) {
+                array_walk($parts, array('self', '_stripLeading'));
+                return $prefix.':ffff:'.implode('.', $parts);
+            }
+
+            $mapped = array(
+                sprintf('%02x%02x', $parts[0], $parts[1]),
+                sprintf('%02x%02x', $parts[2], $parts[3]),
+            );
+            array_walk($mapped, array('self', '_stripLeading'));
+            return $prefix.':ffff:'.implode(':', $mapped);
+        }
+
+        $half           = '[[:xdigit:]]{1,4}';
+        $long           = '(?:'.$half.':'.$half.'|('.$dotAddress.'))';
+        $colonAddress   =
+            '(?:'.
+            '(?:'.$half.':){6}'.$long.'|'.
+            '::(?:'.$half.':){5}'.$long.'|'.
+            '(?:'.$half.')?::(?:'.$half.':){4}'.$long.'|'.
+            '(?:(?:'.$half.':)?'.$half.')?::(?:'.$half.':){3}'.$long.'|'.
+            '(?:(?:'.$half.':){0,2}'.$half.')?::(?:'.$half.':){2}'.$long.'|'.
+            '(?:(?:'.$half.':){0,3}'.$half.')?::'.$half.':'.$long.'|'.
+            '(?:(?:'.$half.':){0,4}'.$half.')?::'.$long.'|'.
+            '(?:(?:'.$half.':){0,5}'.$half.')?::'.$half.'|'.
+            '(?:(?:'.$half.':){0,6}'.$half.')?::'.
+            ')';
+
+        if (!preg_match('/^'.$colonAddress.'$/Di', $host, $matches))
+            throw new Erebot_InvalidValueException('Unrecognized "host"');
+
+        // It's an IPv6, let's handle it.
+        if (count($matches) > 1) {
+            // IPv6 mapped IPv4.
+            $mapped = end($matches);
+            $parts  = explode('.', $mapped, 4);
+            $mapped = array(
+                sprintf('%02x%02x', $parts[0], $parts[1]),
+                sprintf('%02x%02x', $parts[2], $parts[3]),
+            );
+            array_walk($mapped, array('self', '_stripLeading'));
+            $host = str_replace(end($matches), implode(':', $mapped), $host);
+        }
+
+        // Handle "::".
+        $pos = strpos($host, '::');
+        if ($pos !== FALSE) {
+            if (substr($host, 0, 2) == '::')
+                $host = '0'.$host;
+            if (substr($host, -2) == '::')
+                $host .= '0';
+            $repeat = 8 - substr_count($host, ':');
+            $host = str_replace('::', ':'.str_repeat('0:', $repeat), $host);
+        }
+
+        $parts = explode(':', $host, 8);
+        array_walk($parts, array('self', '_stripLeading'));
+        if ($c10n == Erebot_Interface_Identity::CANON_IPV4) {
+            $parts[7]   = (hexdec($parts[6]) << 16) + hexdec($parts[7]);
+            $parts[6]   = long2ip(array_pop($parts));
+        }
+
+        if ($uncompressed)
+            return strtolower(implode(':', $parts));
+
+        // Compress the zeros.
+        $host = 'x:' . implode(':', $parts) . ':x';
+        for ($i = 8; $i > 0; $i--) {
+            $s          = ':'.str_repeat('0:', $i);
+            $pos        = strpos($host, $s);
+            if ($pos !== FALSE) {
+                $host = (string) substr($host, 0, $pos) . '::' .
+                        (string) substr($host, $pos + strlen($s));
+                break;
+            }
+        }
+
+        $host = substr(
+            $host,
+            (substr($host, 0, 3) == 'x::') ?  1 :  2,
+            (substr($host, -3) == '::x')   ? -1 : -2
+        );
+        return strtolower($host);
+    }
+
+    /// \copydoc Erebot_Interface_Identity::getHost()
+    public function getHost($c10n)
+    {
+        if ($this->_host === NULL)
+            return NULL;
+        if ($c10n == Erebot_Interface_Identity::CANON_IPV6)
+            return $this->_host;
+        return self::_canonicalizeHost($this->_host, $c10n, FALSE);
     }
 
     /// \copydoc Erebot_Interface_Identity::getMask()
-    public function getMask()
+    public function getMask($c10n)
     {
         $ident  = ($this->_ident === NULL) ? '*' : $this->_ident;
-        $host   = ($this->_host === NULL) ? '*' : $this->_host;
+        $host   = ($this->_host === NULL) ? '*' : $this->getHost($c10n);
         return $this->_nick.'!'.$ident.'@'.$host;
     }
 
@@ -120,13 +248,139 @@ implements  Erebot_Interface_Identity
      */
     public function match($pattern)
     {
-        $pattern = strtr(
-            preg_quote($pattern, '#'),
-            array(
-                '\\?'   => '.?',
-                '\\*'   => '.*',
+        $nick = explode('!', $pattern, 2);
+        if (count($nick) != 2)
+            return FALSE;
+
+        $ident = explode('@', $nick[1], 2);
+        if (count($ident) != 2)
+            return FALSE;
+
+        $host   = $ident[1];
+        $ident  = $ident[0];
+        $nick   = $nick[0];
+
+        if ($ident == '' || $host == '')
+            return FALSE;
+
+        if (!preg_match(self::_patternize($nick, TRUE), $this->_nick))
+            return FALSE;
+
+        $thisIdent = ($this->_ident === NULL) ? '' : $this->_ident;
+        if (!preg_match(self::_patternize($ident, TRUE), $thisIdent))
+            return FALSE;
+
+        $thisHost = (
+            ($this->_host === NULL) ?
+            '' :
+            self::_canonicalizeHost(
+                $this->_host,
+                Erebot_Interface_Identity::CANON_IPV6,
+                TRUE
             )
         );
-        return (bool) preg_match('#^'.$pattern.'$#iD', $this->getMask());
+
+        // Detect a raw IPv4. The patterns allows the use of "*" where
+        // a number is usually expected, as well as "a.b.c.d/netmask".
+        $decOctet           = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5]|\\*)';
+        $dotAddress         = $decOctet.'(?:\\.'.$decOctet.'){3}(?:/[0-9]*)?';
+        $dotAddress         = '#^'.$dotAddress.'$#Di';
+        $isDottedAddress    = (bool) preg_match($dotAddress, $host);
+
+        // It's some hostname (not an IPv4).
+        if (strpos($host, ':') === FALSE && !$isDottedAddress) {
+            return (bool) preg_match(
+                self::_patternize($host, FALSE),
+                $thisHost
+            );
+        }
+
+        // Handle wildcards for IPv6 mapped IPv4.
+        $host = explode('/', $host, 2);
+        if (strpos($host[0], '*') !== FALSE) {
+            if (count($host) == 2) {
+                throw new Erebot_InvalidValueException(
+                    "Wildcard characters and netmasks ".
+                    "don't go together very well"
+                );
+            }
+
+            $replace    = '';
+            $host[1]    = 128;
+            for ($i = 0; $i < 4; $i++) {
+                $sep = (($i == 3) ? ($isDottedAddress ? '' : ':') : '.');
+                if (substr($host[0], -2) == $sep . '*') {
+                    $host[1]   -= 8;
+                    $host[0]    = substr($host[0], 0, -2);
+                    $replace    = $sep.'0'.$replace;
+                }
+            }
+            $host[0]   .= $replace;
+            // We could check whether some wildcards remain or not,
+            // but self::_canonicalizeHost will raise an exception
+            // for such a pattern anyway.
+        }
+        // No netmask given, assume /128.
+        else if (count($host) == 1)
+            $host[] = 128;
+        else
+            $host[1] = ((int) $host[1]) + ($isDottedAddress ? 96 : 0);
+
+        if ($host[1] < 0 || $host[1] > 128) {
+            throw new Erebot_InvalidValueException(
+                'Invalid netmask value ('.$host[1].')'
+            );
+        }
+
+        $host[0] = self::_canonicalizeHost(
+            $host[0],
+            Erebot_Interface_Identity::CANON_IPV6,
+            TRUE
+        );
+
+        $pattParts      = explode(':', $host[0]);
+        $thisParts  = explode(':', $thisHost);
+        while ($host[1] > 0) {
+            $mask       = 0x10000 - (1 << (16 - min($host[1], 16)));
+            $pattValue  = hexdec(array_shift($pattParts)) & $mask;
+            $thisValue  = hexdec(array_shift($thisParts)) & $mask;
+            if ($pattValue != $thisValue)
+                return FALSE;
+            $host[1] -= 16;
+        }
+        return TRUE;
+    }
+
+    protected function _patternize($pattern, $matchDot)
+    {
+        $realPattern = '';
+        $mapping = array('[^\\.]', '.');
+        for ($i = 0, $len = strlen($pattern); $i < $len; $i++) {
+            switch ($pattern[$i]) {
+                case '?':
+                case '*':
+                    if ($matchDot)
+                        $realPattern .= $mapping[1];
+                    else {
+                        // For wildcards when not running in $matchDot mode:
+                        // allow them to match a dot when followed with a '*'
+                        // (ie. '?*' or '**').
+                        if ((($i + 1) < $len && $pattern[$i + 1] == '*')) {
+                            $realPattern .= $mapping[1];
+                            $i++;
+                        }
+                        else
+                            $realPattern .= $mapping[0];
+                    }
+
+                    if ($pattern[$i] == '*')
+                        $realPattern .= '*';
+                    continue;
+
+                default:
+                    $realPattern .= preg_quote($pattern[$i], '#');
+            }
+        }
+        return '#^'.$realPattern.'$#Di';
     }
 }

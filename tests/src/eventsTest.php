@@ -138,7 +138,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertTrue($dispatched[0] instanceof Erebot_Event_Notify);
         $this->assertEquals(
             "foo!bar@baz",
-            $dispatched[0]->getSource()->getMask()
+            $dispatched[0]->getSource()->getMask(
+                Erebot_Interface_Identity::CANON_IPV4
+            )
         );
         $ts = $dispatched[0]->getTimestamp();
         $this->assertEquals(42, $ts->format('U'));
@@ -160,7 +162,9 @@ extends PHPUnit_Framework_TestCase
         $this->assertTrue($dispatched[0] instanceof Erebot_Event_UnNotify);
         $this->assertEquals(
             "foo!bar@baz",
-            $dispatched[0]->getSource()->getMask()
+            $dispatched[0]->getSource()->getMask(
+                Erebot_Interface_Identity::CANON_IPV4
+            )
         );
         $ts = $dispatched[0]->getTimestamp();
         $this->assertEquals(42, $ts->format('U'));
