@@ -1006,7 +1006,9 @@ implements  Erebot_Interface_ModuleContainer,
                         $cls    = $map[$type];
                         $this->dispatch(
                             $this->makeEvent(
-                                $cls, $nick, $ident, $host,
+                                $cls, $nick,
+                                ($ident == '*' ? NULL : $ident),
+                                ($host == '*' ? NULL : $host),
                                 $timestamp, $text
                             )
                         );
