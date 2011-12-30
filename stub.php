@@ -9,8 +9,7 @@ if (realpath($_SERVER['PATH_TRANSLATED']) == realpath(__FILE__))
 if (version_compare(phpversion(), '5.3.1', '<')) {
     if (substr(phpversion(), 0, 5) != '5.3.1') {
         // this small hack is because of running RCs of 5.3.1
-        echo    basename(__FILE__, '.phar') .
-                " requires PHP 5.3.1 or newer." . PHP_EOL;
+        echo "Erebot requires PHP 5.3.1 or newer." . PHP_EOL;
         exit(1);
     }
 }
@@ -30,10 +29,11 @@ $exts = array(
 );
 foreach ($exts as $ext) {
     if (!extension_loaded($ext)) {
-        echo 'Extension ' . $ext . " is required" . PHP_EOL;
+        echo "Extension $ext is required." . PHP_EOL;
         exit(1);
     }
 }
+unset($exts, $ext);
 
 try {
     Phar::mapPhar();
@@ -50,6 +50,8 @@ $sig = $phar->getSignature();
 define('Erebot_SIG', $sig['hash']);
 define('Erebot_SIGTYPE', $sig['hash_type']);
 define('Erebot_PHAR', __FILE__);
+define('Erebot_VERSION', '@PACKAGE_VERSION@');
+unset($phar, $sig);
 
 include(
     "phar://" . __FILE__ .
@@ -72,10 +74,7 @@ Erebot_Autoload::initialize(
     DIRECTORY_SEPARATOR . 'DependencyInjection'
 );
 
-$logging    = Plop::getInstance();
-$logger     = $logging->getLogger(__FILE__);
 $translator = new Erebot_I18n('Erebot');
-
 $modulesDir = __DIR__ . DIRECTORY_SEPARATOR . 'modules';
 echo sprintf(
     $translator->gettext('Pre-loading modules from "%s".'),
@@ -90,15 +89,10 @@ try {
             continue;
 
         try {
-            $module = new Phar($moduleInfo->getPathName());
-            foreach ($module as $entry) {
-                if ($entry->isDir() && !in_array($entry->getFilename(), $dots))
-                    Erebot_Autoload::initialize(
-                        "phar://" . $moduleInfo->getPathName() .
-                        DIRECTORY_SEPARATOR . $entry->getFilename() .
-                        DIRECTORY_SEPARATOR . "php"
-                    );
-            }
+            $inc = function ($modulePath) {
+                include("phar://" . $modulePath);
+            };
+            $inc($moduleInfo->getPathName());
             echo sprintf(
                 $translator->gettext('Successfully pre-loaded "%s".'),
                 $moduleInfo->getFilename()
@@ -118,10 +112,12 @@ try {
 }
 catch (Exception $e) {
 }
+unset($iter, $dots, $moduleInfo, $inc, $translator, $modulesDir);
 
 echo "Loaded paths:" . PHP_EOL;
 foreach (Erebot_Autoload::getPaths() as $path)
     echo "\t" . $path . PHP_EOL;
+unset($path);
 
 // Quick replacement for ctype_digit in case
 // PHP was compiled with --disable-ctype.
