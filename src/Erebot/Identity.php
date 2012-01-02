@@ -111,18 +111,11 @@ implements  Erebot_Interface_Identity
             );
         }
 
-        // Adapted from the grammar & rules in RFC 1034, section 3.5.
-        $label      = '[A-Za-z](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?';
-        $hostname   = '(?:'.$label.'\.)*'.$label;
-
-        // If this is some hostname, we simply lowercase it.
-        if (preg_match('/^'.$hostname.'$/Di', $host))
-            return strtolower($host);
-
         $decOctet       = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])';
         $dotAddress     = $decOctet.'(?:\\.'.$decOctet.'){3}';
 
         // If it's an IPv4 address, handle it here.
+        // Must appear before the test for hostnames (see RFC 1123, §2.1).
         if (preg_match('/^'.$dotAddress.'$/Di', $host)) {
             $parts  = explode('.', $host, 4);
             $prefix = ($uncompressed ? '0:0:0:0:0' : ':');
@@ -139,6 +132,16 @@ implements  Erebot_Interface_Identity
             return $prefix.':ffff:'.implode(':', $mapped);
         }
 
+        // Adapted from the grammar & rules in RFC 1034, section 3.5,
+        // with an update from the RFC 1123, section 2.1 regarding the
+        // first character.
+        $label      = '[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9]?';
+        $hostname   = '(?:'.$label.'\.)*'.$label;
+
+        // If this is some hostname, we simply lowercase it.
+        if (preg_match('/^'.$hostname.'$/Di', $host))
+            return strtolower($host);
+
         $half           = '[[:xdigit:]]{1,4}';
         $long           = '(?:'.$half.':'.$half.'|('.$dotAddress.'))';
         $colonAddress   =
@@ -154,10 +157,11 @@ implements  Erebot_Interface_Identity
             '(?:(?:'.$half.':){0,6}'.$half.')?::'.
             ')';
 
+        // Is it an IPv6? maybe not...
         if (!preg_match('/^'.$colonAddress.'$/Di', $host, $matches))
             throw new Erebot_InvalidValueException('Unrecognized "host"');
 
-        // It's an IPv6, let's handle it.
+        // It's an IPv6 alright! Let's handle it.
         if (count($matches) > 1) {
             // IPv6 mapped IPv4.
             $mapped = end($matches);
@@ -181,6 +185,7 @@ implements  Erebot_Interface_Identity
             $host = str_replace('::', ':'.str_repeat('0:', $repeat), $host);
         }
 
+        // Remove superfluous leading zeros.
         $parts = explode(':', $host, 8);
         array_walk($parts, array('self', '_stripLeading'));
         if ($c10n == Erebot_Interface_Identity::CANON_IPV4) {
@@ -282,6 +287,7 @@ implements  Erebot_Interface_Identity
 
         // Detect a raw IPv4. The patterns allows the use of "*" where
         // a number is usually expected, as well as "a.b.c.d/netmask".
+        // Must appear before the test for hostnames (see RFC 1123, §2.1).
         $decOctet           = '(?:\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5]|\\*)';
         $dotAddress         = $decOctet.'(?:\\.'.$decOctet.'){3}(?:/[0-9]*)?';
         $dotAddress         = '#^'.$dotAddress.'$#Di';
