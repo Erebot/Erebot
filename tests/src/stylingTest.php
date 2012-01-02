@@ -17,7 +17,7 @@
 */
 
 class   StylingTest
-extends ErebotModuleTestCase
+extends Erebot_Testenv_Module_TestCase
 {
     protected $_translator = NULL;
 

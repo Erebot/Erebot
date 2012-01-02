@@ -67,7 +67,9 @@ extends PHPUnit_Framework_TestCase
             'foo@host',
             'foo!ident@ho$t',
             'foo!ident@host.42',
+            'foo!ident@1.2.3',
             'foo!ident@1.2.3.4.5',
+            'foo!ident@1:2:3:4:5:6:7',
             'foo!ident@1:2:3:4:5:6:7:8:9',
         );
         $masks = array_map(create_function('$a', 'return array($a);'), $masks);

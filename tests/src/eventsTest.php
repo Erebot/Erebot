@@ -72,7 +72,7 @@ extends PHPUnit_Framework_TestCase
         $this->_mainConfig = $this->getMock('Erebot_Interface_Config_Main', array(), array(), '', FALSE, FALSE, FALSE);
         $this->_networkConfig = $this->getMock('Erebot_Interface_Config_Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE, FALSE);
         $this->_serverConfig = $this->getMock('Erebot_Interface_Config_Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE, FALSE);
-        $this->_bot = $this->getMock('ErebotTestCore', array(), array($this->_mainConfig), '', FALSE, FALSE, FALSE);
+        $this->_bot = $this->getMock('Erebot_Testenv_Stub_Core', array(), array($this->_mainConfig), '', FALSE, FALSE, FALSE);
         $events = array(
             '!Ping'     => 'Erebot_Event_Ping',
             '!Connect'  => 'Erebot_Event_Connect',

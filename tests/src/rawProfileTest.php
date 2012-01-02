@@ -17,7 +17,7 @@
 */
 
 abstract class  RawProfileTestHelper
-extends         ErebotModuleTestCase
+extends         Erebot_Testenv_Module_TestCase
 {
     protected $_loader = NULL;
 

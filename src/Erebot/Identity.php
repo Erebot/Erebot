@@ -139,8 +139,14 @@ implements  Erebot_Interface_Identity
         $hostname   = '(?:'.$label.'\.)*'.$label;
 
         // If this is some hostname, we simply lowercase it.
-        if (preg_match('/^'.$hostname.'$/Di', $host))
-            return strtolower($host);
+        if (preg_match('/^'.$hostname.'$/Di', $host)) {
+            // RFC 1123 says the top-level label in a FQDN
+            // can never be all-numeric (avoids ambiguity
+            // with IPv4 addresses in dotted notation).
+            $last = strrchr($host, '.');
+            if (!strspn($last, '.1234567890'))
+                return strtolower($host);
+        }
 
         $half           = '[[:xdigit:]]{1,4}';
         $long           = '(?:'.$half.':'.$half.'|('.$dotAddress.'))';

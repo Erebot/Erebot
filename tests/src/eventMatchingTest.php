@@ -17,7 +17,7 @@
 */
 
 class   EventHandlerMatchTest
-extends ErebotModuleTestCase
+extends Erebot_Testenv_Module_TestCase
 {
     protected $_connection = NULL;
     protected $_cb = NULL;

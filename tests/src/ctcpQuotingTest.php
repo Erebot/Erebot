@@ -38,7 +38,7 @@ extends Erebot_Connection
 
 
 class   CtcpQuotingTest
-extends ErebotModuleTestCase
+extends Erebot_Testenv_Module_TestCase
 {
     public function provider()
     {
