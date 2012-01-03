@@ -144,7 +144,8 @@ implements  Erebot_Interface_Identity
             // can never be all-numeric (avoids ambiguity
             // with IPv4 addresses in dotted notation).
             $last = strrchr($host, '.');
-            if (strspn($last, '.1234567890') != strlen($last))
+            if ($last === FALSE ||
+                strspn($last, '.1234567890') != strlen($last))
                 return strtolower($host);
         }
 
@@ -164,8 +165,11 @@ implements  Erebot_Interface_Identity
             ')';
 
         // Is it an IPv6? maybe not...
-        if (!preg_match('/^'.$colonAddress.'$/Di', $host, $matches))
-            throw new Erebot_InvalidValueException('Unrecognized "host"');
+        if (!preg_match('/^'.$colonAddress.'$/Di', $host, $matches)) {
+            throw new Erebot_InvalidValueException(
+                'Unrecognized "host" ('.$host.')'
+            );
+        }
 
         // It's an IPv6 alright! Let's handle it.
         if (count($matches) > 1) {
