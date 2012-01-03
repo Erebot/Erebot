@@ -144,7 +144,7 @@ implements  Erebot_Interface_Identity
             // can never be all-numeric (avoids ambiguity
             // with IPv4 addresses in dotted notation).
             $last = strrchr($host, '.');
-            if (!strspn($last, '.1234567890'))
+            if (strspn($last, '.1234567890') != strlen($last))
                 return strtolower($host);
         }
 
