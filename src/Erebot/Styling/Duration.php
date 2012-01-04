@@ -17,7 +17,7 @@
 */
 
 class       Erebot_Styling_Duration
-implements  Erebot_Interface_Styling_Variable
+implements  Erebot_Interface_Styling_Duration
 {
     protected $_value;
 
