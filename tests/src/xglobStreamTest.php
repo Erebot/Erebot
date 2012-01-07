@@ -17,7 +17,7 @@
 */
 
 class   XglobStreamTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     /**
      * @covers Erebot_XGlobStream<extended>

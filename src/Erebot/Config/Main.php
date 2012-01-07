@@ -235,7 +235,7 @@ implements  Erebot_Interface_Config_Main
         $plopSchemaOrig = NULL;
         if (!strncmp(__FILE__, 'phar://', 7)) {
             $plopSchemaOrig = $plopSchema;
-            $plopSchema = tempnam(sys_get_temp_dir(), "Plop");
+            $plopSchema     = tempnam(sys_get_temp_dir(), "Plop");
             file_put_contents(
                 $plopSchema,
                 file_get_contents($plopSchemaOrig),
@@ -245,18 +245,20 @@ implements  Erebot_Interface_Config_Main
 
         $plopNormSchema = (string) Erebot_URI::fromAbsPath($plopSchema, TRUE);
         $schema = str_replace('@plop_schema@', $plopNormSchema, $schema);
-        $ok = $domxml->relaxNGValidateSource($schema);
+        $ok     = $domxml->relaxNGValidateSource($schema);
         $errors = $domxml->getErrors();
         libxml_use_internal_errors($ue);
 
         if ($plopSchemaOrig !== NULL)
             @unlink($plopSchema);
 
+        $logging = Plop::getInstance();
         if (!$ok || count($errors)) {
-            # Some unpredicted error occurred,
-            # show some (hopefully) useful information.
-            $errmsg = print_r($errors, TRUE);
-            fprintf(STDERR, '%s', $errmsg);
+            // Some unpredicted error occurred,
+            // show some (hopefully) useful information.
+            $logging->basicConfig();
+            $logger = $logging->getLogger(__FILE__);
+            $logger->error(print_r($errors, TRUE));
             throw new Erebot_InvalidValueException(
                 'Errors were found while validating the configuration file'
             );
@@ -309,7 +311,6 @@ implements  Erebot_Interface_Config_Main
             }
         }
 
-        $logging = Plop::getInstance();
         if (isset($xml->children(Plop_Config_Format_XML::XMLNS)->logging[0]))
             $logging->fileConfig(
                 $xml->children(Plop_Config_Format_XML::XMLNS)->logging[0],

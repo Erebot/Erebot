@@ -17,7 +17,7 @@
 */
 
 class   URITest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     /**
      * @covers Erebot_URI
@@ -82,7 +82,7 @@ extends PHPUnit_Framework_TestCase
 }
 
 class   RelativeURITest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function normalResults()
     {
@@ -148,7 +148,7 @@ extends PHPUnit_Framework_TestCase
 }
 
 class   ParseURLTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function userinfoProvider()
     {
@@ -203,7 +203,7 @@ extends PHPUnit_Framework_TestCase
 }
 
 class   HostTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function validProvider()
     {

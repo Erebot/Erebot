@@ -17,7 +17,7 @@
 */
 
 class   UtilsTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     protected function getCallerObjectHelper()
     {

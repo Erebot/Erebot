@@ -45,8 +45,8 @@ extends Erebot_Identd_Worker
     }
 }
 
-abstract class AbstractIdentdTest
-extends PHPUnit_Framework_TestCase
+abstract class  AbstractIdentdTest
+extends         Erebot_TestEnv_TestCase
 {
     protected $_mainConfig;
     protected $_bot;

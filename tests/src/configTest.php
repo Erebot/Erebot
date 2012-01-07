@@ -17,7 +17,7 @@
 */
 
 class   ConfigTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function setUp()
     {
@@ -105,6 +105,27 @@ CONFIG;
      */
     public function testLoadInvalidConfigFromString()
     {
+        $path   = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
+        $file   =   "src" .
+                    DIRECTORY_SEPARATOR . "Erebot" .
+                    DIRECTORY_SEPARATOR . "Config" .
+                    DIRECTORY_SEPARATOR . "Main.php";
+        $this->setExpectedLogs(<<<LOGS
+ERROR:$path$file:Array
+(
+    [0] => LibXMLError Object
+        (
+            [level] => 2
+            [code] => 24
+            [column] => 0
+            [message] => Element configuration failed to validate attributes
+            [file] => $path
+            [line] => 1
+        )
+)
+LOGS
+        );
+
         $data = '<?xml version="1.0" ?'.'>';
         $data .=<<<CONFIG
 <configuration xmlns="http://www.erebot.net/xmlns/erebot"></configuration>

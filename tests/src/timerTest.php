@@ -17,7 +17,7 @@
 */
 
 abstract class  AbstractTimerTest
-extends         PHPUnit_Framework_TestCase
+extends         Erebot_TestEnv_TestCase
 {
     protected $_flag;
 

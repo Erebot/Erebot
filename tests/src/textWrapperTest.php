@@ -17,7 +17,7 @@
 */
 
 class   TextWrapperTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function setUp()
     {

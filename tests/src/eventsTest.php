@@ -57,7 +57,7 @@ extends Erebot_Connection
 }
 
 class   EventsTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     protected $_outputBuffer = array();
     protected $_mainConfig = NULL;

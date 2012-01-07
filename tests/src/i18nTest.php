@@ -17,7 +17,7 @@
 */
 
 class   I18nTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function setUp()
     {

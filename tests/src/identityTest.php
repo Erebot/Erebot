@@ -17,7 +17,7 @@
 */
 
 class   IdentityTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     /**
      * @covers Erebot_Identity
@@ -51,7 +51,7 @@ extends PHPUnit_Framework_TestCase
 }
 
 class   InvalidIdentitiesTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function invalidMasksProvider()
     {
@@ -88,7 +88,7 @@ extends PHPUnit_Framework_TestCase
 }
 
 class   IdentityMatchingTest
-extends PHPUnit_Framework_TestCase
+extends Erebot_TestEnv_TestCase
 {
     public function testMatching()
     {
