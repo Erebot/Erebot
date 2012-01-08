@@ -112,7 +112,7 @@ extends Erebot_Testenv_Module_TestCase
             // and puts the volume's letter in lowercase.
             $pos = strpos($path, ':');
             $xmlPath = "file:///". strtolower(substr($path, 0, $pos)) .
-                        substr($path, $pos);
+                str_replace(DIRECTORY_SEPARATOR, '/', substr($path, $pos));
         }
 
         $this->setExpectedLogs(<<<LOGS
