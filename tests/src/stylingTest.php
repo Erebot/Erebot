@@ -104,11 +104,16 @@ extends Erebot_Testenv_Module_TestCase
                     DIRECTORY_SEPARATOR . "Styling.php";
         $msg    =  'The "fg" attribute or the "bg" attribute or both must ' .
                     'be supplied when using the <color> tag.';
-        $xmlPath = (
-            (DIRECTORY_SEPARATOR != "/")
-            ? "file:///" . str_replace(DIRECTORY_SEPARATOR, "/", $path)
-            : $path
-        );
+
+        if (DIRECTORY_SEPARATOR == "/")
+            $xmlPath = $path;
+        else {
+            // Under Windows, libxml2 adds a "file:///" prefix
+            // and puts the volume's letter in lowercase.
+            $pos = strpos($path, ':');
+            $xmlPath = "file:///". strtolower(substr($path, 0, $pos)) .
+                        substr($path, $pos);
+        }
 
         $this->setExpectedLogs(<<<LOGS
 ERROR:$path$file:Array

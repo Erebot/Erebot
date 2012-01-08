@@ -110,11 +110,16 @@ CONFIG;
                     DIRECTORY_SEPARATOR . "Erebot" .
                     DIRECTORY_SEPARATOR . "Config" .
                     DIRECTORY_SEPARATOR . "Main.php";
-        $xmlPath = (
-            (DIRECTORY_SEPARATOR != "/")
-            ? "file:///" . str_replace(DIRECTORY_SEPARATOR, "/", $path)
-            : $path
-        );
+
+        if (DIRECTORY_SEPARATOR == "/")
+            $xmlPath = $path;
+        else {
+            // Under Windows, libxml2 adds a "file:///" prefix
+            // and puts the volume's letter in lowercase.
+            $pos = strpos($path, ':');
+            $xmlPath = "file:///". strtolower(substr($path, 0, $pos)) .
+                        substr($path, $pos);
+        }
 
         $this->setExpectedLogs(<<<LOGS
 ERROR:$path$file:Array
