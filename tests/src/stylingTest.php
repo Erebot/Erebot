@@ -104,6 +104,12 @@ extends Erebot_Testenv_Module_TestCase
                     DIRECTORY_SEPARATOR . "Styling.php";
         $msg    =  'The "fg" attribute or the "bg" attribute or both must ' .
                     'be supplied when using the <color> tag.';
+        $xmlPath = (
+            (DIRECTORY_SEPARATOR != "/")
+            ? "file:///" . str_replace(DIRECTORY_SEPARATOR, "/", $path)
+            : $path
+        );
+
         $this->setExpectedLogs(<<<LOGS
 ERROR:$path$file:Array
 (
@@ -113,13 +119,14 @@ ERROR:$path$file:Array
             [code] => 0
             [column] => 0
             [message] => $msg
-            [file] => $path
+            [file] => $xmlPath
             [line] => 0
             [path] => /msg[1]/color[1]
         )
 )
 LOGS
         );
+
         $tpl = new Erebot_Styling($this->_translator);
         $tpl->render('<color>foo</color>');
     }

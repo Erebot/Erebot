@@ -110,6 +110,12 @@ CONFIG;
                     DIRECTORY_SEPARATOR . "Erebot" .
                     DIRECTORY_SEPARATOR . "Config" .
                     DIRECTORY_SEPARATOR . "Main.php";
+        $xmlPath = (
+            (DIRECTORY_SEPARATOR != "/")
+            ? "file:///" . str_replace(DIRECTORY_SEPARATOR, "/", $path)
+            : $path
+        );
+
         $this->setExpectedLogs(<<<LOGS
 ERROR:$path$file:Array
 (
@@ -119,7 +125,7 @@ ERROR:$path$file:Array
             [code] => 24
             [column] => 0
             [message] => Element configuration failed to validate attributes
-            [file] => $path
+            [file] => $xmlPath
             [line] => 1
         )
 )
