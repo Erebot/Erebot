@@ -11,3 +11,6 @@
 /*.pubkey
 /*.tgz
 /*.tagfile.xml
+
+/package.xml
+/package_compatible.xml
