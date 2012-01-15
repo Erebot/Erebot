@@ -123,9 +123,9 @@ the `styling API`_. Readers may be interested in the documentation on
     http://www.gnu.org/s/gettext/
 ..  _`Erebot_Interface_I18n`:
 ..  _`API documentation`:
-    https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__I18n.html
+    https://buildbot.erebot.net/doc/api/Erebot/html/interfaceErebot__Interface__I18n.html
 ..  _`styling API`:
-    https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__Styling.html
+    https://buildbot.erebot.net/doc/api/Erebot/html/interfaceErebot__Interface__Styling.html
 ..  _`styling`:
     Styling.html
 

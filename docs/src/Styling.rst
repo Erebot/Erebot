@@ -473,15 +473,15 @@ implemented, while this page may sometime fall a little behind in what it
 showcases (please `open a ticket`_ if you notice any discrepancy!).
 
 ..  _`styling API`:
-    https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__Styling.html
+    https://buildbot.erebot.net/doc/api/Erebot/html/interfaceErebot__Interface__Styling.html
 ..  _`RelaxNG schema`:
     https://github.com/fpoirotte/Erebot/blob/master/data/styling.rng
 ..  _`Erebot_Styling`:
-    https://buildbot.erebot.net/doc/html/Erebot/classErebot__Styling.html
+    https://buildbot.erebot.net/doc/api/Erebot/html/classErebot__Styling.html
 ..  _`Erebot_Interface_Styling_Variable`:
-    https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__Styling__Variable.html
+    https://buildbot.erebot.net/doc/api/Erebot/html/interfaceErebot__Interface__Styling__Variable.html
 ..  _`Erebot_Interface_I18n`:
-    https://buildbot.erebot.net/doc/html/Erebot/interfaceErebot__Interface__I18n.html
+    https://buildbot.erebot.net/doc/api/Erebot/html/interfaceErebot__Interface__I18n.html
 ..  _`Internationalization`:
     Internationalization.html
 ..  _`open a ticket`:
