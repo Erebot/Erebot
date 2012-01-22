@@ -75,10 +75,63 @@ those dependencies as well anyway.
     modules. At a minimum, this includes: `Erebot_Module_IrcConnector`_,
     `Erebot_Module_AutoConnect`_, `Erebot_Module_PingReply`_.
 
-..  todo::
-    Explain how to do this.
+Installing Erebot as a PHAR archive only involves a few steps:
 
-Be sure to read the section on `final steps`_ for a summary of what to do next.
+1.  Make sure your installation fulfills all of the `prerequisites`_
+
+2.  Download the PHAR archive for Erebot itself. You can grab the latest
+    version from https://pear.erebot.net/get/Erebot-latest.phar.
+
+3.  Create a directory named ``modules`` in the same folder as the PHAR.
+
+4.  Go to the ``modules`` directory and drop a copy of the PHAR archive
+    for the following components:
+
+    *   `Erebot_Module_IrcConnector`_ (direct link:
+        https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar)
+
+    *   `Erebot_Module_AutoConnect`_ (direct link:
+        https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar)
+
+    *   `Erebot_Module_PingReply`_ (direct link:
+        https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar)
+
+    Make sure you read each component's documentation (especially the list
+    of prerequisites).
+
+5.  Optionally, download additional PHAR archives for other modules.
+
+Your tree should now look like this:
+
+    * Erebot/
+        * Erebot-latest.phar
+        * modules/
+            * Erebot_Module_IrcConnector-latest.phar
+            * Erebot_Module_AutoConnect-latest.phar
+            * Erebot_Module_PingReply-latest.phar
+            * *eventually, additional PHAR archives*
+
+That's it! You may now read the section on `final steps`_ for a summary of
+what to do next.
+
+..  note::
+    The whole installation process using PHAR archives can be automated
+    using the following commands:
+
+    ..  sourcecode:: bash
+
+        $ wget --no-check-certificate                                           \
+            https://pear.erebot.net/get/Erebot-latest.phar                      \
+            https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar  \
+            https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar   \
+            https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar
+        $ mkdir modules
+        $ mv Erebot_Module_*-latest.phar modules/
+
+    However, please note that these commands do not attempt to check that
+    the machine they're running on matches the bot's and the module's
+    prerequisites. You should read the documentation of each component
+    to verify that yourself.
 
 
 Installation from source

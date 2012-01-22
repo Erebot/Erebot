@@ -152,7 +152,7 @@ and their role.
     +-----------+---------------+-------------------------------------------+
 
 A <module> tag may contain zero or more `\<param\>`_ tags to specify
-additionnal parameters the module should take into account (such as
+additional parameters the module should take into account (such as
 specific settings).
 
 <param>
