@@ -1,3 +1,5 @@
+..  _`prerequisites`:
+
 Prerequisites
 =============
 
@@ -270,129 +272,94 @@ available for each dependency.
 
 ..  table:: PECL extensions used by Erebot
 
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | Dependency                    | Developer | Packager  | End-user  | Description                       |
-    +===============================+===========+===========+===========+===================================+
-    | `pecl.php.net/DOM`_           | yes       |           | yes       | The DOM extension parses an XML   |
-    |                               |           |           |           | document into a Document Object   |
-    |                               |           |           |           | Model (DOM), making it easier to  |
-    |                               |           |           |           | work with from a developer's      |
-    |                               |           |           |           | point of view.                    |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/intl`_          | yes       | yes       | yes       | Provides several helper classes   |
-    |                               |           |           |           | to ease internationalization of   |
-    |                               |           |           |           | PHP applications.                 |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/libxml`_        | yes       |           | yes       | This extension is a thin wrapper  |
-    |                               |           |           |           | over the C `libxml2`_ library     |
-    |                               |           |           |           | and is used by other extensions   |
-    |                               |           |           |           | (DOM, SimpleXML, XML, etc.) to    |
-    |                               |           |           |           | work with XML documents.          |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/openssl`_       |           |           | [#]_      | Provides `SSL`_/`TLS`_ support    |
-    |                               |           |           |           | (secure communications) for PHP.  |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/pcntl`_         |           |           | [#]_      | Process management using PHP.     |
-    |                               |           |           |           | The functions provided by this    |
-    |                               |           |           |           | extension can be used to          |
-    |                               |           |           |           | communicate with other processes  |
-    |                               |           |           |           | from PHP (using signals) and to   |
-    |                               |           |           |           | exercise some sort of control     |
-    |                               |           |           |           | over them.                        |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/Phar`_          |           | [#]_      | [#]_      | This extension is used to create  |
-    |                               |           |           |           | or access a PHP Archive (phar).   |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/POSIX`_         |           |           | [#]_      | Provides access to several        |
-    |                               |           |           |           | functions only featured by        |
-    |                               |           |           |           | `POSIX`_-compliant operating      |
-    |                               |           |           |           | systems.                          |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/Reflection`_    | yes       |           | yes       | This extension makes it possible  |
-    |                               |           |           |           | for some PHP code to inspect its  |
-    |                               |           |           |           | own structure.                    |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/SimpleXML`_     | yes       |           | yes       | Wrapper around `libxml2`_         |
-    |                               |           |           |           | designed to make working with XML |
-    |                               |           |           |           | documents easier.                 |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/sockets`_       | yes       |           | yes       | This extensions provides          |
-    |                               |           |           |           | networking means for PHP          |
-    |                               |           |           |           | applications.                     |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/SPL`_           | yes       |           | yes       | The `Standard PHP Library`_       |
-    |                               |           |           |           | provides several functions and    |
-    |                               |           |           |           | classes meant to deal with common |
-    |                               |           |           |           | usage patterns, with code reuse   |
-    |                               |           |           |           | as the main focus.                |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/SQLite3`_       |           | yes [#]_  |           | Wrapper around version 3 of the   |
-    |                               |           |           |           | C `SQLite`_ library.              |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/xdebug`_        | yes       |           |           | Debugging execution of PHP code   |
-    |                               |           |           |           | is made possible by this          |
-    |                               |           |           |           | extension. It can also be used to |
-    |                               |           |           |           | retrieve some metrics on the code |
-    |                               |           |           |           | (like code coverage information). |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/XMLReader`_     |           | yes [#]_  |           | A simple extension to read XML    |
-    |                               |           |           |           | documents without having to build |
-    |                               |           |           |           | a full Document Object Model in   |
-    |                               |           |           |           | memory first.                     |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/XMLWriter`_     |           | yes [#]_  |           | XMLReader's counterpart to write  |
-    |                               |           |           |           | XML documents.                    |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pecl.php.net/mbstring`_ or   | yes       |           | yes       | These extensions make it possible |
-    | `pecl.php.net/iconv`_ or      |           |           |           | to re-encode some text (also      |
-    | `pecl.php.net/recode`_ or     |           |           |           | known as transcoding) from one    |
-    | `pecl.php.net/XML`_           |           |           |           | character set to another.         |
-    |                               |           |           |           | **mbstring** or **iconv** is      |
-    |                               |           |           |           | recommended as they support a     |
-    |                               |           |           |           | wider range of character sets     |
-    |                               |           |           |           | when compared to the other        |
-    |                               |           |           |           | extensions.                       |
-    +-------------------------------+-----------+-----------+-----------+-----------------------------------+
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | Dependency                | Developer | Packager  | End-user  | Description                       |
+    +===========================+===========+===========+===========+===================================+
+    | :pecl:`DOM`               | yes       |           | yes       | The DOM extension parses an XML   |
+    |                           |           |           |           | document into a Document Object   |
+    |                           |           |           |           | Model (DOM), making it easier to  |
+    |                           |           |           |           | work with from a developer's      |
+    |                           |           |           |           | point of view.                    |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`intl`              | yes       | yes       | yes       | Provides several helper classes   |
+    |                           |           |           |           | to ease internationalization of   |
+    |                           |           |           |           | PHP applications.                 |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`libxml`            | yes       |           | yes       | This extension is a thin wrapper  |
+    |                           |           |           |           | over the C `libxml2`_ library     |
+    |                           |           |           |           | and is used by other extensions   |
+    |                           |           |           |           | (DOM, SimpleXML, XML, etc.) to    |
+    |                           |           |           |           | work with XML documents.          |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`openssl`           |           |           | [#]_      | Provides `SSL`_/`TLS`_ support    |
+    |                           |           |           |           | (secure communications) for PHP.  |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`pcntl`             |           |           | [#]_      | Process management using PHP.     |
+    |                           |           |           |           | The functions provided by this    |
+    |                           |           |           |           | extension can be used to          |
+    |                           |           |           |           | communicate with other processes  |
+    |                           |           |           |           | from PHP (using signals) and to   |
+    |                           |           |           |           | exercise some sort of control     |
+    |                           |           |           |           | over them.                        |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`Phar`              |           | [#]_      | [#]_      | This extension is used to create  |
+    |                           |           |           |           | or access a PHP Archive (phar).   |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`POSIX`             |           |           | [#]_      | Provides access to several        |
+    |                           |           |           |           | functions only featured by        |
+    |                           |           |           |           | `POSIX`_-compliant operating      |
+    |                           |           |           |           | systems.                          |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`Reflection`        | yes       |           | yes       | This extension makes it possible  |
+    |                           |           |           |           | for some PHP code to inspect its  |
+    |                           |           |           |           | own structure.                    |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`SimpleXML`         | yes       |           | yes       | Wrapper around `libxml2`_         |
+    |                           |           |           |           | designed to make working with XML |
+    |                           |           |           |           | documents easier.                 |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`sockets`           | yes       |           | yes       | This extensions provides          |
+    |                           |           |           |           | networking means for PHP          |
+    |                           |           |           |           | applications.                     |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`SPL`               | yes       |           | yes       | The `Standard PHP Library`_       |
+    |                           |           |           |           | provides several functions and    |
+    |                           |           |           |           | classes meant to deal with common |
+    |                           |           |           |           | usage patterns, with code reuse   |
+    |                           |           |           |           | as the main focus.                |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`SQLite3`           |           | yes [#]_  |           | Wrapper around version 3 of the   |
+    |                           |           |           |           | C `SQLite`_ library.              |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | `pecl.php.net/xdebug`_    | yes       |           |           | Debugging execution of PHP code   |
+    |                           |           |           |           | is made possible by this          |
+    |                           |           |           |           | extension. It can also be used to |
+    |                           |           |           |           | retrieve some metrics on the code |
+    |                           |           |           |           | (like code coverage information). |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`XMLReader`         |           | yes [#]_  |           | A simple extension to read XML    |
+    |                           |           |           |           | documents without having to build |
+    |                           |           |           |           | a full Document Object Model in   |
+    |                           |           |           |           | memory first.                     |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`XMLWriter`         |           | yes [#]_  |           | XMLReader's counterpart to write  |
+    |                           |           |           |           | XML documents.                    |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pecl:`mbstring` or       | yes       |           | yes       | These extensions make it possible |
+    | :pecl:`iconv` or          |           |           |           | to re-encode some text (also      |
+    | :pecl:`recode` or         |           |           |           | known as transcoding) from one    |
+    | :pecl:`XML`               |           |           |           | character set to another.         |
+    |                           |           |           |           | **mbstring** or **iconv** is      |
+    |                           |           |           |           | recommended as they support a     |
+    |                           |           |           |           | wider range of character sets     |
+    |                           |           |           |           | when compared to the other        |
+    |                           |           |           |           | extensions.                       |
+    +---------------------------+-----------+-----------+-----------+-----------------------------------+
 
-..  _`pecl.php.net/DOM`:
-    http://php.net/dom
-..  _`pecl.php.net/intl`:
-    http://php.net/intl
-..  _`pecl.php.net/libxml`:
-    http://php.net/libxml
-..  _`pecl.php.net/openssl`:
-    http://php.net/openssl
-..  _`pecl.php.net/pcntl`:
-    http://php.net/pcntl
-..  _`pecl.php.net/Phar`:
-    http://php.net/phar
-..  _`pecl.php.net/POSIX`:
-    http://php.net/posix
-..  _`pecl.php.net/Reflection`:
-    http://php.net/reflection
-..  _`pecl.php.net/SimpleXML`:
-    http://php.net/libxml
-..  _`pecl.php.net/sockets`:
-    http://php.net/sockets
-..  _`pecl.php.net/SPL`:
 ..  _`Standard PHP Library`:
     http://php.net/spl
-..  _`pecl.php.net/SQLite3`:
-    http://php.net/sqlite3
 ..  _`pecl.php.net/xdebug`:
     http://xdebug.org/
-..  _`pecl.php.net/XMLReader`:
-    http://php.net/xmlreader
-..  _`pecl.php.net/XMLWriter`:
-    http://php.net/xmlwriter
-..  _`pecl.php.net/mbstring`:
-    http://php.net/mbstring
-..  _`pecl.php.net/iconv`:
-    http://php.net/iconv
-..  _`pecl.php.net/recode`:
-    http://php.net/recode
-..  _`pecl.php.net/XML`:
-    http://php.net/xml
 
 ..  [#] Only needed if you want to connect to IRC servers using a secure
     (encrypted) connection.
@@ -435,20 +402,20 @@ available for each dependency.
     |                                       |           |           |           | which provides phing targets for  |
     |                                       |           |           |           | most operations you may use.      |
     +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pear.php.net/Console_CommandLine`_   | yes       |           | yes       | Parses command line arguments.    |
+    | :pear:`Console_CommandLine`           | yes       |           | yes       | Parses command line arguments.    |
     |                                       |           |           |           | This is used by Erebot to provide |
     |                                       |           |           |           | options for the bot (eg. to       |
     |                                       |           |           |           | change the path to the            |
     |                                       |           |           |           | configuration file, to start the  |
     |                                       |           |           |           | bot in the background, etc.).     |
     +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pear.php.net/File_Gettext`_          | yes       |           | yes       | Erebot uses this PEAR package to  |
+    | :pear:`File_Gettext`                  | yes       |           | yes       | Erebot uses this PEAR package to  |
     |                                       |           |           |           | handle internationalization. It   |
     |                                       |           |           |           | can be used to parse `gettext`_   |
     |                                       |           |           |           | translation catalogs, like the    |
     |                                       |           |           |           | ones provided with Erebot.        |
     +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pear.php.net/PHP_CodeSniffer`_       | yes [#]_  |           |           | This package tokenizes PHP files  |
+    | :pear:`PHP_CodeSniffer`               | yes [#]_  |           |           | This package tokenizes PHP files  |
     |                                       |           |           |           | and detects violations of a       |
     |                                       |           |           |           | defined set of coding standards.  |
     |                                       |           |           |           | It is used by Erebot developers   |
@@ -485,12 +452,6 @@ available for each dependency.
     http://pdepend.org/
 ..  _`pear.phing.info/Phing`:
     http://phing.info/
-..  _`pear.php.net/Console_CommandLine`:
-    http://pear.php.net/Console_CommandLine
-..  _`pear.php.net/File_Gettext`:
-    http://pear.php.net/File_Gettext
-..  _`pear.php.net/PHP_CodeSniffer`:
-    http://pear.php.net/PHP_CodeSniffer
 ..  _`pear.phpmd.org/PHP_PMD`:
     http://phpmd.org/
 ..  _`pear.phpunit.de/phpcpd`:
