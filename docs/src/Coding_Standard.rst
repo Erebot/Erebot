@@ -85,7 +85,7 @@ so as to line up the 3 (three) parts of the operator:
 Casting
 -------
 
-Put a space between the (type) and the $variable in a cast:
+Put a single space between the (type) and the operand of a cast:
 
 ..  sourcecode:: inline-php
 
@@ -132,13 +132,6 @@ in the following blog entries:
 
 For switch statements:
 
-..  note::
-    It is sometimes useful to write a case statement which falls through
-    to the next case by not including a ``break`` or ``return`` within
-    that case. To distinguish these cases from bugs, any case statement
-    where ``break`` or ``return`` are omitted should contain a comment
-    indicating that this is the intended behaviour.
-
 ..  sourcecode:: inline-php
 
     switch (condition) {
@@ -153,6 +146,13 @@ For switch statements:
         default:
             defaultaction;
     }
+
+..  note::
+    It is sometimes useful to write a case statement which falls through
+    to the next case by not including a ``break`` or ``return`` within
+    that case. To distinguish these cases from bugs, any case statement
+    where ``break`` or ``return`` are omitted should contain a comment
+    indicating that this is the intended behaviour.
 
 For do-while statements:
 
@@ -968,3 +968,4 @@ You may also be interested in
     http://book.git-scm.com/5_submodules.html
 
 ..  vim: et ts=4
+
