@@ -65,8 +65,8 @@ Unary operators (operators that operate on only one value), such as ``++``,
 should not have a space between the operator and the variable or number
 they are operating on.
 
-When using the ternary operator (``... ? ... : ...``), add parentheses around
-the condition.
+When using the ternary operator, add parentheses around the condition:
+``(...) ? ... : ...``.
 
 Only wrap the ternary operator if the total length of the line exceeds
 the |cs-chars-limit| chars limit. In that case, add a single newline
