@@ -199,24 +199,27 @@ implements  Erebot_Interface_ReceivingConnection
      * Retrieves a single line of text from the incoming buffer
      * and puts it in the incoming FIFO.
      *
-     * \retval TRUE
-     *      Whether a line could be fetched from the buffer.
-     *
-     * \retval FALSE
-     *      ... or not.
+     * \retval bool
+     *      Whether a line could be fetched from the buffer
+     *      or not.
      *
      * \note
      *      Lines fetched by this method are always UTF-8 encoded.
      */
     protected function _getSingleLine()
     {
-        $pos = strpos($this->_incomingData, "\r\n");
-        if ($pos === FALSE)
-            return FALSE;
+        while (TRUE) {
+            $pos = strcspn($this->_incomingData, "\r\n");
+            if ($pos == strlen($this->_incomingData))
+                return FALSE;
 
-        $line = Erebot_Utils::toUTF8(substr($this->_incomingData, 0, $pos));
-        $this->_incomingData    = substr($this->_incomingData, $pos + 2);
-        $this->_rcvQueue[]      = $line;
+            $line = (string) substr($this->_incomingData, 0, $pos);
+            $this->_incomingData = (string) substr($this->_incomingData, $pos + 1);
+            if ($line == "")
+                continue;
+            $line = Erebot_Utils::toUTF8($line);
+        }
+        $this->_rcvQueue[] = $line;
 
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(
