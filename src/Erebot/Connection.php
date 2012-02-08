@@ -686,7 +686,7 @@ implements  Erebot_Interface_ModuleContainer,
                 $parts[0] = substr($parts[0], 1);
 
             $msg = implode(' ', $parts);
-            return $this->dispatch($this->makeEvent('!Error', $souce, $msg));
+            return $this->dispatch($this->makeEvent('!Error', $source, $msg));
         }
 
         $target = array_shift($parts);
