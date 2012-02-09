@@ -213,11 +213,12 @@ implements  Erebot_Interface_ReceivingConnection
             if ($pos == strlen($this->_incomingData))
                 return FALSE;
 
-            $line = (string) substr($this->_incomingData, 0, $pos);
+            $line = substr($this->_incomingData, 0, $pos);
             $this->_incomingData = (string) substr($this->_incomingData, $pos + 1);
-            if ($line == "")
+            if ($line === FALSE)
                 continue;
             $line = Erebot_Utils::toUTF8($line);
+            break;
         }
         $this->_rcvQueue[] = $line;
 
