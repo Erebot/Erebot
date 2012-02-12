@@ -297,5 +297,17 @@ LOGS
         $result = $tpl->render($source, array('boys' => 0, 'girls' => 1));
         $this->assertEquals('There is one person in this room.', $result);
     }
+
+    public function testComplexComputation()
+    {
+        // This "variable" uses both addition on arrays
+        // and counting on a virtual variable.
+        $source = "<var name='#(foo+bar)'/>";
+        $tpl    = new Erebot_Styling($this->_translator);
+        $foo    = range(1, 10);
+        $bar    = range(1, 4);
+        $result = $tpl->render($source, array('foo' => $foo, 'bar' => $bar));
+        $this->assertEquals('14', $result);
+    }
 }
 

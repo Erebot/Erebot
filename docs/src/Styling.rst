@@ -115,14 +115,17 @@ Currently, the following tags are available:
       The value will be rendered in a locale-dependent way, depending on
       the `type of variable`_ used. This tag accepts one attribute:
 
-      - name (required) = name of the variable to insert.
+      - name (required) = variable to insert. See `template variables`_
+        below for the various syntaxes supported by this attribute.
 
     * ``<plural>`` = use the correct plural form for that sentence.
-      This tag has a required attribute called ``var`` indicating the name
-      of the variable that will give us the correct plural form to use.
-      This variable should be an integer. Depending on the locale in use
-      and this number, the appropriate plural form will be selected from
-      a set of possibilities (cases).
+      This tag has a required attribute called ``var`` that is used to
+      determine the correct plural form to use. See `template variables`_
+      below for the various syntaxes supported by this attribute.
+
+      The content of this attribute should evaluate to an integer.
+      Depending on the locale in use and this number, the appropriate plural
+      form will be selected from a set of possibilities (cases).
 
       A ``<plural>`` tag contains one or more ``<case>`` subtags.
       Each ``<case>`` contains some inline text and comes with a required
@@ -159,8 +162,8 @@ Currently, the following tags are available:
 
 ..  _`type of variable`:
 
-Typed variables
-~~~~~~~~~~~~~~~
+Strong typing
+~~~~~~~~~~~~~
 
 Each variable in a template has an associated type.
 The following classes are available by default to represent some of the most
@@ -238,9 +241,11 @@ common types:
         Unix timestamp (seconds since Epoch, UTC) or an array using
         the same format as what is output by the `localtime()`_ PHP
         function.
-        **Note**: `DateTime`_ objects are only supported since PHP 5.3.4,
-        you should not rely on them in code intended to be backward
-        compatible.
+
+        ..  note::
+            `DateTime`_ objects are only supported since PHP 5.3.4,
+            you should not rely on them in code intended to be backward
+            compatible.
 
     *   ``$datetype``
 
@@ -279,6 +284,9 @@ common types:
             echo $formatter->_($source, $vars) . PHP_EOL;
         ?>
 
+    ..  [#] See http://php.net/class.intldateformatter.php for the meaning
+        of each one of these constants.
+
 ``Erebot_Styling_Duration``
     Represents a duration in spelled out form, with a precision up to the
     seconds.
@@ -295,6 +303,9 @@ common types:
             echo $formatter->_($source, $vars) . PHP_EOL;
         ?>
 
+..  tip::
+    If you need to represent a value without any modification, pass it
+    as a string or wrap it in an instance of ``Erebot_Styling_String``.
 
 ..  note::
 
@@ -304,11 +315,88 @@ common types:
     ``Erebot_Styling_Float``, respectively).
     Arrays do not need to be wrapped in any class (but their values do!).
 
-If you need to represent a value without any modification, pass it as a string
-or wrap it in an instance of ``Erebot_Styling_String``.
+    You may change the default classes used to wrap scalar types for a
+    specific template using the ``setClass()`` method, eg:
 
-..  [#] See http://php.net/class.intldateformatter.php for the meaning
-    of each one of these constants.
+    ..  sourcecode:: php
+
+        <?php
+            $translator = new Erebot_I18n();
+            $tpl = new Erebot_Styling($translator);
+
+            // Change the classes used to wrap basic scalar types.
+            $tpl->setClass('int',       'Custom_Int_Wrapper');
+            $tpl->setClass('string',    'Custom_String_Wrapper');
+            $tpl->setClass('float',     'Custom_Float_Wrapper');
+
+            // Use $tpl as we'd normally do.
+        ?>
+
+
+..  _`template variables`:
+
+Template variables
+~~~~~~~~~~~~~~~~~~
+
+When referencing a variable from a template using the ``<var name="..."/>``
+or ``<plural var="..."/>`` tags, various syntaxes are available.
+
+Hence, ``...`` may actually contain:
+
+*   Actual variable passed to the template, eg. ``<var name="foo"/>``.
+
+*   The sum or difference between two integer or floating-point values,
+    eg. ``<var name="foo+bar"/>`` or ``<var name="foo-bar">``.
+    Both types may be combined together (so, "foo" may refer to an integer,
+    while "bar" refers to a floating-point value).
+
+    You may use litteral integer or floating-point values as well,
+    eg. ``<var name="years-18"/>`` or ``<var name="century+1"/>``.
+
+    ..  tip::
+        As a special bonus, you may also use the add operator (+) to append
+        the values of one array to another using ``array_merge``. The original
+        arrays are left intact when this feature is used.
+
+    ..  warning::
+        Any attempt to add or subtract values from incompatible types
+        (eg. adding the value of an integer to a string) will result
+        in an exception being thrown. In particular, subtracting one array
+        from another is not supported yet.
+
+    ..  warning::
+        There is currently no plan to support the multiply (*) or divide (/)
+        operators.
+
+*   Parenthesized expressions, eg. ``<var name="totalCards-(nbCards+1)"/>``.
+
+*   The number of elements in an array passed to the template, using the
+    "count operator" (#), eg. ``<var name="#scores"/>``.
+
+    ..  note::
+        The count operator as higher precedence on the add/subtract operators,
+        meaning that it is applied **before** any addition/substraction,
+        unless parenthesis are used to override this.
+
+    ..  warning::
+        Use of the count operator on any other type may lead to
+        unpredictable results.
+
+*   Whitespace (spaces or tabs), eg. ``<var name="boys    +   girls"/>``.
+    Such whitespace is ignored while processing the variable.
+
+    ..  note::
+        Due to limitations in the XML syntax, is it not possible to use
+        newlines as whitespace.
+
+*   Any combination of the previous syntaxes,
+    eg. ``<var name=" # ( boys + girls ) "/>`` where ``boys`` and ``girls``
+    both refer to arrays.
+
+..  warning::
+    Please keep in mind that variable names are case-sensitive.
+    Any attempt to use an undefined variable in a template will
+    result in an exception.
 
 
 Using templates in your code
@@ -330,6 +418,14 @@ This is usually done with the following steps:
     scalar types/objects) that will be used in the template.
     This is the preparation step, where everything is setup for the final
     step.
+
+    ..  note::
+        Variable names may only contain alphanumeric characters or the
+        underscore (_) and dot (.) characters.
+
+    ..  warning::
+        While designing the template, keep in mind that variable names
+        are case-sensitive.
 
 3.  Render the template (with ``$fmt->render()`` or ``$fmt->_()``) and use
     the result of that process in your code (eg. send it to an IRC channel).
@@ -423,7 +519,7 @@ The equivalent as a template would be:
     <?php
 
         $msg = 'There '.
-                '<plural var="sum"/>'.
+                '<plural var="#(girls+boys)"/>'.
                     '<case form="one">is</case>'.
                     '<case form="other">are</case>'.
                 '</plural> '.
@@ -441,13 +537,13 @@ The equivalent as a template would be:
         $formatter = new Erebot_Styling(new Erebot_I18n());
 
         // Displays "There is one girl and 0 boys in this classroom".
-        echo $formatter->_($msg, array('girls' => 1, 'boys' => 0, 'sum' => 1)) . PHP_EOL;
+        echo $formatter->_($msg, array('girls' => 1, 'boys' => 0)) . PHP_EOL;
 
         // Displays "There are 2 girls and one boy in this classroom".
-        echo $formatter->_($msg, array('girls' => 2, 'boys' => 1, 'sum' => 3)) . PHP_EOL;
+        echo $formatter->_($msg, array('girls' => 2, 'boys' => 1)) . PHP_EOL;
 
         // Displays "There are one girl and 2 boys in this classroom".
-        echo $formatter->_($msg, array('girls' => 1, 'boys' => 2, 'sum' => 3)) . PHP_EOL;
+        echo $formatter->_($msg, array('girls' => 1, 'boys' => 2)) . PHP_EOL;
     ?>
 
 Notice how we represented the actual counts using either a spelled out form
@@ -494,3 +590,4 @@ showcases (please `open a ticket`_ if you notice any discrepancy!).
     http://php.net/function.localtime.php
 
 .. vim: ts=4 et
+
