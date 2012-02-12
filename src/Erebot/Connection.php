@@ -1086,8 +1086,10 @@ implements  Erebot_Interface_ModuleContainer,
     public function getModules($chan = NULL)
     {
         if ($chan !== NULL) {
-            return  $this->_channelModules[$chan] +
-                    $this->_plainModules;
+            $chanModules =  isset($this->_channelModules[$chan])
+                            ? $this->_channelModules[$chan]
+                            : array();
+            return $chanModules + $this->_plainModules;
         }
         return $this->_plainModules;
     }
