@@ -1,6 +1,7 @@
 language: php
 
 php:
+    - 5.2
     - 5.3.2
     - 5.3
     - 5.4
@@ -14,14 +15,15 @@ notifications:
 
 before_script:
     - git submodule update --init
-    - pyrus install pear/Console_CommandLine
-    - pyrus install pear/File_Gettext-beta
-    - pyrus install pear/PHP_ParserGenerator-alpha
+    - (which pear && pear install pear/Console_CommandLine) || pyrus install pear/Console_CommandLine
+    - (which pear && pear install pear/File_Gettext-beta) || pyrus install pear/File_Gettext-beta
+    - (which pear && pear install pear/PHP_ParserGenerator-alpha) || pyrus install pear/PHP_ParserGenerator-alpha
     - phpenv rehash
     - msgfmt --statistics -c -f -o data/i18n/en_US/LC_MESSAGES/Erebot.mo data/i18n/en_US/LC_MESSAGES/Erebot.po
     - msgfmt --statistics -c -f -o data/i18n/fr_FR/LC_MESSAGES/Erebot.mo data/i18n/fr_FR/LC_MESSAGES/Erebot.po
     - cp data/Styling.y src/Erebot/Styling/Parser.y
-    - PHP_PEAR_INSTALL_DIR="`pyrus get php_dir | tail -n 1`" phplemon -q -s src/Erebot/Styling/Parser.y
+    - (which pear && PHP_PEAR_INSTALL_DIR="`pear config-get php_dir`" phplemon -q -s src/Erebot/Styling/Parser.y) || PHP_PEAR_INSTALL_DIR="`pyrus get php_dir | tail -n 1`" phplemon -q -s src/Erebot/Styling/Parser.y
+
 
 script: phpunit --bootstrap tests/testenv/bootstrap.php tests/
 
