@@ -54,7 +54,7 @@ implements  Erebot_Interface_TextWrapper
             $parts = array_slice($parts, $start, $length);
 
         if (!count($parts))
-            return NULL;
+            return "";
 
         return implode($separator, $parts);
     }

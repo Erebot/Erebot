@@ -36,7 +36,7 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals('baz', $this->_wrapped->getTokens(-1));
         $this->assertEquals('bar baz', $this->_wrapped->getTokens(-2));
         $this->assertEquals('foo', $this->_wrapped->getTokens(-3, 1));
-        $this->assertSame(NULL, $this->_wrapped->getTokens(3));
+        $this->assertEquals("", $this->_wrapped->getTokens(3));
     }
 
     /**
