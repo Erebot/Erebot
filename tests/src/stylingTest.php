@@ -233,5 +233,69 @@ LOGS
             $this->assertEquals($spellout, $result);
         }
     }
+
+    public function testCount()
+    {
+        $source = "<var name='#foo'/>";
+        $tpl    = new Erebot_Styling($this->_translator);
+        $values = range(1, 10);
+        $result = $tpl->render($source, array('foo' => $values));
+        $this->assertEquals('10', $result);
+    }
+
+    public function testAddition1()
+    {
+        $source = "<var name='41+1'/>";
+        $tpl    = new Erebot_Styling($this->_translator);
+        $result = $tpl->render($source, array());
+        $this->assertEquals('42', $result);
+    }
+
+    public function testAddition2()
+    {
+        $source = "<var name='#foo+#bar'/>";
+        $tpl    = new Erebot_Styling($this->_translator);
+        $foo    = range(1, 10);
+        $bar    = range(1, 4);
+        $result = $tpl->render($source, array('foo' => $foo, 'bar' => $bar));
+        $this->assertEquals('14', $result);
+    }
+
+    public function testSubtraction1()
+    {
+        $source = "<var name='43-1'/>";
+        $tpl    = new Erebot_Styling($this->_translator);
+        $result = $tpl->render($source, array());
+        $this->assertEquals('42', $result);
+    }
+
+    public function testSubtraction2()
+    {
+        $source = "<var name='#foo-#bar'/>";
+        $tpl    = new Erebot_Styling($this->_translator);
+        $foo    = range(1, 10);
+        $bar    = range(1, 4);
+        $result = $tpl->render($source, array('foo' => $foo, 'bar' => $bar));
+        $this->assertEquals('6', $result);
+    }
+
+    public function testPluralWithComputation()
+    {
+        $source = 'There <plural var="boys + girls">'.
+                    '<case form="one">is one person</case>'.
+                    '<case form="other">are <var name="boys + girls"/> '.
+                        'persons</case>'.
+                    '</plural> in this room.';
+        $tpl    = new Erebot_Styling($this->_translator);
+
+        $result = $tpl->render($source, array('boys' => 2, 'girls' => 0));
+        $this->assertEquals('There are 2 persons in this room.', $result);
+
+        $result = $tpl->render($source, array('boys' => 0, 'girls' => 0));
+        $this->assertEquals('There are 0 persons in this room.', $result);
+
+        $result = $tpl->render($source, array('boys' => 0, 'girls' => 1));
+        $this->assertEquals('There is one person in this room.', $result);
+    }
 }
 

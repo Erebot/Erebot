@@ -2,7 +2,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.0\n"
         "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2012-01-09 21:28+0100\n"
+        "POT-Creation-Date: 2012-02-12 13:59+0100\n"
         "PO-Revision-Date: 2011-02-16 16:43+0100\n"
         "Last-Translator: Automatically generated\n"
         "Language-Team: none\n"
@@ -320,8 +320,48 @@ msgstr  "You SHOULD NOT run Erebot as root!"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #~ msgid        "Run the bot in the background (daemon)."
 #~ msgstr       "Run the bot in the background (daemon)."
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -341,6 +381,26 @@ msgstr  "You SHOULD NOT run Erebot as root!"
 #~      "default is to NOT change group identity, unless configured otherwise."
 #~ msgstr       "Set group identity to this GID/group during startup. The "
 #~      "default is to NOT change group identity, unless configured otherwise."
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -393,9 +453,49 @@ msgstr  "You SHOULD NOT run Erebot as root!"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # File: src/Erebot/I18n.php, line: 324
 #~ msgid        "foobar"
 #~ msgstr       "foobar"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #

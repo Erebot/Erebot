@@ -2,6 +2,10 @@
 /Erebot.xml
 /vendor/Erebot_Module_*
 
+/src/Erebot/Styling/Parser.php
+/src/Erebot/Styling/Parser.y
+/src/Erebot/Styling/Parser.out
+
 /data/i18n/*/LC_MESSAGES/*.mo
 /docs/api
 /docs/enduser

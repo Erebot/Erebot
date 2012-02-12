@@ -368,11 +368,14 @@ implements  Erebot_Interface_Styling
         // Pre-handling.
         switch ($node->tagName) {
             case 'var':
-                $varname = $node->getAttribute('name');
-                if (!($vars[$varname] instanceof
-                    Erebot_Interface_Styling_Variable))
-                    return (string) $vars[$varname];
-                return $vars[$varname]->render($this->_translator);
+                $lexer = new Erebot_Styling_Lexer(
+                    $node->getAttribute('name'),
+                    $vars
+                );
+                $var = $lexer->getResult();
+                if (!($var instanceof Erebot_Interface_Styling_Variable))
+                    return (string) $var;
+                return $var->render($this->_translator);
 
             case 'u':
                 if (!$attributes['underline'])
@@ -494,9 +497,15 @@ implements  Erebot_Interface_Styling
                 throw new Erebot_InvalidValueException(
                     'No variable name given'
                 );
-            $value = (int) $vars[$attrNode->nodeValue]->getValue();
-            $subcontents = array();
-            $pattern = '{0,plural,';
+
+            $lexer = new Erebot_Styling_Lexer($attrNode->nodeValue, $vars);
+            $value = $lexer->getResult();
+            if ($value instanceof Erebot_Interface_Styling_Variable)
+                $value = $value->getValue();
+            $value          = (int) $value;
+
+            $subcontents    = array();
+            $pattern        = '{0,plural,';
             for (   $child = $node->firstChild;
                     $child != NULL;
                     $child = $child->nextSibling) {

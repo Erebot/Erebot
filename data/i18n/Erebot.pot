@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: Erebot 0.5.1\n"
         "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-        "POT-Creation-Date: 2012-01-09 21:28+0100\n"
+        "POT-Creation-Date: 2012-02-12 13:59+0100\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,12 +56,12 @@ msgstr  ""
 msgid   "Allocated:"
 msgstr  ""
 #
-# File: src/Erebot/Connection.php, line: 1378
+# File: src/Erebot/Connection.php, line: 1380
 msgid   "Bad channel name"
 msgstr  ""
 #
-# File: src/Erebot/Connection.php, line: 1261
-# File: src/Erebot/Connection.php, line: 1289
+# File: src/Erebot/Connection.php, line: 1263
+# File: src/Erebot/Connection.php, line: 1291
 msgid   "Code is not clean!"
 msgstr  ""
 #
@@ -141,7 +141,7 @@ msgstr  ""
 msgid   "Got exception"
 msgstr  ""
 #
-# File: src/Erebot/Connection.php, line: 1320
+# File: src/Erebot/Connection.php, line: 1322
 msgid   "Invalid mapping name"
 msgstr  ""
 #
@@ -179,7 +179,7 @@ msgstr  ""
 msgid   "No such group \"%s\""
 msgstr  ""
 #
-# File: src/Erebot/Connection.php, line: 1326
+# File: src/Erebot/Connection.php, line: 1328
 msgid   "No such mapping exists"
 msgstr  ""
 #
@@ -188,7 +188,7 @@ msgstr  ""
 msgid   "No such user \"%s\""
 msgstr  ""
 #
-# File: src/Erebot/Connection.php, line: 1410
+# File: src/Erebot/Connection.php, line: 1412
 msgid   "Not a valid mask"
 msgstr  ""
 #

@@ -4,13 +4,14 @@
 
     <fileset dir="src/" id="sources">
         <include name="**/*.php"/>
-        <exclude name="orm/**"/>
-        <exclude name="logging/**"/>
+        <exclude name="**/Parser.php"/>
     </fileset>
 
     <fileset dir="tests/" id="tests">
         <include name="**/*.php"/>
     </fileset>
+
+    <target name="all" depends="parser,i18n" description=""/>
 
     <target name="protected_set_version">
         <property name="xmlstarlet" value="xmlstarlet ed -P -S -N erebot=http://www.erebot.net/xmlns/erebot"/>
@@ -31,5 +32,24 @@
         <move file="${file.tmp}" tofile="tests/data/valid-config.xml" haltonerror="true" overwrite="true"/>
     </target>
 
+    <target name="parser" description="">
+        <copy file="data/Styling.y" tofile="src/Erebot/Styling/Parser.y" overwrite="true"/>
+        <exec command="pear config-get php_dir system" outputProperty="php_dir"/>
+        <php function="putenv">
+            <param value="PHP_PEAR_INSTALL_DIR=${php_dir}"/>
+        </php>
+        <exec command="phplemon -q -s src/Erebot/Styling/Parser.y" logoutput="true"/>
+        <if>
+            <isset property="env.LANG"/>
+            <then>
+                <php function="putenv">
+                    <param value="PHP_PEAR_INSTALL_DIR=${env.PHP_PEAR_INSTALL_DIR}"/>
+                </php>
+            </then>
+        </if>
+        <delete file="src/Erebot/Styling/Parser.y"/>
+    </target>
+
     <import file="buildenv/build.xml"/>
 </project>
+
