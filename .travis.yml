@@ -1,7 +1,6 @@
 language: php
 
 php:
-    - 5.2
     - 5.3.2
     - 5.3
     - 5.4
@@ -14,9 +13,8 @@ notifications:
     irc: "irc.iiens.net#Erebot"
 
 before_script:
-    - sudo apt-get install gettext
-    - pyrus install pear/Console_CommandLine
-    - pyrus install pear/File_Gettext
+    - pear install pear/Console_CommandLine
+    - pear install pear/File_Gettext-beta
     - phpenv rehash
 
 script: phpunit --bootstrap tests/testenv/bootstrap.php
