@@ -18,5 +18,5 @@ before_script:
     - pyrus install pear/File_Gettext-beta
     - phpenv rehash
 
-script: phpunit --bootstrap tests/testenv/bootstrap.php
+script: phpunit --bootstrap tests/testenv/bootstrap.php tests/
 
