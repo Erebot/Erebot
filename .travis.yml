@@ -21,7 +21,7 @@ before_script:
     - msgfmt --statistics -c -f -o data/i18n/en_US/LC_MESSAGES/Erebot.mo data/i18n/en_US/LC_MESSAGES/Erebot.po
     - msgfmt --statistics -c -f -o data/i18n/fr_FR/LC_MESSAGES/Erebot.mo data/i18n/fr_FR/LC_MESSAGES/Erebot.po
     - cp data/Styling.y src/Erebot/Styling/Parser.y
-    - pyrus get
+    - pyrus cs
     - PHP_PEAR_INSTALL_DIR=`dirname "$(pyrus get data_dir | tail -n 1)"` phplemon -q -s src/Erebot/Styling/Parser.y
 
 script: phpunit --bootstrap tests/testenv/bootstrap.php tests/
