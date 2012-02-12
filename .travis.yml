@@ -13,8 +13,8 @@ notifications:
     irc: "irc.iiens.net#Erebot"
 
 before_script:
-    - pear install pear/Console_CommandLine
-    - pear install pear/File_Gettext-beta
+    - pyrus install pear/Console_CommandLine
+    - pyrus install pear/File_Gettext-beta
     - phpenv rehash
 
 script: phpunit --bootstrap tests/testenv/bootstrap.php
