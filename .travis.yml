@@ -16,7 +16,12 @@ before_script:
     - git submodule update --init
     - pyrus install pear/Console_CommandLine
     - pyrus install pear/File_Gettext-beta
+    - pyrus install pear/PHP_ParserGenerator-alpha
     - phpenv rehash
+    - msgfmt --statistics -c -f -o data/i18n/en_US/LC_MESSAGES/Erebot.mo data/i18n/en_US/LC_MESSAGES/Erebot.po
+    - msgfmt --statistics -c -f -o data/i18n/fr_FR/LC_MESSAGES/Erebot.mo data/i18n/fr_FR/LC_MESSAGES/Erebot.po
+    - cp data/Styling.y src/Erebot/Styling/Parser.y
+    - phplemon -q -s src/Erebot/Styling/Parser.y
 
 script: phpunit --bootstrap tests/testenv/bootstrap.php tests/
 
