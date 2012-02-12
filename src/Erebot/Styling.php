@@ -186,6 +186,27 @@ implements  Erebot_Interface_Styling
         $this->_cls[$type] = $cls;
     }
 
+    /**
+     * Checks whether the given variable name is valid
+     * and throws an exception if its not.
+     *
+     * \param string $var
+     *      Variable name to test.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The given variable name is invalid.
+     */
+    static protected function _checkVariableName($var)
+    {
+        $valid = (bool) preg_match('/^[a-zA-Z0-9_\.]+$/D', $var);
+        if (!$valid)
+            throw new Erebot_InvalidValueException(
+                'Invalid variable name "'.$var.'". '.
+                'Variable names may only contain alphanumeric '.
+                'characters, underscores ("_") and dots (".").'
+            );
+    }
+
     /// \copydoc Erebot_Interface_Styling::_()
     public function _($template, array $vars = array())
     {
@@ -241,6 +262,8 @@ implements  Erebot_Interface_Styling
 
     protected function _wrapScalar($var, $name)
     {
+        self::_checkVariableName($name);
+
         if (is_object($var)) {
             if ($var instanceof Erebot_Interface_Styling_Variable)
                 return $var;
