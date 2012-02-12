@@ -13,6 +13,7 @@ notifications:
     irc: "irc.iiens.net#Erebot"
 
 before_script:
+    - git submodule update --init
     - pyrus install pear/Console_CommandLine
     - pyrus install pear/File_Gettext-beta
     - phpenv rehash
