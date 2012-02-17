@@ -22,7 +22,6 @@
  */
 class       Erebot_Connection
 implements  Erebot_Interface_ModuleContainer,
-            Erebot_Interface_IrcComparator,
             Erebot_Interface_EventDispatcher,
             Erebot_Interface_EventFactory,
             Erebot_Interface_BidirectionalConnection
@@ -66,6 +65,8 @@ implements  Erebot_Interface_ModuleContainer,
 
     protected $_rawProfileLoader;
 
+    protected $_collator;
+
     /// Valid mappings for case-insensitive comparisons.
     static protected $_caseMappings = NULL;
 
@@ -97,24 +98,7 @@ implements  Erebot_Interface_ModuleContainer,
         $this->_rcvQueue        = array();
         $this->_incomingData    = '';
         $this->_connected       = FALSE;
-
-        // Build case mappings for case-insensitive comparisons.
-        if (self::$_caseMappings === NULL) {
-            self::$_caseMappings = array(
-                'ascii' => array_combine(
-                    range('a', 'z'),
-                    range('A', 'Z')
-                ),
-                'strict-rfc1459' => array_combine(
-                    range('a', chr(125)),
-                    range('A', chr(93))
-                ),
-                'rfc1459' => array_combine(
-                    range('a', chr(126)),
-                    range('A', chr(94))
-                ),
-            );
-        }
+        $this->_collator        = new Erebot_IrcCollator_RFC1459();
 
         $this->_eventsMapping = array();
         $this->setEventClasses($events);
@@ -1301,67 +1285,20 @@ implements  Erebot_Interface_ModuleContainer,
         return $this->_dispatchEvent($event);
     }
 
-    protected function _getMapping($mappingName = NULL)
-    {
-        if ($mappingName === NULL) {
-            try {
-                $capabilities = $this->getModule(
-                    'Erebot_Module_ServerCapabilities',
-                    NULL, FALSE
-                );
-                $mappingName = $capabilities->getCaseMapping();
-            }
-            catch (Erebot_NotFoundException $e) {
-                // Fallback to a safe mapping.
-                $mappingName = 'rfc1459';
-            }
-        }
-
-        if (!is_string($mappingName))
-            throw new Erebot_InvalidValueException(
-                $this->_bot->gettext('Invalid mapping name')
-            );
-
-        $mappingName = strtolower($mappingName);
-        if (!isset(self::$_caseMappings[$mappingName]))
-            throw new Erebot_NotFoundException(
-                $this->_bot->gettext('No such mapping exists')
-            );
-        return self::$_caseMappings[$mappingName];
-    }
-
-    /// \copydoc Erebot_Interface_IrcComparator::irccmp()
-    public function irccmp($a, $b)
-    {
-        return strcmp($a, $b);
-    }
-
-    /// \copydoc Erebot_Interface_IrcComparator::ircncmp()
-    public function ircncmp($a, $b, $len)
-    {
-        return strncmp($a, $b, $len);
-    }
-
-    /// \copydoc Erebot_Interface_IrcComparator::irccasecmp()
-    public function irccasecmp($a, $b, $mappingName = NULL)
-    {
-        return strcmp(
-            $this->normalizeNick($a, $mappingName),
-            $this->normalizeNick($b, $mappingName)
-        );
-    }
-
-    /// \copydoc Erebot_Interface_IrcComparator::ircncasecmp()
-    public function ircncasecmp($a, $b, $len, $mappingName = NULL)
-    {
-        return strncmp(
-            $this->normalizeNick($a, $mappingName),
-            $this->normalizeNick($b, $mappingName),
-            $len
-        );
-    }
-
-    /// \copydoc Erebot_Interface_IrcComparator::isChannel()
+    /**
+     * Determines if the given string is a valid channel name or not.
+     * A channel name usually starts with the hash symbol (#).
+     * Valid characters for the rest of the name vary between IRC networks.
+     *
+     * \param $chan
+     *      Tentative channel name.
+     *
+     * \retval bool
+     *      TRUE if $chan is a valid channel name, FALSE otherwise.
+     *
+     * \throw Erebot_InvalidValueException
+     *      $chan is not a string or is empty.
+     */
     public function isChannel($chan)
     {
         try {
@@ -1398,25 +1335,6 @@ implements  Erebot_Interface_ModuleContainer,
         return (strpos('#&+!', $chan[0]) !== FALSE);
     }
 
-    /// \copydoc Erebot_Interface_IrcComparator::normalizeNick()
-    public function normalizeNick($nick, $mappingName = NULL)
-    {
-        $mapping = $this->_getMapping($mappingName);
-        $pos = strpos($nick, '!');
-        $suffix = '';
-        if ($pos !== FALSE) {
-            $suffix = substr($nick, $pos);
-            $nick = substr($nick, 0, $pos);
-            if ($nick === FALSE)
-                throw new Erebot_InvalidValueException(
-                    $this->_bot->gettext('Not a valid mask')
-                );
-        }
-
-        $nick = strtr($nick, $mapping);
-        return $nick.$suffix;
-    }
-
     public function handleCapabilities(
         Erebot_Interface_EventHandler   $handler,
         Erebot_Event_ServerCapabilities $event
@@ -1439,6 +1357,19 @@ implements  Erebot_Interface_ModuleContainer,
             if ($module->hasCommand($cmd))
                 $this->_rawProfileLoader[] =
                     str_replace('!', 'Erebot_Interface_RawProfile_', $profile);
+        }
+
+        $validMappings  = array(
+            // This is already the default value, but we still define it
+            // in case setCollator() was called to change the default.
+            'rfc1459'           => 'Erebot_IrcCollator_RFC1459',
+            'strict-rfc1459'    => 'Erebot_IrcCollator_StrictRFC1459',
+            'ascii'             => 'Erebot_IrcCollator_ASCII',
+        );
+        $caseMapping    = strtolower($module->getCaseMapping());
+        if (in_array($caseMapping, array_keys($validMappings))) {
+            $cls = $validMappings[$caseMapping];
+            $this->_collator = new $cls();
         }
     }
 
@@ -1465,6 +1396,16 @@ implements  Erebot_Interface_ModuleContainer,
         );
         $msg = strtr($msg, $quoting);
         return $msg;
+    }
+
+    public function setCollator(Erebot_Interface_IrcCollator $collator)
+    {
+        $this->_collator = $collator;
+    }
+
+    public function getCollator()
+    {
+        return $this->_collator;
     }
 }
 

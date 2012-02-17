@@ -81,8 +81,9 @@ implements  Erebot_Interface_Event_Match
         if ($this->_source === NULL)
             return TRUE;
 
+        $collator = $event->getConnection()->getCollator();
         return (
-            $event->getConnection()->irccasecmp(
+            $collator->compare(
                 $event->getSource(),
                 (string) $this->_source
             ) == 0

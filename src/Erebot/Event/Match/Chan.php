@@ -78,8 +78,9 @@ implements  Erebot_Interface_Event_Match
         if (!($event instanceof Erebot_Interface_Event_Base_Chan))
             return FALSE;
 
+        $collator = $event->getConnection()->getCollator();
         return (
-            $event->getConnection()->irccasecmp(
+            $collator->compare(
                 $event->getChan(),
                 (string) $this->_chan
             ) == 0
