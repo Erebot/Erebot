@@ -24,7 +24,8 @@ class       Erebot_Connection
 implements  Erebot_Interface_ModuleContainer,
             Erebot_Interface_EventDispatcher,
             Erebot_Interface_EventFactory,
-            Erebot_Interface_BidirectionalConnection
+            Erebot_Interface_BidirectionalConnection,
+            Erebot_Interface_Collated
 {
     /**
      * A configuration object implementing

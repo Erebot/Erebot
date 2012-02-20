@@ -19,7 +19,7 @@
 class   Erebot_IrcCollator_ASCII
 extends Erebot_IrcCollator
 {
-    static protected function _normalizeNick($nick)
+    protected function _normalizeNick($nick)
     {
         return strtr(
             $nick,
