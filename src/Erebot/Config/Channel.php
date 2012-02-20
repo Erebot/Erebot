@@ -49,7 +49,7 @@ implements  Erebot_Interface_Config_Channel
         SimpleXMLElement                $xml
     )
     {
-        parent::__construct($this, $xml);
+        parent::__construct($netCfg, $xml);
         $this->_name     = (string) $xml['name'];
         $this->_netCfg   = $netCfg;
     }
