@@ -348,13 +348,15 @@ implements  Erebot_Interface_Core
         if (function_exists('memory_get_peak_usage')) {
             $logger->debug($this->gettext('Memory usage:'));
 
-            $stats = array(
+            $limit  = trim(ini_get('memory_limit'));
+            $limit  = Erebot_Utils::parseHumanSize($limit."B");
+            $stats  = array(
                 $this->gettext("Allocated:") =>
-                    memory_get_peak_usage(TRUE)."B",
+                    Erebot_Utils::humanSize(memory_get_peak_usage(TRUE)),
                 $this->gettext("Used:") =>
-                    memory_get_peak_usage(FALSE)."B",
+                    Erebot_Utils::humanSize(memory_get_peak_usage(FALSE)),
                 $this->gettext("Limit:") =>
-                    ini_get('memory_limit'),
+                    Erebot_Utils::humanSize($limit),
             );
 
             foreach ($stats as $key => $value)
