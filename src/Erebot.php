@@ -244,6 +244,12 @@ implements  Erebot_Interface_Core
                     $index = array_search($socket, $actives['timers'], TRUE);
                     if ($index !== FALSE) {
                         $timer      = $this->_timers[$index];
+                        // During shutdown, weird things happen to timers,
+                        // including magical disappearance.
+                        if (!is_object($timer)) {
+                            unset($this->_timers[$index]);
+                            break;
+                        }
                         $restart    = $timer->activate();
 
                         // Maybe the callback function
