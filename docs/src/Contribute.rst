@@ -22,9 +22,9 @@ documentation on the `coding standard`_ used by Erebot developers first.
     run the test suites, etc.).
 
 ..  _`reporting new issues`:
-    https://github.com/fpoirotte/Erebot/issues/new
+    https://github.com/Erebot/Erebot/issues/new
 ..  _`sending pull requests`:
-    https://github.com/fpoirotte/Erebot/pulls
+    https://github.com/Erebot/Erebot/pulls
 ..  _`providing a test machine`:
     Buildslaves.html
 ..  _`joining our IRC channel`:

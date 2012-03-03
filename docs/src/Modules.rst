@@ -43,7 +43,7 @@ This section contains a list of supported modules:
 #.  `Erebot_Module_WebGetter`_
 #.  `Erebot_Module_Wordlists`_
 
-All supported modules can be found at https://github.com/fpoirotte/
+All supported modules can be found at https://github.com/Erebot/
 (look for repositories whose name starts with *Erebot_Module_*).
 See each module's individual wiki for installation instructions and additional
 documentation.

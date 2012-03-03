@@ -9,10 +9,10 @@ managed to use it on MacOSX) and works on a wide range of PHP versions
 You can find more information about this project on the following websites:
 
 *   https://www.erebot.net/ |---| The official website.
-*   https://github.com/fpoirotte/Erebot/ |---| Project page on GitHub.
+*   https://github.com/Erebot/Erebot/ |---| Project page on GitHub.
 *   https://pear.erebot.net/ |---| PEAR channel for the project.
 *   https://buildbot.erebot.net/ |---| Our Continuous Integration server.
-*   http://travis-ci.org/#!/fpoirotte/Erebot/ |---| Travis Continuous Integration.
+*   http://travis-ci.org/#!/Erebot/Erebot/ |---| Travis Continuous Integration.
 
 Contents:
 
@@ -31,9 +31,9 @@ Contents:
 
 Current status on http://travis-ci.org/:
 
-..  image:: https://secure.travis-ci.org/fpoirotte/Erebot.png
+..  image:: https://secure.travis-ci.org/Erebot/Erebot.png
     :alt: unknown
-    :target: http://travis-ci.org/#!/fpoirotte/Erebot/
+    :target: http://travis-ci.org/#!/Erebot/Erebot/
 
 
 ..  |---| unicode:: U+02014 .. em dash

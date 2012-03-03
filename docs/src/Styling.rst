@@ -571,7 +571,7 @@ showcases (please `open a ticket`_ if you notice any discrepancy!).
 ..  _`styling API`:
     https://buildbot.erebot.net/doc/api/Erebot/html/interfaceErebot__Interface__Styling.html
 ..  _`RelaxNG schema`:
-    https://github.com/fpoirotte/Erebot/blob/master/data/styling.rng
+    https://github.com/Erebot/Erebot/blob/master/data/styling.rng
 ..  _`Erebot_Styling`:
     https://buildbot.erebot.net/doc/api/Erebot/html/classErebot__Styling.html
 ..  _`Erebot_Interface_Styling_Variable`:
@@ -581,7 +581,7 @@ showcases (please `open a ticket`_ if you notice any discrepancy!).
 ..  _`Internationalization`:
     Internationalization.html
 ..  _`open a ticket`:
-    https://github.com/fpoirotte/Erebot/issues/new
+    https://github.com/Erebot/Erebot/issues/new
 ..  _`gettext's syntax for plurals`:
     http://www.gnu.org/s/hello/manual/gettext/Plural-forms.html
 ..  _`datetime`:

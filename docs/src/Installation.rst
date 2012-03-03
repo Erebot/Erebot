@@ -164,11 +164,11 @@ Now, retrieve the bot's code from the repository, using the following command:
 
 ..  sourcecode:: bash
 
-    $ git clone --recursive git://github.com/fpoirotte/Erebot.git
+    $ git clone --recursive git://github.com/Erebot/Erebot.git
     $ cd Erebot/vendor/
-    $ git clone --recursive git://github.com/fpoirotte/Erebot_Module_IrcConnector.git
-    $ git clone --recursive git://github.com/fpoirotte/Erebot_Module_AutoConnect.git
-    $ git clone --recursive git://github.com/fpoirotte/Erebot_Module_PingReply.git
+    $ git clone --recursive git://github.com/Erebot/Erebot_Module_IrcConnector.git
+    $ git clone --recursive git://github.com/Erebot/Erebot_Module_AutoConnect.git
+    $ git clone --recursive git://github.com/Erebot/Erebot_Module_PingReply.git
     $ cd ..
 
 ..  note::
@@ -178,10 +178,10 @@ Now, retrieve the bot's code from the repository, using the following command:
 
     ..  sourcecode:: bash
 
-        $ git clone --recursive git://github.com/fpoirotte/Erebot.git
-        $ git clone --recursive git://github.com/fpoirotte/Erebot_Module_IrcConnector.git
-        $ git clone --recursive git://github.com/fpoirotte/Erebot_Module_AutoConnect.git
-        $ git clone --recursive git://github.com/fpoirotte/Erebot_Module_PingReply.git
+        $ git clone --recursive git://github.com/Erebot/Erebot.git
+        $ git clone --recursive git://github.com/Erebot/Erebot_Module_IrcConnector.git
+        $ git clone --recursive git://github.com/Erebot/Erebot_Module_AutoConnect.git
+        $ git clone --recursive git://github.com/Erebot/Erebot_Module_PingReply.git
         $ cd Erebot/vendor/
         $ ln -s ../../Erebot_Module_IrcConnector
         $ ln -s ../../Erebot_Module_AutoConnect

@@ -959,11 +959,11 @@ You may also be interested in
 ..  _`DOMDocument`:
     http://php.net/DOMDocument
 ..  _`build.xml`:
-    https://github.com/fpoirotte/Erebot_Module_Skeleton/raw/master/build.xml
+    https://github.com/Erebot/Erebot_Module_Skeleton/raw/master/build.xml
 ..  _`Erebot_Module_Skeleton`:
-    https://github.com/fpoirotte/Erebot_Module_Skeleton/
+    https://github.com/Erebot/Erebot_Module_Skeleton/
 ..  _`Erebot_Buildenv`:
-    https://github.com/fpoirotte/Erebot_Buildenv/
+    https://github.com/Erebot/Erebot_Buildenv/
 ..  _`git submodule`:
     http://book.git-scm.com/5_submodules.html
 
