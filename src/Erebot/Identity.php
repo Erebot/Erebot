@@ -257,11 +257,14 @@ implements  Erebot_Interface_Identity
      *      The pattern this identity should be tested against.
      *      The '?' and '*' wildcard characters are supported.
      *
+     * \param Erebot_Interface_IrcCollator $collator
+     *      Collator object to use to compare IRC nicknames.
+     *
      * \retval bool
      *      TRUE if this identity matches the given pattern,
      *      FALSE otherwise.
      */
-    public function match($pattern)
+    public function match($pattern, Erebot_Interface_IrcCollator $collator)
     {
         $nick = explode('!', $pattern, 2);
         if (count($nick) != 2)
@@ -278,7 +281,9 @@ implements  Erebot_Interface_Identity
         if ($ident == '' || $host == '')
             return FALSE;
 
-        if (!preg_match(self::_patternize($nick, TRUE), $this->_nick))
+        $nick       = $collator->normalizeNick($nick);
+        $thisNick   = $collator->normalizeNick($this->_nick);
+        if (!preg_match(self::_patternize($nick, TRUE), $thisNick))
             return FALSE;
 
         $thisIdent = ($this->_ident === NULL) ? '' : $this->_ident;
@@ -367,7 +372,7 @@ implements  Erebot_Interface_Identity
         return TRUE;
     }
 
-    protected function _patternize($pattern, $matchDot)
+    static protected function _patternize($pattern, $matchDot)
     {
         $realPattern = '';
         $mapping = array('[^\\.]', '.');
@@ -400,3 +405,4 @@ implements  Erebot_Interface_Identity
         return '#^'.$realPattern.'$#Di';
     }
 }
+

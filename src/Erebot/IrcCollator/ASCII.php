@@ -21,6 +21,8 @@ extends Erebot_IrcCollator
 {
     protected function _normalizeNick($nick)
     {
+        // We don't use strtoupper() as it's locale-dependent
+        // and causes issues when using a Turkish locale.
         return strtr(
             $nick,
             array_combine(

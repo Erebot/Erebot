@@ -16,6 +16,15 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+class   Erebot_Test_Identity
+extends Erebot_Identity
+{
+    static public function patternize($pattern, $matchDot)
+    {
+        return self::_patternize($pattern, $matchDot);
+    }
+}
+
 class   IdentityTest
 extends Erebot_TestEnv_TestCase
 {
@@ -90,10 +99,9 @@ extends Erebot_TestEnv_TestCase
 class   IdentityMatchingTest
 extends Erebot_TestEnv_TestCase
 {
-    public function testMatching()
+    public function patterns()
     {
-        $identity = new Erebot_Identity('foo!bar@127.0.0.1');
-        $patterns = array(
+        $masks = array(
             'foo!bar@127.0.0.1',
             'foo!bar@127.0.0.1/32',
             'foo!bar@127.0.0.*',
@@ -101,13 +109,65 @@ extends Erebot_TestEnv_TestCase
             'foo!bar@::ffff:127.0.0.1/128',
             'foo!bar@::ffff:127.0.0.*',
             '*!*@*',
+            'FOO!*@*',
         );
-        foreach ($patterns as $pattern) {
-            $this->assertTrue(
-                $identity->match($pattern),
-                "Did not match '$pattern'"
-            );
-        }
+        $masks = array_map(create_function('$a', 'return array($a);'), $masks);
+        return $masks;
+    }
+
+    /**
+     * @dataProvider patterns
+     * @cover Erebot_Identity::match
+     */
+    public function testMatching($pattern)
+    {
+        $identity = new Erebot_Identity('foo!bar@127.0.0.1');
+        $this->assertTrue(
+            $identity->match($pattern, new Erebot_IrcCollator_ASCII()),
+            "Did not match '$pattern'"
+        );
+    }
+}
+
+class   IdentityPatternizeTest
+extends Erebot_TestEnv_TestCase
+{
+    public function patterns()
+    {
+        return array(
+            # Input pattern,
+            # Output pattern when $dotMatching = TRUE,
+            # Output pattern when $dotMatching = FALSE.
+            array('foo',    "foo",              "foo"),
+            array('#',      "\\#",              "\\#"),
+            array('.',      "\\.",              "\\."),
+            array('?',      ".",                "[^\\.]"),
+            array('*',      ".*",               "[^\\.]*"),
+            array('\\',     "\\\\",             "\\\\"),
+            array('\\.',    "\\\\\\.",          "\\\\\\."),
+            array('\\?',    "\\\\.",            "\\\\[^\\.]"),
+            array('\\*',    "\\\\.*",           "\\\\[^\\.]*"),
+        );
+    }
+
+    /**
+     * @dataProvider    patterns
+     * @cover           Erebot_Identity::patternize
+     */
+    public function testPatternizeNoDotMatching($input, $expectedDot, $expectedNoDot)
+    {
+        $output = Erebot_Test_Identity::patternize($input, FALSE);
+        $this->assertSame('#^'.$expectedNoDot.'$#Di', $output);
+    }
+
+    /**
+     * @dataProvider    patterns
+     * @cover           Erebot_Identity::patternize
+     */
+    public function testPatternizeDotMatching($input, $expectedDot, $expectedNoDot)
+    {
+        $output = Erebot_Test_Identity::patternize($input, TRUE);
+        $this->assertSame('#^'.$expectedDot.'$#Di', $output);
     }
 }
 
