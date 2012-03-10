@@ -109,6 +109,10 @@ implements  Erebot_Interface_ModuleContainer,
                 array(
                     'Erebot_Interface_RawProfile_RFC2812',
                     'Erebot_Interface_RawProfile_005',
+                    // Technically, ISON is an optionnal feature from RFC 1459,
+                    // but we need to load it by default so that some modules
+                    // (eg. Erebot_Module_WatchList) work properly.
+                    'Erebot_Interface_RawProfile_ISON',
                 )
             )
         );
