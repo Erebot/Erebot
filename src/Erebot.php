@@ -300,9 +300,10 @@ implements  Erebot_Interface_Core
             return;
 
         foreach ($this->_connections as $connection) {
-            if ($connection instanceof Erebot_Interface_EventFactory &&
-                $connection instanceof Erebot_Interface_EventDispatcher)
-                $connection->dispatch($connection->makeEvent('!Exit'));
+            if ($connection instanceof Erebot_Interface_EventDispatcher) {
+                $eventsProducer = $connection->getEventsProducer();
+                $connection->dispatch($$eventsProducer->makeEvent('!Exit'));
+            }
         }
 
         $logger->info($this->gettext('Erebot has stopped'));

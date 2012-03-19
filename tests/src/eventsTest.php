@@ -52,7 +52,7 @@ extends Erebot_Connection
 
     public function handleMessage($msg)
     {
-        return $this->_handleMessage($msg);
+        return $this->_eventsProducer->parseLine($msg);
     }
 }
 

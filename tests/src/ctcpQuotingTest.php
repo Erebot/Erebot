@@ -16,7 +16,7 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-abstract class  CtcpQuotingModuleHelper
+abstract class  CtcpQuotingHelper
 extends         Erebot_Module_Base
 {
     // Expose the protected method to test.
@@ -26,8 +26,8 @@ extends         Erebot_Module_Base
     }
 }
 
-class   CtcpQuotingConnectionHelper
-extends Erebot_Connection
+class   CtcpUnQuotingHelper
+extends Erebot_IrcParser
 {
     // Expose the protected method to test.
     static public function ctcpUnquote($msg)
@@ -66,19 +66,19 @@ extends Erebot_Testenv_Module_TestCase
     {
         $this->assertEquals(
             $quoted,
-            CtcpQuotingModuleHelper::ctcpQuote($unquoted)
+            CtcpQuotingHelper::ctcpQuote($unquoted)
         );
     }
 
     /**
      * @dataProvider    provider
-     * @covers          Erebot_Connection::_ctcpUnquote
+     * @covers          Erebot_IrcParser::_ctcpUnquote
      */
     public function testUnquoting($quoted, $unquoted)
     {
         $this->assertEquals(
             $unquoted,
-            CtcpQuotingConnectionHelper::ctcpUnquote($quoted)
+            CtcpUnQuotingHelper::ctcpUnquote($quoted)
         );
     }
 }
