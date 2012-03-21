@@ -473,12 +473,13 @@ implements  Erebot_Interface_ModuleContainer,
     public function pushLine($line)
     {
         $chars = array("\r", "\n");
-        foreach ($chars as $char)
+        foreach ($chars as $char) {
             if (strpos($line, $char) !== FALSE) {
                 throw new Erebot_InvalidValueException(
                     'Line contains forbidden characters'
                 );
             }
+        }
         $this->_sndQueue[] = $line;
     }
 
@@ -783,10 +784,10 @@ implements  Erebot_Interface_ModuleContainer,
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
-#        $logger->debug(
-#            $this->_bot->gettext('Dispatching "%s" event.'),
-#            get_class($event)
-#        );
+//        $logger->debug(
+//            $this->_bot->gettext('Dispatching "%s" event.'),
+//            get_class($event)
+//        );
         try {
             foreach ($this->_events as $handler) {
                 if ($handler->handleEvent($event) === FALSE)
@@ -811,10 +812,10 @@ implements  Erebot_Interface_ModuleContainer,
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
-#        $logger->debug(
-#            $this->_bot->gettext('Dispatching raw #%s.'),
-#            sprintf('%03d', $raw->getRaw())
-#        );
+//        $logger->debug(
+//            $this->_bot->gettext('Dispatching raw #%s.'),
+//            sprintf('%03d', $raw->getRaw())
+//        );
         try {
             foreach ($this->_raws as $handler) {
                 if ($handler->handleRaw($raw) === FALSE)

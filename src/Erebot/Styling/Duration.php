@@ -49,12 +49,10 @@ implements  Erebot_Interface_Styling_Duration
         // as it breaks xgettext on at least Windows platforms.
 
         $rule = $coreTranslator->_(
-            # I18N: ICU rule used to format durations (with words).
-            #Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
-            #For examples of valid rules, see:
-            #http://userguide.icu-project.org/formatparse/numbers/rbnf-examples
-            #For the complete syntax, see also:
-            #http://icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html
+            // I18N: ICU rule used to format durations (using words).
+            // Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
+            // For examples of valid rules, see: http://goo.gl/q94xS
+            // For the complete syntax, see also: http://goo.gl/jp2Bd
             "%with-words:\n".
             "    0: 0 seconds;\n".
             "    1: 1 second;\n".
