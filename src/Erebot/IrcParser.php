@@ -440,7 +440,7 @@ implements  Erebot_Interface_IrcParser
 
             if ($ctcp == "ACTION") {
                 if ($this->_connection->isChannel($target))
-                    return $this->dispatch(
+                    return $this->_connection->dispatch(
                         $this->makeEvent(
                             '!ChanAction',
                             $target, $source, $msg
