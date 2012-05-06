@@ -39,14 +39,6 @@
             <param value="PHP_PEAR_INSTALL_DIR=${php_dir}"/>
         </php>
         <exec command="phplemon -q -s src/Erebot/Styling/Parser.y" logoutput="true"/>
-        <if>
-            <isset property="env.LANG"/>
-            <then>
-                <php function="putenv">
-                    <param value="PHP_PEAR_INSTALL_DIR=${env.PHP_PEAR_INSTALL_DIR}"/>
-                </php>
-            </then>
-        </if>
         <delete file="src/Erebot/Styling/Parser.y"/>
     </target>
 
