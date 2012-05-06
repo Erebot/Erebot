@@ -12,7 +12,7 @@ You can find more information about this project on the following websites:
 *   https://github.com/Erebot/Erebot/ |---| Project page on GitHub.
 *   https://pear.erebot.net/ |---| PEAR channel for the project.
 *   https://buildbot.erebot.net/ |---| Our Continuous Integration server.
-*   http://travis-ci.org/#!/Erebot/Erebot/ |---| Travis Continuous Integration.
+*   http://travis-ci.org/#!/Erebot/Erebot |---| Travis Continuous Integration.
 
 Contents:
 
@@ -33,7 +33,7 @@ Current status on http://travis-ci.org/:
 
 ..  image:: https://secure.travis-ci.org/Erebot/Erebot.png
     :alt: unknown
-    :target: http://travis-ci.org/#!/Erebot/Erebot/
+    :target: http://travis-ci.org/#!/Erebot/Erebot
 
 
 ..  |---| unicode:: U+02014 .. em dash
