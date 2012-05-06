@@ -328,7 +328,7 @@ implements  Erebot_Interface_Core
         foreach ($this->_connections as $connection) {
             if ($connection instanceof Erebot_Interface_EventDispatcher) {
                 $eventsProducer = $connection->getEventsProducer();
-                $connection->dispatch($$eventsProducer->makeEvent('!Exit'));
+                $connection->dispatch($eventsProducer->makeEvent('!Exit'));
             }
         }
 
