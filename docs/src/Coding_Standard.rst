@@ -4,9 +4,16 @@ Coding standard
 This page contains documentation on the coding standard used for Erebot's
 development. It takes inspiration from other such documents, namely:
 
--   `Drupal coding standards <http://drupal.org/coding-standards>`_
--   `Zend Framework coding style <http://framework.zend.com/manual/en/coding-standard.coding-style.html>`_
--   `The PEAR coding standards <http://pear.php.net/manual/en/standards.php>`_
+-   `Drupal coding standards`_
+-   `Zend Framework coding style`_
+-   `The PEAR coding standards`_
+
+..  _`Drupal coding standards`:
+    http://drupal.org/coding-standards
+..  _`Zend Framework coding style`:
+    http://framework.zend.com/manual/en/coding-standard.coding-style.html
+..  _`The PEAR coding standards`:
+    http://pear.php.net/manual/en/standards.php
 
 Most of the information on this page is organized in the same way as the
 Drupal coding standards.
@@ -297,6 +304,15 @@ to line up function calls and promote readability:
     $short         = foo($bar);
     $longVariable  = foo($baz);
 
+..  warning::
+    For methods/functions defined by the core of PHP or any of its extension,
+    (that is, anything that isn't userland-define), always respect the case
+    given by the PHP manual. Even though PHP is case-insensitive for most
+    identifiers, there are recurring propositions about turning it into
+    a case-sensitive language for everything. Using the official case
+    from the start makes the code forward-compatible if such a change is
+    ever made.
+
 
 ..  _`cs-fn-decl`:
 
@@ -403,8 +419,8 @@ For example:
     }
 
 Exceptions may also be used instead of returning ``NULL``.
-Whether an exception an exception should be raised or ``NULL`` / an empty
-array returned is left to the appreciation of developpers.
+Whether an exception should be raised or ``NULL`` / an empty array
+returned is left to the appreciation of developpers.
 
 
 Class constructor calls
@@ -527,7 +543,64 @@ on each side as with the assignment operator:
 Comments
 --------
 
-@TODO
+Don't use Perl-style commands (``# Comment``). For comments that span several
+lines, we recommend that you use C++ comments (``/* Comment */``).
+
+When using C++ comments, you may use asterisks ("stars") at the start of each
+line.
+
+..  warning::
+    Use of comments such as ``/** ... */`` or ``///`` is reserved for API
+    documentation purposes using `Doxygen commands`_.
+    You **MAY NOT** use them to explain the logic of your code.
+    Use the regular forms ``/* ... */`` & ``//`` instead in such cases.
+
+For example,
+
+..  sourcecode:: php
+
+    <?php
+        // Connects the bot to the default servers.
+        $bot->connect();
+
+        /* This is a very long comment about the purpose of the snippet
+         * of code that goes right after this comment, so as to explain
+         * what it does (in case this may not be easy to understand) as
+         * well as how it is done (for example, to describe side-effects).
+         */
+        do_something_very_complex();
+
+        # This kind of comments MUST NOT be used.
+        oops();
+
+        /**
+         * \brief
+         *      A well known pseudo-random number generator.
+         *
+         * This type of comments may only be used to describe the API,
+         * using Doxygen commands.
+         */
+        class PRNG
+        {
+            // The next comment describes part of this class' API.
+            /// Seed for the PRNG.
+            const SEED = 4;
+
+            /**
+             * \brief
+             *      Return a new random number.
+             *
+             * \retval int
+             *      Some random number.
+             */
+            public static function getRandomNumber()
+            {
+                return self::SEED;
+            }
+        }
+    ?>
+
+..  todo:: Add a section on API documentation.
 
 
 ..  _`cs-fs-paths`:
@@ -675,7 +748,8 @@ In particular, for one-line PHP blocks:
 Example URLs
 ------------
 
-Use "example.com" for all example URLs, per :rfc:`2606`.
+Use ``example.com`` as the domain for all example URLs, per :rfc:`2606`.
+You may also refer to subdomains of this domain, eg. ``irc.example.com``.
 
 
 .. _`naming-conventions`:
@@ -750,11 +824,10 @@ For example, all classes belonging to an Erebot module start with the prefix
 :samp:`Erebot_Module_{ModuleName}`.
 See also :ref:`cs-naming-files` for implications.
 
-For interface, the text ``Interface`` should always appear in the interface's
-name, preferably at the end (eg. ``Erebot_Module_FooInterface``).
+For an interface, the text ``Interface`` should always appear in the
+interface's name, preferably at the end (eg. ``Erebot_Module_FooInterface``).
 If you prefer to use a separate directory where all the interfaces are stored,
-this is also permitted using a name such as
-``Erebot_Module_Foo_Interface_Generic``.
+this is also permitted (eg. ``Erebot_Module_Foo_Interface_Generic``).
 
 Class methods and properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -954,6 +1027,8 @@ You may also be interested in
 ..  |---|               unicode:: U+02014 .. em dash
     :trim:
 
+..  _`Doxygen commands`:
+    http://www.stack.nl/~dimitri/doxygen/commands.html
 ..  _`heredoc/nowdoc strings`:
     http://php.net/manual/en/language.types.string.php#language.types.string.syntax.heredoc
 ..  _`DOMDocument`:
