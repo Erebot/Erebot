@@ -261,6 +261,9 @@ implements  Erebot_Interface_ModuleContainer,
                         $this->_channelModules
                     );
                 }
+                catch (Erebot_StopException $e) {
+                    throw $e;
+                }
                 catch (Exception $e) {
                     $logger->warning($e->getMessage());
                 }
@@ -274,6 +277,9 @@ implements  Erebot_Interface_ModuleContainer,
                     $this->_plainModules,
                     $this->_channelModules
                 );
+            }
+            catch (Erebot_StopException $e) {
+                throw $e;
             }
             catch (Exception $e) {
                     $logger->warning($e->getMessage());

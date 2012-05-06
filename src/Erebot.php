@@ -128,8 +128,21 @@ implements  Erebot_Interface_Core
         return $this->_connections;
     }
 
-    /// \copydoc Erebot_Interface_Core::start()
-    public function start(Erebot_Interface_ConnectionFactory $factory)
+    /**
+     * Really starts the bot.
+     *
+     * \param Erebot_Interface_ConnectionFactory $factory
+     *      Factory to use to create new connections.
+     *
+     * \attention
+     *      This method does not return until the bot drops its connections.
+     *      Therefore, this MUST be the last method you call in your script.
+     *
+     * \note
+     *      This method is called by Erebot::start() and does
+     *      the actual workload of running the bot.
+     */
+    protected function _start(Erebot_Interface_ConnectionFactory $factory)
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
@@ -290,6 +303,19 @@ implements  Erebot_Interface_Core
         }
     }
 
+    /// \copydoc Erebot_Interface_Core::start()
+    public function start(Erebot_Interface_ConnectionFactory $factory)
+    {
+        try {
+            return $this->_start($factory);
+        }
+        catch (Erebot_StopException $e) {
+            // This exception is raised by Erebot::handleSignal()
+            // whenever one of SIGINT, SIGQUIT, SIGALRM, or SIGTERM
+            // is received and indicates the bot is stopping.
+        }
+    }
+
     /// \copydoc Erebot_Interface_Core::stop()
     public function stop()
     {
@@ -317,6 +343,7 @@ implements  Erebot_Interface_Core
         $this->_connections     =
         $this->_timers          =
         $this->_mainCfg         = NULL;
+        throw new Erebot_StopException();
     }
 
     /**
