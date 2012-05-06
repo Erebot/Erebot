@@ -419,9 +419,15 @@ available for each dependency.
     |                                       |           |           |           | and detects violations of a       |
     |                                       |           |           |           | defined set of coding standards.  |
     |                                       |           |           |           | It is used by Erebot developers   |
-    |                                       |           |           |           | to make sure sure new patches     |
-    |                                       |           |           |           | comply with                       |
-    |                                       |           |           |           | `Erebot's coding standard`_.      |
+    |                                       |           |           |           | to make sure new patches comply   |
+    |                                       |           |           |           | with `Erebot's coding standard`_. |
+    +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
+    | :pear:`PHP_ParserGenerator`           | yes       | yes       |           | This package is is a port of the  |
+    |                                       |           |           |           | `Lemon parser generator`_ for     |
+    |                                       |           |           |           | PHP and is used by Erebot and its |
+    |                                       |           |           |           | modules to create parsers for     |
+    |                                       |           |           |           | several grammars (eg. to parse    |
+    |                                       |           |           |           | expressions in styles).           |
     +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
     | `pear.phpmd.org/PHP_PMD`_             | [#]_      |           |           | The PHP Mess Detector parses PHP  |
     |                                       |           |           |           | files to detect overly complex    |
@@ -499,5 +505,7 @@ available for each dependency.
     http://www.cygwin.com/
 ..  _`Doxygen's download page`:
     http://www.stack.nl/~dimitri/doxygen/download.html#latestsrc
+..  _`Lemon parser generator`:
+    http://www.hwaci.com/sw/lemon/lemon.html
 
 .. vim: ts=4 et
