@@ -19,14 +19,31 @@
 
 // When running from a clone.
 if ('@php_dir@' == '@'.'php_dir'.'@') {
-    require(
-        dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .
-        'vendor' . DIRECTORY_SEPARATOR .
-        'Erebot_API' . DIRECTORY_SEPARATOR .
-        'src' . DIRECTORY_SEPARATOR .
-        'Erebot' . DIRECTORY_SEPARATOR .
-        'Autoload.php'
-    );
+    if (file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Erebot_API')) {
+        require(
+            dirname(__FILE__) . DIRECTORY_SEPARATOR .
+            'Erebot_API' . DIRECTORY_SEPARATOR .
+            'src' . DIRECTORY_SEPARATOR .
+            'Erebot' . DIRECTORY_SEPARATOR .
+            'Autoload.php'
+        );
+        Erebot_Autoload::initialize(
+            dirname(__FILE__) . DIRECTORY_SEPARATOR .
+            'Erebot_API' . DIRECTORY_SEPARATOR .
+            'src'
+        );
+    }
+
+    else {
+        require(
+            dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .
+            'vendor' . DIRECTORY_SEPARATOR .
+            'Erebot_API' . DIRECTORY_SEPARATOR .
+            'src' . DIRECTORY_SEPARATOR .
+            'Erebot' . DIRECTORY_SEPARATOR .
+            'Autoload.php'
+        );
+    }
 
     // Add Erebot's sources to the Autoloader.
     $base = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR;
