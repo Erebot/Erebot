@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot 0.5.1\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2012-05-06 14:23+0200\n"
+"POT-Creation-Date: 2012-05-20 14:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,12 +56,12 @@ msgstr ""
 msgid "Allocated:"
 msgstr ""
 #
-# File: src/Erebot/Connection.php, line: 875
+# File: src/Erebot/IrcConnection.php, line: 802
 msgid "Bad channel name"
 msgstr ""
 #
-# File: src/Erebot/Connection.php, line: 805
-# File: src/Erebot/Connection.php, line: 833
+# File: src/Erebot/IrcConnection.php, line: 728
+# File: src/Erebot/IrcConnection.php, line: 760
 msgid "Code is not clean!"
 msgstr ""
 #
@@ -105,6 +105,16 @@ msgstr ""
 msgid "Could not start in the background (unable to setsid)"
 msgstr ""
 #
+# File: src/Erebot/IrcConnection.php, line: 717
+#, php-format
+msgid "Dispatching \"%s\" event."
+msgstr ""
+#
+# File: src/Erebot/IrcConnection.php, line: 749
+#, php-format
+msgid "Dispatching raw %s."
+msgstr ""
+#
 # File: src/Erebot/CLI.php, line: 274
 msgid ""
 "Do not run the bot in the background. This is the default, unless the -d "
@@ -132,7 +142,7 @@ msgstr ""
 msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
 msgstr ""
 #
-# File: src/Erebot/Connection.php, line: 614
+# File: src/Erebot/IrcConnection.php, line: 562
 msgid ""
 "Got an exception from the rate-limiter module. Assuming implicit approval to "
 "send the message."
@@ -150,7 +160,7 @@ msgstr ""
 msgid "Loaded configuration data"
 msgstr ""
 #
-# File: src/Erebot/Connection.php, line: 322
+# File: src/Erebot/IrcConnection.php, line: 319
 #, php-format
 msgid "Loading required modules for \"%s\"..."
 msgstr ""
@@ -201,7 +211,7 @@ msgid ""
 "the current directory."
 msgstr ""
 #
-# File: src/Erebot/Prompt.php, line: 156
+# File: src/Erebot/Prompt.php, line: 150
 #, php-format
 msgid "Prompt started in \"%s\""
 msgstr ""
@@ -260,7 +270,7 @@ msgstr ""
 msgid "Successfully connected to \"%s\"..."
 msgstr ""
 #
-# File: src/Erebot/Connection.php, line: 694
+# File: src/Erebot/IrcConnection.php, line: 613
 #, php-format
 msgid "Successfully loaded module '%s'"
 msgstr ""

@@ -1,17 +1,255 @@
 #
+# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/CLI.php, line: 550
+msgid "You SHOULD NOT run Erebot as root!"
+msgstr "You SHOULD NOT run Erebot as root!"
+#
+msgid "Used:"
+msgstr "Used:"
+#
+#, php-format
 msgid ""
+"Unknown error while checking for the existence of another running instance of "
+"Erebot (%s)"
 msgstr ""
-"Project-Id-Version: Erebot 0.5.0\n"
-"Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2012-05-06 14:23+0200\n"
-"PO-Revision-Date: 2011-02-16 16:43+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Unknown error while checking for the existence of another running instance of "
+"Erebot (%s)"
+#
+#, php-format
+msgid "Unable to write PID to pidfile (%s)"
+msgstr "Unable to write PID to pidfile (%s)"
+#
+#, php-format
+msgid "Trying to connect to \"%s\"..."
+msgstr "Trying to connect to \"%s\"..."
+#
+msgid ""
+"This configuration file is meant for Erebot %(config_version)s, but you are "
+"running version %(code_version)s. Things may not work as expected."
+msgstr ""
+"This configuration file is meant for Erebot %(config_version)s, but you are "
+"running version %(code_version)s. Things may not work as expected."
+#
+msgid ""
+"The posix extension is required in order to start the bot in the background"
+msgstr ""
+"The posix extension is required in order to start the bot in the background"
+#
+msgid "The posix extension is needed in order to change user identity."
+msgstr "The posix extension is needed in order to change user identity."
+#
+msgid "The posix extension is needed in order to change group identity."
+msgstr "The posix extension is needed in order to change group identity."
+#
+#, php-format
+msgid "The pidfile (%s) contained garbage. Exiting"
+msgstr "The pidfile (%s) contained garbage. Exiting"
+#
+msgid ""
+"The pcntl extension is required in order to start the bot in the background"
+msgstr ""
+"The pcntl extension is required in order to start the bot in the background"
+#
+msgid "Successfully started in the background"
+msgstr "Successfully started in the background"
+#
+msgid "Successfully reloaded the configuration"
+msgstr "Successfully reloaded the configuration"
+#
+#, php-format
+msgid "Successfully loaded module '%s'"
+msgstr "Successfully loaded module '%s'"
+#
+#, php-format
+msgid "Successfully connected to \"%s\"..."
+msgstr "Successfully connected to \"%s\"..."
+#
+msgid "Successfully changed user identity to \"%(name)s\" (%(id)d)"
+msgstr "Successfully changed user identity to \"%(name)s\" (%(id)d)"
+#
+msgid "Successfully changed group identity to \"%(name)s\" (%(id)d)"
+msgstr "Successfully changed group identity to \"%(name)s\" (%(id)d)"
+#
+msgid "Store the bot's PID in this file."
+msgstr "Store the bot's PID in this file."
+#
+msgid "Starting the bot in the background..."
+msgstr "Starting the bot in the background..."
+#
+# File: src/Erebot/CLI.php, line: 308
+msgid ""
+"Set user identity to this UID/username during startup. The default is to NOT "
+"change user identity, unless configured otherwise. [requires the POSIX "
+"extension]"
+msgstr ""
+"Set user identity to this UID/username during startup. The default is to NOT "
+"change user identity, unless configured otherwise. [requires the POSIX "
+"extension]"
+#
+# File: src/Erebot/CLI.php, line: 291
+msgid ""
+"Set group identity to this GID/group during startup. The default is to NOT "
+"change group identity, unless configured otherwise. [requires the POSIX "
+"extension]"
+msgstr ""
+"Set group identity to this GID/group during startup. The default is to NOT "
+"change group identity, unless configured otherwise. [requires the POSIX "
+"extension]"
+#
+# File: src/Erebot/CLI.php, line: 248
+msgid ""
+"Run the bot in the background (daemon). [requires the POSIX and pcntl "
+"extensions]"
+msgstr ""
+"Run the bot in the background (daemon). [requires the POSIX and pcntl "
+"extensions]"
+#
+#, php-format
+msgid "Reusing existing connection for network \"%s\""
+msgstr "Reusing existing connection for network \"%s\""
+#
+msgid "Reloading the configuration"
+msgstr "Reloading the configuration"
+#
+msgid "Received signal #%(signum)d (%(signame)s)"
+msgstr "Received signal #%(signum)d (%(signame)s)"
+#
+# File: src/Erebot/Prompt.php, line: 156
+#, php-format
+msgid "Prompt started in \"%s\""
+msgstr "Prompt started in \"%s\""
+#
+msgid ""
+"Path to the configuration file to use instead of \"Erebot.xml\", relative to "
+"the current directory."
+msgstr ""
+"Path to the configuration file to use instead of \"Erebot.xml\", relative to "
+"the current directory."
+#
+msgid "PID (%(pid)d) written into %(pidfile)s"
+msgstr "PID (%(pid)d) written into %(pidfile)s"
+#
+#, php-format
+msgid "Only root can change user identity! Your current UID is %d"
+msgstr "Only root can change user identity! Your current UID is %d"
+#
+#, php-format
+msgid "Only root can change group identity! Your current UID is %d"
+msgstr "Only root can change group identity! Your current UID is %d"
+#
+#, php-format
+msgid "No such user \"%s\""
+msgstr "No such user \"%s\""
+#
+#, php-format
+msgid "No such group \"%s\""
+msgstr "No such group \"%s\""
+#
+msgid "No more connections to handle, leaving..."
+msgstr "No more connections to handle, leaving..."
+#
+msgid "No configuration file to reload"
+msgstr "No configuration file to reload"
+#
+msgid "No active connections... Aborting."
+msgstr "No active connections... Aborting."
+#
+msgid "Memory usage:"
+msgstr "Memory usage:"
+#
+#, php-format
+msgid "Loading required modules for \"%s\"..."
+msgstr "Loading required modules for \"%s\"..."
+#
+msgid "Loaded configuration data"
+msgstr "Loaded configuration data"
+#
+msgid "Limit:"
+msgstr "Limit:"
+#
+msgid "Got exception"
+msgstr "Got exception"
+#
+msgid ""
+"Got an exception from the rate-limiter module. Assuming implicit approval to "
+"send the message."
+msgstr ""
+"Got an exception from the rate-limiter module. Assuming implicit approval to "
+"send the message."
+#
+msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
+msgstr "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
+#
+msgid "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". Exiting"
+msgstr "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". Exiting"
+#
+msgid "Erebot is starting"
+msgstr "Erebot is starting"
+#
+#, php-format
+msgid "Erebot is already running with PID %d"
+msgstr "Erebot is already running with PID %d"
+#
+msgid "Erebot has stopped"
+msgstr "Erebot has stopped"
+#
+msgid ""
+"Do not run the bot in the background. This is the default, unless the -d "
+"option is used or the bot is configured otherwise."
+msgstr ""
+"Do not run the bot in the background. This is the default, unless the -d "
+"option is used or the bot is configured otherwise."
+#
+# File: src/Erebot/IrcConnection.php, line: 749
+#, php-format
+msgid "Dispatching raw %s."
+msgstr "Dispatching raw %s."
+#
+# File: src/Erebot/IrcConnection.php, line: 717
+#, php-format
+msgid "Dispatching \"%s\" event."
+msgstr "Dispatching \"%s\" event."
+#
+msgid "Could not start in the background (unable to setsid)"
+msgstr "Could not start in the background (unable to setsid)"
+#
+msgid "Could not start in the background (unable to fork)"
+msgstr "Could not start in the background (unable to fork)"
+#
+msgid "Could not set user identity to \"%(name)s\" (%(id)d)"
+msgstr "Could not set user identity to \"%(name)s\" (%(id)d)"
+#
+msgid "Could not set group identity to \"%(name)s\" (%(id)d)"
+msgstr "Could not set group identity to \"%(name)s\" (%(id)d)"
+#
+#, php-format
+msgid "Could not lock pidfile (%s). Is the bot already running?"
+msgstr "Could not lock pidfile (%s). Is the bot already running?"
+#
+#, php-format
+msgid "Could not connect to \"%s\""
+msgstr "Could not connect to \"%s\""
+#
+#, php-format
+msgid "Could not chdir to \"%s\""
+msgstr "Could not chdir to \"%s\""
+#
+msgid "Could not change umask"
+msgstr "Could not change umask"
+#
+msgid "Connection failed, removing it from the pool"
+msgstr "Connection failed, removing it from the pool"
+#
+msgid "Code is not clean!"
+msgstr "Code is not clean!"
+#
+msgid "Bad channel name"
+msgstr "Bad channel name"
+#
+msgid "Allocated:"
+msgstr "Allocated:"
+#
+msgid "A modular IRC bot written in PHP"
+msgstr "A modular IRC bot written in PHP"
 #
 #. I18N: ICU rule used to format durations (using words).
 #. Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
@@ -68,244 +306,16 @@ msgstr ""
 "    1: 1 week;\n"
 "    2: =#0= weeks;"
 #
-msgid "A modular IRC bot written in PHP"
-msgstr "A modular IRC bot written in PHP"
-#
-msgid "Allocated:"
-msgstr "Allocated:"
-#
-msgid "Bad channel name"
-msgstr "Bad channel name"
-#
-msgid "Code is not clean!"
-msgstr "Code is not clean!"
-#
-msgid "Connection failed, removing it from the pool"
-msgstr "Connection failed, removing it from the pool"
-#
-msgid "Could not change umask"
-msgstr "Could not change umask"
-#
-#, php-format
-msgid "Could not chdir to \"%s\""
-msgstr "Could not chdir to \"%s\""
-#
-#, php-format
-msgid "Could not connect to \"%s\""
-msgstr "Could not connect to \"%s\""
-#
-#, php-format
-msgid "Could not lock pidfile (%s). Is the bot already running?"
-msgstr "Could not lock pidfile (%s). Is the bot already running?"
-#
-msgid "Could not set group identity to \"%(name)s\" (%(id)d)"
-msgstr "Could not set group identity to \"%(name)s\" (%(id)d)"
-#
-msgid "Could not set user identity to \"%(name)s\" (%(id)d)"
-msgstr "Could not set user identity to \"%(name)s\" (%(id)d)"
-#
-msgid "Could not start in the background (unable to fork)"
-msgstr "Could not start in the background (unable to fork)"
-#
-msgid "Could not start in the background (unable to setsid)"
-msgstr "Could not start in the background (unable to setsid)"
-#
 msgid ""
-"Do not run the bot in the background. This is the default, unless the -d "
-"option is used or the bot is configured otherwise."
 msgstr ""
-"Do not run the bot in the background. This is the default, unless the -d "
-"option is used or the bot is configured otherwise."
-#
-msgid "Erebot has stopped"
-msgstr "Erebot has stopped"
-#
-#, php-format
-msgid "Erebot is already running with PID %d"
-msgstr "Erebot is already running with PID %d"
-#
-msgid "Erebot is starting"
-msgstr "Erebot is starting"
-#
-msgid "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". Exiting"
-msgstr "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". Exiting"
-#
-msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
-msgstr "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
-#
-msgid ""
-"Got an exception from the rate-limiter module. Assuming implicit approval to "
-"send the message."
-msgstr ""
-"Got an exception from the rate-limiter module. Assuming implicit approval to "
-"send the message."
-#
-msgid "Got exception"
-msgstr "Got exception"
-#
-msgid "Limit:"
-msgstr "Limit:"
-#
-msgid "Loaded configuration data"
-msgstr "Loaded configuration data"
-#
-#, php-format
-msgid "Loading required modules for \"%s\"..."
-msgstr "Loading required modules for \"%s\"..."
-#
-msgid "Memory usage:"
-msgstr "Memory usage:"
-#
-msgid "No active connections... Aborting."
-msgstr "No active connections... Aborting."
-#
-msgid "No configuration file to reload"
-msgstr "No configuration file to reload"
-#
-msgid "No more connections to handle, leaving..."
-msgstr "No more connections to handle, leaving..."
-#
-#, php-format
-msgid "No such group \"%s\""
-msgstr "No such group \"%s\""
-#
-#, php-format
-msgid "No such user \"%s\""
-msgstr "No such user \"%s\""
-#
-#, php-format
-msgid "Only root can change group identity! Your current UID is %d"
-msgstr "Only root can change group identity! Your current UID is %d"
-#
-#, php-format
-msgid "Only root can change user identity! Your current UID is %d"
-msgstr "Only root can change user identity! Your current UID is %d"
-#
-msgid "PID (%(pid)d) written into %(pidfile)s"
-msgstr "PID (%(pid)d) written into %(pidfile)s"
-#
-msgid ""
-"Path to the configuration file to use instead of \"Erebot.xml\", relative to "
-"the current directory."
-msgstr ""
-"Path to the configuration file to use instead of \"Erebot.xml\", relative to "
-"the current directory."
-#
-# File: src/Erebot/Prompt.php, line: 156
-#, php-format
-msgid "Prompt started in \"%s\""
-msgstr "Prompt started in \"%s\""
-#
-msgid "Received signal #%(signum)d (%(signame)s)"
-msgstr "Received signal #%(signum)d (%(signame)s)"
-#
-msgid "Reloading the configuration"
-msgstr "Reloading the configuration"
-#
-#, php-format
-msgid "Reusing existing connection for network \"%s\""
-msgstr "Reusing existing connection for network \"%s\""
-#
-# File: src/Erebot/CLI.php, line: 248
-msgid ""
-"Run the bot in the background (daemon). [requires the POSIX and pcntl "
-"extensions]"
-msgstr ""
-"Run the bot in the background (daemon). [requires the POSIX and pcntl "
-"extensions]"
-#
-# File: src/Erebot/CLI.php, line: 291
-msgid ""
-"Set group identity to this GID/group during startup. The default is to NOT "
-"change group identity, unless configured otherwise. [requires the POSIX "
-"extension]"
-msgstr ""
-"Set group identity to this GID/group during startup. The default is to NOT "
-"change group identity, unless configured otherwise. [requires the POSIX "
-"extension]"
-#
-# File: src/Erebot/CLI.php, line: 308
-msgid ""
-"Set user identity to this UID/username during startup. The default is to NOT "
-"change user identity, unless configured otherwise. [requires the POSIX "
-"extension]"
-msgstr ""
-"Set user identity to this UID/username during startup. The default is to NOT "
-"change user identity, unless configured otherwise. [requires the POSIX "
-"extension]"
-#
-msgid "Starting the bot in the background..."
-msgstr "Starting the bot in the background..."
-#
-msgid "Store the bot's PID in this file."
-msgstr "Store the bot's PID in this file."
-#
-msgid "Successfully changed group identity to \"%(name)s\" (%(id)d)"
-msgstr "Successfully changed group identity to \"%(name)s\" (%(id)d)"
-#
-msgid "Successfully changed user identity to \"%(name)s\" (%(id)d)"
-msgstr "Successfully changed user identity to \"%(name)s\" (%(id)d)"
-#
-#, php-format
-msgid "Successfully connected to \"%s\"..."
-msgstr "Successfully connected to \"%s\"..."
-#
-#, php-format
-msgid "Successfully loaded module '%s'"
-msgstr "Successfully loaded module '%s'"
-#
-msgid "Successfully reloaded the configuration"
-msgstr "Successfully reloaded the configuration"
-#
-msgid "Successfully started in the background"
-msgstr "Successfully started in the background"
-#
-msgid ""
-"The pcntl extension is required in order to start the bot in the background"
-msgstr ""
-"The pcntl extension is required in order to start the bot in the background"
-#
-#, php-format
-msgid "The pidfile (%s) contained garbage. Exiting"
-msgstr "The pidfile (%s) contained garbage. Exiting"
-#
-msgid "The posix extension is needed in order to change group identity."
-msgstr "The posix extension is needed in order to change group identity."
-#
-msgid "The posix extension is needed in order to change user identity."
-msgstr "The posix extension is needed in order to change user identity."
-#
-msgid ""
-"The posix extension is required in order to start the bot in the background"
-msgstr ""
-"The posix extension is required in order to start the bot in the background"
-#
-msgid ""
-"This configuration file is meant for Erebot %(config_version)s, but you are "
-"running version %(code_version)s. Things may not work as expected."
-msgstr ""
-"This configuration file is meant for Erebot %(config_version)s, but you are "
-"running version %(code_version)s. Things may not work as expected."
-#
-#, php-format
-msgid "Trying to connect to \"%s\"..."
-msgstr "Trying to connect to \"%s\"..."
-#
-#, php-format
-msgid "Unable to write PID to pidfile (%s)"
-msgstr "Unable to write PID to pidfile (%s)"
-#
-#, php-format
-msgid ""
-"Unknown error while checking for the existence of another running instance of "
-"Erebot (%s)"
-msgstr ""
-"Unknown error while checking for the existence of another running instance of "
-"Erebot (%s)"
-#
-msgid "Used:"
-msgstr "Used:"
-#
-# File: /home/looksup/Documents/Erebot/core/trunk/src/Erebot/CLI.php, line: 550
-msgid "You SHOULD NOT run Erebot as root!"
-msgstr "You SHOULD NOT run Erebot as root!"
+"Project-Id-Version: Erebot 0.5.0\n"
+"Report-Msgid-Bugs-To: i18n@erebot.net\n"
+"POT-Creation-Date: 2012-05-20 14:31+0200\n"
+"PO-Revision-Date: 2011-02-16 16:43+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
