@@ -547,7 +547,7 @@ The equivalent as a template would be:
     ?>
 
 Notice how we represented the actual counts using either a spelled out form
-("one girl" / "one boy") or an actual number ("2 girls" / "2 bots"), simply
+("one girl" / "one boy") or an actual number ("2 girls" / "2 boys"), simply
 by specifying different words for the different ``<cases>``.
 
 You'll also notice that this string is electable for `Internationalization`_.
