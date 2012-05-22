@@ -14,7 +14,7 @@
         </parameter>
 
         <parameter key="core.classes.core">Erebot</parameter>
-        <parameter key="core.classes.connection">Erebot_Connection</parameter>
+        <parameter key="core.classes.connection">Erebot_IrcConnection</parameter>
         <parameter key="core.classes.connection_factory">Erebot_ConnectionFactory</parameter>
         <parameter key="core.classes.i18n">Erebot_I18n</parameter>
         <parameter key="core.classes.identity">Erebot_Identity</parameter>

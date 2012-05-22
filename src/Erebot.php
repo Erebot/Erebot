@@ -173,7 +173,7 @@ implements  Erebot_Interface_Core
                 $socket = $connection->getSocket();
 
                 if ($connection instanceof Erebot_Interface_SendingConnection &&
-                    !$connection->emptySendQueue())
+                    $connection->getIO()->inWriteQueue())
                     $write[]    = $socket;
 
                 if ($connection instanceof Erebot_Interface_ReceivingConnection)
@@ -237,7 +237,7 @@ implements  Erebot_Interface_Core
                     if ($index !== FALSE) {
                         // Read as much data from the connection as possible.
                         try {
-                            $this->_connections[$index]->processIncomingData();
+                            $this->_connections[$index]->read();
                         }
                         catch (Erebot_ConnectionFailureException $e) {
                             $logger->info(
@@ -288,7 +288,7 @@ implements  Erebot_Interface_Core
                 foreach ($this->_connections as $connection) {
                     if ($connection instanceof
                         Erebot_Interface_ReceivingConnection)
-                        $connection->processQueuedData();
+                        $connection->process();
                 }
             }
 
@@ -298,7 +298,7 @@ implements  Erebot_Interface_Core
                 if ($index !== FALSE && isset($this->_connections[$index]) &&
                     $this->_connections[$index] instanceof
                     Erebot_Interface_SendingConnection)
-                    $this->_connections[$index]->processOutgoingData();
+                    $this->_connections[$index]->write();
             }
         }
     }

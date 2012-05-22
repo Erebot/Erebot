@@ -47,11 +47,7 @@ implements  Erebot_Interface_ReceivingConnection
     /// The underlying socket, represented as a stream.
     protected $_socket;
 
-    /// A FIFO queue for incoming messages.
-    protected $_rcvQueue;
-
-    /// A raw buffer for incoming data.
-    protected $_incomingData;
+    protected $_io;
 
     /**
      * Constructs the UNIX socket that represents the prompt.
@@ -148,9 +144,7 @@ implements  Erebot_Interface_ReceivingConnection
                 throw new Exception("Error while flushing the socket");
         }
 
-        $this->_rcvQueue        = array();
-        $this->_incomingData    = '';
-
+        $this->_io  = new Erebot_LineIO(Erebot_LineIO::EOL_ANY, $this->_socket);
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(__FILE__);
         $logger->info($bot->gettext('Prompt started in "%s"'), $connector);
@@ -189,68 +183,24 @@ implements  Erebot_Interface_ReceivingConnection
         return $this->_socket;
     }
 
-    /// \copydoc Erebot_Interface_ReceivingConnection::emptyReadQueue()
-    public function emptyReadQueue()
+    /// \copydoc Erebot_Interface_Connection::getIO()
+    public function getIO()
     {
-        return (count($this->_rcvQueue) == 0);
+        return $this->_io;
     }
 
-    /**
-     * Retrieves a single line of text from the incoming buffer
-     * and puts it in the incoming FIFO.
-     *
-     * \retval bool
-     *      Whether a line could be fetched from the buffer
-     *      or not.
-     *
-     * \note
-     *      Lines fetched by this method are always UTF-8 encoded.
-     */
-    protected function _getSingleLine()
+    public function read()
     {
-        while (TRUE) {
-            $pos = strcspn($this->_incomingData, "\r\n");
-            if ($pos == strlen($this->_incomingData))
-                return FALSE;
-
-            $line = substr($this->_incomingData, 0, $pos);
-            $this->_incomingData = (string) substr($this->_incomingData, $pos + 1);
-            if ($line === FALSE)
-                continue;
-            $line = Erebot_Utils::toUTF8($line);
-            break;
-        }
-        $this->_rcvQueue[] = $line;
-
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(
-            __FILE__ . DIRECTORY_SEPARATOR . 'input'
-        );
-        $logger->debug("%s", addcslashes($line, "\000..\037"));
-        return TRUE;
-    }
-
-    /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
-    public function processIncomingData()
-    {
-        $received   = fread($this->_socket, 4096);
-        if ($received === FALSE || feof($this->_socket)) {
+        $res = $this->_io->read();
+        if ($res === FALSE)
             throw new Erebot_ConnectionFailureException('Disconnected');
-        }
-
-        $this->_incomingData .= $received;
-        while ($this->_getSingleLine())
-            ;   // Read messages.
+        return $res;
     }
 
-    /// \copydoc Erebot_Interface_ReceivingConnection::processQueuedData()
-    public function processQueuedData()
+    public function process()
     {
-        if (!count($this->_rcvQueue))
-            return;
-
-        while (count($this->_rcvQueue))
-            $this->_handleMessage(array_shift($this->_rcvQueue));
+        for ($i = $this->_io->inReadQueue(); $i > 0; $i--)
+            $this->_handleMessage($this->_io->pop());
     }
 
     /**

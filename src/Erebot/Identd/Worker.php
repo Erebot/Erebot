@@ -32,11 +32,7 @@ implements  Erebot_Interface_BidirectionalConnection
     /// The underlying socket, represented as a stream.
     protected $_socket;
 
-    /// A raw buffer for incoming data.
-    protected $_incomingData;
-
-    /// A FIFO queue for incoming messages.
-    protected $_rcvQueue;
+    protected $_io;
 
     /**
      * Creates a worker object capable of handling
@@ -56,10 +52,12 @@ implements  Erebot_Interface_BidirectionalConnection
     {
         if (!is_resource($socket))
             throw new Erebot_InvalidValueException('Not a valid socket');
-        $this->_bot             = $bot;
-        $this->_socket          = $socket;
-        $this->_incomingData    = '';
-        $this->_rcvQueue        = array();
+        $this->_bot     = $bot;
+        $this->_socket  = $socket;
+        $this->_io      = new Erebot_LineIO(
+            Erebot_LineIO::EOL_WIN,
+            $this->_socket
+        );
     }
 
     /// Destructor.
@@ -81,57 +79,20 @@ implements  Erebot_Interface_BidirectionalConnection
         $this->_socket = NULL;
     }
 
-    /**
-     * Reads a single line to data from the worker's socket.
-     *
-     * \retval bool
-     *      TRUE if a line could be read, FALSE otherwise.
-     */
-    protected function _getSingleLine()
+    public function read()
     {
-        $pos = strpos($this->_incomingData, "\r\n");
-        if ($pos === FALSE)
-            return FALSE;
-
-        $line = substr($this->_incomingData, 0, $pos);
-        $this->_incomingData    = substr($this->_incomingData, $pos + 2);
-        $this->_rcvQueue[]      = $line;
-        return TRUE;
+        return $this->_io->read();
     }
 
-    /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
-    public function processIncomingData()
+    public function process()
     {
-        $received   = fread($this->_socket, 4096);
-        if ($received === FALSE || feof($this->_socket))
+        if (!$this->_io->inReadQueue())
             return;
 
-        $this->_incomingData .= $received;
-        while ($this->_getSingleLine())
-            ;   // Read messages.
-    }
-
-    /// \copydoc Erebot_Interface_ReceivingConnection::processQueuedData()
-    public function processQueuedData()
-    {
-        if (!count($this->_rcvQueue))
-            return;
-
-        $line = array_shift($this->_rcvQueue);
-        $line = $this->_handleMessage($line);
+        $line = $this->_handleMessage($this->_io->pop());
         if ($line) {
-            // Make sure we send the whole line,
-            // with a trailing CR LF sequence.
-            $line .= "\r\n";
-            for (
-                $written = 0, $len = strlen($line);
-                $written < $len;
-                $written += $fwrite
-            ) {
-                $fwrite = fwrite($this->_socket, substr($line, $written));
-                if ($fwrite === FALSE)
-                    break;
-            }
+            $this->_io->push($line);
+            $this->_io->write();
         }
 
         $this->_bot->removeConnection($this);
@@ -217,25 +178,8 @@ implements  Erebot_Interface_BidirectionalConnection
         return $this->_socket;
     }
 
-    /// \copydoc Erebot_Interface_ReceivingConnection::emptyReadQueue()
-    public function emptyReadQueue()
-    {
-        return TRUE;
-    }
-
-    /// \copydoc Erebot_Interface_SendingConnection::emptySendQueue()
-    public function emptySendQueue()
-    {
-        return TRUE;
-    }
-
-    /// \copydoc Erebot_Interface_SendingConnection::pushLine()
-    public function pushLine($line)
-    {
-    }
-
     /// \copydoc Erebot_Interface_SendingConnection::processOutgoingData()
-    public function processOutgoingData()
+    public function write()
     {
     }
 
@@ -249,6 +193,12 @@ implements  Erebot_Interface_BidirectionalConnection
     public function getConfig($chan)
     {
         return NULL;
+    }
+
+    /// \copydoc Erebot_Interface_Connection::getIO()
+    public function getIO()
+    {
+        return $this->_io;
     }
 }
 

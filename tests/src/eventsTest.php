@@ -17,7 +17,7 @@
 */
 
 class   FakeConnection
-extends Erebot_Connection
+extends Erebot_IrcConnection
 {
     protected $_dispatched = array();
 

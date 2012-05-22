@@ -20,36 +20,30 @@
  * \brief
  *      Handles a (possibly encrypted) connection to an IRC server.
  */
-class       Erebot_Connection
-implements  Erebot_Interface_ModuleContainer,
-            Erebot_Interface_EventDispatcher,
-            Erebot_Interface_BidirectionalConnection,
-            Erebot_Interface_Collated
+class       Erebot_IrcConnection
+implements  Erebot_Interface_IrcConnection
 {
     /**
      * A configuration object implementing
      * the Erebot_Interface_Config_Server interface.
      */
     protected $_config;
+
     /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
 
     /// The underlying socket, represented as a stream.
     protected $_socket;
-    /// A FIFO queue for outgoing messages.
-    protected $_sndQueue;
-    /// A FIFO queue for incoming messages.
-    protected $_rcvQueue;
-    /// A raw buffer for incoming data.
-    protected $_incomingData;
 
     /// Maps channels to their loaded modules.
     protected $_channelModules;
+
     /// Maps modules names to modules instances.
     protected $_plainModules;
 
     /// A list of rawHandlers.
     protected $_raws;
+
     /// A list of eventHandlers.
     protected $_events;
 
@@ -65,6 +59,8 @@ implements  Erebot_Interface_ModuleContainer,
     protected $_collator;
 
     protected $_eventsProducer;
+
+    protected $_io;
 
     /**
      * Constructs the object which will hold a connection.
@@ -83,17 +79,15 @@ implements  Erebot_Interface_ModuleContainer,
                                 $events = array()
     )
     {
-        $this->_config      = $config;
-        $this->_bot         = $bot;
+        $this->_config          = $config;
+        $this->_bot             = $bot;
 
         $this->_channelModules  = array();
         $this->_plainModules    = array();
         $this->_raws            = array();
         $this->_events          = array();
-        $this->_sndQueue        = array();
-        $this->_rcvQueue        = array();
-        $this->_incomingData    = '';
         $this->_connected       = FALSE;
+        $this->_io              = new Erebot_LineIO(Erebot_LineIO::EOL_WIN);
         $this->_collator        = new Erebot_IrcCollator_RFC1459();
         $this->_eventsProducer  = new Erebot_IrcParser($this);
         /// @FIXME: this should really be done in some other way.
@@ -107,7 +101,7 @@ implements  Erebot_Interface_ModuleContainer,
                     'Erebot_Interface_RawProfile_005',
                     // Technically, ISON is an optionnal feature from RFC 1459,
                     // but we need to load it by default so that some modules
-                    // (eg. Erebot_Module_WatchList) work properly.
+                    // (eg. Erebot_Module_WatchList) can work properly.
                     'Erebot_Interface_RawProfile_ISON',
                 )
             )
@@ -282,7 +276,7 @@ implements  Erebot_Interface_ModuleContainer,
                 throw $e;
             }
             catch (Exception $e) {
-                    $logger->warning($e->getMessage());
+                $logger->warning($e->getMessage());
             }
         }
 
@@ -351,7 +345,7 @@ implements  Erebot_Interface_ModuleContainer,
                     throw new Erebot_InvalidValueException('Invalid port');
 
                 if ($this->_socket === NULL) {
-                    $this->_socket = stream_socket_client(
+                    $this->_socket = @stream_socket_client(
                         'tcp://'.$uri->getHost().':'.$port,
                         $errno, $errstr,
                         ini_get('default_socket_timeout'),
@@ -439,6 +433,7 @@ implements  Erebot_Interface_ModuleContainer,
             );
         }
 
+        $this->_io->setSocket($this->_socket);
         $this->dispatch($this->_eventsProducer->makeEvent('!Logon'));
         return TRUE;
     }
@@ -452,18 +447,16 @@ implements  Erebot_Interface_ModuleContainer,
         $logger->info("Disconnecting from '%s' ...", $uris[count($uris) - 1]);
 
         // Purge send queue and send QUIT message to notify server.
-        $this->_sndQueue = array();
+        $this->_io->setSocket($this->_socket);
         $quitMessage =
             Erebot_Utils::stringifiable($quitMessage)
             ? ' :'.$quitMessage
             : '';
-        $this->pushLine('QUIT'.$quitMessage);
+        $this->_io->push('QUIT'.$quitMessage);
 
         // Send any pending data in the outgoing buffer.
-        while (1) {
-            $this->processOutgoingData();
-            if ($this->emptySendQueue())
-                break;
+        while ($this->_io->inWriteQueue()) {
+            $this->_io->write();
             usleep(50000); // Sleep for 50ms.
         }
 
@@ -471,22 +464,9 @@ implements  Erebot_Interface_ModuleContainer,
         $this->_bot->removeConnection($this);
         if (is_resource($this->_socket))
             fclose($this->_socket);
+        $this->_io->setSocket(NULL);
         $this->_socket      = NULL;
         $this->_connected   = FALSE;
-    }
-
-    /// \copydoc Erebot_Interface_SendingConnection::pushLine()
-    public function pushLine($line)
-    {
-        $chars = array("\r", "\n");
-        foreach ($chars as $char) {
-            if (strpos($line, $char) !== FALSE) {
-                throw new Erebot_InvalidValueException(
-                    'Line contains forbidden characters'
-                );
-            }
-        }
-        $this->_sndQueue[] = $line;
     }
 
     /// \copydoc Erebot_Interface_Connection::getConfig()
@@ -512,54 +492,22 @@ implements  Erebot_Interface_ModuleContainer,
         return $this->_socket;
     }
 
-    /// \copydoc Erebot_Interface_ReceivingConnection::emptyReadQueue()
-    public function emptyReadQueue()
+    /// \copydoc Erebot_Interface_Connection::getBot()
+    public function getBot()
     {
-        return (count($this->_rcvQueue) == 0);
+        return $this->_bot;
     }
 
-    /// \copydoc Erebot_Interface_SendingConnection::emptySendQueue()
-    public function emptySendQueue()
+    /// \copydoc Erebot_Interface_Connection::getIO()
+    public function getIO()
     {
-        return (count($this->_sndQueue) == 0);
+        return $this->_io;
     }
 
-    /**
-     * Retrieves a single line of text from the incoming buffer
-     * and puts it in the incoming FIFO.
-     *
-     * \retval TRUE
-     *      Whether a line could be fetched from the buffer.
-     *
-     * \retval FALSE
-     *      ... or not.
-     *
-     * \note
-     *      Lines fetched by this method are always UTF-8 encoded.
-     */
-    protected function _getSingleLine()
+    public function read()
     {
-        $pos = strpos($this->_incomingData, "\r\n");
-        if ($pos === FALSE)
-            return FALSE;
-
-        $line = Erebot_Utils::toUTF8(substr($this->_incomingData, 0, $pos));
-        $this->_incomingData    = substr($this->_incomingData, $pos + 2);
-        $this->_rcvQueue[]      = $line;
-
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(
-            __FILE__ . DIRECTORY_SEPARATOR . 'input'
-        );
-        $logger->debug("%s", addcslashes($line, "\000..\037"));
-        return TRUE;
-    }
-
-    /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
-    public function processIncomingData()
-    {
-        $received   = fread($this->_socket, 4096);
-        if ($received === FALSE || feof($this->_socket)) {
+        $res = $this->_io->read();
+        if ($res === FALSE) {
             $event = $this->_eventsProducer->makeEvent('!Disconnect');
             $this->dispatch($event);
 
@@ -569,24 +517,24 @@ implements  Erebot_Interface_ModuleContainer,
                 $logger->error('Disconnected');
                 throw new Erebot_ConnectionFailureException('Disconnected');
             }
-            return;
         }
-
-        $this->_incomingData .= $received;
-        while ($this->_getSingleLine())
-            ;   // Read messages.
+        return $res;
     }
 
-    /// \copydoc Erebot_Interface_SendingConnection::processOutgoingData()
-    public function processOutgoingData()
+    public function process()
     {
-        if ($this->emptySendQueue()) {
+        for ($i = $this->_io->inReadQueue(); $i > 0; $i--)
+            $this->_eventsProducer->parseLine($this->_io->pop());
+    }
+
+    public function write()
+    {
+        if (!$this->_io->inWriteQueue()) {
             throw new Erebot_NotFoundException(
                 'No outgoing data needs to be handled'
             );
         }
 
-        $line       = array_shift($this->_sndQueue);
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(
             __FILE__ . DIRECTORY_SEPARATOR . 'output'
@@ -603,9 +551,7 @@ implements  Erebot_Interface_ModuleContainer,
             try {
                 // Ask politely if we can send our message.
                 if (!$rateLimiter->canSend()) {
-                    // Put back what we took before.
-                    array_unshift($this->_sndQueue, $line);
-                    return;
+                    return FALSE;
                 }
             }
             catch (Exception $e) {
@@ -622,36 +568,7 @@ implements  Erebot_Interface_ModuleContainer,
             // No rate-limit in effect, send away!
         }
 
-        // Make sure we send the whole line,
-        // with a trailing CR LF sequence.
-        $line .= "\r\n";
-        for (
-            $written = 0, $len = strlen($line);
-            $written < $len;
-            $written += $fwrite
-        ) {
-            $fwrite = @fwrite($this->_socket, substr($line, $written));
-            if ($fwrite === FALSE)
-                return FALSE;
-        }
-        $logger->debug("%s", addcslashes(substr($line, 0, -2), "\000..\037"));
-        return $written;
-    }
-
-    /// \copydoc Erebot_Interface_ReceivingConnection::processQueuedData()
-    public function processQueuedData()
-    {
-        if (!count($this->_rcvQueue))
-            return;
-
-        while (count($this->_rcvQueue))
-            $this->_eventsProducer->parseLine(array_shift($this->_rcvQueue));
-    }
-
-    /// \copydoc Erebot_Interface_Connection::getBot()
-    public function getBot()
-    {
-        return $this->_bot;
+        return $this->_io->write();
     }
 
     protected function _loadModule(
@@ -789,11 +706,15 @@ implements  Erebot_Interface_ModuleContainer,
     )
     {
         $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
-//        $logger->debug(
-//            $this->_bot->gettext('Dispatching "%s" event.'),
-//            get_class($event)
-//        );
+        $logger     = $logging->getLogger(
+            __FILE__ .
+            DIRECTORY_SEPARATOR . 'dispatch' .
+            DIRECTORY_SEPARATOR . 'event'
+        );
+        $logger->debug(
+            $this->_bot->gettext('Dispatching "%s" event.'),
+            get_class($event)
+        );
         try {
             foreach ($this->_events as $handler) {
                 if ($handler->handleEvent($event) === FALSE)
@@ -817,11 +738,15 @@ implements  Erebot_Interface_ModuleContainer,
     protected function _dispatchRaw(Erebot_Interface_Event_Raw $raw)
     {
         $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
-//        $logger->debug(
-//            $this->_bot->gettext('Dispatching raw #%s.'),
-//            sprintf('%03d', $raw->getRaw())
-//        );
+        $logger     = $logging->getLogger(
+            __FILE__ .
+            DIRECTORY_SEPARATOR . 'dispatch' .
+            DIRECTORY_SEPARATOR . 'raw'
+        );
+        $logger->debug(
+            $this->_bot->gettext('Dispatching raw %s.'),
+            sprintf('%03d', $raw->getRaw())
+        );
         try {
             foreach ($this->_raws as $handler) {
                 if ($handler->handleRaw($raw) === FALSE)

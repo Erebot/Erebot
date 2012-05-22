@@ -28,8 +28,10 @@ implements  Erebot_Interface_ReceivingConnection
 {
     /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;
+
     /// The underlying socket, represented as a stream.
     protected $_socket;
+
     /// Class to use to process IdentD requests.
     protected $_workerCls;
 
@@ -113,17 +115,16 @@ implements  Erebot_Interface_ReceivingConnection
         return TRUE;
     }
 
-    /// \copydoc Erebot_Interface_ReceivingConnection::processIncomingData()
-    public function processIncomingData()
+    public function read()
     {
         $socket = stream_socket_accept($this->_socket);
         if (!$socket)
-            return;
+            return FALSE;
         $worker = new $this->_workerCls($this->_bot, $socket);
+        return $worker;
     }
 
-    /// \copydoc Erebot_Interface_ReceivingConnection::processQueuedData()
-    public function processQueuedData()
+    public function process()
     {
     }
 
@@ -135,6 +136,12 @@ implements  Erebot_Interface_ReceivingConnection
 
     /// \copydoc Erebot_Interface_Connection::getConfig()
     public function getConfig($chan)
+    {
+        return NULL;
+    }
+
+    /// \copydoc Erebot_Interface_Connection::getIO()
+    public function getIO()
     {
         return NULL;
     }

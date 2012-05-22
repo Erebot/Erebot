@@ -100,8 +100,8 @@ extends         Erebot_TestEnv_TestCase
         // Uncomment if you want to debug the tests.
 #        echo "Sent: '".trim($msg)."'\r\n";
         fputs($this->_sockets[1], $msg);
-        $this->_worker->processIncomingData();
-        $this->_worker->processQueuedData();
+        $this->_worker->read();
+        $this->_worker->process();
 
         $w = $e = NULL;
         $r = array($this->_sockets[1]);

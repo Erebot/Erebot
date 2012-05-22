@@ -35,7 +35,11 @@ extends         Erebot_Testenv_Module_TestCase
     {
         parent::_createMocks();
         // Mock a real connection instead of the interface.
-        $this->_connection = $this->getMock('Erebot_Connection', array(), array($this->_bot, $this->_serverConfig), '', FALSE, FALSE);
+        $this->_connection = $this->getMock(
+            'Erebot_IrcConnection', array(),
+            array($this->_bot, $this->_serverConfig),
+            '', FALSE, FALSE
+        );
     }
 }
 
