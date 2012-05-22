@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot 0.5.1\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2012-05-20 14:31+0200\n"
+"POT-Creation-Date: 2012-05-23 00:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,12 +56,12 @@ msgstr ""
 msgid "Allocated:"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 802
+# File: src/Erebot/IrcConnection.php, line: 800
 msgid "Bad channel name"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 728
-# File: src/Erebot/IrcConnection.php, line: 760
+# File: src/Erebot/IrcConnection.php, line: 726
+# File: src/Erebot/IrcConnection.php, line: 758
 msgid "Code is not clean!"
 msgstr ""
 #
@@ -105,12 +105,12 @@ msgstr ""
 msgid "Could not start in the background (unable to setsid)"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 717
+# File: src/Erebot/IrcConnection.php, line: 715
 #, php-format
 msgid "Dispatching \"%s\" event."
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 749
+# File: src/Erebot/IrcConnection.php, line: 747
 #, php-format
 msgid "Dispatching raw %s."
 msgstr ""
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 562
+# File: src/Erebot/IrcConnection.php, line: 560
 msgid ""
 "Got an exception from the rate-limiter module. Assuming implicit approval to "
 "send the message."
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Loaded configuration data"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 319
+# File: src/Erebot/IrcConnection.php, line: 316
 #, php-format
 msgid "Loading required modules for \"%s\"..."
 msgstr ""
@@ -270,7 +270,7 @@ msgstr ""
 msgid "Successfully connected to \"%s\"..."
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 613
+# File: src/Erebot/IrcConnection.php, line: 611
 #, php-format
 msgid "Successfully loaded module '%s'"
 msgstr ""

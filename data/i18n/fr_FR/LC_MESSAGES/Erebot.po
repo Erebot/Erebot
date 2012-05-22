@@ -3,11 +3,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot 0.5.0\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2012-05-20 14:31+0200\n"
-"PO-Revision-Date: 2010-02-13 19:10+0100\n"
-"Last-Translator: Automatically generated\n"
+"POT-Creation-Date: 2012-05-20 15:03+0200\n"
+"PO-Revision-Date: 2012-05-20 19:10+0100\n"
+"Last-Translator: François Poirotte\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -114,12 +114,12 @@ msgstr "Impossible de démarrer en arrière-plan (échec de setsid)"
 # File: src/Erebot/IrcConnection.php, line: 717
 #, php-format
 msgid "Dispatching \"%s\" event."
-msgstr ""
+msgstr "Transmission de l'événement \"%s\"."
 #
 # File: src/Erebot/IrcConnection.php, line: 749
 #, php-format
 msgid "Dispatching raw %s."
-msgstr ""
+msgstr "Transmission du message brut %s."
 #
 msgid ""
 "Do not run the bot in the background. This is the default, unless the -d "
