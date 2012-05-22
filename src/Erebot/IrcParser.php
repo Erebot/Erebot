@@ -173,26 +173,17 @@ implements  Erebot_Interface_IrcParser
 
         $type = strtoupper($type);
 
-        // ERROR usually happens when disconnecting from the server,
-        // when using QUIT or getting KILLed, etc.
-        if ($type == 'ERROR') {
-            if (substr($parts[0], 0, 1) == ':')
-                $parts[0] = substr($parts[0], 1);
-
-            $msg = implode(' ', $parts);
-            return $this->_connection->dispatch(
-                $this->makeEvent('!Error', $source, $msg)
-            );
+        // Takes care of messages like QUIT where there
+        // is no target (the current user is the target).
+        if (substr($parts[0], 0, 1) == ':') {
+            $target     = NULL;
         }
-
-        $target = array_shift($parts);
+        else
+            $target = array_shift($parts);
 
         if (count($parts) && substr($parts[0], 0, 1) == ':')
             $parts[0] = substr($parts[0], 1);
         $msg = implode(' ', $parts);
-
-        if (substr($target, 0, 1) == ':')
-            $target = substr($target, 1);
 
         $method = '_handle'.$type;
         $exists = method_exists($this, $method);
@@ -478,6 +469,14 @@ implements  Erebot_Interface_IrcParser
 
         return $this->_connection->dispatch(
             $this->makeEvent('!PrivateText', $source, $msg)
+        );
+    }
+
+    protected function _handleQUIT($source, $target, $msg, $parts) {
+        // :nick1!ident@host QUIT :Reason
+        assert('$target === NULL');
+        return $this->_connection->dispatch(
+            $this->makeEvent('!Quit', $source, $msg)
         );
     }
 
