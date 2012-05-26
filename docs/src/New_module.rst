@@ -2,7 +2,10 @@ Writing a new module
 ====================
 
 This page acts like a guide for those who may be interested in writing a new
-module for Erebot.
+module for Erebot. It assumes basic knowledge of some of the features provided
+by Erebot for developers (such as the `styling features`_ and `i18n features`_).
+
+..  contents::
 
 General structure
 -----------------
@@ -12,7 +15,7 @@ As such, it must have at least two methods (declared *abstract* in
 ``Erebot_Module_Base``):
 
 -   ``_reload()`` is called when the module is (re)loaded with some
-    flags giving more information about where is being reloaded.
+    flags giving more information about what must be (re)loaded.
     The flags are a bitwise-OR combination of the ``RELOAD_*`` constants
     found in ``Erebot_Module_Base``.
 
@@ -34,7 +37,7 @@ Helping users
     Adding an help method to your module is totally optional, but it is
     considered good practice as it provides some way for users to request
     help on your new module and its commands without having to read some
-    online manual for example.
+    online manual.
 
 To provide help for your module, all you need is a method that handles
 help requests. The name of that method does not matter (though this method
@@ -102,6 +105,49 @@ of words in ``$words``, which is very easy as the wrapper implements the
     (by returning ``FALSE`` or nothing at all) and you **must not**
     send a message indicating an error in the request to the user.
 
+The listing below shows an example of a very simple help method for
+an imaginary module:
+
+..  sourcecode:: inline-php
+
+    public function getHelp(
+        Erebot_Interface_Event_Base_TextMessage $event,
+        Erebot_Interface_TextWrapper            $words
+    )
+    {
+        if ($event instanceof Erebot_Interface_Event_Base_Private) {
+            $target = $event->getSource();
+            $chan   = NULL;
+        }
+        else
+            $target = $chan = $event->getChan();
+
+        $fmt        = $this->getFormatter($chan);
+        $moduleName = strtolower(get_class());
+        $nbArgs     = count($words);
+
+        // Help request on the module itself.
+        if ($nbArgs == 1 && $words[0] == $moduleName) {
+            $msg = $fmt->_('This is an <b>imaginary</b> module.');
+
+            // We send the message back to where the request came from:
+            // in a private query or an IRC channel.
+            $this->sendMessage($target, $msg);
+            return TRUE;
+        }
+
+        // This module does not care about other help requests.
+        // So we don't return anything here. This is the same
+        // as if "return;" or "return NULL;" had been used.
+    }
+
+..  note::
+    We used the ``getFormatter()`` method here to be able to `format`_ the help
+    message (to make "imaginary" appear in bold in the output). We also used
+    the formatter's ``_()`` method to mark the message for `translating`_.
+    This is the recommended practice.
+
+
 Once the code for your help method is ready, you have to tell Erebot about it
 by using the ``registerHelpMethod()`` method inside your module's ``_reload()``
 method. You must call ``registerHelpMethod()`` with an object implementing the
@@ -124,25 +170,34 @@ This can be done using the following snippet:
 Frequently Asked Questions
 --------------------------
 
-This sections contains random information aboout modules:
+This sections contains random questions about modules' development.
 
--   What features can I use in a new module?
+What features can I use in a new module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    You can use any of the many features provided by the PHP language.
-    This includes things such as sockets, databases, etc.
+You can use any of the many features provided by the PHP language.
+This includes things such as sockets, databases, etc.
 
--   Likewise, are there patterns I should avoid?
+Are there patterns I should avoid?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Even though you can do pretty much anything you want in a module,
-    you should avoid long running tasks such as downloading a big file
-    from a remote server.
+Even though you can do pretty much anything you want in a module,
+you should avoid long running tasks such as downloading a big file
+from a remote server.
 
-    The reason is simple: PHP does not support multithreading, so while
-    a long running task is being executed, the rest of the bot is literally
-    stopped. This includes other modules (like ``Erebot_Module_PingReply``)
-    responsible for keeping the connection alive. Hence, running a long task
-    in your module may result in the bot being disconnected from IRC servers
-    with a "Ping timeout" error.
+The reason is simple: PHP does not support multithreading, so while
+a long running task is being executed, the rest of the bot is literally
+stopped. This includes other modules (like ``Erebot_Module_PingReply``)
+responsible for keeping the connection alive. Hence, running a long task
+in your module may result in the bot being disconnected from IRC servers
+with a "Ping timeout" error.
 
+
+..  _`styling features`:
+..  _`format`:
+    Styling.html
+..  _`i18n features`:
+..  _`translating`:
+    Internationalization.html
 
 .. vim: ts=4 et
