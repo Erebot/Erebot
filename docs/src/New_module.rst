@@ -8,6 +8,23 @@ General structure
 -----------------
 
 An Erebot module is a PHP class that extends ``Erebot_Module_Base``.
+As such, it must have at least two methods (declared *abstract* in
+``Erebot_Module_Base``):
+
+-   ``_reload()`` is called when the module is (re)loaded with some
+    flags giving more information about where is being reloaded.
+    The flags are a bitwise-OR combination of the ``RELOAD_*`` constants
+    found in ``Erebot_Module_Base``.
+
+-   ``_unload()`` is called when the module is unloaded. Its purpose
+    is to free any resource that may have been allocated by ``_reload()``,
+    save the current state elsewhere, etc.
+
+..  note::
+    When a module is reloaded, only ``_reload()`` is called.
+    The only time ``_unload()`` is ever called is when the module
+    is being completely unloaded (usually, right before the bot
+    exits).
 
 
 Helping users
