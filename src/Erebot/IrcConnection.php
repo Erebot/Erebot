@@ -645,7 +645,7 @@ implements  Erebot_Interface_IrcConnection
                 return $this->_channelModules[$chan][$name];
 
             $netCfg     = $this->_config->getNetworkCfg();
-            $chanCfg    = $netCfg->getChannel($chan);
+            $chanCfg    = $netCfg->getChannelCfg($chan);
             $modules    = $chanCfg->getModules(FALSE);
             if (in_array($name, $modules, TRUE)) {
                 if (!$autoload)
