@@ -27,10 +27,10 @@ Erebot implements a few useful features:
 
 -   A module that displays information on TV schedules .
 
--   An implementation of the popular Uno game, compatible with that of rbot,
+-   An implementation of the popular Uno game, mostly inspired by that of rbot,
     but also providing other variants, making the game even funnier.
 
--   An implementation of the TV gameshow Countdown.
+-   An implementation of the TV gameshow "Countdown".
 
 -   An implementation of the traditionnal game "Gang of Four".
 
