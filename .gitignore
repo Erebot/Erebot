@@ -7,6 +7,10 @@
 # may be referenced in Erebot.xml.
 /vendor/Erebot_Module_*
 
+# Used by Erebot's phar.
+# Useful when doing manual testing.
+/modules
+
 # Local override of Erebot_API.
 /scripts/Erebot_API
 

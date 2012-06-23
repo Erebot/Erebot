@@ -31,10 +31,11 @@ if ($options['phar']) {
         array_merge(
             $deps,
             array(
-                'pear.erebot.net/Erebot_Module_IrcConnector',
-                'pear.erebot.net/Erebot_Module_AutoConnect',
-                'pear.erebot.net/Erebot_Module_PingReply',
+#                'pear.erebot.net/Erebot_Module_IrcConnector',
+#                'pear.erebot.net/Erebot_Module_AutoConnect',
+#                'pear.erebot.net/Erebot_Module_PingReply',
                 'pear.erebot.net/Plop',
+                'composer/composer',
             )
         )
     );
@@ -74,8 +75,14 @@ foreach ($deps as $dep) {
             ($type == 'data' ? $channel . '/' . $dep . '/' : '');
 
         foreach ($iter as $file) {
-            echo "\t" . $file->getPathname()  .
-                ' => ' . $targetDir . $file->getSubPathName() . PHP_EOL;
+            $sourceFile = $file->getPathname();
+            $targetFile = $targetDir . $file->getSubPathName();
+            $padding = str_repeat(
+                " ",
+                max(1, strlen($sourceFile) - strlen($targetFile) - 2)
+            );
+            echo "\t$sourceFile" . PHP_EOL .
+                "\t=>$padding$targetFile" . PHP_EOL;
             $extrafiles[$targetDir . $file->getSubPathName()] =
                 str_replace(
                     '/',
@@ -131,7 +138,8 @@ if (count($pearDeps)) {
                     )
                 );
 
-            echo "\t$file => $targetFile" . PHP_EOL;
+            $padding = str_repeat(" ", strlen($file) - strlen($targetFile) - 2);
+            echo "\t$file" . PHP_EOL . "\t=>$padding$targetFile" . PHP_EOL;
             $extrafiles[$targetFile] = $file;
         }
     }
@@ -167,8 +175,14 @@ foreach ($iter as $fileinfo) {
     $filename = $fileinfo->getFilename();
     if (in_array(substr($filename, -4), array('.php', '.xsd'))) {
         $targetFile = 'php/SymfonyComponents/DependencyInjection/' . $filename;
-        echo "\t" . $fileinfo->getPathname() . " => $targetFile" . PHP_EOL;
-        $extrafiles[$targetFile] = $fileinfo->getPathname();
+        $sourceFile = $fileinfo->getPathname();
+        $padding = str_repeat(
+            " ",
+            max(1, strlen($sourceFile) - strlen($targetFile) - 2)
+        );
+        echo "\t$sourceFile" . PHP_EOL .
+            "\t=>$padding$targetFile" . PHP_EOL;
+        $extrafiles[$targetFile] = $sourceFile;
     }
 }
 

@@ -94,3 +94,6 @@
 [submodule "tests/testenv"]
 	path = tests/testenv
 	url = git://github.com/Erebot/Erebot_Testenv.git
+[submodule "vendor/composer"]
+	path = vendor/composer
+	url = git://github.com/fpoirotte/composer.git
