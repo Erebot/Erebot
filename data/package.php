@@ -13,7 +13,7 @@ return array(
         'path' => $baseDir . 'php',
         'requires' => array(
             'php >= 5.2.0',
-            'virt-Erebot_API',
+            'virt-Erebot_API = 0.2.*',
             'virt-log',
             'pear.erebot.net/DependencyInjection',
             'pear.php.net/Console_CommandLine',
@@ -37,9 +37,16 @@ return array(
             'pecl.php.net/pcntl',
             'pecl.php.net/posix',
         ),
+    ),
+
+    'pear.erebot.net/Erebot_API' => array(
+        'version' => 'master-dev',
+        'requires' => array(
+            'php >= 5.2.0',
+        ),
         'provides' => array(
-            'virt-Erebot_API',
-        )
+            'virt-Erebot_API = 0.2.0',
+        ),
     ),
 
     'pear.erebot.net/Plop' => array(
