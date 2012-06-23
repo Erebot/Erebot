@@ -77,42 +77,77 @@ those dependencies as well anyway.
 
 Installing Erebot as a PHAR archive only involves a few steps:
 
-1.  Make sure your installation fulfills all of the `prerequisites`_
+1.  Make sure your installation fulfills all of the `prerequisites`_.
+
+    ..  note::
+        As all of Erebot's PHAR archives (core and modules) are digitally
+        signed, you must make sure the OpenSSL extension is enabled on your
+        PHP installation. Failure to do so will result in an error when trying
+        to run Erebot's PHAR archive.
 
 2.  Download the PHAR archive for Erebot itself. You can grab the latest
     version from https://pear.erebot.net/get/Erebot-latest.phar.
+    You MUST also download the public signature for the archive.
+    The signature for the latest version is available at
+    https://pear.erebot.net/get/Erebot-latest.phar.pubkey.
 
 3.  Create a directory named ``modules`` in the same folder as the PHAR.
 
-4.  Go to the ``modules`` directory and drop a copy of the PHAR archive
-    for the following components:
+4.  Go to the ``modules`` directory and drop a copy of the following PHAR
+    archives with their signature:
 
-    *   `Erebot_Module_IrcConnector`_ (direct link:
-        https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar)
+    *   Files for the `Erebot_Module_AutoConnect`_ module:
 
-    *   `Erebot_Module_AutoConnect`_ (direct link:
-        https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar)
+        -   `Erebot_Module_AutoConnect-latest.phar`_
+        -   `Erebot_Module_AutoConnect-latest.phar's signature`_
 
-    *   `Erebot_Module_PingReply`_ (direct link:
-        https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar)
+    *   Files for the `Erebot_Module_IrcConnector`_ module:
 
-    Make sure you read each component's documentation (especially the list
+        -   `Erebot_Module_IrcConnector-latest.phar`_
+        -   `Erebot_Module_IrcConnector-latest.phar's signature`_
+
+    *   Files for the `Erebot_Module_PingReply`_ module:
+
+        -   `Erebot_Module_PingReply-latest.phar`_
+        -   `Erebot_Module_PingReply-latest.phar's signature`_
+
+    Make sure you also read each component's documentation (especially the list
     of prerequisites).
 
-5.  Optionally, download additional PHAR archives for other modules.
+    ..  note::
+        You **MUST** copy both the PHAR archives and their signature in the
+        ``modules`` directory. Otherwise, PHP will refuse to load those PHAR
+        archives because it cannot check their origin and integrity.
+
+5.  Optionally, download additional PHAR archives with their signature
+    to install other modules.
+
+..  _`Erebot_Module_AutoConnect-latest.phar`:
+    https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar
+..  _`Erebot_Module_AutoConnect-latest.phar's signature`:
+    https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar.pubkey
+..  _`Erebot_Module_IrcConnector-latest.phar`:
+    https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar
+..  _`Erebot_Module_IrcConnector-latest.phar's signature`:
+    https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar.pubkey
+..  _`Erebot_Module_PingReply-latest.phar`:
+    https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar
+..  _`Erebot_Module_PingReply-latest.phar's signature`:
+    https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar.pubkey
 
 Your tree should now look like this:
 
     * Erebot/
         * Erebot-latest.phar
+        * Erebot-latest.phar.pubkey
         * modules/
-            * Erebot_Module_IrcConnector-latest.phar
             * Erebot_Module_AutoConnect-latest.phar
+            * Erebot_Module_AutoConnect-latest.phar.pubkey
+            * Erebot_Module_IrcConnector-latest.phar
+            * Erebot_Module_IrcConnector-latest.phar.pubkey
             * Erebot_Module_PingReply-latest.phar
-            * *eventually, additional PHAR archives*
-
-That's it! You may now read the section on `final steps`_ for a summary of
-what to do next.
+            * Erebot_Module_PingReply-latest.phar.pubkey
+            * *eventually, additional PHAR archives with their signature*
 
 ..  note::
     The whole installation process using PHAR archives can be automated
@@ -120,18 +155,63 @@ what to do next.
 
     ..  sourcecode:: bash
 
-        $ wget --no-check-certificate                                           \
-            https://pear.erebot.net/get/Erebot-latest.phar                      \
-            https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar  \
-            https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar   \
-            https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar
+        $ wget --no-check-certificate                                                   \
+            https://pear.erebot.net/get/Erebot-latest.phar                              \
+            https://pear.erebot.net/get/Erebot-latest.phar.pubkey                       \
+            https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar           \
+            https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar.pubkey    \
+            https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar          \
+            https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar.pubkey   \
+            https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar             \
+            https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar.pubkey
         $ mkdir modules
-        $ mv Erebot_Module_*-latest.phar modules/
+        $ mv Erebot_Module_*-latest.phar Erebot_Module_*-latest.phar.pubkey modules/
 
-    However, please note that these commands do not attempt to check that
-    the machine they're running on matches the bot's and the module's
-    prerequisites. You should read the documentation of each component
-    to verify that yourself.
+Once the PHAR archives have been retrieved, you may wish to change file
+permissions on :file:`Erebot-latest.phar`, using this command:
+
+    ..  sourcecode:: bash
+
+        $ chmod 0755 Erebot-latest.phar
+
+This way, you may later launch Erebot simply by executing:
+
+    ..  sourcecode:: bash
+
+        $ ./Erebot-latest.phar
+
+..  warning::
+    Even though the command above should work on most installations,
+    a few known problems may occur due to incompatibilities with certain
+    PHP features and extensions. To avoid such issues, it is usually a good
+    idea to check the following items:
+
+    -   Make sure ``detect_unicode`` is set to ``Off`` in your :file:`php.ini`.
+        This is especially important on MacOS where this setting tends to be
+        ``On`` for a default PHP installation.
+
+    -   If you applied the Suhosin security patch to your PHP installation,
+        make sure ``phar`` is listed in your :file:`php.ini` under the
+        ``suhosin.executor.include.whitelist`` directive.
+
+    -   Please be aware of certain incompatibilities between the Phar extension
+        and the ionCube Loader extension. To run Erebot from a PHAR archive,
+        you will need to remove the following line from your :file:`php.ini`:
+
+        .. sourcecode:: ini
+
+            zend_extension = /usr/lib/php5/20090626+lfs/ioncube_loader_lin_5.3.so
+
+        (the path and versions may be different for your installation).
+
+..  note::
+    When run from a PHAR archive, Erebot will first try to determine whether
+    all requirements needed to run the bot and its modules are respected.
+    In case an error is displayed, follow the indications given in the error
+    message and try running the bot again.
+
+That's it! You may now read the section on `final steps`_ for a summary of
+what to do next.
 
 
 Installation from source
