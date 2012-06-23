@@ -160,6 +160,9 @@ class Erebot_CLI
      */
     static public function run()
     {
+        // Apply patches.
+        Erebot_Patches::patch();
+
         $dataDir = '@data_dir@';
         // Running from the repository or PHAR.
         if ($dataDir == '@'.'data_dir'.'@') {

@@ -221,7 +221,7 @@ implements  Erebot_Interface_Core
             // It seems that PHP will mark signal interruptions with OOB data.
             // We simply do a new iteration, because the signal dispatcher
             // will be called right away if needed.
-            // For older versions, see declare(ticks) at the end.
+            // For older versions, we use declare(ticks) (see Patches.php).
             if (count($except))
                 continue;
 
@@ -636,12 +636,4 @@ implements  Erebot_Interface_Core
         $this->_mainCfg     = $config;
     }
 }
-
-if (!empty($_SERVER['DOCUMENT_ROOT']))
-    die("This script isn't meant to be run from the Internet!\n");
-
-// For older versions of PHP that support signals
-// but don't support pcntl_signal_dispatch (5.2.x).
-if (!function_exists('pcntl_signal_dispatch'))
-    declare(ticks=1);
 
