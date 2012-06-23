@@ -18,11 +18,13 @@
 
 class Erebot_Patches
 {
-    static public function patch() {
+    static public function patch()
+    {
         // Quick replacement for ctype_digit in case
         // PHP was compiled with --disable-ctype.
         if (!function_exists('ctype_digit')) {
-            function ctype_digit($s) {
+            function ctype_digit($s)
+            {
                 if (!is_string($s))
                     return FALSE;
                 $len = strlen($s);
