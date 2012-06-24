@@ -81,25 +81,31 @@ URI scheme).
 
 ..  table:: System dependencies for Erebot
 
-    +---------------+-----------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | Dependency    | APT link                          | Developer | Packager  | End-user  | Description                       |
-    +===============+===================================+===========+===========+===========+===================================+
-    | gettext       | `Debian/Ubuntu <apt:gettext>`__   | yes       | yes       |           | The gettext package provides      |
-    |               |                                   |           |           |           | the ``xgettext`` command-line     |
-    |               |                                   |           |           |           | program used to extract messages  |
-    |               |                                   |           |           |           | marked for translation.           |
-    |               |                                   |           |           |           | **Note**: this is **NOT** the     |
-    |               |                                   |           |           |           | same as the PHP ``gettext``       |
-    |               |                                   |           |           |           | extension.                        |
-    +---------------+-----------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | doxygen       | `Debian/Ubuntu <apt:doxygen>`__   | yes       | yes       |           | doxygen is needed if you plan to  |
-    |               |                                   |           |           |           | generate the documentation from   |
-    |               |                                   |           |           |           | Erebot's' source files.           |
-    |               |                                   |           |           |           | We recommend version 1.7.2 or     |
-    |               |                                   |           |           |           | later as Erebot makes heavy use   |
-    |               |                                   |           |           |           | of PHP type-hinting and doxygen   |
-    |               |                                   |           |           |           | did not support that until 1.7.2. |
-    +---------------+-----------------------------------+-----------+-----------+-----------+-----------------------------------+
+    +---------------+---------------------------------------+-----------+-----------+-----------+-----------------------------------+
+    | Dependency    | APT link                              | Developer | Packager  | End-user  | Description                       |
+    +===============+=======================================+===========+===========+===========+===================================+
+    | doxygen       | `Debian/Ubuntu <apt:doxygen>`__       | yes       | yes       |           | doxygen is needed if you plan to  |
+    |               |                                       |           |           |           | generate the documentation from   |
+    |               |                                       |           |           |           | Erebot's' source files.           |
+    |               |                                       |           |           |           | We recommend version 1.7.2 or     |
+    |               |                                       |           |           |           | later as Erebot makes heavy use   |
+    |               |                                       |           |           |           | of PHP type-hinting and doxygen   |
+    |               |                                       |           |           |           | did not support that until 1.7.2. |
+    +---------------+---------------------------------------+-----------+-----------+-----------+-----------------------------------+
+    | gettext       | `Debian/Ubuntu <apt:gettext>`__       | yes       | yes       |           | The gettext package provides      |
+    |               |                                       |           |           |           | the ``xgettext`` command-line     |
+    |               |                                       |           |           |           | program used to extract messages  |
+    |               |                                       |           |           |           | marked for translation.           |
+    |               |                                       |           |           |           | **Note**: this is **NOT** the     |
+    |               |                                       |           |           |           | same as the PHP ``gettext``       |
+    |               |                                       |           |           |           | extension.                        |
+    +---------------+---------------------------------------+-----------+-----------+-----------+-----------------------------------+
+    | xmlstarlet    | `Debian/Ubuntu <apt:xmlstarlet>`__    |           | yes       |           | xmlstarlet is a |CLI| tool that   |
+    |               |                                       |           |           |           | simplifies XML files editing.     |
+    |               |                                       |           |           |           | We use it during packaging to set |
+    |               |                                       |           |           |           | various settings in the           |
+    |               |                                       |           |           |           | :file:`package.xml` file.         |
+    +---------------+---------------------------------------+-----------+-----------+-----------+-----------------------------------+
 
 
 Special instructions for Windows users
@@ -361,8 +367,9 @@ available for each dependency.
 ..  _`pecl.php.net/xdebug`:
     http://xdebug.org/
 
-..  [#] Only needed if you want to connect to IRC servers using a secure
-    (encrypted) connection.
+..  [#] Needed if you want to connect to IRC servers using a secure
+    (encrypted) connection. Required when running Erebot from a PHAR archive
+    (used to check the archive's origin and integrity).
 ..  [#] Required for daemonization and to change user/group information
     upon startup. Not available on Windows.
 ..  [#] Only required to package Erebot as a ``.phar`` archive.
@@ -395,9 +402,8 @@ available for each dependency.
     +=======================================+===========+===========+===========+===================================+
     | `pear.pdepend.org/PHP_Depend`_        | [#]_      |           |           |                                   |
     +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
-    | `pear.phing.info/Phing`_  >= 2.4.3    | yes       | yes       |           | phing (PHing Is Not GNU make) is  |
-    |                                       |           |           |           | a PHP project build system/tool   |
-    |                                       |           |           |           | based on `Apache Ant`_.           |
+    | `pear.phing.info/Phing`_  >= 2.4.3    | yes       | yes       |           | |phing| is a PHP project build    |
+    |                                       |           |           |           | tool based on `Apache Ant`_.      |
     |                                       |           |           |           | It is heavily used by Erebot      |
     |                                       |           |           |           | which provides phing targets for  |
     |                                       |           |           |           | most operations you may use.      |
@@ -410,10 +416,10 @@ available for each dependency.
     |                                       |           |           |           | bot in the background, etc.).     |
     +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
     | :pear:`File_Gettext`                  | yes       |           | yes       | Erebot uses this PEAR package to  |
-    |                                       |           |           |           | handle internationalization. It   |
-    |                                       |           |           |           | can be used to parse `gettext`_   |
-    |                                       |           |           |           | translation catalogs, like the    |
-    |                                       |           |           |           | ones provided with Erebot.        |
+    |                                       |           |           |           | handle |i18n|. It can be used to  |
+    |                                       |           |           |           | parse `gettext`_ translation      |
+    |                                       |           |           |           | catalogs, like the ones provided  |
+    |                                       |           |           |           | with Erebot.                      |
     +---------------------------------------+-----------+-----------+-----------+-----------------------------------+
     | :pear:`PHP_CodeSniffer`               | yes [#]_  |           |           | This package tokenizes PHP files  |
     |                                       |           |           |           | and detects violations of a       |
@@ -468,6 +474,9 @@ available for each dependency.
 
 ..  |---| unicode:: U+02014 .. em dash
     :trim:
+..  |CLI| replace:: :abbr:`CLI (Command-Line Interface)`
+..  |phing| replace:: :abbr:`phing (PHing Is Not GNU make)`
+..  |i18n| replace:: :abbr:`i18n (internationalization)`
 
 ..  _`Continuous Integration server`:
     https://buildbot.erebot.net/components/

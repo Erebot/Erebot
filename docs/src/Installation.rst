@@ -53,7 +53,7 @@ using a command such as:
 Please note that the ``channel-discover`` command needs to be run only once
 (pear and pyrus will refuse to discover a PEAR channel more than once anyway).
 To use Pyrus to manage PEAR packages instead of the regular Pear tool,
-just replace ``pear`` with ``pyrus`` in the commands above.
+just replace :command:`pear` with :command:`pyrus` in the commands above.
 
 That's all! The bot is now ready for the next steps.
 Be sure to read the section on `final steps`_ for a summary of what to do next.
@@ -91,9 +91,9 @@ Installing Erebot as a PHAR archive only involves a few steps:
     The signature for the latest version is available at
     https://pear.erebot.net/get/Erebot-latest.phar.pubkey.
 
-3.  Create a directory named ``modules`` in the same folder as the PHAR.
+3.  Create a directory named :file`modules` in the same folder as the PHAR.
 
-4.  Go to the ``modules`` directory and drop a copy of the following PHAR
+4.  Go to the :file:`modules` directory and drop a copy of the following PHAR
     archives with their signature:
 
     *   Files for the `Erebot_Module_AutoConnect`_ module:
@@ -116,24 +116,11 @@ Installing Erebot as a PHAR archive only involves a few steps:
 
     ..  note::
         You **MUST** copy both the PHAR archives and their signature in the
-        ``modules`` directory. Otherwise, PHP will refuse to load those PHAR
-        archives because it cannot check their origin and integrity.
+        :file:`modules` directory. Otherwise, PHP will refuse to load those
+        PHAR archives because it cannot check their origin and integrity.
 
 5.  Optionally, download additional PHAR archives with their signature
     to install other modules.
-
-..  _`Erebot_Module_AutoConnect-latest.phar`:
-    https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar
-..  _`Erebot_Module_AutoConnect-latest.phar's signature`:
-    https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar.pubkey
-..  _`Erebot_Module_IrcConnector-latest.phar`:
-    https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar
-..  _`Erebot_Module_IrcConnector-latest.phar's signature`:
-    https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar.pubkey
-..  _`Erebot_Module_PingReply-latest.phar`:
-    https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar
-..  _`Erebot_Module_PingReply-latest.phar's signature`:
-    https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar.pubkey
 
 Your tree should now look like this:
 
@@ -234,10 +221,10 @@ the tools provided by your distribution:
 
 ..  note::
     Windows users may be interested in installing `Git for Windows`_ to get
-    an equivalent git client. Also, make sure that ``git.exe`` is present
-    on your account's ``PATH``. If not, you'll have to replace ``git`` by
-    the full path to ``git.exe`` on every invocation
-    (eg. ``"C:\Program Files\Git\bin\git.exe" clone ...``)
+    an equivalent git client. Also, make sure that :program:`git` is present
+    on your account's :envvar:`PATH`. If not, you'll have to replace
+    :command:`git` by the full path to :file:`git.exe` on every invocation
+    (eg. :command:`"C:\Program Files\Git\bin\git.exe" clone ...`)
 
 Also, make sure you have all the `required dependencies`_ installed as well.
 Now, retrieve the bot's code from the repository, using the following command:
@@ -294,11 +281,11 @@ Final steps
 -----------
 
 Once Erebot (core files + a few modules) has been installed, you can
-`write a configuration file`_ for Erebot (usually named ``Erebot.xml``).
+`write a configuration file`_ for Erebot (usually named :file:`Erebot.xml`).
 
-When this is done, the bot can be started, assuming that PHP can be found on the
-``PATH`` using one of the following commands. Exactly what command must be used
-depends on the installation method.
+When this is done, the bot can be started, assuming that PHP can be found
+in your :envvar:`PATH` using one of the following commands.
+Exactly what command must be used depends on the installation method.
 
 ..  sourcecode:: bash
 
@@ -323,18 +310,18 @@ Use the following command to get help on those options.
     $ %EREBOT% --help
 
 ..  note::
-    For ease of use, Linux users may like to add the path where
-    ``Erebot-<version>.phar`` or the ``Erebot`` script reside to
-    their ``PATH``. This way, the bot can be started simply by launching
-    ``Erebot`` or ``Erebot-<version>.phar`` from the command-line or by
-    double-clicking on them from a graphical file browser.
+    For ease of use, Linux users may prefer to add the path where
+    :file:`Erebot-{version}.phar` or the :command:`Erebot` script resides to
+    their :envvar:`PATH`. This way, the bot can be started simply by launching
+    :command:`Erebot` or :file:`Erebot-{version}.phar` from the command-line
+    or by double-clicking on them from a graphical file browser.
 
 ..  note::
-    Unfortunately for Windows users, there is no equivalent to the ``PATH``
-    trick noted above.
+    Unfortunately for Windows users, there is no equivalent to the
+    :envvar:`PATH` trick noted above.
     However, it is possible to associate the ``.phar`` extension with PHP.
     This way, if Erebot was installed using PHAR archives, the bot can be
-    started simply by double-clicking on ``Erebot-<version>.phar``.
+    started simply by double-clicking on :file:`Erebot-{version}.phar`.
 
 
 ..  _`pear`:
@@ -360,5 +347,17 @@ Use the following command to get help on those options.
     /Erebot_Module_PingReply/
 ..  _`write a configuration file`:
     Configuration.html
+..  _`Erebot_Module_AutoConnect-latest.phar`:
+    https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar
+..  _`Erebot_Module_AutoConnect-latest.phar's signature`:
+    https://pear.erebot.net/get/Erebot_Module_AutoConnect-latest.phar.pubkey
+..  _`Erebot_Module_IrcConnector-latest.phar`:
+    https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar
+..  _`Erebot_Module_IrcConnector-latest.phar's signature`:
+    https://pear.erebot.net/get/Erebot_Module_IrcConnector-latest.phar.pubkey
+..  _`Erebot_Module_PingReply-latest.phar`:
+    https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar
+..  _`Erebot_Module_PingReply-latest.phar's signature`:
+    https://pear.erebot.net/get/Erebot_Module_PingReply-latest.phar.pubkey
 
 .. vim: ts=4 et

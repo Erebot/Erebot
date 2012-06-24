@@ -77,9 +77,8 @@ The following table lists attributes of this tag with their role.
     +-----------+-----------+-----------+-----------------------------------+
     | pidfile   | n/a       | No        | Store the bot's PID in this file. |
     +-----------+-----------+-----------+-----------------------------------+
-    | timezone  | n/a       | **Yes**   | A string describing the           |
-    |           |           |           | computer's current timezone, such |
-    |           |           |           | as ``Europe/Paris``. [#]          |
+    | timezone  | n/a       | **Yes**   | This computer's current timezone, |
+    |           |           |           | eg. ``Europe/Paris``. [#]_        |
     +-----------+-----------+-----------+-----------------------------------+
     | user      | n/a       | No        | Once started, assume that user's  |
     |           |           |           | identity (given as a UID or as    |
@@ -106,11 +105,14 @@ The following table lists attributes of this tag with their role.
 
 The logging system used by Erebot is highly customizable. It uses the same
 kind of API as the Python logging module as it is actually a port of that module
-for PHP, hence its name (Python Logging On PHP, or "PLOP").
+for PHP, hence its name :abbr:`PLOP (Python Logging On PHP)`.
 
 It was developped as a subproject of Erebot and ships with its own
-documentation. The syntax for PLOP's configuration is described in details
-@TODO.
+documentation.
+
+..  todo::
+    Either describe PLOP's configuration here or add a link to the proper doc.
+
 
 <modules>
 ~~~~~~~~~
@@ -287,6 +289,10 @@ separated by spaces:
     The second one is a regular SOCKS proxy.
   -->
   <server url="http://http-proxy.example.com:8080/ socks://socks-proxy.example.com/ irc://irc.example.com"/>
+
+..  warning::
+    As of this writing, Erebot does not support older versions of the SOCKS
+    protocol (namely, SOCKSv4 and its derivatives).
 
 This tag may contain a `\<modules\>`_ subtag to change the settings of a module
 for this IRC server.

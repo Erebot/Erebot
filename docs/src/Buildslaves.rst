@@ -30,9 +30,10 @@ Foreword
     We therefore strongly encourage you to take every necessary precaution
     **before** running the buildslave. This means that you should at least:
 
-    -   Make sure your system is running an up-to-date antivirus.
+    -   Make sure your system is up-to-date regarding security patches.
+    -   Run an antivirus with up-to-date virus signatures.
     -   Create a specific unprivileged account for the buildslave.
-    -   Run the buildslave in a jail/chroot'ed environment on platforms
+    -   Run the buildslave in a jail/chroot environment on platforms
         that support this feature.
 
     By providing a buildslave, you agree that you understand and accept all of
@@ -45,7 +46,7 @@ their own buildslave. At the time of this writing, Erebot is therefore tested
 against the following operating systems / distributions:
 
 -   Microsoft Windows XP SP3 i386 (virtual machine)
--   CentOS 6.2 i386
+-   CentOS 6.2 i386 (virtual machine)
 -   Debian 6.0 x86_64
 
 Each buildslave runs with a variety of PHP versions (usually only one, but
@@ -99,7 +100,7 @@ PHP 5.4.0-debug.
     equals "1").
 
     When adding a new version of PHP to test against, you must always specify
-    both the :envvar:`PHP{x}_PATH` and :envvar:`PHP{x}_DESC` variables
+    both the :envvar:`PHPx_PATH` and :envvar:`PHPx_DESC` variables
 
 
 Microsoft Windows
