@@ -24,8 +24,8 @@ extends Erebot_IrcCollator
         return strtr(
             $nick,
             array_combine(
-                range('a', chr(125)),
-                range('A', chr(93))
+                range('a', chr(125)),   // a..}
+                range('A', chr(93))     // A..]
             )
         );
     }
