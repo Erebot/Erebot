@@ -158,8 +158,8 @@ implements  Erebot_Interface_IrcParser
     public function parseLine($msg)
     {
         if (!strncmp($msg, ':', 1)) {
-            $pos    = strpos($msg, ' ');
-            $source = (string) substr($msg, 0, (int) $pos);
+            $pos    = strcspn($msg, ' ');
+            $source = (string) substr($msg, 1, $pos - 1);
             $msg    = new Erebot_IrcTextWrapper((string) substr($msg, $pos + 1));
         }
         else {
@@ -168,21 +168,9 @@ implements  Erebot_Interface_IrcParser
             $msg    = new Erebot_IrcTextWrapper($msg);
         }
 
-        // Ping message from the server.
-        if (!strcasecmp($source, 'PING')) {
-            return $this->_connection->dispatch(
-                $this->makeEvent('!Ping', $msg)
-            );
-        }
-
         $type   = $msg[0];
         $type   = strtoupper($type);
         unset($msg[0]);
-
-        if (substr($source, 0, 1) == ':')
-            $source = (string) substr($source, 1);
-        if ($source == '' || !count($msg))
-            return;
 
         $method = '_handle'.$type;
         $exists = method_exists($this, $method);
@@ -399,6 +387,13 @@ implements  Erebot_Interface_IrcParser
         // :nick1!ident@host PART #chan :Reason
         return $this->_connection->dispatch(
             $this->makeEvent('!Part', $msg[0], $source, $msg[1])
+        );
+    }
+
+    protected function _handlePING($source, $msg) {
+        // PING origin
+        return $this->_connection->dispatch(
+            $this->makeEvent('!Ping', $msg)
         );
     }
 
