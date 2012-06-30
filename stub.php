@@ -17,6 +17,10 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// Guard against double inclusions.
+if (defined('@PACKAGE_NAME@ PHAR'))
+    return;
+
 if (!empty($_SERVER['DOCUMENT_ROOT']))
     die("This script isn't meant to be run from the Internet!\n");
 
@@ -78,6 +82,7 @@ $composerDir =
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
     DIRECTORY_SEPARATOR . "php";
 Erebot_Autoload::initialize($composerDir);
+unset($composerDir);
 
 // Include the dependency checker.
 include(
@@ -86,14 +91,14 @@ include(
     DIRECTORY_SEPARATOR . "data" .
     DIRECTORY_SEPARATOR . "pear.erebot.net" .
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@" .
-    DIRECTORY_SEPARATOR . "dependencies.php"
+    DIRECTORY_SEPARATOR . "checker.php"
 );
 
 // Prepare a new dependency checker.
-$checker = new Erebot_Phar_DependencyChecker("", '@PACKAGE_VERSION@');
+$checker = new Erebot_Package_Dependencies_Checker("", '@PACKAGE_VERSION@');
 
 // Retrieve this package's metadata.
-$metadata = include(
+require(
     "phar://" . __FILE__ .
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
     DIRECTORY_SEPARATOR . "data" .
@@ -133,14 +138,15 @@ try {
 }
 catch (Exception $e) {
 }
-unset($iter, $dots, $moduleInfo, $inc, $translator, $modulesDir);
+unset($metadata, $modulesDir, $iter, $dots, $moduleInfo, $inc);
 
 // Check the dependencies.
 $error = NULL;
 if (!$checker->check($error)) {
-    echo $error . PHP_EOL;
+    echo $error;
     exit(1);
 }
+unset($error, $checker);
 
 // Necessary for PEAR 1 packages that require() stuff.
 set_include_path(implode(PATH_SEPARATOR, Erebot_Autoload::getPaths()));

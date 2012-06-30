@@ -1,5 +1,7 @@
 <?php
 
+require(__DIR__ . DIRECTORY_SEPARATOR . 'dependency.php');
+
 use Composer\DependencyResolver\DefaultPolicy;
 use Composer\DependencyResolver\Pool;
 use Composer\DependencyResolver\Request;
@@ -13,68 +15,7 @@ use Composer\Repository\ArrayRepository;
 use Composer\Package\MemoryPackage;
 use Composer\Package\Version\VersionParser;
 
-class Erebot_Phar_Dependency
-{
-    protected $_name;
-    protected $_version;
-
-    public function __construct($dependency, $allowVersion)
-    {
-        $opTokens   = ' <>=';
-        $errorMessage = 'Invalid dependency specification';
-        if (!is_string($dependency) || $dependency == '')
-            throw new Exception($errorMessage);
-
-        $dependency     = trim($dependency);
-        $depNameEnd     = strcspn($dependency, $opTokens);
-        $depName        = (string) substr($dependency, 0, $depNameEnd);
-
-        if ($depName == '')
-            throw new Exception($errorMessage);
-        $this->_name        = $depName;
-
-        if (!$allowVersion) {
-            if ($depNameEnd != strlen($dependency))
-                throw new Exception($errorMessage);
-            $this->_version = '*';
-            return;
-        }
-
-        $depVersion     = (string) substr($dependency, $depNameEnd);
-        if (strpos($depVersion, '<<') !== FALSE ||
-            strpos($depVersion, '>>') !== FALSE)
-            throw new Exception($errorMessage);
-
-        $depVersion     = strtr($depVersion, array('<=' => '<<', '>=' => '>>'));
-        $depVersion     = str_replace(array('=', ' '), '', $depVersion);
-        $depVersion     = strtr($depVersion, array('<<' => '<=', '>>' => '>='));
-        if ($depVersion == '')
-            $depVersion = NULL;
-        $this->_version     = $depVersion;
-    }
-
-    public function getName()
-    {
-        return $this->_name;
-    }
-
-    public function getVersion()
-    {
-        if ($this->_version === NULL)
-            return '*';
-        return $this->_version;
-    }
-
-    public function __toString()
-    {
-        if ($this->_version === NULL)
-            return $this->_name;
-        return  $this->_name." ".
-                $this->_version;
-    }
-}
-
-class Erebot_Phar_DependencyChecker
+class Erebot_Package_Dependencies_Checker
 {
     protected $_package;
     protected $_versionParser;
@@ -90,17 +31,15 @@ class Erebot_Phar_DependencyChecker
         $this->_localRepo = new ArrayRepository();
     }
 
-    protected function _getLink($source, $target, $description)
+    protected function _getLink($source, $target, $constraints, $description)
     {
-        $sourcePkg  = new Erebot_Phar_Dependency($source, FALSE);
-        $targetPkg  = new Erebot_Phar_Dependency($target, TRUE);
-        $constraint = $targetPkg->getVersion();
+        $constraints = str_replace(' ', '', $constraints);
         $link = new Link(
-            $this->_xformPackage($sourcePkg->getName()),
-            $this->_xformPackage($targetPkg->getName()),
-            $this->_versionParser->parseConstraints($constraint),
+            $this->_xformPackage($source),
+            $this->_xformPackage($target),
+            $this->_versionParser->parseConstraints($constraints),
             $description,
-            $constraint
+            $constraints
         );
         return $link;
     }
@@ -129,12 +68,16 @@ class Erebot_Phar_DependencyChecker
         $error = NULL;
         $versionParser = new VersionParser();
         $this->_package->setRequires(
-            array(
-                $this->_getLink(
-                    "virt-Erebot",
-                    "pear.erebot.net/Erebot",
-                    "requires"
+            array_merge(
+                array(
+                    $this->_getLink(
+                        "virt-Erebot",
+                        "pear.erebot.net/Erebot",
+                        "*",
+                        "requires"
+                    ),
                 ),
+                $this->_package->getRequires()
             )
         );
 
@@ -183,7 +126,19 @@ class Erebot_Phar_DependencyChecker
 
     public function handleMetadata($metadata)
     {
+        $root = isset($metadata['pear.erebot.net/Erebot']);
+        $modules = array();
+
         foreach ($metadata as $pkgName => $data) {
+            $isErebotModule = !strncasecmp($pkgName, 'pear.erebot.net/', 16);
+            if (!$root && $isErebotModule)
+                $modules[] = $this->_getLink(
+                    'virt-Erebot',
+                    $pkgName,
+                    '*',
+                    'requires'
+                );
+
             if (isset($data['path']))
                 Erebot_Autoload::initialize($data['path']);
 
@@ -196,20 +151,38 @@ class Erebot_Phar_DependencyChecker
                 "requires",
                 "provides",
                 "suggests",
-                "recommends",
                 "replaces",
                 "conflicts",
             );
             foreach ($types as $type) {
                 if (isset($data[$type])) {
                     $additions = array();
-                    foreach ($data[$type] as $dep)
-                        $additions[] = $this->_getLink($pkgName, $dep, $type);
+                    foreach ($data[$type] as $dep => $constraints) {
+                        if (is_int($dep)) {
+                            $dep            = $constraints;
+                            $constraints    = "*";
+                        }
+
+                        // Don't depend on (a specific version of) Pyrus.
+                        if ($dep == 'pear2.php.net/pyrus')
+                            continue;
+
+                        $additions[] = $this->_getLink(
+                            $pkgName,
+                            $dep,
+                            $constraints,
+                            $type
+                        );
+                    }
                     $pkg->{"set".ucfirst($type)}($additions);
                 }
             }
             $this->_localRepo->addPackage($pkg);
         }
+
+        // Add modules for virt-Erebot.
+        $modules = array_merge($modules, $this->_package->getRequires());
+        $this->_package->setRequires($modules);
     }
 }
 
