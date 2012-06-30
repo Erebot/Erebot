@@ -225,15 +225,11 @@ extends Erebot_TestEnv_TestCase
      */
     public function testNOTICE($line, $args, $target)
     {
-        $map = array(
-            array('#Finnish', TRUE),
-            array('Wiz', FALSE),
-        );
         $this->_connection
             ->expects($this->once())
             ->method('isChannel')
             ->with($target)
-            ->will($this->returnValueMap($map));
+            ->will($this->returnValue($target == '#Finnish' ? TRUE : FALSE));
 
         $matcher = $this->_parser
             ->expects($this->once())
