@@ -157,9 +157,16 @@ implements  Erebot_Interface_IrcParser
      */
     public function parseLine($msg)
     {
-        $pos    = strpos($msg, ' ');
-        $source = (string) substr($msg, 0, (int) $pos);
-        $msg    = new Erebot_IrcTextWrapper((string) substr($msg, $pos + 1));
+        if (!strncmp($msg, ':', 1)) {
+            $pos    = strpos($msg, ' ');
+            $source = (string) substr($msg, 0, (int) $pos);
+            $msg    = new Erebot_IrcTextWrapper((string) substr($msg, $pos + 1));
+        }
+        else {
+            /// @FIXME the RFCs say we should assume origin = server instead.
+            $source = '';
+            $msg    = new Erebot_IrcTextWrapper($msg);
+        }
 
         // Ping message from the server.
         if (!strcasecmp($source, 'PING')) {
