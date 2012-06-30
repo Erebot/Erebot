@@ -20,6 +20,10 @@
  * \brief
  *      A wrapper that correctly splits messages
  *      received from an IRC server (data part).
+ *
+ * \see
+ *      RFC 1459 and RFC 2812 (§2.3.1) for information
+ *      on the format recognized by this wrapper.
  */
 class       Erebot_IrcTextWrapper
 implements  Erebot_Interface_IrcTextWrapper
