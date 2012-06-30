@@ -45,7 +45,9 @@ implements  Erebot_Interface_IrcTextWrapper
                     $spaces++;
             }
             if ($spaces > 1)
-                throw new Exception(''); /// @TODO
+                throw new Erebot_InvalidValueException(
+                    'Multiple tokens containing spaces'
+                );
         }
         else if (is_string($parts)) {
             // Prepend a single space to ease single token handling.
@@ -72,8 +74,11 @@ implements  Erebot_Interface_IrcTextWrapper
                 $parts = explode(' ', (string) substr($msg, 1));
             }
         }
-        else
-            throw new Exception(''); /// @TODO
+        else {
+            throw new Erebot_InvalidValueException(
+                'A string or an array was expected'
+            );
+        }
 
         $this->_parts       = $parts;
         $this->_position    = 0;

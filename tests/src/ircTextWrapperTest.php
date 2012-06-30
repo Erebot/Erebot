@@ -19,6 +19,11 @@
 class   IrcTextWrapperTest
 extends Erebot_TestEnv_TestCase
 {
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @cover Erebot_IrcTextWrapper::count
+     * @cover Erebot_IrcTextWrapper::__toString
+     */
     public function testEmptyString()
     {
         $wrapper = new Erebot_IrcTextWrapper('');
@@ -27,6 +32,11 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals('', (string) $wrapper);
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @cover Erebot_IrcTextWrapper::count
+     * @cover Erebot_IrcTextWrapper::__toString
+     */
     public function testSingleColon()
     {
         $wrapper = new Erebot_IrcTextWrapper(':');
@@ -35,6 +45,11 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals('', (string) $wrapper);
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @cover Erebot_IrcTextWrapper::count
+     * @cover Erebot_IrcTextWrapper::__toString
+     */
     public function testSpaceHandling()
     {
         $wrapper = new Erebot_IrcTextWrapper('a b c');
@@ -45,6 +60,11 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals('a b c', (string) $wrapper);
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @cover Erebot_IrcTextWrapper::count
+     * @cover Erebot_IrcTextWrapper::__toString
+     */
     public function testColonHandling()
     {
         $wrapper = new Erebot_IrcTextWrapper('a b:c');
@@ -54,6 +74,11 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals('a b:c', (string) $wrapper);
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @cover Erebot_IrcTextWrapper::count
+     * @cover Erebot_IrcTextWrapper::__toString
+     */
     public function testSpaceAndColonHandling()
     {
         $wrapper = new Erebot_IrcTextWrapper('a :b c');
@@ -63,6 +88,11 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals('a :b c', (string) $wrapper);
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @cover Erebot_IrcTextWrapper::count
+     * @cover Erebot_IrcTextWrapper::__toString
+     */
     public function testTokenLeadingColonHandling()
     {
         $wrapper = new Erebot_IrcTextWrapper('a ::b');
@@ -72,6 +102,9 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals('a ::b', (string) $wrapper);
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::offsetGet
+     */
     public function testArrayGet()
     {
         $wrapper = new Erebot_IrcTextWrapper('foo');
@@ -80,6 +113,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
+     * @cover Erebot_IrcTextWrapper::offsetSet
      * @expectedException RuntimeException
      * @expectedExceptionMessage The wrapped text is read-only
      */
@@ -89,6 +123,9 @@ extends Erebot_TestEnv_TestCase
         $wrapper[0] = 'bar';
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::offsetUnset
+     */
     public function testArrayUnsetAndReindex()
     {
         $wrapper = new Erebot_IrcTextWrapper('foo bar baz');
@@ -104,6 +141,9 @@ extends Erebot_TestEnv_TestCase
         $this->assertEquals(0, count($wrapper));
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::offsetExists
+     */
     public function testArrayExistence()
     {
         $wrapper = new Erebot_IrcTextWrapper('foo');
@@ -111,12 +151,51 @@ extends Erebot_TestEnv_TestCase
         $this->assertFalse(isset($wrapper[1]));
     }
 
+    /**
+     * @cover Erebot_IrcTextWrapper::current
+     * @cover Erebot_IrcTextWrapper::key
+     * @cover Erebot_IrcTextWrapper::next
+     * @cover Erebot_IrcTextWrapper::rewind
+     * @cover Erebot_IrcTextWrapper::valid
+     */
     public function testIteration()
     {
         $wrapper    = new Erebot_IrcTextWrapper('a b :c d');
         $expected   = array('a', 'b', 'c d');
         foreach ($wrapper as $index => $real)
             $this->assertEquals($expected[$index], $real);
+    }
+
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     */
+    public function testConstructFromList()
+    {
+        $wrapper = new Erebot_IrcTextWrapper(array('a', 'b', 'c d'));
+        $this->assertEquals(3, count($wrapper));
+        $this->assertEquals('a', $wrapper[0]);
+        $this->assertEquals('b', $wrapper[1]);
+        $this->assertEquals('c d', $wrapper[2]);
+    }
+
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @expectedException Erebot_InvalidValueException
+     * @expectedExceptionMessage Multiple tokens containing spaces
+     */
+    public function testListWithMultipleSpaces()
+    {
+        $wrapper = new Erebot_IrcTextWrapper(array('a b', 'c d'));
+    }
+
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @expectedException Erebot_InvalidValueException
+     * @expectedExceptionMessage A string or an array was expected
+     */
+    public function testInvalidInput()
+    {
+        $wrapper = new Erebot_IrcTextWrapper(42);
     }
 }
 
