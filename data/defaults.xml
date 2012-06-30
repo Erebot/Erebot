@@ -112,7 +112,6 @@
                 <argument key="Erebot_Interface_Event_Invite">Erebot_Event_Invite</argument>
                 <argument key="Erebot_Interface_Event_Join">Erebot_Event_Join</argument>
                 <argument key="Erebot_Interface_Event_Kick">Erebot_Event_Kick</argument>
-                <argument key="Erebot_Interface_Event_Kill">Erebot_Event_Kill</argument>
                 <argument key="Erebot_Interface_Event_Logon">Erebot_Event_Logon</argument>
                 <argument key="Erebot_Interface_Event_Nick">Erebot_Event_Nick</argument>
                 <argument key="Erebot_Interface_Event_Notify">Erebot_Event_Notify</argument>
