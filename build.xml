@@ -8,7 +8,7 @@
     </fileset>
 
     <fileset dir="tests/" id="tests">
-        <include name="**/*.php"/>
+        <include name="src/*Test.php"/>
     </fileset>
 
     <target name="all" depends="parser,i18n" description=""/>

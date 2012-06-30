@@ -47,7 +47,8 @@ implements  Erebot_Interface_IrcParser
         // This simplifies calls to this method a bit.
         $args[0]    = $this->_connection;
         $cls        = new ReflectionClass($this->_eventsMapping[$iface]);
-        return $cls->newInstanceArgs($args);
+        $instance   = $cls->newInstanceArgs($args);
+        return $instance;
     }
 
     static protected function _ctcpUnquote($msg)
@@ -128,8 +129,13 @@ implements  Erebot_Interface_IrcParser
     {
         // Shortcuts.
         $iface = str_replace('!', 'Erebot_Interface_Event_', $iface);
-        $iface = strtolower($iface);
+        if (!interface_exists($iface)) {
+            throw new Erebot_InvalidValueException(
+                'The given interface ('.$iface.') does not exist'
+            );
+        }
 
+        $iface = strtolower($iface);
         $reflector = new ReflectionClass($cls);
         if (!$reflector->implementsInterface($iface)) {
             throw new Erebot_InvalidValueException(
@@ -151,55 +157,49 @@ implements  Erebot_Interface_IrcParser
      */
     public function parseLine($msg)
     {
-        $parts  = explode(' ', $msg);
-        $source = array_shift($parts);
+        $pos    = strpos($msg, ' ');
+        $source = (string) substr($msg, 0, (int) $pos);
+        $msg    = new Erebot_IrcTextWrapper((string) substr($msg, $pos + 1));
 
         // Ping message from the server.
         if (!strcasecmp($source, 'PING')) {
-            $msg = implode(' ', $parts);
-            if (substr($msg, 0, 1) == ':')
-                $msg = substr($msg, 1);
             return $this->_connection->dispatch(
                 $this->makeEvent('!Ping', $msg)
             );
         }
 
-        $type   = array_shift($parts);
-        if ($source == '' || !count($parts))
+        $type   = $msg[0];
+        $type   = strtoupper($type);
+        unset($msg[0]);
+
+        if (substr($source, 0, 1) == ':')
+            $source = (string) substr($source, 1);
+        if ($source == '' || !count($msg))
             return;
-
-        if ($source[0] == ':')
-            $source = substr($source, 1);
-
-        $type = strtoupper($type);
-
-        // Takes care of messages like QUIT where there
-        // is no target (the current user is the target).
-        if (substr($parts[0], 0, 1) == ':') {
-            $target     = NULL;
-        }
-        else
-            $target = array_shift($parts);
-
-        if (count($parts) && substr($parts[0], 0, 1) == ':')
-            $parts[0] = substr($parts[0], 1);
-        $msg = implode(' ', $parts);
 
         $method = '_handle'.$type;
         $exists = method_exists($this, $method);
-        if ($exists)
-            $res = $this->$method($source, $target, $msg, $parts);
+        // We need a backup for numeric events
+        // as the regular method may modify the message.
+        $backup = clone $msg;
 
-        if (ctype_digit($type))
+        if ($exists)
+            $res = $this->$method($source, $msg);
+
+        if (ctype_digit($type)) {
+            // For raw events, the first token is always the target.
+            $target = $backup[0];
+            unset($backup[0]);
             return $this->_connection->dispatch(
                 $this->makeEvent(
                     '!Raw',
                     intval($type, 10),
                     $source,
                     $target,
-                    $msg
+                    $backup
                 )
             );
+        }
 
         if ($exists)
             return $res;
@@ -208,42 +208,99 @@ implements  Erebot_Interface_IrcParser
         return FALSE;
     }
 
-    protected function _handleINVITE($source, $target, $msg, $parts) {
+    protected function _noticeOrPrivmsg($source, $msg, $mapping)
+    {
+        // :nick1!ident@host NOTICE <nick2/#chan> :Message
+        // :nick1!ident@host PRIVMSG <nick2/#chan> :Message
+        $target = $msg[0];
+        $msg    = $msg[1];
+        $isChan = (int) $this->_connection->isChannel($target);
+        if (($len = strlen($msg)) > 1 &&
+            $msg[$len-1] == "\x01" &&
+            $msg[0] == "\x01") {
+
+            // Remove the markers.
+            $msg    = (string) substr($msg, 1, -1);
+            // Unquote the message.
+            $msg    = self::_ctcpUnquote($msg);
+            // Extract the tag from the rest of the message.
+            $pos    = strcspn($msg, " ");
+            $ctcp   = substr($msg, 0, $pos);
+            $msg    = (string) substr($msg, $pos + 1);
+
+            if ($ctcp == "ACTION") {
+                if ($isChan)
+                    return $this->_connection->dispatch(
+                        $this->makeEvent(
+                            $mapping['action'][$isChan],
+                            $target, $source, $msg
+                        )
+                    );
+
+                return $this->_connection->dispatch(
+                    $this->makeEvent(
+                        $mapping['action'][$isChan],
+                        $source, $msg
+                    )
+                );
+            }
+
+            if ($isChan)
+                return $this->_connection->dispatch(
+                    $this->makeEvent(
+                        $mapping['ctcp'][$isChan],
+                        $target, $source, $ctcp, $msg
+                    )
+                );
+
+            return $this->_connection->dispatch(
+                $this->makeEvent(
+                    $mapping['ctcp'][$isChan],
+                    $source, $ctcp, $msg
+                )
+            );
+        }
+
+        if ($isChan)
+            return $this->_connection->dispatch(
+                $this->makeEvent(
+                    $mapping['normal'][$isChan],
+                    $target,
+                    $source,
+                    $msg
+                )
+            );
+
+        return $this->_connection->dispatch(
+            $this->makeEvent($mapping['normal'][$isChan], $source, $msg)
+        );
+    }
+
+    protected function _handleINVITE($source, $msg) {
         // :nick1!ident@host INVITE nick2 :#chan
         return $this->_connection->dispatch(
-            $this->makeEvent('!Invite', $msg, $source, $target)
+            $this->makeEvent('!Invite', $msg[1], $source, $msg[0])
         );
     }
 
-    protected function _handleJOIN($source, $target, $msg, $parts) {
+    protected function _handleJOIN($source, $msg) {
         // :nick1!ident@host JOIN :#chan
         return $this->_connection->dispatch(
-            $this->makeEvent('!Join', $target, $source)
+            $this->makeEvent('!Join', $msg[0], $source)
         );
     }
 
-    protected function _handleKICK($source, $target, $msg, $parts) {
+    protected function _handleKICK($source, $msg) {
         // :nick1!ident@host KICK #chan nick2 :Reason
-        $pos    = strcspn($msg, " ");
-        $nick   = substr($msg, 0, $pos);
-        $msg    = substr($msg, $pos + 1);
-        if (strlen($msg) && $msg[0] == ':')
-            $msg = substr($msg, 1);
-
         return $this->_connection->dispatch(
-            $this->makeEvent('!Kick', $target, $source, $nick, $msg)
+            $this->makeEvent('!Kick', $msg[0], $source, $msg[1], $msg[2])
         );
     }
 
-    protected function _handleKILL($source, $target, $msg, $parts) {
-        // :nick1!ident@host KILL nick2 :Reason
-        return $this->_connection->dispatch(
-            $this->makeEvent('!Kill', $target, $source, $msg)
-        );
-    }
-
-    protected function _handleMODE($source, $target, $msg, $parts) {
-        // :nick1!ident@host MODE <nick2/#chan> modes
+    protected function _handleMODE($source, $msg) {
+        // :nick1!ident@host MODE <nick2/#chan> <modes> [args]
+        $target = $msg[0];
+        unset($msg[0]);
         if (!$this->_connection->isChannel($target)) {
             return $this->_connection->dispatch(
                 $this->makeEvent('!UserMode', $source, $target, $msg)
@@ -255,8 +312,8 @@ implements  Erebot_Interface_IrcParser
         if ($event->preventDefault(TRUE))
             return;
 
-        $wrappedMessage = new Erebot_TextWrapper($msg);
-        $modes  = $wrappedMessage[0];
+        $modes  = $msg[0];
+        unset($msg[0]);
         $len    = strlen($modes);
         $mode   = 'add';
         $k      = 1;
@@ -300,7 +357,8 @@ implements  Erebot_Interface_IrcParser
                 case 'a':
                 case 'q':
                 case 'b':
-                    $tnick  = $wrappedMessage[$k++];
+                case 'e':
+                    $tnick  = $msg[$k++];
                     $cls    = $priv[$mode][$modes[$i]];
                     $this->_connection->dispatch(
                         $this->makeEvent($cls, $target, $source, $tnick)
@@ -308,237 +366,120 @@ implements  Erebot_Interface_IrcParser
                     break;
 
                 default:
-/// @TODO fix this
-/*
-                    for ($j = 3; $j > 0; $j--) {
-                        $pos = strpos(
-                            $this->chanModes[$j-1],
-                            $modes[$i]
-                        );
-                        if ($pos !== FALSE)
-                            break;
-                    }
-                    switch ($j) {
-                        case 3:
-                            if ($mode == self::MODE_REMOVE)
-                                break;
-                        case 1:
-                        case 2:
-                            $remains[] = $wrappedMessage[$k++]
-                            break;
-                    }
-*/
             }
         } // for each mode in $modes
-
-        $remainingModes = str_replace(
-            array('o', 'h', 'v', 'b', '+', '-'),
-            '',
-            $modes
-        );
-        if ($remainingModes != '') {
-            if (count($remains))
-                $remains = ' '.implode(' ', $remains);
-            else $remains = '';
-
-            for ($i = strlen($modes) - 1; $i >= 0; $i--) {
-
-            }
-
-# @TODO
-#                    $event = new ErebotEvent($this, $source, $target,
-#                        ErebotEvent::ON_MODE, $remainingModes.$remains);
-#                    $this->dispatchEvent($event);
-        }
+        /// @TODO: handle remaining modes as well
     }
 
-    protected function _handleNICK($source, $target, $msg, $parts) {
+    protected function _handleNICK($source, $msg) {
         // :oldnick!ident@host NICK newnick
         return $this->_connection->dispatch(
-            $this->makeEvent('!Nick', $source, $target)
+            $this->makeEvent('!Nick', $source, $msg[0])
         );
     }
 
-    protected function _handleNOTICE($source, $target, $msg, $parts) {
+    protected function _handleNOTICE($source, $msg) {
         // :nick1!ident@host NOTICE <nick2/#chan> :Message
-        if (($len = strlen($msg)) > 1 &&
-            $msg[$len-1] == "\001" &&
-            $msg[0] == "\001") {
-
-            // Remove the markers.
-            $msg    = (string) substr($msg, 1, -1);
-            // Unquote the message.
-            $msg    = self::_ctcpUnquote($msg);
-            // Extract the tag from the rest of the message.
-            $pos    = strcspn($msg, " ");
-            $ctcp   = substr($msg, 0, $pos);
-            $msg    = (string) substr($msg, $pos + 1);
-
-            if ($this->_connection->isChannel($target))
-                return $this->_connection->dispatch(
-                    $this->makeEvent(
-                        '!ChanCtcpReply',
-                        $target, $source, $ctcp, $msg
-                    )
-                );
-
-            return $this->_connection->dispatch(
-                $this->makeEvent(
-                    '!PrivateCtcpReply',
-                    $source, $ctcp, $msg
-                )
-            );
-        }
-
-        if ($this->_connection->isChannel($target))
-            return $this->_connection->dispatch(
-                $this->makeEvent('!ChanNotice', $target, $source, $msg)
-            );
-
-        return $this->_connection->dispatch(
-                $this->makeEvent('!PrivateNotice', $source, $msg)
-            );
+        $mapping = array(
+            'action'    => array('!PrivateCtcpReply', '!ChanCtcpReply'),
+            'ctcp'      => array('!PrivateCtcpReply', '!ChanCtcpReply'),
+            'normal'    => array('!PrivateNotice', '!ChanNotice'),
+        );
+        return $this->_noticeOrPrivmsg($source, $msg, $mapping);
     }
 
-    protected function _handlePART($source, $target, $msg, $parts) {
+    protected function _handlePART($source, $msg) {
         // :nick1!ident@host PART #chan :Reason
         return $this->_connection->dispatch(
-            $this->makeEvent('!Part', $target, $source, $msg)
+            $this->makeEvent('!Part', $msg[0], $source, $msg[1])
         );
     }
 
-    protected function _handlePONG($source, $target, $msg, $parts) {
+    protected function _handlePONG($source, $msg) {
         // :origin PONG origin target
         return $this->_connection->dispatch(
-            $this->makeEvent('!Pong', $source, $msg)
+            $this->makeEvent('!Pong', $source, $msg[1])
         );
     }
 
-    protected function _handlePRIVMSG($source, $target, $msg, $parts) {
-        // :nick1!ident@host PRIVMSG <nick2/#chan> :Msg
-        if (($len = strlen($msg)) > 1 &&
-            $msg[$len-1] == "\x01" &&
-            $msg[0] == "\x01") {
-
-            // Remove the markers.
-            $msg    = (string) substr($msg, 1, -1);
-            // Unquote the message.
-            $msg    = self::_ctcpUnquote($msg);
-            // Extract the tag from the rest of the message.
-            $pos    = strcspn($msg, " ");
-            $ctcp   = substr($msg, 0, $pos);
-            $msg    = (string) substr($msg, $pos + 1);
-
-            if ($ctcp == "ACTION") {
-                if ($this->_connection->isChannel($target))
-                    return $this->_connection->dispatch(
-                        $this->makeEvent(
-                            '!ChanAction',
-                            $target, $source, $msg
-                        )
-                    );
-
-                return $this->_connection->dispatch(
-                    $this->makeEvent(
-                        '!PrivateAction',
-                        $source, $msg
-                    )
-                );
-            }
-
-            if ($this->_connection->isChannel($target))
-                return $this->_connection->dispatch(
-                    $this->makeEvent(
-                        '!ChanCtcp',
-                        $target, $source, $ctcp, $msg
-                    )
-                );
-
-            return $this->_connection->dispatch(
-                $this->makeEvent(
-                    '!PrivateCtcp',
-                    $source, $ctcp, $msg
-                )
-            );
-        }
-
-        if ($this->_connection->isChannel($target))
-            return $this->_connection->dispatch(
-                $this->makeEvent('!ChanText', $target, $source, $msg)
-            );
-
-        return $this->_connection->dispatch(
-            $this->makeEvent('!PrivateText', $source, $msg)
+    protected function _handlePRIVMSG($source, $msg) {
+        // :nick1!ident@host PRIVMSG <nick2/#chan> :Message
+        $mapping = array(
+            'action'    => array('!PrivateAction', '!ChanAction'),
+            'ctcp'      => array('!PrivateCtcp', '!ChanCtcp'),
+            'normal'    => array('!PrivateText', '!ChanText'),
         );
+        return $this->_noticeOrPrivmsg($source, $msg, $mapping);
     }
 
-    protected function _handleQUIT($source, $target, $msg, $parts) {
+    protected function _handleQUIT($source, $msg) {
         // :nick1!ident@host QUIT :Reason
-        assert('$target === NULL');
         return $this->_connection->dispatch(
-            $this->makeEvent('!Quit', $source, $msg)
+            $this->makeEvent('!Quit', $source, $msg[0])
         );
     }
 
-    protected function _handleTOPIC($source, $target, $msg, $parts) {
+    protected function _handleTOPIC($source, $msg) {
         // :nick1!ident@host TOPIC #chan :New topic
         return $this->_connection->dispatch(
-            $this->makeEvent('!Topic', $target, $source, $msg)
+            $this->makeEvent('!Topic', $msg[0], $source, $msg[1])
         );
     }
 
-    protected function _handle255($source, $target, $msg, $parts)
+    protected function _handle255($source, $msg)
     {
         // Erebot_Interface_RawProfile_RFC1459::RPL_LUSERME
         /* We can't rely on RPL_WELCOME because we may need
          * to detect the server's capabilities first.
          * So, we delay detection of the connection for as
-         * long as we can (while keeping portability). */
+         * long as we can (while retaining portability). */
         if (!$this->_connection->isConnected())
             return $this->_connection->dispatch($this->makeEvent('!Connect'));
     }
 
-    protected function _handle600($source, $target, $msg, $parts)
+    protected function _handle600($source, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_LOGON
-        return $this->_watchList('!Notify', $parts);
+        return $this->_watchList('!Notify', $msg);
     }
 
-    protected function _handle601($source, $target, $msg, $parts)
+    protected function _handle601($source, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_LOGOFF
-        return $this->_watchList('!UnNotify', $parts);
+        return $this->_watchList('!UnNotify', $msg);
     }
 
-    protected function _handle604($source, $target, $msg, $parts)
+    protected function _handle604($source, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_NOWON
-        return $this->_watchList('!Notify', $parts);
+        return $this->_watchList('!Notify', $msg);
     }
 
-    protected function _handle605($source, $target, $msg, $parts)
+    protected function _handle605($source, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_NOWOFF
-        return $this->_watchList('!UnNotify', $parts);
+        return $this->_watchList('!UnNotify', $msg);
     }
 
-    protected function _watchList($event, $parts)
+    protected function _watchList($event, $msg)
     {
-        $nick       = array_shift($parts);
-        $ident      = array_shift($parts);
-        $host       = array_shift($parts);
-        $timestamp  = intval(array_shift($parts), 10);
+        // <bot> <nick> <ident> <host> <timestamp> :<msg>
+        unset($msg[0]);
+        $nick       = $msg[0];
+        $ident      = $msg[1];
+        $host       = $msg[2];
+        $timestamp  = intval($msg[3], 10);
         $timestamp  = new DateTime('@'.$timestamp);
-        $text       = implode(' ', $parts);
-        if (substr($text, 0, 1) == ':')
-            $text = substr($text, 1);
+        $text       = $msg[4];
 
         return $this->_connection->dispatch(
             $this->makeEvent(
-                $event, $nick,
+                $event,
+                $nick,
                 ($ident == '*' ? NULL : $ident),
                 ($host == '*' ? NULL : $host),
-                $timestamp, $text
+                $timestamp,
+                $text
             )
         );
     }
