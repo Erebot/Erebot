@@ -37,17 +37,7 @@ implements  Erebot_Interface_Styling_Duration
         $this->_value       = $value;
     }
 
-    /**
-     * Formats a duration according to the rules
-     * of the current locale.
-     *
-     * \param int $value
-     *      The duration to format, given in seconds.
-     *
-     * \retval string
-     *      A representation of the duration according to
-     *      the rules of the current locale.
-     */
+    /// \copydoc Erebot_Interface_Styling_Variable::render()
     public function render(Erebot_Interface_I18n $translator)
     {
         $locale = $translator->getLocale(Erebot_Interface_I18n::LC_MESSAGES);
@@ -98,13 +88,7 @@ implements  Erebot_Interface_Styling_Duration
         return (string) $formatter->format($this->_value);
     }
 
-    /**
-     * Returns the duration to format,
-     * in seconds.
-     *
-     * \retval int
-     *      The duration to format.
-     */
+    /// \copydoc Erebot_Interface_Styling_Variable::getValue()
     public function getValue()
     {
         return $this->_value;

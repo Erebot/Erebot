@@ -16,21 +16,43 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      A class that can parse IRC messages
+ *      and produce events to match the commands
+ *      in those messages.
+ */
 class       Erebot_IrcParser
 implements  Erebot_Interface_IrcParser
 {
     /// Mappings from (lowercase) interface names to actual classes.
     protected $_eventsMapping;
 
+    /// IRC connection that will send us some messages to parse.
     protected $_connection;
 
+
+    /**
+     * Constructor.
+     *
+     * \
+     */
     public function __construct(Erebot_Interface_Connection $connection)
     {
         $this->_connection = $connection;
         $this->_eventsMapping = array();
     }
 
-    /// \copydoc Erebot_Interface_EventFactory::makeEvent()
+    /**
+     * \copydoc Erebot_Interface_IrcParser::makeEvent()
+     *
+     * \note
+     *      This method can also use the same shortcuts as
+     *      Erebot_IrcParser::getEventClass().
+     *
+     * \note
+     *      The name of the interface to use is case-insensitive.
+     */
     public function makeEvent($iface /* , ... */)
     {
         $args = func_get_args();
@@ -48,12 +70,25 @@ implements  Erebot_Interface_IrcParser
         $args[0]    = $this->_connection;
         $cls        = new ReflectionClass($this->_eventsMapping[$iface]);
         $instance   = $cls->newInstanceArgs($args);
+        if (!($instance instanceof Erebot_Event_Abstract))
+            throw new Erebot_InvalidValueException('Invalid event');
         return $instance;
     }
 
+    /**
+     * Unquotes a CTCP message.
+     *
+     * \param string $msg
+     *      Some CTCP message to unquote.
+     *
+     * \retval string
+     *      The message, with CTCP quoting removed.
+     *
+     * \see
+     *      http://www.irchelp.org/irchelp/rfc/ctcpspec.html
+     */
     static protected function _ctcpUnquote($msg)
     {
-        // See http://www.irchelp.org/irchelp/rfc/ctcpspec.html
         // CTCP-level unquoting
         $quoting = array(
             "\\a"   => "\001",
@@ -77,8 +112,7 @@ implements  Erebot_Interface_IrcParser
     }
 
     /**
-     * \copydoc
-     *      Erebot_Interface_EventFactory::getEventClass($iface)
+     * \copydoc Erebot_Interface_IrcParser::getEventClass()
      *
      * \note
      *      As a special shortcut, you may use an exclamation
@@ -100,11 +134,27 @@ implements  Erebot_Interface_IrcParser
             : NULL;
     }
 
+    /**
+     * \copydoc Erebot_Interface_IrcParser::getEventClasses()
+     *
+     * \note
+     *      The interfaces' name will be returned in lowercase,
+     *      while the classes' name is returned using the same
+     *      spelling as when it was set.
+     */
     public function getEventClasses()
     {
         return $this->_eventsMapping;
     }
 
+    /**
+     * \copydoc Erebot_Interface_IrcParser::setEventClasses()
+     *
+     * \note
+     *      As a special shortcut, you may use an exclamation
+     *      point ("!") in any interface name, which will be
+     *      replaced by the text "Erebot_Interface_Event_".
+     */
     public function setEventClasses($events)
     {
         foreach ($events as $iface => $cls) {
@@ -113,8 +163,7 @@ implements  Erebot_Interface_IrcParser
     }
 
     /**
-     * \copydoc
-     *      Erebot_Interface_EventFactory::setEventClass($iface, $cls)
+     * \copydoc Erebot_Interface_EventFactory::setEventClass()
      *
      * \note
      *      As a special shortcut, you may use an exclamation
@@ -203,6 +252,28 @@ implements  Erebot_Interface_IrcParser
         return FALSE;
     }
 
+    /**
+     * Process a NOTICE or PRIVMSG message.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     *
+     * \param array $mapping
+     *      A mapping of types to a list of event names.
+     *      Each list should contain two items. The first
+     *      one if the name of the event to use when the
+     *      message is targeted at an IRC user. The second
+     *      one is used for messages targeted at IRC channels.
+     *      The following (case-sensitive) types must appear
+     *      in the mapping: 'ctcp' (for CTCP messages),
+     *      'action' (for the special ACTION CTCP message)
+     *      and 'normal' for regular messages.
+     */
     protected function _noticeOrPrivmsg($origin, $msg, $mapping)
     {
         // :nick1!ident@host NOTICE <nick2/#chan> :Message
@@ -271,6 +342,17 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a message of type INVITE.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleINVITE($origin, $msg) {
         // :nick1!ident@host INVITE nick2 :#chan
         return $this->_connection->dispatch(
@@ -278,6 +360,17 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a message of type JOIN.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleJOIN($origin, $msg) {
         // :nick1!ident@host JOIN :#chan
         return $this->_connection->dispatch(
@@ -285,6 +378,17 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a message of type KICK.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleKICK($origin, $msg) {
         // :nick1!ident@host KICK #chan nick2 :Reason
         return $this->_connection->dispatch(
@@ -292,6 +396,18 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a (user or channel-related)
+     * message of type MODE.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleMODE($origin, $msg) {
         // :nick1!ident@host MODE <nick2/#chan> <modes> [args]
         $target = $msg[0];
@@ -366,6 +482,17 @@ implements  Erebot_Interface_IrcParser
         /// @TODO: handle remaining modes as well
     }
 
+    /**
+     * Processes a message of type NICK.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleNICK($origin, $msg) {
         // :oldnick!ident@host NICK newnick
         return $this->_connection->dispatch(
@@ -373,6 +500,18 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a (user or channel-related) message
+     * of type NOTICE.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleNOTICE($origin, $msg) {
         // :nick1!ident@host NOTICE <nick2/#chan> :Message
         $mapping = array(
@@ -383,6 +522,17 @@ implements  Erebot_Interface_IrcParser
         return $this->_noticeOrPrivmsg($origin, $msg, $mapping);
     }
 
+    /**
+     * Processes a message of type PART.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handlePART($origin, $msg) {
         // :nick1!ident@host PART #chan :Reason
         return $this->_connection->dispatch(
@@ -390,6 +540,17 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a message of type PING.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handlePING($origin, $msg) {
         // PING origin
         return $this->_connection->dispatch(
@@ -397,6 +558,17 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a message of type PONG.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handlePONG($origin, $msg) {
         // :origin PONG origin target
         return $this->_connection->dispatch(
@@ -404,6 +576,18 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a (user or channel-related) message
+     * of type PRIVMSG.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handlePRIVMSG($origin, $msg) {
         // :nick1!ident@host PRIVMSG <nick2/#chan> :Message
         $mapping = array(
@@ -414,6 +598,17 @@ implements  Erebot_Interface_IrcParser
         return $this->_noticeOrPrivmsg($origin, $msg, $mapping);
     }
 
+    /**
+     * Processes a message of type QUIT.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleQUIT($origin, $msg) {
         // :nick1!ident@host QUIT :Reason
         return $this->_connection->dispatch(
@@ -421,6 +616,17 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a message of type TOPIC.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handleTOPIC($origin, $msg) {
         // :nick1!ident@host TOPIC #chan :New topic
         return $this->_connection->dispatch(
@@ -428,6 +634,17 @@ implements  Erebot_Interface_IrcParser
         );
     }
 
+    /**
+     * Processes a raw message with numeric 255.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handle255($origin, $msg)
     {
         // Erebot_Interface_RawProfile_RFC1459::RPL_LUSERME
@@ -439,30 +656,85 @@ implements  Erebot_Interface_IrcParser
             return $this->_connection->dispatch($this->makeEvent('!Connect'));
     }
 
+    /**
+     * Processes a raw message with numeric 600.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handle600($origin, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_LOGON
         return $this->_watchList('!Notify', $msg);
     }
 
+    /**
+     * Processes a raw message with numeric 601.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handle601($origin, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_LOGOFF
         return $this->_watchList('!UnNotify', $msg);
     }
 
+    /**
+     * Processes a raw message with numeric 604.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handle604($origin, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_NOWON
         return $this->_watchList('!Notify', $msg);
     }
 
+    /**
+     * Processes a raw message with numeric 605.
+     *
+     * \param string $origin
+     *      Origin of the message to process.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _handle605($origin, $msg)
     {
         // Erebot_Interface_RawProfile_WATCH::RPL_NOWOFF
         return $this->_watchList('!UnNotify', $msg);
     }
 
+    /**
+     * Processes a raw message related to the WATCH list.
+     *
+     * \param string $event
+     *      Interface name for the event to produce.
+     *
+     * \param Erebot_Interface_IrcTextWrapper $msg
+     *      The message to process, wrapped in
+     *      a special object that makes it easier
+     *      to analyze each token separately.
+     */
     protected function _watchList($event, $msg)
     {
         // <bot> <nick> <ident> <host> <timestamp> :<msg>

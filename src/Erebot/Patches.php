@@ -16,8 +16,25 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      A class that provides some patches
+ *      for PHP.
+ */
 class Erebot_Patches
 {
+    /**
+     * Apply a few patches to PHP.
+     *
+     * Currently the following changes are made:
+     * - ctype_digit() is emulated (in case it was
+     *   disabled on the configure line).
+     * - declare(ticks=1) is used on PHP < 5.3.0
+     *   to allow signal dispatching.
+     *
+     * \return
+     *      This method does not return anything.
+     */
     static public function patch()
     {
         // Quick replacement for ctype_digit in case

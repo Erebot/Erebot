@@ -45,8 +45,9 @@ unset($manager);
  *
  * This class is responsible for controlling the bot, from its start
  * to its shutdown. This is the class that will create new
- * \link Erebot_Connection connections\endlink, handle
- * \link Erebot_Timer timers\endlink, apply multiplexing, etc.
+ * \link Erebot_Interface_Connection connections\endlink, handle
+ * \link Erebot_Interface_Timer timers\endlink, apply multiplexing,
+ * etc.
  *
  * The main method you will be interested in is Erebot::start() which
  * starts the bot.

@@ -51,6 +51,10 @@ class Erebot_Styling_Lexer
      *
      * \param string $formula
      *      Some formula to tokenize.
+     *
+     * \param array $vars
+     *      An array of variables that may be used
+     *      in the formula.
      */
     public function __construct($formula, array $vars)
     {

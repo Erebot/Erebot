@@ -18,11 +18,22 @@
 
 class   Erebot_LineIO
 {
+    /// Windows line-ending.
     const EOL_WIN       = "\r\n";
+
+    /// Old MacOS line-ending (MacOS <= 9).
     const EOL_OLD_MAC   = "\r";
+
+    /// Unix line-ending.
     const EOL_UNIX      = "\n";
+
+    /// New MacOS line-ending (MacOS > 9).
+    const EOL_NEW_MAC   = "\n";
+
+    /// Universal line-ending mode (compatible with Windows, Mac and *nix).
     const EOL_ANY       = NULL;
 
+    /// Line-ending mode in use.
     protected $_eol;
 
     /// The underlying socket, represented as a stream.
