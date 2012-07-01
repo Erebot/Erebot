@@ -1,3 +1,3 @@
 @INCLUDE = buildenv/Doxyfile
-INPUT += docs/additions vendor/Erebot_API/src/
+INPUT += vendor/Erebot_API/src/ vendor/Erebot_API/docs/additions
 EXCLUDE_PATTERNS = Parser.php

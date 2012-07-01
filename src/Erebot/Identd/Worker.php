@@ -24,7 +24,8 @@
  *      http://www.ietf.org/rfc/rfc1413.txt
  */
 class       Erebot_Identd_Worker
-implements  Erebot_Interface_BidirectionalConnection
+implements  Erebot_Interface_SendingConnection,
+            Erebot_Interface_ReceivingConnection
 {
     /// A bot object implementing the Erebot_Interface_Core interface.
     protected $_bot;

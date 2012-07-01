@@ -16,21 +16,42 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      A class used to format strings.
+ *
+ * \note
+ *      Actually, strings are rendered "as is",
+ *      without any special formatting applied,
+ *      so this class can safely be used as a
+ *      passthrough.
+ */
 class       Erebot_Styling_String
 implements  Erebot_Interface_Styling_String
 {
+    /// The value to format.
     protected $_value;
 
+    /**
+     * Constructor.
+     *
+     * \param string $value
+     *      The value to format.
+     *      It must support conversions to the
+     *      string type.
+     */
     public function __construct($value)
     {
         $this->_value = $value;
     }
 
+    /// \copydoc Erebot_Interface_Styling_Variable::render()
     public function render(Erebot_Interface_I18n $translator)
     {
         return (string) $this->_value;
     }
 
+    /// \copydoc Erebot_Interface_Styling_Variable::getValue()
     public function getValue()
     {
         return $this->_value;

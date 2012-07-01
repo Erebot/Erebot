@@ -174,11 +174,13 @@ implements  Erebot_Interface_IrcConnection
         $this->_uriFactory = $factory;
     }
 
+    /// \copydoc Erebot_Interface_IrcConnection::getRawProfileLoader()
     public function getRawProfileLoader()
     {
         return $this->_rawProfileLoader;
     }
 
+    /// \copydoc Erebot_Interface_IrcConnection::setRawProfileLoader()
     public function setRawProfileLoader(
         Erebot_Interface_RawProfileLoader $loader
     )
@@ -768,20 +770,7 @@ implements  Erebot_Interface_IrcConnection
         return $this->_dispatchEvent($event);
     }
 
-    /**
-     * Determines if the given string is a valid channel name or not.
-     * A channel name usually starts with the hash symbol (#).
-     * Valid characters for the rest of the name vary between IRC networks.
-     *
-     * \param $chan
-     *      Tentative channel name.
-     *
-     * \retval bool
-     *      TRUE if $chan is a valid channel name, FALSE otherwise.
-     *
-     * \throw Erebot_InvalidValueException
-     *      $chan is not a string or is empty.
-     */
+    /// \copydoc Erebot_Interface_IrcConnection::isChannel()
     public function isChannel($chan)
     {
         try {

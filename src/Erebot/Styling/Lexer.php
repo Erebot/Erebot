@@ -72,7 +72,7 @@ class Erebot_Styling_Lexer
         return $this->_parser->getResult();
     }
 
-    /// Does the actual work.
+    /// This method does the actual work.
     protected function _tokenize()
     {
         $operators = array(

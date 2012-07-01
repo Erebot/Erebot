@@ -16,10 +16,26 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      A class used to format durations.
+ */
 class       Erebot_Styling_Duration
 implements  Erebot_Interface_Styling_Duration
 {
+    /// The duration to format (in seconds).
     protected $_value;
+
+    /**
+     * Constructor.
+     *
+     * \param int $value
+     *      A duration to format, given in seconds.
+     */
+    public function __construct($value)
+    {
+        $this->_value       = $value;
+    }
 
     /**
      * Formats a duration according to the rules
@@ -32,11 +48,6 @@ implements  Erebot_Interface_Styling_Duration
      *      A representation of the duration according to
      *      the rules of the current locale.
      */
-    public function __construct($value)
-    {
-        $this->_value       = $value;
-    }
-
     public function render(Erebot_Interface_I18n $translator)
     {
         $locale = $translator->getLocale(Erebot_Interface_I18n::LC_MESSAGES);
@@ -87,6 +98,13 @@ implements  Erebot_Interface_Styling_Duration
         return (string) $formatter->format($this->_value);
     }
 
+    /**
+     * Returns the duration to format,
+     * in seconds.
+     *
+     * \retval int
+     *      The duration to format.
+     */
     public function getValue()
     {
         return $this->_value;
