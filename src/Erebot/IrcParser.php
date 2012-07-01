@@ -70,8 +70,6 @@ implements  Erebot_Interface_IrcParser
         $args[0]    = $this->_connection;
         $cls        = new ReflectionClass($this->_eventsMapping[$iface]);
         $instance   = $cls->newInstanceArgs($args);
-        if (!($instance instanceof Erebot_Event_Abstract))
-            throw new Erebot_InvalidValueException('Invalid event');
         return $instance;
     }
 
