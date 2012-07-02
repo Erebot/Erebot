@@ -18,15 +18,27 @@
 
 /**
  * \brief
- *      Triggered when the ServerCapabilities finishes determining
+ *      Triggered when the bot has determined
  *      what features the IRC server supports.
  */
 class       Erebot_Event_ServerCapabilities
 extends     Erebot_Event_Abstract
 implements  Erebot_Interface_Event_ServerCapabilities
 {
+    /// Module containing the server's capabilities.
     protected $_module;
 
+    /**
+     * Constructs a new event dealing with
+     * server capabilities.
+     *
+     * \param Erebot_Interface_Connection $connection
+     *      The connection this event relates to.
+     *
+     * \param Erebot_Module_Base $module
+     *      The module containing information about
+     *      the server's capabilities.
+     */
     public function __construct(
         Erebot_Interface_Connection $connection,
         Erebot_Module_Base          $module
@@ -36,6 +48,7 @@ implements  Erebot_Interface_Event_ServerCapabilities
         $this->_module = $module;
     }
 
+    /// \copydoc Erebot_Interface_Event_ServerCapabilities::getModule()
     public function getModule()
     {
         return $this->_module;

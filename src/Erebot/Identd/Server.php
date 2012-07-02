@@ -115,6 +115,7 @@ implements  Erebot_Interface_ReceivingConnection
         return TRUE;
     }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::read()
     public function read()
     {
         $socket = stream_socket_accept($this->_socket);
@@ -124,6 +125,7 @@ implements  Erebot_Interface_ReceivingConnection
         return $worker;
     }
 
+    /// Processes commands queued in the input buffer.
     public function process()
     {
     }

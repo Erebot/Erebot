@@ -37,7 +37,7 @@ implements  Erebot_Interface_IrcTextWrapper
     /**
      * Constructs a new instance of a text wrapper.
      *
-     * \param string|array $oarts
+     * \param string|array $parts
      *      The text to wrap.
      */
     public function __construct($parts)

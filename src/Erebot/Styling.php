@@ -118,10 +118,6 @@ implements  Erebot_Interface_Styling
     /**
      * Construct a new styling object.
      *
-     * \param string $source
-     *      The template which will be used to produce
-     *      the final message.
-     *
      * \param Erebot_Interface_I18n $translator
      *      A translator object, used to determine the correct
      *      pluralization rules.
@@ -195,11 +191,13 @@ implements  Erebot_Interface_Styling
      *
      * \throw Erebot_InvalidValueException
      *      The given variable name is invalid.
+     *
+     * \return
+     *      This method does not return anything.
      */
     static protected function _checkVariableName($var)
     {
-        $valid = (bool) preg_match('/^[a-zA-Z0-9_\.]+$/D', $var);
-        if (!$valid)
+        if (!preg_match('/^[a-zA-Z0-9_\.]+$/D', $var))
             throw new Erebot_InvalidValueException(
                 'Invalid variable name "'.$var.'". '.
                 'Variable names may only contain alphanumeric '.
@@ -260,6 +258,41 @@ implements  Erebot_Interface_Styling
         return $this->_translator;
     }
 
+    /**
+     * Wraps a scalar into the appropriate
+     * styling object.
+     *
+     * \param mixed $var
+     *      Either a scalar, an array or an object implementing
+     *      the Erebot_Interface_Styling_Variable interface.
+     *      Scalar values will be wrapped with the appropriate
+     *      object while arrays and objects are returned untouched.
+     *
+     * \param string $name
+     *      Name of given variable.
+     *
+     * \retval array
+     *      If \a $var referred to an array, it is returned
+     *      without any modification.
+     *
+     * \retval Erebot_Interface_Styling_Variable
+     *      Objects that implement Erebot_Interface_Styling_Variable
+     *      are returned without any modification. Scalar values
+     *      are wrapped into the appropriate object implementing
+     *      the Erebot_Interface_Styling_Variable interface and
+     *      the resulting object is returned.
+     *
+     * \throw Erebot_InvalidValueException
+     *      Either the given name is invalid, an object was passed
+     *      that did not implement Erebot_InvalidValueException,
+     *      or the given value was not a scalar.
+     *
+     * \note
+     *      In the context of this method, objects that can be
+     *      converted to a string (ie. implement __toString())
+     *      are treated as if they were a string (and thus, are
+     *      considered as scalar values).
+     */
     protected function _wrapScalar($var, $name)
     {
         self::_checkVariableName($name);
@@ -293,6 +326,20 @@ implements  Erebot_Interface_Styling
         return new $cls($var);
     }
 
+    /**
+     * Parses a template into a DOM.
+     *
+     * \param string $source
+     *      Template to parse.
+     *
+     * \retval Erebot_DOM
+     *      DOM object constructed
+     *      from the template.
+     *
+     * \throw Erebot_InvalidValueException
+     *      The template was malformed
+     *      or invalid.
+     */
     static protected function _parseTemplate($source)
     {
         $source =

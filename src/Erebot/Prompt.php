@@ -47,6 +47,7 @@ implements  Erebot_Interface_ReceivingConnection
     /// The underlying socket, represented as a stream.
     protected $_socket;
 
+    /// I/O manager for the socket.
     protected $_io;
 
     /**
@@ -189,6 +190,7 @@ implements  Erebot_Interface_ReceivingConnection
         return $this->_io;
     }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::read()
     public function read()
     {
         $res = $this->_io->read();
@@ -197,6 +199,7 @@ implements  Erebot_Interface_ReceivingConnection
         return $res;
     }
 
+    /// Processes commands queued in the input buffer.
     public function process()
     {
         for ($i = $this->_io->inReadQueue(); $i > 0; $i--)

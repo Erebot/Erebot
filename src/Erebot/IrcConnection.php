@@ -60,6 +60,7 @@ implements  Erebot_Interface_IrcConnection
 
     protected $_eventsProducer;
 
+    /// I/O manager for the socket.
     protected $_io;
 
     /**
@@ -68,15 +69,23 @@ implements  Erebot_Interface_IrcConnection
      * \param Erebot_Interface_Core $bot
      *      A bot instance.
      *
+     * \param Erebot_Interface_Config_Server $config
+     *      The connfiguration for this connection.
+     *
+     * \param array $events
+     *      (optional) A mapping of event interface names
+     *      to the class that must be used to produce such
+     *      events (factory).
+     *
      * \note
-     *      There is no actual connection until
-     *      Erebot_Interface_Connection::connect()
+     *      No connection (in the socket sense) is actually
+     *      created until Erebot_Interface_Connection::connect()
      *      is called.
      */
     public function __construct(
-        Erebot_Interface_Core   $bot,
-                                $config = NULL,
-                                $events = array()
+        Erebot_Interface_Core           $bot,
+        Erebot_Interface_Config_Server  $config = NULL,
+                                        $events = array()
     )
     {
         $this->_config          = $config;
@@ -188,6 +197,12 @@ implements  Erebot_Interface_IrcConnection
         $this->_rawProfileLoader = $loader;
     }
 
+    /**
+     * Reloads/sets the configuration for this connection.
+     *
+     * \param Erebot_Interface_Config_Server $config
+     *      The new configuration for this connection.
+     */
     public function reload(Erebot_Interface_Config_Server $config)
     {
         $this->_loadModules(
@@ -197,6 +212,19 @@ implements  Erebot_Interface_IrcConnection
         $this->_config = $config;
     }
 
+    /**
+     * (Re)Load the modules for this connection.
+     *
+     * \param Erebot_Interface_Config_Server $config
+     *      A server configuration that describes the
+     *      modules to load.
+     *
+     * \param int $flags
+     *      Flags that will be passed to the reload()
+     *      method of every module that needs reloading.
+     *      This is a bitwise-OR of the RELOAD_* constants
+     *      defined in Erebot_Module_Base.
+     */
     protected function _loadModules(
         Erebot_Interface_Config_Server  $config,
                                         $flags
@@ -506,6 +534,7 @@ implements  Erebot_Interface_IrcConnection
         return $this->_io;
     }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::read()
     public function read()
     {
         $res = $this->_io->read();
@@ -523,12 +552,14 @@ implements  Erebot_Interface_IrcConnection
         return $res;
     }
 
+    /// Processes commands queued in the input buffer.
     public function process()
     {
         for ($i = $this->_io->inReadQueue(); $i > 0; $i--)
             $this->_eventsProducer->parseLine($this->_io->pop());
     }
 
+    /// \copydoc Erebot_Interface_SendingConnection::write()
     public function write()
     {
         if (!$this->_io->inWriteQueue()) {
@@ -807,6 +838,16 @@ implements  Erebot_Interface_IrcConnection
         return (strpos('#&+!', $chan[0]) !== FALSE);
     }
 
+    /**
+     * Handles the "ServerCapabilities" event.
+     *
+     * \param Erebot_Interface_EventHandler $handler
+     *      The event handler responsible for calling
+     *      this method.
+     *
+     * \param Erebot_Event_ServerCapabilities $event
+     *      The "ServerCapabilities" event to process.
+     */
     public function handleCapabilities(
         Erebot_Interface_EventHandler   $handler,
         Erebot_Event_ServerCapabilities $event
@@ -845,24 +886,59 @@ implements  Erebot_Interface_IrcConnection
         }
     }
 
+    /**
+     * Handles the "Connect" event.
+     *
+     * \param Erebot_Interface_EventHandler $handler
+     *      The event handler responsible for calling
+     *      this method.
+     *
+     * \param Erebot_Interface_Event_Connect $event
+     *      The "Connect" event to process.
+     */
     public function handleConnect(
         Erebot_Interface_EventHandler   $handler,
-        Erebot_Interface_Event_Connect  $raw
+        Erebot_Interface_Event_Connect  $event
     )
     {
         $this->_connected = TRUE;
     }
 
+    /**
+     * Sets the collector to use for this connection.
+     *
+     * \param Erebot_Interface_Collator $collator
+     *      The new collator to use for this connection.
+     */
     public function setCollator(Erebot_Interface_IrcCollator $collator)
     {
         $this->_collator = $collator;
     }
 
+    /**
+     * Returns the collator associated with
+     * this connection.
+     *
+     * \retval Erebot_Interface_IrcCollator
+     *      The collator for this connection.
+     */
     public function getCollator()
     {
         return $this->_collator;
     }
 
+    /**
+     * Returns the object used to produce events.
+     *
+     * \retval Erebot_Interface_IrcParser
+     *      Object used to produce events.
+     *
+     * \note
+     *      This method is somewhat misnamed, since
+     *      in reality the object it returns does
+     *      more than merely producing events—it is
+     *      a full-blown IRC parser.
+     */
     public function getEventsProducer()
     {
         return $this->_eventsProducer;

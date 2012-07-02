@@ -16,6 +16,14 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      A class that provides a line-by-line reader.
+ *
+ * Using this class, it is possible to read messages
+ * one line at a time simply by specifying the
+ * End-Of-Line (EOL) style in use by the protocol.
+ */
 class   Erebot_LineIO
 {
     /// Windows line-ending.
@@ -49,12 +57,40 @@ class   Erebot_LineIO
     protected $_incomingData;
 
 
+    /**
+     * Constructs a new line-by-line reader.
+     *
+     * \param opaque $eol
+     *      The type of line-endings to accept.
+     *      This may be one of Erebot_LineIO::EOL_WIN,
+     *      Erebot_LineIO::EOL_OLD_MAC,
+     *      Erebot_LineIO::EOL_NEW_MAC,
+     *      Erebot_LineIO::EOL_UNIX or
+     *      Erebot_LineIO::EOL_ANY.
+     *
+     * \param resource $socket
+     *      (optional) The socket to operate on.
+     *
+     * \warning
+     *      Even though the \a $socket argument is
+     *      optional here, you must still provide one
+     *      (using the setSocket() method) before
+     *      calling any of this object's methods.
+     *      Failure to do so may result in unpredictable
+     *      results.
+     */
     public function __construct($eol, $socket = NULL)
     {
         $this->setSocket($socket);
         $this->setEOL($eol);
     }
 
+    /**
+     * Sets the socket this line reader operates on.
+     *
+     * \param resource $socket
+     *      The new socket this reader will now use.
+     */
     public function setSocket($socket)
     {
         $this->_socket          = $socket;
@@ -63,11 +99,31 @@ class   Erebot_LineIO
         $this->_sndQueue        = array();
     }
 
+    /**
+     * Returns the socket associated with this reader.
+     *
+     * \retval resource
+     *      Socket associated with this reader,
+     *      as set during this object's creation
+     *      or the latest call to setSocket().
+     */
     public function getSocket()
     {
         return $this->_socket;
     }
 
+    /**
+     * Sets the End-Of-Line (EOL) style
+     * used to process lines.
+     *
+     * \param opaque $eol
+     *      The type of line-endings to accept.
+     *      This may be one of Erebot_LineIO::EOL_WIN,
+     *      Erebot_LineIO::EOL_OLD_MAC,
+     *      Erebot_LineIO::EOL_NEW_MAC,
+     *      Erebot_LineIO::EOL_UNIX or
+     *      Erebot_LineIO::EOL_ANY.
+     */
     public function setEOL($eol)
     {
         $eols = array(
@@ -86,6 +142,13 @@ class   Erebot_LineIO
         $this->_eol     = $eol;
     }
 
+    /**
+     * Returns the End-Of-Line (EOL) style
+     * currently used.
+     *
+     * \retval opaque
+     *      EOL style currently in use.
+     */
     public function getEOL()
     {
         return $this->_eol;
@@ -128,12 +191,27 @@ class   Erebot_LineIO
         return TRUE;
     }
 
+    /**
+     * Reads as many lines from the socket
+     * as possible.
+     *
+     * \retval bool
+     *      TRUE if lines were successfully read,
+     *      FALSE is returned whenever EOF is reached
+     *      or if this method has been called while
+     *      the socket was still uninitialized..
+     *
+     * \note
+     *      This method blocks until lines have
+     *      been read of EOF is reached (whichever
+     *      comes first).
+     */
     public function read()
     {
         if ($this->_socket === NULL)
             return FALSE;
 
-        $received   = fread($this->_socket, 4096);
+        $received = fread($this->_socket, 4096);
         if ($received === FALSE || feof($this->_socket))
             return FALSE;
 
@@ -143,6 +221,16 @@ class   Erebot_LineIO
         return TRUE;
     }
 
+    /**
+     * Returns a single line from the input buffer.
+     *
+     * \retval string
+     *      A single line from the input buffer.
+     *
+     * \retval NULL
+     *      The input buffer did not contain
+     *      any line.
+     */
     public function pop()
     {
         if (count($this->_rcvQueue))
@@ -173,6 +261,19 @@ class   Erebot_LineIO
         $this->_sndQueue[] = $line;
     }
 
+    /**
+     * Writes a single line from the output buffer
+     * to the socket.
+     *
+     * \retval int
+     *      The number of bytes successfully
+     *      written on the socket.
+     *
+     * \retval FALSE
+     *      The connection was lost while trying
+     *      to send the line or the output buffer
+     *      was empty.
+     */
     public function write()
     {
         if (!count($this->_sndQueue))
@@ -199,11 +300,31 @@ class   Erebot_LineIO
         return $written;
     }
 
+    /**
+     * Indicates whether there are lines
+     * in the input buffer waiting to be
+     * read.
+     *
+     * \retval bool
+     *      Whether there are lines in the
+     *      input buffer awaiting reading
+     *      (TRUE) or not (FALSE).
+     */
     public function inReadQueue()
     {
         return count($this->_rcvQueue);
     }
 
+    /**
+     * Indicates whether there are lines
+     * in the output buffer waiting to be
+     * written.
+     *
+     * \retval bool
+     *      Whether there are lines in the
+     *      output buffer awaiting writing
+     *      (TRUE) or not (FALSE).
+     */
     public function inWriteQueue()
     {
         return count($this->_sndQueue);

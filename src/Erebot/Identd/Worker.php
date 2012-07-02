@@ -33,6 +33,7 @@ implements  Erebot_Interface_SendingConnection,
     /// The underlying socket, represented as a stream.
     protected $_socket;
 
+    /// I/O manager for the socket.
     protected $_io;
 
     /**
@@ -80,11 +81,13 @@ implements  Erebot_Interface_SendingConnection,
         $this->_socket = NULL;
     }
 
+    /// \copydoc Erebot_Interface_ReceivingConnection::read()
     public function read()
     {
         return $this->_io->read();
     }
 
+    /// Processes commands queued in the input buffer.
     public function process()
     {
         if (!$this->_io->inReadQueue())
@@ -179,7 +182,7 @@ implements  Erebot_Interface_SendingConnection,
         return $this->_socket;
     }
 
-    /// \copydoc Erebot_Interface_SendingConnection::processOutgoingData()
+    /// \copydoc Erebot_Interface_SendingConnection::write()
     public function write()
     {
     }

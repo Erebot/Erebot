@@ -35,7 +35,16 @@ implements  Erebot_Interface_IrcParser
     /**
      * Constructor.
      *
-     * \
+     * \param Erebot_Interface_Connection $connection
+     *      The connection associated with this parser.
+     *      Every event created by this parser will
+     *      reference this connection.
+     *
+     * \warning
+     *      Do not ask this parser to parse messages coming
+     *      from a different connection that the one it was
+     *      constructed with or the results will be
+     *      unpredictable.
      */
     public function __construct(Erebot_Interface_Connection $connection)
     {
@@ -161,7 +170,7 @@ implements  Erebot_Interface_IrcParser
     }
 
     /**
-     * \copydoc Erebot_Interface_EventFactory::setEventClass()
+     * \copydoc Erebot_Interface_IrcParser::setEventClass()
      *
      * \note
      *      As a special shortcut, you may use an exclamation
@@ -193,14 +202,13 @@ implements  Erebot_Interface_IrcParser
     }
 
     /**
-     * Handles a single IRC message.
+     * \copydoc Erebot_Interface_IrcParser::parseLine()
      *
-     * \param string $msg
-     *      The message to process.
-     *
-     * \note
-     *      Events/raws are dispatched as necessary
-     *      by this method.
+     * \warning
+     *      Do not ask this parser to parse messages coming
+     *      from a different connection that the one it was
+     *      constructed with or the results will be
+     *      unpredictable.
      */
     public function parseLine($msg)
     {

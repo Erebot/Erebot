@@ -75,6 +75,10 @@ implements  Erebot_Interface_Core
      *
      * \param Erebot_Interface_Config_MainInterface $config
      *      The (main) configuration to use.
+     *
+     * \param Erebot_Interface_I18n $translator
+     *      A translator object that will provide translations
+     *      for messages emitted by the core class.
      */
     public function __construct(
         Erebot_Interface_Config_Main    $config,

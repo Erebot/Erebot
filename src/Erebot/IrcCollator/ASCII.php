@@ -16,9 +16,21 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * \brief
+ *      IRC collator for the "ascii" subset.
+ *
+ * \note
+ *      The name of this collator comes from the
+ *      label associated with it by IRC servers.
+ *
+ * This collator accepts all latin letters
+ * and normalizes nicknames by uppercasing them.
+ */
 class   Erebot_IrcCollator_ASCII
 extends Erebot_IrcCollator
 {
+    /// \copydoc Erebot_IrcCollator::_normalizeNick()
     protected function _normalizeNick($nick)
     {
         // We don't use strtoupper() as it's locale-dependent
