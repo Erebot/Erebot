@@ -433,7 +433,7 @@ implements  Erebot_Interface_IrcParser
         unset($msg[0]);
         $len    = strlen($modes);
         $mode   = 'add';
-        $k      = 1;
+        $k      = 0;
 
         $priv     = array(
             'add' =>
@@ -540,9 +540,14 @@ implements  Erebot_Interface_IrcParser
      *      to analyze each token separately.
      */
     protected function _handlePART($origin, $msg) {
-        // :nick1!ident@host PART #chan :Reason
+        // :nick1!ident@host PART #chan [reason]
         return $this->_connection->dispatch(
-            $this->makeEvent('!Part', $msg[0], $origin, $msg[1])
+            $this->makeEvent(
+                '!Part',
+                $msg[0],
+                $origin,
+                isset($msg[1]) ? $msg[1] : ''
+            )
         );
     }
 
