@@ -34,7 +34,7 @@ extends AbstractTimerTest
 {
     private $_delay = 2.5;
     private $_min   = 2.5;
-    private $_max   = 4.0;
+    private $_max   = 10.0;
     private $_timer;
 
     /**
@@ -42,9 +42,6 @@ extends AbstractTimerTest
      *
      * We create a timer set to go off twice with a delay of 2.5 seconds.
      * We check that each parameter is correctly set before each run.
-     * We test whether or not the timer went off roughly at the right time
-     * (between 2.5 and 3.5 seconds, to allow some CPU overhead) and we do
-     * some extra checks.
      *
      * @covers Erebot_Timer::reset
      * @covers Erebot_Timer::getStream
@@ -170,6 +167,5 @@ extends AbstractTimerTest
         $timer->setRepetition(2);
         $this->assertEquals(2, $timer->getRepetition());
     }
-
 }
 
