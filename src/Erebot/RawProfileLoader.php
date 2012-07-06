@@ -121,17 +121,28 @@ implements  Erebot_Interface_RawProfileLoader
         if (!is_string($rawName))
             throw new Erebot_InvalidValueException('Not a valid name');
 
-        foreach (array_reverse($this->_profiles) as $profile) {
-            if (!$profile->hasConstant($rawName))
-                continue;
+        $seen       = array();
+        $rawName    = strtoupper($rawName);
+        while (!in_array($rawName, $seen)) {
+            $seen[] = $rawName;
+            foreach (array_reverse($this->_profiles) as $profile) {
+                if (!$profile->hasConstant($rawName))
+                    continue;
 
-            $constValue = $profile->getConstant($rawName);
-            if (!is_int($constValue) || $constValue < 0 || $constValue > 999)
-                continue;
-
-            return $constValue;
+                $constValue = $profile->getConstant($rawName);
+                if (is_int($constValue) &&
+                    $constValue > 0 &&
+                    $constValue <= 999)
+                    return $constValue;
+                else if (is_string($constValue)) {
+                    $rawName = strtoupper($constValue);
+                    continue 2;
+                }
+            }
+            return NULL;
         }
-        return NULL;
+
+        throw new Erebot_InvalidValueException('Loop detected');
     }
 
     /**
