@@ -107,9 +107,14 @@ extends Erebot_TestEnv_TestCase
      */
     public function testArrayGet()
     {
-        $wrapper = new Erebot_IrcTextWrapper('foo');
+        $wrapper = new Erebot_IrcTextWrapper('foo bar baz');
         $this->assertEquals('foo', $wrapper[0]);
+        $this->assertEquals('bar', $wrapper[1]);
+        $this->assertEquals('baz', $wrapper[2]);
         $this->assertSame(NULL, $wrapper['test']);
+        $this->assertEquals('foo', $wrapper[-3]);
+        $this->assertEquals('bar', $wrapper[-2]);
+        $this->assertEquals('baz', $wrapper[-1]);
     }
 
     /**
@@ -186,6 +191,16 @@ extends Erebot_TestEnv_TestCase
     public function testListWithMultipleSpaces()
     {
         $wrapper = new Erebot_IrcTextWrapper(array('a b', 'c d'));
+    }
+
+    /**
+     * @cover Erebot_IrcTextWrapper::__construct
+     * @expectedException Erebot_InvalidValueException
+     * @expectedExceptionMessage At least one token must be passed
+     */
+    public function testEmptyList()
+    {
+        $wrapper = new Erebot_IrcTextWrapper(array());
     }
 
     /**

@@ -48,10 +48,16 @@ implements  Erebot_Interface_IrcTextWrapper
                 if (strpos($part, ' ') !== FALSE)
                     $spaces++;
             }
-            if ($spaces > 1)
+            if ($spaces > 1) {
                 throw new Erebot_InvalidValueException(
                     'Multiple tokens containing spaces'
                 );
+            }
+            if (!count($parts)) {
+                throw new Erebot_InvalidValueException(
+                    'At least one token must be passed'
+                );
+            }
         }
         else if (is_string($parts)) {
             // Prepend a single space to ease single token handling.
@@ -186,6 +192,8 @@ implements  Erebot_Interface_IrcTextWrapper
     {
         if (!is_int($offset))
             return NULL;
+        if ($offset < 0)
+            $offset += count($this->_parts);
         return $this->_parts[$offset];
     }
 
