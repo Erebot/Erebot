@@ -532,6 +532,15 @@ implements  Erebot_Interface_Core
         $logger->info($msg);
     }
 
+    /**
+     * Creates the connections for this instance.
+     *
+     * \param Erebot_Interface_ConnectionFactory $factory
+     *      The factory to use to create the connections.
+     *
+     * \param Erebot_Interface_Config_Main $config
+     *      The main configuration for the bot.
+     */
     protected function _createConnections(
         Erebot_Interface_ConnectionFactory  $factory,
         Erebot_Interface_Config_Main        $config

@@ -50,14 +50,16 @@ implements  Erebot_Interface_IrcConnection
     /// Whether this connection is actually... well, connected.
     protected $_connected;
 
+    /// Factory to use to parse URI.
     protected $_uriFactory;
 
-    protected $_depFactory;
-
+    /// Raw profile manager.
     protected $_rawProfileLoader;
 
+    /// Collator for IRC nicknames.
     protected $_collator;
 
+    /// Class to use to parse IRC messages and produce events from them.
     protected $_eventsProducer;
 
     /// I/O manager for the socket.
@@ -149,7 +151,6 @@ implements  Erebot_Interface_IrcConnection
             $this->_channelModules,
             $this->_plainModules,
             $this->_uriFactory,
-            $this->_depFactory
         );
     }
 
@@ -316,11 +317,6 @@ implements  Erebot_Interface_IrcConnection
                 $module->unload();
         foreach ($plainModules as $module)
             $module->unload();
-    }
-
-    protected function _unloadModule($module)
-    {
-        var_dump(gettype($module));
     }
 
     /// \copydoc Erebot_Interface_Connection::isConnected()
@@ -604,6 +600,38 @@ implements  Erebot_Interface_IrcConnection
         return $this->_io->write();
     }
 
+    /**
+     * Load a single module for this connection.
+     *
+     * \param string $module
+     *      Name of the module to load. If the module
+     *      is already loaded, nothing will happen.
+     *
+     * \param string|NULL $chan
+     *      Name of the IRC channel for which this module
+     *      is being loaded. Pass NULL to load a module
+     *      globally (for the whole connection) rather than
+     *      for a specific IRC channel.
+     *
+     * \param opaque $flags
+     *      Bitwise-OR combination of flags to pass to
+     *      the module's initialization method.
+     *
+     * \param array $plainModules
+     *      An associative array containing the global modules
+     *      currently loaded. This array will be updated if it
+     *      needs to be once the module has been successfully
+     *      loaded.
+     *
+     * \param array $channelModules
+     *      An associative array containing the modules currently
+     *      loaded for the given IRC channel. This array will be
+     *      updated if it needs to be once the module has been
+     *      successfully loaded.
+     *
+     * \retval Erebot_Module_Base
+     *      An instance of the module with the given name.
+     */
     protected function _loadModule(
         $module,
         $chan,

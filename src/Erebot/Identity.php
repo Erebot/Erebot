@@ -96,12 +96,68 @@ implements  Erebot_Interface_Identity
         return $this->_ident;
     }
 
+    /**
+     * Strips leading '0' in front of a numeric string.
+     *
+     * \param string $number
+     *      Numeric string whose leading '0' should be
+     *      stripped. Passed by reference and modified
+     *      in-place.
+     *
+     * \param opaque $key
+     *      Unused.
+     *
+     * \return
+     *      Nothing (\a $number is modified in-place).
+     *
+     * \note
+     *      This method is meant to be used with the
+     *      <a target="_blank" href="http://php.net/array_walk">array_walk()</a>
+     *      PHP function.
+     */
     static protected function _stripLeading(&$number, $key)
     {
         $stripped = ltrim($number, '0');
         $number = ($stripped == '' ? '0' : $stripped);
     }
 
+    /**
+     * Canonicalizes a host.
+     *
+     * Despite its name, this method may be applied to either
+     * a hostname or an IP address (v4 or v6).
+     *
+     * \param string $host
+     *      Hostname or IP address to canonicalize.
+     *
+     * \param opaque $c10n
+     *      The type of canonicalization to apply. This is
+     *      either Erebot_Interface_Identity::CANON_IPV4
+     *      or Erebot_Interface_Identity::CANON_IPV6 depending
+     *      on whether IPv6-mapped-IPv4 addresses should be
+     *      rendered in dotted form or in the regular IPv6 form,
+     *      respectively.
+     *
+     * \param bool $uncompressed
+     *      Whether to compress IP addresses or not.
+     *      In compressed form, leading zeros in a colon group
+     *      are omitted and a series of groups with all-zeros
+     *      is represented with just "::".
+     *
+     * \retval string
+     *      The original hostname or IP address in canonicalized
+     *      (and optionally compressed) form.
+     *
+     * \note
+     *      The only transformation that is applied to hostnames
+     *      as part of this canonicalization method is one that
+     *      lowercases them.
+     *
+     * \see
+     *      See the various RFCs related to IP addresses
+     *      for an exact description of the transformations
+     *      that apply when compressing an IPv6 address.
+     */
     static protected function _canonicalizeHost($host, $c10n, $uncompressed)
     {
         if ($c10n != Erebot_Interface_Identity::CANON_IPV4 &&
@@ -372,6 +428,23 @@ implements  Erebot_Interface_Identity
         return TRUE;
     }
 
+    /**
+     * Turn a basic pattern (optionally) containing wirldcards
+     * into a regular expression pattern, intended to match
+     * hostnames or IP addresses.
+     *
+     * \param string $pattern
+     *      Basic pattern, possibly containing
+     *      wildcard characters ('*' and '?').
+     *
+     * \param bool $matchDot
+     *      Whether the '?' and '*' wildcard characters
+     *      should also match dots '.' (TRUE) or not (FALSE).
+     *
+     * \retval string
+     *      A regular expression pattern that matches the
+     *      criteria expressed in the original pattern.
+     */
     static protected function _patternize($pattern, $matchDot)
     {
         $realPattern = '';

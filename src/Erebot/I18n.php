@@ -148,7 +148,7 @@ implements  Erebot_Interface_I18n
 
             if (isset($locale['region'])) {
                 $normLocale = $locale['language'] . '_' . $locale['region'];
-                $file = self::_build_path(
+                $file = self::_get_mo_path(
                     $normLocale,
                     $categoryName,
                     $this->_component
@@ -159,7 +159,7 @@ implements  Erebot_Interface_I18n
                 }
             }
 
-            $file = self::_build_path(
+            $file = self::_get_mo_path(
                 $locale['language'],
                 $categoryName,
                 $this->_component
@@ -176,7 +176,30 @@ implements  Erebot_Interface_I18n
         return $newLocale;
     }
 
-    static protected function _build_path($locale, $category, $domain)
+    /**
+     * Returns the path to the Machine Object (MO file)
+     * for the given locale, category and domain.
+     *
+     * \param string $locale
+     *      The locale for which the MO file must be returned.
+     *      Eg. "fr_FR".
+     *
+     * \param string $category
+     *      The name of the category the MO file belongs to.
+     *      Eg. "LC_MESSAGES".
+     *
+     * \param string $domain
+     *      The domain of the MO file. Eg. "messages".
+     *
+     * \retval
+     *      The path to the MO file matching the arguments.
+     *
+     * \note
+     *      Erebot_I18n::categoryToName() may be used to convert
+     *      a category constant to its name (which is what this
+     *      method expects).
+     */
+    static protected function _get_mo_path($locale, $category, $domain)
     {
         $base = '@data_dir@';
         // Running from the repository.
@@ -200,6 +223,30 @@ implements  Erebot_Interface_I18n
             DIRECTORY_SEPARATOR . $domain . '.mo';
     }
 
+    /**
+     * Returns the translation for the given message,
+     * as contained in some translation catalog (MO file).
+     *
+     * \param string $file
+     *      Path to the translation catalog to use,
+     *      as returned by the _get_mo_path() method.
+     *
+     * \param string $message
+     *      The message to translate.
+     *
+     * \retval string
+     *      The translation matching the given message.
+     *
+     * \retval NULL
+     *      The message could not be found in the translation
+     *      catalog.
+     *
+     * \note
+     *      This method implements a caching strategy
+     *      so that the translation catalog is not read
+     *      again every time this method is called
+     *      but only when the catalog actually changed.
+     */
     protected function _get_translation($file, $message)
     {
         $time = time();
@@ -247,9 +294,26 @@ implements  Erebot_Interface_I18n
         return NULL;
     }
 
+    /**
+     * Low-level translation method.
+     *
+     * \param string $message
+     *      The message to translate.
+     *
+     * \param string $component
+     *      The name of the component this translation
+     *      belongs to, such as "Erebot" for core messages
+     *      or "Erebot_Module_ABC" for messages belonging
+     *      to the module named "Erebot_Module_ABC".
+     *
+     * \retval string
+     *      Either the translation for the given message
+     *      is returned, or the original message if none
+     *      could be found.
+     */
     protected function _real_gettext($message, $component)
     {
-        $translationFile    = self::_build_path(
+        $translationFile = self::_get_mo_path(
             $this->_locales[self::LC_MESSAGES],
             'LC_MESSAGES',
             $component
