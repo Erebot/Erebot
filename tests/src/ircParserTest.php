@@ -423,7 +423,7 @@ extends Erebot_TestEnv_TestCase
     /**
      * @cover Erebot_IrcParser::_handle255
      */
-    public function testRaw255()
+    public function testNumeric255()
     {
         $this->_parser
             ->expects($this->exactly(3))
@@ -437,7 +437,7 @@ extends Erebot_TestEnv_TestCase
             ->expects($this->at(1))
             ->method('makeEvent')
             ->with(
-                '!Raw',
+                '!Numeric',
                 255,
                 'unconfigured.name',
                 'WiZ',
@@ -447,7 +447,7 @@ extends Erebot_TestEnv_TestCase
             ->expects($this->at(2))
             ->method('makeEvent')
             ->with(
-                '!Raw',
+                '!Numeric',
                 255,
                 'unconfigured.name',
                 'WiZ',
@@ -460,11 +460,11 @@ extends Erebot_TestEnv_TestCase
             ->will($this->onConsecutiveCalls(FALSE, TRUE));
 
         // The first time, both a Connect event and
-        // a raw event are emitted (in this order).
+        // a numeric event are emitted (in this order).
         $this->_parser->parseLine(
             ':unconfigured.name 255 WiZ :I have 1195 clients and 2 servers'
         );
-        // The second time, only a raw event is emitted.
+        // The second time, only a numeric event is emitted.
         $this->_parser->parseLine(
             ':unconfigured.name 255 WiZ :I have 1195 clients and 3 servers'
         );
@@ -485,7 +485,7 @@ extends Erebot_TestEnv_TestCase
                     'logged online'
                 ),
                 array(
-                    '!Raw',
+                    '!Numeric',
                     600,
                     'unconfigured.name',
                     'Wiz',
@@ -507,7 +507,7 @@ extends Erebot_TestEnv_TestCase
                     'logged offline'
                 ),
                 array(
-                    '!Raw',
+                    '!Numeric',
                     601,
                     'unconfigured.name',
                     'Wiz',
@@ -529,7 +529,7 @@ extends Erebot_TestEnv_TestCase
                     'is online'
                 ),
                 array(
-                    '!Raw',
+                    '!Numeric',
                     604,
                     'unconfigured.name',
                     'Wiz',
@@ -550,7 +550,7 @@ extends Erebot_TestEnv_TestCase
                     'is offline'
                 ),
                 array(
-                    '!Raw',
+                    '!Numeric',
                     605,
                     'unconfigured.name',
                     'Wiz',
