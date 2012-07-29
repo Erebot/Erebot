@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot 0.5.1\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2012-06-23 13:18+0200\n"
+"POT-Creation-Date: 2012-07-29 18:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
 #. For examples of valid rules, see: http://goo.gl/q94xS
 #. For the complete syntax, see also: http://goo.gl/jp2Bd
-# File: src/Erebot/Styling/Duration.php, line: 56
+# File: src/Erebot/Styling/Duration.php, line: 57
 msgid ""
 "%with-words:\n"
 "    0: 0 seconds;\n"
@@ -52,20 +52,20 @@ msgstr ""
 msgid "A modular IRC bot written in PHP"
 msgstr ""
 #
-# File: src/Erebot.php, line: 388
+# File: src/Erebot.php, line: 393
 msgid "Allocated:"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 800
+# File: src/Erebot/IrcConnection.php, line: 836
 msgid "Bad channel name"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 726
-# File: src/Erebot/IrcConnection.php, line: 758
+# File: src/Erebot/IrcConnection.php, line: 775
+# File: src/Erebot/IrcConnection.php, line: 807
 msgid "Code is not clean!"
 msgstr ""
 #
-# File: src/Erebot.php, line: 245
+# File: src/Erebot.php, line: 250
 msgid "Connection failed, removing it from the pool"
 msgstr ""
 #
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Could not chdir to \"%s\""
 msgstr ""
 #
-# File: src/Erebot.php, line: 623
+# File: src/Erebot.php, line: 648
 #, php-format
 msgid "Could not connect to \"%s\""
 msgstr ""
@@ -105,14 +105,14 @@ msgstr ""
 msgid "Could not start in the background (unable to setsid)"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 715
+# File: src/Erebot/IrcConnection.php, line: 764
 #, php-format
 msgid "Dispatching \"%s\" event."
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 747
+# File: src/Erebot/IrcConnection.php, line: 796
 #, php-format
-msgid "Dispatching raw %s."
+msgid "Dispatching numeric %s."
 msgstr ""
 #
 # File: src/Erebot/CLI.php, line: 277
@@ -121,7 +121,7 @@ msgid ""
 "option is used or the bot is configured otherwise."
 msgstr ""
 #
-# File: src/Erebot.php, line: 335
+# File: src/Erebot.php, line: 340
 msgid "Erebot has stopped"
 msgstr ""
 #
@@ -130,7 +130,7 @@ msgstr ""
 msgid "Erebot is already running with PID %d"
 msgstr ""
 #
-# File: src/Erebot.php, line: 149
+# File: src/Erebot.php, line: 154
 msgid "Erebot is starting"
 msgstr ""
 #
@@ -142,17 +142,17 @@ msgstr ""
 msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 560
+# File: src/Erebot/IrcConnection.php, line: 575
 msgid ""
 "Got an exception from the rate-limiter module. Assuming implicit approval to "
 "send the message."
 msgstr ""
 #
-# File: src/Erebot.php, line: 211
+# File: src/Erebot.php, line: 216
 msgid "Got exception"
 msgstr ""
 #
-# File: src/Erebot.php, line: 392
+# File: src/Erebot.php, line: 397
 msgid "Limit:"
 msgstr ""
 #
@@ -160,24 +160,24 @@ msgstr ""
 msgid "Loaded configuration data"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 316
+# File: src/Erebot/IrcConnection.php, line: 328
 #, php-format
 msgid "Loading required modules for \"%s\"..."
 msgstr ""
 #
-# File: src/Erebot.php, line: 383
+# File: src/Erebot.php, line: 388
 msgid "Memory usage:"
 msgstr ""
 #
-# File: src/Erebot.php, line: 505
+# File: src/Erebot.php, line: 521
 msgid "No active connections... Aborting."
 msgstr ""
 #
-# File: src/Erebot.php, line: 512
+# File: src/Erebot.php, line: 528
 msgid "No configuration file to reload"
 msgstr ""
 #
-# File: src/Erebot.php, line: 197
+# File: src/Erebot.php, line: 202
 msgid "No more connections to handle, leaving..."
 msgstr ""
 #
@@ -211,20 +211,20 @@ msgid ""
 "the current directory."
 msgstr ""
 #
-# File: src/Erebot/Prompt.php, line: 150
+# File: src/Erebot/Prompt.php, line: 151
 #, php-format
 msgid "Prompt started in \"%s\""
 msgstr ""
 #
-# File: src/Erebot.php, line: 373
+# File: src/Erebot.php, line: 378
 msgid "Received signal #%(signum)d (%(signame)s)"
 msgstr ""
 #
-# File: src/Erebot.php, line: 501
+# File: src/Erebot.php, line: 517
 msgid "Reloading the configuration"
 msgstr ""
 #
-# File: src/Erebot.php, line: 566
+# File: src/Erebot.php, line: 591
 #, php-format
 msgid "Reusing existing connection for network \"%s\""
 msgstr ""
@@ -265,17 +265,17 @@ msgstr ""
 msgid "Successfully changed user identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
-# File: src/Erebot.php, line: 611
+# File: src/Erebot.php, line: 636
 #, php-format
 msgid "Successfully connected to \"%s\"..."
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 611
+# File: src/Erebot/IrcConnection.php, line: 658
 #, php-format
 msgid "Successfully loaded module '%s'"
 msgstr ""
 #
-# File: src/Erebot.php, line: 526
+# File: src/Erebot.php, line: 542
 msgid "Successfully reloaded the configuration"
 msgstr ""
 #
@@ -312,7 +312,7 @@ msgid ""
 "running version %(code_version)s. Things may not work as expected."
 msgstr ""
 #
-# File: src/Erebot.php, line: 604
+# File: src/Erebot.php, line: 629
 #, php-format
 msgid "Trying to connect to \"%s\"..."
 msgstr ""
@@ -329,7 +329,7 @@ msgid ""
 "Erebot (%s)"
 msgstr ""
 #
-# File: src/Erebot.php, line: 390
+# File: src/Erebot.php, line: 395
 msgid "Used:"
 msgstr ""
 #
