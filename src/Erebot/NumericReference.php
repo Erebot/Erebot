@@ -18,51 +18,51 @@
 
 /**
  * \brief
- *      A class that holds a reference to an IRC raw numeric.
+ *      A class that holds a reference to an IRC numeric.
  *
- * This class holds a reference to an IRC raw numeric using
+ * This class holds a reference to an IRC numeric using
  * its name (eg. "RPL_WELCOME"). The actual numeric code
  * associated with this reference may vary dynamically depending
- * on the raw profiles currently loaded for the connection.
+ * on the numeric profile currently loaded for the connection.
  */
-class       Erebot_RawReference
-implements  Erebot_Interface_RawReference
+class       Erebot_NumericReference
+implements  Erebot_Interface_NumericReference
 {
     /// IRC connection this reference is valid for.
     protected $_connection;
 
-    /// Name of the raw numeric (eg. "RPL_WELCOME").
-    protected $_rawName;
+    /// Name of the numeric (eg. "RPL_WELCOME").
+    protected $_name;
 
     /**
-     * Constructs a new raw reference.
+     * Constructs a new reference to a numeric.
      *
      * \param Erebot_Interface_Connection $connection
      *      Connection object this reference is valid for.
      *
-     * \param string $rawName
-     *      Name associated with the raw numeric this object
+     * \param string $name
+     *      Name associated with the numeric this object
      *      should reference (such as "RPL_WELCOME").
      */
     public function __construct(
         Erebot_Interface_Connection $connection,
-                                    $rawName
+                                    $name
     )
     {
         $this->_connection  = $connection;
-        $this->_rawName     = $rawName;
+        $this->_name        = $name;
     }
 
-    /// \copydoc Erebot_Interface_RawReference::getName()
+    /// \copydoc Erebot_Interface_NumericReference::getName()
     public function getName()
     {
-        return $this->_rawName;
+        return $this->_name;
     }
 
-    /// \copydoc Erebot_Interface_RawReference::getValue()
+    /// \copydoc Erebot_Interface_NumericReference::getValue()
     public function getValue()
     {
-        $loader = $this->_connection->getRawProfileLoader();
-        return $loader->getRawByName($this->_rawName);
+        $profile = $this->_connection->getNumericProfile();
+        return $profile[$this->_name];
     }
 }

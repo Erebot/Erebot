@@ -230,19 +230,19 @@ implements  Erebot_Interface_IrcParser
         $method = '_handle'.$type;
         $exists = method_exists($this, $method);
         // We need a backup for numeric events
-        // as the regular method may modify the message.
+        // as the method may alter the message.
         $backup = clone $msg;
 
         if ($exists)
             $res = $this->$method($origin, $msg);
 
         if (ctype_digit($type)) {
-            // For raw events, the first token is always the target.
+            // For numeric events, the first token is always the target.
             $target = $backup[0];
             unset($backup[0]);
             return $this->_connection->dispatch(
                 $this->makeEvent(
-                    '!Raw',
+                    '!Numeric',
                     intval($type, 10),
                     $origin,
                     $target,
@@ -646,7 +646,7 @@ implements  Erebot_Interface_IrcParser
     }
 
     /**
-     * Processes a raw message with numeric 255.
+     * Processes a message with numeric 255.
      *
      * \param string $origin
      *      Origin of the message to process.
@@ -655,10 +655,13 @@ implements  Erebot_Interface_IrcParser
      *      The message to process, wrapped in
      *      a special object that makes it easier
      *      to analyze each token separately.
+     *
+     * \TODO
+     *      Use a NumericEventHandler instead, even though it is less effective.
      */
     protected function _handle255($origin, $msg)
     {
-        // Erebot_Interface_RawProfile_RFC1459::RPL_LUSERME
+        // Erebot_Interface_Numerics::RPL_LUSERME
         /* We can't rely on RPL_WELCOME because we may need
          * to detect the server's capabilities first.
          * So, we delay detection of the connection for as
@@ -668,7 +671,7 @@ implements  Erebot_Interface_IrcParser
     }
 
     /**
-     * Processes a raw message with numeric 600.
+     * Processes a message with numeric 600.
      *
      * \param string $origin
      *      Origin of the message to process.
@@ -677,15 +680,18 @@ implements  Erebot_Interface_IrcParser
      *      The message to process, wrapped in
      *      a special object that makes it easier
      *      to analyze each token separately.
+     *
+     * \TODO
+     *      Use a NumericEventHandler instead, even though it is less effective.
      */
     protected function _handle600($origin, $msg)
     {
-        // Erebot_Interface_RawProfile_WATCH::RPL_LOGON
+        // Erebot_Interface_Numerics::RPL_LOGON
         return $this->_watchList('!Notify', $msg);
     }
 
     /**
-     * Processes a raw message with numeric 601.
+     * Processes a message with numeric 601.
      *
      * \param string $origin
      *      Origin of the message to process.
@@ -694,15 +700,18 @@ implements  Erebot_Interface_IrcParser
      *      The message to process, wrapped in
      *      a special object that makes it easier
      *      to analyze each token separately.
+     *
+     * \TODO
+     *      Use a NumericEventHandler instead, even though it is less effective.
      */
     protected function _handle601($origin, $msg)
     {
-        // Erebot_Interface_RawProfile_WATCH::RPL_LOGOFF
+        // Erebot_Interface_Numerics::RPL_LOGOFF
         return $this->_watchList('!UnNotify', $msg);
     }
 
     /**
-     * Processes a raw message with numeric 604.
+     * Processes a message with numeric 604.
      *
      * \param string $origin
      *      Origin of the message to process.
@@ -711,15 +720,18 @@ implements  Erebot_Interface_IrcParser
      *      The message to process, wrapped in
      *      a special object that makes it easier
      *      to analyze each token separately.
+     *
+     * \TODO
+     *      Use a NumericEventHandler instead, even though it is less effective.
      */
     protected function _handle604($origin, $msg)
     {
-        // Erebot_Interface_RawProfile_WATCH::RPL_NOWON
+        // Erebot_Interface_Numerics::RPL_NOWON
         return $this->_watchList('!Notify', $msg);
     }
 
     /**
-     * Processes a raw message with numeric 605.
+     * Processes a message with numeric 605.
      *
      * \param string $origin
      *      Origin of the message to process.
@@ -728,15 +740,18 @@ implements  Erebot_Interface_IrcParser
      *      The message to process, wrapped in
      *      a special object that makes it easier
      *      to analyze each token separately.
+     *
+     * \TODO
+     *      Use a NumericEventHandler instead, even though it is less effective.
      */
     protected function _handle605($origin, $msg)
     {
-        // Erebot_Interface_RawProfile_WATCH::RPL_NOWOFF
+        // Erebot_Interface_Numerics::RPL_NOWOFF
         return $this->_watchList('!UnNotify', $msg);
     }
 
     /**
-     * Processes a raw message related to the WATCH list.
+     * Processes a message related to the WATCH list.
      *
      * \param string $event
      *      Interface name for the event to produce.

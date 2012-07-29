@@ -18,50 +18,50 @@
 
 /**
  * \brief
- *      A class representing a raw numeric event.
+ *      A class representing a numeric event.
  */
-class       Erebot_Event_Raw
-implements  Erebot_Interface_Event_Raw
+class       Erebot_Event_Numeric
+implements  Erebot_Interface_Event_Numeric
 {
-    /// The connection object this raw event came from.
+    /// The connection object this numeric event came from.
     protected $_connection;
-    /// Raw numeric code.
-    protected $_raw;
-    /// Source of the raw event.
+    /// Numeric code.
+    protected $_numeric;
+    /// Source of the numeric event.
     protected $_source;
-    /// Target of the raw event; this is usually the bot.
+    /// Target of the numeric event; this is usually the bot.
     protected $_target;
-    /// Content of the raw event.
+    /// Content of the numeric event.
     protected $_text;
     /// Whether the default action should be prevented or not.
     protected $_halt;
 
     /**
-     * Constructs a raw message.
+     * Constructs a numeric event.
      *
      * \param Erebot_Interface_Connection $connection
      *      The connection this message came from.
      *
-     * \param int $raw
-     *      The raw numeric code.
+     * \param int $numeric
+     *      The numeric code for the message.
      *
      * \param string $source
-     *      The source of the raw message. This will generally be
+     *      The source of the numeric message. This will generally be
      *      the name of an IRC server.
      *
      * \param string $target
-     *      The target of the raw message. This will generally be
+     *      The target of the numeric message. This will generally be
      *      the bot's nickname.
      *
      * \param string $text
-     *      The raw content of the message.
+     *      The numeric content of the message.
      *
      * \note
      *      No attempt is made at parsing the content of the message.
      */
     public function __construct(
         Erebot_Interface_Connection $connection,
-                                    $raw,
+                                    $numeric,
                                     $source,
                                     $target,
                                     $text
@@ -69,7 +69,7 @@ implements  Erebot_Interface_Event_Raw
     {
         $this->_halt        = FALSE;
         $this->_connection  = $connection;
-        $this->_raw         = $raw;
+        $this->_numeric     = $numeric;
         $this->_source      = $source;
         $this->_target      = $target;
         $this->_text        = new Erebot_TextWrapper((string) $text);
@@ -80,31 +80,31 @@ implements  Erebot_Interface_Event_Raw
     {
     }
 
-    /// \copydoc Erebot_Interface_Event_Raw::getConnection()
+    /// \copydoc Erebot_Interface_Event_Numeric::getConnection()
     public function getConnection()
     {
         return $this->_connection;
     }
 
-    /// \copydoc Erebot_Interface_Event_Raw::getRaw()
-    public function getRaw()
+    /// \copydoc Erebot_Interface_Event_Numeric::getNumeric()
+    public function getCode()
     {
-        return $this->_raw;
+        return $this->_numeric;
     }
 
-    /// \copydoc Erebot_Interface_Event_Raw::getSource()
+    /// \copydoc Erebot_Interface_Event_Numeric::getSource()
     public function getSource()
     {
         return $this->_source;
     }
 
-    /// \copydoc Erebot_Interface_Event_Raw::getTarget()
+    /// \copydoc Erebot_Interface_Event_Numeric::getTarget()
     public function getTarget()
     {
         return $this->_target;
     }
 
-    /// \copydoc Erebot_Interface_Event_Raw::getText()
+    /// \copydoc Erebot_Interface_Event_Numeric::getText()
     public function getText()
     {
         return $this->_text;

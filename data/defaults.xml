@@ -20,7 +20,7 @@
         <parameter key="core.classes.identity">Erebot_Identity</parameter>
         <parameter key="core.classes.timer">Erebot_Timer</parameter>
         <parameter key="core.classes.eventhandler">Erebot_EventHandler</parameter>
-        <parameter key="core.classes.rawhandler">Erebot_RawHandler</parameter>
+        <parameter key="core.classes.numerichandle">Erebot_NumericHandler</parameter>
     </parameters>
 
     <services>
@@ -127,7 +127,7 @@
                 <argument key="Erebot_Interface_Event_PrivateText">Erebot_Event_PrivateText</argument>
                 <argument key="Erebot_Interface_Event_Protect">Erebot_Event_Protect</argument>
                 <argument key="Erebot_Interface_Event_Quit">Erebot_Event_Quit</argument>
-                <argument key="Erebot_Interface_Event_Raw">Erebot_Event_Raw</argument>
+                <argument key="Erebot_Interface_Event_Numeric">Erebot_Event_Numeric</argument>
                 <argument key="Erebot_Interface_Event_RawMode">Erebot_Event_RawMode</argument>
                 <argument key="Erebot_Interface_Event_Topic">Erebot_Event_Topic</argument>
                 <argument key="Erebot_Interface_Event_UnBan">Erebot_Event_UnBan</argument>

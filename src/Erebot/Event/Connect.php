@@ -18,12 +18,13 @@
 
 /**
  * \brief
- *      Triggered when the bot is considered as being connected to a new server.
+ *      Triggered when the bot considers itself as being connected
+ *      to a new IRC server.
  *
  * Actually, the bot is considered to be connected to a new server
- * when a predefined message (raw #001) is received from that server.
+ * when a predefined numeric message is received from that server.
  * Therefore, this event is only a convenient shortcut for the underlying
- * raw event.
+ * numeric event.
  */
 class       Erebot_Event_Connect
 extends     Erebot_Event_Abstract

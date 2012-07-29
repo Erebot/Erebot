@@ -41,10 +41,10 @@ implements  Erebot_Interface_IrcConnection
     /// Maps modules names to modules instances.
     protected $_plainModules;
 
-    /// A list of rawHandlers.
-    protected $_raws;
+    /// A list of numeric handlers.
+    protected $_numerics;
 
-    /// A list of eventHandlers.
+    /// A list of event handlers.
     protected $_events;
 
     /// Whether this connection is actually... well, connected.
@@ -53,8 +53,8 @@ implements  Erebot_Interface_IrcConnection
     /// Factory to use to parse URI.
     protected $_uriFactory;
 
-    /// Raw profile manager.
-    protected $_rawProfileLoader;
+    /// Numeric profile.
+    protected $_numericProfile;
 
     /// Collator for IRC nicknames.
     protected $_collator;
@@ -95,7 +95,7 @@ implements  Erebot_Interface_IrcConnection
 
         $this->_channelModules  = array();
         $this->_plainModules    = array();
-        $this->_raws            = array();
+        $this->_numerics        = array();
         $this->_events          = array();
         $this->_connected       = FALSE;
         $this->_io              = new Erebot_LineIO(Erebot_LineIO::EOL_WIN);
@@ -103,20 +103,8 @@ implements  Erebot_Interface_IrcConnection
         $this->_eventsProducer  = new Erebot_IrcParser($this);
         /// @FIXME: this should really be done in some other way.
         $this->_eventsProducer->setEventClasses($events);
-
         $this->setURIFactory('Erebot_URI');
-        $this->setRawProfileLoader(
-            new Erebot_RawProfileLoader(
-                array(
-                    'Erebot_Interface_RawProfile_RFC2812',
-                    'Erebot_Interface_RawProfile_005',
-                    // Technically, ISON is an optionnal feature from RFC 1459,
-                    // but we need to load it by default so that some modules
-                    // (eg. Erebot_Module_WatchList) can work properly.
-                    'Erebot_Interface_RawProfile_ISON',
-                )
-            )
-        );
+        $this->setNumericProfile(new Erebot_NumericProfile_RFC2812());
 
         $this->addEventHandler(
             new Erebot_EventHandler(
@@ -145,12 +133,12 @@ implements  Erebot_Interface_IrcConnection
         $this->_socket = NULL;
         unset(
             $this->_events,
-            $this->_raws,
+            $this->_numerics,
             $this->_config,
             $this->_bot,
             $this->_channelModules,
             $this->_plainModules,
-            $this->_uriFactory,
+            $this->_uriFactory
         );
     }
 
@@ -184,18 +172,16 @@ implements  Erebot_Interface_IrcConnection
         $this->_uriFactory = $factory;
     }
 
-    /// \copydoc Erebot_Interface_IrcConnection::getRawProfileLoader()
-    public function getRawProfileLoader()
+    /// \copydoc Erebot_Interface_IrcConnection::getNumericProfile()
+    public function getNumericProfile()
     {
-        return $this->_rawProfileLoader;
+        return $this->_numericProfile;
     }
 
-    /// \copydoc Erebot_Interface_IrcConnection::setRawProfileLoader()
-    public function setRawProfileLoader(
-        Erebot_Interface_RawProfileLoader $loader
-    )
+    /// \copydoc Erebot_Interface_IrcConnection::setNumericProfile()
+    public function setNumericProfile(Erebot_NumericProfile_Base $profile)
     {
-        $this->_rawProfileLoader = $loader;
+        $this->_numericProfile = $profile;
     }
 
     /**
@@ -725,19 +711,21 @@ implements  Erebot_Interface_IrcConnection
         return $this->loadModule($name, NULL);
     }
 
-    /// \copydoc Erebot_Interface_EventDispatcher::addRawHandler()
-    public function addRawHandler(Erebot_Interface_RawHandler $handler)
+    /// \copydoc Erebot_Interface_EventDispatcher::addNumericHandler()
+    public function addNumericHandler(Erebot_Interface_NumericHandler $handler)
     {
-        $this->_raws[] = $handler;
+        $this->_numerics[] = $handler;
     }
 
-    /// \copydoc Erebot_Interface_EventDispatcher::removeRawHandler()
-    public function removeRawHandler(Erebot_Interface_RawHandler $handler)
+    /// \copydoc Erebot_Interface_EventDispatcher::removeNumericHandler()
+    public function removeNumericHandler(
+        Erebot_Interface_NumericHandler $handler
+    )
     {
-        $key = array_search($handler, $this->_raws);
+        $key = array_search($handler, $this->_numerics);
         if ($key === FALSE)
-            throw new Erebot_NotFoundException('No such raw handler');
-        unset($this->_raws[$key]);
+            throw new Erebot_NotFoundException('No such numeric handler');
+        unset($this->_numerics[$key]);
     }
 
     /// \copydoc Erebot_Interface_EventDispatcher::addEventHandler()
@@ -790,27 +778,27 @@ implements  Erebot_Interface_IrcConnection
     }
 
     /**
-     * Dispatches the given raw to handlers
-     * which have been registered for this type of raw.
+     * Dispatches the given numeric event to handlers
+     * which have been registered for this type of numeric.
      *
-     * \param Erebot_Interface_Event_Raw $raw
-     *      A raw message to dispatch.
+     * \param Erebot_Interface_Event_Numeric $numeric
+     *      A numeric message to dispatch.
      */
-    protected function _dispatchRaw(Erebot_Interface_Event_Raw $raw)
+    protected function _dispatchNumeric(Erebot_Interface_Event_Numeric $numeric)
     {
         $logging    = Plop::getInstance();
         $logger     = $logging->getLogger(
             __FILE__ .
             DIRECTORY_SEPARATOR . 'dispatch' .
-            DIRECTORY_SEPARATOR . 'raw'
+            DIRECTORY_SEPARATOR . 'numeric'
         );
         $logger->debug(
-            $this->_bot->gettext('Dispatching raw %s.'),
-            sprintf('%03d', $raw->getRaw())
+            $this->_bot->gettext('Dispatching numeric %s.'),
+            sprintf('%03d', $numeric->getCode())
         );
         try {
-            foreach ($this->_raws as $handler) {
-                if ($handler->handleRaw($raw) === FALSE)
+            foreach ($this->_numerics as $handler) {
+                if ($handler->handleNumeric($numeric) === FALSE)
                     break;
             }
         }
@@ -824,8 +812,8 @@ implements  Erebot_Interface_IrcConnection
     /// \copydoc Erebot_Interface_EventDispatcher::dispatch()
     public function dispatch(Erebot_Interface_Event_Base_Generic $event)
     {
-        if ($event instanceof Erebot_Interface_Event_Raw)
-            return $this->_dispatchRaw($event);
+        if ($event instanceof Erebot_Interface_Event_Numeric)
+            return $this->_dispatchNumeric($event);
         return $this->_dispatchEvent($event);
     }
 
@@ -882,24 +870,6 @@ implements  Erebot_Interface_IrcConnection
     )
     {
         $module = $event->getModule();
-        $cmds   = array(
-            'WATCH'     => '!WATCH',
-            'ISON'      => '!ISON',
-            'JUPE'      => '!JUPE',
-            'MAP'       => '!MAP',
-            'DCCLIST'   => '!DCCLIST',
-            'GLIST'     => '!GLIST',
-            'RULES'     => '!RULES',
-            'SILENCE'   => '!SILENCE',
-            'STARTTLS'  => '!STARTTLS',
-        );
-
-        foreach ($cmds as $cmd => $profile) {
-            if ($module->hasCommand($cmd))
-                $this->_rawProfileLoader[] =
-                    str_replace('!', 'Erebot_Interface_RawProfile_', $profile);
-        }
-
         $validMappings  = array(
             // This is already the default value, but we still define it
             // in case setCollator() was called to change the default.
