@@ -86,7 +86,7 @@ implements  Erebot_Interface_Event_Numeric
         return $this->_connection;
     }
 
-    /// \copydoc Erebot_Interface_Event_Numeric::getNumeric()
+    /// \copydoc Erebot_Interface_Event_Numeric::getCode()
     public function getCode()
     {
         return $this->_numeric;

@@ -498,6 +498,17 @@ implements  Erebot_Interface_Core
         return $this->reload();
     }
 
+    /**
+     * Reload this instance of the bot.
+     *
+     * This method makes the bot reload most of the data
+     * it currently relies on, such as configuration files.
+     *
+     * \param Erebot_Interface_Config_MainInterface $config
+     *      (optional) The new configuration to use.
+     *      If omitted, the configuration file currently in use
+     *      is reloaded.
+     */
     public function reload(Erebot_Interface_Config_Main $config = NULL)
     {
         $logging    = Plop::getInstance();
