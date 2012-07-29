@@ -414,7 +414,7 @@ implements  Erebot_Interface_Styling
 
         // Pre-handling.
         switch ($node->tagName) {
-            case 'var':
+            case 'var':{
                 $lexer = new Erebot_Styling_Lexer(
                     $node->getAttribute('name'),
                     $vars
@@ -423,20 +423,23 @@ implements  Erebot_Interface_Styling
                 if (!($var instanceof Erebot_Interface_Styling_Variable))
                     return (string) $var;
                 return $var->render($this->_translator);
+            }
 
-            case 'u':
+            case 'u':{
                 if (!$attributes['underline'])
                     $result .= self::CODE_UNDERLINE;
                 $attributes['underline'] = 1;
                 break;
+            }
 
-            case 'b':
+            case 'b':{
                 if (!$attributes['bold'])
                     $result .= self::CODE_BOLD;
                 $attributes['bold'] = 1;
                 break;
+            }
 
-            case 'color':
+            case 'color':{
                 $colors     = array('', '');
                 $mapping    = array('fg', 'bg');
 
@@ -468,6 +471,7 @@ implements  Erebot_Interface_Styling
                     $result .= self::CODE_COLOR.rtrim($code, ',').
                                 self::CODE_BOLD.self::CODE_BOLD;
                 break;
+            }
         }
 
         // Handle loops.

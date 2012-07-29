@@ -898,34 +898,43 @@ implements  Erebot_Interface_URI
         }
 
         switch ($component) {
-            case PHP_URL_SCHEME:
+            case PHP_URL_SCHEME:{
                 return $this->_scheme;
-            case PHP_URL_HOST:
+            }
+            case PHP_URL_HOST:{
                 return $this->_host;
-            case PHP_URL_PORT:
+            }
+            case PHP_URL_PORT:{
                 return  ($this->_port === NULL || !ctype_digit($this->_port))
                         ? NULL
                         : (int) $this->_port;
-            case PHP_URL_PATH:
+            }
+            case PHP_URL_PATH:{
                 return $this->_path;
-            case PHP_URL_QUERY:
+            }
+            case PHP_URL_QUERY:{
                 return $this->_query;
-            case PHP_URL_FRAGMENT:
+            }
+            case PHP_URL_FRAGMENT:{
                 return $this->_fragment;
-            case PHP_URL_USER:
+            }
+            case PHP_URL_USER:{
                 $user = substr(
                     $this->_userinfo, 0,
                     strcspn($this->_userinfo, ':')
                 );
                 return ($user == "" ? NULL : $user);
-            case PHP_URL_PASS:
+            }
+            case PHP_URL_PASS:{
                 $pass = substr(
                     $this->_userinfo,
                     strcspn($this->_userinfo, ':') + 1
                 );
                 return ($pass === FALSE ? NULL : $pass);
-            default:
+            }
+            default:{
                 return NULL;
+            }
         }
     }
 

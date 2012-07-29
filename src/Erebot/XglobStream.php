@@ -111,30 +111,34 @@ extends Erebot_StreamWrapperBase
     public function stream_seek($offset, $whence)
     {
         switch ($whence) {
-            case SEEK_SET:
+            case SEEK_SET:{
                 if ($offset < strlen($this->_content) && $offset >= 0) {
                      $this->_position = $offset;
                      return TRUE;
                 }
                 return FALSE;
+            }
 
-            case SEEK_CUR:
+            case SEEK_CUR:{
                 if ($offset >= 0) {
                      $this->_position += $offset;
                      return TRUE;
                 }
                 return FALSE;
+            }
 
-            case SEEK_END:
+            case SEEK_END:{
                 $len = strlen($this->_content);
                 if ($len + $offset >= 0) {
                      $this->_position = $len + $offset;
                      return TRUE;
                 }
                 return FALSE;
+            }
 
-            default:
+            default:{
                 return FALSE;
+            }
         }
     }
 }
