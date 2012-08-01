@@ -925,18 +925,7 @@ implements  Erebot_Interface_IrcConnection
         return $this->_collator;
     }
 
-    /**
-     * Returns the object used to produce events.
-     *
-     * \retval Erebot_Interface_IrcParser
-     *      Object used to produce events.
-     *
-     * \note
-     *      This method is somewhat misnamed, since
-     *      in reality the object it returns does
-     *      more than merely producing events—it is
-     *      a full-blown IRC parser.
-     */
+    /// \copydoc Erebot_Interface_IrcConnection::getEventsProducer().
     public function getEventsProducer()
     {
         return $this->_eventsProducer;
