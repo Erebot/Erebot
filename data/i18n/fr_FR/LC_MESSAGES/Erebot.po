@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Erebot\n"
 "Report-Msgid-Bugs-To: https://github.com/Erebot/Erebot/issues\n"
 "POT-Creation-Date: 2012-07-29 18:50+0200\n"
-"PO-Revision-Date: 2012-07-29 17:25+0000\n"
+"PO-Revision-Date: 2012-08-01 19:52+0000\n"
 "Last-Translator: François Poirotte <clicky@erebot.net>\n"
 "Language-Team: French (France) <i18n.fr_FR@erebot.net>\n"
 "MIME-Version: 1.0\n"
@@ -110,7 +110,7 @@ msgstr "Impossible de démarrer en arrière-plan (échec de setsid)"
 # File: src/Erebot/IrcConnection.php, line: 764
 #, php-format
 msgid "Dispatching \"%s\" event."
-msgstr ""
+msgstr "Transmission de l'événement \"%s\"."
 
 # File: src/Erebot/IrcConnection.php, line: 796
 #, php-format
