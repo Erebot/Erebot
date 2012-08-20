@@ -217,8 +217,10 @@ implements  Erebot_Interface_Styling
     {
         // For basic strings that don't contain any markup,
         // we try to be as efficient as possible.
-        if (strpos($template, '<') === FALSE)
+        if (strpos($template, '<') === FALSE &&
+            strpos($template, '&') === FALSE) {
             return $template;
+        }
 
         $attributes = array(
             'underline' => 0,
@@ -366,6 +368,9 @@ implements  Erebot_Interface_Styling
         $schema = $dataDir . DIRECTORY_SEPARATOR . 'styling.rng';
 
         $dom    =   new Erebot_DOM();
+        $dom->substituteEntities    = TRUE;
+        $dom->resolveExternals      = FALSE;
+        $dom->recover               = TRUE;
         $ue     = libxml_use_internal_errors(TRUE);
         $dom->loadXML($source);
         $valid  = $dom->relaxNGValidate($schema);
