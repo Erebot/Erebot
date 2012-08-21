@@ -56,7 +56,6 @@ class   Erebot_LineIO
     /// A raw buffer for incoming data.
     protected $_incomingData;
 
-
     /**
      * Constructs a new line-by-line reader.
      *
@@ -89,7 +88,7 @@ class   Erebot_LineIO
      * Sets the socket this line reader operates on.
      *
      * \param resource $socket
-     *      The new socket this reader will now use.
+     *      The socket this reader will use from now on.
      */
     public function setSocket($socket)
     {
@@ -211,11 +210,27 @@ class   Erebot_LineIO
         if ($this->_socket === NULL)
             return FALSE;
 
-        $received = fread($this->_socket, 4096);
-        if ($received === FALSE || feof($this->_socket))
+        if (feof($this->_socket))
             return FALSE;
 
+        $received = fread($this->_socket, 4096);
+        if ($received === FALSE)
+            return FALSE;
         $this->_incomingData .= $received;
+
+        // Workaround for issue #8.
+        $metadata = stream_get_meta_data($this->_socket);
+        if ($metadata['stream_type'] == 'tcp_socket/ssl' &&
+            !feof($this->_socket)) {
+            $blocking = (int) $metadata['blocked'];
+            stream_set_blocking($this->_socket, 0);
+            $received = fread($this->_socket, 4096);
+            stream_set_blocking($this->_socket, $blocking);
+
+            if ($received !== FALSE)
+                $this->_incomingData .= $received;
+        }
+
         // Read all messages currently in the input buffer.
         while ($this->_getLine());
         return TRUE;
