@@ -40,6 +40,38 @@ $exts = array(
 // This only applies to Pyrus (PEAR2).
 $package->dependencies['required']->pearinstaller->min = '2.0.0a3';
 
+// Replacement tasks.
+// First comes "php_dir".
+$php_dir = array(
+    'tasks:replace' => array(
+        'attribs' => array(
+            'from'  => '@php_dir@',
+            'to'    => 'php_dir',
+            'type'  => 'pear-config'
+        )
+    )
+);
+// Then "php_bin".
+$php_bin = array(
+    'tasks:replace' => array(
+        'attribs' => array(
+            'from'  => '@php_bin@',
+            'to'    => 'php_bin',
+            'type'  => 'pear-config'
+        )
+    )
+);
+// And last but certainly not least, "data_dir".
+$data_dir = array(
+    'tasks:replace' => array(
+        'attribs' => array(
+            'from'  => '@data_dir@',
+            'to'    => 'data_dir',
+            'type'  => 'pear-config'
+        )
+    )
+);
+
 foreach (array($package, $compatible) as $obj) {
     $obj->dependencies['required']->php->min = '5.2.2';
     $obj->license['name'] = 'GPL';
@@ -56,59 +88,48 @@ foreach (array($package, $compatible) as $obj) {
         foreach ($data as $ext)
             $obj->dependencies[$req]->extension[$ext]->save();
 
-    // Replacement tasks.
-    // First comes "php_dir".
-    $php_dir = array(
-        'tasks:replace' => array(
-            'attribs' => array(
-                'from'  => '@php_dir@',
-                'to'    => 'php_dir',
-                'type'  => 'pear-config'
-            )
-        )
-    );
-    // Then "php_bin".
-    $php_bin = array(
-        'tasks:replace' => array(
-            'attribs' => array(
-                'from'  => '@php_bin@',
-                'to'    => 'php_bin',
-                'type'  => 'pear-config'
-            )
-        )
-    );
-    // And last but certainly not least, "data_dir".
-    $data_dir = array(
-        'tasks:replace' => array(
-            'attribs' => array(
-                'from'  => '@data_dir@',
-                'to'    => 'data_dir',
-                'type'  => 'pear-config'
-            )
-        )
-    );
+    // Don't include the docs (it uses a lot of space).
+    unset($obj->files['docs']);
+    unset($obj->files['doc']);
 
-    // Now, apply those tasks to the proper files.
-    $obj->files['scripts/Erebot'] = array_merge_recursive(
-        $obj->files['scripts/Erebot']->getArrayCopy(),
+    // Apply replacement tasks to the proper files.
+    // FIXME: $package needs the original filenames,
+    // while $compatible wants the logical filenames.
+    if ($obj === $compatible) {
+        $scriptDir  = 'script';
+        $srcDir     = 'php';
+    }
+    else {
+        $scriptDir  = 'scripts';
+        $srcDir     = 'src';
+    }
+
+    $obj->files["$scriptDir/Erebot"] = array_merge_recursive(
+        $obj->files["$scriptDir/Erebot"]->getArrayCopy(),
         $php_dir
     );
-    $obj->files['src/Erebot/Timer.php'] = array_merge_recursive(
-        $obj->files['src/Erebot/Timer.php']->getArrayCopy(),
+
+    $obj->files["$srcDir/Erebot/Timer.php"] = array_merge_recursive(
+        $obj->files["$srcDir/Erebot/Timer.php"]->getArrayCopy(),
         $php_bin
     );
     $dataFileRefs = array(
-        'src/Erebot/I18n.php',
-        'src/Erebot/Config/Main.php',
-        'src/Erebot/DOM.php',
-        'src/Erebot/Styling.php',
-        'src/Erebot/CLI.php',
+        "$srcDir/Erebot/I18n.php",
+        "$srcDir/Erebot/Config/Main.php",
+        "$srcDir/Erebot/DOM.php",
+        "$srcDir/Erebot/Styling.php",
+        "$srcDir/Erebot/CLI.php",
     );
     foreach ($dataFileRefs as $dataFileRef) {
         $obj->files[$dataFileRef] = array_merge_recursive(
             $obj->files[$dataFileRef]->getArrayCopy(),
-            $php_bin
+            $data_dir
         );
+    }
+
+    // Don't include the API override if it is present.
+    if (isset($obj->files["$scriptDir/Erebot_API"])) {
+        unset($obj->files["$scriptDir/Erebot_API"]);
     }
 }
 
