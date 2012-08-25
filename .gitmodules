@@ -85,9 +85,9 @@
 [submodule "vendor/Erebot_Module_Wordlists"]
 	path = vendor/Erebot_Module_Wordlists
 	url = git://github.com/Erebot/Erebot_Module_Wordlists.git
-[submodule "vendor/dependency-injection"]
-	path = vendor/dependency-injection
-	url = git://github.com/Erebot/dependency-injection.git
+[submodule "vendor/DependencyInjection"]
+	path = vendor/DependencyInjection
+	url = git://github.com/Erebot/DependencyInjection.git
 [submodule "buildenv"]
 	path = buildenv
 	url = git://github.com/Erebot/Erebot_Buildenv.git
