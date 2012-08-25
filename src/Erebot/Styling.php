@@ -362,7 +362,7 @@ implements  Erebot_Interface_Styling
             }
         }
         else
-            $dataDir .= DIRECTORY_SEPARATOR . 'peat.erebot.net' .
+            $dataDir .= DIRECTORY_SEPARATOR . 'pear.erebot.net' .
                         DIRECTORY_SEPARATOR . 'Erebot';
 
         $schema = $dataDir . DIRECTORY_SEPARATOR . 'styling.rng';

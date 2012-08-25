@@ -176,7 +176,7 @@ class Erebot_CLI
             }
         }
         else
-            $dataDir .= DIRECTORY_SEPARATOR . 'peat.erebot.net' .
+            $dataDir .= DIRECTORY_SEPARATOR . 'pear.erebot.net' .
                         DIRECTORY_SEPARATOR . 'Erebot';
 
         $dic    = new sfServiceContainerBuilder();
