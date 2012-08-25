@@ -164,7 +164,7 @@ $extrafiles[$targetFile] = $sourceFile;
 echo PHP_EOL . "Adding Symfony's DIC" . PHP_EOL;
 $iter = new DirectoryIterator(
     'vendor' .
-    DIRECTORY_SEPARATOR . 'dependency-injection' .
+    DIRECTORY_SEPARATOR . 'DependencyInjection' .
     DIRECTORY_SEPARATOR . 'lib'
 );
 
