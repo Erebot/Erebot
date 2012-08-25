@@ -55,5 +55,60 @@ foreach (array($package, $compatible) as $obj) {
     foreach ($exts as $req => $data)
         foreach ($data as $ext)
             $obj->dependencies[$req]->extension[$ext]->save();
+
+    // Replacement tasks.
+    // First comes "php_dir".
+    $php_dir = array(
+        'tasks:replace' => array(
+            'attribs' => array(
+                'from'  => '@php_dir@',
+                'to'    => 'php_dir',
+                'type'  => 'pear-config'
+            )
+        )
+    );
+    // Then "php_bin".
+    $php_bin = array(
+        'tasks:replace' => array(
+            'attribs' => array(
+                'from'  => '@php_bin@',
+                'to'    => 'php_bin',
+                'type'  => 'pear-config'
+            )
+        )
+    );
+    // And last but certainly not least, "data_dir".
+    $data_dir = array(
+        'tasks:replace' => array(
+            'attribs' => array(
+                'from'  => '@data_dir@',
+                'to'    => 'data_dir',
+                'type'  => 'pear-config'
+            )
+        )
+    );
+
+    // Now, apply those tasks to the proper files.
+    $obj->files['scripts/Erebot'] = array_merge_recursive(
+        $obj->files['scripts/Erebot']->getArrayCopy(),
+        $php_dir
+    );
+    $obj->files['src/Erebot/Timer.php'] = array_merge_recursive(
+        $obj->files['src/Erebot/Timer.php']->getArrayCopy(),
+        $php_bin
+    );
+    $dataFileRefs = array(
+        'src/Erebot/I18n.php',
+        'src/Erebot/Config/Main.php',
+        'src/Erebot/DOM.php',
+        'src/Erebot/Styling.php',
+        'src/Erebot/CLI.php',
+    );
+    foreach ($dataFileRefs as $dataFileRef) {
+        $obj->files[$dataFileRef] = array_merge_recursive(
+            $obj->files[$dataFileRef]->getArrayCopy(),
+            $php_bin
+        );
+    }
 }
 
