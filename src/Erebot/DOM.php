@@ -207,8 +207,8 @@ extends DomDocument
         $schematron
     )
     {
-        $dataDir = '@data_dir@';
-        if ($dataDir == '@'.'data_dir'.'@') {
+        $xslDir = '@data_dir@';
+        if ($xslDir == '@'.'data_dir'.'@') {
             $xslDir = dirname(dirname(dirname(__FILE__))) .
                 DIRECTORY_SEPARATOR . 'data';
             // Running from PHAR.
@@ -219,10 +219,10 @@ extends DomDocument
             }
         }
         else
-            $xslDir .=  DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                        DIRECTORY_SEPARATOR . 'Erebot';
+            $xslDir .=
+                DIRECTORY_SEPARATOR . 'pear.erebot.net' .
+                DIRECTORY_SEPARATOR . 'Erebot';
 
-        $xslDir    .= DIRECTORY_SEPARATOR;
         $quiet      = !libxml_use_internal_errors();
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
@@ -246,7 +246,8 @@ extends DomDocument
         $processor  = new XSLTProcessor();
         $extractor  = new DomDocument();
         $success    = $extractor->load(
-            $xslDir . DIRECTORY_SEPARATOR . $schemaSource . "2Schtrn.xsl"
+            $xslDir . DIRECTORY_SEPARATOR .
+            $schemaSource . "2Schtrn.xsl"
         );
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());

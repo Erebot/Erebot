@@ -211,9 +211,11 @@ implements  Erebot_Interface_Config_Main
         }
 
         else {
-            $schemaPath = $dataDir . 'pear.erebot.net' .
+            $schemaPath = $dataDir .
+                DIRECTORY_SEPARATOR . 'pear.erebot.net' .
                 DIRECTORY_SEPARATOR . 'Erebot';
-            $plopSchemaPath = $dataDir . 'pear.erebot.net' .
+            $plopSchemaPath = $dataDir .
+                DIRECTORY_SEPARATOR . 'pear.erebot.net' .
                 DIRECTORY_SEPARATOR . 'Plop';
         }
 
