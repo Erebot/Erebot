@@ -647,6 +647,7 @@ implements  Erebot_Interface_IrcConnection
             );
         }
 
+        $reflector = new ReflectionClass($module);
         $instance = new $module($chan);
         if ($chan === NULL)
             $plainModules[$module] = $instance;
@@ -655,8 +656,13 @@ implements  Erebot_Interface_IrcConnection
 
         $instance->reload($this, $flags);
         $logger->info(
-            $this->_bot->gettext("Successfully loaded module '%s'"),
-            $module
+            $this->_bot->gettext("Successfully loaded module '%(module)s' [%(source)s]"),
+            array(
+                'module' => $module,
+                'source' => (substr($reflector->getFileName(), 0, 7) == 'phar://')
+                            ? $this->_bot->gettext('PHP archive')
+                            : $this->_bot->gettext('regular file'),
+            )
         );
         return $instance;
     }

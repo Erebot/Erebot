@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot 0.5.1\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2012-07-29 18:50+0200\n"
+"POT-Creation-Date: 2012-08-27 19:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,12 +56,12 @@ msgstr ""
 msgid "Allocated:"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 836
+# File: src/Erebot/IrcConnection.php, line: 842
 msgid "Bad channel name"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 775
-# File: src/Erebot/IrcConnection.php, line: 807
+# File: src/Erebot/IrcConnection.php, line: 781
+# File: src/Erebot/IrcConnection.php, line: 813
 msgid "Code is not clean!"
 msgstr ""
 #
@@ -105,12 +105,12 @@ msgstr ""
 msgid "Could not start in the background (unable to setsid)"
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 764
+# File: src/Erebot/IrcConnection.php, line: 770
 #, php-format
 msgid "Dispatching \"%s\" event."
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 796
+# File: src/Erebot/IrcConnection.php, line: 802
 #, php-format
 msgid "Dispatching numeric %s."
 msgstr ""
@@ -156,7 +156,7 @@ msgstr ""
 msgid "Limit:"
 msgstr ""
 #
-# File: src/Erebot/Config/Main.php, line: 342
+# File: src/Erebot/Config/Main.php, line: 344
 msgid "Loaded configuration data"
 msgstr ""
 #
@@ -199,6 +199,10 @@ msgstr ""
 # File: src/Erebot/CLI.php, line: 582
 #, php-format
 msgid "Only root can change user identity! Your current UID is %d"
+msgstr ""
+#
+# File: src/Erebot/IrcConnection.php, line: 663
+msgid "PHP archive"
 msgstr ""
 #
 # File: src/Erebot/CLI.php, line: 724
@@ -270,9 +274,8 @@ msgstr ""
 msgid "Successfully connected to \"%s\"..."
 msgstr ""
 #
-# File: src/Erebot/IrcConnection.php, line: 658
-#, php-format
-msgid "Successfully loaded module '%s'"
+# File: src/Erebot/IrcConnection.php, line: 659
+msgid "Successfully loaded module '%(module)s' [%(source)s]"
 msgstr ""
 #
 # File: src/Erebot.php, line: 542
@@ -306,7 +309,7 @@ msgid ""
 "The posix extension is required in order to start the bot in the background"
 msgstr ""
 #
-# File: src/Erebot/Config/Main.php, line: 329
+# File: src/Erebot/Config/Main.php, line: 331
 msgid ""
 "This configuration file is meant for Erebot %(config_version)s, but you are "
 "running version %(code_version)s. Things may not work as expected."
@@ -335,4 +338,8 @@ msgstr ""
 #
 # File: src/Erebot/CLI.php, line: 742
 msgid "You SHOULD NOT run Erebot as root!"
+msgstr ""
+#
+# File: src/Erebot/IrcConnection.php, line: 664
+msgid "regular file"
 msgstr ""
