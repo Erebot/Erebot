@@ -17,10 +17,6 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Guard against double inclusions.
-if (defined('@PACKAGE_NAME@ PHAR'))
-    return;
-
 if (!empty($_SERVER['DOCUMENT_ROOT']))
     die("This script isn't meant to be run from the Internet!\n");
 
@@ -57,16 +53,6 @@ try {
     exit(1);
 }
 
-Phar::interceptFileFuncs();
-$phar = new Phar(__FILE__);
-$sig = $phar->getSignature();
-
-define('@PACKAGE_NAME@ SIG', $sig['hash']);
-define('@PACKAGE_NAME@ SIGTYPE', $sig['hash_type']);
-define('@PACKAGE_NAME@ PHAR', __FILE__);
-define('@PACKAGE_NAME@ VERSION', '@PACKAGE_VERSION@');
-unset($phar, $sig);
-
 // Load the autoloader.
 include(
     "phar://" . __FILE__ .
@@ -78,7 +64,7 @@ include(
 
 // Register composer into the autoloader.
 $composerDir =
-     "phar://" . __FILE__ .
+    "phar://" . __FILE__ .
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
     DIRECTORY_SEPARATOR . "php";
 Erebot_Autoload::initialize($composerDir);
@@ -97,7 +83,18 @@ include(
 // Prepare a new dependency checker.
 $checker = new Erebot_Package_Dependencies_Checker("", '@PACKAGE_VERSION@');
 
-// Retrieve this package's metadata.
+// Return metadata about this package.
+$packageName = '@PACKAGE_NAME@';
+$packageVersion = '@PACKAGE_VERSION@';
+$metadata = array(
+    'pear.erebot.net/@PACKAGE_NAME@' => array(
+        'version' => '@PACKAGE_VERSION@',
+        'path' =>
+            "phar://" . __FILE__ .
+            DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
+            DIRECTORY_SEPARATOR . "php",
+    )
+);
 require(
     "phar://" . __FILE__ .
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
@@ -108,6 +105,11 @@ require(
 );
 if (is_array($metadata))
     $checker->handleMetadata($metadata);
+
+// Use a closure for modules to avoid variables pollution.
+$inc = function ($modulePath) {
+    return require("phar://" . $modulePath);
+};
 
 // Load phar modules.
 $modulesDir = __DIR__ . DIRECTORY_SEPARATOR . 'modules';
@@ -122,11 +124,6 @@ try {
             continue;
 
         try {
-            // Use a closure to avoid variables pollution.
-            $inc = function ($modulePath) {
-                return include("phar://" . $modulePath);
-            };
-
             // Take the module's metadata into account.
             $metadata = $inc($moduleInfo->getPathName());
             if (is_array($metadata))
@@ -152,5 +149,4 @@ unset($error, $checker);
 set_include_path(implode(PATH_SEPARATOR, Erebot_Autoload::getPaths()));
 
 Erebot_CLI::run();
-
 __HALT_COMPILER();

@@ -16,37 +16,39 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$metadata = array(
-    'pear.erebot.net/Erebot' => array(
-        'version' => constant('Erebot VERSION'),
-        'requires' => array(
-            'php' => '>= 5.2.0',
-            'virt-Erebot_API' => '0.2.*',
-            'virt-log',
-            'pear.erebot.net/DependencyInjection',
-            'pear.php.net/Console_CommandLine',
-            'pear.php.net/File_Gettext',
-            'pecl.php.net/ctype',
-            'pecl.php.net/dom',
-            'pecl.php.net/intl',
-            'pecl.php.net/libxml',
-            'pecl.php.net/pcre',
-            'pecl.php.net/Reflection',
-            'pecl.php.net/SimpleXML',
-            'pecl.php.net/sockets',
-            'pecl.php.net/SPL',
-            'pecl.php.net/XML',
-            'pear.erebot.net/Erebot_Module_AutoConnect',
-            'pear.erebot.net/Erebot_Module_IrcConnector',
-            'pear.erebot.net/Erebot_Module_PingReply',
-        ),
-        'suggests' => array(
-            'pecl.php.net/openssl',
-            'pecl.php.net/pcntl',
-            'pecl.php.net/posix',
-        ),
+$metadata['pear.erebot.net/' . $packageName] += array(
+    'requires' => array(
+        'php' => '>= 5.2.2',
+        'pear.erebot.net/DependencyInjection',
+        'pear.erebot.net/Erebot_Module_AutoConnect',
+        'pear.erebot.net/Erebot_Module_IrcConnector',
+        'pear.erebot.net/Erebot_Module_PingReply',
+        'pear.php.net/Console_CommandLine',
+        'pear.php.net/File_Gettext',
+        'pecl.php.net/ctype',
+        'pecl.php.net/dom',
+        'pecl.php.net/intl',
+        'pecl.php.net/libxml',
+        'pecl.php.net/pcre',
+        'pecl.php.net/Reflection',
+        'pecl.php.net/SimpleXML',
+        'pecl.php.net/sockets',
+        'pecl.php.net/SPL',
+        'pecl.php.net/XML',
+        'virt-Erebot_API' => '0.2.*',
+        'virt-log',
     ),
+    'suggests' => array(
+        'pecl.php.net/openssl',
+        'pecl.php.net/pcntl',
+        'pecl.php.net/posix',
+    ),
+    'license' => array(
+        'GPL' => 'http://www.gnu.org/licenses/gpl-3.0.txt',
+    )
+);
 
+$metadata += array(
     'pear.erebot.net/Erebot_API' => array(
         'version' => 'master-dev',
         'requires' => array(
@@ -54,6 +56,9 @@ $metadata = array(
         ),
         'provides' => array(
             'virt-Erebot_API' => '= 0.2.0',
+        ),
+        'license' => array(
+            'GPL' => 'http://www.gnu.org/licenses/gpl-3.0.txt',
         ),
     ),
 
@@ -64,6 +69,9 @@ $metadata = array(
         ),
         'provides' => array(
             'virt-log',
+        ),
+        'license' => array(
+            'GPL' => 'http://www.gnu.org/licenses/gpl-3.0.txt',
         ),
     ),
 
