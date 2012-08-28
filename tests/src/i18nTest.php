@@ -21,6 +21,10 @@ extends Erebot_TestEnv_TestCase
 {
     public function setUp()
     {
+        Erebot_Utils::getResourcePath(
+            NULL, NULL,
+            dirname(dirname(dirname(__FILE__)))
+        );
         $this->translators = array();
         $locales = array(
             'en_US',
