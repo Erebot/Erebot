@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot\n"
 "Report-Msgid-Bugs-To: https://github.com/Erebot/Erebot/issues\n"
-"POT-Creation-Date: 2012-07-29 18:50+0200\n"
-"PO-Revision-Date: 2012-08-01 19:52+0000\n"
+"POT-Creation-Date: 2012-08-27 19:24+0200\n"
+"PO-Revision-Date: 2012-08-28 08:33+0000\n"
 "Last-Translator: François Poirotte <clicky@erebot.net>\n"
 "Language-Team: French (France) <i18n.fr_FR@erebot.net>\n"
 "MIME-Version: 1.0\n"
@@ -58,12 +58,12 @@ msgstr "Un bot IRC modulaire écrit en PHP"
 msgid "Allocated:"
 msgstr "Allouée :"
 
-# File: src/Erebot/IrcConnection.php, line: 836
+# File: src/Erebot/IrcConnection.php, line: 842
 msgid "Bad channel name"
 msgstr "Nom de canal non valide"
 
-# File: src/Erebot/IrcConnection.php, line: 775
-# File: src/Erebot/IrcConnection.php, line: 807
+# File: src/Erebot/IrcConnection.php, line: 781
+# File: src/Erebot/IrcConnection.php, line: 813
 msgid "Code is not clean!"
 msgstr "Le code n'est pas propre !"
 
@@ -107,12 +107,12 @@ msgstr "Impossible de démarrer en arrière-plan (échec du fork)"
 msgid "Could not start in the background (unable to setsid)"
 msgstr "Impossible de démarrer en arrière-plan (échec de setsid)"
 
-# File: src/Erebot/IrcConnection.php, line: 764
+# File: src/Erebot/IrcConnection.php, line: 770
 #, php-format
 msgid "Dispatching \"%s\" event."
 msgstr "Transmission de l'événement \"%s\"."
 
-# File: src/Erebot/IrcConnection.php, line: 796
+# File: src/Erebot/IrcConnection.php, line: 802
 #, php-format
 msgid "Dispatching numeric %s."
 msgstr "Transmission de l'événement numérique %s."
@@ -158,7 +158,7 @@ msgstr "Une exception a été levée"
 msgid "Limit:"
 msgstr "Limite :"
 
-# File: src/Erebot/Config/Main.php, line: 342
+# File: src/Erebot/Config/Main.php, line: 344
 msgid "Loaded configuration data"
 msgstr "Données de configuration chargées"
 
@@ -202,6 +202,10 @@ msgstr "Seul root peut changer l'identité du groupe ! Votre UID actuel est %d"
 #, php-format
 msgid "Only root can change user identity! Your current UID is %d"
 msgstr "Seul root peut changer l'identité de l'utilisateur ! Votre UID actuel est %d"
+
+# File: src/Erebot/IrcConnection.php, line: 663
+msgid "PHP archive"
+msgstr ""
 
 # File: src/Erebot/CLI.php, line: 724
 msgid "PID (%(pid)d) written into %(pidfile)s"
@@ -272,10 +276,9 @@ msgstr "Identité de l'utilisateur changée avec succès en \"%(name)s\" (%(id)d
 msgid "Successfully connected to \"%s\"..."
 msgstr "Connection réussie à \"%s\"..."
 
-# File: src/Erebot/IrcConnection.php, line: 658
-#, php-format
-msgid "Successfully loaded module '%s'"
-msgstr "Module '%s' chargé avec succès"
+# File: src/Erebot/IrcConnection.php, line: 659
+msgid "Successfully loaded module '%(module)s' [%(source)s]"
+msgstr ""
 
 # File: src/Erebot.php, line: 542
 msgid "Successfully reloaded the configuration"
@@ -308,7 +311,7 @@ msgid ""
 "The posix extension is required in order to start the bot in the background"
 msgstr "L'extension posix est requise pour pouvoir démarrer en arrière-plan"
 
-# File: src/Erebot/Config/Main.php, line: 329
+# File: src/Erebot/Config/Main.php, line: 331
 msgid ""
 "This configuration file is meant for Erebot %(config_version)s, but you are "
 "running version %(code_version)s. Things may not work as expected."
@@ -338,3 +341,7 @@ msgstr "Utilisée :"
 # File: src/Erebot/CLI.php, line: 742
 msgid "You SHOULD NOT run Erebot as root!"
 msgstr "Vous NE DEVRIEZ PAS lancer Erebot en tant que root !"
+
+# File: src/Erebot/IrcConnection.php, line: 664
+msgid "regular file"
+msgstr ""
