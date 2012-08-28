@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Erebot\n"
 "Report-Msgid-Bugs-To: https://github.com/Erebot/Erebot/issues\n"
 "POT-Creation-Date: 2012-08-27 19:24+0200\n"
-"PO-Revision-Date: 2012-08-28 08:33+0000\n"
+"PO-Revision-Date: 2012-08-28 16:37+0000\n"
 "Last-Translator: François Poirotte <clicky@erebot.net>\n"
 "Language-Team: English (United States) <i18n.en_US@erebot.net>\n"
 "MIME-Version: 1.0\n"
@@ -204,7 +204,7 @@ msgstr "Only root can change user identity! Your current UID is %d"
 
 # File: src/Erebot/IrcConnection.php, line: 663
 msgid "PHP archive"
-msgstr ""
+msgstr "PHP archive"
 
 # File: src/Erebot/CLI.php, line: 724
 msgid "PID (%(pid)d) written into %(pidfile)s"
@@ -277,7 +277,7 @@ msgstr "Successfully connected to \"%s\"..."
 
 # File: src/Erebot/IrcConnection.php, line: 659
 msgid "Successfully loaded module '%(module)s' [%(source)s]"
-msgstr ""
+msgstr "Successfully loaded module '%(module)s' [%(source)s]"
 
 # File: src/Erebot.php, line: 542
 msgid "Successfully reloaded the configuration"
@@ -343,4 +343,4 @@ msgstr "You SHOULD NOT run Erebot as root!"
 
 # File: src/Erebot/IrcConnection.php, line: 664
 msgid "regular file"
-msgstr ""
+msgstr "regular file"
