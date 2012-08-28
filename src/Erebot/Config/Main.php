@@ -184,45 +184,10 @@ implements  Erebot_Interface_Config_Main
         else
             $file = NULL;
 
-        $dataDir = '@data_dir@';
-        // Running from the repository.
-        if ($dataDir == '@'.'data_dir'.'@') {
-            $schemaPath = dirname(dirname(dirname(dirname(__FILE__)))) .
-                DIRECTORY_SEPARATOR . 'data';
-
-            // Running from PHAR.
-            if (!strncmp(__FILE__, 'phar://', 7)) {
-                $plopSchemaPath =
-                    $schemaPath .
-                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                    DIRECTORY_SEPARATOR . 'Plop';
-
-                $schemaPath .=
-                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                    DIRECTORY_SEPARATOR . 'Erebot';
-            }
-
-            else {
-                $plopSchemaPath = dirname(dirname(dirname(dirname(__FILE__)))) .
-                    DIRECTORY_SEPARATOR . 'vendor' .
-                    DIRECTORY_SEPARATOR . 'Plop' .
-                    DIRECTORY_SEPARATOR . 'data';
-            }
-        }
-
-        else {
-            $schemaPath = $dataDir .
-                DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                DIRECTORY_SEPARATOR . 'Erebot';
-            $plopSchemaPath = $dataDir .
-                DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                DIRECTORY_SEPARATOR . 'Plop';
-        }
-
-        $schema = file_get_contents(
-            $schemaPath . DIRECTORY_SEPARATOR . 'config.rng'
-        );
-        $plopSchema = $plopSchemaPath . DIRECTORY_SEPARATOR . 'config.rng';
+        $mainSchema = Erebot_Utils::getResourcePath('Erebot', 'config.rng');
+        $plopSchema = Erebot_Utils::getResourcePath('Plop', 'config.rng');
+        $mainSchema = file_get_contents($mainSchema);
+        $plopSchema = file_get_contents($plopSchema);
         $ue         = libxml_use_internal_errors(TRUE);
         $domxml     = new Erebot_DOM();
         if ($source == self::LOAD_FROM_FILE)
@@ -233,26 +198,13 @@ implements  Erebot_Interface_Config_Main
         $domxml->xinclude(LIBXML_NOBASEFIX);
         $this->_stripXGlobWrappers($domxml);
 
-        // libxml doesn't support PHP streams (like "phar://").
-        $plopSchemaOrig = NULL;
-        if (!strncmp(__FILE__, 'phar://', 7)) {
-            $plopSchemaOrig = $plopSchema;
-            $plopSchema     = tempnam(sys_get_temp_dir(), "Plop");
-            file_put_contents(
-                $plopSchema,
-                file_get_contents($plopSchemaOrig),
-                LOCK_EX
-            );
-        }
-
-        $plopNormSchema = (string) Erebot_URI::fromAbsPath($plopSchema, TRUE);
-        $schema = str_replace('@plop_schema@', $plopNormSchema, $schema);
-        $ok     = $domxml->relaxNGValidateSource($schema);
-        $errors = $domxml->getErrors();
+        // libxml doesn't support PHP streams (like "phar://"),
+        // so we use the data:// protocol to pass PLOP's schema.
+        $plopSchema = 'data:;base64,' . base64_encode($plopSchema);
+        $mainSchema = str_replace('@plop_schema@', $plopSchema, $mainSchema);
+        $ok         = $domxml->relaxNGValidateSource($mainSchema);
+        $errors     = $domxml->getErrors();
         libxml_use_internal_errors($ue);
-
-        if ($plopSchemaOrig !== NULL)
-            @unlink($plopSchema);
 
         $logging = Plop::getInstance();
         if (!$ok || count($errors)) {

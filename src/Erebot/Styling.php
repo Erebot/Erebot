@@ -348,25 +348,7 @@ implements  Erebot_Interface_Styling
             '<msg xmlns="http://www.erebot.net/xmlns/erebot/styling">'.
             $source.
             '</msg>';
-
-        $dataDir = '@data_dir@';
-        // Running from the repository or PHAR.
-        if ($dataDir == '@'.'data_dir'.'@') {
-            $dataDir = dirname(dirname(dirname(__FILE__))) .
-                        DIRECTORY_SEPARATOR . 'data';
-            // Running from PHAR.
-            if (!strncmp(__FILE__, 'phar://', 7)) {
-                $dataDir .=
-                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                    DIRECTORY_SEPARATOR . 'Erebot';
-            }
-        }
-        else
-            $dataDir .= DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                        DIRECTORY_SEPARATOR . 'Erebot';
-
-        $schema = $dataDir . DIRECTORY_SEPARATOR . 'styling.rng';
-
+        $schema = Erebot_Utils::getResourcePath('Erebot', 'styling.rng');
         $dom    =   new Erebot_DOM();
         $dom->substituteEntities    = TRUE;
         $dom->resolveExternals      = FALSE;

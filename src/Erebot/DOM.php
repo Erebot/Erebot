@@ -207,21 +207,19 @@ extends DomDocument
         $schematron
     )
     {
-        $xslDir = '@data_dir@';
-        if ($xslDir == '@'.'data_dir'.'@') {
-            $xslDir = dirname(dirname(dirname(__FILE__))) .
-                DIRECTORY_SEPARATOR . 'data';
-            // Running from PHAR.
-            if (!strncmp(__FILE__, 'phar://', 7)) {
-                $xslDir .=
-                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                    DIRECTORY_SEPARATOR . 'Erebot';
-            }
+        try {
+            $xsl1 = Erebot_Utils::getResourcePath(
+                'Erebot',
+                $schemaSource . '2Schtrn.xsl'
+            );
+            $xsl2 = Erebot_Utils::getResourcePath(
+                'Erebot',
+                'schematron-custom.xsl'
+            );
         }
-        else
-            $xslDir .=
-                DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                DIRECTORY_SEPARATOR . 'Erebot';
+        catch (Exception $e) {
+            return FALSE;
+        }
 
         $quiet      = !libxml_use_internal_errors();
         if (!$quiet) {
@@ -245,10 +243,7 @@ extends DomDocument
 
         $processor  = new XSLTProcessor();
         $extractor  = new DomDocument();
-        $success    = $extractor->load(
-            $xslDir . DIRECTORY_SEPARATOR .
-            $schemaSource . "2Schtrn.xsl"
-        );
+        $success    = $extractor->load($xsl1);
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
             libxml_clear_errors();
@@ -262,10 +257,7 @@ extends DomDocument
             return FALSE;
 
         $validator  = new DomDocument();
-        $success    = $validator->load(
-            $xslDir . DIRECTORY_SEPARATOR .
-            "schematron-custom.xsl"
-        );
+        $success    = $validator->load($xsl2);
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
             libxml_clear_errors();

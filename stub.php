@@ -95,6 +95,45 @@ $metadata = array(
             DIRECTORY_SEPARATOR . "php",
     )
 );
+
+// Use closures to avoid variables pollution.
+$inc = function ($modulePath) {
+    return require("phar://" . $modulePath);
+};
+$phars      = array();
+$handleMetadata = function ($checker, $metadata, &$phars, $pharPath) {
+    if (!is_array($metadata))
+        return;
+    $checker->handleMetadata($metadata);
+
+    // Try to figure out the "main package" from the .phar.
+    $main = NULL;
+    foreach (array_keys($metadata) as $pkgName) {
+        if (!strncasecmp($pkgName, 'pear.erebot.net/', 16)) {
+            $shortName  = (string) substr($pkgName, 16);
+            $modulePath = 'phar://' . $pharPath .
+                            DIRECTORY_SEPARATOR .
+                            $shortName . '-' .
+                            $metadata[$pkgName]['version'] .
+                            DIRECTORY_SEPARATOR;
+            $phars[$shortName] = array();
+            if (file_exists($modulePath)) {
+                $main = $modulePath;
+                break;
+            }
+        }
+    }
+    if ($main === NULL)
+        continue;
+
+    foreach (array_keys($metadata) as $pkgName) {
+        if (!strncasecmp($pkgName, 'pear.erebot.net/', 16)) {
+            $phars[(string) substr($pkgName, 16)][] = $main;
+        }
+    }
+};
+
+$pharPath = 
 require(
     "phar://" . __FILE__ .
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
@@ -103,13 +142,7 @@ require(
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@" .
     DIRECTORY_SEPARATOR . "package.php"
 );
-if (is_array($metadata))
-    $checker->handleMetadata($metadata);
-
-// Use a closure for modules to avoid variables pollution.
-$inc = function ($modulePath) {
-    return require("phar://" . $modulePath);
-};
+$handleMetadata($checker, $metadata, $phars, __FILE__);
 
 // Load phar modules.
 $modulesDir = __DIR__ . DIRECTORY_SEPARATOR . 'modules';
@@ -125,9 +158,9 @@ try {
 
         try {
             // Take the module's metadata into account.
-            $metadata = $inc($moduleInfo->getPathName());
-            if (is_array($metadata))
-                $checker->handleMetadata($metadata);
+            $pharPath = $moduleInfo->getPathName();
+            $metadata = $inc($pharPath);
+            $handleMetadata($checker, $metadata, $phars, $pharPath);
         }
         catch (Exception $e) {
         }
@@ -135,7 +168,16 @@ try {
 }
 catch (Exception $e) {
 }
-unset($metadata, $modulesDir, $iter, $dots, $moduleInfo, $inc);
+
+// Define constants with the paths to each module's phars (+ core).
+define('Erebot_PHARS', serialize($phars));
+
+// Global scope cleanup.
+unset(
+    $metadata, $modulesDir, $iter, $dots,
+    $moduleInfo, $inc, $pkgName, $phars,
+    $pharPath
+);
 
 // Check the dependencies.
 $error = NULL;

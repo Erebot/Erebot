@@ -148,25 +148,33 @@ implements  Erebot_Interface_I18n
 
             if (isset($locale['region'])) {
                 $normLocale = $locale['language'] . '_' . $locale['region'];
-                $file = self::_get_mo_path(
-                    $normLocale,
-                    $categoryName,
-                    $this->_component
-                );
-                if (file_exists($file)) {
+                try {
+                    $file = Erebot_Utils::getResourcePath(
+                        $this->_component,
+                        'i18n' .
+                        DIRECTORY_SEPARATOR . $normLocale .
+                        DIRECTORY_SEPARATOR . $categoryName .
+                        DIRECTORY_SEPARATOR . $this->_component . '.mo'
+                    );
                     $newLocale = $normLocale;
                     continue;
                 }
+                catch (Exception $e) {
+                }
             }
 
-            $file = self::_get_mo_path(
-                $locale['language'],
-                $categoryName,
-                $this->_component
-            );
-            if (file_exists($file)) {
+            try {
+                $file = Erebot_Utils::getResourcePath(
+                    $this->_component,
+                    'i18n' .
+                    DIRECTORY_SEPARATOR . $locale['language'] .
+                    DIRECTORY_SEPARATOR . $categoryName .
+                    DIRECTORY_SEPARATOR . $this->_component . '.mo'
+                );
                 $newLocale = $locale['language'];
                 continue;
+            }
+            catch (Exception $e) {
             }
         }
 
@@ -177,59 +185,11 @@ implements  Erebot_Interface_I18n
     }
 
     /**
-     * Returns the path to the Machine Object (MO file)
-     * for the given locale, category and domain.
-     *
-     * \param string $locale
-     *      The locale for which the MO file must be returned.
-     *      Eg. "fr_FR".
-     *
-     * \param string $category
-     *      The name of the category the MO file belongs to.
-     *      Eg. "LC_MESSAGES".
-     *
-     * \param string $domain
-     *      The domain of the MO file. Eg. "messages".
-     *
-     * \retval
-     *      The path to the MO file matching the arguments.
-     *
-     * \note
-     *      Erebot_I18n::categoryToName() may be used to convert
-     *      a category constant to its name (which is what this
-     *      method expects).
-     */
-    static protected function _get_mo_path($locale, $category, $domain)
-    {
-        $base = '@data_dir@';
-        // Running from the repository.
-        if ($base == '@'.'data_dir'.'@') {
-            $base = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
-            if ($domain == 'Erebot')
-                $base .= 'data';
-            else
-                $base .= 'vendor' .
-                    DIRECTORY_SEPARATOR . $domain .
-                    DIRECTORY_SEPARATOR . 'data';
-        }
-        else
-            $base .=    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                        DIRECTORY_SEPARATOR . $domain;
-
-        return $base .
-            DIRECTORY_SEPARATOR . 'i18n' .
-            DIRECTORY_SEPARATOR . $locale .
-            DIRECTORY_SEPARATOR . $category .
-            DIRECTORY_SEPARATOR . $domain . '.mo';
-    }
-
-    /**
      * Returns the translation for the given message,
      * as contained in some translation catalog (MO file).
      *
      * \param string $file
-     *      Path to the translation catalog to use,
-     *      as returned by the _get_mo_path() method.
+     *      Path to the translation catalog to use.
      *
      * \param string $message
      *      The message to translate.
@@ -313,10 +273,12 @@ implements  Erebot_Interface_I18n
      */
     protected function _real_gettext($message, $component)
     {
-        $translationFile = self::_get_mo_path(
-            $this->_locales[self::LC_MESSAGES],
-            'LC_MESSAGES',
-            $component
+        $translationFile = Erebot_Utils::getResourcePath(
+            $component,
+            'i18n' .
+            DIRECTORY_SEPARATOR . $this->_locales[self::LC_MESSAGES] .
+            DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
+            DIRECTORY_SEPARATOR . $component . '.mo'
         );
 
         $translation = $this->_get_translation($translationFile, $message);

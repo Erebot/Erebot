@@ -163,25 +163,13 @@ class Erebot_CLI
         // Apply patches.
         Erebot_Patches::patch();
 
-        $dataDir = '@data_dir@';
-        // Running from the repository or PHAR.
-        if ($dataDir == '@'.'data_dir'.'@') {
-            $dataDir = dirname(dirname(dirname(__FILE__))) .
-                        DIRECTORY_SEPARATOR . 'data';
-            // Running from PHAR.
-            if (!strncmp(__FILE__, 'phar://', 7)) {
-                $dataDir .=
-                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                    DIRECTORY_SEPARATOR . 'Erebot';
-            }
-        }
-        else
-            $dataDir .= DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                        DIRECTORY_SEPARATOR . 'Erebot';
-
-        $dic    = new sfServiceContainerBuilder();
-        $loader = new sfServiceContainerLoaderFileXml($dic);
-        $loader->load($dataDir . DIRECTORY_SEPARATOR . 'defaults.xml');
+        // Load the configuration for the Dependency Injection Container.
+        $baseDir    = dirname(dirname(dirname(__FILE__)));
+        $dic        = new sfServiceContainerBuilder();
+        $loader     = new sfServiceContainerLoaderFileXml($dic);
+        $loader->load(
+            Erebot_Utils::getResourcePath('Erebot', 'defaults.xml', $baseDir)
+        );
 
         // Determine availability of PHP extensions
         // needed by some of the command-line options.

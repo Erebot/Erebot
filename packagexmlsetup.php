@@ -28,16 +28,6 @@ $php_bin = array(
         )
     )
 );
-// And last but certainly not least, "data_dir".
-$data_dir = array(
-    'tasks:replace' => array(
-        'attribs' => array(
-            'from'  => '@data_dir@',
-            'to'    => 'data_dir',
-            'type'  => 'pear-config'
-        )
-    )
-);
 
 foreach (array($package, $compatible) as $obj) {
     // FIXME: $package needs the original filenames,
@@ -66,20 +56,6 @@ foreach (array($package, $compatible) as $obj) {
         $obj->files["$srcDir/Erebot/Timer.php"]->getArrayCopy(),
         $php_bin
     );
-
-    $dataFileRefs = array(
-        "$srcDir/Erebot/I18n.php",
-        "$srcDir/Erebot/Config/Main.php",
-        "$srcDir/Erebot/DOM.php",
-        "$srcDir/Erebot/Styling.php",
-        "$srcDir/Erebot/CLI.php",
-    );
-    foreach ($dataFileRefs as $dataFileRef) {
-        $obj->files[$dataFileRef] = array_merge_recursive(
-            $obj->files[$dataFileRef]->getArrayCopy(),
-            $data_dir
-        );
-    }
 
     // Don't include the API override if it is present.
     if (isset($obj->files["$scriptDir/Erebot_API"])) {
