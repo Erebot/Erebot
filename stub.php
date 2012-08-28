@@ -98,7 +98,17 @@ $metadata = array(
 
 // Use closures to avoid variables pollution.
 $inc = function ($modulePath) {
-    return require("phar://" . $modulePath);
+    $res = @include("phar://" . $modulePath);
+    if (!is_array($res)) {
+        fprintf(
+            STDERR,
+            "An error occurred while processing %s, ".
+            "the module has been ignored.%s",
+            $modulePath,
+            PHP_EOL
+        );
+    }
+    return $res;
 };
 $phars      = array();
 $handleMetadata = function ($checker, $metadata, &$phars, $pharPath) {
