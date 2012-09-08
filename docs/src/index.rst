@@ -28,6 +28,7 @@ Contents:
     Contribute
     Developer_Zone
     TODO
+    License
 
 Current status on http://travis-ci.org/:
 

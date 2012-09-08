@@ -43,8 +43,10 @@ foreach (array($package, $compatible) as $obj) {
         $docDir     = 'docs';
     }
 
-    // Don't include the doc (uses too much space).
-    unset($obj->files[$docDir]);
+    // Don't include those parts of the doc (uses too much disk space).
+    unset($obj->files["$docDir/coverage"]);
+    unset($obj->files["$docDir/api"]);
+    unset($obj->files["$docDir/enduser"]);
 
     // Apply replacement tasks to the proper files.
     $obj->files["$scriptDir/Erebot"] = array_merge_recursive(
