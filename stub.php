@@ -126,7 +126,10 @@ $handleMetadata = function ($checker, $metadata, &$phars, $pharPath) {
                             $shortName . '-' .
                             $metadata[$pkgName]['version'] .
                             DIRECTORY_SEPARATOR;
-            $phars[$shortName] = array();
+            $phars[$shortName] = array(
+                'paths'     => array(),
+                'version'   => $metadata[$pkgName]['version']
+            );
             if (file_exists($modulePath)) {
                 $main = $modulePath;
                 break;
@@ -138,7 +141,7 @@ $handleMetadata = function ($checker, $metadata, &$phars, $pharPath) {
 
     foreach (array_keys($metadata) as $pkgName) {
         if (!strncasecmp($pkgName, 'pear.erebot.net/', 16)) {
-            $phars[(string) substr($pkgName, 16)][] = $main;
+            $phars[(string) substr($pkgName, 16)]['paths'][] = $main;
         }
     }
 };
