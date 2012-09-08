@@ -65,6 +65,24 @@ extends Console_CommandLine_Action
 
 /**
  * \brief
+ *      Custom message provider for Console_CommandLine.
+ */
+class   Erebot_Console_CommandLine_MessageProvider
+extends Console_CommandLine_MessageProvider_Default
+{
+    /**
+     * Overrides the PROG_VERSION_LINE message so that
+     * a dot is not automatically appended at the end
+     * of the text.
+     */
+    public function __construct()
+    {
+        $this->messages['PROG_VERSION_LINE'] = '{$progname} version {$version}';
+    }
+}
+
+/**
+ * \brief
  *      Custom option that can be used in parallel with regular options.
  *
  * The Console_CommandLine package usually prevents
@@ -211,19 +229,35 @@ class Erebot_CLI
             );
         }
 
+        // Also, include some information about the version
+        // of currently loaded PHAR modules, if any.
+        $version = Erebot::VERSION;
+        if (defined('Erebot_PHARS')) {
+            $phars = unserialize(Erebot_PHARS);
+            ksort($phars);
+            foreach ($phars as $module => $metadata) {
+                if (strncasecmp($module, 'Erebot_Module_', 14))
+                    continue;
+                $version .= "\n  with $module version ${metadata['version']}";
+            }
+        }
+        else {
+            $version .= '.';
+        }
+
         Console_CommandLine::registerAction('StoreProxy', 'StoreProxy_Action');
         $parser = new Console_CommandLine(
             array(
                 'name'                  => 'Erebot',
-                'description'           => $translator->gettext(
-                    'A modular IRC bot written in PHP'
-                ),
-                'version'               => Erebot::VERSION,
+                'description'           =>
+                    $translator->gettext('A modular IRC bot written in PHP'),
+                'version'               => $version,
                 'add_help_option'       => TRUE,
                 'add_version_option'    => TRUE,
                 'force_posix'           => FALSE,
             )
         );
+        $parser->accept(new Erebot_Console_CommandLine_MessageProvider());
         $parser->renderer->options_on_different_lines = TRUE;
 
         $defaultConfigFile = getcwd() . DIRECTORY_SEPARATOR . 'Erebot.xml';
