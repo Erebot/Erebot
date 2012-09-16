@@ -36,3 +36,6 @@
 /*.tgz
 /package.xml
 /package_compatible.xml
+
+# Automatically generated during packaging.
+/contrib/nsis/*.exe

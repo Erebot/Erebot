@@ -1,0 +1,6 @@
+<module
+    xmlns="http://www.erebot.net/xmlns/erebot"
+    name="Erebot_Module_Roulette"
+>
+    <param name="nb_chambers" value="6" />
+</module>

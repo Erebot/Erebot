@@ -1,0 +1,15 @@
+<logging
+    xmlns="http://www.erebot.net/xmlns/logging"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <loggers>
+        <xi:include href="loggers/*.xml" />
+    </loggers>
+
+    <handlers>
+        <xi:include href="handlers/*.xml" />
+    </handlers>
+
+    <formatters>
+        <xi:include href="formatters/*.xml" />
+    </formatters>
+</logging>

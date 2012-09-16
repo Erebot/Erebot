@@ -1,0 +1,12 @@
+<logger
+    xmlns="http://www.erebot.net/xmlns/logging"
+    name="output"
+>
+    <level>DEBUG</level>
+    <qualname>Erebot/Connection.php/output</qualname>
+    <propagate>0</propagate>
+    <handlers>
+        <handler>output</handler>
+    </handlers>
+</logger>
+

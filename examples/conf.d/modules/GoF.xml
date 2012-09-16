@@ -1,0 +1,6 @@
+<module
+    xmlns="http://www.erebot.net/xmlns/erebot"
+    name="Erebot_Module_GoF"
+>
+    <param name="limit" value="100"/>
+</module>

@@ -1,0 +1,9 @@
+<module
+    xmlns="http://www.erebot.net/xmlns/erebot"
+    name="Erebot_Module_Admin"
+>
+    <param
+        name="admins"
+        value="*!*@erebot.net *!*@*.erebot.net *!*@localhost *!*@0::ffff:127.0.0.1 *!*@127.0.0.1 *!*@::1"
+    />
+</module>

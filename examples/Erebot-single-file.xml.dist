@@ -117,24 +117,5 @@
                 </channel>
             </channels>
         </network>
-
-        <network name="IIEns">
-            <modules>
-                <module name="Erebot_Module_AutoConnect" active="false"/>
-            </modules>
-
-            <servers>
-                <server url="irc://irc.iiens.net:6667/"/>
-                <server url="irc://irc.secours.iiens.net:6667/"/>
-            </servers>
-
-            <channels>
-                <channel name="#Erebot">
-                    <modules>
-                        <module name="AutoJoin"/>
-                    </modules>
-                </channel>
-            </channels>
-        </network>
     </networks>
 </configuration>

@@ -1,0 +1,8 @@
+<formatter
+    xmlns="http://www.erebot.net/xmlns/logging"
+    name="input"
+>
+    <format>%(asctime)s - &#8592; %(message)s</format>
+    <datefmt>d/m/Y H:i:s</datefmt>
+</formatter>
+

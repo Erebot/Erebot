@@ -1,0 +1,9 @@
+<handler
+    xmlns="http://www.erebot.net/xmlns/logging"
+    name="output"
+>
+    <level>DEBUG</level>
+    <formatter>output</formatter>
+    <class>Plop_Handler_Stream</class>
+</handler>
+

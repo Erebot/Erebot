@@ -143,9 +143,5 @@
 <!--            <argument>0.0.0.0:113</argument>-->
 <!--            <argument>Erebot_Identd_Worker</argument>-->
 <!--        </service>-->
-
-        <service id="prompt" class="Erebot_Prompt">
-            <argument type="service" id="bot"/>
-        </service>
     </services>
 </container>
