@@ -183,11 +183,19 @@ class Erebot_CLI
 
         // Load the configuration for the Dependency Injection Container.
         $baseDir    = dirname(dirname(dirname(__FILE__)));
+        Erebot_Utils::getResourcePath(NULL, NULL, $baseDir);
         $dic        = new sfServiceContainerBuilder();
         $loader     = new sfServiceContainerLoaderFileXml($dic);
-        $loader->load(
-            Erebot_Utils::getResourcePath('Erebot', 'defaults.xml', $baseDir)
-        );
+        if (strncasecmp(__FILE__, 'phar://', 7)) {
+            $dicConfig = Erebot_Utils::getResourcePath(
+                'Erebot',
+                'defaults.xml'
+            );
+        }
+        else {
+            $dicConfig = getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml';
+        }
+        $loader->load($dicConfig);
 
         // Determine availability of PHP extensions
         // needed by some of the command-line options.
@@ -759,10 +767,11 @@ class Erebot_CLI
         }
 
         // Display a desperate warning when run as user root.
-        if (getmyuid() === 0)
+        if ($hasPosix && posix_getuid() === 0) {
             $logger->warning(
                 $translator->gettext('You SHOULD NOT run Erebot as root!')
             );
+        }
 
         if ($identd !== NULL)
             $identd->connect();

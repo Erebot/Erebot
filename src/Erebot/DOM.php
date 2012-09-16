@@ -216,6 +216,10 @@ extends DomDocument
                 'Erebot',
                 'schematron-custom.xsl'
             );
+            $skeleton = Erebot_Utils::getResourcePath(
+                'Erebot',
+                'skeleton1-5.xsl'
+            );
         }
         catch (Exception $e) {
             return FALSE;
@@ -243,7 +247,7 @@ extends DomDocument
 
         $processor  = new XSLTProcessor();
         $extractor  = new DomDocument();
-        $success    = $extractor->load($xsl1);
+        $success    = $extractor->loadXML(file_get_contents($xsl1));
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
             libxml_clear_errors();
@@ -257,7 +261,12 @@ extends DomDocument
             return FALSE;
 
         $validator  = new DomDocument();
-        $success    = $validator->load($xsl2);
+        $xsl2       = str_replace(
+            '@xsl_skeleton@',
+            'data:;base64,' . base64_encode(file_get_contents($skeleton)),
+            file_get_contents($xsl2)
+        );
+        $success    = $validator->loadXML($xsl2);
         if (!$quiet) {
             $this->_errors = array_merge($this->_errors, libxml_get_errors());
             libxml_clear_errors();

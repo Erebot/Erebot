@@ -14,7 +14,7 @@
    xmlns:sch="http://www.ascc.net/xml/schematron" >
    
 <!-- the bulk of the transformation is carried out by the skeleton stylsheet -->   
-<xsl:import href="skeleton1-5.xsl"/>
+<xsl:import href="@xsl_skeleton@"/>
 
 <!-- the validation output will be as XML -->
 <xsl:template name="process-prolog">
