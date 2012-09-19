@@ -186,13 +186,12 @@ class Erebot_CLI
         Erebot_Utils::getResourcePath(NULL, NULL, $baseDir);
         $dic        = new sfServiceContainerBuilder();
         $loader     = new sfServiceContainerLoaderFileXml($dic);
-        if (strncasecmp(__FILE__, 'phar://', 7)) {
-            $dicConfig = Erebot_Utils::getResourcePath(
-                'Erebot',
-                'defaults.xml'
-            );
-        }
-        else {
+        $dicConfig = Erebot_Utils::getResourcePath(
+            'Erebot',
+            'defaults.xml'
+        );
+        if (!strncasecmp(__FILE__, 'phar://', 7) &&
+            file_exists(getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml')) {
             $dicConfig = getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml';
         }
         $loader->load($dicConfig);
