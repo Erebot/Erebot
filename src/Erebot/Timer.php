@@ -42,10 +42,10 @@ implements  Erebot_Interface_Timer
     protected $_args;
 
     /// Path to the PHP binary to use to launch timers.
-    static protected $_binary   = NULL;
+    static protected $_binary = NULL;
 
-    /// Flag that indicates whether we're running on a Windows platform or not.
-    static protected $_isWin    = FALSE;
+    /// Activate a special strategy for Windows.
+    static protected $_windowsStrategy = 0;
 
     /**
      * Creates a new timer, set off to call the given callback
@@ -85,7 +85,9 @@ implements  Erebot_Interface_Timer
             if ($binary == '@'.'php_bin'.'@') {
                 if (!strncasecmp(PHP_OS, 'WIN', 3)) {
                     $binary = 'php.exe';
-                    self::$_isWin = TRUE;
+                    self::$_windowsStrategy = 1 + (
+                        (int) version_compare(PHP_VERSION, '5.3.0', '>=')
+                    );
                 }
                 else
                     $binary = '/usr/bin/env php';
@@ -188,14 +190,28 @@ implements  Erebot_Interface_Timer
 
         $this->_cleanup();
 
-        if (self::$_isWin) {
+        if (self::$_windowsStrategy == 1) {
             // We create a temporary file to which the subprocess will write to.
             // This makes it possible to wait for the delay to pass by using
             // select() on this file descriptor.
             // Simpler approaches don't work on Windows because the underlying
             // php_select() implementation doesn't seem to support pipes.
+            // Note:    this does not work anymore (tested with PHP 5.3.16),
+            //          hence the second strategy below (for PHP >= 5.3.0).
             $this->_handle = tmpfile();
             $descriptors = $this->_handle;
+        }
+        else if (self::$_windowsStrategy == 2) {
+            // Create a pair of interconnected sockets to implement the timer.
+            // Windows' firewall will throw a popup (once),
+            // but it's still better than no timers at all!
+            $pair           = stream_socket_pair(
+                STREAM_PF_INET,
+                STREAM_SOCK_STREAM,
+                0
+            );
+            $descriptors    = $pair[0];
+            $this->_handle  = $pair[1];
         }
         else {
             // On other OSes, we just use a pipe to communicate.
@@ -203,25 +219,34 @@ implements  Erebot_Interface_Timer
         }
 
         // Build the command that will be executed by the subprocess.
-        $command = self::$_binary . ' -r "usleep('.
-            ((int) ($this->_delay * 1000000)).
-            '); ' .
+        $command = self::$_binary . ' -n -d detect_unicode=Off ' .
+            '-d display_errors=Off -d display_startup_errors=Off ' .
+            '-r "usleep('. ((int) ($this->_delay * 1000000)). '); ' .
             'var_dump(42); ' .  // Required to make the subprocess send
                                 // a completion notification back to us.
-            // We add the name of the callback used to ease debugging.
+            // We add the name of the callback (useful when debugging).
             '// '.addslashes($this->_callback).'"';
 
+        $logging    = Plop::getInstance();
+        $logger     = $logging->getLogger(__FILE__);
         $this->_resource = proc_open(
             $command,
             array(1 => $descriptors),
-            $pipes
+            $pipes,
+            NULL,
+            NULL,
+            array('bypass_shell' => TRUE)
         );
 
-        if (self::$_isWin) {
+        if (self::$_windowsStrategy == 1) {
             // Required to remove the "read-ready" flag from the fd.
             // The call will always return FALSE since no data has
             // been written to the temporary file yet.
             fgets($this->_handle);
+        }
+        else if (self::$_windowsStrategy == 2) {
+            // Close the second socket as we have no real use for it.
+            fclose($pair[0]);
         }
         else
             $this->_handle = $pipes[1];
