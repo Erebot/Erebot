@@ -233,7 +233,7 @@ implements  Erebot_Interface_ReceivingConnection
             $config = $connection->getConfig(NULL);
             $netConfig = $config->getNetworkCfg();
             if (preg_match('@^'.$pattern.'$@Di', $netConfig->getName()))
-                $connection->pushLine($line);
+                $connection->getIO()->push($line);
         }
     }
 
