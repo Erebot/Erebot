@@ -76,12 +76,6 @@
             </optional>
 
             <interleave>
-                <optional>
-                    <externalRef href="@plop_schema@">
-                        <ref name="logging"/>
-                    </externalRef>
-                </optional>
-
                 <optional><ref name="modules"/></optional>
                 <optional><ref name="networks"/></optional>
             </interleave>
