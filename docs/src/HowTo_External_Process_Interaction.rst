@@ -6,7 +6,8 @@ interact with an IRC server through the bot.
 In the second part of this tutorial, we will also see how the logging system
 can be used to receive feedback from the bot for commands we sent to it.
 
-..  contents::
+..  contents:: Table of Contents
+    :local:
 
 
 Sending commands through the bot

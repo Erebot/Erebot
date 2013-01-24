@@ -31,7 +31,8 @@ The rest of this page gives information on available options and possible
 values and is directly mapped to the actual hierarchy used in the XML
 configuration file.
 
-..  contents::
+..  contents:: Table of Contents
+    :local:
 
 ..  note::
     The tags may be used in any order. Therefore, one could swap the general

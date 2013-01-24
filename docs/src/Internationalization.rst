@@ -1,7 +1,8 @@
 Internationalization
 ====================
 
-..  contents::
+..  contents:: Table of Contents
+    :local:
 
 
 A practical example

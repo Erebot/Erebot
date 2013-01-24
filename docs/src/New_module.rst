@@ -5,7 +5,8 @@ This page acts like a guide for those who may be interested in writing a new
 module for Erebot. It assumes basic knowledge of some of the features provided
 by Erebot for developers (such as the `styling features`_ and `i18n features`_).
 
-..  contents::
+..  contents:: Table of Contents
+    :local:
 
 General structure
 -----------------

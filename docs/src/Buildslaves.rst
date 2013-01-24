@@ -8,7 +8,8 @@ the online documentation, packaging the project, etc.
 If you wish to contribute a machine for the project, this page explains how to
 do so.
 
-..  contents::
+..  contents:: Table of Contents
+    :local:
 
 Foreword
 --------
@@ -38,8 +39,8 @@ Foreword
 
     By providing a buildslave, you agree that you understand and accept all of
     the risks mentionned above and that you are sole responsible for ensuring
-    the security of your machine. If you don't, please **do not** submit a
-    request to be registered as a buildslave.
+    the security of your machine. If you disagree with that, please **do not**
+    submit a request to be registered as a buildslave.
 
 We already host one buildslave and a few virtual machines that each come with
 their own buildslave. At the time of this writing, Erebot is therefore tested
@@ -75,8 +76,8 @@ to add to the :envvar:`PATH` environment variable when using the PHP version
 with identifier ``x``. You may specify multiple paths by using the appropriate
 separator for your operating system (eg. colon on Linux, semi-colon on Windows).
 
-The :envvar:`PHPx_DESC` lines specify the name of the executable to use to run
-the PHP version with identifier ``x``.
+The :envvar:`PHPx_DESC` lines specify a user-friendly description of the PHP
+version with identifier ``x``.
 
 Last but not least, :envvar:`PHP_MAIN` specifies what is considered the "main" PHP
 version supported by the buildslave. When some PHP code must be run but we do
@@ -85,6 +86,7 @@ used. In the example above, the main version is '3', which refers to
 PHP 5.4.0-debug.
 
 ..  note::
+
     The versions may be numbered from 1 to 10 **with no gap in between**.
     Any gap in the numbering will result in the versions following the gap
     to not be tested at all.
@@ -95,6 +97,7 @@ PHP 5.4.0-debug.
     limit.
 
 ..  warning::
+
     At a minimum, you must define at least 3 variables (:envvar:`PHP1_PATH`,
     :envvar:`PHP1_DESC` and :envvar:`PHP_MAIN`, where :envvar:`PHP_MAIN`
     equals "1").
@@ -106,12 +109,12 @@ PHP 5.4.0-debug.
 Microsoft Windows
 -----------------
 
-@TODO
+..  todo:: Explain how to do this.
 
 Linux
 -----
 
-@TODO
+..  todo:: Explain how to do this.
 
 ..  _`phpfarm`:
     https://github.com/fpoirotte/phpfarm

@@ -4,13 +4,16 @@ Installation
 This pages contains instructions on how to install Erebot on your machine.
 There are several ways to achieve that. Each method is described below.
 
+..  contents:: Table of Contents
+    :local:
+
 ..  warning::
+
     You cannot mix the different methods. Especially, **you must use the same
     method to install modules as the one you selected for Erebot itself**.
 
-..  contents::
-
 ..  note::
+
     We recommend that you install Erebot using its `PEAR channel`_.
     This will result in a system-wide installation which can be upgraded
     very easily later.
@@ -31,29 +34,37 @@ Just use whatever tool your distribution provides to manage PEAR packages:
 * or `pyrus`_ (new experimental tool meant to replace pear someday)
 
 ..  warning::
+
     Pyrus currently has issues with some PEAR packages. It is thus recommended
     that you use the regular pear tool to install Erebot.
     See https://github.com/pyrus/Pyrus/issues/26 for more information.
 
+..  warning::
+
+    Pyrus may corrupt your system when using its default configuration.
+    Unless you know exactly what you are doing, we recommend that you stick
+    to the regular pear tool to install Erebot.
+    See https://github.com/pyrus/Pyrus/issues/8 for more information.
+
 You can install (**as a privileged user**) either the latest stable release
 using a command such as:
 
-..  sourcecode:: bash
+..  sourcecode:: console
 
-    $ pear channel-discover pear.erebot.net
-    $ pear install erebot/Erebot
+    root@localhost:~# pear channel-discover pear.erebot.net
+    root@localhost:~# pear install erebot/Erebot
 
 ... or you can install the latest unstable version instead, using:
 
-..  sourcecode:: bash
+..  sourcecode:: console
 
-    $ pear channel-discover pear.erebot.net
-    $ pear install erebot/Erebot-alpha
+    root@localhost:~# pear channel-discover pear.erebot.net
+    root@localhost:~# pear install erebot/Erebot-alpha
 
 Please note that the ``channel-discover`` command needs to be run only once
 (pear and pyrus will refuse to discover a PEAR channel more than once anyway).
-To use Pyrus to manage PEAR packages instead of the regular Pear tool,
-just replace :command:`pear` with :command:`pyrus` in the commands above.
+In order to use Pyrus to manage PEAR packages instead of the regular Pear tool,
+replace :command:`pear` with :command:`pyrus` in the commands above.
 
 That's all! The bot is now ready for the next steps.
 Be sure to read the section on `final steps`_ for a summary of what to do next.
@@ -69,6 +80,7 @@ same as for an installation using PEAR because you would have had to install
 those dependencies as well anyway.
 
 ..  note::
+
     Actually, not all dependencies are bundled with Erebot.
     Especially, the PHAR archive does not contain any module.
     Thus, to get a working installation, you must install additional Erebot
@@ -80,6 +92,7 @@ Installing Erebot as a PHAR archive only involves a few steps:
 1.  Make sure your installation fulfills all of the `prerequisites`_.
 
     ..  note::
+
         As all of Erebot's PHAR archives (core and modules) are digitally
         signed, you must make sure the OpenSSL extension is enabled on your
         PHP installation. Failure to do so will result in an error when trying
@@ -115,6 +128,7 @@ Installing Erebot as a PHAR archive only involves a few steps:
     of prerequisites).
 
     ..  note::
+
         You **MUST** copy both the PHAR archives and their signature in the
         :file:`modules` directory. Otherwise, PHP will refuse to load those
         PHAR archives because it cannot check their origin and integrity.
@@ -137,6 +151,7 @@ Your tree should now look like this:
             * *eventually, additional PHAR archives with their signature*
 
 ..  note::
+
     The whole installation process using PHAR archives can be automated
     using the following commands:
 
@@ -168,6 +183,7 @@ This way, you may later launch Erebot simply by executing:
         $ ./Erebot-latest.phar
 
 ..  warning::
+
     Even though the command above should work on most installations,
     a few known problems may occur due to incompatibilities with certain
     PHP features and extensions. To avoid such issues, it is usually a good
@@ -187,11 +203,12 @@ This way, you may later launch Erebot simply by executing:
 
         .. sourcecode:: ini
 
-            zend_extension = /usr/lib/php5/20090626+lfs/ioncube_loader_lin_5.3.so
+            zend_extension=/usr/lib/php5/20090626+lfs/ioncube_loader_lin_5.3.so
 
         (the path and versions may be different for your installation).
 
 ..  note::
+
     When run from a PHAR archive, Erebot will first try to determine whether
     all requirements needed to run the bot and its modules are respected.
     In case an error is displayed, follow the indications given in the error
@@ -216,15 +233,19 @@ the tools provided by your distribution:
     # For yum-based distributions such as Fedora / RHEL (RedHat)
     $ yum install git
 
-    # For urpmi-based distributions such as SLES (SuSE) or MES (Mandriva)
+    # For urpmi-based distributions such as MES (Mandriva)
     $ urpmi git
 
+    # For Zypper-based distributions such as SLES (SuSE)
+    $ zypper install git
+
 ..  note::
+
     Windows users may be interested in installing `Git for Windows`_ to get
     an equivalent git client. Also, make sure that :program:`git` is present
     on your account's :envvar:`PATH`. If not, you'll have to replace
     :command:`git` by the full path to :file:`git.exe` on every invocation
-    (eg. :command:`"C:\Program Files\Git\bin\git.exe" clone ...`)
+    (eg. :command:`"C:\\Program Files\\Git\\bin\\git.exe" clone ...`)
 
 Also, make sure you have all the `required dependencies`_ installed as well.
 Now, retrieve the bot's code from the repository, using the following command:
@@ -310,6 +331,7 @@ Use the following command to get help on those options.
     $ %EREBOT% --help
 
 ..  note::
+
     For ease of use, Linux users may prefer to add the path where
     :file:`Erebot-{version}.phar` or the :command:`Erebot` script resides to
     their :envvar:`PATH`. This way, the bot can be started simply by launching
@@ -317,6 +339,7 @@ Use the following command to get help on those options.
     or by double-clicking on them from a graphical file browser.
 
 ..  note::
+
     Unfortunately for Windows users, there is no equivalent to the
     :envvar:`PATH` trick noted above.
     However, it is possible to associate the ``.phar`` extension with PHP.

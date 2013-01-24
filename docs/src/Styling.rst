@@ -7,7 +7,8 @@ If you want more, ask your favourite search engine ;-)
 
 Erebot provides two ways to format messages. Both methods are described here.
 
-..  contents::
+..  contents:: Table of Contents
+    :local:
 
 Please note that using raw codes (method 1) is considered bad practice.
 Advanced styling (method 2) should be used in new code.

@@ -18,7 +18,8 @@ development. It takes inspiration from other such documents, namely:
 Most of the information on this page is organized in the same way as the
 Drupal coding standards.
 
-..  contents::
+..  contents:: Table of Contents
+    :local:
 
 
 Indenting and whitespace
@@ -292,6 +293,7 @@ sign used to assign the return value of a function to a variable
 (as documented in the section on `Operators`_).
 
 ..  warning::
+
     Call-time pass-by-reference is strictly prohibited. See the section on
     :ref:`function/method declarations <cs-fn-decl>` for the proper way
     to pass function arguments by-reference.
@@ -305,6 +307,7 @@ to line up function calls and promote readability:
     $longVariable  = foo($baz);
 
 ..  warning::
+
     For methods/functions defined by the core of PHP or any of its extension,
     (that is, anything that isn't userland-define), always respect the case
     given by the PHP manual. Even though PHP is case-insensitive for most
@@ -320,6 +323,7 @@ Function/method declarations
 ----------------------------
 
 ..  note::
+
     We recommend that you use classes instead of functions in your code,
     even if it means creating classes containing static methods only.
     The rationale behind this decision being that it avoids global scope

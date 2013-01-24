@@ -1,6 +1,10 @@
 Licenses
 ========
 
+..  contents:: Table of Contents
+    :local:
+
+
 Erebot
 ------
 
@@ -12,7 +16,7 @@ The code itself is released under the GNU General Public License.
 
 ::
 
-    Copyright © 2010-2012 François Poirotte
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
