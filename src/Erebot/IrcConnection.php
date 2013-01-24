@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -217,8 +219,7 @@ implements  Erebot_Interface_IrcConnection
                                         $flags
     )
     {
-        $logging        = Plop::getInstance();
-        $logger         = $logging->getLogger(__FILE__);
+        $logger         = Plop::getInstance();
 
         $channelModules = $this->_channelModules;
         $plainModules   = $this->_plainModules;
@@ -317,16 +318,14 @@ implements  Erebot_Interface_IrcConnection
         if ($this->_connected)
             return FALSE;
 
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
-
+        $logger         = Plop::getInstance();
         $uris           = $this->_config->getConnectionURI();
         $serverUri      = new Erebot_URI($uris[count($uris) - 1]);
         $this->_socket  = NULL;
 
         $logger->info(
-            $this->_bot->gettext('Loading required modules for "%s"...'),
-            $serverUri
+            $this->_bot->gettext('Loading required modules for "%(uri)s"...'),
+            array('uri' => $serverUri)
         );
         $this->_loadModules(
             $this->_config,
@@ -378,8 +377,8 @@ implements  Erebot_Interface_IrcConnection
                     $proxy->proxify($uri, $next);
                     $logger->debug(
                         "Successfully established connection ".
-                        "through proxy '%s'",
-                        $uri->toURI(FALSE, FALSE)
+                        "through proxy '%(uri)s'",
+                        array('uri' => $uri->toURI(FALSE, FALSE))
                     );
                 }
                 // That's the endpoint.
@@ -453,10 +452,12 @@ implements  Erebot_Interface_IrcConnection
     /// \copydoc Erebot_Interface_Connection::disconnect()
     public function disconnect($quitMessage = NULL)
     {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
+        $logger     = Plop::getInstance();
         $uris       = $this->_config->getConnectionURI();
-        $logger->info("Disconnecting from '%s' ...", $uris[count($uris) - 1]);
+        $logger->info(
+            "Disconnecting from '%(uri)s' ...",
+            array('uri' => $uris[count($uris) - 1])
+        );
 
         // Purge send queue and send QUIT message to notify server.
         $this->_io->setSocket($this->_socket);
@@ -525,8 +526,7 @@ implements  Erebot_Interface_IrcConnection
             $this->dispatch($event);
 
             if (!$event->preventDefault()) {
-                $logging    = Plop::getInstance();
-                $logger     = $logging->getLogger(__FILE__);
+                $logger     = Plop::getInstance();
                 $logger->error('Disconnected');
                 throw new Erebot_ConnectionFailureException('Disconnected');
             }
@@ -550,10 +550,7 @@ implements  Erebot_Interface_IrcConnection
             );
         }
 
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(
-            __FILE__ . DIRECTORY_SEPARATOR . 'output'
-        );
+        $logger     = Plop::getInstance();
 
         try {
             /// @TODO:  use some variable from the configuration instead
@@ -634,9 +631,6 @@ implements  Erebot_Interface_IrcConnection
         else if (isset($plainModules[$module]))
             return $plainModules[$module];
 
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
-
         if (!class_exists($module, TRUE)) {
             throw new Erebot_InvalidValueException("No such class '$module'");
         }
@@ -655,6 +649,7 @@ implements  Erebot_Interface_IrcConnection
             $channelModules[$chan][$module] = $instance;
 
         $instance->reload($this, $flags);
+        $logger = Plop::getInstance();
         $logger->info(
             $this->_bot->gettext("Successfully loaded module '%(module)s' [%(source)s]"),
             array(
@@ -760,15 +755,10 @@ implements  Erebot_Interface_IrcConnection
         Erebot_Interface_Event_Base_Generic $event
     )
     {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(
-            __FILE__ .
-            DIRECTORY_SEPARATOR . 'dispatch' .
-            DIRECTORY_SEPARATOR . 'event'
-        );
+        $logger = Plop::getInstance();
         $logger->debug(
-            $this->_bot->gettext('Dispatching "%s" event.'),
-            get_class($event)
+            $this->_bot->gettext('Dispatching "%(type)s" event.'),
+            array('type' => get_class($event))
         );
         try {
             foreach ($this->_events as $handler) {
@@ -792,15 +782,10 @@ implements  Erebot_Interface_IrcConnection
      */
     protected function _dispatchNumeric(Erebot_Interface_Event_Numeric $numeric)
     {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(
-            __FILE__ .
-            DIRECTORY_SEPARATOR . 'dispatch' .
-            DIRECTORY_SEPARATOR . 'numeric'
-        );
+        $logger = Plop::getInstance();
         $logger->debug(
-            $this->_bot->gettext('Dispatching numeric %s.'),
-            sprintf('%03d', $numeric->getCode())
+            $this->_bot->gettext('Dispatching numeric %(code)s.'),
+            array('code' => sprintf('%03d', $numeric->getCode()))
         );
         try {
             foreach ($this->_numerics as $handler) {

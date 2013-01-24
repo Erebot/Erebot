@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -185,9 +187,7 @@ implements  Erebot_Interface_Config_Main
             $file = NULL;
 
         $mainSchema = Erebot_Utils::getResourcePath('Erebot', 'config.rng');
-        $plopSchema = Erebot_Utils::getResourcePath('Plop', 'config.rng');
         $mainSchema = file_get_contents($mainSchema);
-        $plopSchema = file_get_contents($plopSchema);
         $ue         = libxml_use_internal_errors(TRUE);
         $domxml     = new Erebot_DOM();
         if ($source == self::LOAD_FROM_FILE)
@@ -198,20 +198,14 @@ implements  Erebot_Interface_Config_Main
         $domxml->xinclude(LIBXML_NOBASEFIX);
         $this->_stripXGlobWrappers($domxml);
 
-        // libxml doesn't support PHP streams (like "phar://"),
-        // so we use the data:// protocol to pass PLOP's schema.
-        $plopSchema = 'data:;base64,' . base64_encode($plopSchema);
-        $mainSchema = str_replace('@plop_schema@', $plopSchema, $mainSchema);
         $ok         = $domxml->relaxNGValidateSource($mainSchema);
         $errors     = $domxml->getErrors();
         libxml_use_internal_errors($ue);
 
-        $logging = Plop::getInstance();
+        $logger = Plop::getInstance();
         if (!$ok || count($errors)) {
             // Some unpredicted error occurred,
             // show some (hopefully) useful information.
-            $logging->basicConfig();
-            $logger = $logging->getLogger(__FILE__);
             $logger->error(print_r($errors, TRUE));
             throw new Erebot_InvalidValueException(
                 'Errors were found while validating the configuration file'
@@ -265,17 +259,7 @@ implements  Erebot_Interface_Config_Main
             }
         }
 
-        if (isset($xml->children(Plop_Config_Format_XML::XMLNS)->logging[0]))
-            $logging->fileConfig(
-                $xml->children(Plop_Config_Format_XML::XMLNS)->logging[0],
-                NULL,
-                'Plop_Config_Format_XML'
-            );
-        else
-            $logging->basicConfig();
-
-        $logger = $logging->getLogger(__FILE__);
-
+        $logger = Plop::getInstance();
         $currentVersion = Erebot_Interface_Core::VERSION;
         if (!version_compare($this->_version, $currentVersion, 'eq'))
             $logger->warning(

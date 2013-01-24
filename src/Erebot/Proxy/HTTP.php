@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -68,7 +70,10 @@ extends Erebot_Proxy_Base
                 'Invalid response from proxy'
             );
 
-        $this->_logger->debug("%s", addcslashes($line, "\000..\037"));
+        $this->_logger->debug(
+            '%(line)s',
+            array('line' => addcslashes($line, "\000..\037"))
+        );
         $contents = array_filter(explode(" ", $line));
 
         switch ((int) $contents[1]) {
@@ -91,7 +96,10 @@ extends Erebot_Proxy_Base
                 );
             if ($line == "")
                 break;
-            $this->_logger->debug("%s", addcslashes($line, "\000..\037"));
+            $this->_logger->debug(
+                '%(line)s',
+                array('line' => addcslashes($line, "\000..\037"))
+            );
         }
         if ($i === $max)
             throw new Erebot_InvalidValueException(

@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -146,9 +148,11 @@ implements  Erebot_Interface_ReceivingConnection
         }
 
         $this->_io  = new Erebot_LineIO(Erebot_LineIO::EOL_ANY, $this->_socket);
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
-        $logger->info($bot->gettext('Prompt started in "%s"'), $connector);
+        $logger = Plop::getInstance();
+        $logger->info(
+            $bot->gettext('Prompt started in "%(path)s"'),
+            array('path' => $connector)
+        );
     }
 
     /// Destructor.

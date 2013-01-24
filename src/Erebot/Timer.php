@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -227,8 +229,6 @@ implements  Erebot_Interface_Timer
             // We add the name of the callback (useful when debugging).
             '// '.addslashes($this->_callback).'"';
 
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
         $this->_resource = proc_open(
             $command,
             array(1 => $descriptors),

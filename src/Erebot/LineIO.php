@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -182,11 +184,11 @@ class   Erebot_LineIO
         $this->_incomingData    = substr($this->_incomingData, $pos + $len);
         $this->_rcvQueue[]      = $line;
 
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(
-            __FILE__ . DIRECTORY_SEPARATOR . 'input'
+        $logger = Plop::getInstance();
+        $logger->debug(
+            '%(line)s',
+            array('line' => addcslashes($line, "\000..\037"))
         );
-        $logger->debug("%s", addcslashes($line, "\000..\037"));
         return TRUE;
     }
 
@@ -294,11 +296,8 @@ class   Erebot_LineIO
         if (!count($this->_sndQueue))
             return FALSE;
 
-        $line       = array_shift($this->_sndQueue);
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(
-            __FILE__ . DIRECTORY_SEPARATOR . 'output'
-        );
+        $line   = array_shift($this->_sndQueue);
+        $logger = Plop::getInstance();
 
         // Make sure we send the whole line,
         // with a trailing CR LF sequence.
@@ -311,7 +310,10 @@ class   Erebot_LineIO
                 return FALSE;
         }
         $line = substr($line, 0, -strlen($eol));
-        $logger->debug("%s", addcslashes($line, "\000..\037"));
+        $logger->debug(
+            '%(line)s',
+            array('line' => addcslashes($line, "\000..\037"))
+        );
         return $written;
     }
 

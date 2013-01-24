@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -362,9 +364,8 @@ implements  Erebot_Interface_Styling
         if (!$valid || count($errors)) {
             // Some unpredicted error occurred,
             // show some (hopefully) useful information.
-            $errmsg     =   print_r($errors, TRUE);
-            $logging    =&  Plop::getInstance();
-            $logger     =   $logging->getLogger(__FILE__);
+            $errmsg = print_r($errors, TRUE);
+            $logger = Plop::getInstance();
             $logger->error($errmsg);
             throw new Erebot_InvalidValueException(
                 'Error while validating the message'

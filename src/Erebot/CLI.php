@@ -1,6 +1,8 @@
 <?php
 /*
-    This file is part of Erebot.
+    This file is part of Erebot, a modular IRC bot written in PHP.
+
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -106,14 +108,6 @@ extends Console_CommandLine_Option
     }
 }
 
-// Don't require it : during development, we can't rely on PEAR.
-@include(
-    'SymfonyComponents'.DIRECTORY_SEPARATOR.
-    'DependencyInjection'.DIRECTORY_SEPARATOR.
-    'sfServiceContainerAutoloader.php'
-);
-sfServiceContainerAutoloader::register();
-
 /**
  * \brief
  *      Provides the entry-point for Erebot.
@@ -160,12 +154,13 @@ class Erebot_CLI
      */
     static public function _cleanup_pidfile($handle, $pidfile)
     {
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
-
         flock($handle, LOCK_UN);
         @unlink($pidfile);
-        $logger->debug('Removed lock on pidfile (%s)', $pidfile);
+        $logger = Plop::getInstance();
+        $logger->debug(
+            'Removed lock on pidfile (%(pidfile)s)',
+            array('pidfile' => $pidfile)
+        );
     }
 
     /**
@@ -178,6 +173,14 @@ class Erebot_CLI
      */
     static public function run()
     {
+        // Don't require it : during development, we can't rely on PEAR.
+        @include(
+            'SymfonyComponents'.DIRECTORY_SEPARATOR.
+            'DependencyInjection'.DIRECTORY_SEPARATOR.
+            'sfServiceContainerAutoloader.php'
+        );
+        sfServiceContainerAutoloader::register();
+
         // Apply patches.
         Erebot_Patches::patch();
 
@@ -185,14 +188,18 @@ class Erebot_CLI
         $baseDir    = dirname(dirname(dirname(__FILE__)));
         Erebot_Utils::getResourcePath(NULL, NULL, $baseDir);
         $dic        = new sfServiceContainerBuilder();
+        $dic->setParameter('Erebot.src_dir', dirname(dirname(__FILE__)));
         $loader     = new sfServiceContainerLoaderFileXml($dic);
         $dicConfig = Erebot_Utils::getResourcePath(
             'Erebot',
             'defaults.xml'
         );
-        if (!strncasecmp(__FILE__, 'phar://', 7) &&
-            file_exists(getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml')) {
-            $dicConfig = getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml';
+        if (!strncasecmp(__FILE__, 'phar://', 7)) {
+            $dicConfigNew = getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml';
+            if (!file_exists($dicConfigNew)) {
+                copy($dicConfig, $dicConfigNew);
+            }
+            $dicConfig = $dicConfigNew;
         }
         $loader->load($dicConfig);
 
@@ -201,6 +208,7 @@ class Erebot_CLI
         $hasPosix = in_array('posix', get_loaded_extensions());
         $hasPcntl = in_array('pcntl', get_loaded_extensions());
 
+        $logger             = $dic->logging;
         $localeGetter       = $dic['i18n.default_getter'];
         $coreTranslatorCls  = $dic['core.classes.i18n'];
         $translator         = new $coreTranslatorCls("Erebot");
@@ -392,9 +400,6 @@ class Erebot_CLI
             if ($parsed->options[$option] === NULL)
                 $parsed->options[$option] = $config->$func();
 
-        $logging    =&  Plop::getInstance();
-        $logger     =   $logging->getLogger(__FILE__);
-
         /* Handle daemonization.
          * See also:
          * - http://www.itp.uzh.ch/~dpotter/howto/daemonize
@@ -491,8 +496,8 @@ class Erebot_CLI
             // Avoid locking up the current directory.
             if (!chdir(DIRECTORY_SEPARATOR))
                 $logger->error(
-                    $translator->gettext('Could not chdir to "%s"'),
-                    DIRECTORY_SEPARATOR
+                    $translator->gettext('Could not chdir to "%(path)s"'),
+                    array('path' => DIRECTORY_SEPARATOR)
                 );
 
             // Explicitly close the magic stream-constants (just in case).
@@ -548,9 +553,9 @@ class Erebot_CLI
                 $logger->warning(
                     $translator->gettext(
                         'Only root can change group identity! '.
-                        'Your current UID is %d',
-                        posix_getuid()
-                    )
+                        'Your current UID is %(uid)d'
+                    ),
+                    array('uid' => posix_getuid())
                 );
             }
             else {
@@ -561,8 +566,8 @@ class Erebot_CLI
 
                 if ($info === FALSE) {
                     $logger->error(
-                        $translator->gettext('No such group "%s"'),
-                        $parsed->options['group']
+                        $translator->gettext('No such group "%(group)s"'),
+                        array('group' => $parsed->options['group'])
                     );
                     exit(1);
                 }
@@ -609,9 +614,9 @@ class Erebot_CLI
                 $logger->warning(
                     $translator->gettext(
                         'Only root can change user identity! '.
-                        'Your current UID is %d'
+                        'Your current UID is %(uid)d'
                     ),
-                    posix_getuid()
+                    array('uid' => posix_getuid())
                 );
             }
             else {
@@ -622,8 +627,8 @@ class Erebot_CLI
 
                 if ($info === FALSE) {
                     $logger->error(
-                        $translator->gettext('No such user "%s"'),
-                        $parsed->options['user']
+                        $translator->gettext('No such user "%(user)s"'),
+                        array('user' => $parsed->options['user'])
                     );
                     exit(1);
                 }
@@ -665,9 +670,10 @@ class Erebot_CLI
                 if (!$pid) {
                     $logger->error(
                         $translator->gettext(
-                            'The pidfile (%s) contained garbage. Exiting'
+                            'The pidfile (%(pidfile)s) contained garbage. ' .
+                            'Exiting'
                         ),
-                        $parsed->options['pidfile']
+                        array('pidfile' => $parsed->options['pidfile'])
                     );
                     exit(1);
                 }
@@ -678,9 +684,10 @@ class Erebot_CLI
                         case 0: // No error.
                             $logger->error(
                                 $translator->gettext(
-                                    'Erebot is already running with PID %d'
+                                    'Erebot is already running ' .
+                                    'with PID %(pid)d'
                                 ),
-                                $pid
+                                array('pid' => $pid)
                             );
                             exit(1);
 
@@ -716,9 +723,9 @@ class Erebot_CLI
                                 $translator->gettext(
                                     'Unknown error while checking for '.
                                     'the existence of another running '.
-                                    'instance of Erebot (%s)'
+                                    'instance of Erebot (%(error)s)'
                                 ),
-                                posix_get_last_error()
+                                array('error' => posix_get_last_error())
                             );
                             exit(1);
                     }
@@ -730,10 +737,10 @@ class Erebot_CLI
             if ($wouldBlock) {
                 $logger->error(
                     $translator->gettext(
-                        'Could not lock pidfile (%s). '.
+                        'Could not lock pidfile (%(pidfile)s). '.
                         'Is the bot already running?'
                     ),
-                    $parsed->options['pidfile']
+                    array('pidfile' => $parsed->options['pidfile'])
                 );
                 exit(1);
             }
@@ -742,8 +749,10 @@ class Erebot_CLI
             $res = fwrite($pidfile, $pid);
             if ($res != strlen($pid)) {
                 $logger->error(
-                    $translator->gettext('Unable to write PID to pidfile (%s)'),
-                    $parsed->options['pidfile']
+                    $translator->gettext(
+                        'Unable to write PID to pidfile (%(pidfile)s)'
+                    ),
+                    array('pidfile' => $parsed->options['pidfile'])
                 );
                 exit(1);
             }

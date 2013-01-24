@@ -2,7 +2,7 @@
 /*
     This file is part of Erebot, a modular IRC bot written in PHP.
 
-    Copyright © 2010-2012 François Poirotte
+    Copyright © 2010 François Poirotte
 
     Erebot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -151,8 +151,7 @@ implements  Erebot_Interface_Core
      */
     protected function _start(Erebot_Interface_ConnectionFactory $factory)
     {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
+        $logger = Plop::getInstance();
         $logger->info($this->gettext('Erebot is starting'));
 
         // This is changed by handleSignal()
@@ -326,8 +325,7 @@ implements  Erebot_Interface_Core
     /// \copydoc Erebot_Interface_Core::stop()
     public function stop()
     {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
+        $logger = Plop::getInstance();
 
         if (!$this->_running)
             return;
@@ -373,8 +371,7 @@ implements  Erebot_Interface_Core
             }
         }
 
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
+        $logger = Plop::getInstance();
         $logger->info(
             $this->gettext(
                 'Received signal #%(signum)d (%(signame)s)'
@@ -513,8 +510,7 @@ implements  Erebot_Interface_Core
      */
     public function reload(Erebot_Interface_Config_Main $config = NULL)
     {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
+        $logger = Plop::getInstance();
 
         $msg = $this->gettext('Reloading the configuration');
         $logger->info($msg);
@@ -559,8 +555,7 @@ implements  Erebot_Interface_Core
         Erebot_Interface_Config_Main        $config
     )
     {
-        $logging    = Plop::getInstance();
-        $logger     = $logging->getLogger(__FILE__);
+        $logger = Plop::getInstance();
 
         // List existing connections so they
         // can eventually be reused.
@@ -590,9 +585,10 @@ implements  Erebot_Interface_Core
 
                     $logger->info(
                         $this->gettext(
-                            'Reusing existing connection for network "%s"'
+                            'Reusing existing connection ' .
+                            'for network "%(network)s"'
                         ),
-                        $netName
+                        array('network' => $netName)
                     );
                     // Move it from existing connections to new connections,
                     // marking it as still being in use.
@@ -628,15 +624,15 @@ implements  Erebot_Interface_Core
                     }
 
                     $logger->info(
-                        $this->gettext('Trying to connect to "%s"...'),
-                        $serverUri
+                        $this->gettext('Trying to connect to "%(uri)s"...'),
+                        array('uri' => $serverUri)
                     );
                     $connection->connect();
                     $newConnections[] = $connection;
 
                     $logger->info(
-                        $this->gettext('Successfully connected to "%s"...'),
-                        $serverUri
+                        $this->gettext('Successfully connected to "%(uri)s"...'),
+                        array('uri' => $serverUri)
                     );
 
                     break;
@@ -647,8 +643,8 @@ implements  Erebot_Interface_Core
                     // list until we successfully
                     // connect or cycle the list.
                     $logger->exception(
-                        $this->gettext('Could not connect to "%s"'),
-                        $e, $serverUri
+                        $this->gettext('Could not connect to "%(uri)s"'),
+                        $e, array('uri' => $serverUri)
                     );
                 }
             }
