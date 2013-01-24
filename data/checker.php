@@ -14,6 +14,7 @@ use Composer\Repository\PlatformRepository;
 use Composer\Repository\ArrayRepository;
 use Composer\Package\MemoryPackage;
 use Composer\Package\Version\VersionParser;
+use Composer\Package\Loader\ArrayLoader;
 
 class Erebot_Package_Dependencies_Checker
 {
@@ -72,7 +73,7 @@ class Erebot_Package_Dependencies_Checker
                 array(
                     $this->_getLink(
                         "virt-Erebot",
-                        "pear.erebot.net/Erebot",
+                        "erebot/erebot",
                         "*",
                         "requires"
                     ),
@@ -126,61 +127,15 @@ class Erebot_Package_Dependencies_Checker
 
     public function handleMetadata($metadata)
     {
-        $root = isset($metadata['pear.erebot.net/Erebot']);
-        $modules = array();
+        if (isset($metadata['extra']['phar']['path']))
+            Erebot_Autoload::initialize($metadata['extra']['phar']['path']);
 
-        foreach ($metadata as $pkgName => $data) {
-            $isErebotModule = !strncasecmp($pkgName, 'pear.erebot.net/', 16);
-            if (!$root && $isErebotModule)
-                $modules[] = $this->_getLink(
-                    'virt-Erebot',
-                    $pkgName,
-                    '*',
-                    'requires'
-                );
-
-            if (isset($data['path']))
-                Erebot_Autoload::initialize($data['path']);
-
-            $pkg = new MemoryPackage(
-                $pkgName,
-                $data['version'] . '.0',
-                $data['version']
-            );
-            $types = array(
-                "requires",
-                "provides",
-                "suggests",
-                "replaces",
-                "conflicts",
-            );
-            foreach ($types as $type) {
-                if (isset($data[$type])) {
-                    $additions = array();
-                    foreach ($data[$type] as $dep => $constraints) {
-                        if (is_int($dep)) {
-                            $dep            = $constraints;
-                            $constraints    = "*";
-                        }
-
-                        // Don't depend on (a specific version of) Pyrus.
-                        if ($dep == 'pear2.php.net/pyrus')
-                            continue;
-
-                        $additions[] = $this->_getLink(
-                            $pkgName,
-                            $dep,
-                            $constraints,
-                            $type
-                        );
-                    }
-                    $pkg->{"set".ucfirst($type)}($additions);
-                }
-            }
-            $this->_localRepo->addPackage($pkg);
-        }
+        $loader = new ArrayLoader();
+        $pkg = $loader->load($metadata);
+        $this->_localRepo->addPackage($pkg);
 
         // Add modules for virt-Erebot.
+        $modules = array($this->_getLink('virt-Erebot', $metadata['name'], '*', 'requires'));
         $modules = array_merge($modules, $this->_package->getRequires());
         $this->_package->setRequires($modules);
     }

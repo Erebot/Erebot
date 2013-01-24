@@ -29,39 +29,24 @@ $php_bin = array(
     )
 );
 
-foreach (array($package, $compatible) as $obj) {
-    // FIXME: $package needs the original filenames,
-    // while $compatible wants the logical filenames.
-    if ($obj === $compatible) {
-        $scriptDir  = 'script';
-        $srcDir     = 'php';
-        $docDir     = 'doc';
-    }
-    else {
-        $scriptDir  = 'scripts';
-        $srcDir     = 'src';
-        $docDir     = 'docs';
-    }
+// Don't include those parts of the doc (uses too much disk space).
+unset($package->files["docs/coverage"]);
+unset($package->files["docs/api"]);
+unset($package->files["docs/enduser"]);
 
-    // Don't include those parts of the doc (uses too much disk space).
-    unset($obj->files["$docDir/coverage"]);
-    unset($obj->files["$docDir/api"]);
-    unset($obj->files["$docDir/enduser"]);
+// Apply replacement tasks to the proper files.
+$package->files["scripts/Erebot"] = array_merge_recursive(
+    $package->files["scripts/Erebot"]->getArrayCopy(),
+    $php_dir
+);
 
-    // Apply replacement tasks to the proper files.
-    $obj->files["$scriptDir/Erebot"] = array_merge_recursive(
-        $obj->files["$scriptDir/Erebot"]->getArrayCopy(),
-        $php_dir
-    );
+$package->files["src/Erebot/Timer.php"] = array_merge_recursive(
+    $package->files["src/Erebot/Timer.php"]->getArrayCopy(),
+    $php_bin
+);
 
-    $obj->files["$srcDir/Erebot/Timer.php"] = array_merge_recursive(
-        $obj->files["$srcDir/Erebot/Timer.php"]->getArrayCopy(),
-        $php_bin
-    );
-
-    // Don't include the API override if it is present.
-    if (isset($obj->files["$scriptDir/Erebot_API"])) {
-        unset($obj->files["$scriptDir/Erebot_API"]);
-    }
+// Don't include the API override if it is present.
+if (isset($package->files["scripts/Erebot_API"])) {
+    unset($package->files["scripts/Erebot_API"]);
 }
 

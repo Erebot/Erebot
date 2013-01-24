@@ -1,0 +1,63 @@
+{
+    "name": "erebot/erebot",
+    "description": "A modular IRC bot for PHP 5.2+",
+    "keywords": ["IRC", "bot"],
+    "homepage": "https://github.com/Erebot/Erebot",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "François Poirotte",
+            "email": "clicky@erebot.net",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "email": "erebot@erebot.net",
+        "issues": "https://github.com/Erebot/Erebot/issues",
+        "wiki": "http://erebot.github.com/Erebot/",
+        "irc": "irc://irc.iiens.net/Erebot",
+        "source": "https://github.com/Erebot/Erebot"
+    },
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.2",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-intl": "*",
+        "ext-libxml": "*",
+        "ext-pcre": "*",
+        "ext-Reflection": "*",
+        "ext-SimpleXML": "*",
+        "ext-sockets": "*",
+        "ext-SPL": "*",
+        "ext-XML": "*",
+        "erebot/erebot-api": "*",
+        "erebot/plop": "1.0.*",
+        "erebot/dependency-injection": "1.0.*",
+        "erebot/erebot-module-autoconnect": "*",
+        "erebot/erebot-module-ircconnector": "*",
+        "erebot/erebot-module-pingreply": "*",
+        "pear-pear.php.net/console_commandline": "*",
+        "pear-pear.php.net/file_gettext": "*"
+    },
+    "suggest": {
+        "ext-openssl": "*",
+        "ext-pcntl": "*",
+        "ext-posix": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Erebot": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

@@ -83,19 +83,6 @@ include(
 // Prepare a new dependency checker.
 $checker = new Erebot_Package_Dependencies_Checker("", '@PACKAGE_VERSION@');
 
-// Return metadata about this package.
-$packageName = '@PACKAGE_NAME@';
-$packageVersion = '@PACKAGE_VERSION@';
-$metadata = array(
-    'pear.erebot.net/@PACKAGE_NAME@' => array(
-        'version' => '@PACKAGE_VERSION@',
-        'path' =>
-            "phar://" . __FILE__ .
-            DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
-            DIRECTORY_SEPARATOR . "php",
-    )
-);
-
 // Use closures to avoid variables pollution.
 $inc = function ($modulePath) {
     $res = @include("phar://" . $modulePath);
@@ -112,49 +99,47 @@ $inc = function ($modulePath) {
 };
 $phars      = array();
 $handleMetadata = function ($checker, $metadata, &$phars, $pharPath) {
-    if (!is_array($metadata))
-        return;
     $checker->handleMetadata($metadata);
 
-    // Try to figure out the "main package" from the .phar.
-    $main = NULL;
-    foreach (array_keys($metadata) as $pkgName) {
-        if (!strncasecmp($pkgName, 'pear.erebot.net/', 16)) {
-            $shortName  = (string) substr($pkgName, 16);
-            $modulePath = 'phar://' . $pharPath .
-                            DIRECTORY_SEPARATOR .
-                            $shortName . '-' .
-                            $metadata[$pkgName]['version'] .
-                            DIRECTORY_SEPARATOR;
-            $phars[$shortName] = array(
-                'paths'     => array(),
-                'version'   => $metadata[$pkgName]['version']
-            );
-            if (file_exists($modulePath)) {
-                $main = $modulePath;
-                break;
-            }
+    list($vendor, $pkgName) = explode('/', $metadata['name'], 2);
+    if ($vendor == 'erebot' || $vendor == 'pear.erebot.net') {
+        if (!isset($metadata['extra']['phar']['path']) ||
+            !isset($metadata['extra']['PEAR']['name'])) {
+            return;
         }
-    }
-    if ($main === NULL)
-        continue;
-
-    foreach (array_keys($metadata) as $pkgName) {
-        if (!strncasecmp($pkgName, 'pear.erebot.net/', 16)) {
-            $phars[(string) substr($pkgName, 16)]['paths'][] = $main;
+        $path       = $metadata['extra']['phar']['path'];
+        $pearName   = $metadata['extra']['PEAR']['name'];
+        $phars[$pearName]['version'] = $metadata['version'];
+        if (file_exists($path)) {
+            $phars[$pearName]['paths'][] = $path;
         }
     }
 };
 
-$pharPath = 
-require(
+$metadata = json_decode(
+    file_get_contents(
+        "phar://" . __FILE__ .
+        DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
+        DIRECTORY_SEPARATOR . "data" .
+        DIRECTORY_SEPARATOR . "pear.erebot.net" .
+        DIRECTORY_SEPARATOR . "@PACKAGE_NAME@" .
+        DIRECTORY_SEPARATOR . "composer.json"
+    ),
+    TRUE
+);
+// Add the extra info the normal stub would usually add.
+$metadata['version'] = '@PACKAGE_VERSION@';
+$metadata['extra']['PEAR']['name'] = '@PACKAGE_NAME@';
+$metadata['extra']['phar']['path'] =
     "phar://" . __FILE__ .
     DIRECTORY_SEPARATOR . "@PACKAGE_NAME@-@PACKAGE_VERSION@" .
-    DIRECTORY_SEPARATOR . "data" .
-    DIRECTORY_SEPARATOR . "pear.erebot.net" .
-    DIRECTORY_SEPARATOR . "@PACKAGE_NAME@" .
-    DIRECTORY_SEPARATOR . "package.php"
-);
+    DIRECTORY_SEPARATOR . "php";
+// Erebot's main .phar embeds the code of several dependencies.
+$metadata['provide']['erebot/erebot-api'] = '*';
+$metadata['provide']['erebot/plop'] = '*';
+$metadata['provide']['erebot/dependency-injection'] = '*';
+$metadata['provide']['pear-pear.php.net/console_commandline'] = '*';
+$metadata['provide']['pear-pear.php.net/file_gettext'] = '*';
 $handleMetadata($checker, $metadata, $phars, __FILE__);
 
 // Load phar modules.
