@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <container xmlns="http://symfony-project.org/2.0/container">
     <parameters>
-        <parameter key="general.version">0.5.0</parameter>
+        <parameter key="general.version">0.5.1</parameter>
         <parameter key="general.timezone">Europe/Paris</parameter>
 
         <parameter key="logging.classes.formatter">Plop_Formatter</parameter>
@@ -25,67 +25,99 @@
 
     <services>
         <service id="logging.formatter.detailed" class="%logging.classes.formatter%">
-            <argument>%(asctime)s - %(levelname)s - %(message)s</argument>
-            <argument>%H:%M:%S</argument>
+            <argument>%%(asctime)s - %%(levelname)s - %%(message)s</argument>
+            <argument>r</argument>
         </service>
 
         <service id="logging.formatter.input" class="%logging.classes.formatter%">
-            <argument>%(asctime)s - &#8592; %(message)s</argument>
-            <argument>%H:%M:%S</argument>
+            <argument>%%(asctime)s - &#8592; %(message)s</argument>
+            <argument>r</argument>
         </service>
 
         <service id="logging.formatter.output" class="%logging.classes.formatter%">
-            <argument>%(asctime)s - &#8594; %(message)s</argument>
-            <argument>%H:%M:%S</argument>
+            <argument>%%(asctime)s - &#8594; %%(message)s</argument>
+            <argument>r</argument>
         </service>
 
         <service id="logging.handler.input" class="%logging.classes.handler%">
-            <argument type="service" id="logging.formatter.input"/>
-            <argument type="const">Plop::DEBUG</argument>
+            <argument type="const">STDERR</argument>
+            <call method="setFormatter">
+                <argument type="service" id="logging.formatter.input"/>
+            </call>
         </service>
 
         <service id="logging.handler.output" class="%logging.classes.handler%">
-            <argument type="service" id="logging.formatter.output"/>
-            <argument type="const">Plop::DEBUG</argument>
+            <argument type="const">STDERR</argument>
+            <call method="setFormatter">
+                <argument type="service" id="logging.formatter.output"/>
+            </call>
         </service>
 
-        <service id="logging.handler.stderr" class="%logging.classes.handler%">
-            <argument type="service" id="logging.formatter.detailed"/>
-            <argument type="const">Plop::DEBUG</argument>
-        </service>
-
-        <service id="logging.logger.root" class="Plop_RootLogger">
-            <argument type="service" id="logging.handler.stderr"/>
-            <argument type="const">Plop::DEBUG</argument>
+        <service id="logging.handler.detailed" class="%logging.classes.handler%">
+            <argument type="const">STDERR</argument>
+            <call method="setFormatter">
+                <argument type="service" id="logging.formatter.detailed"/>
+            </call>
         </service>
 
         <service id="logging.logger.input" class="%logging.classes.logger%">
-            <argument type="service" id="logging.handler.input"/>
-            <argument type="const">Plop::DEBUG</argument>
-            <argument type="collection">
-                <argument key="%core.class.connection%" type="collection">
-                    <argument>_getSingleLine</argument>
-                </argument>
+            <argument>Erebot/LineIO.php</argument>
+            <argument>Erebot_LineIO</argument>
+            <argument>_getLine</argument>
+            <argument type="service">
+                <service class="Plop_HandlersCollection">
+                    <call method="offsetSet">
+                        <argument type="const">NULL</argument>
+                        <argument type="service" id="logging.handler.input"/>
+                    </call>
+                </service>
             </argument>
-            <argument>0</argument>
         </service>
 
         <service id="logging.logger.output" class="%logging.classes.logger%">
-            <argument type="service" id="logging.handler.output"/>
-            <argument type="const">Plop::DEBUG</argument>
-            <argument type="collection">
-                <argument key="%core.classes.connection%" type="collection">
-                    <argument>processOutgoingData</argument>
-                </argument>
+            <argument>Erebot/LineIO.php</argument>
+            <argument>Erebot_LineIO</argument>
+            <argument>write</argument>
+            <argument type="service">
+                <service class="Plop_HandlersCollection">
+                    <call method="offsetSet">
+                        <argument type="const">NULL</argument>
+                        <argument type="service" id="logging.handler.output"/>
+                    </call>
+                </service>
             </argument>
-            <argument>0</argument>
         </service>
 
-        <service id="logging" class="Plop">
-            <!-- The 1st argument MUST be the root logger. -->
-            <argument type="service" id="logging.logger.root"/>
-            <argument type="service" id="logging.logger.input"/>
-            <argument type="service" id="logging.logger.output"/>
+        <service id="logging.logger.root" class="%logging.classes.logger%">
+            <argument type="const">NULL</argument>
+            <argument type="const">NULL</argument>
+            <argument type="const">NULL</argument>
+            <argument type="service">
+                <service class="Plop_HandlersCollection">
+                    <call method="offsetSet">
+                        <argument type="const">NULL</argument>
+                        <argument type="service" id="logging.handler.detailed"/>
+                    </call>
+                </service>
+            </argument>
+        </service>
+
+        <service id="logging" class="Plop" constructor="getInstance" shared="true">
+            <call method="addLogger">
+                <argument type="service" id="logging.logger.root"/>
+                <argument type="service" id="logging.logger.input"/>
+                <argument type="service" id="logging.logger.output"/>
+            </call>
+            <call method="setPrefixes">
+                <argument type="service">
+                    <service class="Plop_PrefixesCollection">
+                        <call method="offsetSet">
+                            <argument type="const">NULL</argument>
+                            <argument>%Erebot.src_dir%</argument>
+                        </call>
+                    </service>
+                </argument>
+            </call>
         </service>
 
         <service id="factory.connection" class="%core.classes.connection_factory%">
