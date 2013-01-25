@@ -110,10 +110,6 @@ CONFIG;
     public function testLoadInvalidConfigFromString()
     {
         $path   = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
-        $file   =   "src" .
-                    DIRECTORY_SEPARATOR . "Erebot" .
-                    DIRECTORY_SEPARATOR . "Config" .
-                    DIRECTORY_SEPARATOR . "Main.php";
 
         if (DIRECTORY_SEPARATOR == "/")
             $xmlPath = $path;
@@ -126,7 +122,7 @@ CONFIG;
         }
 
         $this->setExpectedLogs(<<<LOGS
-ERROR:$path$file:Array
+ERROR:Array
 (
     [0] => LibXMLError Object
         (

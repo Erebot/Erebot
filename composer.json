@@ -38,7 +38,7 @@
         "ext-XML": "*",
         "erebot/erebot-api": "*",
         "erebot/plop": "1.0.*",
-        "erebot/dependency-injection": "1.0.*",
+        "erebot/dependencyinjection": "1.0.*",
         "erebot/erebot-module-autoconnect": "*",
         "erebot/erebot-module-ircconnector": "*",
         "erebot/erebot-module-pingreply": "*",

@@ -103,9 +103,6 @@ extends Erebot_Testenv_Module_TestCase
     public function testColorMissingAttributes()
     {
         $path   = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
-        $file   =   "src" .
-                    DIRECTORY_SEPARATOR . "Erebot" .
-                    DIRECTORY_SEPARATOR . "Styling.php";
         $msg    =  'The "fg" attribute or the "bg" attribute or both must ' .
                     'be supplied when using the <color> tag.';
 
@@ -120,7 +117,7 @@ extends Erebot_Testenv_Module_TestCase
         }
 
         $this->setExpectedLogs(<<<LOGS
-ERROR:$path$file:Array
+ERROR:Array
 (
     [0] => LibXMLError Object
         (
