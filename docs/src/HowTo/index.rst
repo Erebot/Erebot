@@ -7,6 +7,6 @@ your needs:
 ..  toctree::
     :maxdepth: 2
 
-    HowTo_External_Process_Interaction
+    External_Process_Interaction
 
 .. vim: ts=4 et

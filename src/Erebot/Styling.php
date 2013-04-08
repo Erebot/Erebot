@@ -530,7 +530,7 @@ implements  Erebot_Interface_Styling
             /* We don't need the full set of features/complexity/bugs
              * ICU contains. Here, we use a simple "plural" formatter
              * to detect the right plural form to use. The formatting
-             * steps are done before without using ICU. */
+             * steps are done without relying on ICU. */
             $attrNode = $node->getAttributeNode('var');
             if ($attrNode === FALSE)
                 throw new Erebot_InvalidValueException(
@@ -573,7 +573,7 @@ implements  Erebot_Interface_Styling
             $result .= $subcontents[$correctForm];
         }
 
-        // Handle childrens.
+        // Handle children.
         else
             $result .= $this->_parseChildren($node, $attributes, $vars);
 

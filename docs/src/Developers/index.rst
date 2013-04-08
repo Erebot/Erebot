@@ -8,8 +8,8 @@ interested in:
     :maxdepth: 2
 
     Coding_Standard
-    Internationalization
-    Styling
+    I18n
+    Formatting
     New_module
 
 .. vim: ts=4 et

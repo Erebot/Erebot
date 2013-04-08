@@ -1,5 +1,5 @@
-Styling
-=======
+Formatting
+==========
 
 This page is only meant to guide you through the use of formatting codes with
 Erebot, it is not meant as a complete documentation of how styles work with IRC.
@@ -11,17 +11,17 @@ Erebot provides two ways to format messages. Both methods are described here.
     :local:
 
 Please note that using raw codes (method 1) is considered bad practice.
-Advanced styling (method 2) should be used in new code.
+Advanced formatting (method 2) should be used in new code.
 
-Method #1 : raw styles
-----------------------
+Method #1 : raw codes
+---------------------
 
 ..  Warning::
     This method is now deprecated and should not be used in new code.
     This is because messages written using this method are very hard
     to internationalize. Please use the `second method`_ instead.
 
-The `styling API`_ provides constants for the raw control codes that make up
+The `formatting API`_ provides constants for the raw control codes that make up
 styles. There are also constants for colors, see the source code for details.
 
 For example:
@@ -47,8 +47,8 @@ in bold, with the user's nickname underlined when sent to an IRC server.
 
 ..  _`second method`:
 
-Method #2 : "advanced styling"
-------------------------------
+Method #2 : "advanced formatting"
+---------------------------------
 
 This method aims at separating the process of designing the format string
 from the process of actually rendering it (producing the string that would
@@ -158,7 +158,7 @@ Currently, the following tags are available:
     should be used.
 
 ..  note::
-    See also the documentation on the `styling API`_ for more information.
+    See also the documentation on the `formatting API`_ for more information.
 
 
 ..  _`type of variable`:
@@ -565,11 +565,11 @@ and could easily adapt it to the plural rules used in their country.
 Further reading
 ~~~~~~~~~~~~~~~
 
-The documentation on the `styling API`_ always reflects the latest features
+The documentation on the `formatting API`_ always reflects the latest features
 implemented, while this page may sometime fall a little behind in what it
 showcases (please `open a ticket`_ if you notice any discrepancy!).
 
-..  _`styling API`:
+..  _`formatting API`:
     https://buildbot.erebot.net/doc/api/Erebot/html/interfaceErebot__Interface__Styling.html
 ..  _`RelaxNG schema`:
     https://github.com/Erebot/Erebot/blob/master/data/styling.rng
