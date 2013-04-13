@@ -61,7 +61,7 @@
         </service>
 
         <service id="logging.logger.input" class="%logging.classes.logger%">
-            <argument>Erebot/LineIO.php</argument>
+            <argument type="const">NULL</argument>
             <argument>Erebot_LineIO</argument>
             <argument>_getLine</argument>
             <argument type="service">
@@ -75,7 +75,7 @@
         </service>
 
         <service id="logging.logger.output" class="%logging.classes.logger%">
-            <argument>Erebot/LineIO.php</argument>
+            <argument type="const">NULL</argument>
             <argument>Erebot_LineIO</argument>
             <argument>write</argument>
             <argument type="service">

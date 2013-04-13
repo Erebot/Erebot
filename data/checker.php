@@ -82,7 +82,8 @@ class Erebot_Package_Dependencies_Checker
             )
         );
 
-        // create installed repo, this contains all local packages + platform packages (php & extensions)
+        // create installed repo, this contains
+        // all local packages + platform packages (php & extensions)
         $platformRepo = new PlatformRepository();
         $installedRepo = new CompositeRepository(array(
             $platformRepo,
@@ -100,7 +101,10 @@ class Erebot_Package_Dependencies_Checker
             $request->install($link->getTarget(), $link->getConstraint());
         }
         foreach ($platformRepo->getPackages() as $link) {
-            $request->install($link->getName(), $this->_versionParser->parseConstraints('*'));
+            $request->install(
+                $link->getName(),
+                $this->_versionParser->parseConstraints('*')
+            );
         }
 
         // prepare solver
@@ -135,7 +139,9 @@ class Erebot_Package_Dependencies_Checker
         $this->_localRepo->addPackage($pkg);
 
         // Add modules for virt-Erebot.
-        $modules = array($this->_getLink('virt-Erebot', $metadata['name'], '*', 'requires'));
+        $modules = array(
+            $this->_getLink('virt-Erebot', $metadata['name'], '*', 'requires')
+        );
         $modules = array_merge($modules, $this->_package->getRequires());
         $this->_package->setRequires($modules);
     }

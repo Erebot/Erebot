@@ -137,13 +137,13 @@ $metadata['extra']['phar']['path'] =
 // Erebot's main .phar embeds the code of several dependencies.
 $metadata['provide']['erebot/erebot-api'] = '*';
 $metadata['provide']['erebot/plop'] = '*';
-$metadata['provide']['erebot/dependency-injection'] = '*';
+$metadata['provide']['erebot/dependencyinjection'] = '*';
 $metadata['provide']['pear-pear.php.net/console_commandline'] = '*';
 $metadata['provide']['pear-pear.php.net/file_gettext'] = '*';
 $handleMetadata($checker, $metadata, $phars, __FILE__);
 
 // Load phar modules.
-$modulesDir = __DIR__ . DIRECTORY_SEPARATOR . 'modules';
+$modulesDir = getcwd() . DIRECTORY_SEPARATOR . 'modules';
 try {
     $iter = new DirectoryIterator($modulesDir);
     $dots = array('.', '..');
