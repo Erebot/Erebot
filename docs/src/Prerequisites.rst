@@ -10,12 +10,11 @@ In case you compiled PHP yourself, you may need to recompile it to include
 additional extensions (see the list of required `PHP dependencies`_ for more
 information).
 
-As of this writing, Erebot is known to work on PHP versions ranging from
-PHP 5.2.1 up to PHP 5.4.0RC1. Also, Erebot should run correctly on both
-Windows (XP or later) and Linux (most distros).
-The code is tested using an automated process on both Windows XP (32 bits)
-and Linux Debian Stable (64 bits), as reflected by our
-`Continuous Integration server`_.
+As of this writing, Erebot is known to work on all PHP versions since PHP 5.2.1.
+Also, Erebot should run correctly on both Windows (XP or later) and most Linux
+distributions.
+The code is tested using an automated process on several operating systems,
+as reflected by our `Continuous Integration server`_.
 
 ..  contents:: Table of Contents
     :local:
@@ -132,9 +131,11 @@ I have yet to find a gettext binary for Windows that ships with a recent version
 of gettext and hence can support all the options used by Erebot.
 For now, a workaround is to `install Cygwin`_ and its gettext package on your
 machine. Refer to `Cygwin's website`_ for additional information.
+Another solution is to compile your own version of gettext from scratch
+using for example the Mingw compiler.
 
 Hopefully, installing Doxygen on Windows is a lot simpler. Just grab the binary
-release relevant for your system from `Doxygen's download page`_.
+release relevant to your system from `Doxygen's download page`_.
 
 This setup is what we use (combined with PHP 5.3.8) to test Erebot with our
 `Continuous Integration server`_.
