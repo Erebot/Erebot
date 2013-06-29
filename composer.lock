@@ -1,0 +1,843 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "d9a286c3154ee46dc067928767708d9b",
+    "packages": [
+        {
+            "name": "deresh/sfyaml",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/deresh/yaml.git",
+                "reference": "471fc45b3b07c6a3469aaf3b537194b0afda8bc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/deresh/yaml/zipball/471fc45b3b07c6a3469aaf3b537194b0afda8bc5",
+                "reference": "471fc45b3b07c6a3469aaf3b537194b0afda8bc5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "sfYaml": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien.potencier@symfony-project.org",
+                    "homepage": "http://fabien.potencier.org/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "mirror of github.com/fabpot/yaml.",
+            "homepage": "https://github.com/fabpot/yaml",
+            "keywords": [
+                "sfyaml",
+                "yaml"
+            ],
+            "time": "2013-04-16 11:50:18"
+        },
+        {
+            "name": "erebot/api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_API.git",
+                "reference": "6c7ed0a4a0c078604af97739a2dfc48d4eae1e18"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-api-6c7ed0a4a0c078604af97739a2dfc48d4eae1e18-zip-decce0.tar",
+                "reference": "dev-master",
+                "shasum": "0dc96387d5683c928ba0ec386ed9146ad5a0f877"
+            },
+            "require": {
+                "php": ">=5.2.2"
+            },
+            "require-dev": {
+                "erebot/buildenv": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Erebot": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "API for the Erebot project",
+            "homepage": "https://github.com/Erebot/Erebot_API",
+            "keywords": [
+                "Erebot",
+                "IRC",
+                "bot"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_API/issues",
+                "wiki": "http://erebot.github.com/Erebot/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_API"
+            },
+            "time": "2013-06-23 21:22:11"
+        },
+        {
+            "name": "erebot/autoconnect-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Module_AutoConnect.git",
+                "reference": "a675169ad5495db5c1b82b0867e6c6b806f764cd"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-autoconnect-module-a675169ad5495db5c1b82b0867e6c6b806f764cd-zip-ae8cde.tar",
+                "reference": "dev-master",
+                "shasum": "fd0b3949ce5e708205b847a956e0d1b69230b477"
+            },
+            "require": {
+                "erebot/api": "dev-master",
+                "erebot/generic-doc": "dev-master",
+                "erebot/installers": "dev-master",
+                "php": ">=5.2.2"
+            },
+            "require-dev": {
+                "erebot/buildenv": "dev-master",
+                "erebot/testenv": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Erebot": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Erebot module to connect automatically to an IRC server",
+            "homepage": "https://github.com/Erebot/Erebot_Module_AutoConnect",
+            "keywords": [
+                "Erebot",
+                "IRC",
+                "bot",
+                "module"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_Module_AutoConnect/issues",
+                "wiki": "http://erebot.github.io/Erebot_Module_AutoConnect/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_Module_AutoConnect"
+            },
+            "time": "2013-06-27 21:17:58"
+        },
+        {
+            "name": "erebot/dependency-injection",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/DependencyInjection.git",
+                "reference": "bf88c935d5bbe86a53fe292234736cc0229562a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/DependencyInjection/zipball/bf88c935d5bbe86a53fe292234736cc0229562a6",
+                "reference": "bf88c935d5bbe86a53fe292234736cc0229562a6",
+                "shasum": ""
+            },
+            "require": {
+                "deresh/sfyaml": "dev-master",
+                "ext-dom": "*",
+                "ext-simplexml": "*",
+                "php": ">=5.2.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "A fork of the original Symfony Dependency Injection Container",
+            "homepage": "https://github.com/Erebot/DependencyInjection",
+            "keywords": [
+                "container",
+                "dependency",
+                "dic",
+                "injection"
+            ],
+            "time": "2013-06-29 19:20:57"
+        },
+        {
+            "name": "erebot/generic-doc",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Module_Skeleton_Doc.git",
+                "reference": "6864d4b0b3ef044836d0a4d26df8b1df933fb91d"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-generic-doc-6864d4b0b3ef044836d0a4d26df8b1df933fb91d-zip-f1b4ff.tar",
+                "reference": "dev-master",
+                "shasum": "b0efe0dfb3724e8333545f475bf740f896a77c6d"
+            },
+            "require": {
+                "erebot/installers": "dev-master"
+            },
+            "type": "erebot-generic-doc",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Generic documentation for Erebot modules",
+            "homepage": "https://github.com/Erebot/Erebot_Module_Skeleton",
+            "keywords": [
+                "Erebot",
+                "IRC",
+                "bot",
+                "doc",
+                "documentation"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_Module_Skeleton/issues",
+                "wiki": "http://erebot.github.io/Erebot_Module_Skeleton/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_Module_Skeleton"
+            },
+            "time": "2013-06-27 20:44:06"
+        },
+        {
+            "name": "erebot/installers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Installers.git",
+                "reference": "b20c804c270bc6cb51923a6f81cc1ad3b6b09272"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-installers-b20c804c270bc6cb51923a6f81cc1ad3b6b09272-zip-2d1a72.tar",
+                "reference": "dev-master",
+                "shasum": "dcf901c8a8ffd3619092c2c5a15de51cf7fb4fbc"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                },
+                "class": "Erebot\\Composer\\GenericDocInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "Erebot\\Composer": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Composer installers for Erebot",
+            "homepage": "https://github.com/Erebot/Erebot_Installers",
+            "keywords": [
+                "Erebot",
+                "IRC",
+                "bot",
+                "installers"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_Installers/issues",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_Installers"
+            },
+            "time": "2013-06-27 21:08:41"
+        },
+        {
+            "name": "erebot/ircconnector-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Module_IrcConnector.git",
+                "reference": "208d460f811f244af5d945384d152d4b4f4a6343"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-ircconnector-module-208d460f811f244af5d945384d152d4b4f4a6343-zip-4e7c43.tar",
+                "reference": "dev-master",
+                "shasum": "0261dab8bfad22ce3ea191940ccb304ca5e1f312"
+            },
+            "require": {
+                "erebot/api": "dev-master",
+                "erebot/generic-doc": "dev-master",
+                "erebot/installers": "dev-master",
+                "ext-sockets": "*",
+                "php": ">=5.2.2"
+            },
+            "require-dev": {
+                "erebot/buildenv": "dev-master",
+                "erebot/testenv": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Erebot": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Erebot module to connect to an IRC server",
+            "homepage": "https://github.com/Erebot/Erebot_Module_IrcConnector",
+            "keywords": [
+                "Erebot",
+                "IRC",
+                "bot",
+                "module"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_Module_IrcConnector/issues",
+                "wiki": "http://erebot.github.io/Erebot_Module_IrcConnector/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_Module_IrcConnector"
+            },
+            "time": "2013-06-27 21:17:42"
+        },
+        {
+            "name": "erebot/pingreply-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Module_PingReply.git",
+                "reference": "fd59196d99192502188f216d458ad5c21d3fdf5c"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-pingreply-module-fd59196d99192502188f216d458ad5c21d3fdf5c-zip-ed6aa4.tar",
+                "reference": "dev-master",
+                "shasum": "9ab5ca2062ab63101fd34b5e3346619de1df0d99"
+            },
+            "require": {
+                "erebot/api": "dev-master",
+                "erebot/generic-doc": "dev-master",
+                "erebot/installers": "dev-master",
+                "php": ">=5.2.2"
+            },
+            "require-dev": {
+                "erebot/buildenv": "dev-master",
+                "erebot/testenv": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Erebot": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Erebot module to respond to PING messages",
+            "homepage": "https://github.com/Erebot/Erebot_Module_PingReply",
+            "keywords": [
+                "Erebot",
+                "IRC",
+                "bot",
+                "module"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_Module_PingReply/issues",
+                "wiki": "http://erebot.github.io/Erebot_Module_PingReply/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_Module_PingReply"
+            },
+            "time": "2013-06-27 21:18:07"
+        },
+        {
+            "name": "erebot/plop",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Plop.git",
+                "reference": "131d77a78c9128991e62e8b91ea0d50a45b9e487"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-plop-131d77a78c9128991e62e8b91ea0d50a45b9e487-zip-ba640e.tar",
+                "reference": "dev-master",
+                "shasum": "ba1f6aed28e6121e74542c286118e4bd87287943"
+            },
+            "require": {
+                "ext-pcre": "*",
+                "ext-sockets": "*",
+                "ext-spl": "*",
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "erebot/buildenv": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Plop": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "A simple logging library for PHP",
+            "homepage": "https://github.com/Erebot/Plop",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Plop/issues",
+                "wiki": "http://erebot.github.com/Plop/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Plop"
+            },
+            "time": "2013-06-29 15:51:28"
+        },
+        {
+            "name": "pear/console_commandline",
+            "version": "dev-trunk",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Console_CommandLine.git",
+                "reference": "210b2532d3921bfca7720dfb1aba98150434f8be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Console_CommandLine/zipball/210b2532d3921bfca7720dfb1aba98150434f8be",
+                "reference": "210b2532d3921bfca7720dfb1aba98150434f8be",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear_exception": "dev-master",
+                "php": ">=5.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Console_CommandLine": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com"
+                },
+                {
+                    "name": "David Jean Louis",
+                    "email": "izimobil@gmail.com"
+                }
+            ],
+            "description": "A full featured command line options and arguments parser.",
+            "homepage": "https://github.com/pear/Console_CommandLine",
+            "keywords": [
+                "console"
+            ],
+            "time": "2013-02-02 21:07:53"
+        },
+        {
+            "name": "pear/file_gettext",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fpoirotte/File_Gettext.git",
+                "reference": "be6980ae8ad3274792925b2caee17208e1a32d2d"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/pear-file_gettext-be6980ae8ad3274792925b2caee17208e1a32d2d-zip-0841ea.tar",
+                "reference": "dev-master",
+                "shasum": "5dc2298d25afa6d930dffb991b4df327a51abe35"
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "File_Gettext": ""
+                }
+            },
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Wallner",
+                    "email": "mike@php.net"
+                }
+            ],
+            "description": "Reader and writer for GNU PO and MO files.",
+            "homepage": "https://github.com/pear/File_Gettext",
+            "keywords": [
+                "gettext"
+            ],
+            "support": {
+                "source": "https://github.com/fpoirotte/File_Gettext/tree/master"
+            },
+            "time": "2013-06-23 19:46:55"
+        },
+        {
+            "name": "pear/pear_exception",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/PEAR_Exception.git",
+                "reference": "2f560fae7ce41910f1deb7337e8951e35b413f1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/2f560fae7ce41910f1deb7337e8951e35b413f1e",
+                "reference": "2f560fae7ce41910f1deb7337e8951e35b413f1e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4.4.0"
+            },
+            "type": "class",
+            "autoload": {
+                "psr-0": {
+                    "PEAR": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "."
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Helgi Thormar",
+                    "email": "dufuz@php.net"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net"
+                }
+            ],
+            "description": "The PEAR Exception base class.",
+            "homepage": "https://github.com/pear/PEAR_Exception",
+            "keywords": [
+                "exception"
+            ],
+            "time": "2013-04-28 13:00:16"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "erebot/buildenv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Buildenv.git",
+                "reference": "03c621d56756a2412065ba6094034f5ca22f31c8"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-buildenv-03c621d56756a2412065ba6094034f5ca22f31c8-zip-46b166.tar",
+                "reference": "dev-master",
+                "shasum": "0b97c2b2ef495c5be8b53ee7d508e8ccdbdde46c"
+            },
+            "require": {
+                "phing/phing": ">=2.4.3",
+                "php": ">=5.2.2"
+            },
+            "suggest": {
+                "pdepend/pdepend": "Computes metrics on code quality",
+                "phpmd/phpmd": "Detects overly complicated code patterns (mess detector)",
+                "phpunit/phpunit": "Unit tests for PHP code",
+                "sebastian/phpcpd": "Detects (ab)use of repeated code (copy-paste detector)",
+                "squizlabs/php_codesniffer": "Detects violations of a set of predefined rules (>= 1.2.2 required)"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Build environment for the Erebot project",
+            "homepage": "https://github.com/Erebot/Erebot_Buildenv",
+            "keywords": [
+                "Erebot"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_Buildenv/issues",
+                "wiki": "http://erebot.github.com/Erebot/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_Buildenv"
+            },
+            "time": "2013-06-24 21:53:45"
+        },
+        {
+            "name": "erebot/testenv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Testenv.git",
+                "reference": "8764206ae7649f72cf6e8963a0a1a587125b5a4e"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://packages.erebot.net:943/composer/erebot-testenv-8764206ae7649f72cf6e8963a0a1a587125b5a4e-zip-ead546.tar",
+                "reference": "dev-master",
+                "shasum": "032e06868f8c0fb1df826130fc7f4e543f2730fc"
+            },
+            "require": {
+                "php": ">=5.2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Test environment for the Erebot project",
+            "homepage": "https://github.com/Erebot/Erebot_Testenv",
+            "keywords": [
+                "Erebot"
+            ],
+            "support": {
+                "email": "erebot@erebot.net",
+                "issues": "https://github.com/Erebot/Erebot_Testenv/issues",
+                "wiki": "http://erebot.github.com/Erebot/",
+                "irc": "irc://irc.iiens.net/Erebot",
+                "source": "https://github.com/Erebot/Erebot_Testenv"
+            },
+            "time": "2013-06-24 21:23:45"
+        },
+        {
+            "name": "phing/phing",
+            "version": "2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phingofficial/phing.git",
+                "reference": "2.5.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/2.5.0",
+                "reference": "2.5.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "bin": [
+                "bin/phing"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "classes/phing/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "classes"
+            ],
+            "license": [
+                "LGPL3"
+            ],
+            "authors": [
+                {
+                    "name": "Michiel Rook",
+                    "email": "mrook@php.net"
+                },
+                {
+                    "name": "Phing Community",
+                    "homepage": "http://www.phing.info/trac/wiki/Development/Contributors"
+                }
+            ],
+            "description": "PHing Is Not GNU make; it's a PHP project build system or build tool based on Apache Ant.",
+            "homepage": "http://www.phing.info/",
+            "keywords": [
+                "build",
+                "task",
+                "tool"
+            ],
+            "time": "2013-02-16 14:23:57"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "erebot/dependency-injection": 20,
+        "erebot/autoconnect-module": 20,
+        "erebot/ircconnector-module": 20,
+        "erebot/pingreply-module": 20,
+        "pear/console_commandline": 20,
+        "pear/pear_exception": 20,
+        "pear/file_gettext": 20,
+        "deresh/sfyaml": 20,
+        "erebot/api": 20,
+        "erebot/plop": 20,
+        "erebot/installers": 20,
+        "erebot/generic-doc": 20,
+        "erebot/buildenv": 20,
+        "erebot/testenv": 20
+    },
+    "platform": {
+        "php": ">=5.2.2",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-intl": "*",
+        "ext-libxml": "*",
+        "ext-pcre": "*",
+        "ext-reflection": "*",
+        "ext-simplexml": "*",
+        "ext-sockets": "*",
+        "ext-spl": "*",
+        "ext-xml": "*"
+    },
+    "platform-dev": [
+
+    ]
+}

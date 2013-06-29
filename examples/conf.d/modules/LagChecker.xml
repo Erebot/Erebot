@@ -1,8 +1,0 @@
-<module
-    xmlns="http://www.erebot.net/xmlns/erebot"
-    name="Erebot_Module_LagChecker"
->
-    <param name="check"     value="180" />
-    <param name="timeout"   value="30" />
-    <param name="reconnect" value="120" />
-</module>

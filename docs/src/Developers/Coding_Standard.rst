@@ -614,40 +614,8 @@ Filesystem paths
 
 Never use any OS-specific directory separator (eg. "/") directly to concatenate
 parts of a path together. Always use the ``DIRECTORY_SEPARATOR`` constant
-instead as it will take care of abstracting differences in the separator used
+instead. It will take care of abstracting differences in the separator used
 by each OS for you.
-
-For dependencies that are available as PEAR packages, use the replacement
-strings provided by the pear installer, if applicable, but keep in mind that
-the code should still work from a repository checkout (where such strings
-are not replaced):
-
-..  sourcecode:: php
-
-    <?php
-
-        // @data_dir@ is a special substitution string used by
-        // the pear installer to refer to the path where static
-        // data files are stored. This string IS NOT replaced
-        // in a repository checkout.
-        $schema = '@data_dir@' .
-                    DIRECTORY_SEPARATOR . 'pear.erebot.net' .
-                    DIRECTORY_SEPARATOR .  'Erebot' .
-                    DIRECTORY_SEPARATOR . 'schema.xsd';
-
-        // If we're running from a repository checkout,
-        // retrieve the schema from a copy of Erebot
-        // (kept in the vendor/ folder) instead.
-        if ('@data_dir@' == '@'.'data_dir'.'@') {
-            // Several calls to dirname() are necessary to go up
-            // to the root directory of this repository checkout
-            // and then descend to retrieve a specific file.
-            $schema = dirname(dirname(dirname(__FILE__))) .
-                        DIRECTORY_SEPARATOR . 'vendor' .
-                        DIRECTORY_SEPARATOR . 'Erebot' .
-                        DIRECTORY_SEPARATOR . 'data' .
-                        DIRECTORY_SEPARATOR . 'schema.xsd';
-        }
 
 
 Including code
@@ -726,8 +694,8 @@ and set-ups.
     *   Removing it eliminates the possibility for unwanted whitespace
         at the end of files which can cause strange outputs to the console.
     *   The closing delimiter at the end of a file is optional anyway.
-    *   PHP.net itself removes the closing delimiter from the end of its files
-        (example: prepend.inc), so this can be seen as a "best practice."
+    *   PHP.net itself removes the closing delimiter from the end of its files,
+        so this can be seen as a "best practice."
 
 
 Semicolons

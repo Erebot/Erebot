@@ -1,8 +1,0 @@
-<formatter
-    xmlns="http://www.erebot.net/xmlns/logging"
-    name="detailed"
->
-    <format>%(asctime)s - %(levelname)s - %(message)s</format>
-    <datefmt>d/m/Y H:i:s</datefmt>
-</formatter>
-

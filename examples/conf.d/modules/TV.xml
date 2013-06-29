@@ -1,7 +1,0 @@
-<module
-    xmlns="http://www.erebot.net/xmlns/erebot"
-    name="Erebot_Module_TV"
->
-    <param name="group_hertzien" value="TF1,France2,France3,Canal+,France5,M6,Arte"/>
-    <param name="default_group" value="hertzien"/>
-</module>

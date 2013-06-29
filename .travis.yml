@@ -1,10 +1,10 @@
 language: php
 
 php:
-    - 5.2
     - 5.3.3
     - 5.3
     - 5.4
+    - 5.5
 
 branches:
     only: master
@@ -14,7 +14,7 @@ notifications:
     irc: "irc.iiens.net#Erebot"
 
 before_script:
-    - git submodule update --init
+    - wget http://getcomposer.org/composer.phar
     - (which pear && pear install pear/File_Gettext-beta) || pyrus install pear/File_Gettext-beta
     - (which pear && pear install pear/PHP_ParserGenerator-alpha) || pyrus install pear/PHP_ParserGenerator-alpha
     - phpenv rehash
@@ -26,7 +26,8 @@ before_script:
     - msgfmt --statistics -c -f -o data/i18n/fr_FR/LC_MESSAGES/Erebot.mo data/i18n/fr_FR/LC_MESSAGES/Erebot.po
     - cp data/Styling.y src/Erebot/Styling/Parser.y
     - (which pear && PHP_PEAR_INSTALL_DIR="`pear config-get php_dir`" phplemon -q -s src/Erebot/Styling/Parser.y) || PHP_PEAR_INSTALL_DIR="`pyrus get php_dir | tail -n 1`" phplemon -q -s src/Erebot/Styling/Parser.y
+    - if [[ "$TRAVIS_PHP_VERSION" = "5.3.3" ]]; then php composer.phar install --dev --prefer-source; fi
+    - if [[ "$TRAVIS_PHP_VERSION" != "5.3.3" ]]; then php composer.phar install --dev; fi
 
-
-script: phpunit --bootstrap tests/testenv/bootstrap.php tests/
+script: phpunit --bootstrap vendor/erebot/testenv/bootstrap.php tests/
 

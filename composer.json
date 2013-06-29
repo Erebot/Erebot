@@ -20,8 +20,8 @@
     },
     "repositories": [
         {
-            "type": "pear",
-            "url": "http://pear.php.net"
+            "type": "composer",
+            "url": "http://packages.erebot.net"
         }
     ],
     "require": {
@@ -36,14 +36,24 @@
         "ext-sockets": "*",
         "ext-SPL": "*",
         "ext-XML": "*",
-        "erebot/erebot-api": "*",
-        "erebot/plop": "1.0.*",
-        "erebot/dependencyinjection": "1.0.*",
-        "erebot/erebot-module-autoconnect": "*",
-        "erebot/erebot-module-ircconnector": "*",
-        "erebot/erebot-module-pingreply": "*",
-        "pear-pear.php.net/console_commandline": "*",
-        "pear-pear.php.net/file_gettext": "*"
+
+        "erebot/dependency-injection": "dev-master",
+        "erebot/autoconnect-module": "dev-master",
+        "erebot/ircconnector-module": "dev-master",
+        "erebot/pingreply-module": "dev-master",
+
+        "pear/console_commandline": "dev-trunk",
+        "pear/pear_exception": "dev-master",
+        "pear/file_gettext": "dev-master",
+        "deresh/sfyaml": "dev-master",
+        "erebot/api": "dev-master",
+        "erebot/plop": "dev-master",
+        "erebot/installers": "dev-master",
+        "erebot/generic-doc": "dev-master"
+    },
+    "require-dev": {
+        "erebot/buildenv": "dev-master",
+        "erebot/testenv": "dev-master"
     },
     "suggest": {
         "ext-openssl": "*",
@@ -55,6 +65,7 @@
             "Erebot": "src/"
         }
     },
+    "bin": ["bin/Erebot"],
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
