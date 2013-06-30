@@ -202,8 +202,30 @@ implements  Erebot_Interface_URI
      *
      * \retval string
      *      The same text, after percent-encoding normalization.
+     *
+     * \note
+     *      This method is just a thin wrapper around
+     *      Erebot_URI::normalizePercentReal.
      */
     static protected function _normalizePercent($data)
+    {
+        return preg_replace_callback(
+            '/%([[:xdigit:]]{2})/',
+            array('self', 'normalizePercentReal'),
+            $data
+        );
+    }
+
+    /**
+     * Performs normalization of a percent-encoded character.
+     *
+     * \param string $hexchr
+     *      One percent-encoded character that needs to be normalized.
+     *
+     * \retval string
+     *      The same text, after percent-encoding normalization.
+     */
+    static public function normalizePercentReal($hexchr)
     {
         // 6.2.2.1.  Case Normalization
         // Percent-encoded characters must use uppercase letters.
@@ -211,13 +233,11 @@ implements  Erebot_Interface_URI
         $unreserved =   'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.
                         'abcdefghijklmnopqrstuvwxyz'.
                         '-._~';
-        return preg_replace(
-            '/%([[:xdigit:]]{2})/e',
-            "(strpos('".$unreserved."', chr(hexdec('\\1'))) !== FALSE ".
-            "? chr(hexdec('\\1')) ".
-            ": strtoupper('%\\1'))",
-            $data
-        );
+
+        $chr = chr(hexdec($hexchr[1]));
+        if (strpos($unreserved, $chr) !== FALSE)
+            return $chr;
+        return '%' . strtoupper($hexchr[1]);
     }
 
     /**
