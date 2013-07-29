@@ -16,7 +16,8 @@
 
 # These files are automatically generated
 # based on the contents of data/Styling.y.
-/src/Erebot/Styling/Parser.php
+# Note: Parser.php is added to version control to ease
+#       installation from source / using composer.
 /src/Erebot/Styling/Parser.y
 /src/Erebot/Styling/Parser.out
 
