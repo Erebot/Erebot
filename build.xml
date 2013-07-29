@@ -1,6 +1,22 @@
 <?xml version="1.0"?>
 <project name="Erebot" description="" default="all">
     <property name="qa.coverage.force" value="false"/>
+    <property name="phar.stub" value="stub.php"/>
+
+    <fileset dir="." id="phar.files">
+        <include name="vendor/erebot/api/**"/>
+        <include name="vendor/erebot/dependency-injection/**"/>
+        <include name="vendor/erebot/generic-doc/**"/>
+        <include name="vendor/erebot/installers/**"/>
+        <include name="vendor/erebot/plop/**"/>
+        <include name="vendor/pear/console_commandline/**"/>
+        <include name="vendor/pear/file_gettext/**"/>
+        <include name="vendor/pear/pear_exception/**"/>
+        <include name="vendor/composer/composer/LICENSE"/>
+        <include name="vendor/composer/composer/src/**"/>
+        <include name="vendor/deresh/sfyaml/LICENSE"/>
+        <include name="vendor/deresh/sfyaml/lib/**"/>
+    </fileset>
 
     <fileset dir="src/" id="sources">
         <include name="**/*.php"/>
@@ -13,32 +29,9 @@
 
     <target name="all" depends="parser,i18n" description=""/>
 
-    <target name="protected_set_version">
-        <property name="xmlstarlet" value="xmlstarlet ed -P -S -N erebot=http://www.erebot.net/xmlns/erebot"/>
-
-        <!-- Set Erebot_Interface_Core::VERSION in API submodule. -->
-        <exec command="sed -i &quot;s/define.*EREBOT_VERSION.*/define('EREBOT_VERSION', '${version}');/&quot; vendor/Erebot_API/src/Erebot/Interface/Core.php" checkreturn="true"/>
-
-        <!-- Set version in example configurations. -->
-        <!-- * Single file configuration -->
-        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} examples/Erebot-single-file.xml.dist &gt; ${file.tmp}" escape="false" checkreturn="true" logoutput="true"/>
-        <move file="${file.tmp}" tofile="examples/Erebot-single-file.xml.dist" haltonerror="true" overwrite="true"/>
-        <!-- * Multiple file configuration -->
-        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} examples/Erebot-multiple-files.xml.dist &gt; ${file.tmp}" escape="false" checkreturn="true" logoutput="true"/>
-        <move file="${file.tmp}" tofile="examples/Erebot-multiple-files.xml.dist" haltonerror="true" overwrite="true"/>
-
-        <!-- Test data. -->
-        <exec command="${xmlstarlet} -u &quot;/erebot:configuration/@version&quot; -v ${version} tests/data/valid-config.xml &gt; ${file.tmp}" escape="false" checkreturn="true" logoutput="true"/>
-        <move file="${file.tmp}" tofile="tests/data/valid-config.xml" haltonerror="true" overwrite="true"/>
-    </target>
-
     <target name="parser" description="">
         <copy file="data/Styling.y" tofile="src/Erebot/Styling/Parser.y" overwrite="true"/>
-        <exec command="pear config-get php_dir system" outputProperty="php_dir"/>
-        <php function="putenv">
-            <param value="PHP_PEAR_INSTALL_DIR=${php_dir}"/>
-        </php>
-        <exec command="phplemon -q -s src/Erebot/Styling/Parser.y" logoutput="true"/>
+        <exec command='"vendor/bin/phplemon" -q -s src/Erebot/Styling/Parser.y' logoutput="true"/>
         <delete file="src/Erebot/Styling/Parser.y"/>
     </target>
 
