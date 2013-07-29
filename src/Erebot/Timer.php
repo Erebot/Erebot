@@ -83,16 +83,18 @@ implements  Erebot_Interface_Timer
     )
     {
         if (self::$_binary === NULL) {
-            $binary = '@php_bin@';
-            if ($binary == '@'.'php_bin'.'@') {
-                if (!strncasecmp(PHP_OS, 'WIN', 3)) {
-                    $binary = 'php.exe';
-                    self::$_windowsStrategy = 1 + (
-                        (int) version_compare(PHP_VERSION, '5.3.0', '>=')
-                    );
-                }
-                else
-                    $binary = '/usr/bin/env php';
+            if (defined('PHP_BINARY')) {
+                $binary = PHP_BINARY;
+            }
+            else {
+                $binary = PHP_BINDIR . DIRECTORY_SEPARATOR . 'php' .
+                          ((!strncasecmp(PHP_OS, 'WIN', 3)) ? '.exe' : '');
+            }
+
+            if (!strncasecmp(PHP_OS, 'WIN', 3)) {
+                self::$_windowsStrategy = 1 + (
+                    (int) version_compare(PHP_VERSION, '5.3.0', '>=')
+                );
             }
             self::$_binary = $binary;
         }
