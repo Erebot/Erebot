@@ -345,6 +345,12 @@ available for each dependency.
         -   yes [6]_
         -
         -   XMLReader's counterpart to write XML documents.
+    *   -   XSL
+        -   yes [7]_
+        -
+        -
+        -   The XSL extension implements the XSL standard, performing
+            `XSLT transformations`_ using the `libxslt library`_.
     *   -   :pecl:`mbstring`
             or :pecl:`iconv`
             or :pecl:`recode`
@@ -361,6 +367,10 @@ available for each dependency.
     http://php.net/spl
 ..  _`pecl.php.net/xdebug`:
     http://xdebug.org/
+..  _`XSLT transformations`:
+    http://www.w3.org/TR/xslt
+..  _`libxslt library`:
+    http://xmlsoft.org/XSLT/
 
 ..  [1] Needed if you want to connect to IRC servers using a secure
     (encrypted) connection. Required when running Erebot from a PHAR archive
@@ -372,6 +382,7 @@ available for each dependency.
 ..  [5] Required to change user/group information upon startup.
     Not available on Windows.
 ..  [6] This dependency is inherited from Pyrus (which we use to package Erebot).
+..  [7] Only required to run the test suite.
 
 
 PEAR packages
