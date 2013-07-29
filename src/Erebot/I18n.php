@@ -196,6 +196,10 @@ implements  Erebot_Interface_I18n
      * \param string $message
      *      The message to translate.
      *
+     * \param string $mode
+     *      Either "MO" or "PO", indicating whether
+     *      the given file refers to a MO or PO catalog.
+     *
      * \retval string
      *      The translation matching the given message.
      *
@@ -209,7 +213,7 @@ implements  Erebot_Interface_I18n
      *      again every time this method is called
      *      but only when the catalog actually changed.
      */
-    protected function _get_translation($file, $message)
+    protected function _get_translation($file, $message, $mode)
     {
         $time = time();
         if (!isset(self::$_cache[$file]) ||
@@ -240,7 +244,7 @@ implements  Erebot_Interface_I18n
             }
             else if (!isset(self::$_cache[$file]) ||
                 $mtime !== self::$_cache[$file]['mtime']) {
-                $parser = File_Gettext::factory('MO', $file);
+                $parser = File_Gettext::factory($mode, $file);
                 $parser->load();
                 self::$_cache[$file] = array(
                     'mtime'     => $mtime,
@@ -275,15 +279,28 @@ implements  Erebot_Interface_I18n
      */
     protected function _real_gettext($message, $component)
     {
-        $translationFile = Erebot_Utils::getResourcePath(
-            $component,
-            'i18n' .
-            DIRECTORY_SEPARATOR . $this->_locales[self::LC_MESSAGES] .
-            DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
-            DIRECTORY_SEPARATOR . $component . '.mo'
-        );
+        try {
+            $mode = 'MO';
+            $translationFile = Erebot_Utils::getResourcePath(
+                $component,
+                'i18n' .
+                DIRECTORY_SEPARATOR . $this->_locales[self::LC_MESSAGES] .
+                DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
+                DIRECTORY_SEPARATOR . $component . '.mo'
+            );
+        }
+        catch (Exception $e) {
+            $mode = 'PO';
+            $translationFile = Erebot_Utils::getResourcePath(
+                $component,
+                'i18n' .
+                DIRECTORY_SEPARATOR . $this->_locales[self::LC_MESSAGES] .
+                DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
+                DIRECTORY_SEPARATOR . $component . '.po'
+            );
+        }
 
-        $translation = $this->_get_translation($translationFile, $message);
+        $translation = $this->_get_translation($translationFile, $message, $mode);
         return ($translation === NULL) ? $message : $translation;
     }
 
