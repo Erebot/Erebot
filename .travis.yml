@@ -15,19 +15,12 @@ notifications:
 
 before_script:
     - wget http://getcomposer.org/composer.phar
-    - (which pear && pear install pear/File_Gettext-beta) || pyrus install pear/File_Gettext-beta
-    - (which pear && pear install pear/PHP_ParserGenerator-alpha) || pyrus install pear/PHP_ParserGenerator-alpha
-    - phpenv rehash
-    - (php -m | grep intl &> /dev/null) || (echo -e "\n\n" | sudo pecl install pecl/intl)
-    - (php -m | grep intl &> /dev/null) || echo "extension_dir=`php-config --extension-dir`" >> `php --ini | grep "Scan for additional" | sed -e "s|.*:\s*||"`/intl.ini
-    - (php -m | grep intl &> /dev/null) || echo "extension=intl.so" >> `php --ini | grep "Scan for additional" | sed -e "s|.*:\s*||"`/intl.ini
-    - phpenv rehash
     - msgfmt --statistics -c -f -o data/i18n/en_US/LC_MESSAGES/Erebot.mo data/i18n/en_US/LC_MESSAGES/Erebot.po
     - msgfmt --statistics -c -f -o data/i18n/fr_FR/LC_MESSAGES/Erebot.mo data/i18n/fr_FR/LC_MESSAGES/Erebot.po
-    - cp data/Styling.y src/Erebot/Styling/Parser.y
-    - (which pear && PHP_PEAR_INSTALL_DIR="`pear config-get php_dir`" phplemon -q -s src/Erebot/Styling/Parser.y) || PHP_PEAR_INSTALL_DIR="`pyrus get php_dir | tail -n 1`" phplemon -q -s src/Erebot/Styling/Parser.y
     - if [[ "$TRAVIS_PHP_VERSION" = "5.3.3" ]]; then php composer.phar install --dev --prefer-source; fi
     - if [[ "$TRAVIS_PHP_VERSION" != "5.3.3" ]]; then php composer.phar install --dev; fi
+    - cp data/Styling.y src/Erebot/Styling/Parser.y
+    - vendor/bin/phplemon -q -s src/Erebot/Styling/Parser.y
 
 script: phpunit --bootstrap vendor/erebot/testenv/bootstrap.php tests/
 
