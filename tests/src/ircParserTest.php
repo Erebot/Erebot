@@ -32,6 +32,69 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
+     * @covers Erebot_IrcParser::stripCodes
+     */
+    public function testStripCodes()
+    {
+        /*
+         * a is in bold,
+         * c is underlined,
+         * e has reversed colors
+         * after f, styles are reset
+         * h & i are in white on default background
+         * j is in white on black
+         * colors are reset before k
+         */
+        $message =  "\002a\002b\037c\037d\026e\026f\017g\00300h" .
+                    "\0030,1i\00300,01j\003k";
+        $this->assertEquals(
+            "ab\037c\037d\026e\026f\017g\00300h\0030,1i\00300,01j\003k",
+            Erebot_IrcParser::stripCodes(
+                $message,
+                Erebot_IrcParser::STRIP_BOLD
+            )
+        );
+        $this->assertEquals(
+            "\002a\002b\037c\037d\026e\026f\017ghijk",
+            Erebot_IrcParser::stripCodes(
+                $message,
+                Erebot_IrcParser::STRIP_COLORS
+            )
+        );
+        $this->assertEquals(
+            "\002a\002b\037c\037d\026e\026fg\00300h\0030,1i\00300,01j\003k",
+            Erebot_IrcParser::stripCodes(
+                $message,
+                Erebot_IrcParser::STRIP_RESET
+            )
+        );
+        $this->assertEquals(
+            "\002a\002b\037c\037def\017g\00300h\0030,1i\00300,01j\003k",
+            Erebot_IrcParser::stripCodes(
+                $message,
+                Erebot_IrcParser::STRIP_REVERSE
+            )
+        );
+        $this->assertEquals(
+            "\002a\002bcd\026e\026f\017g\00300h\0030,1i\00300,01j\003k",
+            Erebot_IrcParser::stripCodes(
+                $message,
+                Erebot_IrcParser::STRIP_UNDERLINE
+            )
+        );
+        $this->assertEquals(
+            "abcdefghijk",
+            Erebot_IrcParser::stripCodes(
+                $message,
+                Erebot_IrcParser::STRIP_ALL
+            )
+        );
+        $this->assertEquals(
+            "abcdefghijk",
+            Erebot_IrcParser::stripCodes($message));
+    }
+
+    /**
      * @cover Erebot_IrcParser::_handleINVITE
      */
     public function testINVITE()
