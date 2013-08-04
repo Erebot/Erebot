@@ -27,6 +27,24 @@
 class       Erebot_IrcParser
 implements  Erebot_Interface_IrcParser
 {
+    /// Do not strip anything from the text.
+    const STRIP_NONE        = 0x00;
+    /// Strip (mIRC/pIRCh) colors from the text.
+    const STRIP_COLORS      = 0x01;
+    /// Strip the bold attribute from the text.
+    const STRIP_BOLD        = 0x02;
+    /// Strip the underline attribute from the text.
+    const STRIP_UNDERLINE   = 0x04;
+    /// Strip the reverse attribute from the text.
+    const STRIP_REVERSE     = 0x08;
+    /// Strip the reset control character from the text.
+    const STRIP_RESET       = 0x10;
+    /// Strip extended colors from the text.
+    const STRIP_EXT_COLORS  = 0x20;
+    /// Strip all forms of styles from the text.
+    const STRIP_ALL         = 0xFF;
+
+
     /// Mappings from (lowercase) interface names to actual classes.
     protected $_eventsMapping;
 
@@ -52,6 +70,48 @@ implements  Erebot_Interface_IrcParser
     {
         $this->_connection = $connection;
         $this->_eventsMapping = array();
+    }
+
+    /**
+     * Strips IRC styles from a text.
+     *
+     * \param string $text
+     *      The text from which styles must be stripped.
+     *
+     * \param int $strip
+     *      A bitwise OR of the codes of the styles we want to strip.
+     *      The default is to strip all forms of styles from the text.
+     *      See also the Erebot_Utils::STRIP_* constants.
+     *
+     * \retval string
+     *      The text with all the styles specified in $strip stripped.
+     */
+    static public function stripCodes($text, $strip = self::STRIP_ALL)
+    {
+        if (!is_int($strip))
+            throw new Erebot_InvalidValueException("Invalid stripping flags");
+
+        if ($strip & self::STRIP_BOLD)
+            $text = str_replace("\002", '', $text);
+
+        if ($strip & self::STRIP_COLORS)
+            $text = preg_replace(
+                "/\003(?:[0-9]{1,2}(?:,[0-9]{1,2})?)?/",
+                '', $text
+            );
+
+        /// @TODO strip extended colors.
+
+        if ($strip & self::STRIP_RESET)
+            $text = str_replace("\017", '', $text);
+
+        if ($strip & self::STRIP_REVERSE)
+            $text = str_replace("\026", '', $text);
+
+        if ($strip & self::STRIP_UNDERLINE)
+            $text = str_replace("\037", '', $text);
+
+        return $text;
     }
 
     /**
