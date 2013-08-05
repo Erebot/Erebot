@@ -17,10 +17,14 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// Workaround for https://bugs.php.net/bug.php?id=18556
+// and other related bugs in older PHP versions.
+setlocale(LC_CTYPE, 'C');
+
 if (realpath($_SERVER['PATH_TRANSLATED']) == realpath(__FILE__))
-    // Don't use any external file
-    // (eg. from a PEAR repository).
-    ini_set('include_path', '.');
+    // Don't use any external file (eg. don't use
+    // the system's PEAR repository).
+    ini_set('include_path', PATH_TRANSLATED);
 
 if (version_compare(phpversion(), '5.3.1', '<')) {
     if (substr(phpversion(), 0, 5) != '5.3.1') {
@@ -175,8 +179,8 @@ try {
 catch (Exception $e) {
 }
 
-// create installed repo, this contains
-// all local packages + platform packages (php, extensions & libs)
+// Create installed repo, this contains all local packages
+// and platform packages (php, extensions & system libs).
 $platformRepository = new \Composer\Repository\PlatformRepository();
 $installedRepository = new \Composer\Repository\CompositeRepository(array(
     $platformRepository,
