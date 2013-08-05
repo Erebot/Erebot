@@ -186,7 +186,9 @@ implements  Erebot_Interface_Config_Main
         else
             $file = NULL;
 
-        $mainSchema = Erebot_Utils::getResourcePath('Erebot', 'config.rng');
+        $mainSchema = dirname(dirname(dirname(dirname(__FILE__)))) .
+                        DIRECTORY_SEPARATOR . 'data' .
+                        DIRECTORY_SEPARATOR . 'config.rng';
         $mainSchema = file_get_contents($mainSchema);
         $ue         = libxml_use_internal_errors(TRUE);
         $domxml     = new Erebot_DOM();

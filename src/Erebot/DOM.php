@@ -210,18 +210,12 @@ extends DomDocument
     )
     {
         try {
-            $xsl1 = Erebot_Utils::getResourcePath(
-                'Erebot',
-                $schemaSource . '2Schtrn.xsl'
-            );
-            $xsl2 = Erebot_Utils::getResourcePath(
-                'Erebot',
-                'schematron-custom.xsl'
-            );
-            $skeleton = Erebot_Utils::getResourcePath(
-                'Erebot',
-                'skeleton1-5.xsl'
-            );
+            $base = dirname(dirname(dirname(__FILE__))) .
+                    DIRECTORY_SEPARATOR . 'data' .
+                    DIRECTORY_SEPARATOR;
+            $xsl1 = $base . $schemaSource . '2Schtrn.xsl';
+            $xsl2 = $base . 'schematron-custom.xsl';
+            $skeleton = $base . 'skeleton1-5.xsl';
         }
         catch (Exception $e) {
             return FALSE;

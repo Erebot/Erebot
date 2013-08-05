@@ -186,14 +186,12 @@ class Erebot_CLI
 
         // Load the configuration for the Dependency Injection Container.
         $baseDir    = dirname(dirname(dirname(__FILE__)));
-        Erebot_Utils::getResourcePath(NULL, NULL, $baseDir);
         $dic        = new sfServiceContainerBuilder();
         $dic->setParameter('Erebot.src_dir', dirname(dirname(__FILE__)));
         $loader     = new sfServiceContainerLoaderFileXml($dic);
-        $dicConfig = Erebot_Utils::getResourcePath(
-            'Erebot',
-            'defaults.xml'
-        );
+        $dicConfig = dirname(dirname(dirname(__FILE__)) .
+                     DIRECTORY_SEPARATOR . 'data' .
+                     DIRECTORY_SEPARATOR . 'defaults.xml';
         if (!strncasecmp(__FILE__, 'phar://', 7)) {
             $dicConfigNew = getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml';
             if (!file_exists($dicConfigNew)) {

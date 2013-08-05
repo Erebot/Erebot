@@ -122,6 +122,19 @@ implements  Erebot_Interface_I18n
         return $this->_locales[$category];
     }
 
+    private function _getBaseDir($component)
+    {
+        $reflector = new ReflectionClass($component);
+        $parts = explode(DIRECTORY_SEPARATOR, $reflector->getFileName());
+        do {
+            $last = array_pop($parts);
+        } while ($last !== 'src' && count($parts));
+        $parts[] = 'data';
+        $parts[] = 'i18n';
+        $base = implode(DIRECTORY_SEPARATOR, $parts);
+        return $base;
+    }
+
     /// \copydoc Erebot_Interface_I18n::setLocale()
     public function setLocale($category, $candidates)
     {
@@ -131,6 +144,7 @@ implements  Erebot_Interface_I18n
         if (!count($candidates))
             throw new Erebot_InvalidValueException('Invalid locale');
 
+        $base = $this->_getBaseDir($this->_component);
         $newLocale = NULL;
         foreach ($candidates as $candidate) {
             if (!is_string($candidate))
@@ -150,34 +164,24 @@ implements  Erebot_Interface_I18n
 
             if (isset($locale['region'])) {
                 $normLocale = $locale['language'] . '_' . $locale['region'];
-                try {
-                    $file = Erebot_Utils::getResourcePath(
-                        $this->_component,
-                        'i18n' .
+                $file = $base .
                         DIRECTORY_SEPARATOR . $normLocale .
                         DIRECTORY_SEPARATOR . $categoryName .
-                        DIRECTORY_SEPARATOR . $this->_component . '.mo'
-                    );
+                        DIRECTORY_SEPARATOR . $this->_component . '.mo';
+                if (file_exists($file)) {
                     $newLocale = $normLocale;
                     continue;
                 }
-                catch (Exception $e) {
-                }
             }
 
-            try {
-                $file = Erebot_Utils::getResourcePath(
-                    $this->_component,
-                    'i18n' .
-                    DIRECTORY_SEPARATOR . $locale['language'] .
-                    DIRECTORY_SEPARATOR . $categoryName .
-                    DIRECTORY_SEPARATOR . $this->_component . '.mo'
-                );
-                $newLocale = $locale['language'];
-                continue;
-            }
-            catch (Exception $e) {
-            }
+            $file = $base .
+                DIRECTORY_SEPARATOR . $locale['language'] .
+                DIRECTORY_SEPARATOR . $categoryName .
+                DIRECTORY_SEPARATOR . $this->_component . '.mo';
+                if (file_exists($file)) {
+                    $newLocale = $locale['language'];
+                    continue;
+                }
         }
 
         if ($newLocale === NULL)
@@ -213,11 +217,31 @@ implements  Erebot_Interface_I18n
      *      again every time this method is called
      *      but only when the catalog actually changed.
      */
-    protected function _get_translation($file, $message, $mode)
+    protected function _get_translation($component, $message)
     {
         $time = time();
-        if (!isset(self::$_cache[$file]) ||
-            $time > (self::$_cache[$file]['added'] + self::EXPIRE_CACHE)) {
+        $locale = $this->_locales[self::LC_MESSAGES];
+        if (!isset(self::$_cache[$component][$locale]) ||
+            $time > (self::$_cache[$component][$locale]['added'] +
+                     self::EXPIRE_CACHE)) {
+
+            if (isset(self::$_cache[$component][$locale]['file'])) {
+                $file = self::$_cache[$component][$locale]['file'];
+            }
+            else {
+                $file = $this->_getBaseDir($component) .
+                    DIRECTORY_SEPARATOR . $locale .
+                    DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
+                    DIRECTORY_SEPARATOR . $component . '.mo';
+
+                if (!file_exists($file)) {
+                    $file = substr($file, 0, -3) . '.po';
+                }
+
+                if (!file_exists($file)) {
+                    throw new Exception('File not found "' . $file . '"');
+                }
+            }
 
             /**
              * FIXME: filemtime() raises a warning if the given file
@@ -232,31 +256,37 @@ implements  Erebot_Interface_I18n
             else
                 clearstatcache();
 
-            $mtime = filemtime($file);
+            $mtime = FALSE;
+            if ($file !== FALSE) {
+                $mtime = filemtime($file);
+            }
+
             if ($mtime === FALSE) {
                 // We also cache failures to avoid
                 // harassing the CPU too much.
-                self::$_cache[$file] = array(
+                self::$_cache[$component][$locale] = array(
                     'mtime'     => $time,
                     'string'    => array(),
                     'added'     => $time,
+                    'file'      => FALSE,
                 );
             }
-            else if (!isset(self::$_cache[$file]) ||
-                $mtime !== self::$_cache[$file]['mtime']) {
-                $parser = File_Gettext::factory($mode, $file);
+            else if (!isset(self::$_cache[$component][$locale]) ||
+                $mtime !== self::$_cache[$component][$locale]['mtime']) {
+                $parser = File_Gettext::factory(substr($file, -2), $file);
                 $parser->load();
-                self::$_cache[$file] = array(
+                self::$_cache[$component][$locale] = array(
                     'mtime'     => $mtime,
                     'strings'   => $parser->strings,
                     'added'     => $time,
+                    'file'      => $file,
                 );
             }
             error_reporting($oldErrorReporting);
         }
 
-        if (isset(self::$_cache[$file]['strings'][$message]))
-            return self::$_cache[$file]['strings'][$message];
+        if (isset(self::$_cache[$component][$locale]['strings'][$message]))
+            return self::$_cache[$component][$locale]['strings'][$message];
         return NULL;
     }
 
@@ -279,28 +309,10 @@ implements  Erebot_Interface_I18n
      */
     protected function _real_gettext($message, $component)
     {
-        try {
-            $mode = 'MO';
-            $translationFile = Erebot_Utils::getResourcePath(
-                $component,
-                'i18n' .
-                DIRECTORY_SEPARATOR . $this->_locales[self::LC_MESSAGES] .
-                DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
-                DIRECTORY_SEPARATOR . $component . '.mo'
-            );
-        }
-        catch (Exception $e) {
-            $mode = 'PO';
-            $translationFile = Erebot_Utils::getResourcePath(
-                $component,
-                'i18n' .
-                DIRECTORY_SEPARATOR . $this->_locales[self::LC_MESSAGES] .
-                DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
-                DIRECTORY_SEPARATOR . $component . '.po'
-            );
-        }
-
-        $translation = $this->_get_translation($translationFile, $message, $mode);
+        $translation = $this->_get_translation(
+            $component,
+            $message,
+        );
         return ($translation === NULL) ? $message : $translation;
     }
 

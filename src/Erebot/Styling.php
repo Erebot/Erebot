@@ -350,7 +350,9 @@ implements  Erebot_Interface_Styling
             '<msg xmlns="http://www.erebot.net/xmlns/erebot/styling">'.
             $source.
             '</msg>';
-        $schema = Erebot_Utils::getResourcePath('Erebot', 'styling.rng');
+        $schema = dirname(dirname(dirname(__FILE__))) .
+                    DIRECTORY_SEPARATOR . 'data' .
+                    DIRECTORY_SEPARATOR . 'styling.rng';
         $dom    =   new Erebot_DOM();
         $dom->substituteEntities    = TRUE;
         $dom->resolveExternals      = FALSE;
