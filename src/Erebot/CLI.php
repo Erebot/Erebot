@@ -189,7 +189,7 @@ class Erebot_CLI
         $dic        = new sfServiceContainerBuilder();
         $dic->setParameter('Erebot.src_dir', dirname(dirname(__FILE__)));
         $loader     = new sfServiceContainerLoaderFileXml($dic);
-        $dicConfig = dirname(dirname(dirname(__FILE__)) .
+        $dicConfig = dirname(dirname(dirname(__FILE__))) .
                      DIRECTORY_SEPARATOR . 'data' .
                      DIRECTORY_SEPARATOR . 'defaults.xml';
         if (!strncasecmp(__FILE__, 'phar://', 7)) {

@@ -229,17 +229,23 @@ implements  Erebot_Interface_I18n
                 $file = self::$_cache[$component][$locale]['file'];
             }
             else {
-                $file = $this->_getBaseDir($component) .
-                    DIRECTORY_SEPARATOR . $locale .
-                    DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
-                    DIRECTORY_SEPARATOR . $component . '.mo';
+                try {
+                    $file = $this->_getBaseDir($component);
+                }
+                catch (Exception $e) {
+                    return NULL;
+                }
+
+                $file .=    DIRECTORY_SEPARATOR . $locale .
+                            DIRECTORY_SEPARATOR . 'LC_MESSAGES' .
+                            DIRECTORY_SEPARATOR . $component . '.mo';
 
                 if (!file_exists($file)) {
                     $file = substr($file, 0, -3) . '.po';
                 }
 
                 if (!file_exists($file)) {
-                    throw new Exception('File not found "' . $file . '"');
+                    return NULL;
                 }
             }
 
@@ -311,7 +317,7 @@ implements  Erebot_Interface_I18n
     {
         $translation = $this->_get_translation(
             $component,
-            $message,
+            $message
         );
         return ($translation === NULL) ? $message : $translation;
     }
