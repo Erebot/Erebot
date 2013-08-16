@@ -23,10 +23,6 @@ extends Erebot_Testenv_Module_TestCase
 
     public function setUp()
     {
-        Erebot_Utils::getResourcePath(
-            NULL, NULL,
-            dirname(dirname(dirname(__FILE__)))
-        );
         parent::setUp();
         $this->_translator
             ->expects($this->any())
