@@ -24,7 +24,7 @@ setlocale(LC_CTYPE, 'C');
 if (realpath($_SERVER['PATH_TRANSLATED']) == realpath(__FILE__))
     // Don't use any external file (eg. don't use
     // the system's PEAR repository).
-    ini_set('include_path', PATH_TRANSLATED);
+    ini_set('include_path', PATH_SEPARATOR);
 
 if (version_compare(phpversion(), '5.3.1', '<')) {
     if (substr(phpversion(), 0, 5) != '5.3.1') {
@@ -134,45 +134,87 @@ $repository->addPackage($loader->load($metadata));
 $modulesDir = getcwd() . DIRECTORY_SEPARATOR . 'modules';
 try {
     $iter = new DirectoryIterator($modulesDir);
-    $dots = array('.', '..');
     foreach ($iter as $moduleInfo) {
-        if (in_array($moduleInfo->getFilename(), $dots))
+        if (in_array($moduleInfo->getFilename(), array('.', '..')))
             continue;
 
         if (substr($moduleInfo->getFilename(), -5) !== '.phar')
             continue;
 
-        try {
-            // Take the module's metadata into account.
-            $pharPath = $moduleInfo->getPathName();
+        // Take the module's metadata into account.
+        $pharPath = $moduleInfo->getPathName();
 
+        unset($e);
+        try {
             ob_start();
             $metadata = $inc($pharPath);
-            $buffer = ob_get_clean();
-
-            $cut = strpos($buffer, "\r");
-            if ($cut === FALSE)
-                $cut = strpos($buffer, "\n");
-            else if (strpos($buffer, "\n") !== FALSE)
-                $cut = min($cut, strpos($buffer, "\n"));
-
-            $shebang = (string) substr($buffer, 0, $cut);
-            $buffer = (string) substr($buffer, $cut);
-
-            if (substr($shebang, 0, 2) === '#!') {
-                if (substr($buffer, 0, 1) === "\r")
-                    $buffer = (string) substr($buffer, 1);
-                if (substr($buffer, 0, 1) === "\n")
-                    $buffer = (string) substr($buffer, 1);
-            }
-            echo $buffer;
-
-            $phar = new Phar($pharPath);
-            $md = $phar->getMetadata();
-            $metadata['version'] = $md['version'];
-            $repository->addPackage($loader->load($metadata));
+            flush();
         }
         catch (Exception $e) {
+            flush();
+        }
+        $buffer = ob_get_clean();
+
+        $cut = strpos($buffer, "\r");
+        if ($cut === FALSE)
+            $cut = strpos($buffer, "\n");
+        else if (strpos($buffer, "\n") !== FALSE)
+            $cut = min($cut, strpos($buffer, "\n"));
+
+        $shebang = (string) substr($buffer, 0, $cut);
+        $buffer = (string) substr($buffer, $cut);
+
+        if (substr($shebang, 0, 2) === '#!') {
+            if (substr($buffer, 0, 1) === "\r")
+                $buffer = (string) substr($buffer, 1);
+            if (substr($buffer, 0, 1) === "\n")
+                $buffer = (string) substr($buffer, 1);
+        }
+        echo $buffer;
+
+        if ($e !== NULL) {
+            echo "Cannot process " . $pharPath . ":" . PHP_EOL;
+            echo "\t" . $e->getMessage() . PHP_EOL;
+            continue;
+        }
+
+        if (!isset($metadata['packages'])) {
+            $metadata['packages'] = array();
+        }
+        if (!isset($metadata['packages-dev'])) {
+            $metadata['packages-dev'] = array();
+        }
+
+        $packages = array_merge(
+            $metadata['packages'],
+            $metadata['packages-dev']
+        );
+        foreach ($packages as $package) {
+            $repository->addPackage($loader->load($package));
+
+            if (!isset($package['time'])) {
+                foreach ($package['autoload']['psr-0'] as $autoload) {
+                    Erebot_Autoload::initialize(
+                        "phar://" . $pharPath . "/$autoload"
+                    );
+                }
+            }
+
+            if (!file_exists('phar://' . $pharPath .
+                             "/vendor/${package['name']}")) {
+                continue;
+            }
+
+            if (!isset($package['autoload']['psr-0'])) {
+                continue;
+            }
+
+            foreach ($package['autoload']['psr-0'] as $autoload) {
+                Erebot_Autoload::initialize(
+                    "phar://" . $pharPath .
+                    "/vendor/${package['name']}/$autoload"
+                );
+            }
         }
     }
 }
