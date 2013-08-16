@@ -4,6 +4,7 @@
     <property name="phar.stub" value="stub.php"/>
 
     <fileset dir="." id="phar.files">
+        <include name="data/**"/>
         <include name="vendor/erebot/api/**"/>
         <include name="vendor/erebot/dependency-injection/**"/>
         <include name="vendor/erebot/generic-doc/**"/>

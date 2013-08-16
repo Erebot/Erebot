@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot dev-master\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2013-07-19 16:58+0200\n"
+"POT-Creation-Date: 2013-08-15 14:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgid ""
 "    2: =#0= weeks;"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 268
+# File: src/Erebot/CLI.php, line: 266
 msgid "A modular IRC bot written in PHP"
 msgstr ""
 #
@@ -69,11 +69,11 @@ msgstr ""
 msgid "Connection failed, removing it from the pool"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 470
+# File: src/Erebot/CLI.php, line: 468
 msgid "Could not change umask"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 499
+# File: src/Erebot/CLI.php, line: 497
 msgid "Could not chdir to \"%(path)s\""
 msgstr ""
 #
@@ -81,24 +81,24 @@ msgstr ""
 msgid "Could not connect to \"%(uri)s\""
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 740
+# File: src/Erebot/CLI.php, line: 738
 msgid "Could not lock pidfile (%(pidfile)s). Is the bot already running?"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 578
+# File: src/Erebot/CLI.php, line: 576
 msgid "Could not set group identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 639
+# File: src/Erebot/CLI.php, line: 637
 msgid "Could not set user identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 443
-# File: src/Erebot/CLI.php, line: 488
+# File: src/Erebot/CLI.php, line: 441
+# File: src/Erebot/CLI.php, line: 486
 msgid "Could not start in the background (unable to fork)"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 476
+# File: src/Erebot/CLI.php, line: 474
 msgid "Could not start in the background (unable to setsid)"
 msgstr ""
 #
@@ -110,7 +110,7 @@ msgstr ""
 msgid "Dispatching numeric %(code)s."
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 314
+# File: src/Erebot/CLI.php, line: 312
 msgid ""
 "Do not run the bot in the background. This is the default, unless the -d "
 "option is used or the bot is configured otherwise."
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Erebot has stopped"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 687
+# File: src/Erebot/CLI.php, line: 685
 msgid "Erebot is already running with PID %(pid)d"
 msgstr ""
 #
@@ -128,11 +128,11 @@ msgstr ""
 msgid "Erebot is starting"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 711
+# File: src/Erebot/CLI.php, line: 709
 msgid "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". Exiting"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 697
+# File: src/Erebot/CLI.php, line: 695
 msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
 msgstr ""
 #
@@ -150,7 +150,7 @@ msgstr ""
 msgid "Limit:"
 msgstr ""
 #
-# File: src/Erebot/Config/Main.php, line: 280
+# File: src/Erebot/Config/Main.php, line: 282
 msgid "Loaded configuration data"
 msgstr ""
 #
@@ -174,19 +174,19 @@ msgstr ""
 msgid "No more connections to handle, leaving..."
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 569
+# File: src/Erebot/CLI.php, line: 567
 msgid "No such group \"%(group)s\""
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 630
+# File: src/Erebot/CLI.php, line: 628
 msgid "No such user \"%(user)s\""
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 555
+# File: src/Erebot/CLI.php, line: 553
 msgid "Only root can change group identity! Your current UID is %(uid)d"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 616
+# File: src/Erebot/CLI.php, line: 614
 msgid "Only root can change user identity! Your current UID is %(uid)d"
 msgstr ""
 #
@@ -194,11 +194,11 @@ msgstr ""
 msgid "PHP archive"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 762
+# File: src/Erebot/CLI.php, line: 760
 msgid "PID (%(pid)d) written into %(pidfile)s"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 285
+# File: src/Erebot/CLI.php, line: 283
 msgid ""
 "Path to the configuration file to use instead of \"Erebot.xml\", relative to "
 "the current directory."
@@ -220,39 +220,39 @@ msgstr ""
 msgid "Reusing existing connection for network \"%(network)s\""
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 301
+# File: src/Erebot/CLI.php, line: 299
 msgid ""
 "Run the bot in the background (daemon). [requires the POSIX and pcntl "
 "extensions]"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 344
+# File: src/Erebot/CLI.php, line: 342
 msgid ""
 "Set group identity to this GID/group during startup. The default is to NOT "
 "change group identity, unless configured otherwise. [requires the POSIX "
 "extension]"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 361
+# File: src/Erebot/CLI.php, line: 359
 msgid ""
 "Set user identity to this UID/username during startup. The default is to NOT "
 "change user identity, unless configured otherwise. [requires the POSIX "
 "extension]"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 437
+# File: src/Erebot/CLI.php, line: 435
 msgid "Starting the bot in the background..."
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 330
+# File: src/Erebot/CLI.php, line: 328
 msgid "Store the bot's PID in this file."
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 591
+# File: src/Erebot/CLI.php, line: 589
 msgid "Successfully changed group identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 651
+# File: src/Erebot/CLI.php, line: 649
 msgid "Successfully changed user identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
@@ -268,33 +268,33 @@ msgstr ""
 msgid "Successfully reloaded the configuration"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 521
+# File: src/Erebot/CLI.php, line: 519
 msgid "Successfully started in the background"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 422
+# File: src/Erebot/CLI.php, line: 420
 msgid ""
 "The pcntl extension is required in order to start the bot in the background"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 673
+# File: src/Erebot/CLI.php, line: 671
 msgid "The pidfile (%(pidfile)s) contained garbage. Exiting"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 547
+# File: src/Erebot/CLI.php, line: 545
 msgid "The posix extension is needed in order to change group identity."
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 608
+# File: src/Erebot/CLI.php, line: 606
 msgid "The posix extension is needed in order to change user identity."
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 412
+# File: src/Erebot/CLI.php, line: 410
 msgid ""
 "The posix extension is required in order to start the bot in the background"
 msgstr ""
 #
-# File: src/Erebot/Config/Main.php, line: 267
+# File: src/Erebot/Config/Main.php, line: 269
 msgid ""
 "This configuration file is meant for Erebot %(config_version)s, but you are "
 "running version %(code_version)s. Things may not work as expected."
@@ -304,11 +304,11 @@ msgstr ""
 msgid "Trying to connect to \"%(uri)s\"..."
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 753
+# File: src/Erebot/CLI.php, line: 751
 msgid "Unable to write PID to pidfile (%(pidfile)s)"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 724
+# File: src/Erebot/CLI.php, line: 722
 msgid ""
 "Unknown error while checking for the existence of another running instance of "
 "Erebot (%(error)s)"
@@ -318,7 +318,7 @@ msgstr ""
 msgid "Used:"
 msgstr ""
 #
-# File: src/Erebot/CLI.php, line: 780
+# File: src/Erebot/CLI.php, line: 778
 msgid "You SHOULD NOT run Erebot as root!"
 msgstr ""
 #
