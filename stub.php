@@ -144,7 +144,7 @@ try {
         // Take the module's metadata into account.
         $pharPath = $moduleInfo->getPathName();
 
-        unset($e);
+        $e = NULL;
         try {
             ob_start();
             $metadata = $inc($pharPath);
