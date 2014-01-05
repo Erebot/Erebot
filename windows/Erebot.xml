@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<!--
+    You will probably want to adjust the "language" and "timezone"
+    attributes to match your environment.
+    The "version" attribute should match the version of Erebot
+    you are using.
+-->
+<configuration
+    xmlns="http://www.erebot.net/xmlns/erebot"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="0.6.0"
+    language="fr-FR"
+    timezone="Europe/Paris">
+
+    <modules>
+        <!--
+            First, we load a few core modules.
+            Note:
+                The configuration of each module can be overriden
+                at the network, server or channel level when it
+                makes sense.
+                See the configuration of "Erebot_Module_AutoConnect"
+                for the "IIEns" IRC network below for an example.
+        -->
+        <module name="Erebot_Module_AutoConnect"/>
+        <module name="Erebot_Module_CtcpResponder"/>
+
+        <!-- Define the bot's identity when connecting to IRC networks. -->
+        <module name="Erebot_Module_IrcConnector">
+            <param name="nickname"      value="NewErebotUser"/>
+            <param name="identity"      value="Erebot"/>
+            <param name="hostname"      value="Erebot"/>
+            <param name="realname"      value="New Erebot User"/>
+            <param name="quit_message"  value=""/>
+        </module>
+        <module name="Erebot_Module_PingReply"/>
+    </modules>
+
+    <networks>
+        <!--
+            This is the IRC network where Erebot's channel is hosted.
+            The network is intended for french speakers, but discussion
+            in Erebot's channel usually takes place in english.
+        -->
+        <network name="IIEns" language="fr-FR">
+            <modules>
+                <!--
+                    Set "active" to "true" or remove the line altogether
+                    if you want the bot to connect to this IRC network
+                    automatically when started.
+                -->
+                <module name="Erebot_Module_AutoConnect" active="false" />
+            </modules>
+
+            <servers>
+                <server url="irc://[2a01:e35:2e30:c120::28]:6667/" />
+                <server url="irc://irc.iiens.net:6667/" />
+                <server url="irc://irc.secours.iiens.net:6667/" />
+            </servers>
+
+            <channels>
+                <!--
+                    Override the language for Erebot's channel
+                    so that the bot speaks english in there.
+                -->
+                <channel name="#Erebot" language="en-US">
+                    <modules>
+                        <!--
+                            The bot will join this channel automatically
+                            when connecting to this IRC network.
+                        -->
+                        <module name="Erebot_Module_AutoJoin" />
+                    </modules>
+                </channel>
+            </channels>
+        </network>
+    </networks>
+</configuration>

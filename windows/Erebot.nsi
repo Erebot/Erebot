@@ -45,7 +45,7 @@
 
   ;Name and file
   Name              "Erebot"
-  OutFile           "${INST_FILE}"
+  OutFile           "../build/${INST_FILE}"
   XPStyle           on
   ShowInstDetails   show
   ShowUnInstDetails show
@@ -67,7 +67,7 @@
 ;--------------------------------
 ;Interface Settings
 
-  !define MUI_ICON                      "../Erebot.ico"
+  !define MUI_ICON                        "Erebot.ico"
   !define MUI_FINISHPAGE_NOAUTOCLOSE
   !define MUI_UNFINISHPAGE_NOAUTOCLOSE
   !define MUI_ABORTWARNING
@@ -85,7 +85,7 @@
   ;Install pages
   !insertmacro MUI_PAGE_WELCOME
   !insertmacro MULTIUSER_PAGE_INSTALLMODE
-  !insertmacro MUI_PAGE_LICENSE "../../LICENSE"
+  !insertmacro MUI_PAGE_LICENSE "../LICENSE"
   !define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfAlreadyInstalled
   !insertmacro MUI_PAGE_DIRECTORY
   Page custom retrieveModuleList
@@ -362,9 +362,8 @@ Section "Erebot" section_Erebot
 
   File "${MUI_ICON}"
   File "launch.bat"
-  File "/oname=Erebot.xml" "../../examples/Erebot-multiple-files.xml.dist"
-  File /r "../../examples/conf.d"
-  File "../../data/defaults.xml"
+  File "Erebot.xml"
+  File "../data/defaults.xml"
 
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     ;Create shortcuts
