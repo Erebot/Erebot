@@ -6,9 +6,6 @@ php:
     - 5.4
     - 5.5
 
-branches:
-    only: master
-
 notifications:
     email: false
     irc: "irc.iiens.net#Erebot"
