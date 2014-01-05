@@ -10,9 +10,9 @@ You can find more information about this project on the following websites:
 
 *   https://www.erebot.net/ |---| The official website.
 *   https://github.com/Erebot/Erebot/ |---| Project page on GitHub.
-*   https://pear.erebot.net/ |---| PEAR channel for the project.
-*   https://buildbot.erebot.net/ |---| Our Continuous Integration server.
-*   http://travis-ci.org/#!/Erebot/Erebot |---| Travis Continuous Integration.
+*   https://packages.erebot.net/ |---| Repository for the project.
+*   https://ci.erebot.net/ |---| Our Continuous Integration server.
+*   http://travis-ci.org/Erebot/Erebot |---| Travis Continuous Integration.
 
 Contents:
 
@@ -30,12 +30,19 @@ Contents:
     TODO
     License
 
-Current status on http://travis-ci.org/:
+Badges: |badges-travis| |badges-versioneye| |badges-coveralls|
 
-..  image:: https://secure.travis-ci.org/Erebot/Erebot.png
-    :alt: unknown
-    :target: http://travis-ci.org/#!/Erebot/Erebot
+..  |badges-travis| image:: https://travis-ci.org/Erebot/Erebot.png?branch=master
+    :alt: Travis-CI (unknown)
+    :target: http://travis-ci.org/Erebot/Erebot
 
+..  |badges-versioneye| image:: https://www.versioneye.com/php/erebot:erebot/dev-master/badge.png
+    :alt: Versioneye (unknown)
+    :target: https://www.versioneye.com/php/erebot:erebot/dev-master
+
+..  |badges-coveralls| image:: https://coveralls.io/repos/Erebot/Erebot/badge.png?branch=master
+    :alt: Coveralls (unknown)
+    :target: https://coveralls.io/r/Erebot/Erebot?branch=master
 
 ..  |---| unicode:: U+02014 .. em dash
     :trim:

@@ -27,21 +27,22 @@ Each dependency is associated with a "profile" which indicates who might be
 interested in installing that particular dependency.
 Currently, the following profiles are used:
 
-"end-user"
-    Someone who wants to run the bot, ie. have it connect to and interact
-    with some IRC server. Only a few dependencies are required for this
-    profile.
+..  glossary::
+    :sorted:
 
-"packager"
-    Someone who creates packages from Erebot's source code. Currently, this
-    refers only to the people who create PEAR packages (both v1 and v2) or
-    PHAR archives based on the code. This profile does not include
-    distribution maintainers (yet).
+    end-user
+        Someone who wants to run the bot, ie. have it connect to and interact
+        with some IRC server. Only a few dependencies are required for this
+        profile.
 
-"developer"
-    Someone who contributes to the project, eg. by sending patches or pull
-    requests. The developer profile is usually a superset of the end-user
-    profile as developers tend to run the bot to test their work.
+    packager
+        Someone who creates (PHAR) packages from Erebot's source code.
+        This profile does not include distribution maintainers.
+
+    developer
+        Someone who contributes to the project, eg. by sending patches or pull
+        requests. The developer profile is usually a superset of the end-user
+        profile as developers tend to run the bot to test their work.
 
 You only need to install the dependencies associated with the profile that
 best matches what you plan on doing.
@@ -50,37 +51,19 @@ best matches what you plan on doing.
 System dependencies
 -------------------
 
-The following table lists system dependencies. It is assumed that the reader
-has a working package manager which can be used to install those dependencies,
-usually by issuing one of these commands **as a privileged user**, followed by
-the name of the package that provides the dependency:
+The following table lists system dependencies. Make sure to read
+the installation instructions relevant to your system **before**
+you start the installation:
 
-*   For Linux distributions
-
-    ..  sourcecode:: bash
-
-        root@localhost:~# # For apt-based distributions (eg. Debian, Ubuntu).
-        root@localhost:~# apt-get install <package>
-
-        root@localhost:~# # For yum-based distributions (eg. Fedora, RedHat, CentOS).
-        root@localhost:~# yum install <package>
-
-        root@localhost:~# # For urpmi-based distributions (eg. Mandriva).
-        root@localhost:~# urpmi <package>
-
-        root@localhost:~# # For Zypper-based distributions (eg. SuSE)
-        root@localhost:~# zypper install <package>
-
-*   For Windows systems, please refer to the special instructions given
-    below.
+* `Instructions for Linux users`_
+* `Instructions for Windows users`_
 
 For each profile, a "yes" on a dependency's row indicates that users of the
 given profile **MUST** install that dependency (requirement). Optional
 dependencies are indicated using footnotes which state when the dependency
 may be of any interest for the given profile.
 
-For apt-based systems, an installation link is provided (using the ``apt``
-URI scheme).
+For apt-based systems like Debian/Ubuntu, an installation link is also provided.
 
 ..  list-table:: System dependencies for Erebot
     :widths: 10 10 5 5 5 65
@@ -88,21 +71,21 @@ URI scheme).
 
     *   -   Dependency
         -   APT link
-        -   Developer
-        -   Packager
-        -   End-user
+        -   :term:`Developer`
+        -   :term:`Packager`
+        -   :term:`End-user`
         -   Description
-    *   -   doxygen
-        -   `Debian/Ubuntu <apt:doxygen>`__
+    *   -   `doxygen <http://www.stack.nl/~dimitri/doxygen/download.html#latestsrc>`_
+        -   `Install using apt <apt:doxygen>`__
         -   yes
         -   yes
         -
         -   ``doxygen`` is needed if you plan to generate the documentation
-            from Erebot's' source files. We recommend version 1.7.2 or later
+            from Erebot's source files. We recommend version 1.7.2 or later
             as Erebot makes heavy use of PHP type-hinting and ``doxygen``
             did not support that until 1.7.2.
     *   -   gettext
-        -   `Debian/Ubuntu <apt:gettext>`__
+        -   `Install using apt <apt:gettext>`__
         -   yes
         -   yes
         -
@@ -112,8 +95,8 @@ URI scheme).
             ..  note::
 
                 This is **NOT** the same as the PHP ``gettext`` extension.
-    *   -   xmlstarlet
-        -   `Debian/Ubuntu <apt:xmlstarlet>`__
+    *   -   `xmlstarlet <http://xmlstar.sourceforge.net/download.php>`_
+        -   `Install using apt <apt:xmlstarlet>`__
         -
         -   yes
         -
@@ -121,23 +104,62 @@ URI scheme).
             We use it during packaging to set various settings in the
             :file:`package.xml` file.
 
-Special instructions for Windows users
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As Windows lacks a central package manager, a different set of instructions is
-necessary.
+Instructions for Linux users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-I have yet to find a gettext binary for Windows that ships with a recent version
-of gettext and hence can support all the options used by Erebot.
-For now, a workaround is to `install Cygwin`_ and its gettext package on your
-machine. Refer to `Cygwin's website`_ for additional information.
-Another solution is to compile your own version of gettext from scratch
-using for example the Mingw compiler.
+It is assumed that the reader has a working package manager which can be used
+to install those dependencies, usually by issuing one of the following commands
+**as a privileged user**, followed by the name of the package that provides
+the dependency:
 
-Hopefully, installing Doxygen on Windows is a lot simpler. Just grab the binary
-release relevant to your system from `Doxygen's download page`_.
+..  sourcecode:: bash
 
-This setup is what we use (combined with PHP 5.3.8) to test Erebot with our
+    root@localhost:~# # For apt-based distributions (eg. Debian, Ubuntu).
+    root@localhost:~# apt-get install <package>
+
+    root@localhost:~# # For yum-based distributions (eg. Fedora, RedHat, CentOS).
+    root@localhost:~# yum install <package>
+
+    root@localhost:~# # For urpmi-based distributions (eg. Mandriva).
+    root@localhost:~# urpmi <package>
+
+    root@localhost:~# # For Zypper-based distributions (eg. SuSE)
+    root@localhost:~# zypper install <package>
+
+Instructions for Windows users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As Windows lacks a central package manager, each dependency must be downloaded
+and installed separately, using its specific procedure.
+
+For Doxygen, this is easy, just go to `Doxygen's download page`_.
+The same goes for XMLStarlet whose Windows version can easily be downloaded
+from their `download page <http://xmlstar.sourceforge.net/download.php>`_.
+
+Installing gettext for Windows is a little bit thougher.
+First, go to http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/
+and download the latest version (0.18.1.1-2 as of this writing)
+of the following archives :
+
+* `gettext-runtime-dev <http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-dev_0.18.1.1-2_win32.zip>`_
+* `gettext-runtime <http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime_0.18.1.1-2_win32.zip>`_
+* `gettext-tools-dev <http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-tools-dev_0.18.1.1-2_win32.zip>`_
+
+Unzip each of these files to the same target folder (eg. ``C:\gettext``).
+
+..  note::
+
+    So as to avoid potential issues, we recommend that you unzip the files
+    in a folder whose name is both short (eg. your disk drive's root)
+    and does not contain any special character (including spaces).
+
+Once you are done, point your system's :envvar:`PATH` environment variable
+to that folder's ``bin`` subdirectory (ie. ``C:\gettext\bin``).
+The remaining folders (lib, include, share, etc.) are not required
+and can safely be removed if disk space is an issue.
+
+This setup is what we use to test Erebot on Windows on our
 `Continuous Integration server`_.
 
 
@@ -252,109 +274,93 @@ available for each dependency.
     :header-rows: 1
 
     *   -   Dependency
-        -   Developer
-        -   Packager
-        -   End-user
+        -   :term:`Developer`
+        -   :term:`Packager`
+        -   :term:`End-user`
         -   Description
-    *   -   :pecl:`DOM`
+    *   -   :php:`DOM`
         -   yes
         -
         -   yes
         -   The DOM extension parses an |XML| document into a |DOM|, making it
             easier to work with from a developer's point of view.
-    *   -   :pecl:`intl`
+    *   -   :php:`intl`
         -   yes
         -   yes
         -   yes
         -   Provides several helper classes to ease work on |i18n|
             in PHP applications.
-    *   -   :pecl:`libxml`
+    *   -   :php:`libxml`
         -   yes
         -
         -   yes
         -   This extension is a thin wrapper above the C `libxml2`_ library
             and is used by other extensions (DOM, SimpleXML, XML, etc.) that
             deal with |XML| documents.
-    *   -   :pecl:`openssl`
+    *   -   :php:`openssl`
         -
         -
-        -   [1]_
+        -   [#footnotes_openssl]_
         -   Provides `SSL`_/`TLS`_ support (secure communications) for PHP.
-    *   -   :pecl:`pcntl`
+    *   -   :php:`pcntl`
         -
         -
-        -   [2]_
+        -   [#footnotes_pcntl]_
         -   Process management using PHP. The functions provided by this
             extension can be used to communicate with other processes
             from PHP (using signals) and to exercise some sort of control
             over them.
-    *   -   :pecl:`Phar`
+    *   -   :php:`Phar`
         -
-        -   [3]_
-        -   [4]_
+        -   [#footnotes_phar_package]_
+        -   [#footnotes_phar_run]_
         -   This extension is used to create or access a PHP Archive (phar).
-    *   -   :pecl:`POSIX`
+    *   -   :php:`POSIX`
         -
         -
-        -   [5]_
+        -   [#footnotes_posix]_
         -   Provides access to several functions only featured by
             `POSIX`_-compliant operating systems.
-    *   -   :pecl:`Reflection`
+    *   -   :php:`Reflection`
         -   yes
         -
         -   yes
         -   This extension makes it possible for some PHP code to inspect its
             own structure.
-    *   -   :pecl:`SimpleXML`
+    *   -   :php:`SimpleXML`
         -   yes
         -
         -   yes
         -   Wrapper around `libxml2`_ designed to make working with |XML|
             documents easier.
-    *   -   :pecl:`sockets`
+    *   -   :php:`sockets`
         -   yes
         -
         -   yes
         -   This extensions provides networking means for PHP applications.
-    *   -   :pecl:`SPL`
+    *   -   :php:`SPL`
         -   yes
         -
         -   yes
         -   The `Standard PHP Library`_ provides several functions and classes
             meant to deal with common usage patterns, improving code reuse.
-    *   -   :pecl:`SQLite3`
-        -
-        -   yes [6]_
-        -
-        -   Wrapper around version 3 of the C `SQLite`_ library.
-    *   -   `pecl.php.net/xdebug`_
-        -   yes
+    *   -   `xdebug <http://xdebug.org/>`_
+        -   [#footnotes_xdebug]_
         -
         -
         -   Debugging execution of PHP code is made possible by this extension.
             It can also be used to retrieve some metrics on the code (like
             code coverage information).
-    *   -   :pecl:`XMLReader`
-        -
-        -   yes [6]_
-        -
-        -   A simple extension to read |XML| documents without having to build
-            a full |DOM| in memory first.
-    *   -   :pecl:`XMLWriter`
-        -
-        -   yes [6]_
-        -
-        -   XMLReader's counterpart to write XML documents.
-    *   -   XSL
-        -   yes [7]_
+    *   -   :php:`XSL`
+        -   yes
         -
         -
         -   The XSL extension implements the XSL standard, performing
             `XSLT transformations`_ using the `libxslt library`_.
-    *   -   :pecl:`mbstring`
-            or :pecl:`iconv`
-            or :pecl:`recode`
-            or :pecl:`XML`
+    *   -   :php:`mbstring`
+            or :php:`iconv`
+            or :php:`recode`
+            or :php:`XML`
         -   yes
         -
         -   yes
@@ -365,24 +371,32 @@ available for each dependency.
 
 ..  _`Standard PHP Library`:
     http://php.net/spl
-..  _`pecl.php.net/xdebug`:
-    http://xdebug.org/
 ..  _`XSLT transformations`:
     http://www.w3.org/TR/xslt
 ..  _`libxslt library`:
     http://xmlsoft.org/XSLT/
 
-..  [1] Needed if you want to connect to IRC servers using a secure
+..  [#footnotes_openssl]
+    Needed if you want to connect to IRC servers using a secure
     (encrypted) connection. Required when running Erebot from a PHAR archive
     (used to check the archive's origin and integrity).
-..  [2] Required for daemonization and to change user/group information
+
+..  [#footnotes_pcntl]
+    Required for daemonization and to change user/group information
     upon startup. Not available on Windows.
-..  [3] Only required to package Erebot as a ``.phar`` archive.
-..  [4] Only required to run Erebot from a ``.phar`` archive.
-..  [5] Required to change user/group information upon startup.
+
+..  [#footnotes_phar_package]
+    Only required to package Erebot as a ``.phar`` archive.
+
+..  [#footnotes_phar_run]
+    Only required to run Erebot from a ``.phar`` archive.
+
+..  [#footnotes_posix]
+    Required to change user/group information upon startup.
     Not available on Windows.
-..  [6] This dependency is inherited from Pyrus (which we use to package Erebot).
-..  [7] Only required to run the test suite.
+
+..  [#footnotes_xdebug]
+    Only required to run the test suite.
 
 
 PEAR packages
@@ -409,7 +423,7 @@ available for each dependency.
         -   End-user
         -   Description
     *   -   `pear.pdepend.org/PHP_Depend`_
-        -   [7]_
+        -   [#footnotes_qa_depend]_
         -
         -
         -   PHP Depend gives several metrics on PHP code such as adherence
@@ -436,7 +450,7 @@ available for each dependency.
             parse `gettext`_ translation catalogs, like the ones provided
             with Erebot.
     *   -   :pear:`PHP_CodeSniffer`
-        -   yes [8]_
+        -   yes [#footnotes_qa_codesniffer]_
         -
         -
         -   This package tokenizes PHP files and detects violations of a
@@ -450,31 +464,40 @@ available for each dependency.
             and is used by Erebot and its modules to create parsers for several
             grammars (eg. to parse expressions in styles).
     *   -   `pear.phpmd.org/PHP_PMD`_
-        -   [9]_
+        -   [#footnotes_qa_mess]_
         -
         -
         -   The PHP Mess Detector parses PHP files to detect overly complex
             code patterns, making it easier for developpers to refactor their
             code and to improve its readability.
     *   -   `pear.phpunit.de/phpcpd`_
-        -   [10]_
+        -   [#footnotes_qa_duplicates]_
         -
         -
         -   The PHP Copy/Paste Detector detects abusive duplication of PHP code.
     *   -   `pear.phpunit.de/PHPUnit`_ >= 3.4.0
-        -   [11]_
+        -   [#footnotes_phpunit]_
         -
         -
         -   PHP unit test framework used by Erebot. Pull requests should
             generally contain one or more unit test before they can be
             considered for review.
 
-..  [7] Required to use the ``qa_depend`` phing target.
-..  [8] Required to use the ``qa_codesniffer`` phing target,
+..  [#footnotes_qa_depend]
+    Required to use the ``qa_depend`` phing target.
+
+..  [#footnotes_qa_codesniffer]
+    Required to use the ``qa_codesniffer`` phing target,
     which should **ALWAYS** be called before submitting a patch.
-..  [9] Required to use the ``qa_mess`` phing target.
-..  [10] Required to use the ``qa_duplicates`` phing target.
-..  [11] Required to use any of the ``qa_coverage``, ``qa_test``,
+
+..  [#footnotes_qa_mess]
+    Required to use the ``qa_mess`` phing target.
+
+..  [#footnotes_qa_duplicates]
+    Required to use the ``qa_duplicates`` phing target.
+
+..  [#footnotes_phpunit]
+    Required to use any of the ``qa_coverage``, ``qa_test``,
     ``test`` or ``tests`` phing targets.
 
 ..  _`pear.pdepend.org/PHP_Depend`:

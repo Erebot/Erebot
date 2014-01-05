@@ -1,3 +1,5 @@
+..  _`Writing a new module`:
+
 Writing a new module
 ====================
 
@@ -167,6 +169,11 @@ This can be done using the following snippet:
     // value referring to it in a new callable object.
     $this->registerHelpMethod(new $cls(array($this, 'getHelp')));
 
+Alternatively, you may mark your module as implementing the
+:api:`Erebot_Interface_HelpEnabled` interface.
+In that case, the bot will automatically register the module's
+``getHelp()`` method as the help method.
+
 
 Frequently Asked Questions
 --------------------------
@@ -186,13 +193,18 @@ Even though you can do pretty much anything you want in a module,
 you should avoid long running tasks such as downloading a big file
 from a remote server.
 
-The reason is simple: PHP does not support multithreading, so while
-a long running task is being executed, the rest of the bot is literally
-stopped. This includes other modules (like ``Erebot_Module_PingReply``)
-responsible for keeping the connection alive. Hence, running a long task
-in your module may result in the bot being disconnected from IRC servers
-with a "Ping timeout" error.
+The reason is simple: PHP does not support multithreading [#pthreads]_,
+so while a long running task is being executed, the rest of the bot
+is literally stopped. This includes other modules responsible for keeping
+the connection alive (``Erebot_Module_PingReply``).
+Hence, running a long task in your module may result in the bot
+being disconnected from IRC servers with a "Ping timeout" error.
 
+.. [#pthreads]
+    This is not entirely true anymore, as there is now an extension
+    that brings the power of pthreads to PHP. Anyway, PHP does not
+    natively support them and the extension has a few issues of its own.
+    See https://github.com/krakjoe/pthreads for more information.
 
 ..  _`styling features`:
 ..  _`format`:

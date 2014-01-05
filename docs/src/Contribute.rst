@@ -8,6 +8,7 @@ There are actually several ways by which would may contribute
 to the project:
 
 *   by `reporting new issues`_ (or asking for new features)
+*   by submitting `new modules`_
 *   by forking the code and sending `pull requests`_
 *   by running the tests suite (manually or by providing a `test machine`_)
 *   by submitting `new translations`_ (or patches for existing ones)
@@ -15,10 +16,21 @@ to the project:
 Whichever one it is, you may also `join our IRC channel`_ to discuss issues,
 new ideas / feature requests and follow the bot's development.
 
+..  _`new modules`:
+
+New modules
+-----------
+
+If you wish to contribute new modules, you should probably start by reading
+our :ref:`development guides <Writing a new module>`.
+Once your code is ready, make sure to send an email to erebot@erebot.net
+with a link to it so that your module can be added to our list of
+:ref:`Third-party modules`.
+
 ..  _`pull requests`:
 
-Code/patch
-----------
+Code/patch for Erebot's core and API
+------------------------------------
 
 If you plan on sending patches (or pull requests), please read our
 documentation on the `coding standard`_ used by Erebot developers first.
