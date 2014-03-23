@@ -26,17 +26,6 @@
         <include name="src/*Test.php"/>
     </fileset>
 
-    <target name="all" depends="erebot_buildenv.all" description=""/>
-
-    <target name="release" depends="all,erebot_buildenv.release,release_win"
-        description="Build a PHAR package &amp; Windows installer from the current code"/>
-
-    <target name="release_win">
-        <echo>Building installer for Erebot v${normalizedVersion}</echo>
-        <exec command="EREBOT_COMMIT=${commit} EREBOT_VERSION=${normalizedVersion} makensis windows/Erebot.nsi"
-            logoutput="true" checkreturn="true"/>
-    </target>
-
     <import file="vendor/erebot/buildenv/build.xml"/>
 </project>
 
