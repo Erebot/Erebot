@@ -31,8 +31,6 @@ class Erebot_Patches
      * Currently the following changes are made:
      * - ctype_digit() is emulated (in case it was
      *   disabled on the configure line).
-     * - declare(ticks=1) is used on PHP < 5.3.0
-     *   to allow signal dispatching.
      *
      * \return
      *      This method does not return anything.
@@ -53,10 +51,22 @@ class Erebot_Patches
             }
         }
 
-        // For older versions of PHP that support signals
-        // but don't support pcntl_signal_dispatch (5.2.x).
-        if (!function_exists('pcntl_signal_dispatch'))
-            declare(ticks=1);
+        set_error_handler(
+            function ($errno, $errstr, $errfile, $errline) {
+                if (($errno & error_reporting()) !== $errno) {
+                    return FALSE;
+                }
+
+                throw new \Erebot\ErrorReportingException(
+                   $errstr,
+                   $errno,
+                   $errfile,
+                   $errline
+                );
+            },
+            E_ALL
+        );
+
+        \Erebot\CallableWrapper\Init::initialize();
     }
 }
-

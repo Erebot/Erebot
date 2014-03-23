@@ -1,5 +1,6 @@
 {
-    "prefer-stable": true,
+    "prefer-stable": false,
+    "minimal-stability": "dev",
     "name": "erebot/erebot",
     "description": "A modular IRC bot for PHP 5.2+",
     "keywords": ["IRC", "bot"],
@@ -23,7 +24,6 @@
         "php": ">=5.3.0",
         "ext-ctype": "*",
         "ext-dom": "*",
-        "ext-intl": "*",
         "ext-libxml": "*",
         "ext-pcre": "*",
         "ext-Reflection": "*",
@@ -41,7 +41,7 @@
         "erebot/plop": "dev-master",
 
         "erebot/dom": "dev-master",
-        "erebot/timer": "dev-master",
+        "erebot/timer": "1.0.*@dev",
         "erebot/i18n": "dev-master",
         "erebot/callable-wrapper": "dev-master",
         "erebot/styling": "dev-master",

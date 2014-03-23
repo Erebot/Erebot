@@ -49,7 +49,7 @@ implements  Erebot_Interface_EventHandler
      *      associated with this handler to be called.
      */
     public function __construct(
-        Erebot_Interface_Callable       $callback,
+        \Erebot\Callable\CallableInterface $callback,
         Erebot_Interface_Event_Match    $filter = NULL
     )
     {
@@ -63,9 +63,10 @@ implements  Erebot_Interface_EventHandler
     }
 
     /// \copydoc Erebot_Interface_EventHandler::setCallback()
-    public function setCallback(Erebot_Interface_Callable $callback)
+    public function setCallback(\Erebot\Callable\CallableInterface $callback)
     {
         $this->_callback = $callback;
+        return $this;
     }
 
     /// \copydoc Erebot_Interface_EventHandler::getCallback()
@@ -78,6 +79,7 @@ implements  Erebot_Interface_EventHandler
     public function setFilter(Erebot_Interface_Event_Match $filter = NULL)
     {
         $this->_filter = $filter;
+        return $this;
     }
 
     /// \copydoc Erebot_Interface_EventHandler::getFilter()

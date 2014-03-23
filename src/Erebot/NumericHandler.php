@@ -37,7 +37,7 @@ implements  Erebot_Interface_NumericHandler
     /**
      * Constructs a numeric event handler.
      *
-     * \param Erebot_Interface_Callable $callback
+     * \param ::Erebot::Callable::CallableInterface $callback
      *      A callback function/method which will be called
      *      whenever the bot receives a message with the given
      *      \a $numeric code.
@@ -46,23 +46,17 @@ implements  Erebot_Interface_NumericHandler
      *      The particular numeric code this numeric handler will
      *      react to, or a reference to it.
      */
-    public function __construct(Erebot_Interface_Callable $callback, $numeric)
+    public function __construct(\Erebot\Callable\CallableInterface $callback, $numeric)
     {
         $this->setCallback($callback);
         $this->setNumeric($numeric);
-    }
-
-    /**
-     * Destructor.
-     */
-    public function __destruct()
-    {
     }
 
     /// \copydoc Erebot_Interface_NumericHandler::setNumeric()
     public function setNumeric($numeric)
     {
         $this->_numeric = $numeric;
+        return $this;
     }
 
     /// \copydoc Erebot_Interface_NumericHandler::getNumeric()
@@ -72,9 +66,10 @@ implements  Erebot_Interface_NumericHandler
     }
 
     /// \copydoc Erebot_Interface_NumericHandler::setCallback()
-    public function setCallback(Erebot_Interface_Callable $callback)
+    public function setCallback(\Erebot\Callable\CallableInterface $callback)
     {
         $this->_callback = $callback;
+        return $this;
     }
 
     /// \copydoc Erebot_Interface_NumericHandler::getCallback()
@@ -90,8 +85,9 @@ implements  Erebot_Interface_NumericHandler
             ? $this->_numeric->getValue()
             : $this->_numeric;
 
-        if ($numeric->getCode() !== $ourNumeric)
-            return NULL;
+        if ($numeric->getCode() !== $ourNumeric) {
+            return null;
+        }
 
         return $this->_callback->invoke($this, $numeric);
     }

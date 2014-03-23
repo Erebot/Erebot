@@ -191,7 +191,7 @@ implements  Erebot_Interface_Config_Main
                         DIRECTORY_SEPARATOR . 'config.rng';
         $mainSchema = file_get_contents($mainSchema);
         $ue         = libxml_use_internal_errors(TRUE);
-        $domxml     = new Erebot_DOM();
+        $domxml     = new \Erebot\DOM\DOM();
         if ($source == self::LOAD_FROM_FILE)
             $domxml->load((string) $file);
         else
@@ -204,7 +204,7 @@ implements  Erebot_Interface_Config_Main
         $errors     = $domxml->getErrors();
         libxml_use_internal_errors($ue);
 
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
         if (!$ok || count($errors)) {
             // Some unpredicted error occurred,
             // show some (hopefully) useful information.
