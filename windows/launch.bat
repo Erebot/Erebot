@@ -1,7 +1,7 @@
 @echo off
 
 echo Launching Erebot. Press Ctrl+C to stop the bot...
-rem The block is necessary to workaround issues in cmd.exe
+rem The block is necessary to work around issues in cmd.exe
 rem when running with codepage 65001 (UTF-8).
 (
     chcp 65001 > NUL

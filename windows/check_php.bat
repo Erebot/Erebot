@@ -1,13 +1,13 @@
 @echo off
 set minmajor=5
-set minminor=2
-set minpatch=1
+set minminor=3
+set minpatch=3
 
 for %%F in ("%0") do set dirname=%%~dpF
 php.exe -r "echo phpversion().PHP_EOL;" > "%dirname%\phpversion.txt"
 if %ERRORLEVEL% neq 0 (
-    echo PHP %minmajor%.%minminor%.%minpatch% or later must be installed    >   "%dirname%\phperror.log"
-    echo for Erebot to work properly.                                       >>  "%dirname%\phperror.log"
+    echo PHP %minmajor%.%minminor%.%minpatch% or later must be installed
+    echo for Erebot to work properly
     echo PHP not found
     exit /B 1
 )
@@ -25,8 +25,8 @@ if %vmajor% equ %minmajor% if %vminor% gtr %minminor% goto supported
 if %vmajor% equ %minmajor% if %vminor% equ %minminor% if %vpatch% geq %minpatch% goto supported
 
 echo Unsupported PHP version
-echo PHP %minmajor%.%minminor%.%minpatch% or later must be installed    >   "%dirname%\phperror.log"
-echo for Erebot to work properly.                                       >>  "%dirname%\phperror.log"
+echo PHP %minmajor%.%minminor%.%minpatch% or later must be installed
+echo for Erebot to work properly.
 exit /B 1
 
 :supported
@@ -42,15 +42,15 @@ for %%a in (DOM iconv intl libxml Phar Reflection SimpleXML sockets SPL) do (
     if !found! equ 0 (
         set haserrors=1
         echo NOT FOUND
-        echo PECL extension "%%a" not found. >>  "%dirname%\phperror.log"
+        echo PECL extension "%%a" not found.
     ) else (
         echo ok
     )
 )
 if !haserrors! equ 1 (
-    echo. >> "%dirname%\phperror.log"
-    echo Please install and enable the extensions above in your php.ini file first. >> "%dirname%\phperror.log"
-    echo Once those errors have been corrected, you may run the installer again. >> "%dirname%\phperror.log"
+    echo.
+    echo Please install and enable the extensions above in your php.ini first.
+    echo Once those errors have been corrected, you may run the installer again.
     exit /B 1
 )
 exit /B 0

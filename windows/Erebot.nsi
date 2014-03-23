@@ -14,7 +14,7 @@
   !define EREBOT_DESC     "A modular IRC bot written in PHP"
   !define UNINST_KEY      "Software\Microsoft\Windows\CurrentVersion\Uninstall\Erebot"
   !define SW_KEY          "Software\Erebot"
-  !define PEAR_BASE       "http://pear.erebot.net"
+  !define REPO_BASE       "http://packages.erebot.net"
   !define INST_FILE       "Erebot.exe"
   !define URL_HOMEPAGE    "http://www.erebot.net/"
   !define URL_SUPPORT     "https://github.com/Erebot/Erebot/issues"
@@ -33,11 +33,14 @@
   !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY        "${SW_KEY}"
   !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME  ""
 
+  ; Built-in scripts.
   !include "MultiUser.nsh"  ; Multiuser mode
   !include "MUI2.nsh"       ; Modern UI
   !include "FileFunc.nsh"   ; Compute install size
-  !include "XML.nsh"        ; XML manipulation
+
+  ; Custom scripts.
   !include "version.nsh"    ; PHP version comparison
+;  !include "StrChr.nsh"     ; Substring index
 
 
 ;--------------------------------
@@ -88,15 +91,15 @@
   !insertmacro MUI_PAGE_LICENSE "../LICENSE"
   !define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfAlreadyInstalled
   !insertmacro MUI_PAGE_DIRECTORY
-  Page custom retrieveModuleList
+  Page custom prepareModulesPage
   !insertmacro MUI_PAGE_COMPONENTS
+
   ;Start Menu Folder Page Configuration
   !define MUI_STARTMENUPAGE_REGISTRY_ROOT       "HKCU"
   !define MUI_STARTMENUPAGE_REGISTRY_KEY        "${SW_KEY}"
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME  "Start Menu Folder"
   !define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfAlreadyHasMenu
   !insertmacro MUI_PAGE_STARTMENU               Application $StartMenuFolder
-  !define MUI_PAGE_CUSTOMFUNCTION_PRE checkPrerequisites
   !insertmacro MUI_PAGE_INSTFILES
   !insertmacro MUI_PAGE_FINISH
 
@@ -142,13 +145,13 @@
   Section "" "module_${NB_SECTIONS}"
     SectionIn 1
     SectionGetText "${module_${NB_SECTIONS}}" $0
-    Push $0
-    Call getModuleName
-    Pop $0
-    ${If} $0 != ""
-      Push $0
-      Call dlModule
-    ${EndIf}
+;    Push $0
+;    Call getModuleName
+;    Pop $0
+;    ${If} $0 != ""
+;      Push $0
+;      Call dlModule
+;    ${EndIf}
   SectionEnd
   !define OLD_NB_SECTIONS ${NB_SECTIONS}
   !undef NB_SECTIONS
@@ -185,49 +188,6 @@ Function un.onInit
   !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd
 
-Function getVersion ; (string component)
-  Pop $2
-  ${xml::LoadFile} "$PLUGINSDIR\summary.xml" $0
-  ${xml::RootElement} $1 $0
-  ${xml::XPathNode} "/packages/p/n[text()='$2']" $0
-  ${xml::Parent} $1 $0
-  ${xml::FirstChildElement} "v" $1 $0
-  ${xml::GetText} $0 $1
-  ${xml::Unload}
-  Push $0
-FunctionEnd
-
-Function dlModule
-  Pop $0
-  Push $0 ; Save module name (no prefix)
-
-  DetailPrint "Downloading Erebot_Module_$0..."
-  inetc::get /CAPTION "Erebot_Module_$0" /POPUP "" /RESUME "" \
-    "${PEAR_BASE}/get/Erebot_Module_$0-latest.phar" \
-    "Erebot_Module_$0-latest.phar" \
-    "${PEAR_BASE}/get/Erebot_Module_$0-latest.phar.pubkey" \
-    "Erebot_Module_$0-latest.phar.pubkey" \
-    /END
-  Pop $0 # return value = exit code, "OK" if OK
-
-  Pop $0  ; Restore module name (no prefix)
-  Push $0
-  Push "Erebot_Module_$0"
-  Call getVersion
-  Pop $0  ; Version
-  Pop $1  ; Module name (no prefix)
-  WriteRegStr HKCU "${SW_KEY}\versions" "Erebot_Module_$1" "$0"
-FunctionEnd
-
-Function retrieveModuleList
-  InitPluginsDir
-  SetOutPath "$PLUGINSDIR"
-  inetc::get /CAPTION "Erebot" /POPUP "" /RESUME "" \
-    "${PEAR_BASE}/summary.xml" "summary.xml" /END
-  SetOutPath "$INSTDIR"
-  Call listModules
-FunctionEnd
-
 Function skipIfAlreadyInstalled
   ; @FIXME: $INSTDIR lacks the colon when read back.
   ; Apparently, this was made by design ($INSTDIR is
@@ -249,101 +209,47 @@ Function skipIfAlreadyHasMenu
   ${EndIf}
 FunctionEnd
 
+Function prepareModulesPage
+  InitPluginsDir
+  Call checkPrerequisites
+  Call retrieveModuleList
+  Call listModules
+FunctionEnd
+
 Function checkPrerequisites
   SetOutPath "$PLUGINSDIR"
   File "check_php.bat"
 
   ClearErrors
-  ExecWait 'cmd.exe /C "$PLUGINSDIR\check_php.bat"'
-  IfErrors 0 noerror
-    ClearErrors
-    MessageBox MB_ICONSTOP|MB_OK "Could not check prerequisites"
+  MessageBox MB_OK "Executing $PLUGINSDIR\check_php.bat"
+  Push $0 ; Save $0
+  nsExec::ExecToStack '"$PLUGINSDIR\check_php.bat"'
+  Pop $0 ; Return code
+  ${If} $0 != 0
+    Pop $0 ; Output
+    MessageBox MB_ICONSTOP|MB_OK "$0"
     Quit
-  noerror:
-    IfFileExists "$PLUGINSDIR\phperror.log" 0 noerrlog
-      FileOpen  $0 "$PLUGINSDIR\phperror.log" r
-      StrCpy $1 ""
-      ${Do}
-        FileRead  $0 $2
-        StrCpy $1 "$1$2"
-      ${LoopUntil} "$2" == ""
-      FileClose $0
-      MessageBox MB_ICONSTOP|MB_OK "$1"
-      Quit
-  noerrlog:
-    SetOutPath "$INSTDIR"
+  ${EndIf}
+  Pop $0 ; Output
+  Pop $0 ; Restore $0
 FunctionEnd
 
-!define StrChr "!insertmacro StrChr"
- 
-!macro StrChr ResultVar String SubString StartPoint
-  Push "${String}"
-  Push "${SubString}"
-  Push "${StartPoint}"
-  Call StrChr
-  Pop "${ResultVar}"
-!macroend
- 
-Function StrChr
-  ;Get input from user
-  Exch $R0
-  Exch
-  Exch $R1
-  Exch 2
-  Exch $R2
-  Push $R3
-  Push $R4
-  Push $R5
-  Push $R6
- 
-  ;Get "String" and "SubString" length
-  StrLen $R3 $R1
-  StrLen $R4 $R2
-  ;Start "StartCharPos" counter
-  StrCpy $R5 0
- 
-  ;Loop until "SubString" is found or "String" reaches its end
-  ${Do}
-    ;Remove everything before and after the searched part ("TempStr")
-    StrCpy $R6 $R2 $R3 $R5
- 
-    ;Compare "TempStr" with "SubString"
-    ${If} $R6 == $R1
-      ${If} $R0 == `<`
-        IntOp $R6 $R3 + $R5
-        IntOp $R0 $R4 - $R6
-      ${Else}
-        StrCpy $R0 $R5
-      ${EndIf}
-      ${ExitDo}
-    ${EndIf}
-    ;If not "SubString", this could be "String"'s end
-    ${If} $R5 >= $R4
-      StrCpy $R0 ``
-      ${ExitDo}
-    ${EndIf}
-    ;If not, continue the loop
-    IntOp $R5 $R5 + 1
-  ${Loop}
- 
-  ;Return output to user
-  Pop $R6
-  Pop $R5
-  Pop $R4
-  Pop $R3
-  Pop $R2
-  Exch
-  Pop $R1
-  Exch $R0
+Function retrieveModuleList
+  SetOutPath "$PLUGINSDIR"
+  inetc::get /CAPTION "Erebot" /POPUP "" /RESUME "" \
+    "${REPO_BASE}/packages.json" "packages.json" /END
+  Pop $0
+  SetOutPath "$INSTDIR"
 FunctionEnd
 
-Function getModuleName
+Function getVersion
   Pop $0
-  Push $0
-  ${StrChr} $1 $0 " " ">"
+  nsExec::ExecToStack /OEM 'php.exe -d detect_unicode=Off -f "$0.phar" commit'
   Pop $0
-  StrCpy $0 "$0" $1
-  Push $0
+  ${If} $0 != 0
+    Pop $0
+    Push ''
+  ${EndIf}
 FunctionEnd
 
 
@@ -375,9 +281,6 @@ Section "Erebot" section_Erebot
     CreateShortCut  "$SMPROGRAMS\$StartMenuFolder\Online Documentation.lnk" \
                     "${URL_DOC}" "" "%SystemRoot%\system32\SHELL32.dll" 23 \
                     SW_SHOWNORMAL "" "Help"
-    CreateShortCut  "$SMPROGRAMS\$StartMenuFolder\Online Documentation.lnk" \
-                    "${URL_DOC}" "" "%SystemRoot%\system32\SHELL32.dll" 23 \
-                    SW_SHOWNORMAL "" "Help"
     CreateShortCut  "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" \
                     "$INSTDIR\uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
@@ -394,8 +297,8 @@ Section "Erebot" section_Erebot
 
   DetailPrint "Downloading Erebot..."
   inetc::get /CAPTION "Erebot" /POPUP "" /RESUME "" \
-    "${PEAR_BASE}/get/Erebot-latest.phar" "Erebot.phar" \
-    "${PEAR_BASE}/get/Erebot-latest.phar.pubkey" "Erebot.phar.pubkey" \
+    "${REPO_BASE}/get/Erebot-latest.phar" "Erebot.phar" \
+    "${REPO_BASE}/get/Erebot-latest.phar.pubkey" "Erebot.phar.pubkey" \
     /END
   Push "Erebot"
   Call getVersion
@@ -435,7 +338,6 @@ Section "Uninstall"
   Delete "$INSTDIR\modules\*.phar.pubkey"
   Delete "$INSTDIR\Erebot.xml"
   Delete "$INSTDIR\defaults.xml"
-  RMDir /r /REBOOTOK "$INSTDIR\conf.d"
   RMDir /REBOOTOK "$INSTDIR\modules"
   RMDir /REBOOTOK "$INSTDIR"
 
@@ -450,119 +352,51 @@ Section "Uninstall"
 SectionEnd
 
 
-;--------------------------------
-;Other functions that must stay
-;at the end of this file
+;-------------------------------
+; Must be kept at end of file
+
 Function listModules
-  ; $0 = component name
-  ; $1 = component prefix
-  ; $2 = modules counter
-  ; $3 = required modules counter
-  Push $0
-  Push $1
-  Push $2
-  Push $3
-  Push $4
-  Push $5
-  Push $6
-  ${xml::LoadFile} "$PLUGINSDIR\summary.xml" $0
-  ${xml::RootElement} $1 $0
-  ${xml::XPathNode} "/packages/p[1]/n[1]" $0
-  IntOp $2 0 + 0
-  IntOp $3 0 + 0
+  ClearErrors
+  nsJSON::Set /file "$PLUGINSDIR\packages.json"
+  StrCpy $0 1 ; Package iterator
+  StrCpy $3 1 ; Sections iterator
   loop:
-    ${xml::GetText} $0 $1
+    nsJSON::Get /key "packages" /index $0 /end
+    IfErrors endloop
+    Pop $1
+    IntOp $0 $0 + 1
 
-    StrCpy $1 "$0" 14 ; Look for "Erebot_Module_" prefix
-    ${If} "$1" == "Erebot_Module_"
-      ReadRegStr $6 HKCU "${SW_KEY}\versions" "$0"
-      ClearErrors
+    StrCpy $2 "$1" 7 ; Look for "erebot/" prefix
+    StrCmp $2 "erebot/" +1 loop
 
-      ; Required modules are handled in a special way.
-      ${If} "$0" == "Erebot_Module_AutoConnect"
-      ${OrIf} "$0" == "Erebot_Module_IrcConnector"
-      ${OrIf} "$0" == "Erebot_Module_PingReply"
-        IntOp $1 ${SF_SELECTED} | ${SF_RO}
-        IntOp $3 $3 + 1
-      ${EndIf}
+    ; Check whether the current package refers to a module.
+    ; Look for "-module" suffix.
+    StrCpy $2 "$1" "" -7
+    StrCmp $2 "-module" +2 loop
 
-      ${xml::NextSiblingElement} "v" $4 $5
-      ${xml::GetText} $4 $5
-      StrCpy $0 "$0 ($4)" "" 14 ; remove the prefix and add version info
+    module:
+      ; Remove "-module" suffix.
+      StrLen $2 "$1"
+      IntOp $2 $2 - 7
+      StrCpy $1 "$1" $2
 
-      ${If} "$6" != ""
-        IntOp $1 $1 | ${SF_SELECTED}
-        ${php_version_compare} $6 $4 $6
-        ${If} $6 > 0
-          IntOp $1 $1 | ${SF_BOLD}
-        ${EndIf}
-      ${EndIf}
+      ; Remove "erebot/" prefix.
+      StrCpy $1 "$1" "" 7
 
-      IntOp $4 ${module_1} + $2
-      SectionSetText  $4 "$0"
-      SectionSetFlags $4 $1
+      ; Prepare the new section.
+      IntOp $2 ${module_1} + $3
+      SectionSetText  $2 "$1"
+;      SectionSetFlags $2 $1
 
-      ${xml::NextSiblingElement} "s" $5 $6
-      ${xml::GetText} $0 $1
-      IntOp $0 $0 / 1024
-      SectionSetSize  $4 $0
+;      IntOp $0 $0 / 1024
+;      SectionSetSize  $4 $0
 
-      IntOp $2 $2 + 1
-      ; There are more module than sections.
-      ${If} $2 > ${NB_SECTIONS}
+      ; No more sections available.
+      IntOp $3 $3 + 1
+      ${If} $3 > ${NB_SECTIONS}
         Goto endloop
       ${EndIf}
-
-    ${ElseIf} "$0" == "Erebot"
-      IntOp $1 ${SF_SELECTED} | ${SF_RO}
-      ReadRegStr $6 HKCU "${SW_KEY}\versions" "$0"
-      ClearErrors
-
-      ${xml::NextSiblingElement} "v" $4 $5
-      ${xml::GetText} $4 $5
-      StrCpy $0 "$0 ($4)"
-
-      ${If} "$6" != ""
-        ${php_version_compare} $6 $4 $6
-        ${If} $6 > 0
-          IntOp $1 $1 | ${SF_BOLD}
-        ${EndIf}
-      ${EndIf}
-
-      SectionSetText ${section_Erebot} "$0"
-      SectionSetFlags ${section_Erebot} $1
-
-      ${xml::NextSiblingElement} "s" $5 $6
-      ${xml::GetText} $0 $1
-      IntOp $0 $0 / 1024
-      SectionSetSize  ${section_Erebot} $0
-    ${EndIf}
-
-    ${xml::Parent} $1 $0
-    ${xml::NextSiblingElement} "p" $1 $0
-    ${If} $0 != 0
-      Goto endloop
-    ${EndIf}
-
-    ${xml::FirstChildElement} "n" $1 $0
-    ${If} $0 == 0
-      Goto loop
-    ${EndIf}
-
+    Goto loop
   endloop:
-    ${xml::Unload}
-    ${If} $3 < 3
-      MessageBox MB_ICONSTOP|MB_OK "Could not find required modules"
-      SetErrors
-      Quit
-    ${EndIf}
-
-    Pop $6
-    Pop $5
-    Pop $4
-    Pop $3
-    Pop $2
-    Pop $1
-    Pop $0
 FunctionEnd
 
