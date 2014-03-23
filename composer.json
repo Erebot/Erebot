@@ -1,4 +1,5 @@
 {
+    "prefer-stable": true,
     "name": "erebot/erebot",
     "description": "A modular IRC bot for PHP 5.2+",
     "keywords": ["IRC", "bot"],
@@ -14,18 +15,12 @@
     "support": {
         "email": "erebot@erebot.net",
         "issues": "https://github.com/Erebot/Erebot/issues",
-        "wiki": "http://erebot.github.com/Erebot/",
+        "wiki": "http://erebot.github.io/Erebot/",
         "irc": "irc://irc.iiens.net/Erebot",
         "source": "https://github.com/Erebot/Erebot"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.erebot.net"
-        }
-    ],
     "require": {
-        "php": ">=5.2.2",
+        "php": ">=5.3.0",
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-intl": "*",
@@ -44,6 +39,14 @@
         "erebot/dependency-injection": "dev-master",
         "erebot/api": "dev-master",
         "erebot/plop": "dev-master",
+
+        "erebot/dom": "dev-master",
+        "erebot/timer": "dev-master",
+        "erebot/i18n": "dev-master",
+        "erebot/callable-wrapper": "dev-master",
+        "erebot/styling": "dev-master",
+        "erebot/uri": "dev-master",
+
         "erebot/autoconnect-module": "dev-master",
         "erebot/ircconnector-module": "dev-master",
         "erebot/pingreply-module": "dev-master",
@@ -57,30 +60,33 @@
         "erebot/buildenv": "dev-master",
         "erebot/testenv": "dev-master",
 
-        "erebot/az-module": "dev-master",
-        "erebot/triggerregistry-module": "dev-master",
-        "erebot/wordlists-module": "dev-master",
-        "erebot/admin-module": "dev-master",
-        "erebot/autojoin-module": "dev-master",
-        "erebot/autoident-module": "dev-master",
-        "erebot/helper-module": "dev-master",
-        "erebot/servercapabilities-module": "dev-master",
-        "erebot/irctracker-module": "dev-master",
-        "erebot/uno-module": "dev-master",
         "pear/http_request2": "dev-master",
-        "erebot/tv-module": "dev-master",
-        "pear/net_url2": "dev-master",
+
+        "erebot/admin-module": "dev-master",
+        "erebot/autoconnect-module": "dev-master",
+        "erebot/autoident-module": "dev-master",
+        "erebot/autojoin-module": "dev-master",
+        "erebot/az-module": "dev-master",
         "erebot/countdown-module": "dev-master",
         "erebot/ctcpresponder-module": "dev-master",
         "erebot/gof-module": "dev-master",
+        "erebot/helper-module": "dev-master",
+        "erebot/ircconnector-module": "dev-master",
+        "erebot/irctracker-module": "dev-master",
+        "erebot/lagchecker-module": "dev-master",
         "erebot/math-module": "dev-master",
         "erebot/minised-module": "dev-master",
-        "erebot/lagchecker-module": "dev-master",
-        "erebot/roulette-module": "dev-master",
+        "erebot/pingreply-module": "dev-master",
+        "erebot/phpfilter-module": "dev-master",
         "erebot/ratelimiter-module": "dev-master",
+        "erebot/roulette-module": "dev-master",
+        "erebot/servercapabilities-module": "dev-master",
+        "erebot/triggerregistry-module": "dev-master",
+        "erebot/tv-module": "dev-master",
+        "erebot/uno-module": "dev-master",
         "erebot/watchlist-module": "dev-master",
         "erebot/webgetter-module": "dev-master",
-        "erebot/phpfilter-module": "dev-master"
+        "erebot/wordlists-module": "dev-master"
     },
     "suggest": {
         "ext-openssl": "*",

@@ -17,38 +17,6 @@ msgstr ""
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#. I18N: ICU rule used to format durations (using words).
-#. Eg. 12345 becomes "3 hours, 25 minutes, 45 seconds" (in english).
-#. For examples of valid rules, see: http://goo.gl/q94xS
-#. For the complete syntax, see also: http://goo.gl/jp2Bd
-# File: src/Erebot/Styling/Duration.php, line: 57
-msgid ""
-"%with-words:\n"
-"    0: 0 seconds;\n"
-"    1: 1 second;\n"
-"    2: =#0= seconds;\n"
-"    60/60: <%%min<;\n"
-"    61/60: <%%min<, >%with-words>;\n"
-"    3600/60: <%%hr<;\n"
-"    3601/60: <%%hr<, >%with-words>;\n"
-"    86400/86400: <%%day<;\n"
-"    86401/86400: <%%day<, >%with-words>;\n"
-"    604800/604800: <%%week<;\n"
-"    604801/604800: <%%week<, >%with-words>;\n"
-"%%min:\n"
-"    1: 1 minute;\n"
-"    2: =#0= minutes;\n"
-"%%hr:\n"
-"    1: 1 hour;\n"
-"    2: =#0= hours;\n"
-"%%day:\n"
-"    1: 1 day;\n"
-"    2: =#0= days;\n"
-"%%week:\n"
-"    1: 1 week;\n"
-"    2: =#0= weeks;"
-msgstr ""
-
 # File: src/Erebot/CLI.php, line: 231
 msgid "A modular IRC bot written in PHP"
 msgstr ""
