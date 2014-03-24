@@ -245,7 +245,12 @@ class CLI
 
         // Also, include some information about the version
         // of currently loaded PHAR modules, if any.
-        $version = Erebot::VERSION;
+        $version = 'dev-master';
+        if (!strncmp(__FILE__, 'phar://', 7)) {
+            $phar = new Phar(Phar::running(true));
+            $md = $phar->getMetadata();
+            $version = $md['version'];
+        }
         if (defined('Erebot_PHARS')) {
             $phars = unserialize(Erebot_PHARS);
             ksort($phars);
@@ -254,9 +259,6 @@ class CLI
                     continue;
                 $version .= "\n  with $module version ${metadata['version']}";
             }
-        }
-        else {
-            $version .= '.';
         }
 
         Console_CommandLine::registerAction('StoreProxy', 'StoreProxy_Action');

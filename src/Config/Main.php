@@ -257,21 +257,6 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
         }
 
         $logger = \Plop::getInstance();
-        $currentVersion = \Erebot\Interface_Core::VERSION;
-        if (!version_compare($this->_version, $currentVersion, 'eq'))
-            $logger->warning(
-                $this->_coreTranslator->gettext(
-                    'This configuration file is meant for '.
-                    'Erebot %(config_version)s, but you are '.
-                    'running version %(code_version)s. '.
-                    'Things may not work as expected.'
-                ),
-                array(
-                    'config_version'   => $this->_version,
-                    'code_version'     => \Erebot\Interfaces\Core::VERSION,
-                )
-            );
-
         $logger->debug(
             $this->_coreTranslator->gettext(
                 'Loaded configuration data'

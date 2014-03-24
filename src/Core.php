@@ -332,7 +332,7 @@ class Core implements \Erebot\Interfaces\Core
         foreach ($this->_connections as $connection) {
             if ($connection instanceof \Erebot\Interfaces\EventDispatcher) {
                 $eventsProducer = $connection->getEventsProducer();
-                $connection->dispatch($eventsProducer->makeEvent('!Exit'));
+                $connection->dispatch($eventsProducer->makeEvent('!ExitEvent'));
             }
         }
 
@@ -431,11 +431,6 @@ class Core implements \Erebot\Interfaces\Core
             throw new \Erebot\NotFoundException('Timer not found');
 
         unset($this->_timers[$key]);
-    }
-
-    public static function getVersion()
-    {
-        return 'Erebot v'.self::VERSION;
     }
 
     public function addConnection(\Erebot\Interfaces\Connection $connection)
