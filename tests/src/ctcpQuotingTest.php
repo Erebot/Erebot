@@ -20,9 +20,9 @@ abstract class  CtcpQuotingHelper
 extends         \Erebot\Module\Base
 {
     // Expose the protected method to test.
-    static public function ctcpQuote($msg)
+    static public function publicCtcpQuote($msg)
     {
-        return self::_ctcpQuote($msg);
+        return self::ctcpQuote($msg);
     }
 }
 
@@ -30,9 +30,9 @@ class   CtcpUnQuotingHelper
 extends \Erebot\IrcParser
 {
     // Expose the protected method to test.
-    static public function ctcpUnquote($msg)
+    static public function publicCtcpUnquote($msg)
     {
-        return self::_ctcpUnquote($msg);
+        return self::ctcpUnquote($msg);
     }
 }
 
@@ -60,25 +60,25 @@ extends Erebot_Testenv_Module_TestCase
 
     /**
      * @dataProvider    provider
-     * @covers          Erebot_Module_Base::_ctcpQuote
+     * @covers          \Erebot\Module\Base::ctcpQuote
      */
     public function testQuoting($quoted, $unquoted)
     {
         $this->assertEquals(
             $quoted,
-            CtcpQuotingHelper::ctcpQuote($unquoted)
+            CtcpQuotingHelper::publicCtcpQuote($unquoted)
         );
     }
 
     /**
      * @dataProvider    provider
-     * @covers          Erebot_IrcParser::_ctcpUnquote
+     * @covers          \Erebot\IrcParser::ctcpUnquote
      */
     public function testUnquoting($quoted, $unquoted)
     {
         $this->assertEquals(
             $unquoted,
-            CtcpUnQuotingHelper::ctcpUnquote($quoted)
+            CtcpUnQuotingHelper::publicCtcpUnquote($quoted)
         );
     }
 }

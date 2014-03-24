@@ -22,11 +22,11 @@ extends Erebot_TestEnv_TestCase
     public function setUp()
     {
         $sxml = new SimpleXMLElement('<foo/>');
-        $this->_mainConfig = $this->getMock('Erebot_Interface_Config_Main', array(), array(), '', FALSE, FALSE, FALSE);
-        $this->_networkConfig = $this->getMock('Erebot_Interface_Config_Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE, FALSE);
-        $this->_serverConfig = $this->getMock('Erebot_Interface_Config_Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE, FALSE);
-        $this->_bot = $this->getMock('Erebot_Testenv_Stub_Core', array(), array($this->_mainConfig), '', FALSE, FALSE, FALSE);
-        $this->_connection = $this->getMock('Erebot_Interface_Connection', array(), array($this->_bot, $this->_serverConfig), '', FALSE, FALSE, FALSE);
+        $this->_mainConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Main', array(), array(), '', FALSE, FALSE, FALSE);
+        $this->_networkConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE, FALSE);
+        $this->_serverConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE, FALSE);
+        $this->_bot = $this->getMock('\\Erebot\\Interfaces\\Core', array(), array($this->_mainConfig), '', FALSE, FALSE, FALSE);
+        $this->_connection = $this->getMock('\\Erebot\\Interfaces\\Connection', array(), array($this->_bot, $this->_serverConfig), '', FALSE, FALSE, FALSE);
     }
 
     public function tearDown()
@@ -41,11 +41,11 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_Event_Ping
+     * @covers \Erebot\Event\Ping
      */
     public function testPing()
     {
-        $event = new Erebot_Event_Ping($this->_connection, "foo");
+        $event = new \Erebot\Event\Ping($this->_connection, "foo");
         $this->assertEquals("foo", (string) $event->getText());
     }
 }

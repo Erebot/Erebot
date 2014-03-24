@@ -206,7 +206,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function offsetSet($offset, $value)
     {
-        throw new RuntimeException('The wrapped text is read-only');
+        throw new \RuntimeException('The wrapped text is read-only');
     }
 
     /**
@@ -220,4 +220,3 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
         $this->_parts = array_values($this->_parts);
     }
 }
-

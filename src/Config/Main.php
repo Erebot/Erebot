@@ -37,7 +37,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     protected $_networks;
 
     /// The configuration file's version string.
-    protected $_version;
+    protected $version;
 
     /// The bot's current timezone.
     protected $_timezone;
@@ -75,7 +75,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
      *      or the string representation of the configuration data,
      *      respectively.
      *
-     * \param Erebot::I18N::I18NInterface $translator
+     * \param Erebot::IntlInterface $translator
      *      Translator to use for messages coming from core files.
      *
      * \throw Erebot::InvalidValueException
@@ -86,7 +86,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     public function __construct(
                                 $configData,
                                 $source,
-        \Erebot\I18N\I18NInterface   $translator
+        \Erebot\IntlInterface   $translator
     )
     {
         $this->_proxified       = NULL;
@@ -212,9 +212,11 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
         $xml = simplexml_import_dom($domxml);
         parent::__construct($this, $xml);
 
-        if (!isset($xml['version']))
-            throw new \Erebot\InvalidValueException('No version defined');
-        $this->_version  = (string) $xml['version'];
+        if (!isset($xml['version'])) {
+            $this->version = null;
+        } else {
+            $this->version  = (string) $xml['version'];
+        }
 
         if (!isset($xml['timezone']))
             throw new \Erebot\InvalidValueException('No timezone defined');
@@ -300,7 +302,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     /// \copydoc Erebot::Interfaces::Config::Main::getVersion()
     public function getVersion()
     {
-        return $this->_version;
+        return $this->version;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getTimezone()
@@ -349,15 +351,15 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     public function getTranslator($component)
     {
         if (isset($this->_locale)) {
-            $translator = new \Erebot\I18N\I18N($component);
+            $translator = new \Erebot\Intl($component);
             $translator->setLocale(
-                \Erebot\I18N\I18NInterface::LC_MESSAGES,
+                \Erebot\IntlInterface::LC_MESSAGES,
                 $this->_locale
             );
             $categories = array(
-                \Erebot\I18N\I18NInterface::LC_MONETARY,
-                \Erebot\I18N\I18NInterface::LC_NUMERIC,
-                \Erebot\I18N\I18NInterface::LC_TIME,
+                \Erebot\IntlInterface::LC_MONETARY,
+                \Erebot\IntlInterface::LC_NUMERIC,
+                \Erebot\IntlInterface::LC_TIME,
             );
             foreach ($categories as $category) {
                 $translator->setLocale(

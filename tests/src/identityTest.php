@@ -29,7 +29,7 @@ class   IdentityTest
 extends Erebot_TestEnv_TestCase
 {
     /**
-     * @covers Erebot_Identity
+     * @covers \Erebot\Identity
      */
     public function testNominalCase()
     {
@@ -39,12 +39,12 @@ extends Erebot_TestEnv_TestCase
         $this->assertSame('ident',  $identity->getIdent());
         $this->assertSame(
             'host',
-            $identity->getHost(Erebot_Interface_Identity::CANON_IPV4)
+            $identity->getHost(\Erebot\Interfaces\Identity::CANON_IPV4)
         );
     }
 
     /**
-     * @covers Erebot_Identity
+     * @covers \Erebot\Identity
      */
     public function testNominalCase2()
     {
@@ -54,7 +54,7 @@ extends Erebot_TestEnv_TestCase
         $this->assertSame(NULL,     $identity->getIdent());
         $this->assertSame(
             NULL,
-            $identity->getHost(Erebot_Interface_Identity::CANON_IPV4)
+            $identity->getHost(\Erebot\Interfaces\Identity::CANON_IPV4)
         );
     }
 }
@@ -123,7 +123,7 @@ extends Erebot_TestEnv_TestCase
     {
         $identity = new \Erebot\Identity('foo!bar@127.0.0.1');
         $this->assertTrue(
-            $identity->match($pattern, new Erebot_IrcCollator_ASCII()),
+            $identity->match($pattern, new \Erebot\IrcCollator\ASCII()),
             "Did not match '$pattern'"
         );
     }

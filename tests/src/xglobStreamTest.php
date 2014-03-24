@@ -20,17 +20,16 @@ class   XglobStreamTest
 extends Erebot_TestEnv_TestCase
 {
     /**
-     * @covers Erebot_XGlobStream<extended>
+     * @covers \Erebot\XGlobStream<extended>
      */
     public function testXglobStream()
     {
-        $this->assertTrue(class_exists('Erebot_XglobStream'));
+        \Erebot\Patches::patch();
         $expected = array(
             '<xglob:wrapping xmlns:xglob="http://www.erebot.net/xmlns/xglob"><?xml version="1.0"?>',
             '<!-- kate: tab-width: 4 -->',
             '<configuration xmlns="http://www.erebot.net/xmlns/erebot" '.
-                sprintf('version="%s"', EREBOT_VERSION).
-                ' timezone="Europe/Paris">',
+                'timezone="Europe/Paris">',
             '    <networks>',
             '        <network name="localhost">',
             '            <servers>',

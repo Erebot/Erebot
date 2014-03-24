@@ -149,7 +149,7 @@ class Prompt implements \Erebot\Interfaces\ReceivingConnection
         }
 
         $this->_io  = new \Erebot\LineIO(\Erebot\LineIO::EOL_ANY, $this->_socket);
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
         $logger->info(
             $bot->gettext('Prompt started in "%(path)s"'),
             array('path' => $connector)

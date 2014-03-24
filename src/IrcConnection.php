@@ -218,7 +218,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
         $flags
     )
     {
-        $logger         = Plop::getInstance();
+        $logger         = \Plop::getInstance();
 
         $channelModules = $this->_channelModules;
         $plainModules   = $this->_plainModules;
@@ -315,7 +315,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
         if ($this->_connected)
             return FALSE;
 
-        $logger         = Plop::getInstance();
+        $logger         = \Plop::getInstance();
         $uris           = $this->_config->getConnectionURI();
         $serverUri      = new \Erebot\URI($uris[count($uris) - 1]);
         $this->_socket  = NULL;
@@ -448,7 +448,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
 
     public function disconnect($quitMessage = NULL)
     {
-        $logger     = Plop::getInstance();
+        $logger     = \Plop::getInstance();
         $uris       = $this->_config->getConnectionURI();
         $logger->info(
             "Disconnecting from '%(uri)s' ...",
@@ -517,7 +517,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
             $this->dispatch($event);
 
             if (!$event->preventDefault()) {
-                $logger     = Plop::getInstance();
+                $logger = \Plop::getInstance();
                 $logger->error('Disconnected');
                 throw new \Erebot\ConnectionFailureException('Disconnected');
             }
@@ -639,7 +639,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
             $channelModules[$chan][$module] = $instance;
 
         $instance->reloadModule($this, $flags);
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
         $logger->info(
             $this->_bot->gettext("Successfully loaded module '%(module)s' [%(source)s]"),
             array(
@@ -734,7 +734,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
      */
     protected function _dispatchEvent(\Erebot\Interfaces\Event\Base\Generic $event)
     {
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
         $logger->debug(
             $this->_bot->gettext('Dispatching "%(type)s" event.'),
             array('type' => get_class($event))
@@ -761,7 +761,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
      */
     protected function _dispatchNumeric(\Erebot\Interfaces\Event\Numeric $numeric)
     {
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
         $logger->debug(
             $this->_bot->gettext('Dispatching numeric %(code)s.'),
             array('code' => sprintf('%03d', $numeric->getCode()))

@@ -50,7 +50,7 @@ class EventHandler implements \Erebot\Interfaces\EventHandler
      *      associated with this handler to be called.
      */
     public function __construct(
-        \Erebot\Callable\CallableInterface $callback,
+        \Erebot\CallableInterface $callback,
         \Erebot\Interfaces\Event\Match $filter = null
     )
     {
@@ -63,7 +63,7 @@ class EventHandler implements \Erebot\Interfaces\EventHandler
     {
     }
 
-    public function setCallback(\Erebot\Callable\CallableInterface $callback)
+    public function setCallback(\Erebot\CallableInterface $callback)
     {
         $this->_callback = $callback;
         return $this;
@@ -92,7 +92,7 @@ class EventHandler implements \Erebot\Interfaces\EventHandler
         if ($this->_filter !== NULL)
             $matched = $this->_filter->match($event);
 
-        return ($matched ? $this->_callback->invoke($this, $event) : NULL);
+        return ($matched ? $this->_callback->__invoke($this, $event) : NULL);
     }
 }
 

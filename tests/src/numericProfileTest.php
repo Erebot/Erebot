@@ -40,40 +40,40 @@ class   NumericReferenceTest
 extends NumericProfileTestHelper
 {
     /**
-     * @covers Erebot_NumericReference
+     * @covers \Erebot\NumericReference
      */
     public function testSimpleReference()
     {
         // The loader is initially empty.
-        $ref = new Erebot_NumericReference($this->_connection, 'RPL_WELCOME');
+        $ref = new \Erebot\NumericReference($this->_connection, 'RPL_WELCOME');
         $this->assertNull($ref->getValue());
 
         // Swap a profile in that adds the missing numeric and test again.
-        $this->_profile = new Erebot_NumericProfile_RFC2812();
+        $this->_profile = new \Erebot\NumericProfile\RFC2812();
         $this->assertSame(0x001, $ref->getValue());
     }
 
     public function testExtension()
     {
-        $this->_profile = new Erebot_NumericProfile_RFC2812();
+        $this->_profile = new \Erebot\NumericProfile\RFC2812();
         // That numeric is an extension used by bahamut
         // and so it isn't defined in RFC 2812.
-        $ref = new Erebot_NumericReference($this->_connection, 'ERR_GHOSTEDCLIENT');
+        $ref = new \Erebot\NumericReference($this->_connection, 'ERR_GHOSTEDCLIENT');
         $this->assertNull($ref->getValue());
     }
 
     public function testAlias()
     {
-        $this->_profile = new Erebot_NumericProfile_RFC2812();
+        $this->_profile = new \Erebot\NumericProfile\RFC2812();
         // RFC 2812 misspells this numeric message.
-        $ref = new Erebot_NumericReference(
+        $ref = new \Erebot\NumericReference(
             $this->_connection,
             'ERR_ALREADYREGISTRED'
         );
         $this->assertSame(462, $ref->getValue());
         // Now, try again with the correct spelling
         // (which is an alias used by some IRCds).
-        $ref = new Erebot_NumericReference(
+        $ref = new \Erebot\NumericReference(
             $this->_connection,
             'ERR_ALREADYREGISTERED'
         );

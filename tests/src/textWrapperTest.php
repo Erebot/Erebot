@@ -22,11 +22,11 @@ extends Erebot_TestEnv_TestCase
     public function setUp()
     {
         $this->_text = ' foo   bar baz   ';
-        $this->_wrapped = new Erebot_TextWrapper($this->_text);
+        $this->_wrapped = new \Erebot\TextWrapper($this->_text);
     }
 
     /**
-     * @covers Erebot_TextWrapper::getTokens
+     * @covers \Erebot\TextWrapper::getTokens
      */
     public function testGetTokens()
     {
@@ -40,7 +40,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_TextWrapper::countTokens
+     * @covers \Erebot\TextWrapper::countTokens
      */
     public function testCountTokens()
     {
@@ -51,7 +51,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_TextWrapper::__toString
+     * @covers \Erebot\TextWrapper::__toString
      */
     public function testToString()
     {
@@ -59,10 +59,10 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_TextWrapper::current
-     * @covers Erebot_TextWrapper::next
-     * @covers Erebot_TextWrapper::rewind
-     * @covers Erebot_TextWrapper::valid
+     * @covers \Erebot\TextWrapper::current
+     * @covers \Erebot\TextWrapper::next
+     * @covers \Erebot\TextWrapper::rewind
+     * @covers \Erebot\TextWrapper::valid
      */
     public function testIterator()
     {
@@ -77,9 +77,9 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_TextWrapper::count
-     * @covers Erebot_TextWrapper::offsetExists
-     * @covers Erebot_TextWrapper::offsetGet
+     * @covers \Erebot\TextWrapper::count
+     * @covers \Erebot\TextWrapper::offsetExists
+     * @covers \Erebot\TextWrapper::offsetGet
      */
     public function testCountableAndArrayAccess()
     {
@@ -100,8 +100,8 @@ extends Erebot_TestEnv_TestCase
 
     /**
      * @dataProvider        offsetsProvider
-     * @expectedException   RuntimeException
-     * @covers              Erebot_TextWrapper::offsetSet
+     * @expectedException   \RuntimeException
+     * @covers              \Erebot\TextWrapper::offsetSet
      */
     public function testReadOnlyTryingToSet($offset)
     {
@@ -110,8 +110,8 @@ extends Erebot_TestEnv_TestCase
 
     /**
      * @dataProvider        offsetsProvider
-     * @expectedException   RuntimeException
-     * @covers              Erebot_TextWrapper::offsetUnset
+     * @expectedException   \RuntimeException
+     * @covers              \Erebot\TextWrapper::offsetUnset
      */
     public function testReadOnlyTryingToUnset($offset)
     {

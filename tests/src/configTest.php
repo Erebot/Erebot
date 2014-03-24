@@ -22,12 +22,12 @@ extends Erebot_TestEnv_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->_translator = new \Erebot\Intl('Erebot');
+        $this->_translator = new \Erebot\Intl('Erebot\\Core');
     }
 
     /**
-     * @expectedException   Erebot_InvalidValueException
-     * @covers              Erebot_Config_Main
+     * @expectedException   \Erebot\InvalidValueException
+     * @covers              \Erebot\Config\Main
      */
     public function testLoadConfigFromInvalidSource()
     {
@@ -35,7 +35,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_Config_Main
+     * @covers \Erebot\Config\Main
      */
     public function testLoadValidConfigFromFile()
     {
@@ -51,7 +51,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_Config_Main
+     * @covers \Erebot\Config\Main
      */
     public function testLoadValidConfigFromURIObject()
     {
@@ -69,7 +69,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @covers Erebot_Config_Main
+     * @covers \Erebot\Config\Main
      */
     public function testLoadValidConfigFromString()
     {

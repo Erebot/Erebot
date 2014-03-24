@@ -157,7 +157,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \see
      *      http://www.irchelp.org/irchelp/rfc/ctcpspec.html
      */
-    static protected function _ctcpUnquote($msg)
+    static protected function ctcpUnquote($msg)
     {
         // CTCP-level unquoting
         $quoting = array(
@@ -357,7 +357,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
             // Remove the markers.
             $msg    = (string) substr($msg, 1, -1);
             // Unquote the message.
-            $msg    = self::_ctcpUnquote($msg);
+            $msg    = self::ctcpUnquote($msg);
             // Extract the tag from the rest of the message.
             $pos    = strcspn($msg, " ");
             $ctcp   = substr($msg, 0, $pos);
@@ -832,7 +832,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         $ident      = $msg[1];
         $host       = $msg[2];
         $timestamp  = intval($msg[3], 10);
-        $timestamp  = new DateTime('@'.$timestamp);
+        $timestamp  = new \DateTime('@'.$timestamp);
         $text       = $msg[4];
 
         return $this->_connection->dispatch(

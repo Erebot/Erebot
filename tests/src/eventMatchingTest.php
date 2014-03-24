@@ -23,10 +23,9 @@ extends Erebot_Testenv_Module_TestCase
     protected $_cb = NULL;
 
     public function dummyCallback(
-        Erebot_Interface_EventHandler       $handler,
-        Erebot_Interface_Event_Base_Generic $event
-    )
-    {
+        \Erebot\Interfaces\EventHandler $handler,
+        \Erebot\Interfaces\Event\Base\Generic $event
+    ) {
         return TRUE;
     }
 
@@ -34,12 +33,12 @@ extends Erebot_Testenv_Module_TestCase
     {
         $sxml = new SimpleXMLElement('<foo/>');
         $this->_mainConfig = $this->getMock(
-            'Erebot_Interface_Config_Main',
+            '\\Erebot\\Interfaces\\Config\\Main',
             array(), array(), '',
             FALSE, FALSE, FALSE
         );
         $networkConfig = $this->getMock(
-            'Erebot_Interface_Config_Network',
+            '\\Erebot\\Interfaces\\Config\\Network',
             array(),
             array($this->_mainConfig, $sxml),
             '',
@@ -48,7 +47,7 @@ extends Erebot_Testenv_Module_TestCase
             FALSE
         );
         $serverConfig = $this->getMock(
-            'Erebot_Interface_Config_Server',
+            '\\Erebot\\Interfaces\\Config\\Server',
             array(),
             array($networkConfig, $sxml),
             '',
@@ -57,7 +56,7 @@ extends Erebot_Testenv_Module_TestCase
             FALSE
         );
         $bot = $this->getMock(
-            'ErebotTestCore',
+            '\\Erebot\\Interfaces\\Core',
             array(),
             array($this->_mainConfig),
             '',
@@ -66,7 +65,7 @@ extends Erebot_Testenv_Module_TestCase
             FALSE
         );
         $this->_connection = $this->getMock(
-            'Erebot_Interface_Connection',
+            '\\Erebot\\Interfaces\\Connection',
             array(),
             array($bot, $serverConfig),
             '',
@@ -74,18 +73,18 @@ extends Erebot_Testenv_Module_TestCase
             FALSE,
             FALSE
         );
-        $this->_cb = new Erebot_Callable(array($this, 'dummyCallback'));
+        $this->_cb = new \Erebot\CallableWrapper(array($this, 'dummyCallback'));
     }
 
     public function classProvider()
     {
         return array(
             // Direct class
-            array('Erebot_Event_Ping'),
+            array('\\Erebot\\Event\\Ping'),
             // Inherited class
-            array('Erebot_Event_WithTextAbstract'),
+            array('\\Erebot\\Event\\WithTextAbstract'),
             // Top class
-            array('Erebot_Event_Abstract'),
+            array('\\Erebot\\Event\\AbstractEvent'),
         );
     }
 
@@ -93,39 +92,39 @@ extends Erebot_Testenv_Module_TestCase
     {
         return array(
             // Direct interface
-            array('Erebot_Interface_Event_Base_TextMessage'),
+            array('\\Erebot\\Interfaces\\Event\\Base\\TextMessage'),
             // Inherited interface
-            array('Erebot_Interface_Event_Base_MessageCapable'),
+            array('\\Erebot\\Interfaces\\Event\\Base\\MessageCapable'),
             // Top interface
-            array('Erebot_Interface_Event_Base_Generic'),
+            array('\\Erebot\\Interfaces\\Event\\Base\\Generic'),
         );
     }
 
     /**
      * @dataProvider classProvider
-     * @covers Erebot_Event_Match_InstanceOf
-     * @covers Erebot_EventHandler
+     * @covers \Erebot\Event\Match\Type
+     * @covers \Erebot\EventHandler
      */
-    public function testMatchInstanceOfClass($cls)
+    public function testMatchTypeClass($cls)
     {
-        $matcher    = new Erebot_Event_Match_InstanceOf($cls);
+        $matcher    = new \Erebot\Event\Match\Type($cls);
         $this->assertEquals(array($cls), $matcher->getType());
-        $handler    = new Erebot_EventHandler($this->_cb, $matcher);
-        $event      = new Erebot_Event_Ping($this->_connection, 'foo');
+        $handler    = new \Erebot\EventHandler($this->_cb, $matcher);
+        $event      = new \Erebot\Event\Ping($this->_connection, 'foo');
         $this->assertTrue($handler->handleEvent($event));
     }
 
     /**
      * @dataProvider interfaceProvider
-     * @covers Erebot_Event_Match_InstanceOf
-     * @covers Erebot_EventHandler
+     * @covers \Erebot\Event\Match\Type
+     * @covers \Erebot\EventHandler
      */
-    public function testMatchInstanceOfInterface($iface)
+    public function testMatchTypeInterface($iface)
     {
-        $matcher    = new Erebot_Event_Match_InstanceOf($iface);
+        $matcher    = new \Erebot\Event\Match\Type($iface);
         $this->assertEquals(array($iface), $matcher->getType());
-        $handler    = new Erebot_EventHandler($this->_cb, $matcher);
-        $event      = new Erebot_Event_ChanText(
+        $handler    = new \Erebot\EventHandler($this->_cb, $matcher);
+        $event      = new \Erebot\Event\ChanText(
             $this->_connection,
             '#foo', 'bar', 'baz'
         );

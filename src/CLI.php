@@ -29,7 +29,7 @@ namespace Erebot;
  * multiple options that act on the same variable.
  */
 class   StoreProxy_Action
-extends Console_CommandLine_Action
+extends \Console_CommandLine_Action
 {
     /**
      * Sets the result of this action.
@@ -72,7 +72,7 @@ extends Console_CommandLine_Action
  *      Custom message provider for Console_CommandLine.
  */
 class   Erebot_Console_CommandLine_MessageProvider
-extends Console_CommandLine_MessageProvider_Default
+extends \Console_CommandLine_MessageProvider_Default
 {
     /**
      * Overrides the PROG_VERSION_LINE message so that
@@ -95,7 +95,7 @@ extends Console_CommandLine_MessageProvider_Default
  * StoreProxy_Action to work around this.
  */
 class   Console_CommandLine_ParallelOption
-extends Console_CommandLine_Option
+extends \Console_CommandLine_Option
 {
     /**
      * Overrides the parent method so that
@@ -158,7 +158,7 @@ class CLI
     {
         flock($handle, LOCK_UN);
         @unlink($pidfile);
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
         $logger->debug(
             'Removed lock on pidfile (%(pidfile)s)',
             array('pidfile' => $pidfile)
@@ -188,7 +188,7 @@ class CLI
 
         // Load the configuration for the Dependency Injection Container.
         $dic        = new sfServiceContainerBuilder();
-        $dic->setParameter('Erebot.src_dir', __DIR__));
+        $dic->setParameter('Erebot.src_dir', __DIR__);
         $loader     = new sfServiceContainerLoaderFileXml($dic);
         $dicConfig = dirname(__DIR__) .
                      DIRECTORY_SEPARATOR . 'data' .
@@ -210,7 +210,7 @@ class CLI
         $logger             = $dic->logging;
         $localeGetter       = $dic['i18n.default_getter'];
         $coreTranslatorCls  = $dic['core.classes.i18n'];
-        $translator         = new $coreTranslatorCls("Erebot");
+        $translator         = new $coreTranslatorCls("Erebot\\Core");
 
         $categories = array(
             'LC_MESSAGES',

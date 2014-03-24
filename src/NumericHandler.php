@@ -38,7 +38,7 @@ class NumericHandler implements \Erebot\Interfaces\NumericHandler
     /**
      * Constructs a numeric event handler.
      *
-     * \param ::Erebot::Callable::CallableInterface $callback
+     * \param ::Erebot::CallableInterface $callback
      *      A callback function/method which will be called
      *      whenever the bot receives a message with the given
      *      \a $numeric code.
@@ -47,7 +47,7 @@ class NumericHandler implements \Erebot\Interfaces\NumericHandler
      *      The particular numeric code this numeric handler will
      *      react to, or a reference to it.
      */
-    public function __construct(\Erebot\Callable\CallableInterface $callback, $numeric)
+    public function __construct(\Erebot\CallableInterface $callback, $numeric)
     {
         $this->setCallback($callback);
         $this->setNumeric($numeric);
@@ -64,7 +64,7 @@ class NumericHandler implements \Erebot\Interfaces\NumericHandler
         return $this->_numeric;
     }
 
-    public function setCallback(\Erebot\Callable\CallableInterface $callback)
+    public function setCallback(\Erebot\CallableInterface $callback)
     {
         $this->_callback = $callback;
         return $this;

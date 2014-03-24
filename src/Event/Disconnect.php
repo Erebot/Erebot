@@ -24,7 +24,7 @@ namespace Erebot\Event;
  * \brief
  *      Triggered when the connection to a server gets dropped.
  */
-class Disconnect extends \Erebot\Event\Abstract implements
+class Disconnect extends \Erebot\Event\AbstractEvent implements
     \Erebot\Interfaces\Event\Disconnect
 {
 }

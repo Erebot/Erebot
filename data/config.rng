@@ -36,11 +36,13 @@
 
     <define name="configuration">
         <element name="configuration">
-            <attribute name="version">
-                <data type="string">
-                    <param name="pattern">[0-9]+([-\.][0-9]+)*([-\.]?(dev|alpha|beta|RC|rc|pl|[ab#p])[-\.]?[0-9]+)?</param>
-                </data>
-            </attribute>
+            <optional>
+                <attribute name="version">
+                    <data type="string">
+                        <param name="pattern">[0-9]+([-\.][0-9]+)*([-\.]?(dev|alpha|beta|RC|rc|pl|[ab#p])[-\.]?[0-9]+)?</param>
+                    </data>
+                </attribute>
+            </optional>
             <optional>
                 <attribute name="language">
                     <data type="language"/>

@@ -165,7 +165,7 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function offsetSet($offset, $value)
     {
-        throw new RuntimeException('The wrapped text is read-only');
+        throw new \RuntimeException('The wrapped text is read-only');
     }
 
     /**
@@ -175,7 +175,7 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function offsetUnset($offset)
     {
-        throw new RuntimeException('The wrapped text is read-only');
+        throw new \RuntimeException('The wrapped text is read-only');
     }
 }
 

@@ -21,16 +21,16 @@ extends Erebot_TestEnv_TestCase
 {
     protected function getCallerObjectHelper()
     {
-        return Erebot_Utils::getCallerObject();
+        return \Erebot\Utils::getCallerObject();
     }
 
     /**
-     * @covers Erebot_Utils::getCallerObject
+     * @covers \Erebot\Utils::getCallerObject
      */
     public function testGetCallerObject()
     {
         $this->assertSame($this, $this->getCallerObjectHelper());
-        $this->assertNotSame($this, Erebot_Utils::getCallerObject());
+        $this->assertNotSame($this, \Erebot\Utils::getCallerObject());
     }
 
     public function invalidUTF8Sequences()
@@ -146,43 +146,43 @@ extends Erebot_TestEnv_TestCase
 
     /**
      * @dataProvider    invalidUTF8Sequences
-     * @covers          Erebot_Utils::isUTF8
+     * @covers          \Erebot\Utils::isUTF8
      */
     public function testIsUTF8($sequence)
     {
-        $this->assertFalse(Erebot_Utils::isUTF8($sequence));
+        $this->assertFalse(\Erebot\Utils::isUTF8($sequence));
     }
 
     /**
-     * @covers Erebot_Utils::isUTF8
+     * @covers \Erebot\Utils::isUTF8
      */
     public function testIsUTF8SimpleSequences()
     {
         // U+00E9 (LATIN SMALL LETTER E WITH ACUTE) - UTF-8 encoded.
-        $this->assertTrue(Erebot_Utils::isUTF8("\xC3\xA9"));
+        $this->assertTrue(\Erebot\Utils::isUTF8("\xC3\xA9"));
         // Same character, but encoded using iso-8859-1.
-        $this->assertFalse(Erebot_Utils::isUTF8("\xE9"));
+        $this->assertFalse(\Erebot\Utils::isUTF8("\xE9"));
     }
 
     /**
-     * @covers Erebot_Utils::toUTF8
+     * @covers \Erebot\Utils::toUTF8
      */
     public function testToUTF8()
     {
         // U+00E9 (LATIN SMALL LETTER E WITH ACUTE).
         // When it's already encoded in UTF-8.
-        $this->assertEquals("\xC3\xA9", Erebot_Utils::toUTF8("\xC3\xA9"));
+        $this->assertEquals("\xC3\xA9", \Erebot\Utils::toUTF8("\xC3\xA9"));
         // Encoded with the default charset (ISO-8859-1).
-        $this->assertEquals("\xC3\xA9", Erebot_Utils::toUTF8("\xE9"));
+        $this->assertEquals("\xC3\xA9", \Erebot\Utils::toUTF8("\xE9"));
         $this->assertEquals(
             "\xC3\xA9",
-            Erebot_Utils::toUTF8("\xE9", "iso-8859-1")
+            \Erebot\Utils::toUTF8("\xE9", "iso-8859-1")
         );
 
         $this->assertEquals(
             "\xE2\x82\xAC",
             // Euro sign, double-encoded.
-            Erebot_Utils::toUTF8("\xC3\xA2\xC2\x82\xC2\xAC", "__double")
+            \Erebot\Utils::toUTF8("\xC3\xA2\xC2\x82\xC2\xAC", "__double")
         );
     }
 }

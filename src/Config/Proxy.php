@@ -102,15 +102,15 @@ class Proxy
     public function getTranslator($component)
     {
         if (isset($this->_locale)) {
-            $translator = new \Erebot\I18N\I18N($component);
+            $translator = new \Erebot\Intl($component);
             $translator->setLocale(
-                \Erebot\I18N\I18NInterface::LC_MESSAGES,
+                \Erebot\IntlInterface::LC_MESSAGES,
                 $this->_locale
             );
             $categories = array(
-                \Erebot\I18N\I18NInterface::LC_MONETARY,
-                \Erebot\I18N\I18NInterface::LC_NUMERIC,
-                \Erebot\I18N\I18NInterface::LC_TIME,
+                \Erebot\IntlInterface::LC_MONETARY,
+                \Erebot\IntlInterface::LC_NUMERIC,
+                \Erebot\IntlInterface::LC_TIME,
             );
             $proxiedTranslator = $this->_proxified->getTranslator($component);
             foreach ($categories as $category) {

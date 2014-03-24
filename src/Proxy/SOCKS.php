@@ -26,7 +26,7 @@ namespace Erebot\Proxy;
  */
 class SOCKS extends \Erebot\Proxy\Base
 {
-    public function proxify(\Erebot\URI $proxyURI, \Erebot\URI $nextURI)
+    public function proxify(\Erebot\URIInterface $proxyURI, \Erebot\URIInterface $nextURI)
     {
         $port       = $nextURI->getPort();
         $scheme     = $nextURI->getScheme();

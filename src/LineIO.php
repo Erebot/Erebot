@@ -186,7 +186,7 @@ class LineIO
         $this->_incomingData    = substr($this->_incomingData, $pos + $len);
         $this->_rcvQueue[]      = $line;
 
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
         $logger->debug(
             '%(line)s',
             array('line' => addcslashes($line, "\000..\037"))
@@ -299,7 +299,7 @@ class LineIO
             return FALSE;
 
         $line   = array_shift($this->_sndQueue);
-        $logger = Plop::getInstance();
+        $logger = \Plop::getInstance();
 
         // Make sure we send the whole line,
         // with a trailing CR LF sequence.

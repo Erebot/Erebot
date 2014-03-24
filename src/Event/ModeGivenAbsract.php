@@ -25,6 +25,6 @@ namespace Erebot\Event;
  *      Triggered when someone sets a mode on a channel.
  */
 class ModeGivenAbstract extends \Erebot\Event\WithChanSourceTextAbstract implements
-    \Erebot\Interfaces\Event\Base_ChanModeGiven
+    \Erebot\Interfaces\Event\Base\ChanModeGiven
 {
 }
