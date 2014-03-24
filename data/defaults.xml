@@ -13,14 +13,14 @@
             <parameter>getDefault</parameter>
         </parameter>
 
-        <parameter key="core.classes.core">Erebot</parameter>
-        <parameter key="core.classes.connection">Erebot_IrcConnection</parameter>
-        <parameter key="core.classes.connection_factory">Erebot_ConnectionFactory</parameter>
-        <parameter key="core.classes.i18n">Erebot_I18n</parameter>
-        <parameter key="core.classes.identity">Erebot_Identity</parameter>
-        <parameter key="core.classes.timer">Erebot_Timer</parameter>
-        <parameter key="core.classes.eventhandler">Erebot_EventHandler</parameter>
-        <parameter key="core.classes.numerichandle">Erebot_NumericHandler</parameter>
+        <parameter key="core.classes.core">\Erebot\Core</parameter>
+        <parameter key="core.classes.connection">\Erebot\IrcConnection</parameter>
+        <parameter key="core.classes.connection_factory">\Erebot\ConnectionFactory</parameter>
+        <parameter key="core.classes.i18n">\Erebot\I18N\I18N</parameter>
+        <parameter key="core.classes.identity">\Erebot\Identity</parameter>
+        <parameter key="core.classes.timer">\Erebot\Timer\Timer</parameter>
+        <parameter key="core.classes.eventhandler">\Erebot\EventHandler</parameter>
+        <parameter key="core.classes.numerichandle">\Erebot\NumericHandler</parameter>
     </parameters>
 
     <services>
@@ -62,7 +62,7 @@
 
         <service id="logging.logger.input" class="%logging.classes.logger%">
             <argument type="const">NULL</argument>
-            <argument>Erebot_LineIO</argument>
+            <argument>\Erebot\LineIO</argument>
             <argument>_getLine</argument>
             <argument type="service">
                 <service class="Plop_HandlersCollection">
@@ -76,7 +76,7 @@
 
         <service id="logging.logger.output" class="%logging.classes.logger%">
             <argument type="const">NULL</argument>
-            <argument>Erebot_LineIO</argument>
+            <argument>\Erebot\LineIO</argument>
             <argument>write</argument>
             <argument type="service">
                 <service class="Plop_HandlersCollection">
@@ -123,50 +123,50 @@
         <service id="factory.connection" class="%core.classes.connection_factory%">
             <argument>%core.classes.connection%</argument>
             <argument type="collection">
-                <argument key="Erebot_Interface_Event_Ban">Erebot_Event_Ban</argument>
-                <argument key="Erebot_Interface_Event_ChanAction">Erebot_Event_ChanAction</argument>
-                <argument key="Erebot_Interface_Event_ChanAction">Erebot_Event_ChanAction</argument>
-                <argument key="Erebot_Interface_Event_ChanCtcp">Erebot_Event_ChanCtcp</argument>
-                <argument key="Erebot_Interface_Event_ChanCtcpReply">Erebot_Event_ChanCtcpReply</argument>
-                <argument key="Erebot_Interface_Event_ChanNotice">Erebot_Event_ChanNotice</argument>
-                <argument key="Erebot_Interface_Event_ChanText">Erebot_Event_ChanText</argument>
-                <argument key="Erebot_Interface_Event_Connect">Erebot_Event_Connect</argument>
-                <argument key="Erebot_Interface_Event_DeHalfop">Erebot_Event_DeHalfop</argument>
-                <argument key="Erebot_Interface_Event_DeOp">Erebot_Event_DeOp</argument>
-                <argument key="Erebot_Interface_Event_DeOwner">Erebot_Event_DeOwner</argument>
-                <argument key="Erebot_Interface_Event_DeProtect">Erebot_Event_DeProtect</argument>
-                <argument key="Erebot_Interface_Event_DeVoice">Erebot_Event_DeVoice</argument>
-                <argument key="Erebot_Interface_Event_Disconnect">Erebot_Event_Disconnect</argument>
-                <argument key="Erebot_Interface_Event_Error">Erebot_Event_Error</argument>
-                <argument key="Erebot_Interface_Event_Except">Erebot_Event_Except</argument>
-                <argument key="Erebot_Interface_Event_Exit">Erebot_Event_Exit</argument>
-                <argument key="Erebot_Interface_Event_Halfop">Erebot_Event_Halfop</argument>
-                <argument key="Erebot_Interface_Event_Invite">Erebot_Event_Invite</argument>
-                <argument key="Erebot_Interface_Event_Join">Erebot_Event_Join</argument>
-                <argument key="Erebot_Interface_Event_Kick">Erebot_Event_Kick</argument>
-                <argument key="Erebot_Interface_Event_Logon">Erebot_Event_Logon</argument>
-                <argument key="Erebot_Interface_Event_Nick">Erebot_Event_Nick</argument>
-                <argument key="Erebot_Interface_Event_Notify">Erebot_Event_Notify</argument>
-                <argument key="Erebot_Interface_Event_Op">Erebot_Event_Op</argument>
-                <argument key="Erebot_Interface_Event_Owner">Erebot_Event_Owner</argument>
-                <argument key="Erebot_Interface_Event_Part">Erebot_Event_Part</argument>
-                <argument key="Erebot_Interface_Event_Ping">Erebot_Event_Ping</argument>
-                <argument key="Erebot_Interface_Event_Pong">Erebot_Event_Pong</argument>
-                <argument key="Erebot_Interface_Event_PrivateAction">Erebot_Event_PrivateAction</argument>
-                <argument key="Erebot_Interface_Event_PrivateCtcp">Erebot_Event_PrivateCtcp</argument>
-                <argument key="Erebot_Interface_Event_PrivateCtcpReply">Erebot_Event_PrivateCtcpReply</argument>
-                <argument key="Erebot_Interface_Event_PrivateNotice">Erebot_Event_PrivateNotice</argument>
-                <argument key="Erebot_Interface_Event_PrivateText">Erebot_Event_PrivateText</argument>
-                <argument key="Erebot_Interface_Event_Protect">Erebot_Event_Protect</argument>
-                <argument key="Erebot_Interface_Event_Quit">Erebot_Event_Quit</argument>
-                <argument key="Erebot_Interface_Event_Numeric">Erebot_Event_Numeric</argument>
-                <argument key="Erebot_Interface_Event_RawMode">Erebot_Event_RawMode</argument>
-                <argument key="Erebot_Interface_Event_Topic">Erebot_Event_Topic</argument>
-                <argument key="Erebot_Interface_Event_UnBan">Erebot_Event_UnBan</argument>
-                <argument key="Erebot_Interface_Event_UnExcept">Erebot_Event_UnExcept</argument>
-                <argument key="Erebot_Interface_Event_UnNotify">Erebot_Event_UnNotify</argument>
-                <argument key="Erebot_Interface_Event_UserMode">Erebot_Event_UserMode</argument>
-                <argument key="Erebot_Interface_Event_Voice">Erebot_Event_Voice</argument>
+                <argument key="\Erebot\Interface\Event\Ban">\Erebot\Event\Ban</argument>
+                <argument key="\Erebot\Interface\Event\ChanAction">\Erebot\Event\ChanAction</argument>
+                <argument key="\Erebot\Interface\Event\ChanAction">\Erebot\Event\ChanAction</argument>
+                <argument key="\Erebot\Interface\Event\ChanCtcp">\Erebot\Event\ChanCtcp</argument>
+                <argument key="\Erebot\Interface\Event\ChanCtcpReply">\Erebot\Event\ChanCtcpReply</argument>
+                <argument key="\Erebot\Interface\Event\ChanNotice">\Erebot\Event\ChanNotice</argument>
+                <argument key="\Erebot\Interface\Event\ChanText">\Erebot\Event\ChanText</argument>
+                <argument key="\Erebot\Interface\Event\Connect">\Erebot\Event\Connect</argument>
+                <argument key="\Erebot\Interface\Event\DeHalfop">\Erebot\Event\DeHalfop</argument>
+                <argument key="\Erebot\Interface\Event\DeOp">\Erebot\Event\DeOp</argument>
+                <argument key="\Erebot\Interface\Event\DeOwner">\Erebot\Event\DeOwner</argument>
+                <argument key="\Erebot\Interface\Event\DeProtect">\Erebot\Event\DeProtect</argument>
+                <argument key="\Erebot\Interface\Event\DeVoice">\Erebot\Event\DeVoice</argument>
+                <argument key="\Erebot\Interface\Event\Disconnect">\Erebot\Event\Disconnect</argument>
+                <argument key="\Erebot\Interface\Event\Error">\Erebot\Event\Error</argument>
+                <argument key="\Erebot\Interface\Event\Except">\Erebot\Event\Except</argument>
+                <argument key="\Erebot\Interface\Event\Exit">\Erebot\Event\Exit</argument>
+                <argument key="\Erebot\Interface\Event\Halfop">\Erebot\Event\Halfop</argument>
+                <argument key="\Erebot\Interface\Event\Invite">\Erebot\Event\Invite</argument>
+                <argument key="\Erebot\Interface\Event\Join">\Erebot\Event\Join</argument>
+                <argument key="\Erebot\Interface\Event\Kick">\Erebot\Event\Kick</argument>
+                <argument key="\Erebot\Interface\Event\Logon">\Erebot\Event\Logon</argument>
+                <argument key="\Erebot\Interface\Event\Nick">\Erebot\Event\Nick</argument>
+                <argument key="\Erebot\Interface\Event\Notify">\Erebot\Event\Notify</argument>
+                <argument key="\Erebot\Interface\Event\Op">\Erebot\Event\Op</argument>
+                <argument key="\Erebot\Interface\Event\Owner">\Erebot\Event\Owner</argument>
+                <argument key="\Erebot\Interface\Event\Part">\Erebot\Event\Part</argument>
+                <argument key="\Erebot\Interface\Event\Ping">\Erebot\Event\Ping</argument>
+                <argument key="\Erebot\Interface\Event\Pong">\Erebot\Event\Pong</argument>
+                <argument key="\Erebot\Interface\Event\PrivateAction">\Erebot\Event\PrivateAction</argument>
+                <argument key="\Erebot\Interface\Event\PrivateCtcp">\Erebot\Event\PrivateCtcp</argument>
+                <argument key="\Erebot\Interface\Event\PrivateCtcpReply">\Erebot\Event\PrivateCtcpReply</argument>
+                <argument key="\Erebot\Interface\Event\PrivateNotice">\Erebot\Event\PrivateNotice</argument>
+                <argument key="\Erebot\Interface\Event\PrivateText">\Erebot\Event\PrivateText</argument>
+                <argument key="\Erebot\Interface\Event\Protect">\Erebot\Event\Protect</argument>
+                <argument key="\Erebot\Interface\Event\Quit">\Erebot\Event\Quit</argument>
+                <argument key="\Erebot\Interface\Event\Numeric">\Erebot\Event\Numeric</argument>
+                <argument key="\Erebot\Interface\Event\RawMode">\Erebot\Event\RawMode</argument>
+                <argument key="\Erebot\Interface\Event\Topic">\Erebot\Event\Topic</argument>
+                <argument key="\Erebot\Interface\Event\UnBan">\Erebot\Event\UnBan</argument>
+                <argument key="\Erebot\Interface\Event\UnExcept">\Erebot\Event\UnExcept</argument>
+                <argument key="\Erebot\Interface\Event\UnNotify">\Erebot\Event\UnNotify</argument>
+                <argument key="\Erebot\Interface\Event\UserMode">\Erebot\Event\UserMode</argument>
+                <argument key="\Erebot\Interface\Event\Voice">\Erebot\Event\Voice</argument>
             </argument>
         </service>
 

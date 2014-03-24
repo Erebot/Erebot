@@ -34,7 +34,7 @@
 
         "pear/console_commandline": "dev-trunk",
         "pear/pear_exception": "dev-master",
-        "pear/file_gettext": "dev-master",
+        "fpoirotte/file_gettext": "dev-master",
         "deresh/sfyaml": "dev-master",
         "erebot/dependency-injection": "dev-master",
         "erebot/api": "dev-master",
@@ -42,14 +42,10 @@
 
         "erebot/dom": "dev-master",
         "erebot/timer": "1.0.*@dev",
-        "erebot/i18n": "dev-master",
+        "erebot/intl": "dev-master",
         "erebot/callable-wrapper": "dev-master",
         "erebot/styling": "dev-master",
         "erebot/uri": "dev-master",
-
-        "erebot/autoconnect-module": "dev-master",
-        "erebot/ircconnector-module": "dev-master",
-        "erebot/pingreply-module": "dev-master",
 
         "erebot/installers": "dev-master",
         "erebot/generic-doc": "dev-master"
@@ -59,34 +55,9 @@
         "pear/php_parsergenerator": "dev-master",
         "erebot/buildenv": "dev-master",
         "erebot/testenv": "dev-master",
+        "phpunit/phpunit": "<4.0.0",
 
-        "pear/http_request2": "dev-master",
-
-        "erebot/admin-module": "dev-master",
-        "erebot/autoconnect-module": "dev-master",
-        "erebot/autoident-module": "dev-master",
-        "erebot/autojoin-module": "dev-master",
-        "erebot/az-module": "dev-master",
-        "erebot/countdown-module": "dev-master",
-        "erebot/ctcpresponder-module": "dev-master",
-        "erebot/gof-module": "dev-master",
-        "erebot/helper-module": "dev-master",
-        "erebot/ircconnector-module": "dev-master",
-        "erebot/irctracker-module": "dev-master",
-        "erebot/lagchecker-module": "dev-master",
-        "erebot/math-module": "dev-master",
-        "erebot/minised-module": "dev-master",
-        "erebot/pingreply-module": "dev-master",
-        "erebot/phpfilter-module": "dev-master",
-        "erebot/ratelimiter-module": "dev-master",
-        "erebot/roulette-module": "dev-master",
-        "erebot/servercapabilities-module": "dev-master",
-        "erebot/triggerregistry-module": "dev-master",
-        "erebot/tv-module": "dev-master",
-        "erebot/uno-module": "dev-master",
-        "erebot/watchlist-module": "dev-master",
-        "erebot/webgetter-module": "dev-master",
-        "erebot/wordlists-module": "dev-master"
+        "pear/http_request2": "dev-master"
     },
     "suggest": {
         "ext-openssl": "*",
@@ -94,8 +65,8 @@
         "ext-posix": "*"
     },
     "autoload": {
-        "psr-0": {
-            "Erebot": "src/"
+        "psr-4": {
+            "Erebot\\": "src/"
         }
     },
     "bin": ["bin/Erebot"],

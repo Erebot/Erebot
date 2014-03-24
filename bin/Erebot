@@ -25,5 +25,5 @@ require(
     DIRECTORY_SEPARATOR . 'vendor' .
     DIRECTORY_SEPARATOR . 'autoload.php'
 );
-Erebot_CLI::run();
+\Erebot\CLI::run();
 
