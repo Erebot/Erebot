@@ -17,7 +17,7 @@
 */
 
 class   Erebot_Test_Identity
-extends Erebot_Identity
+extends \Erebot\Identity
 {
     static public function patternize($pattern, $matchDot)
     {
@@ -33,7 +33,7 @@ extends Erebot_TestEnv_TestCase
      */
     public function testNominalCase()
     {
-        $identity = new Erebot_Identity('foo!ident@host');
+        $identity = new \Erebot\Identity('foo!ident@host');
         $this->assertSame('foo',    (string) $identity);
         $this->assertSame('foo',    $identity->getNick());
         $this->assertSame('ident',  $identity->getIdent());
@@ -48,7 +48,7 @@ extends Erebot_TestEnv_TestCase
      */
     public function testNominalCase2()
     {
-        $identity = new Erebot_Identity('foo');
+        $identity = new \Erebot\Identity('foo');
         $this->assertSame('foo',    (string) $identity);
         $this->assertSame('foo',    $identity->getNick());
         $this->assertSame(NULL,     $identity->getIdent());
@@ -87,12 +87,12 @@ extends Erebot_TestEnv_TestCase
 
     /**
      * @dataProvider        invalidMasksProvider
-     * @expectedException   Erebot_InvalidValueException
-     * @covers              Erebot_Identity
+     * @expectedException   \Erebot\InvalidValueException
+     * @covers              \Erebot\Identity
      */
     public function testInvalidMasks($mask)
     {
-        new Erebot_Identity($mask);
+        new \Erebot\Identity($mask);
     }
 }
 
@@ -117,11 +117,11 @@ extends Erebot_TestEnv_TestCase
 
     /**
      * @dataProvider patterns
-     * @cover Erebot_Identity::match
+     * @cover \Erebot\Identity::match
      */
     public function testMatching($pattern)
     {
-        $identity = new Erebot_Identity('foo!bar@127.0.0.1');
+        $identity = new \Erebot\Identity('foo!bar@127.0.0.1');
         $this->assertTrue(
             $identity->match($pattern, new Erebot_IrcCollator_ASCII()),
             "Did not match '$pattern'"
@@ -152,7 +152,7 @@ extends Erebot_TestEnv_TestCase
 
     /**
      * @dataProvider    patterns
-     * @cover           Erebot_Identity::patternize
+     * @cover           \Erebot\Identity::patternize
      */
     public function testPatternizeNoDotMatching($input, $expectedDot, $expectedNoDot)
     {
@@ -162,7 +162,7 @@ extends Erebot_TestEnv_TestCase
 
     /**
      * @dataProvider    patterns
-     * @cover           Erebot_Identity::patternize
+     * @cover           \Erebot\Identity::patternize
      */
     public function testPatternizeDotMatching($input, $expectedDot, $expectedNoDot)
     {

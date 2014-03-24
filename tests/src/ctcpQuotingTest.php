@@ -17,7 +17,7 @@
 */
 
 abstract class  CtcpQuotingHelper
-extends         Erebot_Module_Base
+extends         \Erebot\Module\Base
 {
     // Expose the protected method to test.
     static public function ctcpQuote($msg)
@@ -27,7 +27,7 @@ extends         Erebot_Module_Base
 }
 
 class   CtcpUnQuotingHelper
-extends Erebot_IrcParser
+extends \Erebot\IrcParser
 {
     // Expose the protected method to test.
     static public function ctcpUnquote($msg)

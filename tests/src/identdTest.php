@@ -17,11 +17,11 @@
 */
 
 class   Erebot_Identd_Worker_TestStub
-extends Erebot_Identd_Worker
+extends \Erebot\Identd\Worker
 {
     private $_expose;
 
-    public function __construct(Erebot_Interface_Core $bot, $socket = NULL)
+    public function __construct(\Erebot\Interfaces\Core $bot, $socket = NULL)
     {
         parent::__construct($bot, $socket);
         $this->_expose = TRUE;
@@ -40,7 +40,7 @@ extends Erebot_Identd_Worker
     public function parseString()
     {
         if (!$this->_expose)
-            throw new Erebot_Exception('Hidden');
+            throw new \Erebot\Exception('Hidden');
         return "Foobar";
     }
 }
@@ -57,7 +57,7 @@ extends         Erebot_TestEnv_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->_mainConfig = $this->getMock('Erebot_Interface_Config_Main', array(), array(), '', FALSE, FALSE);
+        $this->_mainConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Main', array(), array(), '', FALSE, FALSE);
         $this->_bot = $this->getMock('Erebot_Testenv_Stub_Core', array(), array($this->_mainConfig), '', FALSE, FALSE);
 
         // Create two connected stream-oriented TCP sockets.
@@ -80,7 +80,7 @@ extends         Erebot_TestEnv_TestCase
         // Finish the rest of the preparations
         // (by creating connection objets).
         $this->_sockets = array($accepted, $client);
-        $this->_worker = new Erebot_Identd_Worker($this->_bot, $this->_sockets[0]);
+        $this->_worker = new \Erebot\Identd\Worker($this->_bot, $this->_sockets[0]);
         $this->_connection = new Erebot_Identd_Worker_TestStub($this->_bot, $this->_sockets[1]);
         $this->_bot
             ->expects($this->any())

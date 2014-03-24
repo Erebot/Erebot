@@ -22,7 +22,7 @@ extends Erebot_TestEnv_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->_translator = new Erebot_I18n('Erebot');
+        $this->_translator = new \Erebot\Intl('Erebot');
     }
 
     /**
@@ -31,7 +31,7 @@ extends Erebot_TestEnv_TestCase
      */
     public function testLoadConfigFromInvalidSource()
     {
-        $config = new Erebot_Config_Main('foo', 'bar', $this->_translator);
+        $config = new \Erebot\Config\Main('foo', 'bar', $this->_translator);
     }
 
     /**
@@ -39,12 +39,12 @@ extends Erebot_TestEnv_TestCase
      */
     public function testLoadValidConfigFromFile()
     {
-        $file = dirname(dirname(__FILE__)).
+        $file = dirname(__DIR__).
                 DIRECTORY_SEPARATOR.'data'.
                 DIRECTORY_SEPARATOR.'valid-config.xml';
-        $config = new Erebot_Config_Main(
+        $config = new \Erebot\Config\Main(
             $file,
-            Erebot_Config_Main::LOAD_FROM_FILE,
+            \Erebot\Config\Main::LOAD_FROM_FILE,
             $this->_translator
         );
         unset($config);
@@ -55,14 +55,14 @@ extends Erebot_TestEnv_TestCase
      */
     public function testLoadValidConfigFromURIObject()
     {
-        $file = Erebot_URI::fromAbsPath(
-            dirname(dirname(__FILE__)).
+        $file = \Erebot\URI::fromAbsPath(
+            dirname(__DIR__).
             DIRECTORY_SEPARATOR.'data'.
             DIRECTORY_SEPARATOR.'valid-config.xml'
         );
-        $config = new Erebot_Config_Main(
+        $config = new \Erebot\Config\Main(
             $file,
-            Erebot_Config_Main::LOAD_FROM_FILE,
+            \Erebot\Config\Main::LOAD_FROM_FILE,
             $this->_translator
         );
         unset($config);
@@ -77,7 +77,6 @@ extends Erebot_TestEnv_TestCase
         $data .=<<<CONFIG
 <configuration
     xmlns="http://www.erebot.net/xmlns/erebot"
-    version="%s"
     timezone="Europe/Paris"
 >
     <networks>
@@ -90,22 +89,21 @@ extends Erebot_TestEnv_TestCase
 </configuration>
 CONFIG;
 
-        $data = sprintf($data, EREBOT_VERSION);
-        $config = new Erebot_Config_Main(
+        $config = new \Erebot\Config\Main(
             $data,
-            Erebot_Config_Main::LOAD_FROM_STRING,
+            \Erebot\Config\Main::LOAD_FROM_STRING,
             $this->_translator
         );
         unset($config);
     }
 
     /**
-     * @expectedException   Erebot_InvalidValueException
-     * @covers              Erebot_Config_Main
+     * @expectedException   \Erebot\InvalidValueException
+     * @covers              \Erebot\Config\Main
      */
     public function testLoadInvalidConfigFromString()
     {
-        $path   = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
+        $path   = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
 
         if (DIRECTORY_SEPARATOR == "/")
             $xmlPath = $path;
@@ -138,9 +136,9 @@ LOGS
 <configuration xmlns="http://www.erebot.net/xmlns/erebot"></configuration>
 CONFIG;
 
-        $config = new Erebot_Config_Main(
+        $config = new \Erebot\Config\Main(
             $data,
-            Erebot_Config_Main::LOAD_FROM_STRING,
+            \Erebot\Config\Main::LOAD_FROM_STRING,
             $this->_translator
         );
     }

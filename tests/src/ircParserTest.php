@@ -22,17 +22,17 @@ extends Erebot_TestEnv_TestCase
     public function setUp()
     {
         $sxml = new SimpleXMLElement('<foo/>');
-        $this->_mainConfig = $this->getMock('Erebot_Interface_Config_Main', array(), array(), '', FALSE, FALSE);
-        $this->_networkConfig = $this->getMock('Erebot_Interface_Config_Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE);
-        $this->_serverConfig = $this->getMock('Erebot_Interface_Config_Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE);
+        $this->_mainConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Main', array(), array(), '', FALSE, FALSE);
+        $this->_networkConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE);
+        $this->_serverConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE);
         $this->_bot = $this->getMock('Erebot_Testenv_Stub_Core', array(), array($this->_mainConfig), '', FALSE, FALSE);
-        $this->_connection = $this->getMock('Erebot_Interface_IrcConnection', array(), array($this->_bot, $this->_serverConfig), '', FALSE, FALSE);
-        $this->_event = $this->getMock('Erebot_Interface_Event_Base_Generic', array(), array(), '', FALSE, FALSE);
-        $this->_parser = $this->getMock('Erebot_IrcParser', array('makeEvent'), array($this->_connection));
+        $this->_connection = $this->getMock('\\Erebot\\Interfaces\\IrcConnection', array(), array($this->_bot, $this->_serverConfig), '', FALSE, FALSE);
+        $this->_event = $this->getMock('\\Erebot\\Interfaces\\Event\\Base\\Generic', array(), array(), '', FALSE, FALSE);
+        $this->_parser = $this->getMock('\\Erebot\\IrcParser', array('makeEvent'), array($this->_connection));
     }
 
     /**
-     * @covers Erebot_IrcParser::stripCodes
+     * @covers \Erebot\IrcParser::stripCodes
      */
     public function testStripCodes()
     {
@@ -49,53 +49,53 @@ extends Erebot_TestEnv_TestCase
                     "\0030,1i\00300,01j\003k";
         $this->assertEquals(
             "ab\037c\037d\026e\026f\017g\00300h\0030,1i\00300,01j\003k",
-            Erebot_IrcParser::stripCodes(
+            \Erebot\IrcParser::stripCodes(
                 $message,
-                Erebot_IrcParser::STRIP_BOLD
+                \Erebot\IrcParser::STRIP_BOLD
             )
         );
         $this->assertEquals(
             "\002a\002b\037c\037d\026e\026f\017ghijk",
-            Erebot_IrcParser::stripCodes(
+            \Erebot\IrcParser::stripCodes(
                 $message,
-                Erebot_IrcParser::STRIP_COLORS
+                \Erebot\IrcParser::STRIP_COLORS
             )
         );
         $this->assertEquals(
             "\002a\002b\037c\037d\026e\026fg\00300h\0030,1i\00300,01j\003k",
-            Erebot_IrcParser::stripCodes(
+            \Erebot\IrcParser::stripCodes(
                 $message,
-                Erebot_IrcParser::STRIP_RESET
+                \Erebot\IrcParser::STRIP_RESET
             )
         );
         $this->assertEquals(
             "\002a\002b\037c\037def\017g\00300h\0030,1i\00300,01j\003k",
-            Erebot_IrcParser::stripCodes(
+            \Erebot\IrcParser::stripCodes(
                 $message,
-                Erebot_IrcParser::STRIP_REVERSE
+                \Erebot\IrcParser::STRIP_REVERSE
             )
         );
         $this->assertEquals(
             "\002a\002bcd\026e\026f\017g\00300h\0030,1i\00300,01j\003k",
-            Erebot_IrcParser::stripCodes(
+            \Erebot\IrcParser::stripCodes(
                 $message,
-                Erebot_IrcParser::STRIP_UNDERLINE
+                \Erebot\IrcParser::STRIP_UNDERLINE
             )
         );
         $this->assertEquals(
             "abcdefghijk",
-            Erebot_IrcParser::stripCodes(
+            \Erebot\IrcParser::stripCodes(
                 $message,
-                Erebot_IrcParser::STRIP_ALL
+                \Erebot\IrcParser::STRIP_ALL
             )
         );
         $this->assertEquals(
             "abcdefghijk",
-            Erebot_IrcParser::stripCodes($message));
+            \Erebot\IrcParser::stripCodes($message));
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleINVITE
+     * @cover \Erebot\IrcParser::_handleINVITE
      */
     public function testINVITE()
     {
@@ -114,7 +114,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleJOIN
+     * @cover \Erebot\IrcParser::_handleJOIN
      */
     public function testJOIN()
     {
@@ -134,7 +134,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleKICK
+     * @cover \Erebot\IrcParser::_handleKICK
      */
     public function testKICK()
     {
@@ -156,7 +156,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleMODE
+     * @cover \Erebot\IrcParser::_handleMODE
      */
     public function testUserMODE()
     {
@@ -183,7 +183,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleMODE
+     * @cover \Erebot\IrcParser::_handleMODE
      */
     public function testCapturedChannelMODE()
     {
@@ -194,7 +194,7 @@ extends Erebot_TestEnv_TestCase
                 '!RawMode',
                 '#Finnish',
                 'WiZ!jto@tolsun.oulu.fi',
-                new Erebot_IrcTextWrapper('+imI *!*@*.fi')
+                new \Erebot\IrcTextWrapper('+imI *!*@*.fi')
             )
             ->will($this->returnValue($this->_event));
 
@@ -217,7 +217,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleNICK
+     * @cover \Erebot\IrcParser::_handleNICK
      */
     public function testNICK()
     {
@@ -283,7 +283,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleNOTICE
+     * @cover \Erebot\IrcParser::_handleNOTICE
      * @dataProvider noticeProvider
      */
     public function testNOTICE($line, $args, $target)
@@ -304,7 +304,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handlePART
+     * @cover \Erebot\IrcParser::_handlePART
      */
     public function testPART()
     {
@@ -325,7 +325,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handlePING
+     * @cover \Erebot\IrcParser::_handlePING
      */
     public function testPING()
     {
@@ -342,7 +342,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handlePONG
+     * @cover \Erebot\IrcParser::_handlePONG
      */
     public function testPONG()
     {
@@ -422,7 +422,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handlePRIVMSG
+     * @cover \Erebot\IrcParser::_handlePRIVMSG
      * @dataProvider privmsgProvider
      */
     public function testPRIVMSG($line, $args, $target)
@@ -443,7 +443,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleQUIT
+     * @cover \Erebot\IrcParser::_handleQUIT
      */
     public function testQUIT()
     {
@@ -463,7 +463,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handleTOPIC
+     * @cover \Erebot\IrcParser::_handleTOPIC
      */
     public function testTOPIC()
     {
@@ -484,7 +484,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handle255
+     * @cover \Erebot\IrcParser::_handle255
      */
     public function testNumeric255()
     {
@@ -504,7 +504,7 @@ extends Erebot_TestEnv_TestCase
                 255,
                 'unconfigured.name',
                 'WiZ',
-                new Erebot_IrcTextWrapper(':I have 1195 clients and 2 servers')
+                new \Erebot\IrcTextWrapper(':I have 1195 clients and 2 servers')
             );
         $this->_parser
             ->expects($this->at(2))
@@ -514,7 +514,7 @@ extends Erebot_TestEnv_TestCase
                 255,
                 'unconfigured.name',
                 'WiZ',
-                new Erebot_IrcTextWrapper(':I have 1195 clients and 3 servers')
+                new \Erebot\IrcTextWrapper(':I have 1195 clients and 3 servers')
             );
 
         $this->_connection
@@ -552,7 +552,7 @@ extends Erebot_TestEnv_TestCase
                     600,
                     'unconfigured.name',
                     'Wiz',
-                    new Erebot_IrcTextWrapper(
+                    new \Erebot\IrcTextWrapper(
                         'mspai goddess example.com 911248011 :logged online'
                     )
                 ),
@@ -574,7 +574,7 @@ extends Erebot_TestEnv_TestCase
                     601,
                     'unconfigured.name',
                     'Wiz',
-                    new Erebot_IrcTextWrapper(
+                    new \Erebot\IrcTextWrapper(
                         'mspai goddess example.com 911248011 :logged offline'
                     )
                 ),
@@ -596,7 +596,7 @@ extends Erebot_TestEnv_TestCase
                     604,
                     'unconfigured.name',
                     'Wiz',
-                    new Erebot_IrcTextWrapper(
+                    new \Erebot\IrcTextWrapper(
                         'SB tikiman example.com 911076465 :is online'
                     )
                 ),
@@ -617,7 +617,7 @@ extends Erebot_TestEnv_TestCase
                     605,
                     'unconfigured.name',
                     'Wiz',
-                    new Erebot_IrcTextWrapper('hotblack * * 0 :is offline')
+                    new \Erebot\IrcTextWrapper('hotblack * * 0 :is offline')
                 ),
             ),
         );
@@ -629,11 +629,11 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @cover Erebot_IrcParser::_handle601
-     * @cover Erebot_IrcParser::_handle602
-     * @cover Erebot_IrcParser::_handle604
-     * @cover Erebot_IrcParser::_handle605
-     * @cover Erebot_IrcParser::_watchList
+     * @cover \Erebot\IrcParser::_handle601
+     * @cover \Erebot\IrcParser::_handle602
+     * @cover \Erebot\IrcParser::_handle604
+     * @cover \Erebot\IrcParser::_handle605
+     * @cover \Erebot\IrcParser::_watchList
      * @dataProvider watchListProvider
      */
     public function testWatchList($line, $args)
