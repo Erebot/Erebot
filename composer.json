@@ -53,7 +53,7 @@
     },
     "require-dev": {
         "composer/composer": "dev-master",
-        "pear/php_parsergenerator": "dev-master",
+        "fpoirotte/php_parsergenerator": "dev-master",
         "erebot/buildenv": "dev-master",
         "erebot/testenv": "dev-master",
         "phpunit/phpunit": "<4.0.0",
