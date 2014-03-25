@@ -1,0 +1,2296 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "badb68c4a9489247fa1036fefe8adf18",
+    "packages": [
+        {
+            "name": "deresh/sfyaml",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/deresh/yaml.git",
+                "reference": "471fc45b3b07c6a3469aaf3b537194b0afda8bc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/deresh/yaml/zipball/471fc45b3b07c6a3469aaf3b537194b0afda8bc5",
+                "reference": "471fc45b3b07c6a3469aaf3b537194b0afda8bc5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "sfYaml": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien.potencier@symfony-project.org",
+                    "homepage": "http://fabien.potencier.org/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "mirror of github.com/fabpot/yaml.",
+            "homepage": "https://github.com/fabpot/yaml",
+            "keywords": [
+                "sfyaml",
+                "yaml"
+            ],
+            "time": "2013-04-16 11:50:18"
+        },
+        {
+            "name": "erebot/api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_API.git",
+                "reference": "b5e975d504c385071a187b391cc67614326d361d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Erebot_API/zipball/b5e975d504c385071a187b391cc67614326d361d",
+                "reference": "b5e975d504c385071a187b391cc67614326d361d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-spl": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "erebot/buildenv": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erebot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "API for the Erebot project",
+            "homepage": "https://github.com/Erebot/Erebot_API",
+            "keywords": [
+                "Erebot",
+                "bot",
+                "irc"
+            ],
+            "time": "2014-03-24 22:17:57"
+        },
+        {
+            "name": "erebot/callable-wrapper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/CallableWrapper.git",
+                "reference": "f57af4d48d0ff7f1071dd624c7dea6fbfdfc2d9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/CallableWrapper/zipball/f57af4d48d0ff7f1071dd624c7dea6fbfdfc2d9f",
+                "reference": "f57af4d48d0ff7f1071dd624c7dea6fbfdfc2d9f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-spl": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erebot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Callable wrapper for PHP < 5.4.0",
+            "homepage": "https://github.com/Erebot/CallableWrapper",
+            "keywords": [
+                "callable"
+            ],
+            "time": "2014-03-25 12:20:27"
+        },
+        {
+            "name": "erebot/dom",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/DOM.git",
+                "reference": "347d8c5f37151dcc4185be131cf92df78f2aae17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/DOM/zipball/347d8c5f37151dcc4185be131cf92df78f2aae17",
+                "reference": "347d8c5f37151dcc4185be131cf92df78f2aae17",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-spl": "*",
+                "ext-xsl": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erebot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Adds Schematron validation support to PHP's DOM extension",
+            "homepage": "https://github.com/Erebot/DOM",
+            "keywords": [
+                "dom",
+                "schematron",
+                "validation"
+            ],
+            "time": "2014-03-24 15:08:57"
+        },
+        {
+            "name": "erebot/generic-doc",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Module_Skeleton_Doc.git",
+                "reference": "49d5da55fdda7694a51fbb4675566debedf3a10b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Erebot_Module_Skeleton_Doc/zipball/49d5da55fdda7694a51fbb4675566debedf3a10b",
+                "reference": "49d5da55fdda7694a51fbb4675566debedf3a10b",
+                "shasum": ""
+            },
+            "require": {
+                "erebot/installers": "*"
+            },
+            "type": "erebot-generic-doc",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Generic documentation for Erebot modules",
+            "homepage": "https://github.com/Erebot/Erebot_Module_Skeleton",
+            "keywords": [
+                "Erebot",
+                "bot",
+                "doc",
+                "documentation",
+                "irc"
+            ],
+            "time": "2014-01-03 16:28:56"
+        },
+        {
+            "name": "erebot/installers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Installers.git",
+                "reference": "11bd431167ca9a0dc24959faa748d99cf2d2a5ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Erebot_Installers/zipball/11bd431167ca9a0dc24959faa748d99cf2d2a5ce",
+                "reference": "11bd431167ca9a0dc24959faa748d99cf2d2a5ce",
+                "shasum": ""
+            },
+            "type": "composer-installer",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                },
+                "class": "Erebot\\Composer\\GenericDocInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "Erebot\\Composer": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Composer installers for Erebot",
+            "homepage": "https://github.com/Erebot/Erebot_Installers",
+            "keywords": [
+                "Erebot",
+                "bot",
+                "installers",
+                "irc"
+            ],
+            "time": "2013-10-20 20:39:40"
+        },
+        {
+            "name": "erebot/intl",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Intl.git",
+                "reference": "36f7eca0ec0ba58bed48ae1058e1a658b8086618"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Intl/zipball/36f7eca0ec0ba58bed48ae1058e1a658b8086618",
+                "reference": "36f7eca0ec0ba58bed48ae1058e1a658b8086618",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-reflection": "*",
+                "ext-spl": "*",
+                "fpoirotte/file_gettext": "dev-master",
+                "pear/pear_exception": "dev-master",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erebot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "I18N API for Erebot",
+            "homepage": "https://github.com/Erebot/Intl",
+            "keywords": [
+                "i18n",
+                "intl",
+                "l10n",
+                "translations"
+            ],
+            "time": "2014-03-24 15:10:58"
+        },
+        {
+            "name": "erebot/plop",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Plop.git",
+                "reference": "2301d164fd3e091e62de1fa46252242456384680"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Plop/zipball/2301d164fd3e091e62de1fa46252242456384680",
+                "reference": "2301d164fd3e091e62de1fa46252242456384680",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "ext-sockets": "*",
+                "ext-spl": "*",
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "erebot/buildenv": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Plop": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "A simple logging library for PHP",
+            "homepage": "https://github.com/Erebot/Plop",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "time": "2013-10-20 20:30:57"
+        },
+        {
+            "name": "erebot/styling",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Styling.git",
+                "reference": "2fd0c3d51760aa1e18af3b5878ab8c8fbbe10c03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Styling/zipball/2fd0c3d51760aa1e18af3b5878ab8c8fbbe10c03",
+                "reference": "2fd0c3d51760aa1e18af3b5878ab8c8fbbe10c03",
+                "shasum": ""
+            },
+            "require": {
+                "erebot/dom": "1.0.*@dev",
+                "erebot/intl": "1.0.*@dev",
+                "ext-intl": "*",
+                "ext-pcre": "*",
+                "ext-reflection": "*",
+                "ext-spl": "*",
+                "fpoirotte/file_gettext": "dev-master",
+                "pear/pear_exception": "1.0.*@dev",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fpoirotte/php_parsergenerator": "dev-master",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "suggest": {
+                "erebot/plop": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erebot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Templating API for IRC messages",
+            "homepage": "https://github.com/Erebot/Styling",
+            "keywords": [
+                "irc",
+                "styles",
+                "templates",
+                "templating"
+            ],
+            "time": "2014-03-24 16:25:12"
+        },
+        {
+            "name": "erebot/timer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Timer.git",
+                "reference": "eeac2c51d2f57b7064c59ba08236b3ac5d90198a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Timer/zipball/eeac2c51d2f57b7064c59ba08236b3ac5d90198a",
+                "reference": "eeac2c51d2f57b7064c59ba08236b3ac5d90198a",
+                "shasum": ""
+            },
+            "require": {
+                "erebot/callable-wrapper": "1.0.*@dev",
+                "ext-spl": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erebot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Call a method/function after a certain amount of time has passed",
+            "homepage": "https://github.com/Erebot/Timer",
+            "keywords": [
+                "timer"
+            ],
+            "time": "2014-03-24 16:10:31"
+        },
+        {
+            "name": "erebot/uri",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/URI.git",
+                "reference": "619036cbe34a04289733daab992ffaa5d12c5304"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/URI/zipball/619036cbe34a04289733daab992ffaa5d12c5304",
+                "reference": "619036cbe34a04289733daab992ffaa5d12c5304",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "ext-spl": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erebot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "URI parsing and generation",
+            "homepage": "https://github.com/Erebot/URI",
+            "keywords": [
+                "uri"
+            ],
+            "time": "2014-03-24 18:00:32"
+        },
+        {
+            "name": "fpoirotte/file_gettext",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fpoirotte/File_Gettext.git",
+                "reference": "eb3a52768a971498d4ec6ad603f06175e799bf3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fpoirotte/File_Gettext/zipball/eb3a52768a971498d4ec6ad603f06175e799bf3b",
+                "reference": "eb3a52768a971498d4ec6ad603f06175e799bf3b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.0.0"
+            },
+            "provide": {
+                "pear/file_gettext": "0.4.2-patch1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "File_Gettext": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Wallner",
+                    "email": "mike@php.net"
+                }
+            ],
+            "description": "Reader and writer for GNU PO and MO files",
+            "homepage": "https://github.com/fpoirotte/File_Gettext",
+            "keywords": [
+                "gettext"
+            ],
+            "time": "2013-10-20 17:11:12"
+        },
+        {
+            "name": "pear/console_commandline",
+            "version": "dev-trunk",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Console_CommandLine.git",
+                "reference": "ee5bc2791980332c097c8050aa7fe4f4efbe700d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Console_CommandLine/zipball/ee5bc2791980332c097c8050aa7fe4f4efbe700d",
+                "reference": "ee5bc2791980332c097c8050aa7fe4f4efbe700d",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear_exception": "*",
+                "php": ">=5.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Console": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com"
+                },
+                {
+                    "name": "David Jean Louis",
+                    "email": "izimobil@gmail.com"
+                }
+            ],
+            "description": "A full featured command line options and arguments parser.",
+            "homepage": "https://github.com/pear/Console_CommandLine",
+            "keywords": [
+                "console"
+            ],
+            "time": "2014-02-21 08:54:05"
+        },
+        {
+            "name": "pear/pear_exception",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/PEAR_Exception.git",
+                "reference": "d5a3e9597040dcc56a4a2053a605e07214951202"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/d5a3e9597040dcc56a4a2053a605e07214951202",
+                "reference": "d5a3e9597040dcc56a4a2053a605e07214951202",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "class",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PEAR": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "."
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Helgi Thormar",
+                    "email": "dufuz@php.net"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "The PEAR Exception base class.",
+            "homepage": "https://github.com/pear/PEAR_Exception",
+            "keywords": [
+                "exception"
+            ],
+            "time": "2014-02-21 17:39:41"
+        },
+        {
+            "name": "symfony/config",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Config.git",
+                "reference": "d81bd01eac1514c10dcb3b11eaa9048d6b87dd1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/d81bd01eac1514c10dcb3b11eaa9048d6b87dd1f",
+                "reference": "d81bd01eac1514c10dcb3b11eaa9048d6b87dd1f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/filesystem": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-01-07 13:28:54"
+        },
+        {
+            "name": "symfony/dependency-injection",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/DependencyInjection",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/DependencyInjection.git",
+                "reference": "dde921399691bdb3b32a3c2557dcb2054db7593a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/dde921399691bdb3b32a3c2557dcb2054db7593a",
+                "reference": "dde921399691bdb3b32a3c2557dcb2054db7593a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/config": "~2.2",
+                "symfony/expression-language": "~2.4",
+                "symfony/yaml": "~2.0"
+            },
+            "suggest": {
+                "symfony/config": "",
+                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\DependencyInjection\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DependencyInjection Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-02-11 13:52:09"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "7e65abb06d3b38f4be89266fe3fb4a759544e713"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/7e65abb06d3b38f4be89266fe3fb4a759544e713",
+                "reference": "7e65abb06d3b38f4be89266fe3fb4a759544e713",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-01-07 13:28:54"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "composer/composer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/composer.git",
+                "reference": "b09fb521d281fb832992b1c6bff62580eab499b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/composer/zipball/b09fb521d281fb832992b1c6bff62580eab499b2",
+                "reference": "b09fb521d281fb832992b1c6bff62580eab499b2",
+                "shasum": ""
+            },
+            "require": {
+                "justinrainbow/json-schema": "~1.1",
+                "php": ">=5.3.2",
+                "seld/jsonlint": "1.*",
+                "symfony/console": "~2.3",
+                "symfony/finder": "~2.2",
+                "symfony/process": "~2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7.10"
+            },
+            "suggest": {
+                "ext-openssl": "Enabling the openssl extension allows you to access https URLs for repositories and packages",
+                "ext-zip": "Enabling the zip extension allows you to unzip archives, and allows gzip compression of all internet traffic"
+            },
+            "bin": [
+                "bin/composer"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Nils Adermann",
+                    "email": "naderman@naderman.de",
+                    "homepage": "http://www.naderman.de"
+                }
+            ],
+            "description": "Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.",
+            "homepage": "http://getcomposer.org/",
+            "keywords": [
+                "autoload",
+                "dependency",
+                "package"
+            ],
+            "time": "2014-03-25 10:44:16"
+        },
+        {
+            "name": "erebot/buildenv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Buildenv.git",
+                "reference": "d04ba382e7a65235ed238bdfd73909bfc213e92c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Erebot_Buildenv/zipball/d04ba382e7a65235ed238bdfd73909bfc213e92c",
+                "reference": "d04ba382e7a65235ed238bdfd73909bfc213e92c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-phar": "*",
+                "ext-xsl": "*",
+                "phing/phing": ">=2.4.3",
+                "php": ">=5.2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Build environment for the Erebot project",
+            "homepage": "https://github.com/Erebot/Erebot_Buildenv",
+            "keywords": [
+                "Erebot"
+            ],
+            "time": "2014-02-15 22:31:44"
+        },
+        {
+            "name": "erebot/testenv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Erebot/Erebot_Testenv.git",
+                "reference": "4ad0aa1cd8f3bad5b86de698ebb49fe7903b3661"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Erebot/Erebot_Testenv/zipball/4ad0aa1cd8f3bad5b86de698ebb49fe7903b3661",
+                "reference": "4ad0aa1cd8f3bad5b86de698ebb49fe7903b3661",
+                "shasum": ""
+            },
+            "require": {
+                "erebot/callable-wrapper": "*",
+                "erebot/styling": "*",
+                "pdepend/pdepend": "*",
+                "php": ">=5.2.2",
+                "phpmd/phpmd": "*",
+                "phpunit/phpunit": "*",
+                "sebastian/phpcpd": "*",
+                "squizlabs/php_codesniffer": ">=1.2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "François Poirotte",
+                    "email": "clicky@erebot.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Test environment for the Erebot project",
+            "homepage": "https://github.com/Erebot/Erebot_Testenv",
+            "keywords": [
+                "Erebot"
+            ],
+            "time": "2014-03-24 22:00:14"
+        },
+        {
+            "name": "fpoirotte/php_parsergenerator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fpoirotte/PHP_ParserGenerator.git",
+                "reference": "2f764b64831e288c8a32723d5cc40b901a30cf43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fpoirotte/PHP_ParserGenerator/zipball/2f764b64831e288c8a32723d5cc40b901a30cf43",
+                "reference": "2f764b64831e288c8a32723d5cc40b901a30cf43",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "provide": {
+                "pear/php_parsergenerator": "0.1.7-patch1"
+            },
+            "bin": [
+                "phplemon"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PHP": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "Translate grammar files in Lemon Parser Generator format into a PHP 5 parser",
+            "homepage": "https://github.com/fpoirotte/PHP_ParserGenerator",
+            "keywords": [
+                "lemon",
+                "lempar",
+                "parser"
+            ],
+            "time": "2014-03-23 07:47:41"
+        },
+        {
+            "name": "justinrainbow/json-schema",
+            "version": "1.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/justinrainbow/json-schema.git",
+                "reference": "d97cf3ce890fe80f247fc08594a1c8a1029fc7ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/d97cf3ce890fe80f247fc08594a1c8a1029fc7ed",
+                "reference": "d97cf3ce890fe80f247fc08594a1c8a1029fc7ed",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "json-schema/json-schema-test-suite": "1.1.0",
+                "phpdocumentor/phpdocumentor": "~2",
+                "phpunit/phpunit": "~3.7"
+            },
+            "bin": [
+                "bin/validate-json"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "JsonSchema": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch",
+                    "homepage": "http://wiedler.ch/igor/"
+                },
+                {
+                    "name": "Bruno Prieto Reis",
+                    "email": "bruno.p.reis@gmail.com"
+                },
+                {
+                    "name": "Justin Rainbow",
+                    "email": "justin.rainbow@gmail.com"
+                },
+                {
+                    "name": "Robert Schönthal",
+                    "email": "seroscho@googlemail.com",
+                    "homepage": "http://digitalkaoz.net"
+                }
+            ],
+            "description": "A library to validate a json schema.",
+            "homepage": "https://github.com/justinrainbow/json-schema",
+            "keywords": [
+                "json",
+                "schema"
+            ],
+            "time": "2014-03-05 15:03:52"
+        },
+        {
+            "name": "pdepend/pdepend",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pdepend/pdepend.git",
+                "reference": "1537f19d62d7b30c13ac173270106df7c6b9c459"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1537f19d62d7b30c13ac173270106df7c6b9c459",
+                "reference": "1537f19d62d7b30c13ac173270106df7c6b9c459",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.3"
+            },
+            "bin": [
+                "src/bin/pdepend"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHP_": "src/main/php/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Official version of pdepend to be handled with Composer",
+            "time": "2013-12-04 17:46:00"
+        },
+        {
+            "name": "pear/http_request2",
+            "version": "dev-trunk",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/HTTP_Request2.git",
+                "reference": "ed779344f6f9fad4ee69ad24827ec216b98d7ef9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/HTTP_Request2/zipball/ed779344f6f9fad4ee69ad24827ec216b98d7ef9",
+                "reference": "ed779344f6f9fad4ee69ad24827ec216b98d7ef9",
+                "shasum": ""
+            },
+            "require": {
+                "pear/net_url2": ">=2.0.0",
+                "pear/pear_exception": "*",
+                "php": ">=5.2.0"
+            },
+            "suggest": {
+                "ext-fileinfo": "Adds support for looking up mime-types using finfo.",
+                "ext-zlib": "Allows handling gzip compressed responses.",
+                "lib-curl": "Allows using cURL as a request backend.",
+                "lib-openssl": "Allows handling SSL requests when not using cURL."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HTTP_Request2": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexey Borzov",
+                    "email": "avb@php.net",
+                    "role": "Developer HTML_Common2"
+                }
+            ],
+            "description": "Provides an easy way to perform HTTP requests.",
+            "homepage": "http://pear.php.net/package/HTTP_Request2",
+            "keywords": [
+                "PEAR",
+                "curl",
+                "http",
+                "request"
+            ],
+            "time": "2014-01-16 18:42:31"
+        },
+        {
+            "name": "pear/net_url2",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Net_URL2.git",
+                "reference": "68d6a20bc82c0d4bedbcae082e2c1739932dcb93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Net_URL2/zipball/68d6a20bc82c0d4bedbcae082e2c1739932dcb93",
+                "reference": "68d6a20bc82c0d4bedbcae082e2c1739932dcb93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Net_URL2": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "David Coallier",
+                    "email": "davidc@php.net"
+                },
+                {
+                    "name": "Tom Klingenberg",
+                    "email": "tkli@php.net"
+                },
+                {
+                    "name": "Christian Schmidt",
+                    "email": "chmidt@php.net"
+                }
+            ],
+            "description": "Class for parsing and handling URL. Provides parsing of URLs into their constituent parts (scheme, host, path etc.), URL generation, and resolving of relative URLs.",
+            "homepage": "https://github.com/pear/Net_URL2",
+            "keywords": [
+                "PEAR",
+                "RFC 3986",
+                "net",
+                "networking",
+                "uri",
+                "url"
+            ],
+            "time": "2014-01-01 22:23:14"
+        },
+        {
+            "name": "phing/phing",
+            "version": "2.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phingofficial/phing.git",
+                "reference": "bd2689790c620ac745b3ad29765c641a0dd5d007"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/bd2689790c620ac745b3ad29765c641a0dd5d007",
+                "reference": "bd2689790c620ac745b3ad29765c641a0dd5d007",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "bin": [
+                "bin/phing"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "classes/phing/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "classes"
+            ],
+            "license": [
+                "LGPL3"
+            ],
+            "authors": [
+                {
+                    "name": "Michiel Rook",
+                    "email": "mrook@php.net"
+                },
+                {
+                    "name": "Phing Community",
+                    "homepage": "http://www.phing.info/trac/wiki/Development/Contributors"
+                }
+            ],
+            "description": "PHing Is Not GNU make; it's a PHP project build system or build tool based on Apache Ant.",
+            "homepage": "http://www.phing.info/",
+            "keywords": [
+                "build",
+                "task",
+                "tool"
+            ],
+            "time": "2014-02-13 13:17:59"
+        },
+        {
+            "name": "phpmd/phpmd",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpmd/phpmd.git",
+                "reference": "692b7b1b64518091b2b1bea91b489dbb13598c07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/692b7b1b64518091b2b1bea91b489dbb13598c07",
+                "reference": "692b7b1b64518091b2b1bea91b489dbb13598c07",
+                "shasum": ""
+            },
+            "require": {
+                "pdepend/pdepend": ">=1.1.1",
+                "php": ">=5.3.0"
+            },
+            "bin": [
+                "src/bin/phpmd"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "../../pdepend/pdepend/src/main/php",
+                "src/main/php"
+            ],
+            "description": "Official version of PHPMD handled with Composer.",
+            "time": "2013-07-26 14:47:02"
+        },
+        {
+            "name": "phpunit/php-code-coverage",
+            "version": "1.2.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "69e55e68481cf708a6db43aff0b504e31402fe27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/69e55e68481cf708a6db43aff0b504e31402fe27",
+                "reference": "69e55e68481cf708a6db43aff0b504e31402fe27",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "phpunit/php-file-iterator": ">=1.3.0@stable",
+                "phpunit/php-text-template": ">=1.2.0@stable",
+                "phpunit/php-token-stream": ">=1.1.3@stable"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*@dev"
+            },
+            "suggest": {
+                "ext-dom": "*",
+                "ext-xdebug": ">=2.0.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "PHP/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
+            "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
+            "keywords": [
+                "coverage",
+                "testing",
+                "xunit"
+            ],
+            "time": "2014-02-25 03:34:05"
+        },
+        {
+            "name": "phpunit/php-file-iterator",
+            "version": "1.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
+                "reference": "acd690379117b042d1c8af1fafd61bde001bf6bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/acd690379117b042d1c8af1fafd61bde001bf6bb",
+                "reference": "acd690379117b042d1c8af1fafd61bde001bf6bb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "File/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "FilterIterator implementation that filters files based on a list of suffixes.",
+            "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
+            "keywords": [
+                "filesystem",
+                "iterator"
+            ],
+            "time": "2013-10-10 15:34:57"
+        },
+        {
+            "name": "phpunit/php-text-template",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-text-template.git",
+                "reference": "206dfefc0ffe9cebf65c413e3d0e809c82fbf00a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/206dfefc0ffe9cebf65c413e3d0e809c82fbf00a",
+                "reference": "206dfefc0ffe9cebf65c413e3d0e809c82fbf00a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Text/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Simple template engine.",
+            "homepage": "https://github.com/sebastianbergmann/php-text-template/",
+            "keywords": [
+                "template"
+            ],
+            "time": "2014-01-30 17:20:04"
+        },
+        {
+            "name": "phpunit/php-timer",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-timer.git",
+                "reference": "19689d4354b295ee3d8c54b4f42c3efb69cbc17c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/19689d4354b295ee3d8c54b4f42c3efb69cbc17c",
+                "reference": "19689d4354b295ee3d8c54b4f42c3efb69cbc17c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "PHP/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Utility class for timing",
+            "homepage": "https://github.com/sebastianbergmann/php-timer/",
+            "keywords": [
+                "timer"
+            ],
+            "time": "2013-08-02 07:42:54"
+        },
+        {
+            "name": "phpunit/php-token-stream",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-token-stream.git",
+                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/ad4e1e23ae01b483c16f600ff1bebec184588e32",
+                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "PHP/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Wrapper around PHP's tokenizer extension.",
+            "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
+            "keywords": [
+                "tokenizer"
+            ],
+            "time": "2014-03-03 05:10:30"
+        },
+        {
+            "name": "phpunit/phpunit",
+            "version": "3.7.32",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "2752cbb9ea5bd84c2811b34b6953f76965ec7a2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2752cbb9ea5bd84c2811b34b6953f76965ec7a2f",
+                "reference": "2752cbb9ea5bd84c2811b34b6953f76965ec7a2f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-pcre": "*",
+                "ext-reflection": "*",
+                "ext-spl": "*",
+                "php": ">=5.3.3",
+                "phpunit/php-code-coverage": "~1.2.1",
+                "phpunit/php-file-iterator": ">=1.3.1",
+                "phpunit/php-text-template": ">=1.1.1",
+                "phpunit/php-timer": ">=1.0.4",
+                "phpunit/phpunit-mock-objects": "~1.2.0",
+                "symfony/yaml": "~2.0"
+            },
+            "require-dev": {
+                "pear-pear.php.net/pear": "1.9.4"
+            },
+            "suggest": {
+                "ext-json": "*",
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "phpunit/php-invoker": ">=1.1.0,<1.2.0"
+            },
+            "bin": [
+                "composer/bin/phpunit"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "PHPUnit/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "",
+                "../../symfony/yaml/"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "The PHP Unit Testing framework.",
+            "homepage": "http://www.phpunit.de/",
+            "keywords": [
+                "phpunit",
+                "testing",
+                "xunit"
+            ],
+            "time": "2014-02-25 03:47:29"
+        },
+        {
+            "name": "phpunit/phpunit-mock-objects",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
+                "reference": "5794e3c5c5ba0fb037b11d8151add2a07fa82875"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5794e3c5c5ba0fb037b11d8151add2a07fa82875",
+                "reference": "5794e3c5c5ba0fb037b11d8151add2a07fa82875",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "phpunit/php-text-template": ">=1.1.1@stable"
+            },
+            "suggest": {
+                "ext-soap": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "PHPUnit/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Mock Object library for PHPUnit",
+            "homepage": "https://github.com/sebastianbergmann/phpunit-mock-objects/",
+            "keywords": [
+                "mock",
+                "xunit"
+            ],
+            "time": "2013-01-13 10:24:48"
+        },
+        {
+            "name": "sebastian/finder-facade",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/finder-facade.git",
+                "reference": "1e396fda3449fce9df032749fa4fa2619e0347e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/finder-facade/zipball/1e396fda3449fce9df032749fa4fa2619e0347e0",
+                "reference": "1e396fda3449fce9df032749fa4fa2619e0347e0",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/finder": ">=2.2.0",
+                "theseer/fdomdocument": ">=1.3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "FinderFacade is a convenience wrapper for Symfony's Finder component.",
+            "homepage": "https://github.com/sebastianbergmann/finder-facade",
+            "time": "2013-05-28 06:10:03"
+        },
+        {
+            "name": "sebastian/phpcpd",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpcpd.git",
+                "reference": "346c909de7adc3979988a6505a80814c8562d6b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpcpd/zipball/346c909de7adc3979988a6505a80814c8562d6b3",
+                "reference": "346c909de7adc3979988a6505a80814c8562d6b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "phpunit/php-timer": ">=1.0.4",
+                "sebastian/finder-facade": ">=1.1.0",
+                "sebastian/version": ">=1.0.0",
+                "symfony/console": ">=2.2.0",
+                "theseer/fdomdocument": "~1.4"
+            },
+            "bin": [
+                "composer/bin/phpcpd"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Copy/Paste Detector (CPD) for PHP code.",
+            "homepage": "https://github.com/sebastianbergmann/phpcpd",
+            "time": "2013-11-08 09:05:42"
+        },
+        {
+            "name": "sebastian/version",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/version.git",
+                "reference": "b6e1f0cf6b9e1ec409a0d3e2f2a5fb0998e36b43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/b6e1f0cf6b9e1ec409a0d3e2f2a5fb0998e36b43",
+                "reference": "b6e1f0cf6b9e1ec409a0d3e2f2a5fb0998e36b43",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library that helps with managing the version number of Git-hosted PHP projects",
+            "homepage": "https://github.com/sebastianbergmann/version",
+            "time": "2014-03-07 15:35:33"
+        },
+        {
+            "name": "seld/jsonlint",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/jsonlint.git",
+                "reference": "7cd4c4965e17e6e4c07f26d566619a4c76f8c672"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/7cd4c4965e17e6e4c07f26d566619a4c76f8c672",
+                "reference": "7cd4c4965e17e6e4c07f26d566619a4c76f8c672",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "bin": [
+                "bin/jsonlint"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Seld\\JsonLint": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "JSON Linter",
+            "keywords": [
+                "json",
+                "linter",
+                "parser",
+                "validator"
+            ],
+            "time": "2013-11-04 15:41:11"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "a76a39b317ce8106abe6264daa505e24e1731860"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/a76a39b317ce8106abe6264daa505e24e1731860",
+                "reference": "a76a39b317ce8106abe6264daa505e24e1731860",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=5.1.2"
+            },
+            "suggest": {
+                "phpunit/php-timer": "dev-master"
+            },
+            "bin": [
+                "scripts/phpcs"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "CodeSniffer.php",
+                    "CodeSniffer/CLI.php",
+                    "CodeSniffer/Exception.php",
+                    "CodeSniffer/File.php",
+                    "CodeSniffer/Report.php",
+                    "CodeSniffer/Reporting.php",
+                    "CodeSniffer/Sniff.php",
+                    "CodeSniffer/Tokens.php",
+                    "CodeSniffer/Reports/",
+                    "CodeSniffer/CommentParser/",
+                    "CodeSniffer/Tokenizers/",
+                    "CodeSniffer/DocGenerators/",
+                    "CodeSniffer/Standards/AbstractPatternSniff.php",
+                    "CodeSniffer/Standards/AbstractScopeSniff.php",
+                    "CodeSniffer/Standards/AbstractVariableSniff.php",
+                    "CodeSniffer/Standards/IncorrectPatternException.php",
+                    "CodeSniffer/Standards/Generic/Sniffs/",
+                    "CodeSniffer/Standards/MySource/Sniffs/",
+                    "CodeSniffer/Standards/PEAR/Sniffs/",
+                    "CodeSniffer/Standards/PSR1/Sniffs/",
+                    "CodeSniffer/Standards/PSR2/Sniffs/",
+                    "CodeSniffer/Standards/Squiz/Sniffs/",
+                    "CodeSniffer/Standards/Zend/Sniffs/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2014-02-04 23:49:58"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/Console",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Console.git",
+                "reference": "940f217cbc3c8a33e5403e7c595495c4884400fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/940f217cbc3c8a33e5403e7c595495c4884400fe",
+                "reference": "940f217cbc3c8a33e5403e7c595495c4884400fe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "suggest": {
+                "symfony/event-dispatcher": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-02-11 13:52:09"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/Finder",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Finder.git",
+                "reference": "b6735d1fc16da13c4c7dddfe78366a4a098cf011"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/b6735d1fc16da13c4c7dddfe78366a4a098cf011",
+                "reference": "b6735d1fc16da13c4c7dddfe78366a4a098cf011",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Finder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-01-07 13:28:54"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/Process",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process.git",
+                "reference": "c175448bac997556f8ab972908a4e14c7291fb03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/c175448bac997556f8ab972908a4e14c7291fb03",
+                "reference": "c175448bac997556f8ab972908a4e14c7291fb03",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-02-11 13:52:09"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml.git",
+                "reference": "bb6ddaf8956139d1b8c360b4b713ed0138e876b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/bb6ddaf8956139d1b8c360b4b713ed0138e876b3",
+                "reference": "bb6ddaf8956139d1b8c360b4b713ed0138e876b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-01-07 13:28:54"
+        },
+        {
+            "name": "theseer/fdomdocument",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/theseer/fDOMDocument.git",
+                "reference": "137aa3b13bef05b4e301899cbabdaf7d501847d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/theseer/fDOMDocument/zipball/137aa3b13bef05b4e301899cbabdaf7d501847d2",
+                "reference": "137aa3b13bef05b4e301899cbabdaf7d501847d2",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "lib-libxml": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Arne Blankerts",
+                    "email": "arne@blankerts.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "The classes contained within this repository extend the standard DOM to use exceptions at all occasions of errors instead of PHP warnings or notices. They also add various custom methods and shortcuts for convenience and to simplify the usage of DOM.",
+            "homepage": "https://github.com/theseer/fDOMDocument",
+            "time": "2014-02-19 00:20:43"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "pear/console_commandline": 20,
+        "pear/pear_exception": 20,
+        "fpoirotte/file_gettext": 20,
+        "deresh/sfyaml": 20,
+        "erebot/api": 20,
+        "erebot/plop": 20,
+        "erebot/dom": 20,
+        "erebot/timer": 20,
+        "erebot/intl": 20,
+        "erebot/callable-wrapper": 20,
+        "erebot/styling": 20,
+        "erebot/uri": 20,
+        "erebot/installers": 20,
+        "erebot/generic-doc": 20,
+        "composer/composer": 20,
+        "fpoirotte/php_parsergenerator": 20,
+        "erebot/buildenv": 20,
+        "erebot/testenv": 20,
+        "pear/http_request2": 20
+    },
+    "platform": {
+        "php": ">=5.3.0",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "ext-pcre": "*",
+        "ext-reflection": "*",
+        "ext-simplexml": "*",
+        "ext-sockets": "*",
+        "ext-spl": "*",
+        "ext-xml": "*"
+    },
+    "platform-dev": [
+
+    ]
+}
