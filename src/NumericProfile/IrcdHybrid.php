@@ -18,6 +18,8 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+namespace Erebot\NumericProfile;
+
 /**
  * \brief
  *      Numeric profile for ircd-hybrid-based IRC servers.

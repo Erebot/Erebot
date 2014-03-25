@@ -31,23 +31,26 @@ class SOCKS extends \Erebot\Proxy\Base
         $port       = $nextURI->getPort();
         $scheme     = $nextURI->getScheme();
 
-        if ($port === NULL)
+        if ($port === null) {
             $port = getservbyname($scheme, 'tcp');
-        if (!is_int($port) || $port <= 0 || $port > 65535)
+        }
+        if (!is_int($port) || $port <= 0 || $port > 65535) {
             throw new \Erebot\InvalidValueException('Invalid port');
+        }
 
         // No authentication or username/password-based authentication.
-        $this->_write("\x05\x02\x00\x02");
-        $line = $this->_read(2);
+        $this->write("\x05\x02\x00\x02");
+        $line = $this->read(2);
 
-        if ($line[0] != "\x05")
+        if ($line[0] != "\x05") {
             throw new \Erebot\InvalidValueException('Bad SOCKS version');
+        }
 
         switch (ord($line[1])) {
             case 0: // No authentication
                 break;
             case 2: // Username/password-based authentication
-                $this->_userpass($proxyURI);
+                $this->userpass($proxyURI);
                 break;
             default:
                 throw new \Erebot\InvalidValueException('No acceptable method');
@@ -55,14 +58,15 @@ class SOCKS extends \Erebot\Proxy\Base
 
         // CONNECT.
         $host = $nextURI->getHost();
-        $this->_write(
+        $this->write(
             "\x05\x01\x00\x03".
             pack("Ca*n", strlen($host), $host, $port)
         );
 
-        $line = $this->_read(4);
-        if ($line[0] != "\x05")
+        $line = $this->read(4);
+        if ($line[0] != "\x05") {
             throw new \Erebot\InvalidValueException('Bad SOCKS version');
+        }
 
         $error = ord($line[1]);
         if ($error) {
@@ -78,23 +82,24 @@ class SOCKS extends \Erebot\Proxy\Base
                 'Command not supported',
                 'Address type not supported',
             );
-            if (!isset($errors[$error]))
+            if (!isset($errors[$error])) {
                 throw new \Erebot\InvalidValueException('Unknown error');
+            }
             throw new \Erebot\InvalidValueException($errors[$error]);
         }
 
         switch (ord($line[3])) {
             case 1: // IPv4.
-                $this->_read(4);
+                $this->read(4);
                 break;
 
             case 3: // Domain name.
-                $len = ord($this->_read(1));
-                $this->_read($len);
+                $len = ord($this->read(1));
+                $this->read($len);
                 break;
 
             case 4: // IPv6.
-                $this->_read(16);
+                $this->read(16);
                 break;
 
             default:
@@ -104,7 +109,7 @@ class SOCKS extends \Erebot\Proxy\Base
         }
 
         // Consume the port.
-        $this->_read(2);
+        $this->read(2);
     }
 
     /**
@@ -115,29 +120,32 @@ class SOCKS extends \Erebot\Proxy\Base
      *      containing the credentials that will be sent during the
      *      authentication step.
      */
-    protected function _userpass(\Erebot\URIInterface $proxyURI)
+    protected function userpass(\Erebot\URIInterface $proxyURI)
     {
         $username = $proxyURI->asParsedURL(PHP_URL_USER);
         $password = $proxyURI->asParsedURL(PHP_URL_PASS);
 
-        if ($username === NULL || $password === NULL)
+        if ($username === null || $password === null) {
             throw new \Erebot\InvalidValueException(
                 'No username or password supplied'
             );
+        }
 
         $ulen = strlen($username);
         $plen = strlen($password);
-        if ($ulen > 255)
+        if ($ulen > 255) {
             throw new \Erebot\InvalidValueException(
                 'Username too long (max. 255)'
             );
+        }
 
-        if ($plen > 255)
+        if ($plen > 255) {
             throw new \Erebot\InvalidValueException(
                 'Password too long (max. 255)'
             );
+        }
 
-        $this->_write(
+        $this->write(
             "\x01".pack(
                 "Ca*Ca*",
                 $ulen,
@@ -146,15 +154,17 @@ class SOCKS extends \Erebot\Proxy\Base
                 $password
             )
         );
-        $line = $this->_read(2);
+        $line = $this->read(2);
 
-        if ($line[0] != "\x01")
+        if ($line[0] != "\x01") {
             throw new \Erebot\InvalidValueException(
                 'Bad subnegociation version'
             );
+        }
 
-        if ($line[1] != "\x00")
+        if ($line[1] != "\x00") {
             throw new \Erebot\InvalidValueException('Bad username or password');
+        }
     }
 
     /**
@@ -168,16 +178,13 @@ class SOCKS extends \Erebot\Proxy\Base
      *      that the length of the initial $line if some bytes
      *      could not be sent).
      */
-    protected function _write($line)
+    protected function write($line)
     {
-        for (
-            $written = 0, $len = strlen($line);
-            $written < $len;
-            $written += $fwrite
-        ) {
-            $fwrite = fwrite($this->_socket, substr($line, $written));
-            if ($fwrite === FALSE)
+        for ($written = 0, $len = strlen($line); $written < $len; $written += $fwrite) {
+            $fwrite = fwrite($this->socket, substr($line, $written));
+            if ($fwrite === false) {
                 throw new \Erebot\Exception('Connection closed by proxy');
+            }
         }
         return $written;
     }
@@ -191,14 +198,15 @@ class SOCKS extends \Erebot\Proxy\Base
      * \retval string
      *      Actual data read.
      */
-    protected function _read($len)
+    protected function read($len)
     {
         $contents   = "";
         $clen       = 0;
-        while (!feof($this->_socket) && $clen < $len) {
-            $read = fread($this->_socket, $len - $clen);
-            if ($read === FALSE)
+        while (!feof($this->socket) && $clen < $len) {
+            $read = fread($this->socket, $len - $clen);
+            if ($read === false) {
                 throw new \Erebot\Exception('Connection closed by proxy');
+            }
             $contents  .= $read;
             $clen       = strlen($contents);
         }

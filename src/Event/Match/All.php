@@ -37,4 +37,3 @@ class All extends \Erebot\Event\Match\CollectionAbstract
         return true;
     }
 }
-

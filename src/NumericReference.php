@@ -32,10 +32,10 @@ namespace Erebot;
 class NumericReference implements \Erebot\Interfaces\NumericReference
 {
     /// IRC connection this reference is valid for.
-    protected $_connection;
+    protected $connection;
 
     /// Name of the numeric (eg. "RPL_WELCOME").
-    protected $_name;
+    protected $name;
 
     /**
      * Constructs a new reference to a numeric.
@@ -51,18 +51,18 @@ class NumericReference implements \Erebot\Interfaces\NumericReference
         \Erebot\Interfaces\Connection $connection,
         $name
     ) {
-        $this->_connection  = $connection;
-        $this->_name        = $name;
+        $this->connection  = $connection;
+        $this->name        = $name;
     }
 
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     public function getValue()
     {
-        $profile = $this->_connection->getNumericProfile();
-        return $profile[$this->_name];
+        $profile = $this->connection->getNumericProfile();
+        return $profile[$this->name];
     }
 }

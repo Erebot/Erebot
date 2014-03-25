@@ -18,22 +18,21 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Erebot\Event\Match;
+namespace Erebot\Console;
 
 /**
  * \brief
- *      A filter that groups several (sub-)filters together
- *      and matches if any of the sub-filters matches.
+ *      Custom message provider for Console_CommandLine.
  */
-class Any extends \Erebot\Event\Match\CollectionAbstract
+class MessageProvider extends \Console_CommandLine_MessageProvider_Default
 {
-    public function match(\Erebot\Interfaces\Event\Base\Generic $event)
+    /**
+     * Overrides the PROG_VERSION_LINE message so that
+     * a dot is not automatically appended at the end
+     * of the text.
+     */
+    public function __construct()
     {
-        foreach ($this->_submatchers as $match) {
-            if ($match->match($event)) {
-                return true;
-            }
-        }
-        return false;
+        $this->messages['PROG_VERSION_LINE'] = '{$progname} version {$version}';
     }
 }

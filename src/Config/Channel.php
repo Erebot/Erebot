@@ -30,10 +30,10 @@ namespace Erebot\Config;
 class Channel extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Channel
 {
     /// The name of the channel this configuration refers to.
-    protected $_name;
+    protected $name;
 
     /// Netword configuration configuration this object depends on.
-    protected $_netCfg;
+    protected $netCfg;
 
     /**
      * Creates a new configuration object for an IRC channel.
@@ -49,11 +49,10 @@ class Channel extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\
     public function __construct(
         \Erebot\Interfaces\Config\Network $netCfg,
         \SimpleXMLElement $xml
-    )
-    {
+    ) {
         parent::__construct($netCfg, $xml);
-        $this->_name     = (string) $xml['name'];
-        $this->_netCfg   = $netCfg;
+        $this->name     = (string) $xml['name'];
+        $this->netCfg   = $netCfg;
     }
 
     /// Destructor.
@@ -65,13 +64,12 @@ class Channel extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\
     /// \copydoc Erebot::Interfaces::Config::Channel::getName()
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Channel::getNetworkCfg()
     public function getNetworkCfg()
     {
-        return $this->_netCfg;
+        return $this->netCfg;
     }
 }
-

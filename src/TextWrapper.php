@@ -28,10 +28,10 @@ namespace Erebot;
 class TextWrapper implements \Erebot\Interfaces\TextWrapper
 {
     /// The text wrapped by this instance.
-    protected $_text;
+    protected $text;
 
     /// Position in the text.
-    protected $_position;
+    protected $position;
 
     /**
      * Constructs a new instance of a text wrapper.
@@ -41,35 +41,37 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function __construct($text)
     {
-        $this->_text        = $text;
-        $this->_position    = 0;
+        $this->text        = $text;
+        $this->position    = 0;
     }
 
     public function getTokens($start, $length = 0, $separator = ' ')
     {
-        $string = preg_replace('/\\s+/', ' ', trim($this->_text, $separator));
+        $string = preg_replace('/\\s+/', ' ', trim($this->text, $separator));
         $parts  = explode($separator, $string);
 
-        if (!$length)
+        if (!$length) {
             $parts = array_slice($parts, $start);
-        else
+        } else {
             $parts = array_slice($parts, $start, $length);
+        }
 
-        if (!count($parts))
+        if (!count($parts)) {
             return "";
+        }
 
         return implode($separator, $parts);
     }
 
     public function countTokens($separator = ' ')
     {
-        $string = preg_replace('/\\s+/', ' ', trim($this->_text, $separator));
+        $string = preg_replace('/\\s+/', ' ', trim($this->text, $separator));
         return count(explode($separator, $string));
     }
 
     public function __toString()
     {
-        return $this->_text;
+        return $this->text;
     }
 
     /**
@@ -89,7 +91,7 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function current()
     {
-        return $this->getTokens($this->_position, 1);
+        return $this->getTokens($this->position, 1);
     }
 
     /**
@@ -99,7 +101,7 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function key()
     {
-        return $this->_position;
+        return $this->position;
     }
 
     /**
@@ -109,7 +111,7 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function next()
     {
-        $this->_position++;
+        $this->position++;
     }
 
     /**
@@ -119,7 +121,7 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function rewind()
     {
-        $this->_position = 0;
+        $this->position = 0;
     }
 
     /**
@@ -129,7 +131,7 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function valid()
     {
-        return ($this->_position < $this->countTokens());
+        return ($this->position < $this->countTokens());
     }
 
     /**
@@ -153,8 +155,9 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
      */
     public function offsetGet($offset)
     {
-        if (!is_int($offset))
-            return NULL;
+        if (!is_int($offset)) {
+            return null;
+        }
         return $this->getTokens($offset, 1);
     }
 
@@ -178,4 +181,3 @@ class TextWrapper implements \Erebot\Interfaces\TextWrapper
         throw new \RuntimeException('The wrapped text is read-only');
     }
 }
-

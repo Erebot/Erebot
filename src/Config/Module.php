@@ -30,13 +30,13 @@ namespace Erebot\Config;
 class Module implements \Erebot\Interfaces\Config\Module
 {
     /// A dictionary mapping parameter names to their textual value.
-    protected $_params;
+    protected $params;
 
     /// A boolean indicating whether the module is active or not.
-    protected $_active;
+    protected $active;
 
     /// The name of the module.
-    protected $_name;
+    protected $name;
 
     /**
      * Creates a new configuration object for a module.
@@ -45,21 +45,21 @@ class Module implements \Erebot\Interfaces\Config\Module
      *      An XML node containing the configuration
      *      settings for the module.
      */
-    public function __construct(SimpleXMLElement $xml)
+    public function __construct(\SimpleXMLElement $xml)
     {
-        $this->_name    = (string) $xml['name'];
-        $this->_params  = array();
-        $active         = strtoupper(
+        $this->name     = (string) $xml['name'];
+        $this->params   = array();
+        $active         = strtolower(
             isset($xml['active']) ?
             (string) $xml['active'] :
-            'TRUE'
+            'true'
         );
-        $this->_active  = in_array($active, array('1', 'TRUE', 'ON', 'YES'));
+        $this->active   = in_array($active, array('1', 'true', 'on', 'yes'));
 
         foreach ($xml->param as $param) {
             $prm    = (string) $param['name'];
             $val    = (string) $param['value'];
-            $this->_params[$prm] = $val;
+            $this->params[$prm] = $val;
         }
     }
 
@@ -71,16 +71,16 @@ class Module implements \Erebot\Interfaces\Config\Module
     }
 
     /// \copydoc Erebot::Interfaces::Config::Module::isActive()
-    public function isActive($active = NULL)
+    public function isActive($active = null)
     {
-        $res = $this->_active;
-        if ($active !== NULL) {
+        $res = $this->active;
+        if ($active !== null) {
             if (!is_bool($active)) {
                 throw new \Erebot\InvalidValueException(
                     'Invalid activation value'
                 );
             }
-            $this->_active = $active;
+            $this->active = $active;
         }
         return $res;
     }
@@ -88,23 +88,24 @@ class Module implements \Erebot\Interfaces\Config\Module
     /// \copydoc Erebot::Interfaces::Config::Module::getName()
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Module::getParam()
     public function getParam($param)
     {
-        if (!is_string($param))
+        if (!is_string($param)) {
             throw new \Erebot\InvalidValueException('Bad parameter name');
-        if (!isset($this->_params[$param]))
+        }
+        if (!isset($this->params[$param])) {
             throw new \Erebot\NotFoundException('No such parameter');
-        return $this->_params[$param];
+        }
+        return $this->params[$param];
     }
 
     /// \copydoc Erebot::Interfaces::Config::Module::getParamsNames()
     public function getParamsNames()
     {
-        return array_keys($this->_params);
+        return array_keys($this->params);
     }
 }
-

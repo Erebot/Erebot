@@ -31,34 +31,34 @@ namespace Erebot\Config;
 class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Main
 {
     /// The (relative or absolute) path to the configuration, if available.
-    protected $_configFile;
+    protected $configFile;
 
     /// A list of Erebot::Config::Network objects.
-    protected $_networks;
+    protected $networks;
 
     /// The configuration file's version string.
     protected $version;
 
     /// The bot's current timezone.
-    protected $_timezone;
+    protected $timezone;
 
     /// The prefix used to recognize commands.
-    protected $_commandsPrefix;
+    protected $commandsPrefix;
 
     /// Whether to daemonize the bot or not.
-    protected $_daemonize;
+    protected $daemonize;
 
     /// User identity to switch to.
-    protected $_userIdentity;
+    protected $userIdentity;
 
     /// Group identity to switch to.
-    protected $_groupIdentity;
+    protected $groupIdentity;
 
     /// File where the bot's PID will be written.
-    protected $_pidfile;
+    protected $pidfile;
 
     /// Translator used by core files.
-    protected $_coreTranslator;
+    protected $coreTranslator;
 
     /**
      * Creates a new instance of the Erebot::Config::Main class.
@@ -84,15 +84,14 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
      *      an invalid value.
      */
     public function __construct(
-                                $configData,
-                                $source,
-        \Erebot\IntlInterface   $translator
-    )
-    {
-        $this->_proxified       = NULL;
-        $this->_modules         = array();
-        $this->_configFile      = NULL;
-        $this->_coreTranslator  = $translator;
+        $configData,
+        $source,
+        \Erebot\IntlInterface $translator
+    ) {
+        $this->proxified        = null;
+        $this->modules          = array();
+        $this->configFile       = null;
+        $this->coreTranslator   = $translator;
         $this->load($configData, $source);
     }
 
@@ -103,14 +102,14 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     {
         parent::__destruct();
         unset(
-            $this->_networks
+            $this->networks
         );
     }
 
     /// \copydoc Erebot::Interface::Config::Main::__clone()
     public function __clone()
     {
-        throw new Exception('Cloning is forbidden');
+        throw new \Exception('Cloning is forbidden');
     }
 
     /**
@@ -123,7 +122,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
      *      the parsing and interpretation of the configuration
      *      file.
      */
-    private function _stripXGlobWrappers(&$domxml)
+    private function stripXGlobWrappers(&$domxml)
     {
         $xpath = new \DOMXPath($domxml);
         $xpath->registerNamespace('xglob', \Erebot\XGlobStream::XMLNS);
@@ -146,8 +145,9 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
                                     self::LOAD_FROM_FILE,
                                     self::LOAD_FROM_STRING,
                                 );
-        if (!in_array($source, $possibleSources, TRUE))
+        if (!in_array($source, $possibleSources, true)) {
             throw new \Erebot\InvalidValueException('Invalid $source');
+        }
 
         if ($source == self::LOAD_FROM_FILE) {
             if (is_string($configData) && $configData != "") {
@@ -157,43 +157,40 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
                         $configData = getcwd() . DIRECTORY_SEPARATOR .
                                         $configData;
                     }
-                }
-                else if ($configData[0] != DIRECTORY_SEPARATOR) {
+                } elseif ($configData[0] != DIRECTORY_SEPARATOR) {
                     $configData = getcwd() . DIRECTORY_SEPARATOR . $configData;
                 }
-                $file = \Erebot\URI::fromAbsPath($configData, FALSE);
-            }
-            else if (is_object($configData) &&
+                $file = \Erebot\URI::fromAbsPath($configData, false);
+            } elseif (is_object($configData) &&
                 $configData instanceof \Erebot\URIInterface) {
                 $file = $configData;
-            }
-            else {
+            } else {
                 throw new \Erebot\InvalidValueException(
                     "Invalid configuration file"
                 );
             }
-        }
-        else if (!is_string($configData)) {
+        } elseif (!is_string($configData)) {
             throw new \Erebot\InvalidValueException(
                 "Invalid configuration file"
             );
+        } else {
+            $file = null;
         }
-        else
-            $file = NULL;
 
         $mainSchema = dirname(dirname(__DIR__)) .
                         DIRECTORY_SEPARATOR . 'data' .
                         DIRECTORY_SEPARATOR . 'config.rng';
         $mainSchema = file_get_contents($mainSchema);
-        $ue         = libxml_use_internal_errors(TRUE);
+        $ue         = libxml_use_internal_errors(true);
         $domxml     = new \Erebot\DOM();
-        if ($source == self::LOAD_FROM_FILE)
+        if ($source == self::LOAD_FROM_FILE) {
             $domxml->load((string) $file);
-        else
+        } else {
             $domxml->loadXML($configData);
+        }
 
         $domxml->xinclude(LIBXML_NOBASEFIX);
-        $this->_stripXGlobWrappers($domxml);
+        $this->stripXGlobWrappers($domxml);
 
         $ok         = $domxml->relaxNGValidateSource($mainSchema);
         $errors     = $domxml->getErrors();
@@ -203,7 +200,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
         if (!$ok || count($errors)) {
             // Some unpredicted error occurred,
             // show some (hopefully) useful information.
-            $logger->error(print_r($errors, TRUE));
+            $logger->error(print_r($errors, true));
             throw new \Erebot\InvalidValueException(
                 'Errors were found while validating the configuration file'
             );
@@ -218,40 +215,43 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
             $this->version  = (string) $xml['version'];
         }
 
-        if (!isset($xml['timezone']))
+        if (!isset($xml['timezone'])) {
             throw new \Erebot\InvalidValueException('No timezone defined');
-        $this->_timezone = (string) $xml['timezone'];
+        }
+        $this->timezone = (string) $xml['timezone'];
 
         // Set timezone information.
         // This is needed to configure the logging subsystem.
         if (function_exists('date_default_timezone_set')) {
-            if (!date_default_timezone_set($this->_timezone))
+            if (!date_default_timezone_set($this->timezone)) {
                 throw \Erebot\InvalidValueException(
                     sprintf(
                         'Invalid timezone: "%s"',
-                        $this->_timezone
+                        $this->timezone
                     )
                 );
+            }
         }
 
         $daemonize      = isset($xml['daemon'])
-                        ? $this->_parseBool((string) $xml['daemon'])
-                        : FALSE;
-        $userIdentity   = isset($xml['uid']) ? ((string) $xml['uid']) : NULL;
-        $groupIdentity  = isset($xml['gid']) ? ((string) $xml['gid']) : NULL;
+                        ? $this->parseBool((string) $xml['daemon'])
+                        : false;
+        $userIdentity   = isset($xml['uid']) ? ((string) $xml['uid']) : null;
+        $groupIdentity  = isset($xml['gid']) ? ((string) $xml['gid']) : null;
         $pidfile        = isset($xml['pidfile'])
                         ? ((string) $xml['pidfile'])
-                        : NULL;
+                        : null;
 
-        if ($daemonize === NULL)
+        if ($daemonize === null) {
             throw new \Erebot\InvalidValueException('Invalid "daemon" value');
+        }
 
-        if (!isset($xml['commands-prefix']))
-            $this->_commandsPrefix = '!';
-        else {
-            $this->_commandsPrefix = (string) $xml['commands-prefix'];
-            if (strcspn($this->_commandsPrefix, " \r\n\t") !=
-                strlen($this->_commandsPrefix)) {
+        if (!isset($xml['commands-prefix'])) {
+            $this->commandsPrefix = '!';
+        } else {
+            $this->commandsPrefix = (string) $xml['commands-prefix'];
+            if (strcspn($this->commandsPrefix, " \r\n\t") !=
+                strlen($this->commandsPrefix)) {
                 throw new \Erebot\InvalidValueException(
                     'Invalid command prefix'
                 );
@@ -260,43 +260,45 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
 
         $logger = \Plop::getInstance();
         $logger->debug(
-            $this->_coreTranslator->gettext(
+            $this->coreTranslator->gettext(
                 'Loaded configuration data'
             )
         );
 
-        $this->_networks = array();
+        $this->networks = array();
         foreach ($xml->networks->network as $netCfg) {
             /// @TODO use dependency injection instead.
             $newConfig  = new \Erebot\Config\Network($this, $netCfg);
-            $this->_networks[$newConfig->getName()] = $newConfig;
+            $this->networks[$newConfig->getName()] = $newConfig;
             unset($newConfig);
         }
 
-        if ($source == self::LOAD_FROM_FILE)
-            $this->_configFile   = $configData;
-        else
-            $this->_configFile   = NULL;
+        if ($source == self::LOAD_FROM_FILE) {
+            $this->configFile   = $configData;
+        } else {
+            $this->configFile   = null;
+        }
 
         // Default values.
-        $this->_daemonize       = $daemonize;
-        $this->_userIdentity    = $userIdentity;
-        $this->_groupIdentity   = $groupIdentity;
-        $this->_pidfile         = $pidfile;
+        $this->daemonize        = $daemonize;
+        $this->userIdentity     = $userIdentity;
+        $this->groupIdentity    = $groupIdentity;
+        $this->pidfile          = $pidfile;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getNetworkCfg()
     public function getNetworkCfg($network)
     {
-        if (!isset($this->_networks[$network]))
+        if (!isset($this->networks[$network])) {
             throw new \Erebot\NotFoundException('No such network');
-        return $this->_networks[$network];
+        }
+        return $this->networks[$network];
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getNetworks()
     public function getNetworks()
     {
-        return $this->_networks;
+        return $this->networks;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getVersion()
@@ -308,53 +310,53 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     /// \copydoc Erebot::Interfaces::Config::Main::getTimezone()
     public function getTimezone()
     {
-        return $this->_timezone;
+        return $this->timezone;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getCommandsPrefix()
     public function getCommandsPrefix()
     {
-        return $this->_commandsPrefix;
+        return $this->commandsPrefix;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getConfigFile()
     public function getConfigFile()
     {
-        return $this->_configFile;
+        return $this->configFile;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::mustDaemonize()
     public function mustDaemonize()
     {
-        return $this->_daemonize;
+        return $this->daemonize;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getGroupIdentity()
     public function getGroupIdentity()
     {
-        return $this->_groupIdentity;
+        return $this->groupIdentity;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getUserIdentity()
     public function getUserIdentity()
     {
-        return $this->_userIdentity;
+        return $this->userIdentity;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getPidfile()
     public function getPidfile()
     {
-        return $this->_pidfile;
+        return $this->pidfile;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Main::getTranslator()
     public function getTranslator($component)
     {
-        if (isset($this->_locale)) {
+        if (isset($this->locale)) {
             $translator = new \Erebot\Intl($component);
             $translator->setLocale(
                 \Erebot\IntlInterface::LC_MESSAGES,
-                $this->_locale
+                $this->locale
             );
             $categories = array(
                 \Erebot\IntlInterface::LC_MONETARY,
@@ -364,19 +366,12 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
             foreach ($categories as $category) {
                 $translator->setLocale(
                     $category,
-                    $this->_coreTranslator->getLocale($category)
+                    $this->coreTranslator->getLocale($category)
                 );
             }
             return $translator;
         }
 
-        return $this->_coreTranslator;
+        return $this->coreTranslator;
     }
 }
-
-/* Needed to prevent libxml from trying to magically "fix" URLs
- * included with XInclude as this breaks a lot of things.
- * This requires libxml >= 2.6.20 (which was released in 2005). */
-if (!defined('LIBXML_NOBASEFIX'))
-    define('LIBXML_NOBASEFIX', 1 << 18);
-

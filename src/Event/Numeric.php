@@ -27,17 +27,17 @@ namespace Erebot\Event;
 class Numeric implements \Erebot\Interfaces\Event\Numeric
 {
     /// The connection object this numeric event came from.
-    protected $_connection;
+    protected $connection;
     /// Numeric code.
-    protected $_numeric;
+    protected $numeric;
     /// Source of the numeric event.
-    protected $_source;
+    protected $source;
     /// Target of the numeric event; this is usually the bot.
-    protected $_target;
+    protected $target;
     /// Content of the numeric event.
-    protected $_text;
+    protected $text;
     /// Whether the default action should be prevented or not.
-    protected $_halt;
+    protected $halt;
 
     /**
      * Constructs a numeric event.
@@ -69,12 +69,12 @@ class Numeric implements \Erebot\Interfaces\Event\Numeric
         $target,
         $text
     ) {
-        $this->_halt        = FALSE;
-        $this->_connection  = $connection;
-        $this->_numeric     = $numeric;
-        $this->_source      = $source;
-        $this->_target      = $target;
-        $this->_text        = new \Erebot\TextWrapper((string) $text);
+        $this->halt         = false;
+        $this->connection   = $connection;
+        $this->numeric      = $numeric;
+        $this->source       = $source;
+        $this->target       = $target;
+        $this->text         = new \Erebot\TextWrapper((string) $text);
     }
 
     /// Destructor.
@@ -84,37 +84,38 @@ class Numeric implements \Erebot\Interfaces\Event\Numeric
 
     public function getConnection()
     {
-        return $this->_connection;
+        return $this->connection;
     }
 
     public function getCode()
     {
-        return $this->_numeric;
+        return $this->numeric;
     }
 
     public function getSource()
     {
-        return $this->_source;
+        return $this->source;
     }
 
     public function getTarget()
     {
-        return $this->_target;
+        return $this->target;
     }
 
     public function getText()
     {
-        return $this->_text;
+        return $this->text;
     }
 
-    public function preventDefault($prevent = NULL)
+    public function preventDefault($prevent = null)
     {
-        $res = $this->_halt;
-        if ($prevent !== NULL) {
-            if (!is_bool($prevent))
+        $res = $this->halt;
+        if ($prevent !== null) {
+            if (!is_bool($prevent)) {
                 throw new \Erebot\InvalidValueException('Bad prevention value');
+            }
 
-            $this->_halt = $prevent;
+            $this->halt = $prevent;
         }
         return $res;
     }

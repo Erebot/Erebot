@@ -30,13 +30,13 @@ namespace Erebot\Identd;
 class Server implements \Erebot\Interfaces\ReceivingConnection
 {
     /// A bot object implementing the Erebot::Interfaces::Core interface.
-    protected $_bot;
+    protected $bot;
 
     /// The underlying socket, represented as a stream.
-    protected $_socket;
+    protected $socket;
 
     /// Class to use to process IdentD requests.
-    protected $_workerCls;
+    protected $workerCls;
 
     /**
      * Create a new instance of the IdentD server.
@@ -64,19 +64,15 @@ class Server implements \Erebot\Interfaces\ReceivingConnection
         \Erebot\Interfaces\Core $bot,
         $connector = '0.0.0.0:113',
         $workerCls = '\\Erebot\\Identd\\Worker'
-    )
-    {
-
-        $this->_bot         = $bot;
-        $this->_workerCls   = $workerCls;
-        $this->_socket      = stream_socket_server(
-            "tcp://".$connector,
-            $errno, $errstr
-        );
-        if (!$this->_socket)
-            throw new Exception(
+    ) {
+        $this->bot          = $bot;
+        $this->workerCls    = $workerCls;
+        $this->socket       = stream_socket_server('tcp://' . $connector, $errno, $errstr);
+        if (!$this->socket) {
+            throw new \Exception(
                 "Could not create identd server (".$errstr.")"
             );
+        }
     }
 
     /// Destructor.
@@ -87,38 +83,40 @@ class Server implements \Erebot\Interfaces\ReceivingConnection
 
     public function connect()
     {
-        $this->_bot->addConnection($this);
+        $this->bot->addConnection($this);
     }
 
-    public function disconnect($quitMessage = NULL)
+    public function disconnect($quitMessage = null)
     {
-        $this->_bot->removeConnection($this);
-        if ($this->_socket !== NULL)
-            stream_socket_shutdown($this->_socket, STREAM_SHUT_RDWR);
-        $this->_socket = NULL;
+        $this->bot->removeConnection($this);
+        if ($this->socket !== null) {
+            stream_socket_shutdown($this->socket, STREAM_SHUT_RDWR);
+        }
+        $this->socket = null;
     }
 
     public function isConnected()
     {
-        return TRUE;
+        return true;
     }
 
     public function getSocket()
     {
-        return $this->_socket;
+        return $this->socket;
     }
 
     public function emptyReadQueue()
     {
-        return TRUE;
+        return true;
     }
 
     public function read()
     {
-        $socket = stream_socket_accept($this->_socket);
-        if (!$socket)
-            return FALSE;
-        $worker = new $this->_workerCls($this->_bot, $socket);
+        $socket = stream_socket_accept($this->socket);
+        if (!$socket) {
+            return false;
+        }
+        $worker = new $this->workerCls($this->bot, $socket);
         return $worker;
     }
 
@@ -129,17 +127,16 @@ class Server implements \Erebot\Interfaces\ReceivingConnection
 
     public function getBot()
     {
-        return $this->_bot;
+        return $this->bot;
     }
 
     public function getConfig($chan)
     {
-        return NULL;
+        return null;
     }
 
     public function getIO()
     {
-        return NULL;
+        return null;
     }
 }
-

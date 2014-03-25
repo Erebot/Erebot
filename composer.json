@@ -36,7 +36,8 @@
         "pear/pear_exception": "dev-master",
         "fpoirotte/file_gettext": "dev-master",
         "deresh/sfyaml": "dev-master",
-        "erebot/dependency-injection": "dev-master",
+        "symfony/dependency-injection": "*",
+        "symfony/config": "*",
         "erebot/api": "dev-master",
         "erebot/plop": "dev-master",
 

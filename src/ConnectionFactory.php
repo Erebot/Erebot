@@ -27,10 +27,10 @@ namespace Erebot;
 class ConnectionFactory implements \Erebot\Interfaces\ConnectionFactory
 {
     /// Class to use to create connections.
-    protected $_connectionCls;
+    protected $connectionCls;
 
     /// Mapping of event interfaces to their factory.
-    protected $_eventClasses;
+    protected $eventClasses;
 
     /**
      * Initializes the factory.
@@ -45,13 +45,13 @@ class ConnectionFactory implements \Erebot\Interfaces\ConnectionFactory
      */
     public function __construct($connectionCls, $eventClasses)
     {
-        $this->_connectionCls   = $connectionCls;
-        $this->_eventClasses    = $eventClasses;
+        $this->connectionCls    = $connectionCls;
+        $this->eventClasses     = $eventClasses;
     }
 
     public function newConnection($bot, $config)
     {
-        $connectionCls = $this->_connectionCls;
-        return new $connectionCls($bot, $config, $this->_eventClasses);
+        $connectionCls = $this->connectionCls;
+        return new $connectionCls($bot, $config, $this->eventClasses);
     }
 }

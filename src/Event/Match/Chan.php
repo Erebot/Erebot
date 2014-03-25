@@ -31,7 +31,7 @@ namespace Erebot\Event\Match;
 class Chan implements \Erebot\Interfaces\Event\Match
 {
     /// Channel to use in the comparison, as a string.
-    protected $_chan;
+    protected $chan;
 
     /**
      * Creates a new instance of the filter.
@@ -55,7 +55,7 @@ class Chan implements \Erebot\Interfaces\Event\Match
      */
     public function getChan()
     {
-        return $this->_chan;
+        return $this->chan;
     }
 
     /**
@@ -73,7 +73,7 @@ class Chan implements \Erebot\Interfaces\Event\Match
             throw new \Erebot\InvalidValueException('Not a channel');
         }
 
-        $this->_chan = $chan;
+        $this->chan = $chan;
     }
 
     public function match(\Erebot\Interfaces\Event\Base\Generic $event)
@@ -86,9 +86,8 @@ class Chan implements \Erebot\Interfaces\Event\Match
         return (
             $collator->compare(
                 $event->getChan(),
-                (string) $this->_chan
+                (string) $this->chan
             ) == 0
         );
     }
 }
-

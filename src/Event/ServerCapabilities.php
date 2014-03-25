@@ -29,7 +29,7 @@ class ServerCapabilities extends \Erebot\Event\AbstractEvent implements
     \Erebot\Interfaces\Event\ServerCapabilities
 {
     /// Module containing the server's capabilities.
-    protected $_module;
+    protected $module;
 
     /**
      * Constructs a new event dealing with
@@ -47,11 +47,11 @@ class ServerCapabilities extends \Erebot\Event\AbstractEvent implements
         \Erebot\Module\Base $module
     ) {
         parent::__construct($connection);
-        $this->_module = $module;
+        $this->module = $module;
     }
 
     public function getModule()
     {
-        return $this->_module;
+        return $this->module;
     }
 }

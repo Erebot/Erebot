@@ -29,6 +29,6 @@ class TextRegex extends \Erebot\Event\Match\TextAbstract
 {
     protected function realMatch($prefix, $text)
     {
-        return (preg_match((string) $this->_pattern, $text) == 1);
+        return (preg_match((string) $this->pattern, $text) == 1);
     }
 }

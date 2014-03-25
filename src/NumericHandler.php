@@ -31,9 +31,9 @@ namespace Erebot;
 class NumericHandler implements \Erebot\Interfaces\NumericHandler
 {
     /// Numeric code handled by this instance.
-    protected $_numeric;
+    protected $numeric;
     /// Method/function to call when this handler is triggered.
-    protected $_callback;
+    protected $callback;
 
     /**
      * Constructs a numeric event handler.
@@ -55,37 +55,36 @@ class NumericHandler implements \Erebot\Interfaces\NumericHandler
 
     public function setNumeric($numeric)
     {
-        $this->_numeric = $numeric;
+        $this->numeric = $numeric;
         return $this;
     }
 
     public function getNumeric()
     {
-        return $this->_numeric;
+        return $this->numeric;
     }
 
     public function setCallback(\Erebot\CallableInterface $callback)
     {
-        $this->_callback = $callback;
+        $this->callback = $callback;
         return $this;
     }
 
     public function getCallback()
     {
-        return $this->_callback;
+        return $this->callback;
     }
 
     public function handleNumeric(\Erebot\Interfaces\Event\Numeric $numeric)
     {
-        $ourNumeric = ($this->_numeric instanceof \Erebot\NumericReference)
-            ? $this->_numeric->getValue()
-            : $this->_numeric;
+        $ourNumeric = ($this->numeric instanceof \Erebot\NumericReference)
+            ? $this->numeric->getValue()
+            : $this->numeric;
 
         if ($numeric->getCode() !== $ourNumeric) {
             return null;
         }
 
-        return $this->_callback->invoke($this, $numeric);
+        return $this->callback->invoke($this, $numeric);
     }
 }
-

@@ -27,7 +27,7 @@ namespace Erebot\Event\Match;
 class Type implements \Erebot\Interfaces\Event\Match
 {
     /// Type to use in comparisons, as a string.
-    protected $_type;
+    protected $type;
 
     /**
      * Creates a new instance of this filter.
@@ -48,7 +48,7 @@ class Type implements \Erebot\Interfaces\Event\Match
      */
     public function getType()
     {
-        return $this->_type;
+        return $this->type;
     }
 
     /**
@@ -71,7 +71,7 @@ class Type implements \Erebot\Interfaces\Event\Match
             $types = array($types);
         }
 
-        $this->_type = array();
+        $finalTypes = array();
         foreach ($types as $type) {
             if (is_object($type)) {
                 $type = get_class($type);
@@ -81,13 +81,14 @@ class Type implements \Erebot\Interfaces\Event\Match
                 throw new \Erebot\InvalidValueException('Not a valid type');
             }
 
-            $this->_type[] = $type;
+            $finalTypes[] = $type;
         }
+        $this->type = $finalTypes;
     }
 
     public function match(\Erebot\Interfaces\Event\Base\Generic $event)
     {
-        foreach ($this->_type as $type) {
+        foreach ($this->type as $type) {
             if ($event instanceof $type) {
                 return true;
             }

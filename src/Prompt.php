@@ -45,13 +45,13 @@ namespace Erebot;
 class Prompt implements \Erebot\Interfaces\ReceivingConnection
 {
     /// A bot object implementing the Erebot::Interfaces::Core interface.
-    protected $_bot;
+    protected $bot;
 
     /// The underlying socket, represented as a stream.
-    protected $_socket;
+    protected $socket;
 
     /// I/O manager for the socket.
-    protected $_io;
+    protected $io;
 
     /**
      * Constructs the UNIX socket that represents the prompt.
@@ -98,34 +98,39 @@ class Prompt implements \Erebot\Interfaces\ReceivingConnection
      */
     public function __construct(
         \Erebot\Interfaces\Core $bot,
-        $connector = NULL,
-        $group = NULL,
+        $connector = null,
+        $group = null,
         $perms = 0660
-    )
-    {
-        $this->_bot         = $bot;
+    ) {
+        $this->bot = $bot;
 
-        if ($connector === NULL)
+        if ($connector === null) {
             $connector = sys_get_temp_dir() .
                         DIRECTORY_SEPARATOR .
                         'Erebot.sock';
-        $this->_socket = stream_socket_server(
+        }
+        $this->socket = stream_socket_server(
             "udg://".$connector,
-            $errno, $errstr,
+            $errno,
+            $errstr,
             STREAM_SERVER_BIND
         );
-        if (!$this->_socket)
-            throw new Exception("Could not create prompt (".$errstr.")");
+        if (!$this->socket) {
+            throw new \Exception("Could not create prompt (".$errstr.")");
+        }
 
+        // Cleanup on shutdown.
         register_shutdown_function(
-            array(__CLASS__, '_cleanup_socket'),
+            function ($socket) {
+                @unlink($socket);
+            },
             $connector
         );
 
         // Change group.
-        if ($group !== NULL) {
+        if ($group !== null) {
             if (!@chgrp($connector, $group)) {
-                throw new Exception(
+                throw new \Exception(
                     "Could not change group to '$group' for '$connector'"
                 );
             }
@@ -133,7 +138,7 @@ class Prompt implements \Erebot\Interfaces\ReceivingConnection
 
         // Change permissions.
         if (!chmod($connector, $perms)) {
-            throw new Exception(
+            throw new \Exception(
                 "Could not set permissions to $perms on '$connector'"
             );
         }
@@ -141,14 +146,15 @@ class Prompt implements \Erebot\Interfaces\ReceivingConnection
         // Flush any received data on the socket, because
         // any data sent before the group and permissions
         // were set may have come from an untrusted source.
-        $flush = array($this->_socket);
-        $dummy = NULL;
+        $flush = array($this->socket);
+        $dummy = null;
         while (stream_select($flush, $dummy, $dummy, 0) == 1) {
-            if (fread($this->_socket, 8192) === FALSE)
-                throw new Exception("Error while flushing the socket");
+            if (fread($this->socket, 8192) === false) {
+                throw new \Exception("Error while flushing the socket");
+            }
         }
 
-        $this->_io  = new \Erebot\LineIO(\Erebot\LineIO::EOL_ANY, $this->_socket);
+        $this->io  = new \Erebot\LineIO(\Erebot\LineIO::EOL_ANY, $this->socket);
         $logger = \Plop::getInstance();
         $logger->info(
             $bot->gettext('Prompt started in "%(path)s"'),
@@ -164,45 +170,48 @@ class Prompt implements \Erebot\Interfaces\ReceivingConnection
 
     public function connect()
     {
-        $this->_bot->addConnection($this);
+        $this->bot->addConnection($this);
     }
 
-    public function disconnect($quitMessage = NULL)
+    public function disconnect($quitMessage = null)
     {
-        $this->_bot->removeConnection($this);
-        if ($this->_socket !== NULL)
-            stream_socket_shutdown($this->_socket, STREAM_SHUT_RDWR);
-        $this->_socket = NULL;
+        $this->bot->removeConnection($this);
+        if ($this->socket !== null) {
+            stream_socket_shutdown($this->socket, STREAM_SHUT_RDWR);
+        }
+        $this->socket = null;
     }
 
     public function isConnected()
     {
-        return TRUE;
+        return true;
     }
 
     public function getSocket()
     {
-        return $this->_socket;
+        return $this->socket;
     }
 
     public function getIO()
     {
-        return $this->_io;
+        return $this->io;
     }
 
     public function read()
     {
-        $res = $this->_io->read();
-        if ($res === FALSE)
+        $res = $this->io->read();
+        if ($res === false) {
             throw new \Erebot\ConnectionFailureException('Disconnected');
+        }
         return $res;
     }
 
     /// Processes commands queued in the input buffer.
     public function process()
     {
-        for ($i = $this->_io->inReadQueue(); $i > 0; $i--)
-            $this->_handleMessage($this->_io->pop());
+        for ($i = $this->io->inReadQueue(); $i > 0; $i--) {
+            $this->handleMessage($this->io->pop());
+        }
     }
 
     /**
@@ -212,53 +221,40 @@ class Prompt implements \Erebot\Interfaces\ReceivingConnection
      *      A single line of text received from the prompt,
      *      with the end-of-line sequence stripped.
      */
-    protected function _handleMessage($line)
+    protected function handleMessage($line)
     {
         $pos = strpos($line, ' ');
-        if ($pos === FALSE)
+        if ($pos === false) {
             return;
+        }
 
         $pattern    = preg_quote(substr($line, 0, $pos), '@');
         $pattern    = strtr($pattern, array('\\?' => '.?', '\\*' => '.*'));
         $line       = substr($line, $pos + 1);
-        if ($line === FALSE)
+        if ($line === false) {
             return;
+        }
 
-        foreach ($this->_bot->getConnections() as $connection) {
-            if (!($connection instanceof \Erebot\Interfaces\SendingConnection) ||
-                $connection == $this)
+        foreach ($this->bot->getConnections() as $connection) {
+            if (!($connection instanceof \Erebot\Interfaces\SendingConnection) || $connection == $this) {
                 continue;
+            }
 
-            $config = $connection->getConfig(NULL);
+            $config = $connection->getConfig(null);
             $netConfig = $config->getNetworkCfg();
-            if (preg_match('@^'.$pattern.'$@Di', $netConfig->getName()))
+            if (preg_match('@^'.$pattern.'$@Di', $netConfig->getName())) {
                 $connection->getIO()->push($line);
+            }
         }
     }
 
     public function getBot()
     {
-        return $this->_bot;
+        return $this->bot;
     }
 
     public function getConfig($chan)
     {
-        return NULL;
-    }
-
-    /**
-     * Destroys the socket used by the prompt
-     * whenever Erebot exits.
-     *
-     * \param string $socket
-     *      Path to the UNIX socket used to control Erebot.
-     *
-     * \return
-     *      This method does not have a return value.
-     */
-    static public function _cleanup_socket($socket)
-    {
-        @unlink($socket);
+        return null;
     }
 }
-

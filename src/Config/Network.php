@@ -33,16 +33,16 @@ namespace Erebot\Config;
 class Network extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Network
 {
     /// Main configuration this object depends on.
-    protected $_maincfg;
+    protected $maincfg;
 
     /// The name of this IRC network.
-    protected $_name;
+    protected $name;
 
     /// A list of server configurations which apply to this network.
-    protected $_servers;
+    protected $servers;
 
     /// A list of channel configurations which apply to this network.
-    protected $_channels;
+    protected $channels;
 
     /**
      * Creates a new configuration object for an IRC network.
@@ -57,20 +57,19 @@ class Network extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\
     public function __construct(
         \Erebot\Interfaces\Config\Main $mainCfg,
         \SimpleXMLElement $xml
-    )
-    {
+    ) {
         parent::__construct($mainCfg, $xml);
-        $this->_maincfg     = $mainCfg;
-        $this->_servers     = array();
-        $this->_channels    = array();
-        $this->_name        = (string) $xml['name'];
+        $this->maincfg  = $mainCfg;
+        $this->servers  = array();
+        $this->channels = array();
+        $this->name     = (string) $xml['name'];
 
         foreach ($xml->servers->server as $serverCfg) {
             /// @TODO use dependency injection instead.
             $newConfig  = new \Erebot\Config\Server($this, $serverCfg);
             $uris       = $newConfig->getConnectionURI();
             $uri        = new \Erebot\URI($uris[count($uris) - 1]);
-            $this->_servers[(string) $uri] = $newConfig;
+            $this->servers[(string) $uri] = $newConfig;
             unset($newConfig);
         }
 
@@ -78,7 +77,7 @@ class Network extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\
             foreach ($xml->channels->channel as $channelCfg) {
                 /// @TODO use dependency injection instead.
                 $newConfig = new \Erebot\Config\Channel($this, $channelCfg);
-                $this->_channels[$newConfig->getName()] = $newConfig;
+                $this->channels[$newConfig->getName()] = $newConfig;
                 unset($newConfig);
             }
         }
@@ -90,8 +89,8 @@ class Network extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\
     public function __destruct()
     {
         unset(
-            $this->_servers,
-            $this->_maincfg
+            $this->servers,
+            $this->maincfg
         );
         parent::__destruct();
     }
@@ -99,35 +98,36 @@ class Network extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\
     /// \copydoc Erebot::Interfaces::Config::Network::getName()
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Network::getServerCfg()
     public function getServerCfg($server)
     {
-        if (!isset($this->_servers[$server]))
+        if (!isset($this->servers[$server])) {
             throw new \Erebot\NotFoundException('No such server');
-        return $this->_servers[$server];
+        }
+        return $this->servers[$server];
     }
 
     /// \copydoc Erebot::Interfaces::Config::Network::getServers()
     public function getServers()
     {
-        return $this->_servers;
+        return $this->servers;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Network::getChannelCfg()
     public function getChannelCfg($channel)
     {
-        if (!isset($this->_channels[$channel]))
+        if (!isset($this->channels[$channel])) {
             throw new \Erebot\NotFoundException('No such channel');
-        return $this->_channels[$channel];
+        }
+        return $this->channels[$channel];
     }
 
     /// \copydoc Erebot::Interfaces::Config::Network::getChannels()
     public function getChannels()
     {
-        return $this->_channels;
+        return $this->channels;
     }
 }
-

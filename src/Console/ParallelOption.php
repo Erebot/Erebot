@@ -18,22 +18,28 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Erebot\Event\Match;
+namespace Erebot\Console;
 
 /**
  * \brief
- *      A filter that groups several (sub-)filters together
- *      and matches if any of the sub-filters matches.
+ *      Custom option that can be used in parallel with regular options.
+ *
+ * The Console_CommandLine package usually prevents
+ * options from acting on the same variable. This
+ * specific type of option can be used with the
+ * Erebot::Console::StoreProxyAction to work around this.
  */
-class Any extends \Erebot\Event\Match\CollectionAbstract
+class ParallelOption extends \Console_CommandLine_Option
 {
-    public function match(\Erebot\Interfaces\Event\Base\Generic $event)
+    /**
+     * Overrides the parent method so that
+     * this option never expects an argument.
+     *
+     * \retval bool
+     *      Always returns \b false.
+     */
+    public function expectsArgument()
     {
-        foreach ($this->_submatchers as $match) {
-            if ($match->match($event)) {
-                return true;
-            }
-        }
         return false;
     }
 }

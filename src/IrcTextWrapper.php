@@ -32,10 +32,10 @@ namespace Erebot;
 class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
 {
     /// The parts wrapped by this instance.
-    protected $_parts;
+    protected $parts;
 
     /// Position in the text.
-    protected $_position;
+    protected $position;
 
     /**
      * Constructs a new instance of a text wrapper.
@@ -48,8 +48,9 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
         if (is_array($parts)) {
             $spaces = 0;
             foreach ($parts as $part) {
-                if (strpos($part, ' ') !== FALSE)
+                if (strpos($part, ' ') !== false) {
                     $spaces++;
+                }
             }
             if ($spaces > 1) {
                 throw new \Erebot\InvalidValueException(
@@ -61,8 +62,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
                     'At least one token must be passed'
                 );
             }
-        }
-        else if (is_string($parts)) {
+        } elseif (is_string($parts)) {
             // Prepend a single space to ease single token handling.
             $msg    = ' '.$parts;
             $pos    = strpos($msg, ' :');
@@ -70,47 +70,47 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
             // Split the message correctly.
             // If there is no colon, then the message
             // has already been split correctly above.
-            if ($pos !== FALSE) {
+            if ($pos !== false) {
                 // Single token, just remove the leading ' :'.
-                if (!$pos)
+                if (!$pos) {
                     $parts = array((string) substr($msg, 2));
-                else {
+                } else {
                     // Build up the parts from all words before ' :',
                     // removing the leading space and then add the last
                     // token formed by everything after the first leading ':'.
                     $parts = explode(' ', substr($msg, 1, $pos - 1));
                     $parts[] = (string) substr($msg, $pos + 2);
                 }
-            }
-            // No significative colon.
-            else {
+            } else {
+                // No significative colon.
                 $parts = explode(' ', (string) substr($msg, 1));
             }
-        }
-        else {
+        } else {
             throw new \Erebot\InvalidValueException(
                 'A string or an array was expected'
             );
         }
 
-        $this->_parts       = $parts;
-        $this->_position    = 0;
+        $this->parts       = $parts;
+        $this->position    = 0;
     }
 
     public function __toString()
     {
-        $last   = count($this->_parts) - 1;
+        $last   = count($this->parts) - 1;
         $text   = '';
-        foreach ($this->_parts as $index => $part) {
+        foreach ($this->parts as $index => $part) {
             if ($index == $last) {
-                if (strpos($part, ' ') !== FALSE || !strncmp($part, ':', 1))
+                if (strpos($part, ' ') !== false || !strncmp($part, ':', 1)) {
                     $text .= ':';
+                }
+            } elseif (!strncmp($part, ':', 1)) {
+                throw new \Exception('Oops!'); // Will trigger a fatal error.
             }
-            else if (!strncmp($part, ':', 1))
-                throw new Exception('Oops!'); // Will trigger a fatal error.
             $text .= $part;
-            if ($index != $last)
+            if ($index != $last) {
                 $text .= ' ';
+            }
         }
         return $text;
     }
@@ -122,7 +122,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function count()
     {
-        return count($this->_parts);
+        return count($this->parts);
     }
 
     /**
@@ -132,7 +132,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function current()
     {
-        return $this->_parts[$this->_position];
+        return $this->parts[$this->position];
     }
 
     /**
@@ -142,7 +142,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function key()
     {
-        return $this->_position;
+        return $this->position;
     }
 
     /**
@@ -152,7 +152,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function next()
     {
-        $this->_position++;
+        $this->position++;
     }
 
     /**
@@ -162,7 +162,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function rewind()
     {
-        $this->_position = 0;
+        $this->position = 0;
     }
 
     /**
@@ -172,7 +172,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function valid()
     {
-        return ($this->_position < count($this->_parts));
+        return ($this->position < count($this->parts));
     }
 
     /**
@@ -182,7 +182,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function offsetExists($offset)
     {
-        return isset($this->_parts[$offset]);
+        return isset($this->parts[$offset]);
     }
 
     /**
@@ -192,11 +192,13 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function offsetGet($offset)
     {
-        if (!is_int($offset))
-            return NULL;
-        if ($offset < 0)
-            $offset += count($this->_parts);
-        return $this->_parts[$offset];
+        if (!is_int($offset)) {
+            return null;
+        }
+        if ($offset < 0) {
+            $offset += count($this->parts);
+        }
+        return $this->parts[$offset];
     }
 
     /**
@@ -216,7 +218,7 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
      */
     public function offsetUnset($offset)
     {
-        unset($this->_parts[$offset]);
-        $this->_parts = array_values($this->_parts);
+        unset($this->parts[$offset]);
+        $this->parts = array_values($this->parts);
     }
 }

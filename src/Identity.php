@@ -26,14 +26,14 @@ namespace Erebot;
  */
 class Identity implements \Erebot\Interfaces\Identity
 {
-    /// Nickname for this user identity, either a string or NULL.
-    protected $_nick;
+    /// Nickname for this user identity, either a string or \b null.
+    protected $nick;
 
-    /// Identity string for this user identity, either a string or NULL.
-    protected $_ident;
+    /// Identity string for this user identity, either a string or \b null.
+    protected $ident;
 
-    /// Host part for this user identity, either a string or NULL.
-    protected $_host;
+    /// Host part for this user identity, either a string or \b null.
+    protected $host;
 
     /**
      * Creates a new object holding some user's identity.
@@ -48,53 +48,56 @@ class Identity implements \Erebot\Interfaces\Identity
      */
     public function __construct($user)
     {
-        if (!is_string($user))
+        if (!is_string($user)) {
             throw new \Erebot\InvalidValueException('Not a valid identity');
+        }
 
-        $ident  = NULL;
-        $host   = NULL;
-        $nick   = NULL;
+        $ident  = null;
+        $host   = null;
+        $nick   = null;
         $pos    = strpos($user, '!');
-        if ($pos !== FALSE) {
+        if ($pos !== false) {
             $parts  = explode('@', substr($user, $pos + 1));
-            if (count($parts) != 2)
+            if (count($parts) != 2) {
                 throw new \Erebot\InvalidValueException('Invalid mask');
+            }
 
             $nick   = substr($user, 0, $pos);
             $ident  = $parts[0];
             $host   = $parts[1];
 
-            if ($nick === FALSE || $ident == '' || $host == '')
+            if ($nick === false || $ident == '' || $host == '') {
                 throw new \Erebot\InvalidValueException('Invalid mask');
-        }
-        // If there is a "@" but no "!", this is also invalid.
-        else if (strpos($user, '@') !== FALSE)
+            }
+        } elseif (strpos($user, '@') !== false) {
+            // If there is a "@" but no "!", this is also invalid.
             throw new \Erebot\InvalidValueException('Invalid mask');
-        else
+        } else {
             $nick = $user;
+        }
 
-        $this->_nick    = $nick;
-        $this->_ident   = $ident;
+        $this->nick    = $nick;
+        $this->ident   = $ident;
 
-        if ($host === NULL)
-            $this->_host = NULL;
-        else {
-            $this->_host    = self::_canonicalizeHost(
+        if ($host === null) {
+            $this->host = null;
+        } else {
+            $this->host = self::canonicalizeHost(
                 $host,
                 \Erebot\Interfaces\Identity::CANON_IPV6,
-                FALSE
+                false
             );
         }
     }
 
     public function getNick()
     {
-        return $this->_nick;
+        return $this->nick;
     }
 
     public function getIdent()
     {
-        return $this->_ident;
+        return $this->ident;
     }
 
     /**
@@ -116,7 +119,7 @@ class Identity implements \Erebot\Interfaces\Identity
      *      <a target="_blank" href="http://php.net/array_walk">array_walk()</a>
      *      PHP function.
      */
-    static protected function _stripLeading(&$number, $key)
+    protected static function stripLeading(&$number, $key)
     {
         $stripped = ltrim($number, '0');
         $number = ($stripped == '' ? '0' : $stripped);
@@ -159,7 +162,7 @@ class Identity implements \Erebot\Interfaces\Identity
      *      for an exact description of the transformations
      *      that apply when compressing an IPv6 address.
      */
-    static protected function _canonicalizeHost($host, $c10n, $uncompressed)
+    protected static function canonicalizeHost($host, $c10n, $uncompressed)
     {
         if ($c10n != \Erebot\Interfaces\Identity::CANON_IPV4 &&
             $c10n != \Erebot\Interfaces\Identity::CANON_IPV6) {
@@ -177,7 +180,7 @@ class Identity implements \Erebot\Interfaces\Identity
             $parts  = explode('.', $host, 4);
             $prefix = ($uncompressed ? '0:0:0:0:0' : ':');
             if ($c10n == \Erebot\Interfaces\Identity::CANON_IPV4) {
-                array_walk($parts, array('self', '_stripLeading'));
+                array_walk($parts, array('self', 'stripLeading'));
                 return $prefix.':ffff:'.implode('.', $parts);
             }
 
@@ -185,7 +188,7 @@ class Identity implements \Erebot\Interfaces\Identity
                 sprintf('%02x%02x', $parts[0], $parts[1]),
                 sprintf('%02x%02x', $parts[2], $parts[3]),
             );
-            array_walk($mapped, array('self', '_stripLeading'));
+            array_walk($mapped, array('self', 'stripLeading'));
             return $prefix.':ffff:'.implode(':', $mapped);
         }
 
@@ -201,9 +204,9 @@ class Identity implements \Erebot\Interfaces\Identity
             // can never be all-numeric (avoids ambiguity
             // with IPv4 addresses in dotted notation).
             $last = strrchr($host, '.');
-            if ($last === FALSE ||
-                strspn($last, '.1234567890') != strlen($last))
+            if ($last === false || strspn($last, '.1234567890') != strlen($last)) {
                 return strtolower($host);
+            }
         }
 
         $half           = '[[:xdigit:]]{1,4}';
@@ -237,38 +240,41 @@ class Identity implements \Erebot\Interfaces\Identity
                 sprintf('%02x%02x', $parts[0], $parts[1]),
                 sprintf('%02x%02x', $parts[2], $parts[3]),
             );
-            array_walk($mapped, array('self', '_stripLeading'));
+            array_walk($mapped, array('self', 'stripLeading'));
             $host = str_replace(end($matches), implode(':', $mapped), $host);
         }
 
         // Handle "::".
         $pos = strpos($host, '::');
-        if ($pos !== FALSE) {
-            if (substr($host, 0, 2) == '::')
+        if ($pos !== false) {
+            if (substr($host, 0, 2) == '::') {
                 $host = '0'.$host;
-            if (substr($host, -2) == '::')
+            }
+            if (substr($host, -2) == '::') {
                 $host .= '0';
+            }
             $repeat = 8 - substr_count($host, ':');
             $host = str_replace('::', ':'.str_repeat('0:', $repeat), $host);
         }
 
         // Remove superfluous leading zeros.
         $parts = explode(':', $host, 8);
-        array_walk($parts, array('self', '_stripLeading'));
+        array_walk($parts, array('self', 'stripLeading'));
         if ($c10n == \Erebot\Interfaces\Identity::CANON_IPV4) {
             $parts[7]   = (hexdec($parts[6]) << 16) + hexdec($parts[7]);
             $parts[6]   = long2ip(array_pop($parts));
         }
 
-        if ($uncompressed)
+        if ($uncompressed) {
             return strtolower(implode(':', $parts));
+        }
 
         // Compress the zeros.
         $host = 'x:' . implode(':', $parts) . ':x';
         for ($i = 8; $i > 0; $i--) {
             $s          = ':'.str_repeat('0:', $i);
             $pos        = strpos($host, $s);
-            if ($pos !== FALSE) {
+            if ($pos !== false) {
                 $host = (string) substr($host, 0, $pos) . '::' .
                         (string) substr($host, $pos + strlen($s));
                 break;
@@ -285,23 +291,25 @@ class Identity implements \Erebot\Interfaces\Identity
 
     public function getHost($c10n)
     {
-        if ($this->_host === NULL)
-            return NULL;
-        if ($c10n == \Erebot\Interfaces\Identity::CANON_IPV6)
-            return $this->_host;
-        return self::_canonicalizeHost($this->_host, $c10n, FALSE);
+        if ($this->host === null) {
+            return null;
+        }
+        if ($c10n == \Erebot\Interfaces\Identity::CANON_IPV6) {
+            return $this->host;
+        }
+        return self::canonicalizeHost($this->host, $c10n, false);
     }
 
     public function getMask($c10n)
     {
-        $ident  = ($this->_ident === NULL) ? '*' : $this->_ident;
-        $host   = ($this->_host === NULL) ? '*' : $this->getHost($c10n);
-        return $this->_nick.'!'.$ident.'@'.$host;
+        $ident  = ($this->ident === null) ? '*' : $this->ident;
+        $host   = ($this->host === null) ? '*' : $this->getHost($c10n);
+        return $this->nick.'!'.$ident.'@'.$host;
     }
 
     public function __toString()
     {
-        return $this->_nick;
+        return $this->nick;
     }
 
     /**
@@ -315,42 +323,47 @@ class Identity implements \Erebot\Interfaces\Identity
      *      Collator object to use to compare IRC nicknames.
      *
      * \retval bool
-     *      TRUE if this identity matches the given pattern,
-     *      FALSE otherwise.
+     *      \b true if this identity matches the given pattern,
+     *      \b false otherwise.
      */
     public function match($pattern, \Erebot\Interfaces\IrcCollator $collator)
     {
         $nick = explode('!', $pattern, 2);
-        if (count($nick) != 2)
-            return FALSE;
+        if (count($nick) != 2) {
+            return false;
+        }
 
         $ident = explode('@', $nick[1], 2);
-        if (count($ident) != 2)
-            return FALSE;
+        if (count($ident) != 2) {
+            return false;
+        }
 
         $host   = $ident[1];
         $ident  = $ident[0];
         $nick   = $nick[0];
 
-        if ($ident == '' || $host == '')
-            return FALSE;
+        if ($ident == '' || $host == '') {
+            return false;
+        }
 
         $nick       = $collator->normalizeNick($nick);
-        $thisNick   = $collator->normalizeNick($this->_nick);
-        if (!preg_match(self::_patternize($nick, TRUE), $thisNick))
-            return FALSE;
+        $thisNick   = $collator->normalizeNick($this->nick);
+        if (!preg_match(self::patternize($nick, true), $thisNick)) {
+            return false;
+        }
 
-        $thisIdent = ($this->_ident === NULL) ? '' : $this->_ident;
-        if (!preg_match(self::_patternize($ident, TRUE), $thisIdent))
-            return FALSE;
+        $thisIdent = ($this->ident === null) ? '' : $this->ident;
+        if (!preg_match(self::patternize($ident, true), $thisIdent)) {
+            return false;
+        }
 
         $thisHost = (
-            ($this->_host === NULL) ?
+            ($this->host === null) ?
             '' :
-            self::_canonicalizeHost(
-                $this->_host,
+            self::canonicalizeHost(
+                $this->host,
                 \Erebot\Interfaces\Identity::CANON_IPV6,
-                TRUE
+                true
             )
         );
 
@@ -363,16 +376,16 @@ class Identity implements \Erebot\Interfaces\Identity
         $isDottedAddress    = (bool) preg_match($dotAddress, $host);
 
         // It's some hostname (not an IPv4).
-        if (strpos($host, ':') === FALSE && !$isDottedAddress) {
+        if (strpos($host, ':') === false && !$isDottedAddress) {
             return (bool) preg_match(
-                self::_patternize($host, FALSE),
+                self::patternize($host, false),
                 $thisHost
             );
         }
 
         // Handle wildcards for IPv6 mapped IPv4.
         $host = explode('/', $host, 2);
-        if (strpos($host[0], '*') !== FALSE) {
+        if (strpos($host[0], '*') !== false) {
             if (count($host) == 2) {
                 throw new \Erebot\InvalidValueException(
                     "Wildcard characters and netmasks ".
@@ -392,14 +405,14 @@ class Identity implements \Erebot\Interfaces\Identity
             }
             $host[0]   .= $replace;
             // We could check whether some wildcards remain or not,
-            // but self::_canonicalizeHost will raise an exception
+            // but self::canonicalizeHost will raise an exception
             // for such a pattern anyway.
-        }
-        // No netmask given, assume /128.
-        else if (count($host) == 1)
+        } elseif (count($host) == 1) {
+            // No netmask given, assume /128.
             $host[] = 128;
-        else
+        } else {
             $host[1] = ((int) $host[1]) + ($isDottedAddress ? 96 : 0);
+        }
 
         if ($host[1] < 0 || $host[1] > 128) {
             throw new \Erebot\InvalidValueException(
@@ -407,10 +420,10 @@ class Identity implements \Erebot\Interfaces\Identity
             );
         }
 
-        $host[0] = self::_canonicalizeHost(
+        $host[0] = self::canonicalizeHost(
             $host[0],
             \Erebot\Interfaces\Identity::CANON_IPV6,
-            TRUE
+            true
         );
 
         $pattParts      = explode(':', $host[0]);
@@ -419,11 +432,12 @@ class Identity implements \Erebot\Interfaces\Identity
             $mask       = 0x10000 - (1 << (16 - min($host[1], 16)));
             $pattValue  = hexdec(array_shift($pattParts)) & $mask;
             $thisValue  = hexdec(array_shift($thisParts)) & $mask;
-            if ($pattValue != $thisValue)
-                return FALSE;
+            if ($pattValue != $thisValue) {
+                return false;
+            }
             $host[1] -= 16;
         }
-        return TRUE;
+        return true;
     }
 
     /**
@@ -437,13 +451,13 @@ class Identity implements \Erebot\Interfaces\Identity
      *
      * \param bool $matchDot
      *      Whether the '?' and '*' wildcard characters
-     *      should also match dots '.' (TRUE) or not (FALSE).
+     *      should also match dots '.' (\b true) or not (\b false).
      *
      * \retval string
      *      A regular expression pattern that matches the
      *      criteria expressed in the original pattern.
      */
-    static protected function _patternize($pattern, $matchDot)
+    protected static function patternize($pattern, $matchDot)
     {
         $realPattern = '';
         $mapping = array('[^\\.]', '.');
@@ -451,22 +465,23 @@ class Identity implements \Erebot\Interfaces\Identity
             switch ($pattern[$i]) {
                 case '?':
                 case '*':
-                    if ($matchDot)
+                    if ($matchDot) {
                         $realPattern .= $mapping[1];
-                    else {
+                    } else {
                         // For wildcards when not running in $matchDot mode:
                         // allow them to match a dot when followed with a '*'
                         // (ie. '?*' or '**').
                         if ((($i + 1) < $len && $pattern[$i + 1] == '*')) {
                             $realPattern .= $mapping[1];
                             $i++;
-                        }
-                        else
+                        } else {
                             $realPattern .= $mapping[0];
+                        }
                     }
 
-                    if ($pattern[$i] == '*')
+                    if ($pattern[$i] == '*') {
                         $realPattern .= '*';
+                    }
                     continue;
 
                 default:
@@ -476,4 +491,3 @@ class Identity implements \Erebot\Interfaces\Identity
         return '#^'.$realPattern.'$#Di';
     }
 }
-

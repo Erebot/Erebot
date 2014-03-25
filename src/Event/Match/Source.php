@@ -31,7 +31,7 @@ namespace Erebot\Event\Match;
 class Source implements \Erebot\Interfaces\Event\Match
 {
     /// Source to use in the comparison, as a string.
-    protected $_source;
+    protected $source;
 
     /**
      * Creates a new instance of the filter.
@@ -55,7 +55,7 @@ class Source implements \Erebot\Interfaces\Event\Match
      */
     public function getSource()
     {
-        return $this->_source;
+        return $this->source;
     }
 
     /**
@@ -69,11 +69,11 @@ class Source implements \Erebot\Interfaces\Event\Match
      */
     public function setSource($source)
     {
-        if ($source !== NULL && !\Erebot\Utils::stringifiable($source)) {
+        if ($source !== null && !\Erebot\Utils::stringifiable($source)) {
             throw new \Erebot\InvalidValueException('Not a valid nickname');
         }
 
-        $this->_source = $source;
+        $this->source = $source;
     }
 
     public function match(\Erebot\Interfaces\Event\Base\Generic $event)
@@ -82,7 +82,7 @@ class Source implements \Erebot\Interfaces\Event\Match
             return false;
         }
 
-        if ($this->_source === null) {
+        if ($this->source === null) {
             return true;
         }
 
@@ -90,7 +90,7 @@ class Source implements \Erebot\Interfaces\Event\Match
         return (
             $collator->compare(
                 $event->getSource(),
-                (string) $this->_source
+                (string) $this->source
             ) == 0
         );
     }

@@ -31,7 +31,7 @@ namespace Erebot\Event\Match;
 class Not implements \Erebot\Interfaces\Event\Match
 {
     /// Subfilter to negate.
-    protected $_filter;
+    protected $filter;
 
     /**
      * Creates a new instance of this filter.
@@ -52,7 +52,7 @@ class Not implements \Erebot\Interfaces\Event\Match
      */
     public function getFilter()
     {
-        return $this->_filter;
+        return $this->filter;
     }
 
     /**
@@ -63,11 +63,11 @@ class Not implements \Erebot\Interfaces\Event\Match
      */
     public function setFilter(\Erebot\Interfaces\Event\Match $filter)
     {
-        $this->_filter = $filter;
+        $this->filter = $filter;
     }
 
     public function match(\Erebot\Interfaces\Event\Base\Generic $event)
     {
-        return (!$this->_filter->match($event));
+        return (!$this->filter->match($event));
     }
 }

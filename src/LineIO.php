@@ -43,22 +43,22 @@ class LineIO
     const EOL_NEW_MAC   = "\n";
 
     /// Universal line-ending mode (compatible with Windows, Mac and *nix).
-    const EOL_ANY       = NULL;
+    const EOL_ANY       = null;
 
     /// Line-ending mode in use.
-    protected $_eol;
+    protected $eol;
 
     /// The underlying socket, represented as a stream.
-    protected $_socket;
+    protected $socket;
 
     /// A FIFO queue for outgoing messages.
-    protected $_sndQueue;
+    protected $sndQueue;
 
     /// A FIFO queue for incoming messages.
-    protected $_rcvQueue;
+    protected $rcvQueue;
 
     /// A raw buffer for incoming data.
-    protected $_incomingData;
+    protected $incomingData;
 
     /**
      * Constructs a new line-by-line reader.
@@ -82,7 +82,7 @@ class LineIO
      *      Failure to do so may result in unpredictable
      *      results.
      */
-    public function __construct($eol, $socket = NULL)
+    public function __construct($eol, $socket = null)
     {
         $this->setSocket($socket);
         $this->setEOL($eol);
@@ -96,10 +96,10 @@ class LineIO
      */
     public function setSocket($socket)
     {
-        $this->_socket          = $socket;
-        $this->_incomingData    = "";
-        $this->_rcvQueue        = array();
-        $this->_sndQueue        = array();
+        $this->socket          = $socket;
+        $this->incomingData    = "";
+        $this->rcvQueue        = array();
+        $this->sndQueue        = array();
     }
 
     /**
@@ -112,7 +112,7 @@ class LineIO
      */
     public function getSocket()
     {
-        return $this->_socket;
+        return $this->socket;
     }
 
     /**
@@ -135,14 +135,16 @@ class LineIO
             self::EOL_UNIX,
             self::EOL_ANY,
         );
-        if (!in_array($eol, $eols))
+        if (!in_array($eol, $eols)) {
             throw new \Erebot\InvalidValueException('Invalid EOL mode');
-        if ($eol === self::EOL_ANY)
+        }
+        if ($eol === self::EOL_ANY) {
             $eol = array("\r\n", "\r", "\n");
-        else
+        } else {
             $eol = array($eol);
+        }
 
-        $this->_eol     = $eol;
+        $this->eol     = $eol;
     }
 
     /**
@@ -154,44 +156,46 @@ class LineIO
      */
     public function getEOL()
     {
-        return $this->_eol;
+        return $this->eol;
     }
 
     /**
      * Retrieves a single line of text from the incoming buffer
      * and puts it in the incoming FIFO.
      *
-     * \retval TRUE
+     * \retval true
      *      Whether a line could be fetched from the buffer.
      *
-     * \retval FALSE
+     * \retval false
      *      ... or not.
      *
      * \note
      *      Lines fetched by this method are always UTF-8 encoded.
      */
-    protected function _getLine()
+    protected function getLine()
     {
-        $pos = FALSE;
-        foreach ($this->_eol as $eol) {
-            $pos = strpos($this->_incomingData, $eol);
-            if ($pos !== FALSE)
+        $pos = false;
+        foreach ($this->eol as $eol) {
+            $pos = strpos($this->incomingData, $eol);
+            if ($pos !== false) {
                 break;
+            }
         }
-        if ($pos === FALSE)
-            return FALSE;
+        if ($pos === false) {
+            return false;
+        }
 
         $len    = strlen($eol);
-        $line   = \Erebot\Utils::toUTF8(substr($this->_incomingData, 0, $pos));
-        $this->_incomingData    = substr($this->_incomingData, $pos + $len);
-        $this->_rcvQueue[]      = $line;
+        $line   = \Erebot\Utils::toUTF8(substr($this->incomingData, 0, $pos));
+        $this->incomingData    = substr($this->incomingData, $pos + $len);
+        $this->rcvQueue[]      = $line;
 
         $logger = \Plop::getInstance();
         $logger->debug(
             '%(line)s',
             array('line' => addcslashes($line, "\000..\037"))
         );
-        return TRUE;
+        return true;
     }
 
     /**
@@ -199,8 +203,8 @@ class LineIO
      * as possible.
      *
      * \retval bool
-     *      TRUE if lines were successfully read,
-     *      FALSE is returned whenever EOF is reached
+     *      \b true if lines were successfully read,
+     *      \b false is returned whenever EOF is reached
      *      or if this method has been called while
      *      the socket was still uninitialized..
      *
@@ -211,33 +215,38 @@ class LineIO
      */
     public function read()
     {
-        if ($this->_socket === NULL)
-            return FALSE;
+        if ($this->socket === null) {
+            return false;
+        }
 
-        if (feof($this->_socket))
-            return FALSE;
+        if (feof($this->socket)) {
+            return false;
+        }
 
-        $received = fread($this->_socket, 4096);
-        if ($received === FALSE)
-            return FALSE;
-        $this->_incomingData .= $received;
+        $received = fread($this->socket, 4096);
+        if ($received === false) {
+            return false;
+        }
+        $this->incomingData .= $received;
 
         // Workaround for issue #8.
-        $metadata = stream_get_meta_data($this->_socket);
-        if ($metadata['stream_type'] == 'tcp_socket/ssl' &&
-            !feof($this->_socket)) {
+        $metadata = stream_get_meta_data($this->socket);
+        if ($metadata['stream_type'] == 'tcp_socket/ssl' && !feof($this->socket)) {
             $blocking = (int) $metadata['blocked'];
-            stream_set_blocking($this->_socket, 0);
-            $received = fread($this->_socket, 4096);
-            stream_set_blocking($this->_socket, $blocking);
+            stream_set_blocking($this->socket, 0);
+            $received = fread($this->socket, 4096);
+            stream_set_blocking($this->socket, $blocking);
 
-            if ($received !== FALSE)
-                $this->_incomingData .= $received;
+            if ($received !== false) {
+                $this->incomingData .= $received;
+            }
         }
 
         // Read all messages currently in the input buffer.
-        while ($this->_getLine());
-        return TRUE;
+        while ($this->getLine()) {
+            ; // Nothing more to do.
+        }
+        return true;
     }
 
     /**
@@ -246,15 +255,16 @@ class LineIO
      * \retval string
      *      A single line from the input buffer.
      *
-     * \retval NULL
+     * \retval null
      *      The input buffer did not contain
      *      any line.
      */
     public function pop()
     {
-        if (count($this->_rcvQueue))
-            return array_shift($this->_rcvQueue);
-        return NULL;
+        if (count($this->rcvQueue)) {
+            return array_shift($this->rcvQueue);
+        }
+        return null;
     }
 
     /**
@@ -264,11 +274,11 @@ class LineIO
      *      The line of text to send.
      *
      * \throw Erebot::InvalidValueException
-     *      Thrown if the $line contains invalid characters.
+     *      The $line contains invalid characters.
      */
     public function push($line)
     {
-        if ($this->_socket === NULL) {
+        if ($this->socket === null) {
             throw new \Erebot\IllegalActionException('Uninitialized socket');
         }
 
@@ -277,7 +287,7 @@ class LineIO
                 'Line contains forbidden characters'
             );
         }
-        $this->_sndQueue[] = $line;
+        $this->sndQueue[] = $line;
     }
 
     /**
@@ -288,28 +298,30 @@ class LineIO
      *      The number of bytes successfully
      *      written on the socket.
      *
-     * \retval FALSE
+     * \retval false
      *      The connection was lost while trying
      *      to send the line or the output buffer
      *      was empty.
      */
     public function write()
     {
-        if (!count($this->_sndQueue))
-            return FALSE;
+        if (!count($this->sndQueue)) {
+            return false;
+        }
 
-        $line   = array_shift($this->_sndQueue);
+        $line   = array_shift($this->sndQueue);
         $logger = \Plop::getInstance();
 
         // Make sure we send the whole line,
         // with a trailing CR LF sequence.
-        $eol    = $this->_eol[count($this->_eol) - 1];
+        $eol    = $this->eol[count($this->eol) - 1];
         $line  .= $eol;
         $len    = strlen($line);
         for ($written = 0; $written < $len; $written += $fwrite) {
-            $fwrite = @fwrite($this->_socket, substr($line, $written));
-            if ($fwrite === FALSE)
-                return FALSE;
+            $fwrite = @fwrite($this->socket, substr($line, $written));
+            if ($fwrite === false) {
+                return false;
+            }
         }
         $line = substr($line, 0, -strlen($eol));
         $logger->debug(
@@ -327,11 +339,11 @@ class LineIO
      * \retval bool
      *      Whether there are lines in the
      *      input buffer awaiting reading
-     *      (TRUE) or not (FALSE).
+     *      (\b true) or not (\b false).
      */
     public function inReadQueue()
     {
-        return count($this->_rcvQueue);
+        return count($this->rcvQueue);
     }
 
     /**
@@ -342,11 +354,10 @@ class LineIO
      * \retval bool
      *      Whether there are lines in the
      *      output buffer awaiting writing
-     *      (TRUE) or not (FALSE).
+     *      (\b true) or not (\b false).
      */
     public function inWriteQueue()
     {
-        return count($this->_sndQueue);
+        return count($this->sndQueue);
     }
 }
-

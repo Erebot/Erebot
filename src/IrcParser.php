@@ -40,17 +40,15 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
     const STRIP_REVERSE     = 0x08;
     /// Strip the reset control character from the text.
     const STRIP_RESET       = 0x10;
-    /// Strip extended colors from the text.
-    const STRIP_EXT_COLORS  = 0x20;
     /// Strip all forms of styles from the text.
     const STRIP_ALL         = 0xFF;
 
 
     /// Mappings from (lowercase) interface names to actual classes.
-    protected $_eventsMapping;
+    protected $eventsMapping;
 
     /// IRC connection that will send us some messages to parse.
-    protected $_connection;
+    protected $connection;
 
 
     /**
@@ -69,8 +67,8 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      */
     public function __construct(\Erebot\Interfaces\Connection $connection)
     {
-        $this->_connection = $connection;
-        $this->_eventsMapping = array();
+        $this->connection = $connection;
+        $this->eventsMapping = array();
     }
 
     /**
@@ -87,30 +85,31 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \retval string
      *      The text with all the styles specified in $strip stripped.
      */
-    static public function stripCodes($text, $strip = self::STRIP_ALL)
+    public static function stripCodes($text, $strip = self::STRIP_ALL)
     {
-        if (!is_int($strip))
+        if (!is_int($strip)) {
             throw new \Erebot\InvalidValueException("Invalid stripping flags");
+        }
 
-        if ($strip & self::STRIP_BOLD)
+        if ($strip & self::STRIP_BOLD) {
             $text = str_replace("\002", '', $text);
+        }
 
-        if ($strip & self::STRIP_COLORS)
-            $text = preg_replace(
-                "/\003(?:[0-9]{1,2}(?:,[0-9]{1,2})?)?/",
-                '', $text
-            );
+        if ($strip & self::STRIP_COLORS) {
+            $text = preg_replace("/\003(?:[0-9]{1,2}(?:,[0-9]{1,2})?)?/", '', $text);
+        }
 
-        /// @TODO strip extended colors.
-
-        if ($strip & self::STRIP_RESET)
+        if ($strip & self::STRIP_RESET) {
             $text = str_replace("\017", '', $text);
+        }
 
-        if ($strip & self::STRIP_REVERSE)
+        if ($strip & self::STRIP_REVERSE) {
             $text = str_replace("\026", '', $text);
+        }
 
-        if ($strip & self::STRIP_UNDERLINE)
+        if ($strip & self::STRIP_UNDERLINE) {
             $text = str_replace("\037", '', $text);
+        }
 
         return $text;
     }
@@ -133,14 +132,15 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         $iface = str_replace('!', '\\Erebot\\Interfaces\\Event\\', $iface);
         $iface = strtolower($iface);
 
-        if (!isset($this->_eventsMapping[$iface]))
+        if (!isset($this->eventsMapping[$iface])) {
             throw new \Erebot\NotFoundException('No such declared interface');
+        }
 
         // Replace the first argument (interface) with a reference
         // to the connection, since all events require it anyway.
         // This simplifies calls to this method a bit.
-        $args[0]    = $this->_connection;
-        $cls        = new ReflectionClass($this->_eventsMapping[$iface]);
+        $args[0]    = $this->connection;
+        $cls        = new \ReflectionClass($this->eventsMapping[$iface]);
         $instance   = $cls->newInstanceArgs($args);
         return $instance;
     }
@@ -157,7 +157,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \see
      *      http://www.irchelp.org/irchelp/rfc/ctcpspec.html
      */
-    static protected function ctcpUnquote($msg)
+    protected static function ctcpUnquote($msg)
     {
         // CTCP-level unquoting
         $quoting = array(
@@ -199,9 +199,9 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         $iface = str_replace('!', '\\Erebot\\Interfaces\\Event\\', $iface);
         $iface = strtolower($iface);
 
-        return isset($this->_eventsMapping[$iface])
-            ? $this->_eventsMapping[$iface]
-            : NULL;
+        return isset($this->eventsMapping[$iface])
+            ? $this->eventsMapping[$iface]
+            : null;
     }
 
     /**
@@ -214,7 +214,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      */
     public function getEventClasses()
     {
-        return $this->_eventsMapping;
+        return $this->eventsMapping;
     }
 
     /**
@@ -255,13 +255,13 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         }
 
         $iface = strtolower($iface);
-        $reflector = new ReflectionClass($cls);
+        $reflector = new \ReflectionClass($cls);
         if (!$reflector->implementsInterface($iface)) {
             throw new \Erebot\InvalidValueException(
                 'The given class does not implement that interface'
             );
         }
-        $this->_eventsMapping[$iface] = $cls;
+        $this->eventsMapping[$iface] = $cls;
     }
 
     /**
@@ -279,8 +279,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
             $pos    = strcspn($msg, ' ');
             $origin = (string) substr($msg, 1, $pos - 1);
             $msg    = new \Erebot\IrcTextWrapper((string) substr($msg, $pos + 1));
-        }
-        else {
+        } else {
             /// @FIXME the RFCs say we should assume origin = server instead.
             $origin = '';
             $msg    = new \Erebot\IrcTextWrapper($msg);
@@ -290,20 +289,21 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         $type   = strtoupper($type);
         unset($msg[0]);
 
-        $method = '_handle'.$type;
+        $method = 'handle'.$type;
         $exists = method_exists($this, $method);
         // We need a backup for numeric events
         // as the method may alter the message.
         $backup = clone $msg;
 
-        if ($exists)
+        if ($exists) {
             $res = $this->$method($origin, $msg);
+        }
 
         if (ctype_digit($type)) {
             // For numeric events, the first token is always the target.
             $target = $backup[0];
             unset($backup[0]);
-            return $this->_connection->dispatch(
+            return $this->connection->dispatch(
                 $this->makeEvent(
                     '!Numeric',
                     intval($type, 10),
@@ -314,11 +314,12 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
             );
         }
 
-        if ($exists)
+        if ($exists) {
             return $res;
+        }
 
         /// @TODO: logging
-        return FALSE;
+        return false;
     }
 
     /**
@@ -343,13 +344,13 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      'action' (for the special ACTION CTCP message)
      *      and 'normal' for regular messages.
      */
-    protected function _noticeOrPrivmsg($origin, $msg, $mapping)
+    protected function noticeOrPrivmsg($origin, $msg, $mapping)
     {
         // :nick1!ident@host NOTICE <nick2/#chan> :Message
         // :nick1!ident@host PRIVMSG <nick2/#chan> :Message
         $target = $msg[0];
         $msg    = $msg[1];
-        $isChan = (int) $this->_connection->isChannel($target);
+        $isChan = (int) $this->connection->isChannel($target);
         if (($len = strlen($msg)) > 1 &&
             $msg[$len-1] == "\x01" &&
             $msg[0] == "\x01") {
@@ -364,40 +365,30 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
             $msg    = (string) substr($msg, $pos + 1);
 
             if ($ctcp == "ACTION") {
-                if ($isChan)
-                    return $this->_connection->dispatch(
-                        $this->makeEvent(
-                            $mapping['action'][$isChan],
-                            $target, $origin, $msg
-                        )
+                if ($isChan) {
+                    return $this->connection->dispatch(
+                        $this->makeEvent($mapping['action'][$isChan], $target, $origin, $msg)
                     );
+                }
 
-                return $this->_connection->dispatch(
-                    $this->makeEvent(
-                        $mapping['action'][$isChan],
-                        $origin, $msg
-                    )
+                return $this->connection->dispatch(
+                    $this->makeEvent($mapping['action'][$isChan], $origin, $msg)
                 );
             }
 
-            if ($isChan)
-                return $this->_connection->dispatch(
-                    $this->makeEvent(
-                        $mapping['ctcp'][$isChan],
-                        $target, $origin, $ctcp, $msg
-                    )
+            if ($isChan) {
+                return $this->connection->dispatch(
+                    $this->makeEvent($mapping['ctcp'][$isChan], $target, $origin, $ctcp, $msg)
                 );
+            }
 
-            return $this->_connection->dispatch(
-                $this->makeEvent(
-                    $mapping['ctcp'][$isChan],
-                    $origin, $ctcp, $msg
-                )
+            return $this->connection->dispatch(
+                $this->makeEvent($mapping['ctcp'][$isChan], $origin, $ctcp, $msg)
             );
         }
 
-        if ($isChan)
-            return $this->_connection->dispatch(
+        if ($isChan) {
+            return $this->connection->dispatch(
                 $this->makeEvent(
                     $mapping['normal'][$isChan],
                     $target,
@@ -405,8 +396,9 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
                     $msg
                 )
             );
+        }
 
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent($mapping['normal'][$isChan], $origin, $msg)
         );
     }
@@ -422,9 +414,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleINVITE($origin, $msg) {
+    protected function handleINVITE($origin, $msg)
+    {
         // :nick1!ident@host INVITE nick2 :#chan
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Invite', $msg[1], $origin, $msg[0])
         );
     }
@@ -440,9 +433,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleJOIN($origin, $msg) {
+    protected function handleJOIN($origin, $msg)
+    {
         // :nick1!ident@host JOIN :#chan
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Join', $msg[0], $origin)
         );
     }
@@ -458,9 +452,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleKICK($origin, $msg) {
+    protected function handleKICK($origin, $msg)
+    {
         // :nick1!ident@host KICK #chan nick2 :Reason
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Kick', $msg[0], $origin, $msg[1], $msg[2])
         );
     }
@@ -477,20 +472,22 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleMODE($origin, $msg) {
+    protected function handleMODE($origin, $msg)
+    {
         // :nick1!ident@host MODE <nick2/#chan> <modes> [args]
         $target = $msg[0];
         unset($msg[0]);
-        if (!$this->_connection->isChannel($target)) {
-            return $this->_connection->dispatch(
+        if (!$this->connection->isChannel($target)) {
+            return $this->connection->dispatch(
                 $this->makeEvent('!UserMode', $origin, $target, $msg)
             );
         }
 
         $event = $this->makeEvent('!RawMode', $target, $origin, $msg);
-        $this->_connection->dispatch($event);
-        if ($event->preventDefault(TRUE))
+        $this->connection->dispatch($event);
+        if ($event->preventDefault(true)) {
             return;
+        }
 
         $modes  = $msg[0];
         unset($msg[0]);
@@ -540,7 +537,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
                 case 'e':
                     $tnick  = $msg[$k++];
                     $cls    = $priv[$mode][$modes[$i]];
-                    $this->_connection->dispatch(
+                    $this->connection->dispatch(
                         $this->makeEvent($cls, $target, $origin, $tnick)
                     );
                     break;
@@ -562,9 +559,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleNICK($origin, $msg) {
+    protected function handleNICK($origin, $msg)
+    {
         // :oldnick!ident@host NICK newnick
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Nick', $origin, $msg[0])
         );
     }
@@ -581,14 +579,15 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleNOTICE($origin, $msg) {
+    protected function handleNOTICE($origin, $msg)
+    {
         // :nick1!ident@host NOTICE <nick2/#chan> :Message
         $mapping = array(
             'action'    => array('!PrivateCtcpReply', '!ChanCtcpReply'),
             'ctcp'      => array('!PrivateCtcpReply', '!ChanCtcpReply'),
             'normal'    => array('!PrivateNotice', '!ChanNotice'),
         );
-        return $this->_noticeOrPrivmsg($origin, $msg, $mapping);
+        return $this->noticeOrPrivmsg($origin, $msg, $mapping);
     }
 
     /**
@@ -602,9 +601,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handlePART($origin, $msg) {
+    protected function handlePART($origin, $msg)
+    {
         // :nick1!ident@host PART #chan [reason]
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent(
                 '!Part',
                 $msg[0],
@@ -625,9 +625,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handlePING($origin, $msg) {
+    protected function handlePING($origin, $msg)
+    {
         // PING origin
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Ping', $msg)
         );
     }
@@ -643,9 +644,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handlePONG($origin, $msg) {
+    protected function handlePONG($origin, $msg)
+    {
         // :origin PONG origin target
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Pong', $origin, $msg[1])
         );
     }
@@ -662,14 +664,15 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handlePRIVMSG($origin, $msg) {
+    protected function handlePRIVMSG($origin, $msg)
+    {
         // :nick1!ident@host PRIVMSG <nick2/#chan> :Message
         $mapping = array(
             'action'    => array('!PrivateAction', '!ChanAction'),
             'ctcp'      => array('!PrivateCtcp', '!ChanCtcp'),
             'normal'    => array('!PrivateText', '!ChanText'),
         );
-        return $this->_noticeOrPrivmsg($origin, $msg, $mapping);
+        return $this->noticeOrPrivmsg($origin, $msg, $mapping);
     }
 
     /**
@@ -683,9 +686,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleQUIT($origin, $msg) {
+    protected function handleQUIT($origin, $msg)
+    {
         // :nick1!ident@host QUIT :Reason
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Quit', $origin, $msg[0])
         );
     }
@@ -701,9 +705,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _handleTOPIC($origin, $msg) {
+    protected function handleTOPIC($origin, $msg)
+    {
         // :nick1!ident@host TOPIC #chan :New topic
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent('!Topic', $msg[0], $origin, $msg[1])
         );
     }
@@ -722,15 +727,16 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \TODO
      *      Use a NumericEventHandler instead, even though it is less effective.
      */
-    protected function _handle255($origin, $msg)
+    protected function handle255($origin, $msg)
     {
         // \Erebot\Interfaces\Numerics::RPL_LUSERME
         /* We can't rely on RPL_WELCOME because we may need
          * to detect the server's capabilities first.
          * So, we delay detection of the connection for as
          * long as we can (while retaining portability). */
-        if (!$this->_connection->isConnected())
-            return $this->_connection->dispatch($this->makeEvent('!Connect'));
+        if (!$this->connection->isConnected()) {
+            return $this->connection->dispatch($this->makeEvent('!Connect'));
+        }
     }
 
     /**
@@ -747,10 +753,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \TODO
      *      Use a NumericEventHandler instead, even though it is less effective.
      */
-    protected function _handle600($origin, $msg)
+    protected function handle600($origin, $msg)
     {
         // \Erebot\Interfaces\Numerics::RPL_LOGON
-        return $this->_watchList('!Notify', $msg);
+        return $this->watchList('!Notify', $msg);
     }
 
     /**
@@ -767,10 +773,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \TODO
      *      Use a NumericEventHandler instead, even though it is less effective.
      */
-    protected function _handle601($origin, $msg)
+    protected function handle601($origin, $msg)
     {
         // \Erebot\Interfaces\Numerics::RPL_LOGOFF
-        return $this->_watchList('!UnNotify', $msg);
+        return $this->watchList('!UnNotify', $msg);
     }
 
     /**
@@ -787,10 +793,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \TODO
      *      Use a NumericEventHandler instead, even though it is less effective.
      */
-    protected function _handle604($origin, $msg)
+    protected function handle604($origin, $msg)
     {
         // \Erebot\Interfaces\Numerics::RPL_NOWON
-        return $this->_watchList('!Notify', $msg);
+        return $this->watchList('!Notify', $msg);
     }
 
     /**
@@ -807,10 +813,10 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \TODO
      *      Use a NumericEventHandler instead, even though it is less effective.
      */
-    protected function _handle605($origin, $msg)
+    protected function handle605($origin, $msg)
     {
         // \Erebot\Interfaces\Numerics::RPL_NOWOFF
-        return $this->_watchList('!UnNotify', $msg);
+        return $this->watchList('!UnNotify', $msg);
     }
 
     /**
@@ -824,7 +830,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      *      a special object that makes it easier
      *      to analyze each token separately.
      */
-    protected function _watchList($event, $msg)
+    protected function watchList($event, $msg)
     {
         // <bot> <nick> <ident> <host> <timestamp> :<msg>
         unset($msg[0]);
@@ -835,16 +841,15 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         $timestamp  = new \DateTime('@'.$timestamp);
         $text       = $msg[4];
 
-        return $this->_connection->dispatch(
+        return $this->connection->dispatch(
             $this->makeEvent(
                 $event,
                 $nick,
-                ($ident == '*' ? NULL : $ident),
-                ($host == '*' ? NULL : $host),
+                ($ident == '*' ? null : $ident),
+                ($host == '*' ? null : $host),
                 $timestamp,
                 $text
             )
         );
     }
 }
-

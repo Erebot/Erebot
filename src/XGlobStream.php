@@ -18,6 +18,7 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// @codingStandardsIgnoreFile
 namespace Erebot;
 
 /**
@@ -31,13 +32,13 @@ namespace Erebot;
 class XGlobStream extends \Erebot\StreamWrapperBase
 {
     /// Stream context, set automatically by PHP.
-    public      $context;
+    public $context;
 
     /// Current position in the stream.
-    protected   $_position;
+    protected $position;
 
     /// Content of the stream.
-    protected   $_content;
+    protected $content;
 
     /// The XML namespace the content will be wrapped into.
     const XMLNS = 'http://www.erebot.net/xmlns/xglob';
@@ -46,97 +47,97 @@ class XGlobStream extends \Erebot\StreamWrapperBase
 
     public function stream_tell()
     {
-        return $this->_position;
+        return $this->position;
     }
 
     public function stream_eof()
     {
-        return ($this->_position >= strlen($this->_content));
+        return ($this->position >= strlen($this->content));
     }
 
     public function stream_close()
     {
-        $this->_position    = 0;
-        $this->_content     = '';
+        $this->position = 0;
+        $this->content = '';
     }
 
     public function stream_open($path, $mode, $options, &$openedPath)
     {
-        $this->_position = 0;
+        $this->position = 0;
         $pos = strpos($path, '://');
-        if ($pos === FALSE)
-            return FALSE;
+        if ($pos === false) {
+            return false;
+        }
 
         $path   = substr($path, $pos + 3);
 
-        if (strlen($path) < 1)
-            return FALSE;
+        if (strlen($path) < 1) {
+            return false;
+        }
 
-        if (in_array($path[0], array("/", DIRECTORY_SEPARATOR)))
+        if (in_array($path[0], array("/", DIRECTORY_SEPARATOR))) {
             $abs = '';
-        else if (!strncasecmp(PHP_OS, "Win", 3) &&
-                strlen($path) > 1 && $path[1] == ':')
+        } elseif (!strncasecmp(PHP_OS, "Win", 3) && strlen($path) > 1 && $path[1] == ':') {
             $abs = '';
-        else
+        } else {
             $abs = getcwd() . DIRECTORY_SEPARATOR;
+        }
 
         $abs .= str_replace("/", DIRECTORY_SEPARATOR, $path);
         $matches    = glob($abs, 0);
-        if ($matches === FALSE)
+        if ($matches === false) {
             $matches = array();
+        }
 
         $content    = '<xglob:'.self::TAG.' xmlns:xglob="'.self::XMLNS.'">';
         foreach ($matches as $absname) {
-            if (!is_file($absname))
+            if (!is_file($absname)) {
                 continue;
+            }
             $cnt = file_get_contents($absname);
-            if ($cnt !== FALSE)
+            if ($cnt !== false) {
                 $content .= $cnt;
+            }
         }
-        $content        .= '</xglob:'.self::TAG.'>';
-        $this->_content  = $content;
-        return TRUE;
+        $content       .= '</xglob:'.self::TAG.'>';
+        $this->content  = $content;
+        return true;
     }
 
     public function stream_read($count)
     {
-        $ret = substr($this->_content, $this->_position, $count);
-        $this->_position += strlen($ret);
+        $ret = substr($this->content, $this->position, $count);
+        $this->position += strlen($ret);
         return $ret;
     }
 
     public function stream_seek($offset, $whence)
     {
         switch ($whence) {
-            case SEEK_SET:{
-                if ($offset < strlen($this->_content) && $offset >= 0) {
-                     $this->_position = $offset;
-                     return TRUE;
+            case SEEK_SET:
+                if ($offset < strlen($this->content) && $offset >= 0) {
+                     $this->position = $offset;
+                     return true;
                 }
-                return FALSE;
-            }
+                return false;
 
-            case SEEK_CUR:{
+            case SEEK_CUR:
                 if ($offset >= 0) {
-                     $this->_position += $offset;
-                     return TRUE;
+                     $this->position += $offset;
+                     return true;
                 }
-                return FALSE;
-            }
+                return false;
 
-            case SEEK_END:{
-                $len = strlen($this->_content);
+            case SEEK_END:
+                $len = strlen($this->content);
                 if ($len + $offset >= 0) {
-                     $this->_position = $len + $offset;
-                     return TRUE;
+                     $this->position = $len + $offset;
+                     return true;
                 }
-                return FALSE;
-            }
+                return false;
 
-            default:{
-                return FALSE;
-            }
+            default:
+                return false;
         }
     }
 }
-

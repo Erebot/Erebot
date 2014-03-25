@@ -30,26 +30,22 @@ class Patches
     /**
      * Apply a few patches to PHP.
      *
-     * Currently the following changes are made:
-     * - ctype_digit() is emulated (in case it was
-     *   disabled on the configure line).
-     *
      * \return
      *      This method does not return anything.
      */
-    static public function patch()
+    public static function patch()
     {
         set_error_handler(
             function ($errno, $errstr, $errfile, $errline) {
                 if (($errno & error_reporting()) !== $errno) {
-                    return FALSE;
+                    return false;
                 }
 
                 throw new \Erebot\ErrorReportingException(
-                   $errstr,
-                   $errno,
-                   $errfile,
-                   $errline
+                    $errstr,
+                    $errno,
+                    $errfile,
+                    $errline
                 );
             },
             E_ALL
@@ -61,6 +57,13 @@ class Patches
         // Moreover, the wrapper returns an XML document, hence "xglob".
         if (!in_array("xglob", stream_get_wrappers())) {
             stream_wrapper_register('xglob', '\\Erebot\\XGlobStream', STREAM_IS_URL);
+        }
+
+        /* Needed to prevent libxml from trying to magically "fix" URLs
+         * included with XInclude as this breaks a lot of things.
+         * This requires libxml >= 2.6.20 (which was released in 2005). */
+        if (!defined('LIBXML_NOBASEFIX')) {
+            define('LIBXML_NOBASEFIX', 1 << 18);
         }
     }
 }

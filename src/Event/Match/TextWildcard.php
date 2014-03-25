@@ -47,12 +47,13 @@ class TextWildcard extends \Erebot\Event\Match\TextAbstract
             '&'     => '[^\\040]+',
         );
         $text       = preg_replace('/\s+/', ' ', $text);
-        $pattern    = preg_replace('/\s+/', ' ', (string) $this->_pattern);
+        $pattern    = preg_replace('/\s+/', ' ', (string) $this->pattern);
         $prefixPattern = '';
-        if ($this->_requirePrefix !== FALSE) {
+        if ($this->requirePrefix !== false) {
             $prefixPattern = '(?:'.preg_quote($prefix).')';
-            if ($this->_requirePrefix === NULL)
+            if ($this->requirePrefix === null) {
                 $prefixPattern .= '?';
+            }
         }
         $pattern    =   "#^".$prefixPattern.strtr(
             preg_quote($pattern, '#'),
@@ -61,4 +62,3 @@ class TextWildcard extends \Erebot\Event\Match\TextAbstract
         return (preg_match($pattern, $text) == 1);
     }
 }
-

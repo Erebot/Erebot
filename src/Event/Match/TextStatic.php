@@ -31,19 +31,20 @@ class TextStatic extends \Erebot\Event\Match\TextAbstract
     protected function realMatch($prefix, $text)
     {
         $text       = preg_replace('/\s+/', ' ', $text);
-        $pattern    = preg_replace('/\s+/', ' ', (string) $this->_pattern);
+        $pattern    = preg_replace('/\s+/', ' ', (string) $this->pattern);
 
         // Prefix forbidden.
-        if ($this->_requirePrefix === FALSE)
+        if ($this->requirePrefix === false) {
             return ($pattern == $text);
+        }
 
         $matched    = ($text == $prefix.$pattern);
         // Prefix required.
-        if ($this->_requirePrefix === TRUE)
+        if ($this->requirePrefix === true) {
             return $matched;
+        }
 
         // Prefix allowed.
         return ($matched || $pattern == $text);
     }
 }
-

@@ -59,19 +59,19 @@ unset($manager);
 class Core implements \Erebot\Interfaces\Core
 {
     /// \link Erebot::Interfaces::Connection Connections\endlink to handle.
-    protected $_connections;
+    protected $connections;
 
     /// \link Erebot::TimerInterface Timers\endlink to trigger.
-    protected $_timers;
+    protected $timers;
 
     /// Main configuration for the bot.
-    protected $_mainCfg;
+    protected $mainCfg;
 
     /// Indicates whether the bot is currently running or not.
-    protected $_running;
+    protected $running;
 
     /// Translator object for messages the bot may display.
-    protected $_translator;
+    protected $translator;
 
     /**
      * Creates a new Erebot instance.
@@ -86,13 +86,12 @@ class Core implements \Erebot\Interfaces\Core
     public function __construct(
         \Erebot\Interfaces\Config\Main $config,
         \Erebot\IntlInterface $translator
-    )
-    {
-        $this->_connections     =
-        $this->_timers          = array();
-        $this->_running         = FALSE;
-        $this->_mainCfg         = $config;
-        $this->_translator      = $translator;
+    ) {
+        $this->connections  =
+        $this->timers       = array();
+        $this->running      = false;
+        $this->mainCfg      = $config;
+        $this->translator   = $translator;
 
         // If pcntl_signal is not supported,
         // the bot won't be able to stop!
@@ -107,10 +106,11 @@ class Core implements \Erebot\Interfaces\Core
                             SIGTERM,
                         );
 
-            foreach ($signals as $signal)
-                pcntl_signal($signal, array($this, 'handleSignal'), TRUE);
+            foreach ($signals as $signal) {
+                pcntl_signal($signal, array($this, 'handleSignal'), true);
+            }
 
-            pcntl_signal(SIGHUP, array($this, 'handleSIGHUP'), TRUE);
+            pcntl_signal(SIGHUP, array($this, 'handleSIGHUP'), true);
         }
     }
 
@@ -127,13 +127,13 @@ class Core implements \Erebot\Interfaces\Core
      */
     public function __clone()
     {
-        throw new Exception("Cloning forbidden!");
+        throw new \Exception("Cloning forbidden!");
     }
 
     /// \copydoc Erebot::Interfaces::Core::getConnections()
     public function getConnections()
     {
-        return $this->_connections;
+        return $this->connections;
     }
 
     /**
@@ -150,48 +150,47 @@ class Core implements \Erebot\Interfaces\Core
      *      This method is called by Erebot::start() and does
      *      the actual workload of running the bot.
      */
-    protected function _start(\Erebot\Interfaces\ConnectionFactory $factory)
+    protected function realStart(\Erebot\Interfaces\ConnectionFactory $factory)
     {
         $logger = \Plop::getInstance();
         $logger->info($this->gettext('Erebot is starting'));
 
         // This is changed by handleSignal()
         // when the bot should stop.
-        $this->_running = time();
+        $this->running = time();
 
-        $this->_createConnections($factory, $this->_mainCfg);
-
-        // PHP 5.3 way of handling signals.
-        $hasSignalDispatch = function_exists('pcntl_signal_dispatch');
+        $this->createConnections($factory, $this->mainCfg);
 
         // Main loop
-        while ($this->_running) {
-            if ($hasSignalDispatch)
-                pcntl_signal_dispatch();
+        while ($this->running) {
+            pcntl_signal_dispatch();
 
             $read = $write = $except = array();
             $actives = array('connections' => array(), 'timers' => array());
 
-            if ($this->_connections === NULL)
+            if ($this->connections === null) {
                 break;
+            }
 
             // Find out connections in need of some handling.
-            foreach ($this->_connections as $index => $connection) {
+            foreach ($this->connections as $index => $connection) {
                 $socket = $connection->getSocket();
 
                 if ($connection instanceof \Erebot\Interfaces\SendingConnection &&
-                    $connection->getIO()->inWriteQueue())
+                    $connection->getIO()->inWriteQueue()) {
                     $write[]    = $socket;
+                }
 
-                if ($connection instanceof \Erebot\Interfaces\ReceivingConnection)
+                if ($connection instanceof \Erebot\Interfaces\ReceivingConnection) {
                     $read[] = $socket;
+                }
 
                 $except[]                       = $socket;
                 $actives['connections'][$index] = $socket;
             }
 
             // Find out timed out timers.
-            foreach ($this->_timers as $index => $timer) {
+            foreach ($this->timers as $index => $timer) {
                 $stream = $timer->getStream();
 
                 $read[]                     = $stream;
@@ -211,17 +210,17 @@ class Core implements \Erebot\Interfaces\Core
                 // are treated as streams too, we will also wake
                 // up whenever a timer fires.
                 // Throws a warning under PHP 5.2 when a signal is received.
-                $nb = @stream_select($read, $write, $except, NULL);
-            }
-            catch (\Erebot\ErrorReportingException $e) {
-                if ($this->_running)
+                $nb = @stream_select($read, $write, $except, null);
+            } catch (\Erebot\ErrorReportingException $e) {
+                if ($this->running) {
                     $logger->exception($this->gettext('Got exception'), $e);
-                else
+                } else {
                     /* If the bot is not running anymore,
                      * this probably means we received a signal.
                      * We continue to the next iteration,
                      * which will make the bot exit properly. */
                     continue;
+                }
             }
 
             // Handle exceptional (out-of-band) data.
@@ -229,8 +228,9 @@ class Core implements \Erebot\Interfaces\Core
             // We simply do a new iteration, because the signal dispatcher
             // will be called right away if needed.
             // For older versions, we use declare(ticks) (see Patches.php).
-            if (count($except))
+            if (count($except)) {
                 continue;
+            }
 
             // Handle read-ready "sockets"
             foreach ($read as $socket) {
@@ -239,14 +239,13 @@ class Core implements \Erebot\Interfaces\Core
                     $index = array_search(
                         $socket,
                         $actives['connections'],
-                        TRUE
+                        true
                     );
-                    if ($index !== FALSE) {
+                    if ($index !== false) {
                         // Read as much data from the connection as possible.
                         try {
-                            $this->_connections[$index]->read();
-                        }
-                        catch (\Erebot\ConnectionFailureException $e) {
+                            $this->connections[$index]->read();
+                        } catch (\Erebot\ConnectionFailureException $e) {
                             $logger->info(
                                 $this->gettext(
                                     'Connection failed, removing it '.
@@ -254,34 +253,36 @@ class Core implements \Erebot\Interfaces\Core
                                 )
                             );
                             $this->removeConnection(
-                                $this->_connections[$index]
+                                $this->connections[$index]
                             );
                         }
                         break;
                     }
 
                     // Is it a timer?
-                    $index = array_search($socket, $actives['timers'], TRUE);
-                    if ($index !== FALSE) {
-                        $timer      = $this->_timers[$index];
+                    $index = array_search($socket, $actives['timers'], true);
+                    if ($index !== false) {
+                        $timer = $this->timers[$index];
                         // During shutdown, weird things happen to timers,
                         // including magical disappearance.
                         if (!is_object($timer)) {
-                            unset($this->_timers[$index]);
+                            unset($this->timers[$index]);
                             break;
                         }
                         $restart    = $timer->activate();
 
                         // Maybe the callback function
                         // removed the timer already.
-                        if (!isset($this->_timers[$index]))
+                        if (!isset($this->timers[$index])) {
                             break;
+                        }
 
                         // Otherwise, restart or remove it as necessary.
-                        if ($restart === TRUE || $timer->getRepetition())
+                        if ($restart === true || $timer->getRepetition()) {
                             $timer->reset();
-                        else
-                            unset($this->_timers[$index]);
+                        } else {
+                            unset($this->timers[$index]);
+                        }
 
                         break;
                     }
@@ -291,21 +292,21 @@ class Core implements \Erebot\Interfaces\Core
             }
 
             // Take care of incoming data waiting for processing.
-            if (is_array($this->_connections)) {
-                foreach ($this->_connections as $connection) {
-                    if ($connection instanceof
-                        \Erebot\Interfaces\ReceivingConnection)
+            if (is_array($this->connections)) {
+                foreach ($this->connections as $connection) {
+                    if ($connection instanceof \Erebot\Interfaces\ReceivingConnection) {
                         $connection->process();
+                    }
                 }
             }
 
             // Handle write-ready sockets (flush outgoing data).
             foreach ($write as $socket) {
                 $index = array_search($socket, $actives['connections']);
-                if ($index !== FALSE && isset($this->_connections[$index]) &&
-                    $this->_connections[$index] instanceof
-                    \Erebot\Interfaces\SendingConnection)
-                    $this->_connections[$index]->write();
+                if ($index !== false && isset($this->connections[$index]) &&
+                    $this->connections[$index] instanceof \Erebot\Interfaces\SendingConnection) {
+                    $this->connections[$index]->write();
+                }
             }
         }
     }
@@ -313,9 +314,8 @@ class Core implements \Erebot\Interfaces\Core
     public function start(\Erebot\Interfaces\ConnectionFactory $factory)
     {
         try {
-            return $this->_start($factory);
-        }
-        catch (\Erebot\StopException $e) {
+            return $this->realStart($factory);
+        } catch (\Erebot\StopException $e) {
             // This exception is raised by Erebot::handleSignal()
             // whenever one of SIGINT, SIGQUIT, SIGALRM, or SIGTERM
             // is received and indicates the bot is stopping.
@@ -326,10 +326,11 @@ class Core implements \Erebot\Interfaces\Core
     {
         $logger = \Plop::getInstance();
 
-        if (!$this->_running)
+        if (!$this->running) {
             return;
+        }
 
-        foreach ($this->_connections as $connection) {
+        foreach ($this->connections as $connection) {
             if ($connection instanceof \Erebot\Interfaces\EventDispatcher) {
                 $eventsProducer = $connection->getEventsProducer();
                 $connection->dispatch($eventsProducer->makeEvent('!ExitEvent'));
@@ -338,15 +339,15 @@ class Core implements \Erebot\Interfaces\Core
 
         $logger->info($this->gettext('Erebot has stopped'));
         unset(
-            $this->_timers,
-            $this->_connections,
-            $this->_mainCfg
+            $this->timers,
+            $this->connections,
+            $this->mainCfg
         );
 
-        $this->_running         = FALSE;
-        $this->_connections     =
-        $this->_timers          =
-        $this->_mainCfg         = NULL;
+        $this->running         = false;
+        $this->connections     =
+        $this->timers          =
+        $this->mainCfg         = null;
         throw new \Erebot\StopException();
     }
 
@@ -359,7 +360,7 @@ class Core implements \Erebot\Interfaces\Core
      */
     public function handleSignal($signum)
     {
-        $consts     = get_defined_constants(TRUE);
+        $consts     = get_defined_constants(true);
         $signame    = '???';
         foreach ($consts['pcntl'] as $name => $value) {
             if (!strncmp($name, 'SIG', 3) &&
@@ -389,14 +390,14 @@ class Core implements \Erebot\Interfaces\Core
             $limit  = \Erebot\Utils::parseHumanSize($limit."B");
             $stats  = array(
                 $this->gettext("Allocated:") =>
-                    \Erebot\Utils::humanSize(memory_get_peak_usage(TRUE)),
+                    \Erebot\Utils::humanSize(memory_get_peak_usage(true)),
                 $this->gettext("Used:") =>
-                    \Erebot\Utils::humanSize(memory_get_peak_usage(FALSE)),
+                    \Erebot\Utils::humanSize(memory_get_peak_usage(false)),
                 $this->gettext("Limit:") =>
                     \Erebot\Utils::humanSize($limit),
             );
 
-            foreach ($stats as $key => $value)
+            foreach ($stats as $key => $value) {
                 $logger->debug(
                     '%(key)-16s%(value)10s',
                     array(
@@ -404,6 +405,7 @@ class Core implements \Erebot\Interfaces\Core
                         'value' => $value,
                     )
                 );
+            }
         }
 
         $this->stop();
@@ -411,64 +413,70 @@ class Core implements \Erebot\Interfaces\Core
 
     public function getTimers()
     {
-        return $this->_timers;
+        return $this->timers;
     }
 
     public function addTimer(\Erebot\TimerInterface $timer)
     {
-        $key = array_search($timer, $this->_timers);
-        if ($key !== FALSE)
+        $key = array_search($timer, $this->timers);
+        if ($key !== false) {
             throw new \Erebot\InvalidValueException('Timer already registered');
+        }
 
         $timer->reset();
-        $this->_timers[] =  $timer;
+        $this->timers[] =  $timer;
     }
 
     public function removeTimer(\Erebot\TimerInterface $timer)
     {
-        $key = array_search($timer, $this->_timers);
-        if ($key === FALSE)
+        $key = array_search($timer, $this->timers);
+        if ($key === false) {
             throw new \Erebot\NotFoundException('Timer not found');
+        }
 
-        unset($this->_timers[$key]);
+        unset($this->timers[$key]);
     }
 
     public function addConnection(\Erebot\Interfaces\Connection $connection)
     {
-        $key = array_search($connection, $this->_connections);
-        if ($key !== FALSE)
+        $key = array_search($connection, $this->connections);
+        if ($key !== false) {
             throw new \Erebot\InvalidValueException(
                 'Already handling this connection'
             );
+        }
 
-        $this->_connections[] = $connection;
+        $this->connections[] = $connection;
     }
 
     public function removeConnection(\Erebot\Interfaces\Connection $connection)
     {
-        /* $this->_connections is unset during destructor call,
+        /* $this->connections is unset during destructor call,
          * but the destructing code depends on this method.
          * we silently ignore the problem. */
-        if (!isset($this->_connections))
+        if (!isset($this->connections)) {
             return;
+        }
 
-        $key = array_search($connection, $this->_connections);
-        if ($key === FALSE)
+        $key = array_search($connection, $this->connections);
+        if ($key === false) {
             throw new \Erebot\NotFoundException('No such connection');
+        }
 
-        unset($this->_connections[$key]);
+        unset($this->connections[$key]);
     }
 
     public function gettext($message)
     {
-        return $this->_translator->gettext($message);
+        return $this->translator->gettext($message);
     }
 
     public function getRunningTime()
     {
-        if (!$this->_running)
-            return FALSE;
-        return time() - $this->_running;
+        if (!$this->running) {
+            return false;
+        }
+        return time() - $this->running;
     }
 
     /**
@@ -494,21 +502,21 @@ class Core implements \Erebot\Interfaces\Core
      *      If omitted, the configuration file currently in use
      *      is reloaded.
      */
-    public function reload(\Erebot\Interfaces\Config\Main $config = NULL)
+    public function reload(\Erebot\Interfaces\Config\Main $config = null)
     {
         $logger = \Plop::getInstance();
 
         $msg = $this->gettext('Reloading the configuration');
         $logger->info($msg);
 
-        if (!count($this->_connections)) {
+        if (!count($this->connections)) {
             $logger->info($this->gettext('No active connections... Aborting.'));
             return;
         }
 
-        if ($config === NULL) {
-            $configFile = $this->_mainCfg->getConfigFile();
-            if ($configFile === NULL) {
+        if ($config === null) {
+            $configFile = $this->mainCfg->getConfigFile();
+            if ($configFile === null) {
                 $msg = $this->gettext('No configuration file to reload');
                 $logger->info($msg);
                 return;
@@ -521,8 +529,8 @@ class Core implements \Erebot\Interfaces\Core
             );
         }
 
-        $connectionCls = get_class($this->_connections[0]);
-        $this->_createConnections($connectionCls, $config);
+        $connectionCls = get_class($this->connections[0]);
+        $this->createConnections($connectionCls, $config);
         $msg = $this->gettext('Successfully reloaded the configuration');
         $logger->info($msg);
     }
@@ -536,25 +544,24 @@ class Core implements \Erebot\Interfaces\Core
      * \param Erebot::Interfaces::Config::Main $config
      *      The main configuration for the bot.
      */
-    protected function _createConnections(
+    protected function createConnections(
         \Erebot\Interfaces\ConnectionFactory $factory,
         \Erebot\Interfaces\Config\Main $config
-    )
-    {
+    ) {
         $logger = \Plop::getInstance();
 
         // List existing connections so they
         // can eventually be reused.
         $newConnections     =
         $currentConnections = array();
-        foreach ($this->_connections as $connection) {
-            $connCfg = $connection->getConfig(NULL);
+        foreach ($this->connections as $connection) {
+            $connCfg = $connection->getConfig(null);
             if ($connCfg) {
                 $netCfg = $connCfg->getNetworkCfg();
                 $currentConnections[$netCfg->getName()] = $connection;
-            }
-            else
+            } else {
                 $newConnections[] = $connection;
+            }
         }
 
         // Let's establish some contacts.
@@ -564,7 +571,7 @@ class Core implements \Erebot\Interfaces\Core
             if (isset($currentConnections[$netName])) {
                 try {
                     $uris   = $currentConnections[$netName]
-                                ->getConfig(NULL)
+                                ->getConfig(null)
                                 ->getConnectionURI();
                     $uri    = new \Erebot\URI($uris[count($uris) - 1]);
                     $serverCfg = $network->getServerCfg((string) $uri);
@@ -583,17 +590,14 @@ class Core implements \Erebot\Interfaces\Core
                     $newConnections[] = $copy;
                     unset($currentConnections[$netName]);
                     continue;
-                }
-                catch (\Erebot\NotFoundException $e) {
+                } catch (\Erebot\NotFoundException $e) {
                     // Nothing to do.
                 }
             }
 
-            if (!in_array(
-                '\\Erebot\\Module\\AutoConnect',
-                $network->getModules(TRUE)
-            ))
+            if (!in_array('\\Erebot\\Module\\AutoConnect', $network->getModules(true))) {
                 continue;
+            }
 
             $servers = $network->getServers();
             foreach ($servers as $server) {
@@ -622,15 +626,15 @@ class Core implements \Erebot\Interfaces\Core
                     );
 
                     break;
-                }
-                catch (\Erebot\ConnectionFailureException $e) {
+                } catch (\Erebot\ConnectionFailureException $e) {
                     // Nothing to do... We simply
                     // try the next server on the
                     // list until we successfully
                     // connect or cycle the list.
                     $logger->exception(
                         $this->gettext('Could not connect to "%(uri)s"'),
-                        $e, array('uri' => $serverUri)
+                        $e,
+                        array('uri' => $serverUri)
                     );
                 }
             }
@@ -641,8 +645,7 @@ class Core implements \Erebot\Interfaces\Core
             $connection->disconnect();
         }
 
-        $this->_connections = $newConnections;
-        $this->_mainCfg     = $config;
+        $this->connections = $newConnections;
+        $this->mainCfg     = $config;
     }
 }
-

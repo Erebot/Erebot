@@ -22,6 +22,7 @@ extends Erebot_TestEnv_TestCase
     public function setUp()
     {
         parent::setUp();
+        \Erebot\Patches::patch();
         $this->_translator = new \Erebot\Intl('Erebot\\Core');
     }
 

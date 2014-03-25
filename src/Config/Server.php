@@ -30,7 +30,7 @@ namespace Erebot\Config;
 class Server extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Server
 {
     /// An array of URI to follow to connect to this IRC(S) server.
-    protected $_connectionURI;
+    protected $connectionURI;
 
     /**
      * Creates a new Erebot::Config::Server instance.
@@ -46,10 +46,9 @@ class Server extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\S
     public function __construct(
         \Erebot\Interfaces\Config\Network $netCfg,
         \SimpleXMLElement $xml
-    )
-    {
+    ) {
         parent::__construct($netCfg, $xml);
-        $this->_connectionURI = array_filter(
+        $this->connectionURI = array_filter(
             explode(' ', (string) $xml['url'])
         );
     }
@@ -63,13 +62,12 @@ class Server extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\S
     /// \copydoc Erebot::Interfaces::Config::Server::getConnectionURI()
     public function getConnectionURI()
     {
-        return $this->_connectionURI;
+        return $this->connectionURI;
     }
 
     /// \copydoc Erebot::Interfaces::Config::Server::getNetworkCfg()
     public function getNetworkCfg()
     {
-        return $this->_proxified;
+        return $this->proxified;
     }
 }
-

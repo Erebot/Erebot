@@ -33,20 +33,19 @@ class HTTP extends \Erebot\Proxy\Base
         $port           = $nextURI->getPort();
         $scheme         = $nextURI->getScheme();
 
-        if ($port === NULL)
+        if ($port === null) {
             $port = getservbyname($scheme, 'tcp');
-        if (!is_int($port) || $port <= 0 || $port > 65535)
+        }
+        if (!is_int($port) || $port <= 0 || $port > 65535) {
             throw new \Erebot\InvalidValueException('Invalid port');
+        }
 
         $request = "";
         $request .= sprintf("CONNECT %s:%d HTTP/1.0\r\n", $host, $port);
         $request .= sprintf("Host: %s:%d\r\n", $host, $port);
-        $request .= sprintf(
-            "User-Agent: Erebot/%s\r\n",
-            \Erebot\Interfaces\Core::VERSION
-        );
+        $request .= "User-Agent: Erebot/dev-master\r\n";
 
-        if ($credentials !== NULL) {
+        if ($credentials !== null) {
             $request .= sprintf(
                 "Proxy-Authorization: basic %s\r\n",
                 base64_encode($credentials)
@@ -54,21 +53,19 @@ class HTTP extends \Erebot\Proxy\Base
         }
         $request .= "\r\n";
 
-        for (
-            $written = 0, $len = strlen($request);
-            $written < $len;
-            $written += $fwrite
-        ) {
+        for ($written = 0, $len = strlen($request); $written < $len; $written += $fwrite) {
             $fwrite = fwrite($this->_socket, substr($request, $written));
-            if ($fwrite === FALSE)
+            if ($fwrite === false) {
                 throw new \Erebot\Exception('Connection closed by proxy');
+            }
         }
 
         $line = stream_get_line($this->_socket, 4096, "\r\n");
-        if ($line === FALSE)
+        if ($line === false) {
             throw new \Erebot\InvalidValueException(
                 'Invalid response from proxy'
             );
+        }
 
         $this->_logger->debug(
             '%(line)s',
@@ -90,20 +87,23 @@ class HTTP extends \Erebot\Proxy\Base
         $max = (1 << 10);
         for ($i = 0; $i < $max; $i++) {
             $line = stream_get_line($this->_socket, 4096, "\r\n");
-            if ($line === FALSE)
+            if ($line === false) {
                 throw new \Erebot\InvalidValueException(
                     'Invalid response from proxy'
                 );
-            if ($line == "")
+            }
+            if ($line == "") {
                 break;
+            }
             $this->_logger->debug(
                 '%(line)s',
                 array('line' => addcslashes($line, "\000..\037"))
             );
         }
-        if ($i === $max)
+        if ($i === $max) {
             throw new \Erebot\InvalidValueException(
                 'Endless loop detected in proxy response'
             );
+        }
     }
 }

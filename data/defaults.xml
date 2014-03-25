@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
-<container xmlns="http://symfony-project.org/2.0/container">
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <parameter key="general.version">0.5.1</parameter>
         <parameter key="general.timezone">Europe/Paris</parameter>
@@ -16,58 +18,58 @@
         <parameter key="core.classes.core">\Erebot\Core</parameter>
         <parameter key="core.classes.connection">\Erebot\IrcConnection</parameter>
         <parameter key="core.classes.connection_factory">\Erebot\ConnectionFactory</parameter>
-        <parameter key="core.classes.i18n">\Erebot\I18N\I18N</parameter>
+        <parameter key="core.classes.i18n">\Erebot\Intl</parameter>
         <parameter key="core.classes.identity">\Erebot\Identity</parameter>
-        <parameter key="core.classes.timer">\Erebot\Timer\Timer</parameter>
+        <parameter key="core.classes.timer">\Erebot\Timer</parameter>
         <parameter key="core.classes.eventhandler">\Erebot\EventHandler</parameter>
         <parameter key="core.classes.numerichandle">\Erebot\NumericHandler</parameter>
     </parameters>
 
     <services>
         <service id="logging.formatter.detailed" class="%logging.classes.formatter%">
-            <argument>%%(asctime)s - %%(levelname)s - %%(message)s</argument>
+            <argument>%%(asctime)s &lt;%%(levelname)-7s&gt; * %%(message)s</argument>
             <argument>r</argument>
         </service>
 
         <service id="logging.formatter.input" class="%logging.classes.formatter%">
-            <argument>%%(asctime)s - &#8592; %(message)s</argument>
+            <argument>%%(asctime)s &lt;%%(levelname)-7s&gt; &#8592; %(message)s</argument>
             <argument>r</argument>
         </service>
 
         <service id="logging.formatter.output" class="%logging.classes.formatter%">
-            <argument>%%(asctime)s - &#8594; %%(message)s</argument>
+            <argument>%%(asctime)s &lt;%%(levelname)-7s&gt; &#8594; %%(message)s</argument>
             <argument>r</argument>
         </service>
 
         <service id="logging.handler.input" class="%logging.classes.handler%">
-            <argument type="const">STDERR</argument>
+            <argument type="constant">STDERR</argument>
             <call method="setFormatter">
                 <argument type="service" id="logging.formatter.input"/>
             </call>
         </service>
 
         <service id="logging.handler.output" class="%logging.classes.handler%">
-            <argument type="const">STDERR</argument>
+            <argument type="constant">STDERR</argument>
             <call method="setFormatter">
                 <argument type="service" id="logging.formatter.output"/>
             </call>
         </service>
 
         <service id="logging.handler.detailed" class="%logging.classes.handler%">
-            <argument type="const">STDERR</argument>
+            <argument type="constant">STDERR</argument>
             <call method="setFormatter">
                 <argument type="service" id="logging.formatter.detailed"/>
             </call>
         </service>
 
         <service id="logging.logger.input" class="%logging.classes.logger%">
-            <argument type="const">NULL</argument>
+            <argument type="constant">NULL</argument>
             <argument>\Erebot\LineIO</argument>
             <argument>_getLine</argument>
             <argument type="service">
                 <service class="Plop_HandlersCollection">
                     <call method="offsetSet">
-                        <argument type="const">NULL</argument>
+                        <argument type="constant">NULL</argument>
                         <argument type="service" id="logging.handler.input"/>
                     </call>
                 </service>
@@ -75,13 +77,13 @@
         </service>
 
         <service id="logging.logger.output" class="%logging.classes.logger%">
-            <argument type="const">NULL</argument>
+            <argument type="constant">NULL</argument>
             <argument>\Erebot\LineIO</argument>
             <argument>write</argument>
             <argument type="service">
                 <service class="Plop_HandlersCollection">
                     <call method="offsetSet">
-                        <argument type="const">NULL</argument>
+                        <argument type="constant">NULL</argument>
                         <argument type="service" id="logging.handler.output"/>
                     </call>
                 </service>
@@ -89,20 +91,20 @@
         </service>
 
         <service id="logging.logger.root" class="%logging.classes.logger%">
-            <argument type="const">NULL</argument>
-            <argument type="const">NULL</argument>
-            <argument type="const">NULL</argument>
+            <argument type="constant">NULL</argument>
+            <argument type="constant">NULL</argument>
+            <argument type="constant">NULL</argument>
             <argument type="service">
                 <service class="Plop_HandlersCollection">
                     <call method="offsetSet">
-                        <argument type="const">NULL</argument>
+                        <argument type="constant">NULL</argument>
                         <argument type="service" id="logging.handler.detailed"/>
                     </call>
                 </service>
             </argument>
         </service>
 
-        <service id="logging" class="Plop" constructor="getInstance" shared="true">
+        <service id="logging" factory-class="Plop" factory-method="getInstance">
             <call method="addLogger">
                 <argument type="service" id="logging.logger.root"/>
                 <argument type="service" id="logging.logger.input"/>
@@ -112,13 +114,15 @@
                 <argument type="service">
                     <service class="Plop_PrefixesCollection">
                         <call method="offsetSet">
-                            <argument type="const">NULL</argument>
+                            <argument type="constant">NULL</argument>
                             <argument>%Erebot.src_dir%</argument>
                         </call>
                     </service>
                 </argument>
             </call>
         </service>
+
+        <service id="bot" synthetic="true"/>
 
         <service id="factory.connection" class="%core.classes.connection_factory%">
             <argument>%core.classes.connection%</argument>

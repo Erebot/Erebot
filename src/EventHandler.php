@@ -31,10 +31,10 @@ namespace Erebot;
 class EventHandler implements \Erebot\Interfaces\EventHandler
 {
     /// Callable object to use when this handler is triggered.
-    protected $_callback;
+    protected $callback;
 
     /// Filtering object to decide whether the callback must be called or not.
-    protected $_filter;
+    protected $filter;
 
     /**
      * Constructs an event handler.
@@ -52,8 +52,7 @@ class EventHandler implements \Erebot\Interfaces\EventHandler
     public function __construct(
         \Erebot\CallableInterface $callback,
         \Erebot\Interfaces\Event\Match $filter = null
-    )
-    {
+    ) {
         $this->setCallback($callback);
         $this->setFilter($filter);
     }
@@ -65,34 +64,34 @@ class EventHandler implements \Erebot\Interfaces\EventHandler
 
     public function setCallback(\Erebot\CallableInterface $callback)
     {
-        $this->_callback = $callback;
+        $this->callback = $callback;
         return $this;
     }
 
     public function getCallback()
     {
-        return $this->_callback;
+        return $this->callback;
     }
 
-    public function setFilter(\Erebot\Interfaces\Event\Match $filter = NULL)
+    public function setFilter(\Erebot\Interfaces\Event\Match $filter = null)
     {
-        $this->_filter = $filter;
+        $this->filter = $filter;
         return $this;
     }
 
     public function getFilter()
     {
-        return $this->_filter;
+        return $this->filter;
     }
 
     public function handleEvent(\Erebot\Interfaces\Event\Base\Generic $event)
     {
-        $matched = TRUE;
+        $matched = true;
 
-        if ($this->_filter !== NULL)
-            $matched = $this->_filter->match($event);
+        if ($this->filter !== null) {
+            $matched = $this->filter->match($event);
+        }
 
-        return ($matched ? $this->_callback->__invoke($this, $event) : NULL);
+        return ($matched ? $this->callback->__invoke($this, $event) : null);
     }
 }
-

@@ -19,9 +19,9 @@
 class   Erebot_Test_Identity
 extends \Erebot\Identity
 {
-    static public function patternize($pattern, $matchDot)
+    static public function publicPatternize($pattern, $matchDot)
     {
-        return self::_patternize($pattern, $matchDot);
+        return self::patternize($pattern, $matchDot);
     }
 }
 
@@ -156,7 +156,7 @@ extends Erebot_TestEnv_TestCase
      */
     public function testPatternizeNoDotMatching($input, $expectedDot, $expectedNoDot)
     {
-        $output = Erebot_Test_Identity::patternize($input, FALSE);
+        $output = Erebot_Test_Identity::publicPatternize($input, FALSE);
         $this->assertSame('#^'.$expectedNoDot.'$#Di', $output);
     }
 
@@ -166,7 +166,7 @@ extends Erebot_TestEnv_TestCase
      */
     public function testPatternizeDotMatching($input, $expectedDot, $expectedNoDot)
     {
-        $output = Erebot_Test_Identity::patternize($input, TRUE);
+        $output = Erebot_Test_Identity::publicPatternize($input, TRUE);
         $this->assertSame('#^'.$expectedDot.'$#Di', $output);
     }
 }

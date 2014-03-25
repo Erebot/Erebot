@@ -32,13 +32,13 @@ class Worker implements
     \Erebot\Interfaces\ReceivingConnection
 {
     /// A bot object implementing the Erebot::Interfaces::Core interface.
-    protected $_bot;
+    protected $bot;
 
     /// The underlying socket, represented as a stream.
-    protected $_socket;
+    protected $socket;
 
     /// I/O manager for the socket.
-    protected $_io;
+    protected $io;
 
     /**
      * Creates a worker object capable of handling
@@ -56,13 +56,14 @@ class Worker implements
      */
     public function __construct(\Erebot\Interfaces\Core $bot, $socket)
     {
-        if (!is_resource($socket))
+        if (!is_resource($socket)) {
             throw new \Erebot\InvalidValueException('Not a valid socket');
-        $this->_bot     = $bot;
-        $this->_socket  = $socket;
-        $this->_io      = new \Erebot\LineIO(
+        }
+        $this->bot      = $bot;
+        $this->socket   = $socket;
+        $this->io       = new \Erebot\LineIO(
             \Erebot\LineIO::EOL_WIN,
-            $this->_socket
+            $this->socket
         );
     }
 
@@ -75,32 +76,34 @@ class Worker implements
     {
     }
 
-    public function disconnect($quitMessage = NULL)
+    public function disconnect($quitMessage = null)
     {
-        $this->_bot->removeConnection($this);
-        if ($this->_socket !== NULL)
-            stream_socket_shutdown($this->_socket, STREAM_SHUT_RDWR);
-        $this->_socket = NULL;
+        $this->bot->removeConnection($this);
+        if ($this->socket !== null) {
+            stream_socket_shutdown($this->socket, STREAM_SHUT_RDWR);
+        }
+        $this->socket = null;
     }
 
     public function read()
     {
-        return $this->_io->read();
+        return $this->io->read();
     }
 
     /// Processes commands queued in the input buffer.
     public function process()
     {
-        if (!$this->_io->inReadQueue())
+        if (!$this->io->inReadQueue()) {
             return;
-
-        $line = $this->_handleMessage($this->_io->pop());
-        if ($line) {
-            $this->_io->push($line);
-            $this->_io->write();
         }
 
-        $this->_bot->removeConnection($this);
+        $line = $this->handleMessage($this->io->pop());
+        if ($line) {
+            $this->io->push($line);
+            $this->io->write();
+        }
+
+        $this->bot->removeConnection($this);
         $this->disconnect();
     }
 
@@ -114,56 +117,58 @@ class Worker implements
      *      Message to send as the response
      *      to this request.
      *
-     * \retval FALSE
+     * \retval false
      *      The request was malformed.
      */
-    protected function _handleMessage($line)
+    protected function handleMessage($line)
     {
-        if (!is_string($line))
-            return FALSE;
+        if (!is_string($line)) {
+            return false;
+        }
 
         $parts = array_map('trim', explode(',', $line));
-        if (count($parts) != 2)
-            return FALSE;
+        if (count($parts) != 2) {
+            return false;
+        }
 
         $line = implode(" , ", $parts);
-        if (!ctype_digit($parts[0]) || !ctype_digit($parts[1]))
+        if (!ctype_digit($parts[0]) || !ctype_digit($parts[1])) {
             return $line . " : ERROR : INVALID-PORT";
+        }
 
         $cport = (int) $parts[0];
         $sport = (int) $parts[1];
 
-        if ($sport <= 0 || $sport > 65535 || $cport <= 0 || $cport > 65535)
+        if ($sport <= 0 || $sport > 65535 || $cport <= 0 || $cport > 65535) {
             return $line . " : ERROR : INVALID-PORT";
+        }
 
-        foreach ($this->_bot->getConnections() as $connection) {
-            if ($connection == $this)
+        foreach ($this->bot->getConnections() as $connection) {
+            if ($connection == $this) {
                 continue;
+            }
 
             $socket = $connection->getSocket();
 
-            $rport = (int) substr(
-                strrchr(stream_socket_get_name($socket, TRUE), ':'), 1
-            );
-            if ($rport != $sport)
+            $rport = (int) substr(strrchr(stream_socket_get_name($socket, true), ':'), 1);
+            if ($rport != $sport) {
                 continue;
+            }
 
-            $lport = (int) substr(
-                strrchr(stream_socket_get_name($socket, FALSE), ':'), 1
-            );
-            if ($lport != $cport)
+            $lport = (int) substr(strrchr(stream_socket_get_name($socket, false), ':'), 1);
+            if ($lport != $cport) {
                 continue;
+            }
 
             try {
-                $config     = $connection->getConfig(NULL);
+                $config     = $connection->getConfig(null);
                 $identity   = $config->parseString(
                     '\\Erebot\\Module\\IrcConnector',
                     'identity',
                     ''
                 );
                 return $line . " : USERID : UNIX : " . $identity;
-            }
-            catch (\Erebot\Exception $e) {
+            } catch (\Erebot\Exception $e) {
                 return $line . " : ERROR : HIDDEN-USER ";
             }
         }
@@ -173,12 +178,12 @@ class Worker implements
 
     public function isConnected()
     {
-        return TRUE;
+        return true;
     }
 
     public function getSocket()
     {
-        return $this->_socket;
+        return $this->socket;
     }
 
     public function write()
@@ -187,17 +192,16 @@ class Worker implements
 
     public function getBot()
     {
-        return $this->_bot;
+        return $this->bot;
     }
 
     public function getConfig($chan)
     {
-        return NULL;
+        return null;
     }
 
     public function getIO()
     {
-        return $this->_io;
+        return $this->io;
     }
 }
-
