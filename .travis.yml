@@ -18,7 +18,7 @@ notifications:
 
 before_script:
     - composer self-update -n
-    - then composer install --dev -n
+    - composer install --dev -n
 
 script: phpunit --bootstrap vendor/erebot/testenv/bootstrap.php --coverage-clover clover.xml tests/
 
