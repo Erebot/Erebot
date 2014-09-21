@@ -25,6 +25,3 @@
 /docs/coverage
 /docs/src/generic
 /*.tagfile.xml
-
-# Automatically generated during packaging.
-/contrib/nsis/*.exe

@@ -100,16 +100,16 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
         $this->events           = array();
         $this->connected        = false;
         $this->io               = new \Erebot\LineIO(\Erebot\LineIO::EOL_WIN);
-        $this->collator         = new \Erebot\IrcCollator_RFC1459();
+        $this->collator         = new \Erebot\IrcCollator\RFC1459();
         $this->eventsProducer   = new \Erebot\IrcParser($this);
         /// @FIXME: this should really be done in some other way.
         $this->eventsProducer->setEventClasses($events);
         $this->setURIFactory('\\Erebot\\URI');
-        $this->setNumericProfile(new \Erebot\NumericProfile_RFC2812());
+        $this->setNumericProfile(new \Erebot\NumericProfile\RFC2812());
 
         $this->addEventHandler(
             new \Erebot\EventHandler(
-                new \Erebot\CallableWrapper(array($this, 'handleCapabilities')),
+                \Erebot\CallableWrapper::wrap(array($this, 'handleCapabilities')),
                 new \Erebot\Event\Match\Type(
                     '\\Erebot\\Event\\ServerCapabilities'
                 )
@@ -118,7 +118,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
 
         $this->addEventHandler(
             new \Erebot\EventHandler(
-                new \Erebot\CallableWrapper(array($this, 'handleConnect')),
+                \Erebot\CallableWrapper::wrap(array($this, 'handleConnect')),
                 new \Erebot\Event\Match\Type(
                     '\\Erebot\\Interface\\Event\\Connect'
                 )

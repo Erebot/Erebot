@@ -2,7 +2,7 @@
     "prefer-stable": false,
     "minimal-stability": "dev",
     "name": "erebot/erebot",
-    "description": "A modular IRC bot for PHP 5.2+",
+    "description": "A modular IRC bot for PHP 5.3+",
     "keywords": ["IRC", "bot"],
     "homepage": "https://github.com/Erebot/Erebot",
     "license": "GPL-3.0+",
