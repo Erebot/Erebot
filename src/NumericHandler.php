@@ -85,6 +85,7 @@ class NumericHandler implements \Erebot\Interfaces\NumericHandler
             return null;
         }
 
-        return $this->callback->invoke($this, $numeric);
+        $cb = $this->callback;
+        return $cb($this, $numeric);
     }
 }

@@ -321,7 +321,7 @@ class Proxy
                 throw new \Erebot\NotFoundException('No such module');
             }
             $value  = $this->modules[$module]->getParam($param);
-            $value  = $parser->invoke($value);
+            $value  = $parser($value);
             if ($value !== null) {
                 return $value;
             }
@@ -337,7 +337,7 @@ class Proxy
                 throw new \Erebot\NotFoundException('No such parameter');
             }
 
-            if ($checker->invoke($default)) {
+            if ($checker($default)) {
                 return $default;
             }
             throw new \Erebot\InvalidValueException('Bad default value');

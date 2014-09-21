@@ -92,6 +92,7 @@ class EventHandler implements \Erebot\Interfaces\EventHandler
             $matched = $this->filter->match($event);
         }
 
-        return ($matched ? $this->callback->__invoke($this, $event) : null);
+        $cb = $this->callback;
+        return ($matched ? $cb($this, $event) : null);
     }
 }
