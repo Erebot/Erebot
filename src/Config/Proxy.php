@@ -351,9 +351,9 @@ class Proxy
             $module,
             $param,
             $default,
-            new \Erebot\CallableWrapper(array($this, 'parseBoolHelper')),
+            \Erebot\CallableWrapper::wrap(array($this, 'parseBoolHelper')),
             __FUNCTION__,
-            new \Erebot\CallableWrapper('is_bool')
+            \Erebot\CallableWrapper::wrap('is_bool')
         );
     }
 
@@ -364,9 +364,9 @@ class Proxy
             $module,
             $param,
             $default,
-            new \Erebot\CallableWrapper('strval'),
+            \Erebot\CallableWrapper::wrap('strval'),
             __FUNCTION__,
-            new \Erebot\CallableWrapper('is_string')
+            \Erebot\CallableWrapper::wrap('is_string')
         );
     }
 
@@ -377,9 +377,9 @@ class Proxy
             $module,
             $param,
             $default,
-            new \Erebot\CallableWrapper(array($this, 'parseIntHelper')),
+            \Erebot\CallableWrapper::wrap(array($this, 'parseIntHelper')),
             __FUNCTION__,
-            new \Erebot\CallableWrapper('is_int')
+            \Erebot\CallableWrapper::wrap('is_int')
         );
     }
 
@@ -390,9 +390,9 @@ class Proxy
             $module,
             $param,
             $default,
-            new \Erebot\CallableWrapper(array($this, 'parseRealHelper')),
+            \Erebot\CallableWrapper::wrap(array($this, 'parseRealHelper')),
             __FUNCTION__,
-            new \Erebot\CallableWrapper('is_real')
+            \Erebot\CallableWrapper::wrap('is_real')
         );
     }
 }

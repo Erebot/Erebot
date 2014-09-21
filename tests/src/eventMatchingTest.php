@@ -73,7 +73,7 @@ extends Erebot_Testenv_Module_TestCase
             FALSE,
             FALSE
         );
-        $this->_cb = new \Erebot\CallableWrapper(array($this, 'dummyCallback'));
+        $this->_cb = \Erebot\CallableWrapper::wrap(array($this, 'dummyCallback'));
     }
 
     public function classProvider()
