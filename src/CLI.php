@@ -100,12 +100,14 @@ class CLI
         $dicConfig = dirname(__DIR__) .
                      DIRECTORY_SEPARATOR . 'data' .
                      DIRECTORY_SEPARATOR . 'defaults.xml';
+        $dicCwdConfig = getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml';
         if (!strncasecmp(__FILE__, 'phar://', 7)) {
-            $dicConfigNew = getcwd() . DIRECTORY_SEPARATOR . 'defaults.xml';
-            if (!file_exists($dicConfigNew)) {
-                copy($dicConfig, $dicConfigNew);
+            if (!file_exists($dicCwdConfig)) {
+                copy($dicConfig, $dicCwdConfig);
             }
-            $dicConfig = $dicConfigNew;
+            $dicConfig = $dicCwdConfig;
+        } elseif (file_exists($dicCwdConfig)) {
+            $dicConfig = $dicCwdConfig;
         }
         $loader->load($dicConfig);
 
