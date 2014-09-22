@@ -29,7 +29,7 @@ class All extends \Erebot\Event\Match\CollectionAbstract
 {
     public function match(\Erebot\Interfaces\Event\Base\Generic $event)
     {
-        foreach ($this->_submatchers as $match) {
+        foreach ($this->submatchers as $match) {
             if (!$match->match($event)) {
                 return false;
             }
