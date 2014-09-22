@@ -404,7 +404,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
                         'ssl',
                         'verify_peer',
                         isset($params['verify_peer'])
-                        ? \Erebot\Config\Proxy::parseBool(
+                        ? \Erebot\Config\Proxy::parseBoolHelper(
                             $params['verify_peer']
                         )
                         : true
@@ -415,7 +415,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
                         'ssl',
                         'allow_self_signed',
                         isset($params['allow_self_signed'])
-                        ? \Erebot\Config\Proxy::parseBool(
+                        ? \Erebot\Config\Proxy::parseBoolHelper(
                             $params['allow_self_signed']
                         )
                         : true
