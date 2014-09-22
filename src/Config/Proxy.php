@@ -169,11 +169,13 @@ class Proxy
     /// \copydoc Erebot::Interfaces::Config::Proxy::getModule()
     public function getModule($moduleName)
     {
+        $moduleName = '\\' . ltrim($moduleName, '\\');
         if (!isset($this->modules[$moduleName])) {
             if ($this->proxified !== $this) {
                 return $this->proxified->getModule($moduleName);
             }
-            throw new \Erebot\NotFoundException('No such module');
+            throw new \Erebot\NotFoundException('No such module "' .
+                                                $moduleName . '"');
         }
         return $this->modules[$moduleName];
     }
@@ -334,7 +336,9 @@ class Proxy
             }
 
             if ($default === null) {
-                throw new \Erebot\NotFoundException('No such parameter');
+                throw new \Erebot\NotFoundException('No such parameter "' .
+                                                    $param . '" for module "' .
+                                                    $module . '"');
             }
 
             if ($checker($default)) {

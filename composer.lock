@@ -897,12 +897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "2cb64c8a7254b748617baeff4316654bcf6bb551"
+                "reference": "62b506214640ae66ad88a07240a0bbb0201bd1e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/2cb64c8a7254b748617baeff4316654bcf6bb551",
-                "reference": "2cb64c8a7254b748617baeff4316654bcf6bb551",
+                "url": "https://api.github.com/repos/composer/composer/zipball/62b506214640ae66ad88a07240a0bbb0201bd1e3",
+                "reference": "62b506214640ae66ad88a07240a0bbb0201bd1e3",
                 "shasum": ""
             },
             "require": {
@@ -957,7 +957,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2014-09-18 15:58:10"
+            "time": "2014-09-22 16:04:58"
         },
         {
             "name": "erebot/buildenv",
