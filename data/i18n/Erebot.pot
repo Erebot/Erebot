@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot 1.0.x-dev\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2014-09-21 23:49+0200\n"
+"POT-Creation-Date: 2014-09-28 21:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
-# File: src/CLI.php, line: 179
+# File: src/CLI.php, line: 181
 msgid "A modular IRC bot written in PHP"
 msgstr ""
 #
@@ -37,11 +37,11 @@ msgstr ""
 msgid "Connection failed, removing it from the pool"
 msgstr ""
 #
-# File: src/CLI.php, line: 387
+# File: src/CLI.php, line: 389
 msgid "Could not change umask"
 msgstr ""
 #
-# File: src/CLI.php, line: 418
+# File: src/CLI.php, line: 420
 msgid "Could not chdir to \"%(path)s\""
 msgstr ""
 #
@@ -49,24 +49,24 @@ msgstr ""
 msgid "Could not connect to \"%(uri)s\""
 msgstr ""
 #
-# File: src/CLI.php, line: 657
+# File: src/CLI.php, line: 659
 msgid "Could not lock pidfile (%(pidfile)s). Is the bot already running?"
 msgstr ""
 #
-# File: src/CLI.php, line: 497
+# File: src/CLI.php, line: 499
 msgid "Could not set group identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
-# File: src/CLI.php, line: 557
+# File: src/CLI.php, line: 559
 msgid "Could not set user identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
-# File: src/CLI.php, line: 357
-# File: src/CLI.php, line: 406
+# File: src/CLI.php, line: 359
+# File: src/CLI.php, line: 408
 msgid "Could not start in the background (unable to fork)"
 msgstr ""
 #
-# File: src/CLI.php, line: 394
+# File: src/CLI.php, line: 396
 msgid "Could not start in the background (unable to setsid)"
 msgstr ""
 #
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Dispatching numeric %(code)s."
 msgstr ""
 #
-# File: src/CLI.php, line: 225
+# File: src/CLI.php, line: 227
 msgid ""
 "Do not run the bot in the background. This is the default, unless the -d "
 "option is used or the bot is configured otherwise."
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Erebot has stopped"
 msgstr ""
 #
-# File: src/CLI.php, line: 604
+# File: src/CLI.php, line: 606
 msgid "Erebot is already running with PID %(pid)d"
 msgstr ""
 #
@@ -96,11 +96,11 @@ msgstr ""
 msgid "Erebot is starting"
 msgstr ""
 #
-# File: src/CLI.php, line: 628
+# File: src/CLI.php, line: 630
 msgid "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". Exiting"
 msgstr ""
 #
-# File: src/CLI.php, line: 614
+# File: src/CLI.php, line: 616
 msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
 msgstr ""
 #
@@ -142,19 +142,19 @@ msgstr ""
 msgid "No more connections to handle, leaving..."
 msgstr ""
 #
-# File: src/CLI.php, line: 488
+# File: src/CLI.php, line: 490
 msgid "No such group \"%(group)s\""
 msgstr ""
 #
-# File: src/CLI.php, line: 548
+# File: src/CLI.php, line: 550
 msgid "No such user \"%(user)s\""
 msgstr ""
 #
-# File: src/CLI.php, line: 474
+# File: src/CLI.php, line: 476
 msgid "Only root can change group identity! Your current UID is %(uid)d"
 msgstr ""
 #
-# File: src/CLI.php, line: 534
+# File: src/CLI.php, line: 536
 msgid "Only root can change user identity! Your current UID is %(uid)d"
 msgstr ""
 #
@@ -162,11 +162,11 @@ msgstr ""
 msgid "PHP archive"
 msgstr ""
 #
-# File: src/CLI.php, line: 679
+# File: src/CLI.php, line: 681
 msgid "PID (%(pid)d) written into %(pidfile)s"
 msgstr ""
 #
-# File: src/CLI.php, line: 196
+# File: src/CLI.php, line: 198
 msgid ""
 "Path to the configuration file to use instead of \"Erebot.xml\", relative to "
 "the current directory."
@@ -188,39 +188,39 @@ msgstr ""
 msgid "Reusing existing connection for network \"%(network)s\""
 msgstr ""
 #
-# File: src/CLI.php, line: 212
+# File: src/CLI.php, line: 214
 msgid ""
 "Run the bot in the background (daemon). [requires the POSIX and pcntl "
 "extensions]"
 msgstr ""
 #
-# File: src/CLI.php, line: 255
+# File: src/CLI.php, line: 257
 msgid ""
 "Set group identity to this GID/group during startup. The default is to NOT "
 "change group identity, unless configured otherwise. [requires the POSIX "
 "extension]"
 msgstr ""
 #
-# File: src/CLI.php, line: 272
+# File: src/CLI.php, line: 274
 msgid ""
 "Set user identity to this UID/username during startup. The default is to NOT "
 "change user identity, unless configured otherwise. [requires the POSIX "
 "extension]"
 msgstr ""
 #
-# File: src/CLI.php, line: 351
+# File: src/CLI.php, line: 353
 msgid "Starting the bot in the background..."
 msgstr ""
 #
-# File: src/CLI.php, line: 241
+# File: src/CLI.php, line: 243
 msgid "Store the bot's PID in this file."
 msgstr ""
 #
-# File: src/CLI.php, line: 510
+# File: src/CLI.php, line: 512
 msgid "Successfully changed group identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
-# File: src/CLI.php, line: 569
+# File: src/CLI.php, line: 571
 msgid "Successfully changed user identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
@@ -236,28 +236,28 @@ msgstr ""
 msgid "Successfully reloaded the configuration"
 msgstr ""
 #
-# File: src/CLI.php, line: 443
+# File: src/CLI.php, line: 445
 msgid "Successfully started in the background"
 msgstr ""
 #
-# File: src/CLI.php, line: 334
+# File: src/CLI.php, line: 336
 msgid ""
 "The pcntl extension is required in order to start the bot in the background"
 msgstr ""
 #
-# File: src/CLI.php, line: 591
+# File: src/CLI.php, line: 593
 msgid "The pidfile (%(pidfile)s) contained garbage. Exiting"
 msgstr ""
 #
-# File: src/CLI.php, line: 467
+# File: src/CLI.php, line: 469
 msgid "The posix extension is needed in order to change group identity."
 msgstr ""
 #
-# File: src/CLI.php, line: 527
+# File: src/CLI.php, line: 529
 msgid "The posix extension is needed in order to change user identity."
 msgstr ""
 #
-# File: src/CLI.php, line: 324
+# File: src/CLI.php, line: 326
 msgid ""
 "The posix extension is required in order to start the bot in the background"
 msgstr ""
@@ -266,11 +266,11 @@ msgstr ""
 msgid "Trying to connect to \"%(uri)s\"..."
 msgstr ""
 #
-# File: src/CLI.php, line: 670
+# File: src/CLI.php, line: 672
 msgid "Unable to write PID to pidfile (%(pidfile)s)"
 msgstr ""
 #
-# File: src/CLI.php, line: 641
+# File: src/CLI.php, line: 643
 msgid ""
 "Unknown error while checking for the existence of another running instance of "
 "Erebot (%(error)s)"
@@ -280,7 +280,7 @@ msgstr ""
 msgid "Used:"
 msgstr ""
 #
-# File: src/CLI.php, line: 697
+# File: src/CLI.php, line: 699
 msgid "You SHOULD NOT run Erebot as root!"
 msgstr ""
 #

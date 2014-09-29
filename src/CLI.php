@@ -69,7 +69,7 @@ class CLI
     {
         flock($handle, LOCK_UN);
         @unlink($pidfile);
-        $logger = \Plop::getInstance();
+        $logger = \Plop\Plop::getInstance();
         $logger->debug(
             'Removed lock on pidfile (%(pidfile)s)',
             array('pidfile' => $pidfile)

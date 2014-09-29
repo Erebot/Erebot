@@ -141,10 +141,11 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     /// \copydoc Erebot::Interfaces::Config::Main::load()
     public function load($configData, $source)
     {
-        $possibleSources =     array(
-                                    self::LOAD_FROM_FILE,
-                                    self::LOAD_FROM_STRING,
-                                );
+        $logger = \Plop\Plop::getInstance();
+        $possibleSources = array(
+            self::LOAD_FROM_FILE,
+            self::LOAD_FROM_STRING,
+        );
         if (!in_array($source, $possibleSources, true)) {
             throw new \Erebot\InvalidValueException('Invalid $source');
         }
@@ -196,7 +197,6 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
         $errors     = $domxml->getErrors();
         libxml_use_internal_errors($ue);
 
-        $logger = \Plop::getInstance();
         if (!$ok || count($errors)) {
             // Some unpredicted error occurred,
             // show some (hopefully) useful information.
@@ -258,7 +258,6 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
             }
         }
 
-        $logger = \Plop::getInstance();
         $logger->debug(
             $this->coreTranslator->gettext(
                 'Loaded configuration data'

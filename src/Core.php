@@ -152,7 +152,7 @@ class Core implements \Erebot\Interfaces\Core
      */
     protected function realStart(\Erebot\Interfaces\ConnectionFactory $factory)
     {
-        $logger = \Plop::getInstance();
+        $logger = \Plop\Plop::getInstance();
         $logger->info($this->gettext('Erebot is starting'));
 
         // This is changed by handleSignal()
@@ -324,7 +324,7 @@ class Core implements \Erebot\Interfaces\Core
 
     public function stop()
     {
-        $logger = \Plop::getInstance();
+        $logger = \Plop\Plop::getInstance();
 
         if (!$this->running) {
             return;
@@ -371,7 +371,7 @@ class Core implements \Erebot\Interfaces\Core
             }
         }
 
-        $logger = \Plop::getInstance();
+        $logger = \Plop\Plop::getInstance();
         $logger->info(
             $this->gettext(
                 'Received signal #%(signum)d (%(signame)s)'
@@ -504,7 +504,7 @@ class Core implements \Erebot\Interfaces\Core
      */
     public function reload(\Erebot\Interfaces\Config\Main $config = null)
     {
-        $logger = \Plop::getInstance();
+        $logger = \Plop\Plop::getInstance();
 
         $msg = $this->gettext('Reloading the configuration');
         $logger->info($msg);
@@ -548,7 +548,7 @@ class Core implements \Erebot\Interfaces\Core
         \Erebot\Interfaces\ConnectionFactory $factory,
         \Erebot\Interfaces\Config\Main $config
     ) {
-        $logger = \Plop::getInstance();
+        $logger = \Plop\Plop::getInstance();
 
         // List existing connections so they
         // can eventually be reused.
