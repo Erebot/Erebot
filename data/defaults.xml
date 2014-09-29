@@ -6,9 +6,9 @@
         <parameter key="general.version">0.5.1</parameter>
         <parameter key="general.timezone">Europe/Paris</parameter>
 
-        <parameter key="logging.classes.formatter">Plop_Formatter</parameter>
-        <parameter key="logging.classes.handler">Plop_Handler_Stream</parameter>
-        <parameter key="logging.classes.logger">Plop_Logger</parameter>
+        <parameter key="logging.classes.formatter">\Plop\Formatter</parameter>
+        <parameter key="logging.classes.handler">\Plop\Handler\Stream</parameter>
+        <parameter key="logging.classes.logger">\Plop\Logger</parameter>
 
         <parameter key="i18n.default_getter" type="collection">
             <parameter>Locale</parameter>
@@ -28,17 +28,14 @@
     <services>
         <service id="logging.formatter.detailed" class="%logging.classes.formatter%">
             <argument>%%(asctime)s &lt;%%(levelname)-7s&gt; * %%(message)s</argument>
-            <argument>r</argument>
         </service>
 
         <service id="logging.formatter.input" class="%logging.classes.formatter%">
             <argument>%%(asctime)s &lt;%%(levelname)-7s&gt; &#8592; %(message)s</argument>
-            <argument>r</argument>
         </service>
 
         <service id="logging.formatter.output" class="%logging.classes.formatter%">
             <argument>%%(asctime)s &lt;%%(levelname)-7s&gt; &#8594; %%(message)s</argument>
-            <argument>r</argument>
         </service>
 
         <service id="logging.handler.input" class="%logging.classes.handler%">
@@ -63,11 +60,11 @@
         </service>
 
         <service id="logging.logger.input" class="%logging.classes.logger%">
-            <argument type="constant">NULL</argument>
-            <argument>\Erebot\LineIO</argument>
-            <argument>_getLine</argument>
+            <argument>Erebot</argument>
+            <argument>LineIO</argument>
+            <argument>getLine</argument>
             <argument type="service">
-                <service class="Plop_HandlersCollection">
+                <service class="\Plop\HandlersCollection">
                     <call method="offsetSet">
                         <argument type="constant">NULL</argument>
                         <argument type="service" id="logging.handler.input"/>
@@ -77,11 +74,11 @@
         </service>
 
         <service id="logging.logger.output" class="%logging.classes.logger%">
-            <argument type="constant">NULL</argument>
-            <argument>\Erebot\LineIO</argument>
+            <argument>Erebot</argument>
+            <argument>LineIO</argument>
             <argument>write</argument>
             <argument type="service">
-                <service class="Plop_HandlersCollection">
+                <service class="\Plop\HandlersCollection">
                     <call method="offsetSet">
                         <argument type="constant">NULL</argument>
                         <argument type="service" id="logging.handler.output"/>
@@ -95,7 +92,7 @@
             <argument type="constant">NULL</argument>
             <argument type="constant">NULL</argument>
             <argument type="service">
-                <service class="Plop_HandlersCollection">
+                <service class="\Plop\HandlersCollection">
                     <call method="offsetSet">
                         <argument type="constant">NULL</argument>
                         <argument type="service" id="logging.handler.detailed"/>
@@ -104,21 +101,11 @@
             </argument>
         </service>
 
-        <service id="logging" factory-class="Plop" factory-method="getInstance">
+        <service id="logging" factory-class="\Plop\Plop" factory-method="getInstance">
             <call method="addLogger">
                 <argument type="service" id="logging.logger.root"/>
                 <argument type="service" id="logging.logger.input"/>
                 <argument type="service" id="logging.logger.output"/>
-            </call>
-            <call method="setPrefixes">
-                <argument type="service">
-                    <service class="Plop_PrefixesCollection">
-                        <call method="offsetSet">
-                            <argument type="constant">NULL</argument>
-                            <argument>%Erebot.src_dir%</argument>
-                        </call>
-                    </service>
-                </argument>
             </call>
         </service>
 
