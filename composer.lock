@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f4c8743e29153e138d5709fa0c576833",
+    "hash": "f0ebc1bf38c366072f2a76b83af8546d",
     "packages": [
         {
             "name": "deresh/sfyaml",
@@ -363,23 +363,23 @@
         },
         {
             "name": "erebot/plop",
-            "version": "dev-master",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Erebot/Plop.git",
-                "reference": "b15878b434ec85c259f68a4239f9d0932cf6237d"
+                "reference": "5a66660746d90f910d49e1fe26edf77548e4b4d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Erebot/Plop/zipball/b15878b434ec85c259f68a4239f9d0932cf6237d",
-                "reference": "b15878b434ec85c259f68a4239f9d0932cf6237d",
+                "url": "https://api.github.com/repos/Erebot/Plop/zipball/5a66660746d90f910d49e1fe26edf77548e4b4d2",
+                "reference": "5a66660746d90f910d49e1fe26edf77548e4b4d2",
                 "shasum": ""
             },
             "require": {
                 "ext-pcre": "*",
                 "ext-sockets": "*",
                 "ext-spl": "*",
-                "php": ">=5.3.1"
+                "php": ">=5.3.3"
             },
             "require-dev": {
                 "erebot/buildenv": "dev-master",
@@ -387,8 +387,12 @@
                 "phpmd/phpmd": "*",
                 "phpunit/php-code-coverage": "*",
                 "phpunit/phpunit": "*",
+                "psr/log": "*",
                 "sebastian/phpcpd": "*",
                 "squizlabs/php_codesniffer": "*"
+            },
+            "suggest": {
+                "psr/log": "Provides the PSR-3 logging framework"
             },
             "type": "library",
             "extra": {
@@ -418,7 +422,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2014-09-29 21:33:18"
+            "time": "2014-10-04 17:30:18"
         },
         {
             "name": "erebot/styling",
@@ -903,12 +907,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "31eadc6920cd1866bc061fb0087798c37e2b7d14"
+                "reference": "73e9db5d9952d52a46ecbc20a269a8c5f9c5b011"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/31eadc6920cd1866bc061fb0087798c37e2b7d14",
-                "reference": "31eadc6920cd1866bc061fb0087798c37e2b7d14",
+                "url": "https://api.github.com/repos/composer/composer/zipball/73e9db5d9952d52a46ecbc20a269a8c5f9c5b011",
+                "reference": "73e9db5d9952d52a46ecbc20a269a8c5f9c5b011",
                 "shasum": ""
             },
             "require": {
@@ -963,20 +967,20 @@
                 "dependency",
                 "package"
             ],
-            "time": "2014-09-25 17:49:51"
+            "time": "2014-10-07 15:03:19"
         },
         {
             "name": "erebot/buildenv",
-            "version": "dev-master",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Erebot/Erebot_Buildenv.git",
-                "reference": "f76e1ab68c58d0f35820c2a710f20888ff43835f"
+                "reference": "b0e1b262e2ac66ca88ade3a88cbb2cf25187657c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Erebot/Erebot_Buildenv/zipball/f76e1ab68c58d0f35820c2a710f20888ff43835f",
-                "reference": "f76e1ab68c58d0f35820c2a710f20888ff43835f",
+                "url": "https://api.github.com/repos/Erebot/Erebot_Buildenv/zipball/b0e1b262e2ac66ca88ade3a88cbb2cf25187657c",
+                "reference": "b0e1b262e2ac66ca88ade3a88cbb2cf25187657c",
                 "shasum": ""
             },
             "require": {
@@ -1008,7 +1012,7 @@
             "keywords": [
                 "Erebot"
             ],
-            "time": "2014-09-27 11:08:42"
+            "time": "2014-10-04 15:56:52"
         },
         {
             "name": "erebot/testenv",
@@ -1181,16 +1185,16 @@
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "5fbe4b9ec9d05057d88b898ac5ba9071f427eeb0"
+                "reference": "dc582a3c0180664a8fbfc5a34efaf4cc13fccc60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/5fbe4b9ec9d05057d88b898ac5ba9071f427eeb0",
-                "reference": "5fbe4b9ec9d05057d88b898ac5ba9071f427eeb0",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/dc582a3c0180664a8fbfc5a34efaf4cc13fccc60",
+                "reference": "dc582a3c0180664a8fbfc5a34efaf4cc13fccc60",
                 "shasum": ""
             },
             "require": {
@@ -1216,7 +1220,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2014-09-16 14:04:28"
+            "time": "2014-10-08 06:54:50"
         },
         {
             "name": "pear/http_request2",
@@ -1272,20 +1276,23 @@
         },
         {
             "name": "pear/net_url2",
-            "version": "v2.0.7",
+            "version": "v2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Net_URL2.git",
-                "reference": "e4c4fb0d266a171feaed61d744b075769cfaa08b"
+                "reference": "c96636ef9802e0e084108df59aa5e4284e59d172"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Net_URL2/zipball/e4c4fb0d266a171feaed61d744b075769cfaa08b",
-                "reference": "e4c4fb0d266a171feaed61d744b075769cfaa08b",
+                "url": "https://api.github.com/repos/pear/Net_URL2/zipball/c96636ef9802e0e084108df59aa5e4284e59d172",
+                "reference": "c96636ef9802e0e084108df59aa5e4284e59d172",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.1.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=3.3.0"
             },
             "type": "library",
             "extra": {
@@ -1295,10 +1302,13 @@
             },
             "autoload": {
                 "psr-0": {
-                    "Net_URL2": ""
+                    "Net": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1320,13 +1330,13 @@
             "homepage": "https://github.com/pear/Net_URL2",
             "keywords": [
                 "PEAR",
-                "RFC 3986",
                 "net",
                 "networking",
+                "rfc3986",
                 "uri",
                 "url"
             ],
-            "time": "2014-09-07 17:29:55"
+            "time": "2014-10-09 22:14:12"
         },
         {
             "name": "phing/phing",
@@ -2293,7 +2303,7 @@
         "fpoirotte/file_gettext": 20,
         "deresh/sfyaml": 20,
         "erebot/api": 20,
-        "erebot/plop": 20,
+        "erebot/plop": 0,
         "erebot/dom": 20,
         "erebot/timer": 20,
         "erebot/intl": 20,
@@ -2304,7 +2314,6 @@
         "erebot/generic-doc": 20,
         "composer/composer": 20,
         "fpoirotte/php_parsergenerator": 20,
-        "erebot/buildenv": 20,
         "erebot/testenv": 20,
         "pear/http_request2": 20
     },

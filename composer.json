@@ -39,7 +39,7 @@
         "symfony/dependency-injection": "*",
         "symfony/config": "*",
         "erebot/api": "dev-master",
-        "erebot/plop": "dev-master",
+        "erebot/plop": "@stable",
 
         "erebot/dom": "dev-master",
         "erebot/timer": "1.0.*@dev",
@@ -54,7 +54,7 @@
     "require-dev": {
         "composer/composer": "dev-master",
         "fpoirotte/php_parsergenerator": "dev-master",
-        "erebot/buildenv": "dev-master",
+        "erebot/buildenv": "~1.2.0",
         "erebot/testenv": "dev-master",
         "phpunit/phpunit": "<4.0.0",
 
