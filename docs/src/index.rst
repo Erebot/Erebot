@@ -24,10 +24,8 @@ Contents:
     Configuration
     Modules
     HowTo/index
-    FAQ
     Contribute
     Developers/index
-    TODO
     License
 
 Badges: |badges-travis| |badges-versioneye| |badges-coveralls|

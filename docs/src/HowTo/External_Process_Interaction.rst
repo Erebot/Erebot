@@ -43,7 +43,7 @@ That service will usually be an instance of the ``Erebot_Prompt`` class
 and should be passed the bot's service (named ``bot``) as its first
 parameter. It also accepts a few parameters, listed in the following table.
 
-..  table:: Parameters accepted by ``Erebot_Prompt`` (in this order)
+..  table:: Parameters accepted by ``\\Erebot\\Prompt`` (in this order)
 
     =========== ======= =================== ========= ======================== ====================================
     Parameter   Type    Description         Required? Default value            Example value
@@ -66,7 +66,7 @@ configuration file may look like this:
 ..  sourcecode:: xml
     :linenos:
 
-    <service id="prompt" class="Erebot_Prompt">
+    <service id="prompt" class="\Erebot\Prompt">
         <argument type="service" id="bot"/>
         <argument>/var/lib/Erebot/control.sock</argument>
         <argument>nogroup</argument>
@@ -193,16 +193,16 @@ solutions or workarounds.
 
 **Example**::
 
-    PHP Warning:  stream_socket_server(): unable to connect to udg:///tmp/Erebot.sock (Unknown error) in /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php on line 44
+    PHP Warning:  stream_socket_server(): unable to connect to udg:///tmp/Erebot.sock (Unknown error) in /home/clicky/Documents/Erebot/src/Prompt.php on line 44
     PHP Stack trace:
-    PHP   1. {main}() /home/looksup/Documents/Erebot/core/trunk/scripts/Erebot:0
-    PHP   2. Erebot_CLI::run() /home/looksup/Documents/Erebot/core/trunk/scripts/Erebot:99
+    PHP   1. {main}() /home/clicky/Documents/Erebot/bin/Erebot:0
+    PHP   2. \Erebot\CLI::run() /home/clicky/Documents/Erebot/bin/Erebot:99
     PHP   3. sfServiceContainer->__get() /var/local/buildbot/pear/php/SymfonyComponents/DependencyInjection/sfServiceContainer.php:0
     PHP   4. sfServiceContainerBuilder->getService() /var/local/buildbot/pear/php/SymfonyComponents/DependencyInjection/sfServiceContainer.php:276
     PHP   5. sfServiceContainerBuilder->createService() /var/local/buildbot/pear/php/SymfonyComponents/DependencyInjection/sfServiceContainerBuilder.php:86
     PHP   6. ReflectionClass->newInstanceArgs() /var/local/buildbot/pear/php/SymfonyComponents/DependencyInjection/sfServiceContainerBuilder.php:248
-    PHP   7. Erebot_Prompt->__construct() /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php:0
-    PHP   8. stream_socket_server() /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php:44
+    PHP   7. \Erebot\Prompt->__construct() /home/clicky/Documents/Erebot/src/Prompt.php:0
+    PHP   8. stream_socket_server() /home/clicky/Documents/Erebot/src/Prompt.php:44
 
 **Origins**:
 
@@ -222,16 +222,16 @@ Issue the following command (adapt the path depending on the content of the erro
 
 **Example**::
 
-    PHP Fatal error:  Uncaught exception 'Exception' with message 'Could not change group to 'nogroup' for '/tmp/Erebot.sock'' in /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php:56
+    PHP Fatal error:  Uncaught exception 'Exception' with message 'Could not change group to 'nogroup' for '/tmp/Erebot.sock'' in /home/clicky/Documents/Erebot/src/Prompt.php:56
     Stack trace:
-    #0 [internal function]: Erebot_Prompt->__construct(Object(Erebot), '/tmp/Erebot.soc...', 'nogroup', 384)
+    #0 [internal function]: \Erebot\Prompt->__construct(Object(Erebot), '/tmp/Erebot.soc...', 'nogroup', 384)
     #1 /var/local/buildbot/pear/php/SymfonyComponents/DependencyInjection/sfServiceContainerBuilder.php(248): ReflectionClass->newInstanceArgs(Array)
     #2 /var/local/buildbot/pear/php/SymfonyComponents/DependencyInjection/sfServiceContainerBuilder.php(86): sfServiceContainerBuilder->createService(Object(sfServiceDefinition))
     #3 /var/local/buildbot/pear/php/SymfonyComponents/DependencyInjection/sfServiceContainer.php(276): sfServiceContainerBuilder->getService('prompt')
-    #4 /home/looksup/Documents/Erebot/core/trunk/src/Erebot/CLI.php(363): sfServiceContainer->__get('prompt')
-    #5 /home/looksup/Documents/Erebot/core/trunk/scripts/Erebot(99): Erebot_CLI::run()
+    #4 /home/clicky/Documents/Erebot/src/CLI.php(363): sfServiceContainer->__get('prompt')
+    #5 /home/clicky/Documents/Erebot/bin/Erebot(99): \Erebot\CLI::run()
     #6 {main}
-      thrown in /home/looksup/Documents/Erebot/core/trunk/src/Erebot/Prompt.php on line 56
+      thrown in /home/clicky/Documents/Erebot/src/Prompt.php on line 56
 
 **Origins**:
 

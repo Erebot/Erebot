@@ -63,7 +63,8 @@ This sections contains a list of third-party modules:
 
 Contact us at erebot@erebot.net if you would like your module to be listed here.
 
-..  warning:: No support is provided by Erebot developpers for those third-party
-    modules.
+..  warning::
+
+    No support is provided by Erebot developpers for those third-party modules.
 
 .. vim: ts=4 et

@@ -177,10 +177,6 @@ PECL packages
     with new features or changes the behaviour of existing features.
     They are downloaded from the `PHP Extension Community Library`_.
 
-Erebot uses both kinds of dependencies. In this section, each dependency
-will be identified by the full name of the PEAR channel this dependency may
-be obtained from and the name of the PEAR/PECL package, followed by any relevant
-version constraint (eg. ``pear.erebot.net/Erebot_API > 0.0.1alpha2``).
 For each dependency, a short description as well as the profiles that are
 likely to be interested in installing that dependency are listed.
 
@@ -207,7 +203,7 @@ There are currently two of them:
 
         $ pear install <dependency>
 
-`Pyrus`_
+`Pyrus`_ (highly experimental, see below)
     Successor for `pear`_, meant to replace it someday.
     Pyrus provides the means to install and manage installations for packages
     built using package.xml version 2.0 or newer. Pyrus is redesigned from
@@ -223,35 +219,17 @@ There are currently two of them:
         $ php pyrus.phar install <dependency>
 
 
-..  note::
+..  warning::
 
     At the time of this writing, `Pyrus`_ is still in development, with only
-    alpha releases currently available. For now, `pear`_ is still the preferred
-    tool to install Erebot.
-
-..  warning::
-
-    Pyrus may corrupt your system when using its default configuration.
+    alpha releases currently available.
+    Pyrus may corrupt your system when using its default configuration
+    and is also known to install pear packages incorrectly under certain
+    circumstances.
     Unless you know exactly what you are doing, we recommend that you stick
-    to the regular pear tool to install Erebot.
-    See https://github.com/pyrus/Pyrus/issues/8 for more information.
-
-..  note::
-
-    Despite the previous notes, `Pyrus`_ is actually **required** for packagers
-    due to the way the packaging process is currently implemented.
-    In this case, both `pear`_ and `pyrus`_ **MUST** be installed side-by-side
-    on your computer.
-
-..  warning::
-
-    Due to a `bug in Pyrus <https://github.com/pyrus/Pyrus/issues/26>`_,
-    installation of a PEAR (version 1) package containing static data files,
-    configuration data, tests or webpages will result in a corrupted
-    installation. This affects Erebot as well as some of its dependencies.
-    As a result, we ask that you **DO NOT** use `Pyrus`_ to install Erebot
-    or its dependencies until this bug has been fixed. It is still safe to
-    use it to **package** Erebot or its dependencies though.
+    to the regular `pear`_ tool to install Erebot.
+    See https://github.com/pyrus/Pyrus/issues/8
+    and https://github.com/pyrus/Pyrus/issues/26 for more information.
 
 
 PECL extensions
@@ -369,35 +347,6 @@ available for each dependency.
             ``mbstring`` and ``iconv`` support a wider set of encodings than
             the other extensions and are thus recommended.
 
-..  _`Standard PHP Library`:
-    http://php.net/spl
-..  _`XSLT transformations`:
-    http://www.w3.org/TR/xslt
-..  _`libxslt library`:
-    http://xmlsoft.org/XSLT/
-
-..  [#footnotes_openssl]
-    Needed if you want to connect to IRC servers using a secure
-    (encrypted) connection. Required when running Erebot from a PHAR archive
-    (used to check the archive's origin and integrity).
-
-..  [#footnotes_pcntl]
-    Required for daemonization and to change user/group information
-    upon startup. Not available on Windows.
-
-..  [#footnotes_phar_package]
-    Only required to package Erebot as a ``.phar`` archive.
-
-..  [#footnotes_phar_run]
-    Only required to run Erebot from a ``.phar`` archive.
-
-..  [#footnotes_posix]
-    Required to change user/group information upon startup.
-    Not available on Windows.
-
-..  [#footnotes_xdebug]
-    Only required to run the test suite.
-
 
 PEAR packages
 ~~~~~~~~~~~~~
@@ -483,6 +432,28 @@ available for each dependency.
             generally contain one or more unit test before they can be
             considered for review.
 
+..  [#footnotes_openssl]
+    Needed if you want to connect to IRC servers using a secure
+    (encrypted) connection. Required when running Erebot from a PHAR archive
+    (used to check the archive's origin and integrity).
+
+..  [#footnotes_pcntl]
+    Required for daemonization and to change user/group information
+    upon startup. Not available on Windows.
+
+..  [#footnotes_phar_package]
+    Only required to package Erebot as a ``.phar`` archive.
+
+..  [#footnotes_phar_run]
+    Only required to run Erebot from a ``.phar`` archive.
+
+..  [#footnotes_posix]
+    Required to change user/group information upon startup.
+    Not available on Windows.
+
+..  [#footnotes_xdebug]
+    Only required to run the test suite.
+
 ..  [#footnotes_qa_depend]
     Required to use the ``qa_depend`` phing target.
 
@@ -500,6 +471,20 @@ available for each dependency.
     Required to use any of the ``qa_coverage``, ``qa_test``,
     ``test`` or ``tests`` phing targets.
 
+..  |---| unicode:: U+02014 .. em dash
+    :trim:
+..  |CLI|   replace:: :abbr:`CLI (Command-Line Interface)`
+..  |phing| replace:: :abbr:`phing (PHing Is Not GNU make)`
+..  |i18n|  replace:: :abbr:`i18n (internationalization)`
+..  |XML|   replace:: :abbr:`XML (eXtensible Markup Language)`
+..  |DOM|   replace:: :abbr:`DOM (Document Object Model)`
+
+..  _`Standard PHP Library`:
+    http://php.net/spl
+..  _`XSLT transformations`:
+    http://www.w3.org/TR/xslt
+..  _`libxslt library`:
+    http://xmlsoft.org/XSLT/
 ..  _`pear.pdepend.org/PHP_Depend`:
     http://pdepend.org/
 ..  _`pear.phing.info/Phing`:
@@ -510,16 +495,6 @@ available for each dependency.
     https://github.com/sebastianbergmann/phpcpd
 ..  _`pear.phpunit.de/PHPUnit`:
     http://phpunit.de/
-
-
-..  |---| unicode:: U+02014 .. em dash
-    :trim:
-..  |CLI|   replace:: :abbr:`CLI (Command-Line Interface)`
-..  |phing| replace:: :abbr:`phing (PHing Is Not GNU make)`
-..  |i18n|  replace:: :abbr:`i18n (internationalization)`
-..  |XML|   replace:: :abbr:`XML (eXtensible Markup Language)`
-..  |DOM|   replace:: :abbr:`DOM (Document Object Model)`
-
 ..  _`Continuous Integration server`:
     https://buildbot.erebot.net/components/
 ..  _`PHP Extension and Application Repository`:
