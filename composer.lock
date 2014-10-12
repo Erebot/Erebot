@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f0ebc1bf38c366072f2a76b83af8546d",
+    "hash": "4f1488ad756b087b594208dee04271fb",
     "packages": [
         {
             "name": "deresh/sfyaml",
@@ -971,16 +971,16 @@
         },
         {
             "name": "erebot/buildenv",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Erebot/Erebot_Buildenv.git",
-                "reference": "b0e1b262e2ac66ca88ade3a88cbb2cf25187657c"
+                "reference": "81f0bc9b172a5dd12303e996b95b956ca380846c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Erebot/Erebot_Buildenv/zipball/b0e1b262e2ac66ca88ade3a88cbb2cf25187657c",
-                "reference": "b0e1b262e2ac66ca88ade3a88cbb2cf25187657c",
+                "url": "https://api.github.com/repos/Erebot/Erebot_Buildenv/zipball/81f0bc9b172a5dd12303e996b95b956ca380846c",
+                "reference": "81f0bc9b172a5dd12303e996b95b956ca380846c",
                 "shasum": ""
             },
             "require": {
@@ -1012,7 +1012,7 @@
             "keywords": [
                 "Erebot"
             ],
-            "time": "2014-10-04 15:56:52"
+            "time": "2014-10-12 20:33:19"
         },
         {
             "name": "erebot/testenv",

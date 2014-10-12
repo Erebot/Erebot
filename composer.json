@@ -57,7 +57,6 @@
         "erebot/buildenv": "~1.2.0",
         "erebot/testenv": "dev-master",
         "phpunit/phpunit": "<4.0.0",
-
         "pear/http_request2": "dev-master"
     },
     "suggest": {

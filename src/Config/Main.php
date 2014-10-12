@@ -117,7 +117,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
      * Removes wrapping xglob tags that were automatically
      * added by the Erebot::XGlobStream wrapper.
      *
-     * \param \DOMDocument $domxml
+     * \param DOMDocument $domxml
      *      A DOM node with the document resulting from
      *      the parsing and interpretation of the configuration
      *      file.

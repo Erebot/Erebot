@@ -77,9 +77,10 @@ words.
 
 Now, there are two types of requests:
 
--   Requests for help on the module itself (``!help Erebot_Module_Foo``).
+-   Requests for help on the module itself (``!help Foo``).
     In that case, ``$words`` will contain only one word:
-    the name of the module itself (``Erebot_Module_Foo``).
+    the name of the module itself inside the
+    ``\\Erebot\\Module`` namespace |--| ``Foo`` in this case.
 
 -   Requests for help on a command/topic (``!help foo``, ``!help foo bar...``).
     In that case, ``$words`` will contain 2 or more words:
@@ -152,16 +153,16 @@ an imaginary module:
 
 
 Once the code for your help method is ready, you have to tell Erebot about it
-by using the ``registerHelpMethod()`` method inside your module's ``_reload()``
+by using the ``registerHelpMethod()`` method inside your module's ``reload()``
 method. You must call ``registerHelpMethod()`` with an object implementing the
-``Erebot_Interface_Callable`` interface and referring to your method.
+``\\Erebot\\Interface\\Callable`` interface and referring to your method.
 
 This can be done using the following snippet:
 
 ..  sourcecode:: inline-php
 
     // First, we retrieve the factory to use to produce instances
-    // implementing "Erebot_Interface_Callable".
+    // implementing "\Erebot\Interface\Callable".
     $cls = $this->getFactory('!Callable');
 
     // Next, we register our help method (here, the getHelp() method
@@ -170,7 +171,7 @@ This can be done using the following snippet:
     $this->registerHelpMethod(new $cls(array($this, 'getHelp')));
 
 Alternatively, you may mark your module as implementing the
-:api:`Erebot_Interface_HelpEnabled` interface.
+:api:`\\Erebot\\Interface\\HelpEnabled` interface.
 In that case, the bot will automatically register the module's
 ``getHelp()`` method as the help method.
 
@@ -196,7 +197,7 @@ from a remote server.
 The reason is simple: PHP does not support multithreading [#pthreads]_,
 so while a long running task is being executed, the rest of the bot
 is literally stopped. This includes other modules responsible for keeping
-the connection alive (``Erebot_Module_PingReply``).
+the connection alive (``\\Erebot\\Module\\PingReply``).
 Hence, running a long task in your module may result in the bot
 being disconnected from IRC servers with a "Ping timeout" error.
 

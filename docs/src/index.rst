@@ -3,8 +3,8 @@ Welcome to Erebot's documentation!
 
 Erebot is a modular IRC bot written in PHP.
 It is known to work under both Linux and Windows (contact us on GitHub if you
-managed to use it on MacOSX) and works on a wide range of PHP versions
-(from PHP 5.2.1 upto the latest beta of PHP 5.5).
+managed to use it on MacOSX) and works on a wide range of PHP versions from
+PHP 5.3.3 onwards.
 
 You can find more information about this project on the following websites:
 
