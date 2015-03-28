@@ -23,11 +23,149 @@ extends \Erebot\Identity
     {
         return self::patternize($pattern, $matchDot);
     }
+
+    static public function publicCanonicalizeHost($host, $c10n, $uncompressed)
+    {
+        return self::canonicalizeHost($host, $c10n, $uncompressed);
+    }
 }
 
 class   IdentityTest
 extends Erebot_TestEnv_TestCase
 {
+    public function invalidMasks()
+    {
+        $masks = array(
+            'foo!@',
+            'foo@!',
+            'foo!',
+            'foo@',
+            'foo!ident@',
+            'foo!@host',
+            'foo@host!ident',
+            'foo!ident',
+            'foo@host',
+            'foo!ident@ho$t',
+            'foo!ident@host.42',
+            'foo!ident@1.2.3',
+            'foo!ident@1.2.3.4.5',
+            'foo!ident@1:2:3:4:5:6:7',
+            'foo!ident@1:2:3:4:5:6:7:8:9',
+        );
+        $masks = array_map(create_function('$a', 'return array($a);'), $masks);
+        return $masks;
+    }
+
+    public function matchingData()
+    {
+        $masks = array(
+            'foo!bar@127.0.0.1',
+            'foo!bar@127.0.0.1/32',
+            'foo!bar@127.0.0.*',
+            'foo!bar@::ffff:127.0.0.1',
+            'foo!bar@::ffff:127.0.0.1/128',
+            'foo!bar@::ffff:127.0.0.*',
+            '*!*@*',
+            'FOO!*@*',
+        );
+        $masks = array_map(create_function('$a', 'return array($a);'), $masks);
+        return $masks;
+    }
+
+    public function patternizeData()
+    {
+        return array(
+            # Input pattern,
+            # Output pattern when $dotMatching = TRUE,
+            # Output pattern when $dotMatching = FALSE.
+            array('foo',    "foo",              "foo"),
+            array('#',      "\\#",              "\\#"),
+            array('.',      "\\.",              "\\."),
+            array('?',      ".",                "[^\\.]"),
+            array('*',      ".*",               "[^\\.]*"),
+            array('\\',     "\\\\",             "\\\\"),
+            array('\\.',    "\\\\\\.",          "\\\\\\."),
+            array('\\?',    "\\\\.",            "\\\\[^\\.]"),
+            array('\\*',    "\\\\.*",           "\\\\[^\\.]*"),
+        );
+    }
+
+    public function canonicalizeData()
+    {
+        return array(
+            # Canonicalization method
+            # Input
+            # Expected output
+
+            # http://tools.ietf.org/html/rfc5952#section-4.1
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:0db8::0001',
+                '2001:db8::1'
+            ),
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:0db8:0000:4:5:6:7:8',
+                '2001:db8:0:4:5:6:7:8'
+            ),
+
+            # http://tools.ietf.org/html/rfc5952#section-4.2.1
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:db8:0:0:0:0:2:1',
+                '2001:db8::2:1'
+            ),
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:db8::0:1',
+                '2001:db8::1'
+            ),
+
+            # http://tools.ietf.org/html/rfc5952#section-4.2.2
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:db8:0:1:1:1:1:1',
+                '2001:db8:0:1:1:1:1:1'
+            ),
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:db8::1:1:1:1:1',
+                '2001:db8:0:1:1:1:1:1'
+            ),
+
+            # http://tools.ietf.org/html/rfc5952#section-4.2.3
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:0:0:1:0:0:0:1',
+                '2001:0:0:1::1'
+            ),
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:db8:0:0:1:0:0:1',
+                '2001:db8::1:0:0:1'
+            ),
+
+            # http://tools.ietf.org/html/rfc5952#section-4.3
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV6,
+                '2001:db8:A:B:C:D:E:F',
+                '2001:db8:a:b:c:d:e:f'
+            ),
+
+            # http://tools.ietf.org/html/rfc5952#section-5
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV4,
+                '0:0:0:0:0:ffff:192.0.2.1',
+                '::ffff:192.0.2.1'
+            ),
+            array(
+                \Erebot\Interfaces\Identity::CANON_IPV4,
+                '::',
+                '::0.0.0.0'
+            ),
+        );
+    }
+
     /**
      * @covers \Erebot\Identity
      */
@@ -57,36 +195,9 @@ extends Erebot_TestEnv_TestCase
             $identity->getHost(\Erebot\Interfaces\Identity::CANON_IPV4)
         );
     }
-}
-
-class   InvalidIdentitiesTest
-extends Erebot_TestEnv_TestCase
-{
-    public function invalidMasksProvider()
-    {
-        $masks = array(
-            'foo!@',
-            'foo@!',
-            'foo!',
-            'foo@',
-            'foo!ident@',
-            'foo!@host',
-            'foo@host!ident',
-            'foo!ident',
-            'foo@host',
-            'foo!ident@ho$t',
-            'foo!ident@host.42',
-            'foo!ident@1.2.3',
-            'foo!ident@1.2.3.4.5',
-            'foo!ident@1:2:3:4:5:6:7',
-            'foo!ident@1:2:3:4:5:6:7:8:9',
-        );
-        $masks = array_map(create_function('$a', 'return array($a);'), $masks);
-        return $masks;
-    }
 
     /**
-     * @dataProvider        invalidMasksProvider
+     * @dataProvider        invalidMasks
      * @expectedException   \Erebot\InvalidValueException
      * @covers              \Erebot\Identity
      */
@@ -94,29 +205,9 @@ extends Erebot_TestEnv_TestCase
     {
         new \Erebot\Identity($mask);
     }
-}
-
-class   IdentityMatchingTest
-extends Erebot_TestEnv_TestCase
-{
-    public function patterns()
-    {
-        $masks = array(
-            'foo!bar@127.0.0.1',
-            'foo!bar@127.0.0.1/32',
-            'foo!bar@127.0.0.*',
-            'foo!bar@::ffff:127.0.0.1',
-            'foo!bar@::ffff:127.0.0.1/128',
-            'foo!bar@::ffff:127.0.0.*',
-            '*!*@*',
-            'FOO!*@*',
-        );
-        $masks = array_map(create_function('$a', 'return array($a);'), $masks);
-        return $masks;
-    }
 
     /**
-     * @dataProvider patterns
+     * @dataProvider matchingData
      * @cover \Erebot\Identity::match
      */
     public function testMatching($pattern)
@@ -127,31 +218,9 @@ extends Erebot_TestEnv_TestCase
             "Did not match '$pattern'"
         );
     }
-}
-
-class   IdentityPatternizeTest
-extends Erebot_TestEnv_TestCase
-{
-    public function patterns()
-    {
-        return array(
-            # Input pattern,
-            # Output pattern when $dotMatching = TRUE,
-            # Output pattern when $dotMatching = FALSE.
-            array('foo',    "foo",              "foo"),
-            array('#',      "\\#",              "\\#"),
-            array('.',      "\\.",              "\\."),
-            array('?',      ".",                "[^\\.]"),
-            array('*',      ".*",               "[^\\.]*"),
-            array('\\',     "\\\\",             "\\\\"),
-            array('\\.',    "\\\\\\.",          "\\\\\\."),
-            array('\\?',    "\\\\.",            "\\\\[^\\.]"),
-            array('\\*',    "\\\\.*",           "\\\\[^\\.]*"),
-        );
-    }
 
     /**
-     * @dataProvider    patterns
+     * @dataProvider    patternizeData
      * @cover           \Erebot\Identity::patternize
      */
     public function testPatternizeNoDotMatching($input, $expectedDot, $expectedNoDot)
@@ -161,7 +230,7 @@ extends Erebot_TestEnv_TestCase
     }
 
     /**
-     * @dataProvider    patterns
+     * @dataProvider    patternizeData
      * @cover           \Erebot\Identity::patternize
      */
     public function testPatternizeDotMatching($input, $expectedDot, $expectedNoDot)
@@ -169,5 +238,16 @@ extends Erebot_TestEnv_TestCase
         $output = Erebot_Test_Identity::publicPatternize($input, TRUE);
         $this->assertSame('#^'.$expectedDot.'$#Di', $output);
     }
-}
 
+    /**
+     * @dataProvider    canonicalizeData
+     * @cover           \Erebot\Identity::canonicalizeHost
+     */
+    public function testCanonicalize($c10n, $input, $expected)
+    {
+        $this->assertSame(
+            $expected,
+            Erebot_Test_Identity::publicCanonicalizeHost($input, $c10n, false)
+        );
+    }
+}

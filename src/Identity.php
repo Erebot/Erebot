@@ -271,7 +271,7 @@ class Identity implements \Erebot\Interfaces\Identity
 
         // Compress the zeros.
         $host = 'x:' . implode(':', $parts) . ':x';
-        for ($i = 8; $i > 0; $i--) {
+        for ($i = 8; $i > 1; $i--) {
             $s          = ':'.str_repeat('0:', $i);
             $pos        = strpos($host, $s);
             if ($pos !== false) {
@@ -281,11 +281,8 @@ class Identity implements \Erebot\Interfaces\Identity
             }
         }
 
-        $host = substr(
-            $host,
-            (substr($host, 0, 3) == 'x::') ?  1 :  2,
-            (substr($host, -3) == '::x')   ? -1 : -2
-        );
+        $host = str_replace(array('x::', '::x'), '::', $host);
+        $host = str_replace(array('x:', ':x'), '', $host);
         return strtolower($host);
     }
 
@@ -426,7 +423,7 @@ class Identity implements \Erebot\Interfaces\Identity
             true
         );
 
-        $pattParts      = explode(':', $host[0]);
+        $pattParts  = explode(':', $host[0]);
         $thisParts  = explode(':', $thisHost);
         while ($host[1] > 0) {
             $mask       = 0x10000 - (1 << (16 - min($host[1], 16)));
