@@ -1,0 +1,435 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/HowTo/External_Process_Interaction.rst:10
+# fcc034177e894c05aaf6462ebe37b522
+msgid "How to interact with Erebot from an external process"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:12
+# 61d02cbd404246a9bb4ae95c5c4e1d84
+msgid "This guide will show you how to setup Erebot so that an external process can interact with an IRC server through the bot. In the second part of this tutorial, we will also see how the logging system can be used to receive feedback from the bot for commands we sent to it."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:0
+# 7d8f7ce022fd43e4983549bdf0c59f61
+msgid "Table of Contents"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:22
+# 0babede77dd14c3a957301a49b72d818
+msgid "Sending commands through the bot"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:24
+# 586355c30f9a4ffebdbaaaa19d5ecd86
+msgid "Erebot embeds a class called ``Erebot_Prompt`` that can be used to control the bot remotely using a UNIX socket. This can be used for example to build a web frontend for the bot. It might be used to build a complete IRC client too."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:30
+# 5ee98ca0286549fa8dd9324c963205db
+msgid "This feature only offers a one-way communication channel with the bot. That is, it can be used to send commands to the bot, but it cannot be used to see the actual responses to those commands."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:35
+# 38d59f0c8a4d489f8b771d6d0502c427
+msgid "If you need bidirectional communications, you can combine this feature with Erebot's logging mechanism to intercept messages as the bot sends or receives them. See the section entitled « `Intercepting messages`_ » for more information."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:41
+# e3f08a00c41e4ac897e51ea02b312f4f
+msgid "This feature is only available on platforms that implement UNIX sockets (especially, it is **not** available on Windows platforms)."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:46
+# 14e76129074c43538d6f72fed1a878cc
+msgid "Setting things up"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:48
+# a329336559954c69bf21a42b49e628e7
+msgid "Enabling the prompt is actually quite easy. All you need to do is add a service named \"prompt\" to your ``defaults.xml`` configuration file. That service will usually be an instance of the ``Erebot_Prompt`` class and should be passed the bot's service (named ``bot``) as its first parameter. It also accepts a few parameters, listed in the following table."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:0
+# fee89511daed47699b9d96b3c09e9afc
+msgid "Parameters accepted by ``\\\\Erebot\\\\Prompt`` (in this order)"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:57
+# 7a22ce5b3e2644c097fcbd8e47082518
+msgid "Parameter"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:57
+# 0f41900e1c8447168b6d851338e65bbe
+msgid "Type"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:57
+# e303d1ecc682422ca8b84fcdade4968b
+msgid "Description"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:57
+# 8e546febb3f349f08f0855cd92ad2a6e
+msgid "Required?"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:57
+# e8c058b0580f4cd88c290e435654d061
+msgid "Default value"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:57
+# 475ca5f621a64a6f987de895aad9a5ba
+msgid "Example value"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:59
+# c0d99c0b3c184eb08da35a1edf2957b4
+msgid "$bot"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:59
+# 581ce83dc49d49f4835a3d9bacf1b541
+msgid "object"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:59
+# addcd03000804bc69a36ab552fd8082f
+msgid "Instance of the ``bot`` service."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:59
+# 6f4aed2ace11496aa8842b824d9fc557
+msgid "Yes"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:59
+#: ../src/HowTo/External_Process_Interaction.rst:59
+# 5067db7f0a38460684be5714ececf566
+# 454ddfc4c33943d4a5bfd70a66e3a9ef
+msgid "N/A"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:61
+# 838ea8aec25e488e90dfa11ac138a547
+msgid "$connector"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:61
+#: ../src/HowTo/External_Process_Interaction.rst:63
+# 5282f06954de4475aa57f659bc83151f
+# dbd1792f19ee44218793aede48ba0d2a
+msgid "string"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:61
+# 4baa365b3d6a4542bc8679df22700951
+msgid "Path to the UNIX socket to create."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:61
+#: ../src/HowTo/External_Process_Interaction.rst:63
+# 209c82dc06084ae9bb52985fbcd6b73c
+# 086870a9d41c4c6b84a525f37a578948
+msgid "No"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:61
+# ee0a8facf64a41cbbc5c7a7a71d9ef24
+msgid "\"``/tmp/Erebot.sock``\""
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:61
+# 1542521e67874c4f9114ffdfc907d10b
+msgid "\"``/var/lib/Erebot/control.sock``\""
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:63
+# 7e8dd025e20a4c49a88ee92087842eff
+msgid "$group"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:63
+# c57c7258b448450398bb0c7ea0fd2fcb
+msgid "UNIX group for the new socket."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:63
+# 5aa586098e5941e0b118a28f3b542571
+msgid "Primary group of the user running the bot."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:63
+# e97f731e1a164091b0e70aadc508ac5c
+msgid "\"``nogroup``\""
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:65
+# 07bce971d25d418386a09acb76dea51d
+msgid "$perms"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:65
+# 8b5dd2454b9447a9aba0be3d21e64998
+msgid "integer"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:65
+# 667c7a5ad3a049ad9fb41e6c85ec763d
+msgid "Permissions on the socket to create."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:65
+# 008d4132af214bfba3bc8803a4029f95
+msgid "``0660`` (``rw-rw----``)"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:65
+# f8363e868a0f471db3821f98749e5c94
+msgid "``0666`` (to allow any program to control Erebot |---| this is considered dangerous, avoid if possible)."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:71
+# 41e73fcff210407591fb8c7c3e1eb683
+msgid "Therefore, a potential configuration for the prompt in the ``defaults.xml`` configuration file may look like this:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:86
+# 850aa63e7c2946ff88b9ac3602fdc8e9
+msgid "Passing commands to Erebot"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:89
+# ba011ccde4234184a5346961eb02a101
+msgid "What you need to know"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:91
+# 37fb80d80e92428d9f6601a2bf3178c9
+msgid "To send commands to Erebot, you need two pieces of information:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:93
+# a161d6e9f5af446c9ea13886ec0edbc7
+msgid "The path to the UNIX socket that acts as Erebot's prompt."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:94
+# 4e386587a012444f8340fa290514fbc5
+msgid "The name of the IRC network (as declared in Erebot's configuration file) to send the commands to."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:98
+# 80fe9530db124ba68aa5c11990b45df6
+msgid "The latter is actually optional if you want to execute the command on all IRC networks (eg. an ``AWAY`` command before going to sleep), as we will see below."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:103
+# 4f9cd02e31db4c24a11a1a321c37afb1
+msgid "A simple example"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:105
+# a1eda752f4614616808aa89d226caafe
+msgid "Once you have those information, open the UNIX socket using your favorite programming language."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:109
+# c02ca813d6e64e87950e105913d1f040
+msgid "UNIX sockets can be opened from any language that supports them, including |---| but not limited to |---| Bash, Perl, PHP, Python, Java, etc."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:112
+# 579a3870da3843e2878d9b31d71ff1df
+msgid "You may now send commands using the following format::"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:116
+# 73f96d5190af4924aeb36c93584d71fe
+msgid "where each token is described below:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:124
+# b30588d0c5474288beb46422f90dc428
+msgid "``<pattern>``"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:119
+# a508fe2388fa4d548059398a596376ee
+msgid "A pattern that will be used to match the network's name (as declared in Erebot's configuration file). You may use wildcard characters here (``?`` to match 0 or exactly 1 character, ``*`` to match 0 or more characters). The simplest way to target a specific IRC network is to simply pass that network's name as the ``<pattern>``."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:128
+# 07570de9a9434dfa8fe2b72c5548696b
+msgid "``<command>``"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:127
+# e23da89ec6dc4dedb00fdb5c7a957441
+msgid "The IRC command you wish to send (eg. ``AWAY :Gone to sleep``). Please refer to :rfc:`2812` for information on valid commands."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:136
+# 52e8ff823d154a618847556adf58117c
+msgid "``<line ending>``"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:131
+# c67a2c8cda8e443eb399e273af4d7988
+msgid "One of the 3 common line endings accepted by Erebot and noted below using C-style espace sequences:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:134
+# d778b8272219486ea9bf00f43cb7b4d9
+msgid "\"``\\r``\" (Mac style)"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:135
+# ca992140db0448bab87ccfc760cac8af
+msgid "\"``\\n``\" (Linux style)"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:136
+# d13fe91c8e244781812de68cbdb88332
+msgid "\"``\\r\\n``\" (Windows style)"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:139
+# 0d6b1f0f1f274f3c8f5715586259abe5
+msgid "When looking for the connections targeted by a command, a case-insensitive full-line match is performed. This means that a pattern such as \"``mynetwork``\" and \"``mynet*``\" will match a network named \"``MyNetwork``\", but \"``mynet``\" won't."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:144
+# 3bf1e2952de64e32b80bdfcf4044360c
+msgid "Here is an example using the socat command from a cron task to make the bot quit the \"``iiens``\" IRC network every day at midnight:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:154
+# 9da55d32453745f48c973f31a20ab255
+msgid "Targeting multiple IRC networks at once"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:156
+# 06c0ff2b578d45c8b7d3f2cf6e00d132
+msgid "As seen in the format above, a pattern matching the target IRC network's name is passed before the actual command. Hence, targeting multiple IRC networks at once is only a matter of using the right pattern. For example, if you have multiple connections to the same IRC network, named \"``MyNetwork1``\", \"``MyNetwork2``\", etc. you could easily send a command to all of these connections using \"``MyNetwork*``\" as the pattern."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:163
+# d3f1d6f561814ed38170d1538de17add
+msgid "Following the same logic, it is possible to send a command to **all** the servers the bot is currently connected to by using \"``*``\" as the pattern, since this will match any network, regardless of its name."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:169
+# cccfc19e7d8a4c0899e85c1c62284c17
+msgid "Intercepting messages"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:171
+# 190697d379424371b9510d3416acc5e1
+msgid "The technic described below makes it possible to intercept both incoming and outgoing messages. It is ideal if you're trying to build a frontend for Erebot because:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:175
+# 950d5183cfdb4943a06d7686c92f542e
+msgid "You can capture outgoing messages to get feedback on the actual commands being sent by the bot (keep in mind that modules may prevent certain commands from being sent for example)."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:179
+# 5c4d5aec676046bd928b82cd0c252926
+msgid "You can capture incoming messages too, which means that you can process them using external tools if needed (eg. display them on your website)."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:183
+# a79975b0aa3b4ce0a8bd9a1c94ece224
+msgid "Even if you could easily process messages with an external tool then feed the results back to Erebot using the UNIX socket, it is often a lot more efficient to write a module for Erebot directly (using the assets provided by the PHP toolbox)."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:193
+# 8ca69422cb2f4a529593ea984c3acad6
+msgid "Troubleshooting"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:195
+# 0999c76a3a8c4041a1f8c57159a5398f
+msgid "This paragraph lists the most common problems you may encounter while following this tutorial, as well as explanations as to why they appear and possible solutions or workarounds."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:200
+# 248194eaf18f447d8a16fd1cd46b4189
+msgid "``PHP Warning: stream_socket_server(): unable to connect to udg:///... (Unknown error) in .../Erebot/Prompt.php on line ...``"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:202
+#: ../src/HowTo/External_Process_Interaction.rst:231
+# 3c6b6029a6064572b05f605547c27fab
+# bc6804fea5d8419aa6ca00f7cd054dc2
+msgid "**Example**::"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:215
+#: ../src/HowTo/External_Process_Interaction.rst:244
+# 08e6f838b3d846eea2da48dd907e2fca
+# b8e1540aa6464d489690dddaa09c385e
+msgid "**Origins**:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:217
+# 908f9bb8b1ef4bb3a87cae9ce2529ade
+msgid "This error usually appears after the bot was stopped in a non-clean fashion (eg. after it has been killed). This is caused by a left-over UNIX socket created by the previous instance. You can fix the problem by manually removing the socket."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:222
+#: ../src/HowTo/External_Process_Interaction.rst:253
+# 44d0de3b45264feeb908627f043ba4f6
+# c4802b4fe213426cb6a995143f6d4048
+msgid "**Solution**:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:224
+# 896468b50e3f40b78b84a9979e7c616d
+msgid "Issue the following command (adapt the path depending on the content of the error message)::"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:229
+# e234e3ca39ea4958b3a1f5cd9dc185eb
+msgid "``PHP Fatal error: Uncaught exception 'Exception' with message 'Could not change group to '...' for '...'' in ...``"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:246
+# 1eb4a90709a040b2997919bdec5e1988
+msgid "Possible reasons for this error include:"
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:248
+# cd910e046e634e00818419beb4b6e5a4
+msgid "The given group name or GID does not exist."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:249
+# 4c9af1f72a724243940173536d3602d5
+msgid "The current user is not the superuser (root) and is not a member of the given group (this is a limitation from the low-level chgrp system call). See also http://php.net/chgrp for more information."
+msgstr ""
+
+#: ../src/HowTo/External_Process_Interaction.rst:255
+# c2a03dfbfe03410ab19e7e03cb0ea57b
+msgid "Make sure the given group exists and the user running the bot is a member of that group (or is the superuser)."
+msgstr ""
+

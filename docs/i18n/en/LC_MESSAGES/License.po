@@ -1,0 +1,161 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# c1bd2b08d66e4f0da0ca43d786e52eaa
+#: ../src/License.rst:10
+msgid "Licenses"
+msgstr "Licenses"
+
+# 6c244371ab154fb9b1f75508a0e251d2
+#: ../src/License.rst:0
+msgid "Table of Contents"
+msgstr "Table of Contents"
+
+# 1a3ea155ad904019bcfd4af6770215e7
+#: ../src/License.rst:17
+msgid "Erebot"
+msgstr "Erebot"
+
+# 8335ee836048498bb7141eb13a77e53d
+#: ../src/License.rst:19
+msgid ""
+"The documentation (both the API documentation and the end-user documentation) "
+"for Erebot is released under the CC BY-NC-SA license (see http://"
+"creativecommons.org/licenses/by-sa/3.0/)."
+msgstr ""
+"The documentation (both the API documentation and the end-user documentation) "
+"for Erebot is released under the CC BY-NC-SA license (see http://"
+"creativecommons.org/licenses/by-sa/3.0/)."
+
+# 846a74104ac94681a534f8060f292d5b
+#: ../src/License.rst:23
+msgid "The code itself is released under the GNU General Public License."
+msgstr "The code itself is released under the GNU General Public License."
+
+# b7ac6e11796c400d866f06eb45d83b68
+#: ../src/License.rst:44
+msgid "PEAR"
+msgstr "PEAR"
+
+# 13064db11946452782d8d2db73e13f12
+#: ../src/License.rst:45
+msgid ""
+"php/PEAR/Exception.php is bundled with every Erebot PHAR archive as it is "
+"sometimes needed by other bundled packages (it may be removed later)."
+msgstr ""
+"php/PEAR/Exception.php is bundled with every Erebot PHAR archive as it is "
+"sometimes needed by other bundled packages (it may be removed later)."
+
+# 52252d3d1c27455fad1ac20e35bd90bf
+#: ../src/License.rst:48
+msgid "PEAR is released under the \"2-clause BSD license\"."
+msgstr "PEAR is released under the \"2-clause BSD license\"."
+
+# 00ed42efde73408a82587efbf724c2d7
+#: ../src/License.rst:82
+msgid "File_Gettext"
+msgstr "File_Gettext"
+
+# 3e6f6acecc2b410e8fa8e0ea62b327dd
+#: ../src/License.rst:83
+msgid ""
+"This package is used by Erebot to parse MO files (translation files). Only "
+"the files marked with the \"php\" or \"data\" role are bundled with Erebot's "
+"phar."
+msgstr ""
+"This package is used by Erebot to parse MO files (translation files). Only "
+"the files marked with the \"php\" or \"data\" role are bundled with Erebot's "
+"phar."
+
+# 7b1f40e240224a2688f6f2e80cc359cd
+#: ../src/License.rst:86
+msgid ""
+"File_Gettext is released under the \"2-clause BSD license\" since November, "
+"8th 2005."
+msgstr ""
+"File_Gettext is released under the \"2-clause BSD license\" since November, "
+"8th 2005."
+
+# 864a6315cc2a4741885b56c116c53a27
+#: ../src/License.rst:115
+msgid "Console_CommandLine"
+msgstr "Console_CommandLine"
+
+# 82f21e21e16a47eb8824b1f3f49492a8
+#: ../src/License.rst:116
+msgid ""
+"This package is used to parse options given to Erebot's CLI. Only files with "
+"the \"php\" or \"data\" role are bundled with Erebot's phar archive."
+msgstr ""
+"This package is used to parse options given to Erebot's CLI. Only files with "
+"the \"php\" or \"data\" role are bundled with Erebot's phar archive."
+
+# f42956f6d6414693ac7e9f5f23e7ed10
+#: ../src/License.rst:119
+msgid "Console_CommandLine is released under the MIT (Expat) license."
+msgstr "Console_CommandLine is released under the MIT (Expat) license."
+
+# 95d8127d43b24f588f18a3cddc80fbac
+#: ../src/License.rst:145
+msgid "Symfony's Dependency Injection Container"
+msgstr "Symfony's Dependency Injection Container"
+
+# 47682190c6394801908f99b1b3b692d2
+#: ../src/License.rst:146
+msgid ""
+"We use our own special fork of Symfony's Depedency Injection Container (DIC) "
+"for Erebot to inject runtime dependencies. The fork uses the same license as "
+"the original project."
+msgstr ""
+"We use our own special fork of Symfony's Depedency Injection Container (DIC) "
+"for Erebot to inject runtime dependencies. The fork uses the same license as "
+"the original project."
+
+# cb403f9d2aae48edb59040daa0962234
+#: ../src/License.rst:150
+msgid ""
+"Symfony's dependency injection container is released under the MIT (Expat) "
+"license."
+msgstr ""
+"Symfony's dependency injection container is released under the MIT (Expat) "
+"license."
+
+# 20ec6ead838b4127878e47e4a1762ebf
+#: ../src/License.rst:175
+msgid "Symfony's YAML component"
+msgstr "Symfony's YAML component"
+
+# e0606b4d8b76498298d568d52e2728d5
+#: ../src/License.rst:177
+msgid "Symfony's YAML component is released under the MIT (Expat) license."
+msgstr "Symfony's YAML component is released under the MIT (Expat) license."
+
+# b36bd1080b15448782ffb9c8d14c5b9d
+#: ../src/License.rst:203
+msgid "Composer"
+msgstr "Composer"
+
+# 64895672d28542519c6ed003ed390ef8
+#: ../src/License.rst:204
+msgid ""
+"Used for runtime dependency checks when Erebot is used as a PHAR archive. "
+"Composer is released under the MIT (Expat) license."
+msgstr ""
+"Used for runtime dependency checks when Erebot is used as a PHAR archive. "
+"Composer is released under the MIT (Expat) license."

@@ -1,0 +1,274 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# 5d37040fa7284d43aa1303d797a8a5ae
+#: ../src/Buildslaves.rst:10
+msgid "Buildslaves"
+msgstr "Buildslaves"
+
+# 60a5bbcc4405410aa13429b7a03f9372
+#: ../src/Buildslaves.rst:12
+msgid ""
+"A buildslave is a machine that runs continuous integration tasks for the "
+"project. Such tasks include running unit tests after every commit, building "
+"the online documentation, packaging the project, etc."
+msgstr ""
+"A buildslave is a machine that runs continuous integration tasks for the "
+"project. Such tasks include running unit tests after every commit, building "
+"the online documentation, packaging the project, etc."
+
+# 6b55f368ecfd43a5903b22dda9b2c2a0
+#: ../src/Buildslaves.rst:16
+msgid ""
+"If you wish to contribute a machine for the project, this page explains how "
+"to do so."
+msgstr ""
+"If you wish to contribute a machine for the project, this page explains how "
+"to do so."
+
+# 541c1fd1941f405bb2833da5281b30c8
+#: ../src/Buildslaves.rst:0
+msgid "Table of Contents"
+msgstr "Table of Contents"
+
+# c7278ac9c30c4c748ccc75189d49ea91
+#: ../src/Buildslaves.rst:23
+msgid "Foreword"
+msgstr "Foreword"
+
+# 52895ee0d6c246598f83752d5ed6c780
+#: ../src/Buildslaves.rst:26
+msgid ""
+"Even though a buildslave can do many things, we only discuss use of "
+"buildslaves to run unit tests in the context of this page. That's because we "
+"do not intend to make remote machines handle critical tasks such as packaging "
+"that involve digital signatures."
+msgstr ""
+"Even though a buildslave can do many things, we only discuss use of "
+"buildslaves to run unit tests in the context of this page. That's because we "
+"do not intend to make remote machines handle critical tasks such as packaging "
+"that involve digital signatures."
+
+# 49ccd523d62d46db8c1cf5780a9db064
+#: ../src/Buildslaves.rst:32
+msgid ""
+"When running a buildslave, some PHP code will be run on your system without "
+"requiring any prior confirmation. This may represent a risk for your machine. "
+"Even though we do our best to prevent malicious code execution on the "
+"buildslaves, we still depend on external services (GitHub, Transifex, etc.) "
+"and we cannot guarantee that no malicious code will ever be injected in the "
+"repository."
+msgstr ""
+"When running a buildslave, some PHP code will be run on your system without "
+"requiring any prior confirmation. This may represent a risk for your machine. "
+"Even though we do our best to prevent malicious code execution on the "
+"buildslaves, we still depend on external services (GitHub, Transifex, etc.) "
+"and we cannot guarantee that no malicious code will ever be injected in the "
+"repository."
+
+# 637a37ecf474438694fb533017ca29ee
+#: ../src/Buildslaves.rst:39
+msgid ""
+"We therefore strongly encourage you to take every necessary precaution "
+"**before** running the buildslave. This means that you should at least:"
+msgstr ""
+"We therefore strongly encourage you to take every necessary precaution "
+"**before** running the buildslave. This means that you should at least:"
+
+# 88ca331d348b47468a361e619c05d732
+#: ../src/Buildslaves.rst:42
+msgid "Make sure your system is up-to-date regarding security patches."
+msgstr "Make sure your system is up-to-date regarding security patches."
+
+# f2a656d5094e4b21b4acd6968b6387ee
+#: ../src/Buildslaves.rst:43
+msgid "Run an antivirus with up-to-date virus signatures."
+msgstr "Run an antivirus with up-to-date virus signatures."
+
+# f50b724bcce24cacb1d1eda878c73875
+#: ../src/Buildslaves.rst:44
+msgid "Create a specific unprivileged account for the buildslave."
+msgstr "Create a specific unprivileged account for the buildslave."
+
+# 1ebb4c75659544638676b040729a3ccc
+#: ../src/Buildslaves.rst:45
+msgid ""
+"Run the buildslave in a jail/chroot environment on platforms that support "
+"this feature."
+msgstr ""
+"Run the buildslave in a jail/chroot environment on platforms that support "
+"this feature."
+
+# ff3f5dd45cc44a46b8e12e969a987afa
+#: ../src/Buildslaves.rst:48
+msgid ""
+"By providing a buildslave, you agree that you understand and accept all of "
+"the risks mentionned above and that you are sole responsible for ensuring the "
+"security of your machine. If you disagree with that, please **do not** submit "
+"a request to be registered as a buildslave."
+msgstr ""
+"By providing a buildslave, you agree that you understand and accept all of "
+"the risks mentionned above and that you are sole responsible for ensuring the "
+"security of your machine. If you disagree with that, please **do not** submit "
+"a request to be registered as a buildslave."
+
+# 446909ddfa10480f8693980094da47c0
+#: ../src/Buildslaves.rst:53
+msgid ""
+"We already host one buildslave and a few virtual machines that each come with "
+"their own buildslave. At the time of this writing, Erebot is therefore tested "
+"against the following operating systems / distributions:"
+msgstr ""
+"We already host one buildslave and a few virtual machines that each come with "
+"their own buildslave. At the time of this writing, Erebot is therefore tested "
+"against the following operating systems / distributions:"
+
+# ebaa152038b944bebc05a688d7c2b4b3
+#: ../src/Buildslaves.rst:57
+msgid "Microsoft Windows XP SP3 i386 (virtual machine)"
+msgstr "Microsoft Windows XP SP3 i386 (virtual machine)"
+
+# 398d4b18b10a43e7ab60033eb77b3369
+#: ../src/Buildslaves.rst:58
+msgid "CentOS 6.2 i386 (virtual machine)"
+msgstr "CentOS 6.2 i386 (virtual machine)"
+
+# d04e3dd75d71479883ff47dbb3504c38
+#: ../src/Buildslaves.rst:59
+msgid "Debian 6.0 x86_64"
+msgstr "Debian 6.0 x86_64"
+
+# 701400fab0624c96b58a09aacf94252c
+#: ../src/Buildslaves.rst:61
+msgid ""
+"Each buildslave runs with a variety of PHP versions (usually only one, but "
+"sometimes more). We use `phpfarm`_ to manage the different versions. Each "
+"version of PHP is tested separately and a buildslave can use up to 10 "
+"different PHP versions."
+msgstr ""
+"Each buildslave runs with a variety of PHP versions (usually only one, but "
+"sometimes more). We use `phpfarm`_ to manage the different versions. Each "
+"version of PHP is tested separately and a buildslave can use up to 10 "
+"different PHP versions."
+
+# 9b0c7b8aa5824d21838c3d351635e410
+#: ../src/Buildslaves.rst:66
+msgid ""
+"Since the buildmaster (the server that tells the buildslaves to test "
+"something) has no knowledge of what versions a given buildslave has, the "
+"buildslave must declare the versions it supports. To do so, code such as the "
+"following must be added at the very beginning of the buildslave's :file:"
+"`buildbot.tac` file:"
+msgstr ""
+"Since the buildmaster (the server that tells the buildslaves to test "
+"something) has no knowledge of what versions a given buildslave has, the "
+"buildslave must declare the versions it supports. To do so, code such as the "
+"following must be added at the very beginning of the buildslave's :file:"
+"`buildbot.tac` file:"
+
+# 440901b2346e4537b98436a0f32508fb
+#: ../src/Buildslaves.rst:82
+msgid ""
+"The :envvar:`PHPx_PATH` environment variables specify additional directories "
+"to add to the :envvar:`PATH` environment variable when using the PHP version "
+"with identifier ``x``. You may specify multiple paths by using the "
+"appropriate separator for your operating system (eg. colon on Linux, semi-"
+"colon on Windows)."
+msgstr ""
+"The :envvar:`PHPx_PATH` environment variables specify additional directories "
+"to add to the :envvar:`PATH` environment variable when using the PHP version "
+"with identifier ``x``. You may specify multiple paths by using the "
+"appropriate separator for your operating system (eg. colon on Linux, semi-"
+"colon on Windows)."
+
+# a5197289eb104c0d8320efdc7f72aca7
+#: ../src/Buildslaves.rst:87
+msgid ""
+"The :envvar:`PHPx_DESC` lines specify a user-friendly description of the PHP "
+"version with identifier ``x``."
+msgstr ""
+"The :envvar:`PHPx_DESC` lines specify a user-friendly description of the PHP "
+"version with identifier ``x``."
+
+# 30a859dffbca42aca6986e67391db6f0
+#: ../src/Buildslaves.rst:90
+msgid ""
+"Last but not least, :envvar:`PHP_MAIN` specifies what is considered the \"main"
+"\" PHP version supported by the buildslave. When some PHP code must be run "
+"but we do not care what version of PHP is used, the version with that "
+"identifier will be used. In the example above, the main version is '3', which "
+"refers to PHP 5.4.0-debug."
+msgstr ""
+"Last but not least, :envvar:`PHP_MAIN` specifies what is considered the \"main"
+"\" PHP version supported by the buildslave. When some PHP code must be run "
+"but we do not care what version of PHP is used, the version with that "
+"identifier will be used. In the example above, the main version is '3', which "
+"refers to PHP 5.4.0-debug."
+
+# 391755d759f641d280fe6a8aaa31c540
+#: ../src/Buildslaves.rst:98
+msgid ""
+"The versions may be numbered from 1 to 10 **with no gap in between**. Any gap "
+"in the numbering will result in the versions following the gap to not be "
+"tested at all."
+msgstr ""
+"The versions may be numbered from 1 to 10 **with no gap in between**. Any gap "
+"in the numbering will result in the versions following the gap to not be "
+"tested at all."
+
+# a8e07cdd5e6b4eea95149b6ea5ffa6f5
+#: ../src/Buildslaves.rst:102
+msgid ""
+"If you want to test the code against more than 10 different versions, either "
+"run a separate buildslave on the same machine with additional versions or "
+"contact us on IRC or GitHub so that we increase the current limit."
+msgstr ""
+"If you want to test the code against more than 10 different versions, either "
+"run a separate buildslave on the same machine with additional versions or "
+"contact us on IRC or GitHub so that we increase the current limit."
+
+# ded82862c2b248af96e6377da4c5fa30
+#: ../src/Buildslaves.rst:109
+msgid ""
+"At a minimum, you must define at least 3 variables (:envvar:`PHP1_PATH`, :"
+"envvar:`PHP1_DESC` and :envvar:`PHP_MAIN`, where :envvar:`PHP_MAIN` equals "
+"\"1\")."
+msgstr ""
+"At a minimum, you must define at least 3 variables (:envvar:`PHP1_PATH`, :"
+"envvar:`PHP1_DESC` and :envvar:`PHP_MAIN`, where :envvar:`PHP_MAIN` equals "
+"\"1\")."
+
+# c2e8cb0393c449a9adb7adccd9b9797f
+#: ../src/Buildslaves.rst:113
+msgid ""
+"When adding a new version of PHP to test against, you must always specify "
+"both the :envvar:`PHPx_PATH` and :envvar:`PHPx_DESC` variables"
+msgstr ""
+"When adding a new version of PHP to test against, you must always specify "
+"both the :envvar:`PHPx_PATH` and :envvar:`PHPx_DESC` variables"
+
+# 2781ea60850945ee8ad046c716bdabaa
+#: ../src/Buildslaves.rst:118
+msgid "Microsoft Windows"
+msgstr "Microsoft Windows"
+
+# e63c798b386b4abbb0a4e87946e34c38
+#: ../src/Buildslaves.rst:123
+msgid "Linux"
+msgstr "Linux"

@@ -42,7 +42,7 @@ coming first and the not-so-simple-to-implement stuff coming after that
     *   the running configuration may be reloaded at any time by overwriting it
         with settings found in the Erebot.xml file.
         How settings are merged between running & startup configuration has yet
-        to be defined. Simplest solution is to overwriting running configuration
+        to be defined. Simplest solution is to overwrite the running configuration
         with settings from the startup configuration upon reloading.
 
 -   reimplement (and finish the code for) the Thiercelieux game...
@@ -55,7 +55,7 @@ Take a break. The following notes were merged from an unsorted TODO file that
 was committed some time before this one was. So... it's not "up-to-date", it
 contains redundant entries with the previous list, it makes references to old
 ideas & modules, etc. That being said, "USE THIS LIST AT YOUR OWN RISK" is the
-best thing I could probably advice about it.
+best piece of advice I could probably give about it.
 
 Wanted (additions to) modules :
 

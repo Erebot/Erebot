@@ -1,0 +1,76 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# cff5028dd61a43ac9ee4a29845cb4b50
+#: ../src/index.rst:10
+msgid "Welcome to Erebot's documentation!"
+msgstr "Welcome to Erebot's documentation!"
+
+# a7211662bf8c41a9b920f645834df4f4
+#: ../src/index.rst:12
+msgid ""
+"Erebot is a modular IRC bot written in PHP. It is known to work under both "
+"Linux and Windows (contact us on GitHub if you managed to use it on MacOSX) "
+"and works on a wide range of PHP versions from PHP 5.3.3 onwards."
+msgstr ""
+"Erebot is a modular IRC bot written in PHP. It is known to work under both "
+"Linux and Windows (contact us on GitHub if you managed to use it on MacOSX) "
+"and works on a wide range of PHP versions from PHP 5.3.3 onwards."
+
+# 276d41d8c47549f88752eab86b73421f
+#: ../src/index.rst:17
+msgid ""
+"You can find more information about this project on the following websites:"
+msgstr ""
+"You can find more information about this project on the following websites:"
+
+# c5940ec66af84eaf95b1cd7ad07ed1d7
+#: ../src/index.rst:19
+msgid "https://www.erebot.net/ |---| The official website."
+msgstr "https://www.erebot.net/ |---| The official website."
+
+# 6f94998db5a241f88dfd77027a68cfb5
+#: ../src/index.rst:20
+msgid "https://github.com/Erebot/Erebot/ |---| Project page on GitHub."
+msgstr "https://github.com/Erebot/Erebot/ |---| Project page on GitHub."
+
+# 1437d94452ac4d7fb9f59ee32d26a9c3
+#: ../src/index.rst:21
+msgid "https://packages.erebot.net/ |---| Repository for the project."
+msgstr "https://packages.erebot.net/ |---| Repository for the project."
+
+# 6c77c7837d62407fb6e661ec19a307ad
+#: ../src/index.rst:22
+msgid "https://ci.erebot.net/ |---| Our Continuous Integration server."
+msgstr "https://ci.erebot.net/ |---| Our Continuous Integration server."
+
+# ef65c73101d84313a0596a56eb07913a
+#: ../src/index.rst:23
+msgid "http://travis-ci.org/Erebot/Erebot |---| Travis Continuous Integration."
+msgstr "http://travis-ci.org/Erebot/Erebot |---| Travis Continuous Integration."
+
+# 15a2bff75ad041cfbf5ad671ceecf527
+#: ../src/index.rst:25
+msgid "Contents:"
+msgstr "Contents:"
+
+# f3a4e3da51864b4cbc94b0d372e0c5f5
+#: ../src/index.rst:39
+msgid "Badges: |badges-travis| |badges-versioneye| |badges-coveralls|"
+msgstr "Badges: |badges-travis| |badges-versioneye| |badges-coveralls|"

@@ -1,0 +1,836 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# c5dcefe43f3e4fc6a4dcc266638dc44b
+#: ../src/Configuration.rst:10
+msgid "Erebot's configuration"
+msgstr "Erebot's configuration"
+
+# 838832fef55d40d3897f1ef1a8038dcd
+#: ../src/Configuration.rst:12
+msgid ""
+"Erebot's configuration is stored in an XML file. This file is usually called "
+"\"``Erebot.xml``\", though you could name it otherwise and use the :option:"
+"`Erebot -c` option when running Erebot to point it to your file."
+msgstr ""
+"Erebot's configuration is stored in an XML file. This file is usually called "
+"\"``Erebot.xml``\", though you could name it otherwise and use the :option:"
+"`Erebot -c` option when running Erebot to point it to your file."
+
+# 831abf8dc21340a8a1af11b71be4e113
+#: ../src/Configuration.rst:16
+msgid ""
+"This file is composed of a hierarchy of settings, with inner sections being "
+"able to inherit settings from outer sections."
+msgstr ""
+"This file is composed of a hierarchy of settings, with inner sections being "
+"able to inherit settings from outer sections."
+
+# 33a7e07d85994f0594b61e8727e56cb7
+#: ../src/Configuration.rst:19
+msgid "The configuration is based on 3 structures:"
+msgstr "The configuration is based on 3 structures:"
+
+# 2e588ee772d34adcaa5faf5cdf13cec3
+#: ../src/Configuration.rst:21
+msgid "general settings"
+msgstr "general settings"
+
+# e22583ade3514d52b9ca5ce11d26d0b5
+#: ../src/Configuration.rst:22
+msgid "logging configuration"
+msgstr "logging configuration"
+
+# 747865f016424ec08fe4e1ed9c6963e0
+#: ../src/Configuration.rst:23
+msgid "IRC-related settings"
+msgstr "IRC-related settings"
+
+# 690c3a59971b4bf287da3bd5874f600b
+#: ../src/Configuration.rst:25
+msgid ""
+"The general settings include things such as information on the current "
+"timezone, the locale (language) the bot should use to display messages in the "
+"console, etc."
+msgstr ""
+"The general settings include things such as information on the current "
+"timezone, the locale (language) the bot should use to display messages in the "
+"console, etc."
+
+# f1410d0aaf2e41e7812b1889e2b0d5fd
+#: ../src/Configuration.rst:29
+msgid ""
+"The logging configuration is what defines what information the bot will print "
+"to the logs, how the log are organized (do we store them in a syslog, a "
+"database, or print them directly in the console) and how they appear (how "
+"they're formatted)."
+msgstr ""
+"The logging configuration is what defines what information the bot will print "
+"to the logs, how the log are organized (do we store them in a syslog, a "
+"database, or print them directly in the console) and how they appear (how "
+"they're formatted)."
+
+# 05080398b25b4b95a2e1e50256d0bfa6
+#: ../src/Configuration.rst:34
+msgid ""
+"Last but not least, the rest of the configuration is dedicated to IRC, with "
+"information on what networks/servers the bot should contact, what modules it "
+"should enable, etc."
+msgstr ""
+"Last but not least, the rest of the configuration is dedicated to IRC, with "
+"information on what networks/servers the bot should contact, what modules it "
+"should enable, etc."
+
+# d59b216604434809ac872bd32b30122a
+#: ../src/Configuration.rst:38
+msgid ""
+"The rest of this page gives information on available options and possible "
+"values and is directly mapped to the actual hierarchy used in the XML "
+"configuration file."
+msgstr ""
+"The rest of this page gives information on available options and possible "
+"values and is directly mapped to the actual hierarchy used in the XML "
+"configuration file."
+
+# 7116f880165448ed82f8832098f86adf
+#: ../src/Configuration.rst:0
+msgid "Table of Contents"
+msgstr "Table of Contents"
+
+# 3b0b3ce7f4c94e988e2c77b1266f8ef3
+#: ../src/Configuration.rst:46
+msgid ""
+"The tags may be used in any order. Therefore, one could swap the general "
+"configuration for `\\<modules\\>`_ with the configuration for the `\\<logging"
+"\\>`_ subsystem in the tree above. You still need to maintain the hierarchy "
+"however. Therefore, a `\\<channels\\>`_ or `\\<servers\\>`_ tag may only be a "
+"descendant of a `\\<network\\>`_ tag."
+msgstr ""
+"The tags may be used in any order. Therefore, one could swap the general "
+"configuration for `\\<modules\\>`_ with the configuration for the `\\<logging"
+"\\>`_ subsystem in the tree above. You still need to maintain the hierarchy "
+"however. Therefore, a `\\<channels\\>`_ or `\\<servers\\>`_ tag may only be a "
+"descendant of a `\\<network\\>`_ tag."
+
+# 27ee84863afb471fba91fdb5697154fa
+#: ../src/Configuration.rst:55
+msgid "<configuration>"
+msgstr "<configuration>"
+
+# e2bf75521eef4168a75c4df7e447516d
+#: ../src/Configuration.rst:57
+msgid ""
+"The `\\<configuration\\>`_ tag deals with settings related to the machine "
+"Erebot is running on more than to IRC itself."
+msgstr ""
+"The `\\<configuration\\>`_ tag deals with settings related to the machine "
+"Erebot is running on more than to IRC itself."
+
+# dea676e8a3a949b29db84f1fc8971b7e
+#: ../src/Configuration.rst:60
+msgid "The following table lists attributes of this tag with their role."
+msgstr "The following table lists attributes of this tag with their role."
+
+# 5fee2e1b73d94d70bef72b9fa3fa4d4f
+#: ../src/Configuration.rst:0
+msgid "Valid attributes for the <configuration> tag"
+msgstr "Valid attributes for the <configuration> tag"
+
+# ebf597a35c7d4636a620a823187d0d91
+# 508bac73eab148ecb45b28c04be5c9d4
+# 6d76c7a3bcb4491995bce8037bf63609
+# 54ad57a5297442ee9ed01e746a9d3ece
+# 41ea46a59ae74bef81c1deb4122a7c01
+# 16337e2f53694a02b2d232ee4e6172f2
+#: ../src/Configuration.rst:65 ../src/Configuration.rst:156
+#: ../src/Configuration.rst:178 ../src/Configuration.rst:206
+#: ../src/Configuration.rst:234 ../src/Configuration.rst:323
+msgid "Attribute"
+msgstr "Attribute"
+
+# f63fc033ca214a9c85c465dbec2cf88d
+# f426b78398ad4d8fba99060230d6daf1
+# f1a6f39e7f0b4664b116bfd5cc85bc88
+# 7d7669a76b444c909a091dd6738be4ba
+# 3b0bbf206b3d42ce91604d3f512b27c1
+# a421fec8afdc421896ef31ed4a059bc9
+#: ../src/Configuration.rst:65 ../src/Configuration.rst:156
+#: ../src/Configuration.rst:178 ../src/Configuration.rst:206
+#: ../src/Configuration.rst:234 ../src/Configuration.rst:323
+msgid "Default value"
+msgstr "Default value"
+
+# c3235d8182c0446dbabddd55200cc6b7
+#: ../src/Configuration.rst:65
+msgid "Required"
+msgstr "Required"
+
+# fc926851ef5843178f7e4c95424ea391
+# aad8327298424c0a9fb7bce7acd58161
+# 95b153d4efd74cf6879063a7580cd167
+# 6bb7abe3feee492a8d152e18d62733a3
+# eff08a2340144d1e854c2ca87fa3625f
+# 4091847c6657466aa27f2af92326c839
+#: ../src/Configuration.rst:65 ../src/Configuration.rst:156
+#: ../src/Configuration.rst:178 ../src/Configuration.rst:206
+#: ../src/Configuration.rst:234 ../src/Configuration.rst:323
+msgid "Role"
+msgstr "Role"
+
+# e035edca1f68439793a60e5767b2bad5
+#: ../src/Configuration.rst:68
+msgid "|prefix|"
+msgstr "|prefix|"
+
+# 3719366ce7db49ba8dc51bfb0e8841cd
+# 694f2db1002a4c8f8285367c3c26526f
+# 22916fd0e02444b3ba8741674315d8b2
+# 16be26716f6544c6a8356466f5301f4f
+# c8a18cffa314456fb820ca72e499c27f
+# 64c236cba6084d84bb0844d6716ea510
+# 8eb738380ef44b5fba71de8193997861
+# 97f93910c98d40d38addb99c86990691
+# feffdd87853243ac8541e4c4fddc1630
+# 1fd1777da0c14b6289178524e56467ec
+# 7f7f5a92fdaa462aa4352ac9c116fa38
+# f0bb84f33e8540989ca363b8e0ff008b
+# e81eef7cabbc4005a473f0a96180c44c
+# 671b22f6bf2a412299d1ba3ac117d41d
+#: ../src/Configuration.rst:68 ../src/Configuration.rst:73
+#: ../src/Configuration.rst:77 ../src/Configuration.rst:81
+#: ../src/Configuration.rst:87 ../src/Configuration.rst:89
+#: ../src/Configuration.rst:92 ../src/Configuration.rst:96
+#: ../src/Configuration.rst:158 ../src/Configuration.rst:180
+#: ../src/Configuration.rst:182 ../src/Configuration.rst:208
+#: ../src/Configuration.rst:236 ../src/Configuration.rst:325
+msgid "n/a"
+msgstr "n/a"
+
+# a576114ebff04103b99a572a7ea06a27
+# 3882dac061c442939e77c0f2b0f7c982
+# 877f3c6863f64dd58fe92a3f5f4d93a2
+# cbf233d7f6744729a90d19229f027ddd
+#: ../src/Configuration.rst:68 ../src/Configuration.rst:81
+#: ../src/Configuration.rst:89 ../src/Configuration.rst:96
+msgid "**Yes**"
+msgstr "**Yes**"
+
+# 3310520c63234fee810035e3b86bdcb9
+#: ../src/Configuration.rst:68
+msgid ""
+"The prefix used to identify commands adressed to the bot. Common values "
+"include: ``!``, ``'``, ``@``, etc."
+msgstr ""
+"The prefix used to identify commands adressed to the bot. Common values "
+"include: ``!``, ``'``, ``@``, etc."
+
+# 27d2c8dd03aa4555ae8aaa3aecfd9129
+#: ../src/Configuration.rst:73
+msgid "daemon"
+msgstr "daemon"
+
+# 967b6e6c9bb64c4eafa71e7820d4bf95
+# eba0b6bfb08e44a68e7bd2407b7af027
+# 4592fbc09aa64d689583b364d71c65ce
+# 9aea1649bef244739367fac3b1762d18
+#: ../src/Configuration.rst:73 ../src/Configuration.rst:77
+#: ../src/Configuration.rst:87 ../src/Configuration.rst:92
+msgid "No"
+msgstr "No"
+
+# 9d1366c02bf54dcbb73a9bbf670405f2
+#: ../src/Configuration.rst:73
+msgid "Whether to start the bot as a daemon (``True``) or not (``False``)."
+msgstr "Whether to start the bot as a daemon (``True``) or not (``False``)."
+
+# b1174883f57f49848c9a13edeecfafc7
+#: ../src/Configuration.rst:77
+msgid "group"
+msgstr "group"
+
+# dd82447a0eb84f61aeb0ab90090f575b
+#: ../src/Configuration.rst:77
+msgid ""
+"Once started, assume that group's identity (given as a GID or as a name)."
+msgstr ""
+"Once started, assume that group's identity (given as a GID or as a name)."
+
+# a41c77f49b49405db761ddf12a48b2d7
+#: ../src/Configuration.rst:81
+msgid "language"
+msgstr "language"
+
+# fe39199280334fd08b3e784f1ddfbade
+#: ../src/Configuration.rst:81
+msgid ""
+"The preferred locale to use, as an IETF language tag (eg. ``en-US`` or ``fr-"
+"FR``). The usual Linux format for locales (``en_US``) is also supported."
+msgstr ""
+"The preferred locale to use, as an IETF language tag (eg. ``en-US`` or ``fr-"
+"FR``). The usual Linux format for locales (``en_US``) is also supported."
+
+# c9c68389cb3a4f32a0940d1ef653ff04
+#: ../src/Configuration.rst:87
+msgid "pidfile"
+msgstr "pidfile"
+
+# 409f5b8eb3f041049b982efe02e19065
+#: ../src/Configuration.rst:87
+msgid "Store the bot's PID in this file."
+msgstr "Store the bot's PID in this file."
+
+# 88a8ea77895b4f68970350054de26f68
+#: ../src/Configuration.rst:89
+msgid "timezone"
+msgstr "timezone"
+
+# c91a68aa86874696af0d8c4c7d754268
+#: ../src/Configuration.rst:89
+msgid "This computer's current timezone, eg. ``Europe/Paris``. [#]_"
+msgstr "This computer's current timezone, eg. ``Europe/Paris``. [#]_"
+
+# 389acfda21e548f5b30c714003eadcca
+#: ../src/Configuration.rst:92
+msgid "user"
+msgstr "user"
+
+# bbf4d4742b2444bd82e8607d48f5f61a
+#: ../src/Configuration.rst:92
+msgid "Once started, assume that user's identity (given as a UID or as a name)."
+msgstr ""
+"Once started, assume that user's identity (given as a UID or as a name)."
+
+# c7ebe2402a664def917175d950deed5e
+#: ../src/Configuration.rst:96
+msgid "version"
+msgstr "version"
+
+# 6ed612fb401a4c00a7ad4b217313c20e
+#: ../src/Configuration.rst:96
+msgid ""
+"Must match the Erebot's version. It is currently used as a failsafe to "
+"prevent the bot from running with an outdated configuration file."
+msgstr ""
+"Must match the Erebot's version. It is currently used as a failsafe to "
+"prevent the bot from running with an outdated configuration file."
+
+# 7ed8e2b4dfa34dbbb494c14c43f5d589
+#: ../src/Configuration.rst:103
+msgid ""
+"The list of supported timezones can be found on http://php.net/manual/en/"
+"timezones.php"
+msgstr ""
+"The list of supported timezones can be found on http://php.net/manual/en/"
+"timezones.php"
+
+# 081fdc86723c4468a4468f1cd2c7b668
+#: ../src/Configuration.rst:108
+msgid ""
+"The values of the ``daemon``, ``user``, ``group`` & ``pidfile`` options can "
+"be overriden from the command-line. The values given here only act as default "
+"ones in case the command line does not override them."
+msgstr ""
+"The values of the ``daemon``, ``user``, ``group`` & ``pidfile`` options can "
+"be overriden from the command-line. The values given here only act as default "
+"ones in case the command line does not override them."
+
+# 9ddd2caa4df14422907a9b6feb7fdb4f
+#: ../src/Configuration.rst:113
+msgid "<logging>"
+msgstr "<logging>"
+
+# be6b0fc9688842e48eb2a73435b2f178
+#: ../src/Configuration.rst:115
+msgid ""
+"The logging system used by Erebot is highly customizable. It uses the same "
+"kind of API as the Python logging module as it is actually a port of that "
+"module for PHP, hence its name :abbr:`PLOP (Python Logging On PHP)`."
+msgstr ""
+"The logging system used by Erebot is highly customizable. It uses the same "
+"kind of API as the Python logging module as it is actually a port of that "
+"module for PHP, hence its name :abbr:`PLOP (Python Logging On PHP)`."
+
+# 0a6c4508d75f42c0831e62eb8c979012
+#: ../src/Configuration.rst:119
+msgid ""
+"It was developped as a subproject of Erebot and ships with its own "
+"documentation."
+msgstr ""
+"It was developped as a subproject of Erebot and ships with its own "
+"documentation."
+
+# 616d38f4d14c44dab1c9e1e729855d72
+#: ../src/Configuration.rst:127
+msgid "<modules>"
+msgstr "<modules>"
+
+# a7b2e60bab884080a9ba05ed9095b28e
+#: ../src/Configuration.rst:129
+msgid ""
+"Each of the `\\<configuration\\>`_, `\\<network\\>`_, `\\<server\\>`_ and `"
+"\\<channel\\>`_ tags may have a `\\<modules\\>`_ subtag to specify which "
+"modules should be made available at that level."
+msgstr ""
+"Each of the `\\<configuration\\>`_, `\\<network\\>`_, `\\<server\\>`_ and `"
+"\\<channel\\>`_ tags may have a `\\<modules\\>`_ subtag to specify which "
+"modules should be made available at that level."
+
+# 9fd083ef8f6148d7b9458884ff7e0d34
+#: ../src/Configuration.rst:133
+msgid "This tag is a simple container for zero or more `\\<module\\>`_ tags."
+msgstr "This tag is a simple container for zero or more `\\<module\\>`_ tags."
+
+# 394910c13eaa44b0ad93ab5296371138
+#: ../src/Configuration.rst:136
+msgid "<module>"
+msgstr "<module>"
+
+# 3d52904c06b54052b3e1ef1ce5160c2f
+#: ../src/Configuration.rst:138
+msgid ""
+"This tag defines a module that will be available at the current level (ie. "
+"either globally or for the current network/server/channel)."
+msgstr ""
+"This tag defines a module that will be available at the current level (ie. "
+"either globally or for the current network/server/channel)."
+
+# 1aa67d0cd44e4c8d8929b7cad88b32bc
+#: ../src/Configuration.rst:141
+msgid ""
+"Settings for a module at one level will override settings for the same module "
+"at some higher level (hence, settings for a module in a `\\<channel\\>`_ "
+"section will replace settings defined at the `\\<network\\>`_ level). `"
+"\\<channel\\>`_ is considered as being at a lower level as `\\<server\\>`_ "
+"for the purposes of this mechanism."
+msgstr ""
+"Settings for a module at one level will override settings for the same module "
+"at some higher level (hence, settings for a module in a `\\<channel\\>`_ "
+"section will replace settings defined at the `\\<network\\>`_ level). `"
+"\\<channel\\>`_ is considered as being at a lower level as `\\<server\\>`_ "
+"for the purposes of this mechanism."
+
+# f585c7c6d799437a984c7f3b56eac426
+#: ../src/Configuration.rst:147
+msgid ""
+"You may choose to enable/disable a module at a particular level by setting "
+"its ``active`` attribute to ``True`` or ``False`` (respectively)."
+msgstr ""
+"You may choose to enable/disable a module at a particular level by setting "
+"its ``active`` attribute to ``True`` or ``False`` (respectively)."
+
+# 4536cf8d29ec4a3baafcf71929397afd
+#: ../src/Configuration.rst:150
+msgid ""
+"The following table lists attributes of this tag, their default value and "
+"their role."
+msgstr ""
+"The following table lists attributes of this tag, their default value and "
+"their role."
+
+# 0038acd5add849f499457a2a08070955
+#: ../src/Configuration.rst:0
+msgid "Valid attributes for the <module> tag"
+msgstr "Valid attributes for the <module> tag"
+
+# 990a9bfa37ae485b87fc01e4a349be59
+# c4a296c0553b41a8b8fe8d2ca7380e17
+# 8ed2c984fd0e401ea85ac7e37fd17606
+# dede371f5c2c46aaa8daefbcc6c664e6
+#: ../src/Configuration.rst:158 ../src/Configuration.rst:180
+#: ../src/Configuration.rst:208 ../src/Configuration.rst:325
+msgid "name"
+msgstr "name"
+
+# 10c264da48bd46a3b8f16750f1ed49bd
+#: ../src/Configuration.rst:158
+msgid "The name of the module to load/unload."
+msgstr "The name of the module to load/unload."
+
+# 2d1d6702d80640b294f23163a3e7faec
+#: ../src/Configuration.rst:160
+msgid "active"
+msgstr "active"
+
+# 22fe8b62a63f4bcda23c58968f7964bd
+#: ../src/Configuration.rst:160
+msgid "``True``"
+msgstr "``True``"
+
+# b47a224c179d47d6b4c3e24edc834b0c
+#: ../src/Configuration.rst:160
+msgid ""
+"Indicates whether the module should be enabled at that level (``True``), or "
+"disabled (``False``)."
+msgstr ""
+"Indicates whether the module should be enabled at that level (``True``), or "
+"disabled (``False``)."
+
+# 7d78fcf0bb54452db027d608417125a8
+#: ../src/Configuration.rst:165
+msgid ""
+"A <module> tag may contain zero or more `\\<param\\>`_ tags to specify "
+"additional parameters the module should take into account (such as specific "
+"settings)."
+msgstr ""
+"A <module> tag may contain zero or more `\\<param\\>`_ tags to specify "
+"additional parameters the module should take into account (such as specific "
+"settings)."
+
+# b313a27469db425ebbe88a488887c099
+#: ../src/Configuration.rst:170
+msgid "<param>"
+msgstr "<param>"
+
+# 9f5cc2640a0d4011984113d6228ec00a
+#: ../src/Configuration.rst:172
+msgid ""
+"This tag can be used to define a parameter for a module. It has 2 (two) "
+"mandatory attributes, as described in the table below."
+msgstr ""
+"This tag can be used to define a parameter for a module. It has 2 (two) "
+"mandatory attributes, as described in the table below."
+
+# 88ccaa6e7c894f7cb3de10b31b733acf
+#: ../src/Configuration.rst:0
+msgid "Valid attributes for the <param> tag"
+msgstr "Valid attributes for the <param> tag"
+
+# 2b2991d3487e419c8fe0bd39ee781cf8
+#: ../src/Configuration.rst:180
+msgid "The name of the parameter."
+msgstr "The name of the parameter."
+
+# 35090c33aa884240b6b081eaf35fd58e
+#: ../src/Configuration.rst:182
+msgid "value"
+msgstr "value"
+
+# e23d46de5e4942a39d146a434a5b3d7f
+#: ../src/Configuration.rst:182
+msgid ""
+"The value for that parameter. Different types of values are accepted. The "
+"precise type to use depends on the module and parameter. Read each module's "
+"documentation for more information."
+msgstr ""
+"The value for that parameter. Different types of values are accepted. The "
+"precise type to use depends on the module and parameter. Read each module's "
+"documentation for more information."
+
+# cae89de7d02549ed88721ab48f751a12
+#: ../src/Configuration.rst:190
+msgid "A <param> tag may NOT contain any subtags."
+msgstr "A <param> tag may NOT contain any subtags."
+
+# bdb8513ce00e438587a7c49743ee1bb2
+#: ../src/Configuration.rst:193
+msgid "<networks>"
+msgstr "<networks>"
+
+# 6065768a5fcd43119dba7d4ab7e81c87
+#: ../src/Configuration.rst:195
+msgid "This tag is a simple container for zero or more `\\<network\\>`_."
+msgstr "This tag is a simple container for zero or more `\\<network\\>`_."
+
+# f386bdf26983437ca8b47863987b2877
+#: ../src/Configuration.rst:198
+msgid "<network>"
+msgstr "<network>"
+
+# 3e652aadca63480d813086883363d4ec
+#: ../src/Configuration.rst:200
+msgid ""
+"This tag represents an IRC network. The following table lists attributes of "
+"this tag with their role."
+msgstr ""
+"This tag represents an IRC network. The following table lists attributes of "
+"this tag with their role."
+
+# 5d1bb9ed75694d49aee73c127c791690
+#: ../src/Configuration.rst:0
+msgid "Valid attributes for the <network> tag"
+msgstr "Valid attributes for the <network> tag"
+
+# 4da9d1cb84bf49b28f7112c840b6a102
+#: ../src/Configuration.rst:208
+msgid "The name of that IRC network."
+msgstr "The name of that IRC network."
+
+# 89a26f90777c4fa1ba88041547d9bdbd
+#: ../src/Configuration.rst:211
+msgid ""
+"The <network> tag **MUST** contain a `\\<servers\\>`_ subtag, used to "
+"describe IRC servers belonging to that IRC network."
+msgstr ""
+"The <network> tag **MUST** contain a `\\<servers\\>`_ subtag, used to "
+"describe IRC servers belonging to that IRC network."
+
+# e09d35b8d94f4eab9fbe1e499ef978f6
+#: ../src/Configuration.rst:214
+msgid ""
+"It may contain a `\\<modules\\>`_ subtag to change the settings of a module "
+"for this IRC server."
+msgstr ""
+"It may contain a `\\<modules\\>`_ subtag to change the settings of a module "
+"for this IRC server."
+
+# dd85f801089c467794e3673d40766357
+#: ../src/Configuration.rst:217
+msgid ""
+"It may also contain a `\\<channels\\>`_ subtag to change the settings of a "
+"module for some IRC channels on this network."
+msgstr ""
+"It may also contain a `\\<channels\\>`_ subtag to change the settings of a "
+"module for some IRC channels on this network."
+
+# dc6fa387f72c45319d061bfd50611501
+#: ../src/Configuration.rst:221
+msgid "<servers>"
+msgstr "<servers>"
+
+# 699623bc09b5468b99e42b2e116f09fc
+#: ../src/Configuration.rst:223
+msgid "This tag is a simple container for **one** or more `\\<server\\>`_."
+msgstr "This tag is a simple container for **one** or more `\\<server\\>`_."
+
+# f567c5cd034944eda3ceebac601a4a5d
+#: ../src/Configuration.rst:226
+msgid "<server>"
+msgstr "<server>"
+
+# f417a683a2ee452c8c4180fba3e1e634
+#: ../src/Configuration.rst:228
+msgid ""
+"This tag represents the configuration of an IRC server. The following table "
+"lists attributes of this tag with their role."
+msgstr ""
+"This tag represents the configuration of an IRC server. The following table "
+"lists attributes of this tag with their role."
+
+# 67a92278893f452094c6594b253158fe
+#: ../src/Configuration.rst:0
+msgid "Valid attributes for the <server> tag"
+msgstr "Valid attributes for the <server> tag"
+
+# e0629ed7f24a4627a198b501d1e55cdf
+#: ../src/Configuration.rst:236
+msgid "url"
+msgstr "url"
+
+# 16c42dae090b40d0a351091b99eac4c4
+#: ../src/Configuration.rst:236
+msgid "Connection URLs to use to contact this IRC server."
+msgstr "Connection URLs to use to contact this IRC server."
+
+# 2519379bf24448d4a11ea27c2ddf1c02
+#: ../src/Configuration.rst:240
+msgid ""
+"The ``url`` attribute contains a series of connection URLs. A connection URL "
+"simply gives information on how to connect to a particular IRC server. A "
+"valid connection URL looks like this: ``ircs://irc.iiens.net:7000/?"
+"verify_peer=0``"
+msgstr ""
+"The ``url`` attribute contains a series of connection URLs. A connection URL "
+"simply gives information on how to connect to a particular IRC server. A "
+"valid connection URL looks like this: ``ircs://irc.iiens.net:7000/?"
+"verify_peer=0``"
+
+# e6b551181797434a92fcdc6009e9ea62
+#: ../src/Configuration.rst:245
+msgid ""
+"The scheme part may be either ``irc`` for plain text communications or "
+"``ircs`` for IRC over SSL/TLS (encrypted communications). The host part "
+"indicates the IP address or hostname of the IRC server. The port part can be "
+"used to override the default port value for the given scheme."
+msgstr ""
+"The scheme part may be either ``irc`` for plain text communications or "
+"``ircs`` for IRC over SSL/TLS (encrypted communications). The host part "
+"indicates the IP address or hostname of the IRC server. The port part can be "
+"used to override the default port value for the given scheme."
+
+# eb362e01683643d59010b86bb258ff19
+#: ../src/Configuration.rst:251
+msgid ""
+"By default, plain text IRC uses port 194 while IRC over SSL/TLS uses port "
+"994. However, since both of these ports require root permissions on linux to "
+"launch a server, most IRC servers use different values like 6667 or 7000 for "
+"plain text communications and 6697 or 7002 for encrypted communications."
+msgstr ""
+"By default, plain text IRC uses port 194 while IRC over SSL/TLS uses port "
+"994. However, since both of these ports require root permissions on linux to "
+"launch a server, most IRC servers use different values like 6667 or 7000 for "
+"plain text communications and 6697 or 7002 for encrypted communications."
+
+# 02b819e0eb484067a5a97e7a68abf0a1
+#: ../src/Configuration.rst:256
+msgid ""
+"Last but not least, additional parameters may be used to control various "
+"aspects of the connection phase. At present time, these settings only affect "
+"encrypted connections (IRC over SSL/TLS), but they may be later extended to "
+"affect plain-text connections as well. The following table lists currently "
+"supported parameters:"
+msgstr ""
+"Last but not least, additional parameters may be used to control various "
+"aspects of the connection phase. At present time, these settings only affect "
+"encrypted connections (IRC over SSL/TLS), but they may be later extended to "
+"affect plain-text connections as well. The following table lists currently "
+"supported parameters:"
+
+# 5f41a841f9dc4a2da2cc56a22b41fdd2
+#: ../src/Configuration.rst:0
+msgid "Valid parameters for connection URLs"
+msgstr "Valid parameters for connection URLs"
+
+# 901f67f32def4ba59e974577ed12206b
+#: ../src/Configuration.rst:265
+msgid "Name"
+msgstr "Name"
+
+# 3ac38cf48ed1429ebbe3235701d0b87d
+#: ../src/Configuration.rst:265
+msgid "Valid values"
+msgstr "Valid values"
+
+# 3e71022c83d24c46bf08276e5209cf3c
+#: ../src/Configuration.rst:265
+msgid "Description"
+msgstr "Description"
+
+# 71876f443f5a4b58922acf7092f5e75f
+#: ../src/Configuration.rst:267
+msgid "verify_peer"
+msgstr "verify_peer"
+
+# 3f4accf466ef45a9a6a26dc1646a6770
+# df4b28bb94ad4a80a15ab2143b631d95
+#: ../src/Configuration.rst:267 ../src/Configuration.rst:271
+msgid "``0`` or ``1``"
+msgstr "``0`` or ``1``"
+
+# 6ae99a66747248bba68b77e501763f75
+#: ../src/Configuration.rst:267
+msgid "Check if the certificate really belongs to the target IRC server."
+msgstr "Check if the certificate really belongs to the target IRC server."
+
+# 3ad1675533294d9c957bf6ec52438a76
+#: ../src/Configuration.rst:271
+msgid "allow_self_signed"
+msgstr "allow_self_signed"
+
+# cabb08f6a8414642aff7d7099b78649d
+#: ../src/Configuration.rst:271
+msgid "Consider self-signed certificates to be valid."
+msgstr "Consider self-signed certificates to be valid."
+
+# 34d0e82626d645ce98aa7012c1c63059
+#: ../src/Configuration.rst:274
+msgid "ciphers"
+msgstr "ciphers"
+
+# 9790af93414a4d24a89d54b17da49c0c
+#: ../src/Configuration.rst:274
+msgid "a list of ciphers separated by colons"
+msgstr "a list of ciphers separated by colons"
+
+# f71b062c0578499ea46d924a4bb472a5
+#: ../src/Configuration.rst:274
+msgid "Acceptable ciphers to use to encrypt communications with the server."
+msgstr "Acceptable ciphers to use to encrypt communications with the server."
+
+# fad67ffc292f4d46baf5562f2431c041
+#: ../src/Configuration.rst:279
+msgid ""
+"See also http://php.net/manual/en/context.ssl.php for additional information "
+"on those settings."
+msgstr ""
+"See also http://php.net/manual/en/context.ssl.php for additional information "
+"on those settings."
+
+# 0aa3cdda1b324292bfdeaf46116c483f
+#: ../src/Configuration.rst:282
+msgid ""
+"You may also specify an HTTP or SOCKS 5 server through which the connection "
+"should be proxied by adding a proxy URL to the ``url`` attribute. Several "
+"proxies can be used by prepending their URLs to that attribute, separated by "
+"spaces:"
+msgstr ""
+"You may also specify an HTTP or SOCKS 5 server through which the connection "
+"should be proxied by adding a proxy URL to the ``url`` attribute. Several "
+"proxies can be used by prepending their URLs to that attribute, separated by "
+"spaces:"
+
+# 5f0a5d7f71be49ec856d83a508c350d3
+#: ../src/Configuration.rst:303
+msgid ""
+"As of this writing, Erebot does not support older versions of the SOCKS "
+"protocol (namely, SOCKSv4 and its derivatives)."
+msgstr ""
+"As of this writing, Erebot does not support older versions of the SOCKS "
+"protocol (namely, SOCKSv4 and its derivatives)."
+
+# b5b679ea2ef34d25a16bb0520146b5de
+#: ../src/Configuration.rst:306
+msgid ""
+"This tag may contain a `\\<modules\\>`_ subtag to change the settings of a "
+"module for this IRC server."
+msgstr ""
+"This tag may contain a `\\<modules\\>`_ subtag to change the settings of a "
+"module for this IRC server."
+
+# 7a68423c774347d39705fd7cf281cc7a
+#: ../src/Configuration.rst:310
+msgid "<channels>"
+msgstr "<channels>"
+
+# c93c75290f5f439d8eac080a772a4506
+#: ../src/Configuration.rst:312
+msgid "This tag is a simple container for zero or more `\\<channel\\>`_ tags."
+msgstr "This tag is a simple container for zero or more `\\<channel\\>`_ tags."
+
+# 136dc6f3403948738b433a32e2c63736
+#: ../src/Configuration.rst:315
+msgid "<channel>"
+msgstr "<channel>"
+
+# bf8ff3b8a2784c168d36e3fdb021581a
+#: ../src/Configuration.rst:317
+msgid ""
+"This tag represents the configuration of an IRC channel. The following table "
+"lists attributes of this tag with their role."
+msgstr ""
+"This tag represents the configuration of an IRC channel. The following table "
+"lists attributes of this tag with their role."
+
+# 9811bf009a7d4ce1900e1cc651906e45
+#: ../src/Configuration.rst:0
+msgid "Valid attributes for the <channel> tag."
+msgstr "Valid attributes for the <channel> tag."
+
+# 65a865a9cc854afd9733bb1f48ba5429
+#: ../src/Configuration.rst:325
+msgid "The name of the IRC channel being configured."
+msgstr "The name of the IRC channel being configured."
+
+# 9bd3385501764ffd801c2e1ba8e5bc72
+#: ../src/Configuration.rst:329
+msgid ""
+"This tag may contain a `\\<modules\\>`_ subtag to change the settings of a "
+"module for this IRC channel."
+msgstr ""
+"This tag may contain a `\\<modules\\>`_ subtag to change the settings of a "
+"module for this IRC channel."

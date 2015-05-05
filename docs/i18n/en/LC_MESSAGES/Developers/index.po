@@ -1,0 +1,32 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# c08d27f0fa1e4afeae90136f7f40ed37
+#: ../src/Developers/index.rst:10
+msgid "Developer Zone"
+msgstr "Developer Zone"
+
+# 580ca1a319904fbf99cbf6f883b1bb92
+#: ../src/Developers/index.rst:12
+msgid ""
+"This pages contains links to various resources that developers may be "
+"interested in:"
+msgstr ""
+"This pages contains links to various resources that developers may be "
+"interested in:"

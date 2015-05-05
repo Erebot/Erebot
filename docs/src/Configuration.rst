@@ -1,3 +1,5 @@
+..  _`configuration`:
+
 Erebot's configuration
 ======================
 

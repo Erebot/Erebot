@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/index.rst:10
+# cff5028dd61a43ac9ee4a29845cb4b50
+msgid "Welcome to Erebot's documentation!"
+msgstr ""
+
+#: ../src/index.rst:12
+# a7211662bf8c41a9b920f645834df4f4
+msgid "Erebot is a modular IRC bot written in PHP. It is known to work under both Linux and Windows (contact us on GitHub if you managed to use it on MacOSX) and works on a wide range of PHP versions from PHP 5.3.3 onwards."
+msgstr ""
+
+#: ../src/index.rst:17
+# 276d41d8c47549f88752eab86b73421f
+msgid "You can find more information about this project on the following websites:"
+msgstr ""
+
+#: ../src/index.rst:19
+# c5940ec66af84eaf95b1cd7ad07ed1d7
+msgid "https://www.erebot.net/ |---| The official website."
+msgstr ""
+
+#: ../src/index.rst:20
+# 6f94998db5a241f88dfd77027a68cfb5
+msgid "https://github.com/Erebot/Erebot/ |---| Project page on GitHub."
+msgstr ""
+
+#: ../src/index.rst:21
+# 1437d94452ac4d7fb9f59ee32d26a9c3
+msgid "https://packages.erebot.net/ |---| Repository for the project."
+msgstr ""
+
+#: ../src/index.rst:22
+# 6c77c7837d62407fb6e661ec19a307ad
+msgid "https://ci.erebot.net/ |---| Our Continuous Integration server."
+msgstr ""
+
+#: ../src/index.rst:23
+# ef65c73101d84313a0596a56eb07913a
+msgid "http://travis-ci.org/Erebot/Erebot |---| Travis Continuous Integration."
+msgstr ""
+
+#: ../src/index.rst:25
+# 15a2bff75ad041cfbf5ad671ceecf527
+msgid "Contents:"
+msgstr ""
+
+#: ../src/index.rst:39
+# f3a4e3da51864b4cbc94b0d372e0c5f5
+msgid "Badges: |badges-travis| |badges-versioneye| |badges-coveralls|"
+msgstr ""
+

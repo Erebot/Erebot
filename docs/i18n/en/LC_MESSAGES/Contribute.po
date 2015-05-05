@@ -1,0 +1,247 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# 1e39253d922e43f38d38d6dac5cb1039
+#: ../src/Contribute.rst:10
+msgid "Contribute"
+msgstr "Contribute"
+
+# 068a4b655e5042f186b24a8bb468fb75
+#: ../src/Contribute.rst:12
+msgid ""
+"So, you took interest in Erebot and would like to contribute back? This is "
+"the right page!"
+msgstr ""
+"So, you took interest in Erebot and would like to contribute back? This is "
+"the right page!"
+
+# 23c9030dbe4c4baead0df9ed1228bb0d
+#: ../src/Contribute.rst:15
+msgid ""
+"There are actually several ways by which would may contribute to the project:"
+msgstr ""
+"There are actually several ways by which would may contribute to the project:"
+
+# 9e58b87430644c3eb692f14970d66c42
+#: ../src/Contribute.rst:18
+msgid "by `reporting new issues`_ (or asking for new features)"
+msgstr "by `reporting new issues`_ (or asking for new features)"
+
+# a2c42acec76b4f03880871b89f2faff4
+#: ../src/Contribute.rst:19
+msgid "by submitting `new modules`_"
+msgstr "by submitting `new modules`_"
+
+# ec78749951164113bc5a50298b729bb4
+#: ../src/Contribute.rst:20
+msgid "by forking the code and sending `pull requests`_"
+msgstr "by forking the code and sending `pull requests`_"
+
+# e8d1f27402d443d8b755f29bdf1a3eae
+#: ../src/Contribute.rst:21
+msgid "by running the tests suite (manually or by providing a `test machine`_)"
+msgstr "by running the tests suite (manually or by providing a `test machine`_)"
+
+# 0c716785e95d490eb2df3e126dee645e
+#: ../src/Contribute.rst:22
+msgid "by submitting `new translations`_ (or patches for existing ones)"
+msgstr "by submitting `new translations`_ (or patches for existing ones)"
+
+# 954dbe733e36426bb5122a23b093e717
+#: ../src/Contribute.rst:24
+msgid ""
+"Whichever one it is, you may also `join our IRC channel`_ to discuss issues, "
+"new ideas / feature requests and follow the bot's development."
+msgstr ""
+"Whichever one it is, you may also `join our IRC channel`_ to discuss issues, "
+"new ideas / feature requests and follow the bot's development."
+
+# d72489c73c7341fa8f24817676ad6fb4
+#: ../src/Contribute.rst:30
+msgid "New modules"
+msgstr "New modules"
+
+# b9bd7187cf61462b8c05e32e7eab5f52
+#: ../src/Contribute.rst:32
+msgid ""
+"If you wish to contribute new modules, you should probably start by reading "
+"our :ref:`development guides <Writing a new module>`. Once your code is "
+"ready, make sure to send an email to erebot@erebot.net with a link to it so "
+"that your module can be added to our list of :ref:`Third-party modules`."
+msgstr ""
+"If you wish to contribute new modules, you should probably start by reading "
+"our :ref:`development guides <Writing a new module>`. Once your code is "
+"ready, make sure to send an email to erebot@erebot.net with a link to it so "
+"that your module can be added to our list of :ref:`Third-party modules`."
+
+# 0903a621ead94accaadf5724af38f167
+#: ../src/Contribute.rst:41
+msgid "Code/patch for Erebot's core and API"
+msgstr "Code/patch for Erebot's core and API"
+
+# 24a5f058805640f98f7a5f05f7cd8e02
+#: ../src/Contribute.rst:43
+msgid ""
+"If you plan on sending patches (or pull requests), please read our "
+"documentation on the `coding standard`_ used by Erebot developers first. Your "
+"patch will have greater chances to be approved if it abides by that standard "
+"when you submit it."
+msgstr ""
+"If you plan on sending patches (or pull requests), please read our "
+"documentation on the `coding standard`_ used by Erebot developers first. Your "
+"patch will have greater chances to be approved if it abides by that standard "
+"when you submit it."
+
+# fb36abfc2c3447fc8c736434f24b2c2f
+#: ../src/Contribute.rst:48
+msgid ""
+"To contribute a patch, you will need a GitHub account. Then you can simply:"
+msgstr ""
+"To contribute a patch, you will need a GitHub account. Then you can simply:"
+
+# c2db98aee0a44797bf664030d5f0e778
+#: ../src/Contribute.rst:50
+msgid "`Fork the code`_ to your own account."
+msgstr "`Fork the code`_ to your own account."
+
+# d678c57ed8b042a8ba8a54e8a0c57a08
+#: ../src/Contribute.rst:51
+msgid "Create a new branch."
+msgstr "Create a new branch."
+
+# b6b1e3a671be462f9a1ab16a5dab59e5
+#: ../src/Contribute.rst:52
+msgid "Patch things up as much as you want."
+msgstr "Patch things up as much as you want."
+
+# 3904826c43684c039201ca3c99a18e92
+#: ../src/Contribute.rst:53
+msgid "Create a pull request with your changes."
+msgstr "Create a pull request with your changes."
+
+# 6cb23e7636a94e01aa34be590ba86989
+#: ../src/Contribute.rst:55
+msgid ""
+"Once your pull request has been received, it will undergo a review process to "
+"decide whether it can be accepted as-is, needs more changes before having a "
+"chance to be accepted or is utterly rejected."
+msgstr ""
+"Once your pull request has been received, it will undergo a review process to "
+"decide whether it can be accepted as-is, needs more changes before having a "
+"chance to be accepted or is utterly rejected."
+
+# f9ce194c11f14ff294dab6a35799b666
+#: ../src/Contribute.rst:69
+msgid "Test machines"
+msgstr "Test machines"
+
+# 6508b168b44a4bc9b40cbfd92efb44ef
+#: ../src/Contribute.rst:71
+msgid ""
+"So, you have some spare CPU cycles to contribute? We're glad to hear that!"
+msgstr ""
+"So, you have some spare CPU cycles to contribute? We're glad to hear that!"
+
+# cd48cc6ce53d442ebf4b86a1068e9392
+#: ../src/Contribute.rst:73
+msgid ""
+"The Erebot project uses `Buildbot`_ for its continuous integration. The "
+"process of setting up a test machine (more oftenly called a \"buildslave\" in "
+"Buildbot's terminology) is a bit tedious and deserves `a page of its own "
+"<Buildslaves.html>`_."
+msgstr ""
+"The Erebot project uses `Buildbot`_ for its continuous integration. The "
+"process of setting up a test machine (more oftenly called a \"buildslave\" in "
+"Buildbot's terminology) is a bit tedious and deserves `a page of its own "
+"<Buildslaves.html>`_."
+
+# 498d97d202694b659099845acb412361
+#: ../src/Contribute.rst:82
+msgid "Translations"
+msgstr "Translations"
+
+# ef88323ffef74e77bee6f81f78423a9f
+#: ../src/Contribute.rst:84
+msgid ""
+"The project uses the `Transifex service`_ to manage translations. All "
+"submissions or patches to translations should be submitted through `Erebot's "
+"project page on Transifex`_."
+msgstr ""
+"The project uses the `Transifex service`_ to manage translations. All "
+"submissions or patches to translations should be submitted through `Erebot's "
+"project page on Transifex`_."
+
+# eb54a409306e4c99866106c3ab2cae77
+#: ../src/Contribute.rst:88
+msgid ""
+"To submit a new translation or a patch for an already existing translation, "
+"you will need a Transifex account. Then, apply for one of the translation "
+"teams or request the creation of a new team in case none currently exists for "
+"your language. As soon as you have joined one of the translation teams, you "
+"may proceed with your changes."
+msgstr ""
+"To submit a new translation or a patch for an already existing translation, "
+"you will need a Transifex account. Then, apply for one of the translation "
+"teams or request the creation of a new team in case none currently exists for "
+"your language. As soon as you have joined one of the translation teams, you "
+"may proceed with your changes."
+
+# f6de06ced7e04d6a88a5905ab71904c5
+#: ../src/Contribute.rst:94
+msgid ""
+"Just like for the code, translations undergo manual review. Once a "
+"translation has been formally reviewed, it will automatically be merged in "
+"the project alongside other translations."
+msgstr ""
+"Just like for the code, translations undergo manual review. Once a "
+"translation has been formally reviewed, it will automatically be merged in "
+"the project alongside other translations."
+
+# 1fdb4c967133460fb4fbdf8b21b3b02d
+#: ../src/Contribute.rst:99
+msgid ""
+"There is a tight integration between the code and the translations. The "
+"translations on Transifex are periodically synchronized with the messages in "
+"the repository, meaning that any change / new message in the code quickly "
+"appears on the Transifex page."
+msgstr ""
+"There is a tight integration between the code and the translations. The "
+"translations on Transifex are periodically synchronized with the messages in "
+"the repository, meaning that any change / new message in the code quickly "
+"appears on the Transifex page."
+
+# ab7fdf1f924747aea19ccf399d27693c
+#: ../src/Contribute.rst:104
+msgid ""
+"This goes both ways: changes to the translations are automatically merged in "
+"the code's repository once they have been approved by one of your team's "
+"reviewers."
+msgstr ""
+"This goes both ways: changes to the translations are automatically merged in "
+"the code's repository once they have been approved by one of your team's "
+"reviewers."
+
+# 802e7bfed8ad4ca6b6b6b4c5811f4a1a
+#: ../src/Contribute.rst:109
+msgid ""
+"It usually takes from 5 to 10 minutes after a translation has been approved "
+"before the changes are visible in the repository."
+msgstr ""
+"It usually takes from 5 to 10 minutes after a translation has been approved "
+"before the changes are visible in the repository."

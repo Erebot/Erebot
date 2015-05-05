@@ -28,6 +28,12 @@ Contents:
     Developers/index
     License
 
+..  toctree::
+    :hidden:
+
+    generic/Installation
+
+
 Badges: |badges-travis| |badges-versioneye| |badges-coveralls|
 
 ..  |badges-travis| image:: https://travis-ci.org/Erebot/Erebot.png?branch=master

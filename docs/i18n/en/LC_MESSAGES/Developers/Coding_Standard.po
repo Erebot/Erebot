@@ -1,0 +1,1369 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# a223d3c07afe4c8f93366c26e87ed2b5
+#: ../src/Developers/Coding_Standard.rst:10
+msgid "Coding standard"
+msgstr "Coding standard"
+
+# 83770745ec914e2d929c9b818451933d
+#: ../src/Developers/Coding_Standard.rst:12
+msgid ""
+"This page contains documentation on the coding standard used for Erebot's "
+"development. It takes inspiration from other such documents, namely:"
+msgstr ""
+"This page contains documentation on the coding standard used for Erebot's "
+"development. It takes inspiration from other such documents, namely:"
+
+# 5f44e75cc7e54e6fad0b336bddb12cdd
+#: ../src/Developers/Coding_Standard.rst:15
+msgid "`Drupal coding standards`_"
+msgstr "`Drupal coding standards`_"
+
+# 1db9ff0e420f4c7199709a6003778ca3
+#: ../src/Developers/Coding_Standard.rst:16
+msgid "`Zend Framework coding style`_"
+msgstr "`Zend Framework coding style`_"
+
+# c0014138374740b997b9a4197c850346
+#: ../src/Developers/Coding_Standard.rst:17
+msgid "`The PEAR coding standards`_"
+msgstr "`The PEAR coding standards`_"
+
+# 326ed0b2c5654cfeb8a5cd0dac243bbe
+#: ../src/Developers/Coding_Standard.rst:26
+msgid ""
+"Most of the information on this page is organized in the same way as the "
+"Drupal coding standards."
+msgstr ""
+"Most of the information on this page is organized in the same way as the "
+"Drupal coding standards."
+
+# b40f005186254b1091f7205439c6fda9
+#: ../src/Developers/Coding_Standard.rst:0
+msgid "Table of Contents"
+msgstr "Table of Contents"
+
+# ca3dfb3420d642ffbc2fe9dcdefa833d
+#: ../src/Developers/Coding_Standard.rst:34
+msgid "Indenting and whitespace"
+msgstr "Indenting and whitespace"
+
+# 3c760dfd2b5a40159ea7de937c8df261
+#: ../src/Developers/Coding_Standard.rst:36
+msgid "Use an indent of 4 spaces, with no tabs."
+msgstr "Use an indent of 4 spaces, with no tabs."
+
+# e58218deba6d4a66bac10bb05d64f79e
+#: ../src/Developers/Coding_Standard.rst:38
+msgid "Lines should have no trailing whitespace at the end."
+msgstr "Lines should have no trailing whitespace at the end."
+
+# 03d0b829b0404e9d96bc4731b8a47eec
+#: ../src/Developers/Coding_Standard.rst:40
+msgid ""
+"Files should be formatted with \\\\n as the line ending (Unix line endings), "
+"not \\\\r\\\\n (Windows line endings)."
+msgstr ""
+"Files should be formatted with \\\\n as the line ending (Unix line endings), "
+"not \\\\r\\\\n (Windows line endings)."
+
+# 42205b14dbe2417096dec0e96945bd78
+#: ../src/Developers/Coding_Standard.rst:43
+msgid ""
+"All text files should end in a single newline (\\\\n). This avoids the "
+"verbose \"\\\\ No newline at end of file\" patch warning and makes patches "
+"easier to read since it's clearer what is being changed when lines are added "
+"to the end of a file."
+msgstr ""
+"All text files should end in a single newline (\\\\n). This avoids the "
+"verbose \"\\\\ No newline at end of file\" patch warning and makes patches "
+"easier to read since it's clearer what is being changed when lines are added "
+"to the end of a file."
+
+# b10536a4c5fd4ca3a05b863bc6c11dc2
+#: ../src/Developers/Coding_Standard.rst:50
+msgid "Operators"
+msgstr "Operators"
+
+# 402f2865e29c43a9979e1f4d4c199d5a
+#: ../src/Developers/Coding_Standard.rst:52
+msgid ""
+"All binary operators (operators that come between two values), such as ``+``, "
+"``-``, ``=``, ``!=``, ``==``, ``>``, etc. should have a space before and "
+"after the operator, for readability."
+msgstr ""
+"All binary operators (operators that come between two values), such as ``+``, "
+"``-``, ``=``, ``!=``, ``==``, ``>``, etc. should have a space before and "
+"after the operator, for readability."
+
+# 08283990577346b5bd50249c9aafaea1
+#: ../src/Developers/Coding_Standard.rst:56
+msgid "For example, an assignment should be formatted as"
+msgstr "For example, an assignment should be formatted as"
+
+# 9b8f6ed6f6a641a9b14a2f3b661ad0eb
+#: ../src/Developers/Coding_Standard.rst:62
+msgid "rather than"
+msgstr "rather than"
+
+# 7115772b5184428dbf71427f79c24443
+#: ../src/Developers/Coding_Standard.rst:68
+msgid ""
+"As a special case for assigning operators, such as ``=``, ``&=``, ``<<=``, "
+"etc. you may add several spaces before the operator when the code contains "
+"several lines of assignments (lining up the equal signs) so as to improve "
+"readability:"
+msgstr ""
+"As a special case for assigning operators, such as ``=``, ``&=``, ``<<=``, "
+"etc. you may add several spaces before the operator when the code contains "
+"several lines of assignments (lining up the equal signs) so as to improve "
+"readability:"
+
+# 35d0dd4c64ce4fb9a1a0eb8c1bac8c66
+#: ../src/Developers/Coding_Standard.rst:80
+msgid ""
+"Unary operators (operators that operate on only one value), such as ``++``, "
+"should not have a space between the operator and the variable or number they "
+"are operating on."
+msgstr ""
+"Unary operators (operators that operate on only one value), such as ``++``, "
+"should not have a space between the operator and the variable or number they "
+"are operating on."
+
+# ef9cfa55ffa943c28e7769d80583abef
+#: ../src/Developers/Coding_Standard.rst:84
+msgid ""
+"When using the ternary operator, add parentheses around the condition: "
+"``(...) ? ... : ...``."
+msgstr ""
+"When using the ternary operator, add parentheses around the condition: "
+"``(...) ? ... : ...``."
+
+# 7a8a107c9da340ffbdf1074ddd960fc6
+#: ../src/Developers/Coding_Standard.rst:87
+msgid ""
+"Only wrap the ternary operator if the total length of the line exceeds the |"
+"cs-chars-limit| chars limit. In that case, add a single newline before the ``?"
+"`` and ``:`` symbols, while adding enough spaces before them so as to line up "
+"the 3 (three) parts of the operator:"
+msgstr ""
+"Only wrap the ternary operator if the total length of the line exceeds the |"
+"cs-chars-limit| chars limit. In that case, add a single newline before the ``?"
+"`` and ``:`` symbols, while adding enough spaces before them so as to line up "
+"the 3 (three) parts of the operator:"
+
+# 256ee01c8da94622b681f843bb2f7ea1
+#: ../src/Developers/Coding_Standard.rst:102
+msgid "Casting"
+msgstr "Casting"
+
+# 0da6e8d5a5954bf780969c414e5f8c97
+#: ../src/Developers/Coding_Standard.rst:104
+msgid "Put a single space between the (type) and the operand of a cast:"
+msgstr "Put a single space between the (type) and the operand of a cast:"
+
+# 562c7d5e4ef24e788cc0d06e0db74874
+#: ../src/Developers/Coding_Standard.rst:112
+msgid "Control structures"
+msgstr "Control structures"
+
+# 9d28923b246e43999a15b44a8fa788dd
+#: ../src/Developers/Coding_Standard.rst:114
+msgid ""
+"Control structures include ``if``, ``for``, ``while``, ``switch``, etc. Here "
+"is a sample ``if`` statement, since it is the most complicated of them:"
+msgstr ""
+"Control structures include ``if``, ``for``, ``while``, ``switch``, etc. Here "
+"is a sample ``if`` statement, since it is the most complicated of them:"
+
+# 95b27666e1ff486e880fa0eebf1dc075
+#: ../src/Developers/Coding_Standard.rst:129
+msgid ""
+"Control statements should have one space between the control keyword and "
+"opening parenthesis, to distinguish them from function calls."
+msgstr ""
+"Control statements should have one space between the control keyword and "
+"opening parenthesis, to distinguish them from function calls."
+
+# b8005f1ddf964096b056fa27f64fe32d
+#: ../src/Developers/Coding_Standard.rst:132
+msgid "Use ``else if`` instead of ``elseif``."
+msgstr "Use ``else if`` instead of ``elseif``."
+
+# 4a2d3763901e4da885939d7df06774cc
+#: ../src/Developers/Coding_Standard.rst:134
+msgid ""
+"You are strongly encouraged to always use curly braces even in situations "
+"where they are technically optional.Having them increases readability and "
+"decreases the likelihood of logic errors being introduced when new lines are "
+"added."
+msgstr ""
+"You are strongly encouraged to always use curly braces even in situations "
+"where they are technically optional.Having them increases readability and "
+"decreases the likelihood of logic errors being introduced when new lines are "
+"added."
+
+# 81c2c5ff12f94691b5d8e84d38ee40dc
+#: ../src/Developers/Coding_Standard.rst:139
+msgid ""
+"The only exception to the rule above is to follow the \"return/fail early\" "
+"principle where the action following a condition is a ``return`` or ``throw`` "
+"statement and no line is ever going to be added to the action part. More "
+"information on this principle and why you should follow it can be found in "
+"the following blog entries:"
+msgstr ""
+"The only exception to the rule above is to follow the \"return/fail early\" "
+"principle where the action following a condition is a ``return`` or ``throw`` "
+"statement and no line is ever going to be added to the action part. More "
+"information on this principle and why you should follow it can be found in "
+"the following blog entries:"
+
+# 497ab5b422d5482bb7d2f02a1f2c7a91
+#: ../src/Developers/Coding_Standard.rst:145
+msgid "http://vocamus.net/dave/?p=1421 (by a long time Mozilla contributor)"
+msgstr "http://vocamus.net/dave/?p=1421 (by a long time Mozilla contributor)"
+
+# 673dbe975b064452b92bac4e02a07fa2
+#: ../src/Developers/Coding_Standard.rst:146
+msgid ""
+"http://saltybeagle.com/2011/06/fail-early/ (by Brett Bieber, one of the main "
+"contributors to Pyrus, the next generation PEAR installer)"
+msgstr ""
+"http://saltybeagle.com/2011/06/fail-early/ (by Brett Bieber, one of the main "
+"contributors to Pyrus, the next generation PEAR installer)"
+
+# 256def13118e49b3b273051a78a78c31
+#: ../src/Developers/Coding_Standard.rst:149
+msgid "For switch statements:"
+msgstr "For switch statements:"
+
+# 23f2c10448bd4235b681146c789a8931
+#: ../src/Developers/Coding_Standard.rst:167
+msgid ""
+"It is sometimes useful to write a case statement which falls through to the "
+"next case by not including a ``break`` or ``return`` within that case. To "
+"distinguish these cases from bugs, any case statement where ``break`` or "
+"``return`` are omitted should contain a comment indicating that this is the "
+"intended behaviour."
+msgstr ""
+"It is sometimes useful to write a case statement which falls through to the "
+"next case by not including a ``break`` or ``return`` within that case. To "
+"distinguish these cases from bugs, any case statement where ``break`` or "
+"``return`` are omitted should contain a comment indicating that this is the "
+"intended behaviour."
+
+# 9eddde6ccd7a4badb71984f733a4d516
+#: ../src/Developers/Coding_Standard.rst:173
+msgid "For do-while statements:"
+msgstr "For do-while statements:"
+
+# dba881b0cd7a4ca59bd6db94b0b58c8f
+#: ../src/Developers/Coding_Standard.rst:182
+msgid ""
+"Use of the alternative forms for these structures is prohibited. For example:"
+msgstr ""
+"Use of the alternative forms for these structures is prohibited. For example:"
+
+# 629cd8ea6b6c41d8aacc4ac48b0750aa
+#: ../src/Developers/Coding_Standard.rst:196
+msgid "Line length and wrapping"
+msgstr "Line length and wrapping"
+
+# 1a70c5d7efa540608939da150d768814
+#: ../src/Developers/Coding_Standard.rst:198
+msgid "The following rules apply to code:"
+msgstr "The following rules apply to code:"
+
+# 6a8af2f65cdf4a5cb1508974ce0b77f8
+#: ../src/Developers/Coding_Standard.rst:200
+msgid ""
+"In general, all lines of code should not be longer than |cs-chars-limit| "
+"chars."
+msgstr ""
+"In general, all lines of code should not be longer than |cs-chars-limit| "
+"chars."
+
+# 7d1a9244047e4679931c6141f22dd3db
+#: ../src/Developers/Coding_Standard.rst:203
+msgid ""
+"Long control structure conditions should be wrapped into multiple lines so as "
+"not to break the |cs-chars-limit| chars rule."
+msgstr ""
+"Long control structure conditions should be wrapped into multiple lines so as "
+"not to break the |cs-chars-limit| chars rule."
+
+# 7f6dc41c70f4421e843c80fd52f29d6a
+#: ../src/Developers/Coding_Standard.rst:206
+msgid ""
+"Whenever possible, try to prepare values related to the condition beforehand "
+"(storing them in temporary variables if necessary)."
+msgstr ""
+"Whenever possible, try to prepare values related to the condition beforehand "
+"(storing them in temporary variables if necessary)."
+
+# 81919c9b411f490eae3ffe4a2c77a163
+#: ../src/Developers/Coding_Standard.rst:209
+msgid "So, instead of this:"
+msgstr "So, instead of this:"
+
+# 94d7f862f96f42f69c30ea9052611900
+#: ../src/Developers/Coding_Standard.rst:217
+msgid "use the following snippet:"
+msgstr "use the following snippet:"
+
+# 8669ec296fa94393a59277a970f14272
+#: ../src/Developers/Coding_Standard.rst:226
+msgid ""
+"When breaking a test composed of several conditions, wrap the conditions "
+"after the operator (``&&`` or ``||``) and indent the next line using 4 spaces "
+"so as to line up the conditions."
+msgstr ""
+"When breaking a test composed of several conditions, wrap the conditions "
+"after the operator (``&&`` or ``||``) and indent the next line using 4 spaces "
+"so as to line up the conditions."
+
+# 1fe0029405564686b543b99804dd79e3
+#: ../src/Developers/Coding_Standard.rst:230
+msgid "So, instead of this snippet:"
+msgstr "So, instead of this snippet:"
+
+# 3f77996f50ee4eee92101e886fe1d3cf
+#: ../src/Developers/Coding_Standard.rst:238
+msgid "use this one:"
+msgstr "use this one:"
+
+# cde7c9ddf0d14742bad76d8fdc3a8952
+#: ../src/Developers/Coding_Standard.rst:248
+msgid ""
+"Control structure conditions should also **NOT** attempt to win the *Most "
+"Compact Condition In Least Lines Of Code Award™*:"
+msgstr ""
+"Control structure conditions should also **NOT** attempt to win the *Most "
+"Compact Condition In Least Lines Of Code Award™*:"
+
+# 96252ae52f9849a7a9666e56e5a79d69
+#: ../src/Developers/Coding_Standard.rst:258
+msgid ""
+"Instead, it is recommended practice to split out and prepare the conditions "
+"separately, which also permits documenting the underlying reasons for the "
+"conditions:"
+msgstr ""
+"Instead, it is recommended practice to split out and prepare the conditions "
+"separately, which also permits documenting the underlying reasons for the "
+"conditions:"
+
+# 3ff6c509d875451a8a2b32bcde600e6c
+#: ../src/Developers/Coding_Standard.rst:280
+msgid ""
+"This example is still a bit dense. Always consider and decide on your own "
+"whether people unfamiliar with your code will be able to make sense of the "
+"logic."
+msgstr ""
+"This example is still a bit dense. Always consider and decide on your own "
+"whether people unfamiliar with your code will be able to make sense of the "
+"logic."
+
+# 045eda3aba474b3b8ca405cf849d6435
+#: ../src/Developers/Coding_Standard.rst:286
+msgid "Function/method calls"
+msgstr "Function/method calls"
+
+# d7356308bbcf4e06acb6be3547577688
+#: ../src/Developers/Coding_Standard.rst:288
+msgid ""
+"Functions and methods should be called with no spaces between the function "
+"name, the opening parenthesis, and the first parameter; spaces between commas "
+"and each parameter, and no space between the last parameter, the closing "
+"parenthesis, and the semicolon."
+msgstr ""
+"Functions and methods should be called with no spaces between the function "
+"name, the opening parenthesis, and the first parameter; spaces between commas "
+"and each parameter, and no space between the last parameter, the closing "
+"parenthesis, and the semicolon."
+
+# d3e0f7f99353477ebdf2ed5256fe1406
+#: ../src/Developers/Coding_Standard.rst:293
+msgid "Here's an example:"
+msgstr "Here's an example:"
+
+# 8238c982db5a46dfab19d7e705de726c
+#: ../src/Developers/Coding_Standard.rst:299
+msgid ""
+"As displayed above, there should be one space on either side of an equals "
+"sign used to assign the return value of a function to a variable (as "
+"documented in the section on `Operators`_)."
+msgstr ""
+"As displayed above, there should be one space on either side of an equals "
+"sign used to assign the return value of a function to a variable (as "
+"documented in the section on `Operators`_)."
+
+# f2b00b5b0c5947878d16f448fb37a659
+#: ../src/Developers/Coding_Standard.rst:305
+msgid ""
+"Call-time pass-by-reference is strictly prohibited. See the section on :ref:"
+"`function/method declarations <cs-fn-decl>` for the proper way to pass "
+"function arguments by-reference."
+msgstr ""
+"Call-time pass-by-reference is strictly prohibited. See the section on :ref:"
+"`function/method declarations <cs-fn-decl>` for the proper way to pass "
+"function arguments by-reference."
+
+# 760e5dd4dbd04f6da2d1c3dcf0b7867f
+#: ../src/Developers/Coding_Standard.rst:309
+msgid ""
+"In the case of a block of related assignments, more space may be inserted to "
+"line up function calls and promote readability:"
+msgstr ""
+"In the case of a block of related assignments, more space may be inserted to "
+"line up function calls and promote readability:"
+
+# 70572c6abcd940d59482f6ba5fc99e02
+#: ../src/Developers/Coding_Standard.rst:319
+msgid ""
+"For methods/functions defined by the core of PHP or any of its extension, "
+"(that is, anything that isn't userland-define), always respect the case given "
+"by the PHP manual. Even though PHP is case-insensitive for most identifiers, "
+"there are recurring propositions about turning it into a case-sensitive "
+"language for everything. Using the official case from the start makes the "
+"code forward-compatible if such a change is ever made."
+msgstr ""
+"For methods/functions defined by the core of PHP or any of its extension, "
+"(that is, anything that isn't userland-define), always respect the case given "
+"by the PHP manual. Even though PHP is case-insensitive for most identifiers, "
+"there are recurring propositions about turning it into a case-sensitive "
+"language for everything. Using the official case from the start makes the "
+"code forward-compatible if such a change is ever made."
+
+# 24bd1e4097204a3ab928a20f54abf10d
+#: ../src/Developers/Coding_Standard.rst:331
+msgid "Function/method declarations"
+msgstr "Function/method declarations"
+
+# f071a2fac71f490399c6309e7934a195
+#: ../src/Developers/Coding_Standard.rst:335
+msgid ""
+"We recommend that you use classes instead of functions in your code, even if "
+"it means creating classes containing static methods only. The rationale "
+"behind this decision being that it avoids global scope name pollution."
+msgstr ""
+"We recommend that you use classes instead of functions in your code, even if "
+"it means creating classes containing static methods only. The rationale "
+"behind this decision being that it avoids global scope name pollution."
+
+# 0f937ea4aa5040a6b26252d9f1ae3984
+#: ../src/Developers/Coding_Standard.rst:341
+msgid "Call-time pass-by-reference is strictly prohibited."
+msgstr "Call-time pass-by-reference is strictly prohibited."
+
+# 9ac8106e85ed42839744eb609082c594
+#: ../src/Developers/Coding_Standard.rst:343
+msgid "Always put the opening curly brace on a new line."
+msgstr "Always put the opening curly brace on a new line."
+
+# a6fd83e8aa154e91a59675782e81e23e
+#: ../src/Developers/Coding_Standard.rst:353
+msgid "Arguments with default values go at the end of the argument list."
+msgstr "Arguments with default values go at the end of the argument list."
+
+# ec474acc16d94411ad7680b2f0056371
+#: ../src/Developers/Coding_Standard.rst:356
+msgid ""
+"Use type-hints whenever possible, but only if the type-hint is ``array`` or "
+"**refers to an interface**."
+msgstr ""
+"Use type-hints whenever possible, but only if the type-hint is ``array`` or "
+"**refers to an interface**."
+
+# 230698be59bf43ce9f49861d115c2a6e
+#: ../src/Developers/Coding_Standard.rst:373
+msgid ""
+"For classes provided by PHP or one of its extensions (eg. `DOMDocument`_), "
+"consider writing an interface for it and use that as a type-hint."
+msgstr ""
+"For classes provided by PHP or one of its extensions (eg. `DOMDocument`_), "
+"consider writing an interface for it and use that as a type-hint."
+
+# 9edf60c070e24a59a36f56facbd68901
+#: ../src/Developers/Coding_Standard.rst:376
+msgid ""
+"Using an interface instead of a class name in the type-hint makes it easier "
+"to use a class that provides the same features (the same API) through a "
+"different implementation. This is especially useful when unit testing the "
+"function."
+msgstr ""
+"Using an interface instead of a class name in the type-hint makes it easier "
+"to use a class that provides the same features (the same API) through a "
+"different implementation. This is especially useful when unit testing the "
+"function."
+
+# 7d7dd822cc214e539799ae594bbf286f
+#: ../src/Developers/Coding_Standard.rst:381
+msgid ""
+"When a function or method's arguments list exceeds the |cs-chars-limit| chars "
+"limit, use a single newline after the opening parentheses, write each "
+"argument on a separate line and put the closing parentheses on a separate "
+"line too. Indent each argument's line by 4 (four) spaces and add extra spaces "
+"to line up the arguments' dollar sign whenever type-hints and/or references "
+"are used In this case, the closing parentheses and the opening curly brace "
+"that follows it should still be on separate lines:"
+msgstr ""
+"When a function or method's arguments list exceeds the |cs-chars-limit| chars "
+"limit, use a single newline after the opening parentheses, write each "
+"argument on a separate line and put the closing parentheses on a separate "
+"line too. Indent each argument's line by 4 (four) spaces and add extra spaces "
+"to line up the arguments' dollar sign whenever type-hints and/or references "
+"are used In this case, the closing parentheses and the opening curly brace "
+"that follows it should still be on separate lines:"
+
+# 1e87878d70e645f7891f49a4d1a10676
+#: ../src/Developers/Coding_Standard.rst:400
+msgid ""
+"Last but not least, always attempt to return a meaningful value from a "
+"function if one is appropriate. If no meaningful value exist, consider "
+"returning ``NULL`` or an empty array instead of ``FALSE``."
+msgstr ""
+"Last but not least, always attempt to return a meaningful value from a "
+"function if one is appropriate. If no meaningful value exist, consider "
+"returning ``NULL`` or an empty array instead of ``FALSE``."
+
+# 63c600ace3b9432dba2b7260694bb0ca
+#: ../src/Developers/Coding_Standard.rst:404
+msgid ""
+"The return value must not be enclosed in parentheses. This can hinder "
+"readability, in addition to breaking code if a method is later changed to "
+"return by reference."
+msgstr ""
+"The return value must not be enclosed in parentheses. This can hinder "
+"readability, in addition to breaking code if a method is later changed to "
+"return by reference."
+
+# b0f1cb6301b944c1929ee97410684f64
+# d0d98894e1eb4e30ab5b727d6ce7442b
+#: ../src/Developers/Coding_Standard.rst:408
+#: ../src/Developers/Coding_Standard.rst:788
+msgid "For example:"
+msgstr "For example:"
+
+# 76fcdd8f636e4f198f6d440ca5da7c18
+#: ../src/Developers/Coding_Standard.rst:433
+msgid ""
+"Exceptions may also be used instead of returning ``NULL``. Whether an "
+"exception should be raised or ``NULL`` / an empty array returned is left to "
+"the appreciation of developpers."
+msgstr ""
+"Exceptions may also be used instead of returning ``NULL``. Whether an "
+"exception should be raised or ``NULL`` / an empty array returned is left to "
+"the appreciation of developpers."
+
+# f7ca11c1e05344d3b261b1a85187ffde
+#: ../src/Developers/Coding_Standard.rst:439
+msgid "Class constructor calls"
+msgstr "Class constructor calls"
+
+# 8ed6aa6edece420ab8b89f48981f65a3
+#: ../src/Developers/Coding_Standard.rst:441
+msgid ""
+"When calling class constructors with no arguments, always include parentheses:"
+msgstr ""
+"When calling class constructors with no arguments, always include parentheses:"
+
+# c0f0b221b41e48aa81fbea7aa7196ca5
+#: ../src/Developers/Coding_Standard.rst:447
+msgid "This is to maintain consistency with constructors that have arguments:"
+msgstr "This is to maintain consistency with constructors that have arguments:"
+
+# cf77c63955f34a099c3638274eab46fd
+#: ../src/Developers/Coding_Standard.rst:453
+msgid ""
+"Note that if the class name is a variable, the variable will be evaluated "
+"first to get the class name, and then the constructor will be called."
+msgstr ""
+"Note that if the class name is a variable, the variable will be evaluated "
+"first to get the class name, and then the constructor will be called."
+
+# 023e3f1ef6f445ce8be8e101638cc302
+#: ../src/Developers/Coding_Standard.rst:456
+msgid "Use the same syntax:"
+msgstr "Use the same syntax:"
+
+# 449a708b97e34d939504a5c46cc57462
+#: ../src/Developers/Coding_Standard.rst:466
+msgid "Arrays"
+msgstr "Arrays"
+
+# 5eeb81fc73e74be1b7b274a9a1f2e449
+#: ../src/Developers/Coding_Standard.rst:468
+msgid ""
+"Arrays should be formatted with a space separating each element (after the "
+"comma), and spaces around the ``=>`` key association operator, if applicable:"
+msgstr ""
+"Arrays should be formatted with a space separating each element (after the "
+"comma), and spaces around the ``=>`` key association operator, if applicable:"
+
+# cc2f7695fecd4119b5ac84bb8c92d854
+#: ../src/Developers/Coding_Standard.rst:476
+msgid ""
+"Note that if the line declaring an array spans longer than |cs-chars-limit| "
+"characters, each element should be broken into its own line, and indented one "
+"level. Extra spaces may be added before the ``=>`` operator to increase "
+"readability:"
+msgstr ""
+"Note that if the line declaring an array spans longer than |cs-chars-limit| "
+"characters, each element should be broken into its own line, and indented one "
+"level. Extra spaces may be added before the ``=>`` operator to increase "
+"readability:"
+
+# 67d339693c144b508bf6dc6634529637
+#: ../src/Developers/Coding_Standard.rst:492
+msgid ""
+"Always add a comma at the end of the last array element. It helps prevent "
+"parsing errors if another element is placed at the end of the list later."
+msgstr ""
+"Always add a comma at the end of the last array element. It helps prevent "
+"parsing errors if another element is placed at the end of the list later."
+
+# d23bdfabe7b94c2182654ac5ea06e491
+#: ../src/Developers/Coding_Standard.rst:497
+msgid "Quotes"
+msgstr "Quotes"
+
+# fbfee091fb584409849e69e0a6353212
+#: ../src/Developers/Coding_Standard.rst:499
+msgid ""
+"Erebot does not have a hard standard for the use of single quotes vs. double "
+"quotes. Where possible, keep consistency within each module, and respect the "
+"personal style of other developers."
+msgstr ""
+"Erebot does not have a hard standard for the use of single quotes vs. double "
+"quotes. Where possible, keep consistency within each module, and respect the "
+"personal style of other developers."
+
+# 491239c9f38a45d8b5fe7328a0b25403
+#: ../src/Developers/Coding_Standard.rst:503
+msgid ""
+"With that caveat in mind: single quote strings are known to be faster because "
+"the parser doesn't have to look for in-line variables. Their use is "
+"recommended except in two cases:"
+msgstr ""
+"With that caveat in mind: single quote strings are known to be faster because "
+"the parser doesn't have to look for in-line variables. Their use is "
+"recommended except in two cases:"
+
+# ab624d4475ad41ad8987fbe4e5450ea6
+#: ../src/Developers/Coding_Standard.rst:507
+msgid "In-line variable usage, e.g. ``<h2>$header</h2>``."
+msgstr "In-line variable usage, e.g. ``<h2>$header</h2>``."
+
+# e6ad01a0743245dfab3af07b672f34ef
+#: ../src/Developers/Coding_Standard.rst:508
+msgid ""
+"Translated strings where one can avoid escaping single quotes by enclosing "
+"the string in double quotes. One such string would be \"He's a good person.\" "
+"This string would become 'He\\'s a good person.' with single quotes. Such "
+"escaping may not be handled properly by .pot file generators for text "
+"translation, and it's also somewhat awkward to read."
+msgstr ""
+"Translated strings where one can avoid escaping single quotes by enclosing "
+"the string in double quotes. One such string would be \"He's a good person.\" "
+"This string would become 'He\\'s a good person.' with single quotes. Such "
+"escaping may not be handled properly by .pot file generators for text "
+"translation, and it's also somewhat awkward to read."
+
+# 0fa22292688248f8b60687cc6d8a0776
+#: ../src/Developers/Coding_Standard.rst:515
+msgid ""
+"For long chunks of texts, you may also `heredoc/nowdoc strings`_, except when "
+"the text needs to be translated, because the current parser for translations "
+"does not pick them up."
+msgstr ""
+"For long chunks of texts, you may also `heredoc/nowdoc strings`_, except when "
+"the text needs to be translated, because the current parser for translations "
+"does not pick them up."
+
+# 9898a1c5778c454bbd851cbee5fcf746
+#: ../src/Developers/Coding_Standard.rst:521
+msgid "String concatenations"
+msgstr "String concatenations"
+
+# 15f5049f8be544a3b96c637f1c5fb948
+#: ../src/Developers/Coding_Standard.rst:523
+msgid ""
+"We recommend that you always use a space between the dot and the concatenated "
+"parts to improve readability (we current ruleset does not enforce this rule "
+"though)."
+msgstr ""
+"We recommend that you always use a space between the dot and the concatenated "
+"parts to improve readability (we current ruleset does not enforce this rule "
+"though)."
+
+# 15a6650075624cb59012f8b00dcaf5f4
+#: ../src/Developers/Coding_Standard.rst:536
+msgid ""
+"When you concatenate simple variables, you can use double quotes and add the "
+"variable inside; otherwise, use single quotes."
+msgstr ""
+"When you concatenate simple variables, you can use double quotes and add the "
+"variable inside; otherwise, use single quotes."
+
+# e0b0500342b945838e2459d1b1de72b7
+#: ../src/Developers/Coding_Standard.rst:543
+msgid ""
+"When using the concatenating assignment operator ``.=``, use a space on each "
+"side as with the assignment operator:"
+msgstr ""
+"When using the concatenating assignment operator ``.=``, use a space on each "
+"side as with the assignment operator:"
+
+# b5b74f7f553440b78bc9a6691031dc0d
+#: ../src/Developers/Coding_Standard.rst:556
+msgid "Comments"
+msgstr "Comments"
+
+# b1f5b11bbfe14d4dac045ddaf9e6a30f
+#: ../src/Developers/Coding_Standard.rst:558
+msgid ""
+"Don't use Perl-style commands (``# Comment``). For comments that span several "
+"lines, we recommend that you use C++ comments (``/* Comment */``)."
+msgstr ""
+"Don't use Perl-style commands (``# Comment``). For comments that span several "
+"lines, we recommend that you use C++ comments (``/* Comment */``)."
+
+# 8952ba71fa5f40178fbbf9e818169e70
+#: ../src/Developers/Coding_Standard.rst:561
+msgid ""
+"When using C++ comments, you may use asterisks (\"stars\") at the start of "
+"each line."
+msgstr ""
+"When using C++ comments, you may use asterisks (\"stars\") at the start of "
+"each line."
+
+# df29115382d04447b1ff538a3e0e691d
+#: ../src/Developers/Coding_Standard.rst:565
+msgid ""
+"Use of comments such as ``/** ... */`` or ``///`` is reserved for API "
+"documentation purposes using `Doxygen commands`_. You **MAY NOT** use them to "
+"explain the logic of your code. Use the regular forms ``/* ... */`` & ``//`` "
+"instead in such cases."
+msgstr ""
+"Use of comments such as ``/** ... */`` or ``///`` is reserved for API "
+"documentation purposes using `Doxygen commands`_. You **MAY NOT** use them to "
+"explain the logic of your code. Use the regular forms ``/* ... */`` & ``//`` "
+"instead in such cases."
+
+# 65935e971fa84905b941dcadc608e916
+#: ../src/Developers/Coding_Standard.rst:570
+msgid "For example,"
+msgstr "For example,"
+
+# 9ea1ee8e742c4483ba25ecd55c0bca9d
+#: ../src/Developers/Coding_Standard.rst:621
+msgid "Filesystem paths"
+msgstr "Filesystem paths"
+
+# da724f7238ad4588ad94db2479b4dad3
+#: ../src/Developers/Coding_Standard.rst:623
+msgid ""
+"Never use any OS-specific directory separator (eg. \"/\") directly to "
+"concatenate parts of a path together. Always use the ``DIRECTORY_SEPARATOR`` "
+"constant instead. It will take care of abstracting differences in the "
+"separator used by each OS for you."
+msgstr ""
+"Never use any OS-specific directory separator (eg. \"/\") directly to "
+"concatenate parts of a path together. Always use the ``DIRECTORY_SEPARATOR`` "
+"constant instead. It will take care of abstracting differences in the "
+"separator used by each OS for you."
+
+# 8402ebc8c09f417981492bfe15d0c489
+#: ../src/Developers/Coding_Standard.rst:630
+msgid "Including code"
+msgstr "Including code"
+
+# f3ecde57636247f2a07643e073944d2e
+#: ../src/Developers/Coding_Standard.rst:633
+msgid ""
+"For code that is part of Erebot itself, you don't need to manually include "
+"any file as the autoloader will load the files on the fly whenever this is "
+"required."
+msgstr ""
+"For code that is part of Erebot itself, you don't need to manually include "
+"any file as the autoloader will load the files on the fly whenever this is "
+"required."
+
+# 3dceba2e6d30464c8c7a050c3415f596
+#: ../src/Developers/Coding_Standard.rst:637
+msgid ""
+"Anywhere you are unconditionally including a class file, use "
+"``require_once()``. Anywhere you are conditionally including a class file "
+"(for example, factory methods), use ``include_once()``. Either of these will "
+"ensure that class files are included only once. They share the same file "
+"list, so you don't need to worry about mixing them |---| a file included with "
+"``require_once()`` will not be included again by ``include_once()``."
+msgstr ""
+"Anywhere you are unconditionally including a class file, use "
+"``require_once()``. Anywhere you are conditionally including a class file "
+"(for example, factory methods), use ``include_once()``. Either of these will "
+"ensure that class files are included only once. They share the same file "
+"list, so you don't need to worry about mixing them |---| a file included with "
+"``require_once()`` will not be included again by ``include_once()``."
+
+# cab5e600e7ae4de087694b4270296552
+#: ../src/Developers/Coding_Standard.rst:646
+msgid ""
+"``include_once()`` and ``require_once()`` are statements and not functions. "
+"Having said that, we recommend that you always put parentheses around the "
+"file name to be included, even though this is not necessary from a technical "
+"point of view. This makes the coding style coherent with that of functions."
+msgstr ""
+"``include_once()`` and ``require_once()`` are statements and not functions. "
+"Having said that, we recommend that you always put parentheses around the "
+"file name to be included, even though this is not necessary from a technical "
+"point of view. This makes the coding style coherent with that of functions."
+
+# 3aabe9c5f0a340e58ea2655bcb414ba5
+#: ../src/Developers/Coding_Standard.rst:651
+msgid ""
+"Never use relative paths when including code, always build an absolute path. "
+"You may use the ``__FILE__`` magical constant and the ``dirname()`` function "
+"to help you build such a path. See also the :ref:`conventions for filesystem "
+"paths <cs-fs-paths>` for more information."
+msgstr ""
+"Never use relative paths when including code, always build an absolute path. "
+"You may use the ``__FILE__`` magical constant and the ``dirname()`` function "
+"to help you build such a path. See also the :ref:`conventions for filesystem "
+"paths <cs-fs-paths>` for more information."
+
+# 6c777132e5bc4441962f85d66a6f9ec0
+#: ../src/Developers/Coding_Standard.rst:658
+msgid ""
+"Even for external libraries, we recommend that you use the autoloader "
+"provided by those libraries if one is available instead of manually including "
+"their code."
+msgstr ""
+"Even for external libraries, we recommend that you use the autoloader "
+"provided by those libraries if one is available instead of manually including "
+"their code."
+
+# e92428fec4084881b0b8575d60a19271
+#: ../src/Developers/Coding_Standard.rst:664
+msgid "PHP code tags"
+msgstr "PHP code tags"
+
+# 76303454017949e6b226a3b6bc66b7b4
+#: ../src/Developers/Coding_Standard.rst:666
+msgid "Always use :"
+msgstr "Always use :"
+
+# aad5905609774d5483907a98a874456c
+#: ../src/Developers/Coding_Standard.rst:672
+msgid "to delimit PHP code, not the shorthand,"
+msgstr "to delimit PHP code, not the shorthand,"
+
+# fb77085208e043099d15df46286745e2
+#: ../src/Developers/Coding_Standard.rst:678
+msgid "or other exotic tags allowed by PHP::"
+msgstr "or other exotic tags allowed by PHP::"
+
+# 90ce0e64fc64446aaa4ef0c448835a30
+#: ../src/Developers/Coding_Standard.rst:696
+msgid ""
+"This is required for portability across differing operating systems and set-"
+"ups."
+msgstr ""
+"This is required for portability across differing operating systems and set-"
+"ups."
+
+# ef92b87def64471fbe862c379941cfc0
+#: ../src/Developers/Coding_Standard.rst:700
+msgid "Never use a closing ``?>`` at the end of code files:"
+msgstr "Never use a closing ``?>`` at the end of code files:"
+
+# f5ae1786e4564ea49d38860e016bc04b
+#: ../src/Developers/Coding_Standard.rst:702
+msgid ""
+"Removing it eliminates the possibility for unwanted whitespace at the end of "
+"files which can cause strange outputs to the console."
+msgstr ""
+"Removing it eliminates the possibility for unwanted whitespace at the end of "
+"files which can cause strange outputs to the console."
+
+# 57b6a05f869b4fbe97d260dca5dfc6e4
+#: ../src/Developers/Coding_Standard.rst:704
+msgid "The closing delimiter at the end of a file is optional anyway."
+msgstr "The closing delimiter at the end of a file is optional anyway."
+
+# 74172bae5aa24aa99658c1a0023a6bd7
+#: ../src/Developers/Coding_Standard.rst:705
+msgid ""
+"PHP.net itself removes the closing delimiter from the end of its files, so "
+"this can be seen as a \"best practice.\""
+msgstr ""
+"PHP.net itself removes the closing delimiter from the end of its files, so "
+"this can be seen as a \"best practice.\""
+
+# 109e8fdc046e4195a6c55016a7f56b08
+#: ../src/Developers/Coding_Standard.rst:710
+msgid "Semicolons"
+msgstr "Semicolons"
+
+# 3d93e66831214cf6b92d561aee53aaaf
+#: ../src/Developers/Coding_Standard.rst:712
+msgid ""
+"The PHP language requires semicolons at the end of most lines, but allows "
+"them to be omitted at the end of code blocks."
+msgstr ""
+"The PHP language requires semicolons at the end of most lines, but allows "
+"them to be omitted at the end of code blocks."
+
+# f7a8f1b00c1a4470830985a43e2d22be
+#: ../src/Developers/Coding_Standard.rst:715
+msgid ""
+"Erebot coding standards require them, even at the end of code blocks. In "
+"particular, for one-line PHP blocks:"
+msgstr ""
+"Erebot coding standards require them, even at the end of code blocks. In "
+"particular, for one-line PHP blocks:"
+
+# 1876b0b7d2284d92a2ab7a2a5ebfc22e
+#: ../src/Developers/Coding_Standard.rst:729
+msgid "Example URLs"
+msgstr "Example URLs"
+
+# 52d83ed34abf4e7ebd3806eedf6e6808
+#: ../src/Developers/Coding_Standard.rst:731
+msgid ""
+"Use ``example.com`` as the domain for all example URLs, per :rfc:`2606`. You "
+"may also refer to subdomains of this domain, eg. ``irc.example.com``."
+msgstr ""
+"Use ``example.com`` as the domain for all example URLs, per :rfc:`2606`. You "
+"may also refer to subdomains of this domain, eg. ``irc.example.com``."
+
+# 9154e4dcad68491bbf0f973a0749b257
+#: ../src/Developers/Coding_Standard.rst:738
+msgid ""
+"Naming Conventions (Functions, Constants, Global Variables, Classes, Files)"
+msgstr ""
+"Naming Conventions (Functions, Constants, Global Variables, Classes, Files)"
+
+# 50dca76bdb124d4dad5f2c75d200d7f1
+#: ../src/Developers/Coding_Standard.rst:743
+msgid "Files"
+msgstr "Files"
+
+# 5335c762a15847c995fb6208a8218425
+#: ../src/Developers/Coding_Standard.rst:745
+msgid ""
+"Files containing classes should be named after the content of the last "
+"underscore (``_``) contained in the class name. If the class name does not "
+"contain any underscore, the file should be named after the class name as a "
+"whole."
+msgstr ""
+"Files containing classes should be named after the content of the last "
+"underscore (``_``) contained in the class name. If the class name does not "
+"contain any underscore, the file should be named after the class name as a "
+"whole."
+
+# 82afbf55f4264bc3816df282de32e2eb
+#: ../src/Developers/Coding_Standard.rst:751
+msgid ""
+"You must **ALWAYS** use a separate file for each class or interface defined "
+"in your code."
+msgstr ""
+"You must **ALWAYS** use a separate file for each class or interface defined "
+"in your code."
+
+# 8cb2b67382ac4720a0c043e3318fb6f9
+#: ../src/Developers/Coding_Standard.rst:754
+msgid ""
+"The file should also be placed in a hierarchy of directories that is directly "
+"mapped from each segment of the class name obtained after splitting the class "
+"name on underscores and removing the last segment (name of the file itself)."
+msgstr ""
+"The file should also be placed in a hierarchy of directories that is directly "
+"mapped from each segment of the class name obtained after splitting the class "
+"name on underscores and removing the last segment (name of the file itself)."
+
+# 761e5759e3834a6397691110005be293
+#: ../src/Developers/Coding_Standard.rst:758
+msgid "The same holds for interfaces."
+msgstr "The same holds for interfaces."
+
+# cc6819ce7e7d4b038f7107fb069a650d
+#: ../src/Developers/Coding_Standard.rst:760
+msgid ""
+"The following table shows how files should be arranged depending on the name "
+"of the class/interface they contain:"
+msgstr ""
+"The following table shows how files should be arranged depending on the name "
+"of the class/interface they contain:"
+
+# 31b1ec293e1f4ee8a1ec035f0702a309
+#: ../src/Developers/Coding_Standard.rst:0
+msgid "Class/interface name to filesystem mapping"
+msgstr "Class/interface name to filesystem mapping"
+
+# e03acc4ac84b4027b9effa1847120057
+#: ../src/Developers/Coding_Standard.rst:766
+msgid "Class name"
+msgstr "Class name"
+
+# d76fc858a1a444b6a26a6598eea659ba
+#: ../src/Developers/Coding_Standard.rst:766
+msgid "Path on filesystem"
+msgstr "Path on filesystem"
+
+# b16be28e64044a4295d2dded2280c317
+#: ../src/Developers/Coding_Standard.rst:768
+msgid "Erebot"
+msgstr "Erebot"
+
+# 980c4029b7e9452083e2801dc10b0ee7
+#: ../src/Developers/Coding_Standard.rst:768
+msgid ":samp:`{src}/Erebot.php`"
+msgstr ":samp:`{src}/Erebot.php`"
+
+# b35e4ea34e9f4c12a5f9edb5503ec191
+#: ../src/Developers/Coding_Standard.rst:770
+msgid "Erebot_Module_Foo"
+msgstr "Erebot_Module_Foo"
+
+# bfe37b6068134f999ed26fe9213c476d
+#: ../src/Developers/Coding_Standard.rst:770
+msgid ":samp:`{src}/Erebot/Module/Foo.php`"
+msgstr ":samp:`{src}/Erebot/Module/Foo.php`"
+
+# 73e16651d70a4117a4cc8aa2cd0199e7
+#: ../src/Developers/Coding_Standard.rst:772
+msgid "Erebot_Interface_I18n"
+msgstr "Erebot_Interface_I18n"
+
+# 94f24cbe416344e080d83b8f0ee85ecc
+#: ../src/Developers/Coding_Standard.rst:772
+msgid ":samp:`{src}/Erebot/Interface/I18n.php`"
+msgstr ":samp:`{src}/Erebot/Interface/I18n.php`"
+
+# 1a5d37fcf44347edad77c4a0c6014349
+#: ../src/Developers/Coding_Standard.rst:775
+msgid "This convention is required to make Erebot's autoloader work."
+msgstr "This convention is required to make Erebot's autoloader work."
+
+# 8bc7679127c743b1b0e2cd6e1511d316
+#: ../src/Developers/Coding_Standard.rst:778
+msgid "Classes and interfaces"
+msgstr "Classes and interfaces"
+
+# 1adeb35ae22947888efe3dbc9abc07c4
+#: ../src/Developers/Coding_Standard.rst:780
+msgid ""
+"Classes should be named using \"UpperCamelCase\", a newline should be "
+"inserted before the ``extends`` and ``implements`` keywords and before the "
+"opening curly brace."
+msgstr ""
+"Classes should be named using \"UpperCamelCase\", a newline should be "
+"inserted before the ``extends`` and ``implements`` keywords and before the "
+"opening curly brace."
+
+# b00a5ebe64054864b728feadd9889501
+#: ../src/Developers/Coding_Standard.rst:784
+msgid ""
+"When a class implements several interfaces, add a single newline after each "
+"comma separating the interfaces; do not put any space before the comma. Add "
+"extra spaces to line up the class and interface names."
+msgstr ""
+"When a class implements several interfaces, add a single newline after each "
+"comma separating the interfaces; do not put any space before the comma. Add "
+"extra spaces to line up the class and interface names."
+
+# 70eb7ef5e6e348babbf08908a628eee9
+#: ../src/Developers/Coding_Standard.rst:802
+msgid ""
+"Use underscores when you need to logically separate groups of classes. For "
+"example, all classes belonging to an Erebot module start with the prefix :"
+"samp:`Erebot_Module_{ModuleName}`. See also :ref:`cs-naming-files` for "
+"implications."
+msgstr ""
+"Use underscores when you need to logically separate groups of classes. For "
+"example, all classes belonging to an Erebot module start with the prefix :"
+"samp:`Erebot_Module_{ModuleName}`. See also :ref:`cs-naming-files` for "
+"implications."
+
+# ef69780470b041afb48e12fd90cf2d85
+#: ../src/Developers/Coding_Standard.rst:807
+msgid ""
+"For an interface, the text ``Interface`` should always appear in the "
+"interface's name, preferably at the end (eg. ``Erebot_Module_FooInterface``). "
+"If you prefer to use a separate directory where all the interfaces are "
+"stored, this is also permitted (eg. ``Erebot_Module_Foo_Interface_Generic``)."
+msgstr ""
+"For an interface, the text ``Interface`` should always appear in the "
+"interface's name, preferably at the end (eg. ``Erebot_Module_FooInterface``). "
+"If you prefer to use a separate directory where all the interfaces are "
+"stored, this is also permitted (eg. ``Erebot_Module_Foo_Interface_Generic``)."
+
+# e9ad74cd7cdb42be88ffab239931e513
+#: ../src/Developers/Coding_Standard.rst:813
+msgid "Class methods and properties"
+msgstr "Class methods and properties"
+
+# 36881e0cd83c468b95ec0732a98fb471
+#: ../src/Developers/Coding_Standard.rst:815
+msgid "Class methods and properties should use \"lowerCamelCase\":"
+msgstr "Class methods and properties should use \"lowerCamelCase\":"
+
+# e81f0e82f84944f2a2322559b40474d6
+#: ../src/Developers/Coding_Standard.rst:817
+msgid ""
+"The use of ``public`` properties is strongly discouraged, as it allows for "
+"unwanted side effects. It also exposes implementation specific details, which "
+"in turn makes swapping out a class for another implementation (one of the key "
+"reasons to use objects) much harder. Properties should be considered internal "
+"to a class."
+msgstr ""
+"The use of ``public`` properties is strongly discouraged, as it allows for "
+"unwanted side effects. It also exposes implementation specific details, which "
+"in turn makes swapping out a class for another implementation (one of the key "
+"reasons to use objects) much harder. Properties should be considered internal "
+"to a class."
+
+# ab38ebfd8102456cafc9c6408e9fcd10
+#: ../src/Developers/Coding_Standard.rst:823
+msgid ""
+"All methods and properties of classes must specify their visibility: "
+"``public``, ``protected``, or ``private``. The PHP 4-style ``var`` "
+"declaration must not be used."
+msgstr ""
+"All methods and properties of classes must specify their visibility: "
+"``public``, ``protected``, or ``private``. The PHP 4-style ``var`` "
+"declaration must not be used."
+
+# 550d49b2a2c14769a73d3d4e24e72a86
+#: ../src/Developers/Coding_Standard.rst:827
+msgid ""
+"The use of ``private`` class methods and properties should be avoided |---| "
+"use ``protected`` instead, so that another class could extend your class and "
+"change the behaviour of a method if necessary (eg. for unit testing purposes)."
+msgstr ""
+"The use of ``private`` class methods and properties should be avoided |---| "
+"use ``protected`` instead, so that another class could extend your class and "
+"change the behaviour of a method if necessary (eg. for unit testing purposes)."
+
+# 00018270f1254ea0b916c0a0f12f6368
+#: ../src/Developers/Coding_Standard.rst:831
+msgid ""
+"Use an underscore prefix for ``protected`` and ``private`` methods and "
+"properties so as to make them easily identifiable."
+msgstr ""
+"Use an underscore prefix for ``protected`` and ``private`` methods and "
+"properties so as to make them easily identifiable."
+
+# 7287da489fc54b6f9bcfb4b04f224820
+#: ../src/Developers/Coding_Standard.rst:834
+msgid ""
+"You may use extra spaces before a property's name to line up all properties "
+"of a class."
+msgstr ""
+"You may use extra spaces before a property's name to line up all properties "
+"of a class."
+
+# ae2c324e0ea6405f9fe786e9bc605f00
+#: ../src/Developers/Coding_Standard.rst:837
+msgid "The following snippet summarizes all of those rules:"
+msgstr "The following snippet summarizes all of those rules:"
+
+# 15c647f94ccd4983b0aa426e75877967
+#: ../src/Developers/Coding_Standard.rst:850
+msgid ""
+"For methods that are ``static``/``abstract``/``final``, PHP allows use of the "
+"keywords in any order. We do not impose any order either, except that the "
+"visibility specifier (``public``, ``protected`` or ``private``) should always "
+"be the last keyword."
+msgstr ""
+"For methods that are ``static``/``abstract``/``final``, PHP allows use of the "
+"keywords in any order. We do not impose any order either, except that the "
+"visibility specifier (``public``, ``protected`` or ``private``) should always "
+"be the last keyword."
+
+# 5ed08639ce594cfea84d7dbdc8c23f91
+#: ../src/Developers/Coding_Standard.rst:855
+msgid ""
+"For example, the snippet below defines four methods. Only the first 2 (two) "
+"forms are accepted in Erebot, with the first form being the preferred one "
+"(``final`` or ``abstract`` before ``static``):"
+msgstr ""
+"For example, the snippet below defines four methods. Only the first 2 (two) "
+"forms are accepted in Erebot, with the first form being the preferred one "
+"(``final`` or ``abstract`` before ``static``):"
+
+# 64e2af326365422ab22092b37746bf0b
+#: ../src/Developers/Coding_Standard.rst:890
+msgid "Class constructors"
+msgstr "Class constructors"
+
+# c7fcf8d8d0224829a8dbd45748862150
+#: ../src/Developers/Coding_Standard.rst:892
+msgid ""
+"Always use the ``__construct()`` method to define a class constructor. Do not "
+"use the old PHP 4 convention where the constructor was named after the class:"
+msgstr ""
+"Always use the ``__construct()`` method to define a class constructor. Do not "
+"use the old PHP 4 convention where the constructor was named after the class:"
+
+# f823fe4947844383ae1215004f5b5720
+#: ../src/Developers/Coding_Standard.rst:919
+msgid "Functions"
+msgstr "Functions"
+
+# 87377476c101429fb0ed139007f63f95
+#: ../src/Developers/Coding_Standard.rst:921
+msgid ""
+"Functions should be named using lowercase, and words should be separated with "
+"an underscore. Functions should also have the module's name as a prefix, to "
+"avoid name collisions between modules."
+msgstr ""
+"Functions should be named using lowercase, and words should be separated with "
+"an underscore. Functions should also have the module's name as a prefix, to "
+"avoid name collisions between modules."
+
+# 3bbc06fbb5a844eb913c156285a4c7f7
+#: ../src/Developers/Coding_Standard.rst:926
+msgid "Constants"
+msgstr "Constants"
+
+# fe944b966fa247d6bd0ae530ba8b7fda
+#: ../src/Developers/Coding_Standard.rst:928
+msgid ""
+"Constants should always be all-uppercase, with underscores to separate words. "
+"(This includes pre-defined PHP constants like ``TRUE``, ``FALSE``, and "
+"``NULL``.)"
+msgstr ""
+"Constants should always be all-uppercase, with underscores to separate words. "
+"(This includes pre-defined PHP constants like ``TRUE``, ``FALSE``, and "
+"``NULL``.)"
+
+# 2f5d7e01bc2741d59bba0ebd126dda67
+#: ../src/Developers/Coding_Standard.rst:932
+msgid ""
+"Global constants defined by modules should also have their names prefixed by "
+"an uppercase spelling of the module that defines them."
+msgstr ""
+"Global constants defined by modules should also have their names prefixed by "
+"an uppercase spelling of the module that defines them."
+
+# f79d8664f34e488f95176fea4c1a5e18
+#: ../src/Developers/Coding_Standard.rst:936
+msgid ""
+"Whenever possible, use class constants instead of global constants to avoid "
+"global naming space pollution."
+msgstr ""
+"Whenever possible, use class constants instead of global constants to avoid "
+"global naming space pollution."
+
+# fa81d25ce4544d32b4067d5903e0f26a
+#: ../src/Developers/Coding_Standard.rst:939
+msgid ""
+"Global constants should be defined using the ``const`` PHP language keyword "
+"(instead of ``define()``), for performance reasons:"
+msgstr ""
+"Global constants should be defined using the ``const`` PHP language keyword "
+"(instead of ``define()``), for performance reasons:"
+
+# 7805127b194e40619aec251dbf620e44
+#: ../src/Developers/Coding_Standard.rst:953
+msgid ""
+"The ``const`` keyword does not work with PHP expressions. ``define()`` should "
+"still be used when defining a constant conditionally or with a non-literal "
+"value:"
+msgstr ""
+"The ``const`` keyword does not work with PHP expressions. ``define()`` should "
+"still be used when defining a constant conditionally or with a non-literal "
+"value:"
+
+# e3e90b9cddc94146bc80b94a7691d945
+#: ../src/Developers/Coding_Standard.rst:966
+msgid "Global variables"
+msgstr "Global variables"
+
+# 0cc57c2e985c473485228bb9381fe7d9
+#: ../src/Developers/Coding_Standard.rst:968
+msgid ""
+"Global variables are strictly forbidden in Erebot and any of its modules; "
+"this is non-negociable."
+msgstr ""
+"Global variables are strictly forbidden in Erebot and any of its modules; "
+"this is non-negociable."
+
+# b655026218924b5cb1846d27ef1e8eae
+#: ../src/Developers/Coding_Standard.rst:973
+msgid "Check your code"
+msgstr "Check your code"
+
+# 058a4312f5c647d9b04a3744a8b499ba
+#: ../src/Developers/Coding_Standard.rst:975
+msgid ""
+"To check that your code complies with these standards, install the following "
+"PEAR packages on your machine:"
+msgstr ""
+"To check that your code complies with these standards, install the following "
+"PEAR packages on your machine:"
+
+# e6a58c3e65ee4025b4dfb9cf09f4effe
+#: ../src/Developers/Coding_Standard.rst:978
+msgid ":pear:`PHP_CodeSniffer`"
+msgstr ":pear:`PHP_CodeSniffer`"
+
+# 9485e227d7364d378a101e12b86a70fb
+#: ../src/Developers/Coding_Standard.rst:979
+msgid "`pear.phing.info/Phing <http://pear.phing.info/>`_"
+msgstr "`pear.phing.info/Phing <http://pear.phing.info/>`_"
+
+# 85c403c94e004340b677fbf9a1eaaf02
+#: ../src/Developers/Coding_Standard.rst:981
+msgid ""
+"If you are creating your own module, write a ``build.xml`` file if you "
+"haven't done so yet. You can start with a copy of `Erebot_Module_Skeleton`_'s "
+"own `build.xml`_ file. You'll also want to make sure that your module follows "
+"the same layout as official Erebot modules and that you added "
+"`Erebot_Buildenv`_ as a `git submodule`_ to your module."
+msgstr ""
+"If you are creating your own module, write a ``build.xml`` file if you "
+"haven't done so yet. You can start with a copy of `Erebot_Module_Skeleton`_'s "
+"own `build.xml`_ file. You'll also want to make sure that your module follows "
+"the same layout as official Erebot modules and that you added "
+"`Erebot_Buildenv`_ as a `git submodule`_ to your module."
+
+# 68d83e232cf546d38ed04c75826d955e
+#: ../src/Developers/Coding_Standard.rst:988
+msgid "Now, go to the root directory of the component and run:"
+msgstr "Now, go to the root directory of the component and run:"
+
+# 3cc2ee4782844f75a3e88040c84eace9
+#: ../src/Developers/Coding_Standard.rst:994
+msgid "This will check your code against the standards described here."
+msgstr "This will check your code against the standards described here."
+
+# a7e5dd0e1ba3400392d34c90ea12638e
+#: ../src/Developers/Coding_Standard.rst:996
+msgid ""
+"You may also be interested in :ref:`installing other PEAR packages "
+"<prerequisites>` related to :abbr:`QA (Quality Assurance)`, and then running "
+"the full :abbr:`QA (Quality Assurance)` test suite with:"
+msgstr ""
+"You may also be interested in :ref:`installing other PEAR packages "
+"<prerequisites>` related to :abbr:`QA (Quality Assurance)`, and then running "
+"the full :abbr:`QA (Quality Assurance)` test suite with:"

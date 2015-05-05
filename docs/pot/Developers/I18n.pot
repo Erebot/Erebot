@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Developers/I18n.rst:10
+# cd92bae672dd4dccba2ae20fdfa609eb
+msgid "Internationalization"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:0
+# 443c023a85b948e5ade0159170fd46cb
+msgid "Table of Contents"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:17
+# 207ec78c6e43464a889b6aa7e96867b8
+msgid "A practical example"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:19
+# 6b9f3352d41848dfbbebbe5f8b75c760
+msgid "Supporting I18N in your module is very simple. All you need is an instance of a translator (an instance of an object that implements `Erebot_Interface_I18n`_) for the module. A translator for the module is automatically created along instances of your module."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:25
+# fc77e846ba4e4f4c8bdcdc7509a8d30b
+msgid "Once equipped with a translator, just call its ``gettext()`` method, passing the string to translate to it. Therefore, translating a string is as simple as the following snippet:"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:39
+# 2423568c87a7445d9a4f436ac0012a4c
+msgid "Module developpers may also be interested in the other methods provided by the translator object, presented in the `API documentation`_ for that class."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:43
+# 099e508eb7774e8bab89ad8d24ccaa8b
+msgid "Managing translations"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:45
+# 1243f25b83c34c6289efc7a2e589f2e1
+msgid "In the previous section, we saw how to integrate strings that will be translated. So... how does Erebot finds out the correct translation?"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:48
+# 6a6d9801fbd043c19fc644855720e17a
+msgid "There is another special file in :samp:`data/i18n/{module}.po` where :samp:`{module}` is the name of your module (eg. ``Erebot_Module_XYZ``). This file uses the `gettext`_ format and lists all messages marked as requiring a translation (as extracted from your source code when running ``phing i18n``)."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:54
+# 59dbbd90d2c24ddeab2a173542dde78c
+msgid "Also, every Erebot module contains a set of translations in :samp:`data/i18n/{locale}/LC_MESSAGES/{module}.po`, where :samp:`{locale}` is some locale identifier, expressed using the following format: ``xx_YY`` (where ``xx`` is the ISO 639-1 code for the language [#]_ and ``yy`` is the code for the country, eg. ``en_US``) and :samp:`{module}` is the name of your module (eg. ``Erebot_Module_XYZ``). Those files use the same format as the previous file and provide the translations for the messages listed in :samp:`data/i18n/{module}.po`."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:63
+# 4171b6084f7f4bb2ad2b60c0dfb3115a
+msgid "To ease management of the translations, and especially the PO files (also called \"catalogs\"), a few tools are provided by Erebot as `phing`_ targets. These tools are discussed below."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:67
+# 052a4441596f4948b34150f0ac6a7bcf
+msgid "See http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:70
+# 5a30593f15594d8a9b9a92a74078fc5e
+msgid "Extracting strings marked for translation"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:72
+# 71db36b07ab040bfa9b8c74393c71974
+msgid "The ``extract_messages`` target can be used to parse the code of your module and extract strings marked for translation. This will write out every string marked for translation into :samp:`data/i18n/{module}.po`. Example:"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:83
+# fc99b61aaa044542b8af2eda0624bed6
+msgid "Adding translations for a new locale"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:85
+# 4e99c9f000cb40f5bf5eab033431125e
+msgid "Translations for a new locale can be added by using the ``init_catalog`` target and passing a ``locale`` parameter, like so:"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:94
+# 206200d2c9764f58bdc3a7a06ef03cf3
+msgid "Updating existing catalogs"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:96
+# 33aa8e9a28f14cc391f4f27399c02f8e
+msgid "Updating the catalogs is quite simple, just use the ``update_catalog`` target:"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:103
+# 4d2621c072754cf5a35edd82bc775739
+msgid "Compiling the catalogs"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:105
+# 5d38aa63bb554af98ac0d7fc80868b7a
+msgid "Last but not least, the catalog files cannot be used directly by the bot. You first need to compile them using the ``compile_catalog`` phing target:"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:113
+# e5a38f940c7c45f58dc9ce2b97dfbd77
+msgid "This will generate MO files for the miscellaneous PO files described above."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:116
+# 70ade8dbbe044bffadd65070c89706de
+msgid "Plurals"
+msgstr ""
+
+#: ../src/Developers/I18n.rst:118
+# 3d662210baaa4a919fa387ef4b37ffa9
+msgid "Correct pluralization of sentences is a big challenge when dealing with i18n."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:121
+# 49f2f6d217df4b1396d1ccc60056bab3
+msgid "Even though the `gettext`_ family of tools has some (incomplete, at least from my point of view) support for plurals, the original feature from `gettext`_ is not used by Erebot."
+msgstr ""
+
+#: ../src/Developers/I18n.rst:125
+# 0c8bdc54bf1f49208de1f8742f2b8217
+msgid "Erebot handles plurals in an elegant way, using a special set of markup in the `styling API`_. Readers may be interested in the documentation on `styling`_ for more information on plurals support."
+msgstr ""
+

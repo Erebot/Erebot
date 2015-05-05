@@ -1,0 +1,208 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Developers/New_module.rst:12
+# c6c21770a9fc4ead993283554ab01f4d
+msgid "Writing a new module"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:14
+# 02f6e19cbfcf4df88e5f8fdc26b220e5
+msgid "This page acts like a guide for those who may be interested in writing a new module for Erebot. It assumes basic knowledge of some of the features provided by Erebot for developers (such as the `styling features`_ and `i18n features`_)."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:0
+# 54b0dd5af1c24b5581112722dfb69e40
+msgid "Table of Contents"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:22
+# c239e243619a4669bc757c7590db3bc5
+msgid "General structure"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:24
+# 3f305f7aadbe46818d46fa2abbb2d776
+msgid "An Erebot module is a PHP class that extends ``Erebot_Module_Base``. As such, it must have at least two methods (declared *abstract* in ``Erebot_Module_Base``):"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:28
+# 8063b88515fe4e2a9f03743f756b7eec
+msgid "``_reload()`` is called when the module is (re)loaded with some flags giving more information about what must be (re)loaded. The flags are a bitwise-OR combination of the ``RELOAD_*`` constants found in ``Erebot_Module_Base``."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:33
+# bcc173a832384bd9aa26b75160968094
+msgid "``_unload()`` is called when the module is unloaded. Its purpose is to free any resource that may have been allocated by ``_reload()``, save the current state elsewhere, etc."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:38
+# f5269d50936044069d9bf72c964605b7
+msgid "When a module is reloaded, only ``_reload()`` is called. The only time ``_unload()`` is ever called is when the module is being completely unloaded (usually, right before the bot exits)."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:45
+# 1928ea1486fa4f8bbc970593ef403fc6
+msgid "Helping users"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:48
+# d6b25968ea914c25803a77041a961701
+msgid "Adding an help method to your module is totally optional, but it is considered good practice as it provides some way for users to request help on your new module and its commands without having to read some online manual."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:53
+# 5a912880fd454619829460b38b7fdfe0
+msgid "To provide help for your module, all you need is a method that handles help requests. The name of that method does not matter (though this method is called ``getHelp()`` in all modules that ship with Erebot)."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:57
+# 11d83a8950594b108731260f0d0422db
+msgid "When someone requests help on a module or command, the help methods are looked up in order to find one that will acknowledge the request (see below). This may result in one or more help methods being called to handle the request."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:61
+# d3d6d9045a294a449cd596fe7d79e513
+msgid "The help method **must** use the following signature."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:70
+# 079371d365ad4d6a98dc697cf2202676
+msgid "This method is responsible for either acknowledging the help request (by returning ``TRUE``) or ignoring it (by returning ``FALSE`` or by not returning anything at all). If your method chooses to ignore the help request, the next help method in line will be called with the same parameters, until either a method acknowledges the request or there are no more help methods to try."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:77
+# 23f74c9c19bf4ef9b65f12bb7bb499d4
+msgid "``$event`` will contain the original request as an event. This will either be an event that implements the ``Erebot_Interface_Event_Base_Private`` interface if the request was sent as a private query, or an event implementing the ``Erebot_Interface_Event_Base_Chan`` interface if it came from an IRC channel."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:82
+# a55b86a2b3b649deaeac5f1cf11df49f
+msgid "``$words`` contains the content of the request (derived from the text in the original request in ``$event``), wrapped to make it easier to look at individual words."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:86
+# f0d71c0a005148049037fff40b132c0e
+msgid "Now, there are two types of requests:"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:88
+# fb62d7721c07428c96296a0df8f292b1
+msgid "Requests for help on the module itself (``!help Foo``). In that case, ``$words`` will contain only one word: the name of the module itself inside the ``\\\\Erebot\\\\Module`` namespace |--| ``Foo`` in this case."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:93
+# 6c88277f95b84cadacf40ec2456cdb99
+msgid "Requests for help on a command/topic (``!help foo``, ``!help foo bar...``). In that case, ``$words`` will contain 2 or more words:"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:96
+# ba1b4bc352204b099acc1dc9f29cad0b
+msgid "The name of the current module."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:97
+# 5cf556f9723b4a7cb0b6f8a913426207
+msgid "The name of the command (``foo``)."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:98
+# e3fa5ef3b2fc4244aded101af56f8da2
+msgid "Any additional parameters (``bar...``)."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:100
+# c75f0e9b6d584f52b8d9f2d4e94c9297
+msgid "You can find out which type of request is in use by simply counting the number of words in ``$words``, which is very easy as the wrapper implements the ``Countable`` interface:"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:111
+# e2f9b2d5180341e5bc29bbeeb15b0701
+msgid "Erebot has now way (yet) to know what module provides a given command/topic, so for such help requests, it calls every module's help method with the request until one acknowledges it."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:115
+# 37bfcdf1772547d8a40af919eee812d6
+msgid "This means that your help method may receive requests about commands or topics it knows nothing about. You **must** ignore such requests (by returning ``FALSE`` or nothing at all) and you **must not** send a message indicating an error in the request to the user."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:120
+# 3203c3fe76db4303a7f68c8d85ff24a5
+msgid "The listing below shows an example of a very simple help method for an imaginary module:"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:157
+# 357c7abf77c74b5ca6610bc5a37ec176
+msgid "We used the ``getFormatter()`` method here to be able to `format`_ the help message (to make \"imaginary\" appear in bold in the output). We also used the formatter's ``_()`` method to mark the message for `translating`_. This is the recommended practice."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:163
+# 423febfda5a64a26b425f91bb1f5e527
+msgid "Once the code for your help method is ready, you have to tell Erebot about it by using the ``registerHelpMethod()`` method inside your module's ``reload()`` method. You must call ``registerHelpMethod()`` with an object implementing the ``\\\\Erebot\\\\Interface\\\\Callable`` interface and referring to your method."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:168
+# 853b8af5f67143a5ac8a5db7d729450c
+msgid "This can be done using the following snippet:"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:181
+# 1be30a6449654c2788efb639c1458f9b
+msgid "Alternatively, you may mark your module as implementing the :api:`\\\\Erebot\\\\Interface\\\\HelpEnabled` interface. In that case, the bot will automatically register the module's ``getHelp()`` method as the help method."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:188
+# b649c5ed1fee4393a020c9e8e3aca05d
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:190
+# 612e62fbefdc44bd941969e3e1db4e32
+msgid "This sections contains random questions about modules' development."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:193
+# be48fbbab9ac4557b2539d2ad4e7c40a
+msgid "What features can I use in a new module?"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:195
+# d7709458d88645a2982a8f41b7d268a5
+msgid "You can use any of the many features provided by the PHP language. This includes things such as sockets, databases, etc."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:199
+# 674d2b38aa874e509128c04b4976db2b
+msgid "Are there patterns I should avoid?"
+msgstr ""
+
+#: ../src/Developers/New_module.rst:201
+# a7b381bcbc644a478b9f11b64f30e984
+msgid "Even though you can do pretty much anything you want in a module, you should avoid long running tasks such as downloading a big file from a remote server."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:205
+# 876059863c534f9e96b9f5b59ba3a6b4
+msgid "The reason is simple: PHP does not support multithreading [#pthreads]_, so while a long running task is being executed, the rest of the bot is literally stopped. This includes other modules responsible for keeping the connection alive (``\\\\Erebot\\\\Module\\\\PingReply``). Hence, running a long task in your module may result in the bot being disconnected from IRC servers with a \"Ping timeout\" error."
+msgstr ""
+
+#: ../src/Developers/New_module.rst:213
+# f1747b993a624c75ae8586114ec2708f
+msgid "This is not entirely true anymore, as there is now an extension that brings the power of pthreads to PHP. Anyway, PHP does not natively support them and the extension has a few issues of its own. See https://github.com/krakjoe/pthreads for more information."
+msgstr ""
+

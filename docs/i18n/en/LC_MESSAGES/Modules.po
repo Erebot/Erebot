@@ -1,0 +1,231 @@
+# English translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# d4ea069e11d44088872998995e9dbae2
+#: ../src/Modules.rst:10
+msgid "Compatible modules"
+msgstr "Compatible modules"
+
+# 84277542f10b4c27a92f3392c4c0357f
+#: ../src/Modules.rst:12
+msgid ""
+"This page lists several modules which are known to be compatible with Erebot, "
+"divided into two categories:"
+msgstr ""
+"This page lists several modules which are known to be compatible with Erebot, "
+"divided into two categories:"
+
+# f2c46eb929cc4118b5985ca8f03f8fa4
+#: ../src/Modules.rst:15
+msgid "`Supported modules`_"
+msgstr "`Supported modules`_"
+
+# 4bd3e2c40b734fbea3e1bc2b29c8b139
+#: ../src/Modules.rst:16
+msgid "`Third-party modules`_"
+msgstr "`Third-party modules`_"
+
+# 2a19983775df4c87a94fa61fdf773455
+#: ../src/Modules.rst:22
+msgid "Supported modules"
+msgstr "Supported modules"
+
+# 4abf6e408db7465a92960c8e019277d0
+#: ../src/Modules.rst:24
+msgid "This section contains a list of supported modules:"
+msgstr "This section contains a list of supported modules:"
+
+# 7902962bc2f1470d89960367f41ed0a6
+#: ../src/Modules.rst:29
+msgid ":erebot:module:`Admin`"
+msgstr ":erebot:module:`Admin`"
+
+# b5a0ab5e9ae8488baec05e606aa81475
+#: ../src/Modules.rst:30
+msgid ":erebot:module:`AutoConnect`"
+msgstr ":erebot:module:`AutoConnect`"
+
+# 7c1458076aed4fdb9f6135ef6b14471f
+#: ../src/Modules.rst:31
+msgid ":erebot:module:`AutoIdent`"
+msgstr ":erebot:module:`AutoIdent`"
+
+# 7e7d3b478e954ba88e71881d34f01388
+#: ../src/Modules.rst:32
+msgid ":erebot:module:`AutoJoin`"
+msgstr ":erebot:module:`AutoJoin`"
+
+# d07578dc21754c63b4c2d80226a8957f
+#: ../src/Modules.rst:33
+msgid ":erebot:module:`AZ`"
+msgstr ":erebot:module:`AZ`"
+
+# 08b015c6b7e940b28d2d2c658a34a54b
+#: ../src/Modules.rst:34
+msgid ":erebot:module:`Countdown`"
+msgstr ":erebot:module:`Countdown`"
+
+# de18ede71988457aab6d3fd0a683cbcd
+#: ../src/Modules.rst:35
+msgid ":erebot:module:`CtcpResponder`"
+msgstr ":erebot:module:`CtcpResponder`"
+
+# dea80f9d80c54ec291469fc6957b6b22
+#: ../src/Modules.rst:36
+msgid "Feeds"
+msgstr "Feeds"
+
+# a45dc60b26dd42afa81cd3049c2452ed
+#: ../src/Modules.rst:37
+msgid ":erebot:module:`GoF`"
+msgstr ":erebot:module:`GoF`"
+
+# 299bde584a05455b80ccb082f8b8fe4a
+#: ../src/Modules.rst:38
+msgid ":erebot:module:`Helper`"
+msgstr ":erebot:module:`Helper`"
+
+# eb9f42970f7d49bdace7bbf4fdfd1f89
+#: ../src/Modules.rst:39
+msgid ":erebot:module:`IrcConnector`"
+msgstr ":erebot:module:`IrcConnector`"
+
+# fb314e9ba22d4a6a950fdebeb932a9b0
+#: ../src/Modules.rst:40
+msgid ":erebot:module:`IrcTracker`"
+msgstr ":erebot:module:`IrcTracker`"
+
+# bd647c861f3444d38775707b6092f6d2
+#: ../src/Modules.rst:41
+msgid ":erebot:module:`LagChecker`"
+msgstr ":erebot:module:`LagChecker`"
+
+# 37e26d86c99e497da133e6373b547654
+#: ../src/Modules.rst:42
+msgid ":erebot:module:`Math`"
+msgstr ":erebot:module:`Math`"
+
+# 0de6870fb2454dd7bfe91ff05c853338
+#: ../src/Modules.rst:43
+msgid ":erebot:module:`MiniSed`"
+msgstr ":erebot:module:`MiniSed`"
+
+# 9d2b7a23f8cd4adebfe54c7d0be46ebd
+#: ../src/Modules.rst:44
+msgid ":erebot:module:`PhpFilter`"
+msgstr ":erebot:module:`PhpFilter`"
+
+# ebaf559a534a4867a555a7011fc9e9c3
+#: ../src/Modules.rst:45
+msgid ":erebot:module:`PingReply`"
+msgstr ":erebot:module:`PingReply`"
+
+# 6eea35b486fa488c82eeb4798560f28c
+#: ../src/Modules.rst:46
+msgid ":erebot:module:`RateLimiter`"
+msgstr ":erebot:module:`RateLimiter`"
+
+# 57cea755bbde42b98644acc9cb7e0118
+#: ../src/Modules.rst:47
+msgid ":erebot:module:`Roulette`"
+msgstr ":erebot:module:`Roulette`"
+
+# f2a8106c2b9745b28238b8fb1e5fa431
+#: ../src/Modules.rst:48
+msgid ":erebot:module:`ServerCapabilities`"
+msgstr ":erebot:module:`ServerCapabilities`"
+
+# ba15a92788a643cbadb707eae8a9d982
+#: ../src/Modules.rst:49
+msgid "Thiercelieux"
+msgstr "Thiercelieux"
+
+# 1a61b7f41dad4745976e3a01450e753a
+#: ../src/Modules.rst:50
+msgid ":erebot:module:`TriggerRegistry`"
+msgstr ":erebot:module:`TriggerRegistry`"
+
+# 2c5ee5fefcdb4f0b90286b340100612f
+#: ../src/Modules.rst:51
+msgid ":erebot:module:`TV`"
+msgstr ":erebot:module:`TV`"
+
+# 8747c94583c542b5a3a9d4ee7dda9d95
+#: ../src/Modules.rst:52
+msgid ":erebot:module:`Uno`"
+msgstr ":erebot:module:`Uno`"
+
+# a45657ae81874a009ac9aa6175aef47a
+#: ../src/Modules.rst:53
+msgid ":erebot:module:`WatchList`"
+msgstr ":erebot:module:`WatchList`"
+
+# c9aa7b40421f4c8cbacde1e276be5800
+#: ../src/Modules.rst:54
+msgid ":erebot:module:`WebGetter`"
+msgstr ":erebot:module:`WebGetter`"
+
+# d24c1a35657e41558d016e7574b7b191
+#: ../src/Modules.rst:55
+msgid ":erebot:module:`Wordlists`"
+msgstr ":erebot:module:`Wordlists`"
+
+# 60e70d00f0204b93acc4f40569666de4
+#: ../src/Modules.rst:57
+msgid ""
+"All supported modules can be found at https://github.com/Erebot/ (look for "
+"repositories whose name starts with *Erebot_Module_*). See each module's "
+"individual documentation for installation instructions and additional "
+"information."
+msgstr ""
+"All supported modules can be found at https://github.com/Erebot/ (look for "
+"repositories whose name starts with *Erebot_Module_*). See each module's "
+"individual documentation for installation instructions and additional "
+"information."
+
+# 7e275dac4ddc4580a604affef8475b01
+#: ../src/Modules.rst:66
+msgid "Third-party modules"
+msgstr "Third-party modules"
+
+# 9018fb5a557b41a7befa98d71614ceb6
+#: ../src/Modules.rst:68
+msgid "This sections contains a list of third-party modules:"
+msgstr "This sections contains a list of third-party modules:"
+
+# 196aa06fb1a940d494aa66970eb34417
+#: ../src/Modules.rst:70
+msgid "*No third-party module has been submitted yet.*"
+msgstr "*No third-party module has been submitted yet.*"
+
+# 6efd4f17d215441ba84e3ff9bfe77543
+#: ../src/Modules.rst:72
+msgid ""
+"Contact us at erebot@erebot.net if you would like your module to be listed "
+"here."
+msgstr ""
+"Contact us at erebot@erebot.net if you would like your module to be listed "
+"here."
+
+# 89e17c7bab25427eb761df2d4068bec1
+#: ../src/Modules.rst:76
+msgid ""
+"No support is provided by Erebot developpers for those third-party modules."
+msgstr ""
+"No support is provided by Erebot developpers for those third-party modules."

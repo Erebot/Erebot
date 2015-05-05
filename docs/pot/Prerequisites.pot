@@ -1,0 +1,815 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Prerequisites.rst:12
+# d0c13ef5a3144e9196d7192b34399677
+msgid "Prerequisites"
+msgstr ""
+
+#: ../src/Prerequisites.rst:14
+# 518b4fdaae71472ca275caf8b95e9354
+msgid "This page assumes that the reader has a working PHP setup (either installed using some distribution's package manager or manually) and lists the dependencies required to use Erebot. In case you compiled PHP yourself, you may need to recompile it to include additional extensions (see the list of required `PHP dependencies`_ for more information)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:21
+# 2137d6e78e064dd3b404b6ddbdda6153
+msgid "As of this writing, Erebot is known to work on all PHP versions since PHP 5.2.1. Also, Erebot should run correctly on both Windows (XP or later) and most Linux distributions. The code is tested using an automated process on several operating systems, as reflected by our `Continuous Integration server`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:0
+# 80e81dc1ec3b4689a4bdbc4ffa2bed66
+msgid "Table of Contents"
+msgstr ""
+
+#: ../src/Prerequisites.rst:32
+# 713a8aca922a418ca482e128fd53bc82
+msgid "How to read this page"
+msgstr ""
+
+#: ../src/Prerequisites.rst:34
+# 26e1d64f759544c99b81ac4a211cd164
+msgid "Each dependency is associated with a \"profile\" which indicates who might be interested in installing that particular dependency. Currently, the following profiles are used:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:49
+# 96e6576e46ab45a2afa1b5cbaa783ab1
+msgid "developer"
+msgstr ""
+
+#: ../src/Prerequisites.rst:51
+# 6bb40f8866a8437ca9de1e52f149c7ae
+msgid "Someone who contributes to the project, eg. by sending patches or pull requests. The developer profile is usually a superset of the end-user profile as developers tend to run the bot to test their work."
+msgstr ""
+
+#: ../src/Prerequisites.rst:40
+# b7e8195d9eb04a6b8b859327ec6030fe
+msgid "end-user"
+msgstr ""
+
+#: ../src/Prerequisites.rst:42
+# fa2f5dce27014b32a3b4964360ae862b
+msgid "Someone who wants to run the bot, ie. have it connect to and interact with some IRC server. Only a few dependencies are required for this profile."
+msgstr ""
+
+#: ../src/Prerequisites.rst:45
+# 7a654025035f485089f3f175707f423d
+msgid "packager"
+msgstr ""
+
+#: ../src/Prerequisites.rst:47
+# a8c49352f59e44bb94805533da2a6592
+msgid "Someone who creates (PHAR) packages from Erebot's source code. This profile does not include distribution maintainers."
+msgstr ""
+
+#: ../src/Prerequisites.rst:55
+# 22c0cc6195cb4738b5ae220e3fa59805
+msgid "You only need to install the dependencies associated with the profile that best matches what you plan on doing."
+msgstr ""
+
+#: ../src/Prerequisites.rst:60
+# 5031e9bbdf7541b9aab67aedc1626610
+msgid "System dependencies"
+msgstr ""
+
+#: ../src/Prerequisites.rst:62
+# 707cec831bf545a18f2b057442a56eea
+msgid "The following table lists system dependencies. Make sure to read the installation instructions relevant to your system **before** you start the installation:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:66
+# fdcf6a6990924617a4de4d52bdbd032d
+msgid "`Instructions for Linux users`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:67
+# 3224ca3eb8b24872b3d256e9b285ddec
+msgid "`Instructions for Windows users`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:69
+#: ../src/Prerequisites.rst:249
+#: ../src/Prerequisites.rst:364
+# 1120136d8d3745a8a03c3462c5d97139
+# fea61a4fb2694714bcdd994fea21fa49
+# 38188cb470ff4fd68345feff89fca29d
+msgid "For each profile, a \"yes\" on a dependency's row indicates that users of the given profile **MUST** install that dependency (requirement). Optional dependencies are indicated using footnotes which state when the dependency may be of any interest for the given profile."
+msgstr ""
+
+#: ../src/Prerequisites.rst:74
+# c1bc486ec5284e3abed0ea3307a8e6c0
+msgid "For apt-based systems like Debian/Ubuntu, an installation link is also provided."
+msgstr ""
+
+#: ../src/Prerequisites.rst:0
+# 6f89b15e83a241a29030e0266cf9e363
+msgid "System dependencies for Erebot"
+msgstr ""
+
+#: ../src/Prerequisites.rst:80
+#: ../src/Prerequisites.rst:262
+#: ../src/Prerequisites.rst:377
+# f1a52e7dd3854faa887b96c3088018a5
+# 0901235dd2214c308ea32cab610f85ea
+# 9f111d4df04040c6be3e8979706aa60a
+msgid "Dependency"
+msgstr ""
+
+#: ../src/Prerequisites.rst:81
+# cd5830a04ecc4033bb49950aa480a86b
+msgid "APT link"
+msgstr ""
+
+#: ../src/Prerequisites.rst:82
+#: ../src/Prerequisites.rst:263
+# 8c6e10aac4bb485397a591778b5df4c4
+# c5678edea9cf4a8998f58468c32d1850
+msgid ":term:`Developer`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:83
+#: ../src/Prerequisites.rst:264
+# 9aa43b5b19e9445e9bc64891312622d0
+# 40b0a4daa2af44e09a4d9b6c5efce271
+msgid ":term:`Packager`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:84
+#: ../src/Prerequisites.rst:265
+# dd369697f2e34dae96476ef173ff6f42
+# e5c5c877d28e4668980994c152809242
+msgid ":term:`End-user`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:85
+#: ../src/Prerequisites.rst:266
+#: ../src/Prerequisites.rst:381
+# a16e5124e80c4f628c15aedd35d5e9eb
+# 9b5659beba674911b9222a0ff1c0ed09
+# cadab4925b5742b38f05bde8fdcfb890
+msgid "Description"
+msgstr ""
+
+#: ../src/Prerequisites.rst:86
+# d39cb3c2b5c747ebacfd68f6b85536e4
+msgid "`doxygen <http://www.stack.nl/~dimitri/doxygen/download.html#latestsrc>`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:87
+# 22170c54aebe40d5b07f42cad168f5a3
+msgid "`Install using apt <apt:doxygen>`__"
+msgstr ""
+
+#: ../src/Prerequisites.rst:88
+#: ../src/Prerequisites.rst:89
+#: ../src/Prerequisites.rst:97
+#: ../src/Prerequisites.rst:98
+#: ../src/Prerequisites.rst:109
+#: ../src/Prerequisites.rst:268
+#: ../src/Prerequisites.rst:270
+#: ../src/Prerequisites.rst:274
+#: ../src/Prerequisites.rst:275
+#: ../src/Prerequisites.rst:276
+#: ../src/Prerequisites.rst:280
+#: ../src/Prerequisites.rst:282
+#: ../src/Prerequisites.rst:311
+#: ../src/Prerequisites.rst:313
+#: ../src/Prerequisites.rst:317
+#: ../src/Prerequisites.rst:319
+#: ../src/Prerequisites.rst:323
+#: ../src/Prerequisites.rst:325
+#: ../src/Prerequisites.rst:328
+#: ../src/Prerequisites.rst:330
+#: ../src/Prerequisites.rst:341
+#: ../src/Prerequisites.rst:350
+#: ../src/Prerequisites.rst:352
+#: ../src/Prerequisites.rst:389
+#: ../src/Prerequisites.rst:390
+#: ../src/Prerequisites.rst:396
+#: ../src/Prerequisites.rst:398
+#: ../src/Prerequisites.rst:403
+#: ../src/Prerequisites.rst:405
+#: ../src/Prerequisites.rst:417
+#: ../src/Prerequisites.rst:418
+# 223526cc81ce471dbec646f3ff497433
+# 9e3bde730d314930826a0490872cf9e5
+# 627b68d45b80424d873186d847a82eea
+# 390a97ae29654f12accfa0a63162130d
+# ec79a0346f704209ab63c9a4e01fe645
+# 44de3e21fb884ba2ac0b49a42a14da00
+# e5c3d10fae894b95baf66c30f2d85b51
+# a936985d94d549d5856011952b59d79e
+# 3783ed72772446a3956e4757b774a982
+# 22cd49cf0121456a97e853d64503cc1d
+# a3b133e3b75648c0802b1c09a7dfcb7e
+# 1bc075ee7c7c4efeac61ec9d8da4f2fc
+# 5f781ba295e44622b1773a92d7be705a
+# 7154119094de47b7989f2d08b7a37622
+# 7e83c024c72e4b8299bb2389a3535703
+# 02847a9068b7466f97abe3a6eb43f02d
+# aefecb3426894451af6ed7a5dafa0339
+# bb1c26f5cdba4d478787973a955af5eb
+# d2a1fe19f81a454db0d5184228596617
+# 4d68921582c04d08b6d340d65e6d5904
+# f9c4f219512147aa891b9f5211a1c32e
+# 6f25d812f611483fa51009b8d4ccc6f3
+# eb1607b1ead54021b695e74df4cd17d6
+# 9659b0be9ae44aa0a057800e8c70039c
+# 35575336e1f843b38de7e0440b2b8fab
+# 0b1fba1af8cb47e39c62d0ea81220419
+# 1045b1c3fb9e41e5964bc05e309f2b14
+# e694e1fa2eeb49b1b4be65e8bbdedee5
+# 5a8da6f0498140d99af0708372dd6bb5
+# cf28b6e9e4564a9aaad5faf9efc2df51
+# 4dd2af012cc946e68565472c6f35c2a9
+msgid "yes"
+msgstr ""
+
+#: ../src/Prerequisites.rst:91
+# 1784a254d03a4295959f1fda5cf62e4b
+msgid "``doxygen`` is needed if you plan to generate the documentation from Erebot's source files. We recommend version 1.7.2 or later as Erebot makes heavy use of PHP type-hinting and ``doxygen`` did not support that until 1.7.2."
+msgstr ""
+
+#: ../src/Prerequisites.rst:95
+# 80578bcf68824f26a6426a2a7373fb7d
+msgid "gettext"
+msgstr ""
+
+#: ../src/Prerequisites.rst:96
+# e6dd711e7bb0454a95db829d7d4493af
+msgid "`Install using apt <apt:gettext>`__"
+msgstr ""
+
+#: ../src/Prerequisites.rst:100
+# 11effc53c2994f5a89b8aecf77443109
+msgid "The ``gettext`` package provides the ``xgettext`` command-line program used to extract messages marked for translation."
+msgstr ""
+
+#: ../src/Prerequisites.rst:105
+# ea620dae908a41d78b723acfd6346f98
+msgid "This is **NOT** the same as the PHP ``gettext`` extension."
+msgstr ""
+
+#: ../src/Prerequisites.rst:106
+# 4028136703524d73b5d8d4ca9334a191
+msgid "`xmlstarlet <http://xmlstar.sourceforge.net/download.php>`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:107
+# d52e32bc48014469b34563b52c749b58
+msgid "`Install using apt <apt:xmlstarlet>`__"
+msgstr ""
+
+#: ../src/Prerequisites.rst:111
+# 25f1a8fde7b74e48b5e09125e4ee5e48
+msgid "``xmlstarlet`` is a |CLI| tool that simplifies XML files editing. We use it during packaging to set various settings in the :file:`package.xml` file."
+msgstr ""
+
+#: ../src/Prerequisites.rst:117
+# 37b37fed0bcd4de791e72fab1e496063
+msgid "Instructions for Linux users"
+msgstr ""
+
+#: ../src/Prerequisites.rst:119
+# fa306f26c909485ea518d94ebb7e8400
+msgid "It is assumed that the reader has a working package manager which can be used to install those dependencies, usually by issuing one of the following commands **as a privileged user**, followed by the name of the package that provides the dependency:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:139
+# 5a91d412db364726914ebaf224e45853
+msgid "Instructions for Windows users"
+msgstr ""
+
+#: ../src/Prerequisites.rst:141
+# 15dbfb6b861a477a9cf12c6b64a5094b
+msgid "As Windows lacks a central package manager, each dependency must be downloaded and installed separately, using its specific procedure."
+msgstr ""
+
+#: ../src/Prerequisites.rst:144
+# 6577dacf061b48438600b41fe36b4892
+msgid "For Doxygen, this is easy, just go to `Doxygen's download page`_. The same goes for XMLStarlet whose Windows version can easily be downloaded from their `download page <http://xmlstar.sourceforge.net/download.php>`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:148
+# 493ef93866ff411bbf8d968391559590
+msgid "Installing gettext for Windows is a little bit thougher. First, go to http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ and download the latest version (0.18.1.1-2 as of this writing) of the following archives :"
+msgstr ""
+
+#: ../src/Prerequisites.rst:153
+# 826b123079614a42a46edf17e1673b14
+msgid "`gettext-runtime-dev <http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-dev_0.18.1.1-2_win32.zip>`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:154
+# ee0ac7aa4d584055a9468757d7953dd1
+msgid "`gettext-runtime <http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime_0.18.1.1-2_win32.zip>`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:155
+# 6c18a8178faf4e2581be0112fd321137
+msgid "`gettext-tools-dev <http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-tools-dev_0.18.1.1-2_win32.zip>`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:157
+# 5fd9cece39644ff7bd18e519f4d66040
+msgid "Unzip each of these files to the same target folder (eg. ``C:\\gettext``)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:161
+# 811cfac70fd14c90b71e2fad20a82c90
+msgid "So as to avoid potential issues, we recommend that you unzip the files in a folder whose name is both short (eg. your disk drive's root) and does not contain any special character (including spaces)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:165
+# 50dc4fe1087e4387a30882a2396b1ae2
+msgid "Once you are done, point your system's :envvar:`PATH` environment variable to that folder's ``bin`` subdirectory (ie. ``C:\\gettext\\bin``). The remaining folders (lib, include, share, etc.) are not required and can safely be removed if disk space is an issue."
+msgstr ""
+
+#: ../src/Prerequisites.rst:170
+# 949bc4565d7240a59e0df9abbbb511a4
+msgid "This setup is what we use to test Erebot on Windows on our `Continuous Integration server`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:175
+# 0d42692732994e758dc85e0f4c75d985
+msgid "PHP dependencies"
+msgstr ""
+
+#: ../src/Prerequisites.rst:177
+# c5eaf3df122f46e1a0e9ee17e2d6c0aa
+msgid "There are two kinds of dependencies:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:181
+#: ../src/Prerequisites.rst:360
+# 4cac0521ae574ef7b3326a6b63ce0093
+# 229de24e9420483ca0cc44a5ecc60ca2
+msgid "PEAR packages"
+msgstr ""
+
+#: ../src/Prerequisites.rst:180
+# 965582463fb14c6e99a93ea121000c0a
+msgid "These packages contain (reusable) PHP code. They are downloaded from the `PHP Extension and Application Repository`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:186
+# 2d7f0abf4aeb42068f1c3578b6206d31
+msgid "PECL packages"
+msgstr ""
+
+#: ../src/Prerequisites.rst:184
+# cd6254647c5e4ff99c67779920223b58
+msgid "These packages contain code (usually written in C) that extends PHP with new features or changes the behaviour of existing features. They are downloaded from the `PHP Extension Community Library`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:188
+# 4e220e58a8b74c5aac4dfae9814bf2d2
+msgid "For each dependency, a short description as well as the profiles that are likely to be interested in installing that dependency are listed."
+msgstr ""
+
+#: ../src/Prerequisites.rst:193
+# 5216982974c84320b62a50d5ea4626cd
+msgid "Compatible installers"
+msgstr ""
+
+#: ../src/Prerequisites.rst:195
+# 69ba4b5cf853406d8f5bf102bf31b7cc
+msgid "To install Erebot's PHP dependencies, you will need a compatible installer. There are currently two of them:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:212
+# c451136608ab4e6c8d778f3fbc54b23e
+msgid "`pear`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:199
+# bd2e3484a8994d10b7a91cfc2a15b477
+msgid "The original installer, meant to install both PEAR and PECL packages. The simplest way to `install pear`_ is to grab a copy of `go-pear.phar <http://pear.php.net/go-pear.phar>`_ and run this command from a shell:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:208
+# b410e285f13240b2a1214b01dffe7645
+msgid "Then, to install a dependency using `pear`_, run the following command:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:228
+# ff9efa10a7994a40ba425b4ce060bc73
+msgid "`Pyrus`_ (highly experimental, see below)"
+msgstr ""
+
+#: ../src/Prerequisites.rst:215
+# c34f5f45a9fa49128996e88e8935f818
+msgid "Successor for `pear`_, meant to replace it someday. Pyrus provides the means to install and manage installations for packages built using package.xml version 2.0 or newer. Pyrus is redesigned from the ground up for PHP 5.3 or newer, and provides significant improvements over the older PEAR Installer. The latest version can be downloaded from `this link <http://pear2.php.net/pyrus.phar>`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:223
+# e6d2336f1aff4fe39d836a14abd4c7ec
+msgid "To install a dependency using `Pyrus`_, run the following command:"
+msgstr ""
+
+#: ../src/Prerequisites.rst:232
+# 50a094cc3d1548b891d4e0ea667cae89
+msgid "At the time of this writing, `Pyrus`_ is still in development, with only alpha releases currently available. Pyrus may corrupt your system when using its default configuration and is also known to install pear packages incorrectly under certain circumstances. Unless you know exactly what you are doing, we recommend that you stick to the regular `pear`_ tool to install Erebot. See https://github.com/pyrus/Pyrus/issues/8 and https://github.com/pyrus/Pyrus/issues/26 for more information."
+msgstr ""
+
+#: ../src/Prerequisites.rst:244
+# 6179a7a1ed104e09989d75a8ae95d247
+msgid "PECL extensions"
+msgstr ""
+
+#: ../src/Prerequisites.rst:246
+# 9f2d0b0938dd4eda8e737605899c376a
+msgid "The following table lists the PECL extensions needed to use Erebot. You may notice that most of these extensions are actually part of PHP Core."
+msgstr ""
+
+#: ../src/Prerequisites.rst:254
+#: ../src/Prerequisites.rst:369
+# b228415820b7455b818acd3239e37f15
+# ca7c4a4a3bb64a0fa8985b0b0b38d712
+msgid "Unless you have a good reason not to (such as when testing backward compatibility), we recommend that you always install the latest version available for each dependency."
+msgstr ""
+
+#: ../src/Prerequisites.rst:0
+# 27b8767890df4e5baed116695c5b2ff7
+msgid "PECL extensions used by Erebot"
+msgstr ""
+
+#: ../src/Prerequisites.rst:267
+# 772e881c8d6f4a72a61f2f9ada15a792
+msgid ":php:`DOM`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:271
+# 920b4394c3de46cc848863cbb7e47261
+msgid "The DOM extension parses an |XML| document into a |DOM|, making it easier to work with from a developer's point of view."
+msgstr ""
+
+#: ../src/Prerequisites.rst:273
+# 6b79e03fb8ed463fb330071de4156708
+msgid ":php:`intl`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:277
+# 8e5f8450829848bb9b6cecf5a1b7c852
+msgid "Provides several helper classes to ease work on |i18n| in PHP applications."
+msgstr ""
+
+#: ../src/Prerequisites.rst:279
+# 54043a72d27b435cb0bc3c536be02957
+msgid ":php:`libxml`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:283
+# 67f49e6747b44a1f93ccd3935bb03d25
+msgid "This extension is a thin wrapper above the C `libxml2`_ library and is used by other extensions (DOM, SimpleXML, XML, etc.) that deal with |XML| documents."
+msgstr ""
+
+#: ../src/Prerequisites.rst:286
+# 3c90e30b01544d50b3880146987eab65
+msgid ":php:`openssl`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:289
+# 27e6dcfe46d8415dab8accea294e7a22
+msgid "[#footnotes_openssl]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:290
+# 40507be34a3c422cbd333c63928b1b61
+msgid "Provides `SSL`_/`TLS`_ support (secure communications) for PHP."
+msgstr ""
+
+#: ../src/Prerequisites.rst:291
+# 5ae190fa72914b91a5f752a8874b9f7d
+msgid ":php:`pcntl`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:294
+# 67ac829caf2649f3ba12a830ddbb498c
+msgid "[#footnotes_pcntl]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:295
+# 761149a16698498e883d08f6bd1ed47a
+msgid "Process management using PHP. The functions provided by this extension can be used to communicate with other processes from PHP (using signals) and to exercise some sort of control over them."
+msgstr ""
+
+#: ../src/Prerequisites.rst:299
+# 5412f9e401a94c71aef923b33a747dc7
+msgid ":php:`Phar`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:301
+# 3c9a4bed1be74acd8fc3ae23802059c4
+msgid "[#footnotes_phar_package]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:302
+# 4974a997c40749ce9ed8f6de15df1f23
+msgid "[#footnotes_phar_run]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:303
+# 73c68b3a41934b219e539902595ecefc
+msgid "This extension is used to create or access a PHP Archive (phar)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:304
+# 1c50aa10cdcf457c8559afc43ac43d10
+msgid ":php:`POSIX`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:307
+# d3794752f41545de9501b4fdf3debf9c
+msgid "[#footnotes_posix]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:308
+# 8bdb682c11dd411197c06b61ecfb28ba
+msgid "Provides access to several functions only featured by `POSIX`_-compliant operating systems."
+msgstr ""
+
+#: ../src/Prerequisites.rst:310
+# 70c5451f86eb48d0a99c59082238db34
+msgid ":php:`Reflection`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:314
+# 7847e8a8ef5742be9b4e488946eb058b
+msgid "This extension makes it possible for some PHP code to inspect its own structure."
+msgstr ""
+
+#: ../src/Prerequisites.rst:316
+# e6bf15ed22e2498c987f8a31362e42bc
+msgid ":php:`SimpleXML`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:320
+# 5eb2b108fda447ff8a169a00119488f5
+msgid "Wrapper around `libxml2`_ designed to make working with |XML| documents easier."
+msgstr ""
+
+#: ../src/Prerequisites.rst:322
+# 4817390421114e628586bb8325219250
+msgid ":php:`sockets`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:326
+# 9268955d017a40d3b0ec9831b759cd52
+msgid "This extensions provides networking means for PHP applications."
+msgstr ""
+
+#: ../src/Prerequisites.rst:327
+# f9ec2e529df247848a0d87302e27ef59
+msgid ":php:`SPL`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:331
+# 5514bbec83cc46d7b81a8b245b7b48de
+msgid "The `Standard PHP Library`_ provides several functions and classes meant to deal with common usage patterns, improving code reuse."
+msgstr ""
+
+#: ../src/Prerequisites.rst:333
+# c0cf82cc4fa440d8a845735e909975d7
+msgid "`xdebug <http://xdebug.org/>`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:334
+# 3656b06000b24bbfa53b8936f51f813a
+msgid "[#footnotes_xdebug]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:337
+# 45e5a75a61ec427484caf9e6e2b8c6b0
+msgid "Debugging execution of PHP code is made possible by this extension. It can also be used to retrieve some metrics on the code (like code coverage information)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:340
+# c74c5b73edd1477c9898883f722d9fcd
+msgid ":php:`XSL`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:344
+# 7689024b25914778917441f50750bdbd
+msgid "The XSL extension implements the XSL standard, performing `XSLT transformations`_ using the `libxslt library`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:346
+# 5f23f2733b0a45abb473a18a9f38b966
+msgid ":php:`mbstring` or :php:`iconv` or :php:`recode` or :php:`XML`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:353
+# 63acbd4c4ede4cdcaaa6987142bc9f99
+msgid "These extensions make it possible to re-encode some text (also known as transcoding) from one encoding to another. ``mbstring`` and ``iconv`` support a wider set of encodings than the other extensions and are thus recommended."
+msgstr ""
+
+#: ../src/Prerequisites.rst:362
+# 4dd27c906e174a939c1ee3a08c37692c
+msgid "The following table lists the PEAR packages needed to use Erebot."
+msgstr ""
+
+#: ../src/Prerequisites.rst:0
+# 6ade32aeafea46028f0b73e379f28cd8
+msgid "PEAR packages used by Erebot"
+msgstr ""
+
+#: ../src/Prerequisites.rst:378
+# 91e99556ccc14538bbd04a699d3d6212
+msgid "Developer"
+msgstr ""
+
+#: ../src/Prerequisites.rst:379
+# ef2bf2aa100b4d7596bf291224d32911
+msgid "Packager"
+msgstr ""
+
+#: ../src/Prerequisites.rst:380
+# 05f1cf5ac5254a43ae091c26b03ba870
+msgid "End-user"
+msgstr ""
+
+#: ../src/Prerequisites.rst:382
+# 8025fc162627461f9070faeeaa438501
+msgid "`pear.pdepend.org/PHP_Depend`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:383
+# 7c2d750b7d3244608b164ba3f3e6dffa
+msgid "[#footnotes_qa_depend]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:386
+# d4a682164dac422fba28890ac71eef90
+msgid "PHP Depend gives several metrics on PHP code such as adherence between classes."
+msgstr ""
+
+#: ../src/Prerequisites.rst:388
+# 0df6bd063d11471daf7d44945c391016
+msgid "`pear.phing.info/Phing`_  >= 2.4.3"
+msgstr ""
+
+#: ../src/Prerequisites.rst:392
+# 3fa11fcfba844b04a7f258b80b3231d0
+msgid "|phing| is a PHP project build tool based on `Apache Ant`_. It is heavily used by Erebot which provides phing targets for most operations you may use."
+msgstr ""
+
+#: ../src/Prerequisites.rst:395
+# 68760ed3a0644b24b888b11bf553cdbd
+msgid ":pear:`Console_CommandLine`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:399
+# 2f4a0621ee7d45809c2a532970c9cde8
+msgid "Parses command line arguments. This is used by Erebot to provide options for the bot (eg. to change the path to the configuration file, to start the bot in the background, etc.)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:402
+# 778d530865ad4f11b930aa093fa6d020
+msgid ":pear:`File_Gettext`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:406
+# 435e35b8239648ae8ed9665befa0d6a1
+msgid "Erebot uses this PEAR package to handle |i18n|. It can be used to parse `gettext`_ translation catalogs, like the ones provided with Erebot."
+msgstr ""
+
+#: ../src/Prerequisites.rst:409
+# b3b53cf049144e15afc6917a3d8cb2b3
+msgid ":pear:`PHP_CodeSniffer`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:410
+# 7fb8198b003f41fbacdcf9ad412bb023
+msgid "yes [#footnotes_qa_codesniffer]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:413
+# e8bae8a4d4ab46b48a7a2e08da74d6fa
+msgid "This package tokenizes PHP files and detects violations of a defined set of coding standards. It is used by Erebot developers to make sure new patches comply with `Erebot's coding standard`_."
+msgstr ""
+
+#: ../src/Prerequisites.rst:416
+# 593ecf745e8c4f5ea135de4e09cd8a5a
+msgid ":pear:`PHP_ParserGenerator`"
+msgstr ""
+
+#: ../src/Prerequisites.rst:420
+# 728a109aff784795b663cf12e9d178cb
+msgid "This package is is a port of the `Lemon parser generator`_ for PHP and is used by Erebot and its modules to create parsers for several grammars (eg. to parse expressions in styles)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:423
+# 7d71d38765a24d2db398d3f453e0d8cc
+msgid "`pear.phpmd.org/PHP_PMD`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:424
+# c85b3fe70f78401997a1b0cb724b3421
+msgid "[#footnotes_qa_mess]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:427
+# 784c660b548b4cb4b7367b4f2454c644
+msgid "The PHP Mess Detector parses PHP files to detect overly complex code patterns, making it easier for developpers to refactor their code and to improve its readability."
+msgstr ""
+
+#: ../src/Prerequisites.rst:430
+# fa62d770ddaf49ada5b3dda36d0fec05
+msgid "`pear.phpunit.de/phpcpd`_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:431
+# af0faa6c6a0346b59b0d5425fba03bb6
+msgid "[#footnotes_qa_duplicates]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:434
+# 2dd4f57c8e954ef5bbad96f0ad5ef14d
+msgid "The PHP Copy/Paste Detector detects abusive duplication of PHP code."
+msgstr ""
+
+#: ../src/Prerequisites.rst:435
+# fed3726d9557477384a73ef6235c8c50
+msgid "`pear.phpunit.de/PHPUnit`_ >= 3.4.0"
+msgstr ""
+
+#: ../src/Prerequisites.rst:436
+# 3809b2bf87364ca48977b7a77c908316
+msgid "[#footnotes_phpunit]_"
+msgstr ""
+
+#: ../src/Prerequisites.rst:439
+# f0bd4e8415584ebe842e837c6e045d17
+msgid "PHP unit test framework used by Erebot. Pull requests should generally contain one or more unit test before they can be considered for review."
+msgstr ""
+
+#: ../src/Prerequisites.rst:444
+# 08dec6f7c77b49f88acf5e092b47b879
+msgid "Needed if you want to connect to IRC servers using a secure (encrypted) connection. Required when running Erebot from a PHAR archive (used to check the archive's origin and integrity)."
+msgstr ""
+
+#: ../src/Prerequisites.rst:449
+# 0dc8d2d3c4384cc88be0c15ed4e726e9
+msgid "Required for daemonization and to change user/group information upon startup. Not available on Windows."
+msgstr ""
+
+#: ../src/Prerequisites.rst:453
+# 531d7e9ba6b74ffbbc0e006449c5bee2
+msgid "Only required to package Erebot as a ``.phar`` archive."
+msgstr ""
+
+#: ../src/Prerequisites.rst:456
+# 25bf1a0ab4b74bb48d4757219acbd3f3
+msgid "Only required to run Erebot from a ``.phar`` archive."
+msgstr ""
+
+#: ../src/Prerequisites.rst:459
+# 82e271bd4b49414cb17751ace711bc9e
+msgid "Required to change user/group information upon startup. Not available on Windows."
+msgstr ""
+
+#: ../src/Prerequisites.rst:463
+# 087c07fca8fb44378ef0050e9b41a4b2
+msgid "Only required to run the test suite."
+msgstr ""
+
+#: ../src/Prerequisites.rst:466
+# b12c23a71b674a90a6df67af76c78482
+msgid "Required to use the ``qa_depend`` phing target."
+msgstr ""
+
+#: ../src/Prerequisites.rst:469
+# bc49d79fbf0940109b6d712cd620de94
+msgid "Required to use the ``qa_codesniffer`` phing target, which should **ALWAYS** be called before submitting a patch."
+msgstr ""
+
+#: ../src/Prerequisites.rst:473
+# 209fd2a7336241ce915de64bfe286229
+msgid "Required to use the ``qa_mess`` phing target."
+msgstr ""
+
+#: ../src/Prerequisites.rst:476
+# 04f068a5cb61474695b057c7979e93ac
+msgid "Required to use the ``qa_duplicates`` phing target."
+msgstr ""
+
+#: ../src/Prerequisites.rst:479
+# 1a1aaa68c1f34b7d87e15fd067313c52
+msgid "Required to use any of the ``qa_coverage``, ``qa_test``, ``test`` or ``tests`` phing targets."
+msgstr ""
+
