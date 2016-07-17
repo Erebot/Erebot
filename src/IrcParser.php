@@ -351,10 +351,8 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         $target = $msg[0];
         $msg    = $msg[1];
         $isChan = (int) $this->connection->isChannel($target);
-        if (($len = strlen($msg)) > 1 &&
-            $msg[$len-1] == "\x01" &&
-            $msg[0] == "\x01") {
-
+        $len = strlen($msg);
+        if ($len > 1 && $msg[$len-1] == "\x01" && $msg[0] == "\x01") {
             // Remove the markers.
             $msg    = (string) substr($msg, 1, -1);
             // Unquote the message.
@@ -496,26 +494,24 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
         $k      = 0;
 
         $priv     = array(
-            'add' =>
-                array(
-                    'o' => '!Op',
-                    'h' => '!Halfop',
-                    'v' => '!Voice',
-                    'a' => '!Protect',
-                    'q' => '!Owner',
-                    'b' => '!Ban',
-                    'e' => '!Except',
-                ),
-            'remove' =>
-                array(
-                    'o' => '!DeOp',
-                    'h' => '!DeHalfop',
-                    'v' => '!DeVoice',
-                    'a' => '!DeProtect',
-                    'q' => '!DeOwner',
-                    'b' => '!UnBan',
-                    'e' => '!UnExcept',
-                ),
+            'add' => array(
+                'o' => '!Op',
+                'h' => '!Halfop',
+                'v' => '!Voice',
+                'a' => '!Protect',
+                'q' => '!Owner',
+                'b' => '!Ban',
+                'e' => '!Except',
+            ),
+            'remove' => array(
+                'o' => '!DeOp',
+                'h' => '!DeHalfop',
+                'v' => '!DeVoice',
+                'a' => '!DeProtect',
+                'q' => '!DeOwner',
+                'b' => '!UnBan',
+                'e' => '!UnExcept',
+            ),
         );
 
         $remains = array();
