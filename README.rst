@@ -5,7 +5,7 @@ What is it?
 -----------
 
 Erebot is an IRC bot written in PHP thought up with modularity in mind.
-It is fully compatible with PHP 5.2.1 up to the very latest versions of PHP.
+It is fully compatible with PHP 5.3.0 up to the very latest versions of PHP.
 
 
 What does it offer?
@@ -65,10 +65,10 @@ along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 
 
 ..  _`Many other modules`:
-    http://erebot.github.com/Erebot/Modules.html
+    http://erebot.readthedocs.io/en/latest/Modules.html
 ..  _`roll your own module`:
-    http://erebot.github.com/Erebot/New_module.html
+    http://erebot.readthedocs.io/en/latest/Developers/New_module.html
 ..  _`installation instructions`:
-    http://erebot.github.com/Erebot/Installation.html
+    http://erebot.readthedocs.io/en/latest/Installation.html
 
 .. vim: ts=4 et
