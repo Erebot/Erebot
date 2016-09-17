@@ -1,0 +1,757 @@
+# French translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# 9095e09fae0f4900b6c804c3fea06807
+#: ../src/Developers/Formatting.rst:10
+msgid "Formatting"
+msgstr ""
+
+# 94827cb280e74808b62f180ba31c2771
+#: ../src/Developers/Formatting.rst:12
+msgid ""
+"This page is only meant to guide you through the use of formatting codes with "
+"Erebot, it is not meant as a complete documentation of how styles work with "
+"IRC. If you want more, ask your favourite search engine ;-)"
+msgstr ""
+
+# 326d617db3184327925caf91b19b68b4
+#: ../src/Developers/Formatting.rst:16
+msgid ""
+"Erebot provides two ways to format messages. Both methods are described here."
+msgstr ""
+
+# 50a1460a0c6a446597d22f6f099aee35
+#: ../src/Developers/Formatting.rst:0
+msgid "Table of Contents"
+msgstr ""
+
+# b688f9f49a5241f1b0d19f82cfd811e0
+#: ../src/Developers/Formatting.rst:21
+msgid ""
+"Please note that using raw codes (method 1) is considered bad practice. "
+"Advanced formatting (method 2) should be used in new code."
+msgstr ""
+
+# 10f02a94340c4561b0f648a3b25907d5
+#: ../src/Developers/Formatting.rst:25
+msgid "Method #1 : raw codes"
+msgstr ""
+
+# c597c40c27cf417aa2d2af6999d66ee0
+#: ../src/Developers/Formatting.rst:28
+msgid ""
+"This method is now deprecated and should not be used in new code. This is "
+"because messages written using this method are very hard to internationalize. "
+"Please use the `second method`_ instead."
+msgstr ""
+
+# bc2c654057524deba2fcdcb906b9f7d2
+#: ../src/Developers/Formatting.rst:32
+msgid ""
+"The `formatting API`_ provides constants for the raw control codes that make "
+"up styles. There are also constants for colors, see the source code for "
+"details."
+msgstr ""
+
+# 07944fa6f2cd4575ac1c4b67c18f76f8
+#: ../src/Developers/Formatting.rst:35
+msgid "For example:"
+msgstr ""
+
+# d51aabba281f451194003a72b0d1113c
+#: ../src/Developers/Formatting.rst:53
+msgid ""
+"The example above would display ``Hi Foobar``. The message would be displayed "
+"in bold, with the user's nickname underlined when sent to an IRC server."
+msgstr ""
+
+# 55ed2e75a3bb4f599d9b2a0ebd675116
+#: ../src/Developers/Formatting.rst:59
+msgid "Method #2 : \"advanced formatting\""
+msgstr ""
+
+# 8cbf5d3439474fbca51bbab829d8f90c
+#: ../src/Developers/Formatting.rst:61
+msgid ""
+"This method aims at separating the process of designing the format string "
+"from the process of actually rendering it (producing the string that would be "
+"sent to an IRC server)."
+msgstr ""
+
+# bccf2ce57f6d4cad9f0484baacd0adff
+#: ../src/Developers/Formatting.rst:65
+msgid ""
+"It uses an XML syntax to design the format string and a simple API to do the "
+"rendering. This syntax is generally more verbose than the previous one, but "
+"is also a lot easier to use and read. Moreover, each message is validated "
+"(using a `RelaxNG schema`_ [#]_), making it impossible to build invalid "
+"templates."
+msgstr ""
+
+# 440945c1099b4c089d8dc9bd2928ef6e
+#: ../src/Developers/Formatting.rst:71
+msgid "For more information on RelaxNG schemae, see http://relaxng.org/."
+msgstr ""
+
+# 62037a26289747a7ad833a50f25b2af1
+#: ../src/Developers/Formatting.rst:75
+msgid "Designing the format string"
+msgstr ""
+
+# 911d674a5a9a4945989ee7f8eefcfe3c
+#: ../src/Developers/Formatting.rst:77
+msgid ""
+"The format string contains XML tags which are recognized by the bot and allow "
+"you to achieve many different formatting combinations."
+msgstr ""
+
+# e697981afafc4a7a9d4b47822995f297
+#: ../src/Developers/Formatting.rst:80
+msgid "Currently, the following tags are available:"
+msgstr ""
+
+# 88dd6fd0d06f4a4e92ff124c0302c141
+#: ../src/Developers/Formatting.rst:82
+msgid "``<b>`` = bold"
+msgstr ""
+
+# 54cc399385704f468764c3c8217fba04
+#: ../src/Developers/Formatting.rst:83
+msgid "``<u>`` = underline"
+msgstr ""
+
+# 325a92b7cad449a9a01d2c5f71e416e4
+#: ../src/Developers/Formatting.rst:84
+msgid ""
+"``<color>`` = change the (foreground and/or background) color of the text. "
+"This tag recognizes two optional attributes:"
+msgstr ""
+
+# a7cc2b69f71045aa92cf7f3831763edb
+#: ../src/Developers/Formatting.rst:87
+msgid ""
+"``fg`` (optional) = changes the foreground color. The color's name should be "
+"one of the ``COLOR_`` constants defined in the styling class, with the "
+"``COLOR_`` prefix stripped (eg. ``red``). The color's name is case-"
+"insensitive."
+msgstr ""
+
+# 7c67ee6a7d39410d8276bc0181c93f54
+#: ../src/Developers/Formatting.rst:92
+msgid ""
+"``bg`` (optional) = changes the background color. See the description of "
+"``fg`` for valid values."
+msgstr ""
+
+# e0c0e1ae6b9d4718af4ddd0dcd1878f0
+#: ../src/Developers/Formatting.rst:96
+msgid ""
+"At least one of the ``fg`` or ``bg`` must be provided, otherwise the message "
+"will be rejected as invalid."
+msgstr ""
+
+# 523719dc1fc249d98e6a13cc4a2c4f18
+#: ../src/Developers/Formatting.rst:99
+msgid ""
+"``<for>`` = loop other an array to format its content. This tag recognizes 2 "
+"required attributes and some optional ones:"
+msgstr ""
+
+# 44feea91e2804be498819f1831fcd0a0
+#: ../src/Developers/Formatting.rst:102
+msgid ""
+"``from`` (required) = name of the variable which contains the array to format."
+msgstr ""
+
+# 7f3645f78c1f4f188b1d386a15928824
+#: ../src/Developers/Formatting.rst:105
+msgid ""
+"``item`` (required) = a variable which will be created to store each value in "
+"the array (in turn)."
+msgstr ""
+
+# 114f97541739429f97c89582094b6918
+#: ../src/Developers/Formatting.rst:108
+msgid ""
+"``key`` (optional) = a variable which will be created to store the key for "
+"that value (useful for associative arrays like in our example above)."
+msgstr ""
+
+# 6e3a45be4d1f49799dd2512f02891c4d
+#: ../src/Developers/Formatting.rst:112
+msgid ""
+"``separator`` (optional) = a separator to add between all entries in the "
+"array, except for the last two. Defaults to a comma followed by a single "
+"space."
+msgstr ""
+
+# aa504c8b8e604476bf89b114f9f4c5ff
+#: ../src/Developers/Formatting.rst:115
+msgid "``sep`` (optional) = alias for ``separator``."
+msgstr ""
+
+# 2f1f441fa68a45d0a2688b7bdd3033d1
+#: ../src/Developers/Formatting.rst:117
+msgid ""
+"``last_separator`` (optional) = a separator to add between the last 2 entries "
+"of the array. If no ``separator`` attribute has been set, defaults to an "
+"ampersand between two spaces. Otherwise, defaults to the value of the "
+"``separator`` attribute."
+msgstr ""
+
+# 5fb9d45fd68846a286c4c1f981b2fc03
+#: ../src/Developers/Formatting.rst:121
+msgid "``last_sep`` (optional) = alias for ``last_separator``."
+msgstr ""
+
+# 31229b3080e742a48762a3a9c2b8393e
+#: ../src/Developers/Formatting.rst:123
+msgid ""
+"``<var>`` = insert the value of the given variable at this point. The value "
+"will be rendered in a locale-dependent way, depending on the `type of "
+"variable`_ used. This tag accepts one attribute:"
+msgstr ""
+
+# 86df56e47545481fba5045cfd88a6d17
+#: ../src/Developers/Formatting.rst:127
+msgid ""
+"name (required) = variable to insert. See `template variables`_ below for the "
+"various syntaxes supported by this attribute."
+msgstr ""
+
+# 79c7a44edbb048caa60a76ee753a4862
+#: ../src/Developers/Formatting.rst:130
+msgid ""
+"``<plural>`` = use the correct plural form for that sentence. This tag has a "
+"required attribute called ``var`` that is used to determine the correct "
+"plural form to use. See `template variables`_ below for the various syntaxes "
+"supported by this attribute."
+msgstr ""
+
+# b796c13f182a446bb05346dfd70971dd
+#: ../src/Developers/Formatting.rst:135
+msgid ""
+"The content of this attribute should evaluate to an integer. Depending on the "
+"locale in use and this number, the appropriate plural form will be selected "
+"from a set of possibilities (cases)."
+msgstr ""
+
+# bfd838571e5b4e61b8000b6c70921a67
+#: ../src/Developers/Formatting.rst:139
+msgid ""
+"A ``<plural>`` tag contains one or more ``<case>`` subtags. Each ``<case>`` "
+"contains some inline text and comes with a required ``form`` attribute "
+"indicating when this text should be used [#]_."
+msgstr ""
+
+# 22bd445298cc40ed85c6ad91acd65adf
+#: ../src/Developers/Formatting.rst:143
+msgid ""
+"You **MUST** add a ``<case>`` subtag with the special form called ``other``. "
+"This special form will be used when no specific rule applies for this word's "
+"plural."
+msgstr ""
+
+# c6926fdf932d471492518c940654b819
+#: ../src/Developers/Formatting.rst:147
+msgid ""
+"The page at http://unicode.org/cldr/data/charts/supplemental/"
+"language_plural_rules.html lists all available forms."
+msgstr ""
+
+# 0a4d7a0748e7418cae429f6c3855a78b
+#: ../src/Developers/Formatting.rst:151
+msgid ""
+"If you're used to `gettext's syntax for plurals`_ (using a predicate and a "
+"fixed array of translations), you'll notice the format used here is much more "
+"flexible, as it enables one to write something such as::"
+msgstr ""
+
+# e3f00073a732496e846f977571f38853
+#: ../src/Developers/Formatting.rst:157
+msgid ""
+"using the `correct form for each word`_ (noun or verb), while gettext would "
+"require you to either split the text in multiple sentences or define a "
+"complicated predicate to retrieve the correct plural."
+msgstr ""
+
+# 34fe29cf94c742faabef1520e6dfa39e
+#: ../src/Developers/Formatting.rst:161
+msgid ""
+"Also, please note that although gettext is used to store translations, the "
+"plural handling mechanism from gettext is never used by Erebot (ie. Erebot "
+"never calls ``ngettext`` or its variants). Instead, each message embeds both "
+"the singular and plural forms and an algorithm is used at runtime to decide "
+"which of the forms should be used."
+msgstr ""
+
+# 7993dd3cf20b46acac418bca11abaed9
+#: ../src/Developers/Formatting.rst:169
+msgid ""
+"See also the documentation on the `formatting API`_ for more information."
+msgstr ""
+
+# bb080967d9b44321ac615095dc1304c9
+#: ../src/Developers/Formatting.rst:175
+msgid "Strong typing"
+msgstr ""
+
+# bcc1847930744edb8b17367994f1c19b
+#: ../src/Developers/Formatting.rst:177
+msgid ""
+"Each variable in a template has an associated type. The following classes are "
+"available by default to represent some of the most common types:"
+msgstr ""
+
+# a798ee9e10194af08792292ee122bd95
+#: ../src/Developers/Formatting.rst:194
+msgid "``Erebot_Styling_Integer``"
+msgstr ""
+
+# 0e0971ec52af43be93545050699b39d1
+#: ../src/Developers/Formatting.rst:182
+msgid "Represents an integer."
+msgstr ""
+
+# 982a14d7a6e24abda142fa7a60e98ad3
+#: ../src/Developers/Formatting.rst:206
+msgid "``Erebot_Styling_String``"
+msgstr ""
+
+# 052e3b0acd27428092ec399609309251
+#: ../src/Developers/Formatting.rst:197
+msgid "Represents a string. The value will be passed as is."
+msgstr ""
+
+# 330ef042aefe417e86a2416736b35ee0
+#: ../src/Developers/Formatting.rst:220
+msgid "``Erebot_Styling_Float``"
+msgstr ""
+
+# 3f861e8c81454efcbf31bee70857dd84
+#: ../src/Developers/Formatting.rst:209
+msgid "Represents a floating-point value."
+msgstr ""
+
+# 1daf308a9a874daf8ae4db20d248f625
+#: ../src/Developers/Formatting.rst:239
+msgid "``Erebot_Styling_Currency``"
+msgstr ""
+
+# 137595965f7b4483aa7c4e73230ed609
+#: ../src/Developers/Formatting.rst:223
+msgid "Represents a monetary value expressed in some currency."
+msgstr ""
+
+# 5528e23c22d54d6b99fb62cc60cbe543
+#: ../src/Developers/Formatting.rst:297
+msgid "``Erebot_Styling_DateTime``"
+msgstr ""
+
+# 30a5c7c240bb4adba23d6f2fd900571b
+#: ../src/Developers/Formatting.rst:242
+msgid ""
+"Represents a date and/or time. Some extra values (passed as additional "
+"parameters to this class) are necessary to represent such data. Thus, the "
+"arguments for this class' constructor are:"
+msgstr ""
+
+# ac7e9938593a417fb7ad3fc2b3c5b2c8
+#: ../src/Developers/Formatting.rst:247
+msgid "``$value``"
+msgstr ""
+
+# 7f1b4a629917473db4b74f8a8069c686
+#: ../src/Developers/Formatting.rst:249
+msgid ""
+"Either a `DateTime`_ object, an integer representing some Unix timestamp "
+"(seconds since Epoch, UTC) or an array using the same format as what is "
+"output by the `localtime()`_ PHP function."
+msgstr ""
+
+# 53caac5dd79d461f820d483a8a7a03e4
+#: ../src/Developers/Formatting.rst:255
+msgid ""
+"`DateTime`_ objects are only supported since PHP 5.3.4, you should not rely "
+"on them in code intended to be backward compatible."
+msgstr ""
+
+# 16c9626bb7e34da78819f6a1bd329fb6
+#: ../src/Developers/Formatting.rst:259
+msgid "``$datetype``"
+msgstr ""
+
+# b9af3c54cb994dc4b4ff0abd7b7c8cf1
+#: ../src/Developers/Formatting.rst:261
+msgid ""
+"One of ``IntlDateFormatter::NONE``, ``IntlDateFormatter::FULL``, "
+"``IntlDateFormatter::LONG``, ``IntlDateFormatter::MEDIUM`` or "
+"``IntlDateFormatter::SHORT`` [#]_. This indicates how the date part of the "
+"value will be represented."
+msgstr ""
+
+# 7e47d9a89f644ad79b39388e867ec49a
+#: ../src/Developers/Formatting.rst:266
+msgid "``$timetype``"
+msgstr ""
+
+# da6d9701a6b845c4888df0b389363502
+#: ../src/Developers/Formatting.rst:268
+msgid ""
+"One of ``IntlDateFormatter::NONE``, ``IntlDateFormatter::FULL``, "
+"``IntlDateFormatter::LONG``, ``IntlDateFormatter::MEDIUM`` or "
+"``IntlDateFormatter::SHORT``. This indicates how the time part of the value "
+"will be represented."
+msgstr ""
+
+# f0db3fd52b564f83892f065d1911f447
+#: ../src/Developers/Formatting.rst:273
+msgid "``$timezone``"
+msgstr ""
+
+# c8e6a63e81dc4431afd3588fbecf04b2
+#: ../src/Developers/Formatting.rst:275
+msgid ""
+"A timezone identifier (such as \"Europe/Paris\"). This value is ignored when "
+"a Unix timestamp is passed as the ``$value``."
+msgstr ""
+
+# 313a60ad47b345ec9f34c9c067bb65dc
+#: ../src/Developers/Formatting.rst:296
+msgid ""
+"See http://php.net/class.intldateformatter.php for the meaning of each one of "
+"these constants."
+msgstr ""
+
+# 52b6014517e848269d2bf03fe0e1a67f
+#: ../src/Developers/Formatting.rst:313
+msgid "``Erebot_Styling_Duration``"
+msgstr ""
+
+# 12c5eaa59c2043c5b17ec7106d81f2e8
+#: ../src/Developers/Formatting.rst:300
+msgid ""
+"Represents a duration in spelled out form, with a precision up to the seconds."
+msgstr ""
+
+# 973a74b1d334430b9cea8c75b4637409
+#: ../src/Developers/Formatting.rst:316
+msgid ""
+"If you need to represent a value without any modification, pass it as a "
+"string or wrap it in an instance of ``Erebot_Styling_String``."
+msgstr ""
+
+# 55d09e141a7a413b97f6afc8ac356d2d
+#: ../src/Developers/Formatting.rst:321
+msgid ""
+"For basic scalar types (integer, string or float), the API will wrap the "
+"value automatically for you using the appropriate class "
+"(``Erebot_Styling_Integer``, ``Erebot_Styling_String`` or "
+"``Erebot_Styling_Float``, respectively). Arrays do not need to be wrapped in "
+"any class (but their values do!)."
+msgstr ""
+
+# 32de3192fb864551871a9e172df89136
+#: ../src/Developers/Formatting.rst:327
+msgid ""
+"You may change the default classes used to wrap scalar types for a specific "
+"template using the ``setClass()`` method, eg:"
+msgstr ""
+
+# 90466509902d4fc68167455fb01d7900
+#: ../src/Developers/Formatting.rst:348
+msgid "Template variables"
+msgstr ""
+
+# 68a640ac8bcb40fb8c846791c8227be4
+#: ../src/Developers/Formatting.rst:350
+msgid ""
+"When referencing a variable from a template using the ``<var name=\"...\"/>`` "
+"or ``<plural var=\"...\"/>`` tags, various syntaxes are available."
+msgstr ""
+
+# 7f5bcc63d89642799e3e3838156bffa8
+#: ../src/Developers/Formatting.rst:353
+msgid "Hence, ``...`` may actually contain:"
+msgstr ""
+
+# bea916bb167f4fabbaac9f05252e8771
+#: ../src/Developers/Formatting.rst:355
+msgid "Actual variable passed to the template, eg. ``<var name=\"foo\"/>``."
+msgstr ""
+
+# 2b7925681a9848f4bb5e3c212719b8e8
+#: ../src/Developers/Formatting.rst:357
+msgid ""
+"The sum or difference between two integer or floating-point values, eg. "
+"``<var name=\"foo+bar\"/>`` or ``<var name=\"foo-bar\">``. Both types may be "
+"combined together (so, \"foo\" may refer to an integer, while \"bar\" refers "
+"to a floating-point value)."
+msgstr ""
+
+# e2654b25a7724e07a1389d53144922e5
+#: ../src/Developers/Formatting.rst:362
+msgid ""
+"You may use litteral integer or floating-point values as well, eg. ``<var "
+"name=\"years-18\"/>`` or ``<var name=\"century+1\"/>``."
+msgstr ""
+
+# 1fe2c3915a694f2b85c6935880026dc9
+#: ../src/Developers/Formatting.rst:366
+msgid ""
+"As a special bonus, you may also use the add operator (+) to append the "
+"values of one array to another using ``array_merge``. The original arrays are "
+"left intact when this feature is used."
+msgstr ""
+
+# b8bbb177ecea4bdfbe6645a7d85c9b35
+#: ../src/Developers/Formatting.rst:371
+msgid ""
+"Any attempt to add or subtract values from incompatible types (eg. adding the "
+"value of an integer to a string) will result in an exception being thrown. In "
+"particular, subtracting one array from another is not supported yet."
+msgstr ""
+
+# 9db2fff7a8de4cbea795fc7f6d7c02a6
+#: ../src/Developers/Formatting.rst:377
+msgid ""
+"There is currently no plan to support the multiply (*) or divide (/) "
+"operators."
+msgstr ""
+
+# 6025448361c94fa6b9aced646d2dc4c3
+#: ../src/Developers/Formatting.rst:380
+msgid ""
+"Parenthesized expressions, eg. ``<var name=\"totalCards-(nbCards+1)\"/>``."
+msgstr ""
+
+# 2e25c4f4e9b348d093bce90197c10191
+#: ../src/Developers/Formatting.rst:382
+msgid ""
+"The number of elements in an array passed to the template, using the \"count "
+"operator\" (#), eg. ``<var name=\"#scores\"/>``."
+msgstr ""
+
+# 7869b4aba4324320941971c5df221f5d
+#: ../src/Developers/Formatting.rst:386
+msgid ""
+"The count operator as higher precedence on the add/subtract operators, "
+"meaning that it is applied **before** any addition/substraction, unless "
+"parenthesis are used to override this."
+msgstr ""
+
+# 2db523a841c14d6b989d04a13b2591e7
+#: ../src/Developers/Formatting.rst:391
+msgid ""
+"Use of the count operator on any other type may lead to unpredictable results."
+msgstr ""
+
+# c1dcdc0de6734fec9d08ab0b51a8d106
+#: ../src/Developers/Formatting.rst:394
+msgid ""
+"Whitespace (spaces or tabs), eg. ``<var name=\"boys    +   girls\"/>``. Such "
+"whitespace is ignored while processing the variable."
+msgstr ""
+
+# b6a471254e9e43ed87eef48c5f329b75
+#: ../src/Developers/Formatting.rst:398
+msgid ""
+"Due to limitations in the XML syntax, is it not possible to use newlines as "
+"whitespace."
+msgstr ""
+
+# 0f4924e72ce843238fa6b5fe15d5fcd0
+#: ../src/Developers/Formatting.rst:401
+msgid ""
+"Any combination of the previous syntaxes, eg. ``<var name=\" # ( boys + "
+"girls ) \"/>`` where ``boys`` and ``girls`` both refer to arrays."
+msgstr ""
+
+# d245abed712144b88736de55938e24d0
+#: ../src/Developers/Formatting.rst:406
+msgid ""
+"Please keep in mind that variable names are case-sensitive. Any attempt to "
+"use an undefined variable in a template will result in an exception."
+msgstr ""
+
+# 42040beb98df4a799f4ea2b11e28f493
+#: ../src/Developers/Formatting.rst:412
+msgid "Using templates in your code"
+msgstr ""
+
+# 226610ba79884b7aa4396bdc370da2cb
+#: ../src/Developers/Formatting.rst:414
+msgid ""
+"Once the format string has been designed, you (as a programmer, not as a "
+"designer) must add a few lines in your code in order to use it."
+msgstr ""
+
+# 7734f063f0694b91b8f6922b03eb93ca
+#: ../src/Developers/Formatting.rst:417
+msgid "This is usually done with the following steps:"
+msgstr ""
+
+# efd30efcaae4466fb38862308fc8cf82
+#: ../src/Developers/Formatting.rst:419
+msgid ""
+"Create an instance of `Erebot_Styling`_ by passing a translator object (an "
+"object implementing the `Erebot_Interface_I18n`_ interface) to its "
+"constructor. This is the creation step, where a formatter is created and "
+"bound to a translator."
+msgstr ""
+
+# d4a4f5e30025437ea4696b8547f2ba5e
+#: ../src/Developers/Formatting.rst:425
+msgid ""
+"Prepare the values (either scalar types, objects implementing the "
+"`Erebot_Interface_Styling_Variable`_ interface or arrays made of scalar types/"
+"objects) that will be used in the template. This is the preparation step, "
+"where everything is setup for the final step."
+msgstr ""
+
+# b7e9c0854b0947739631959e65dcda95
+#: ../src/Developers/Formatting.rst:432
+msgid ""
+"Variable names may only contain alphanumeric characters or the underscore (_) "
+"and dot (.) characters."
+msgstr ""
+
+# 31c8471f56084e42a84694ae11f8ec53
+#: ../src/Developers/Formatting.rst:436
+msgid ""
+"While designing the template, keep in mind that variable names are case-"
+"sensitive."
+msgstr ""
+
+# 03607e62171142339c5e2d3976128455
+#: ../src/Developers/Formatting.rst:439
+msgid ""
+"Render the template (with ``$fmt->render()`` or ``$fmt->_()``) and use the "
+"result of that process in your code (eg. send it to an IRC channel). This is "
+"the rendering step."
+msgstr ""
+
+# 3f18ecbeb224495ebebb80394dc84bff
+#: ../src/Developers/Formatting.rst:493
+msgid ""
+"Here, ``$source`` has been split over many lines to make it easier to figure "
+"out how the final message will look like. The template could actually be "
+"written in a much more compact way."
+msgstr ""
+
+# c3e60a031e7845aca59a7ebb346dba6a
+#: ../src/Developers/Formatting.rst:497
+msgid ""
+"You do not need to wrap your template (``$source``) in XML tags manually, the "
+"bot already adds an enclosing tag automatically for you."
+msgstr ""
+
+# 088758a8100644afbdecb7185ea67aaa
+#: ../src/Developers/Formatting.rst:500
+msgid "Also, the format string could be retrieved from anywhere:"
+msgstr ""
+
+# d1f9fd777028446782644f41ae0835e8
+#: ../src/Developers/Formatting.rst:502
+msgid "an array in a PHP script,"
+msgstr ""
+
+# 43c3a0a90ee0487bb76ade0199bea275
+#: ../src/Developers/Formatting.rst:503
+msgid "an external process (eg. a database),"
+msgstr ""
+
+# 2d491f1d4f7644ee8dfaed0415ac2438
+#: ../src/Developers/Formatting.rst:504
+msgid "a translation catalog (MO file),"
+msgstr ""
+
+# 3932a10c440a4066a5fb392f8985eadb
+#: ../src/Developers/Formatting.rst:505
+msgid "etc."
+msgstr ""
+
+# 354df751b233407692481c876bf55a8f
+#: ../src/Developers/Formatting.rst:507
+msgid ""
+"We prefer to have customizable format strings in a translation catalog, as "
+"this gives more control to translators over the result and it is a format "
+"they are used to working with."
+msgstr ""
+
+# 91f3d6f57fc6454992e7e90ced077bc1
+#: ../src/Developers/Formatting.rst:515
+msgid "Plurals"
+msgstr ""
+
+# f06a978b3bb34de49000f084815d2f5f
+#: ../src/Developers/Formatting.rst:517
+msgid ""
+"Plurals are handled gracefully by Erebot using the ``<plural>`` and "
+"``<case>`` tags."
+msgstr ""
+
+# 3e2b5eac4dd34cfc96e8153b791ef0e1
+#: ../src/Developers/Formatting.rst:520
+msgid "Taking the sentence from earlier as an example::"
+msgstr ""
+
+# a59f93d37d814e589a6dfdd480966c13
+#: ../src/Developers/Formatting.rst:524
+msgid "The equivalent as a template would be:"
+msgstr ""
+
+# e3e898cd603545a7a166dab04013ce1b
+#: ../src/Developers/Formatting.rst:558
+msgid ""
+"Notice how we represented the actual counts using either a spelled out form "
+"(\"one girl\" / \"one boy\") or an actual number (\"2 girls\" / \"2 boys\"), "
+"simply by specifying different words for the different ``<cases>``."
+msgstr ""
+
+# 9ca19673e9cd445dacfb07c0f0443bde
+#: ../src/Developers/Formatting.rst:562
+msgid ""
+"You'll also notice that this string is electable for `Internationalization`_. "
+"Translators have full control over the template used to render the sentence "
+"and could easily adapt it to the plural rules used in their country."
+msgstr ""
+
+# 8ec5afa434b849a0a09f45b7a641a267
+#: ../src/Developers/Formatting.rst:567
+msgid ""
+"There are often many different ways to represent the same message using "
+"templates. Here, we grouped words that were affected by the same variable "
+"together. Once again, **translators are the ones in charge** here. This is "
+"very important because they know better than you how the sentence should look "
+"like in their language."
+msgstr ""
+
+# a50462d973d84c0d80c9846a1d01f099
+#: ../src/Developers/Formatting.rst:574
+msgid "Further reading"
+msgstr ""
+
+# 026ff87354134cd6ac80c3c2d0118633
+#: ../src/Developers/Formatting.rst:576
+msgid ""
+"The documentation on the `formatting API`_ always reflects the latest "
+"features implemented, while this page may sometime fall a little behind in "
+"what it showcases (please `open a ticket`_ if you notice any discrepancy!)."
+msgstr ""

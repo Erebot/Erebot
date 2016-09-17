@@ -1,0 +1,415 @@
+# French translations for Erebot package.
+# Copyright (C) 2011-2015, Erebot
+# This file is distributed under the same license as the Erebot package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Erebot 1.0.x-dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-29 12:06+0200\n"
+"PO-Revision-Date: 2015-03-29 12:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# a99186ad5a014b45b5af226e0323a114
+#: ../src/Installation.rst:10
+msgid "Installation"
+msgstr ""
+
+# 19b2f9608fbb4285aba56802f0f354c4
+#: ../src/Installation.rst:12
+msgid ""
+"This pages contains instructions on how to install Erebot on your machine. "
+"There are several ways to achieve that. Each method is described below."
+msgstr ""
+
+# a880e3c2037149ba8d1ad8157520c6e5
+#: ../src/Installation.rst:19
+msgid ""
+"You cannot mix the different methods. Especially, **you must use the same "
+"method to install modules as the one you selected for Erebot itself**."
+msgstr ""
+
+# 39bfaf1d1400483197665cbf8c59ed2e
+#: ../src/Installation.rst:24
+msgid ""
+"We recommend using the `PHAR installation`_ method or the `composer "
+"installation`_ method, depending on whether your project already uses "
+"`Composer`_ or not. Installation from sources is reserved for advanced "
+"installations (mainly for Erebot's developers)."
+msgstr ""
+
+# 240538cf367143af80b5073016c32a94
+#: ../src/Installation.rst:34
+msgid "Installation using PHAR archives"
+msgstr ""
+
+# 3eb199d6f3d544f9a2454744aaca0784
+#: ../src/Installation.rst:36
+msgid ""
+"A PHAR archive is simply a way of bundling all the necessary files in one big "
+"file. However, PHAR's archive does not contain any module. Thus, to get a "
+"working installation, you must install additional Erebot modules. At a "
+"minimum, this includes: `Erebot_Module_IrcConnector`_, "
+"`Erebot_Module_AutoConnect`_, `Erebot_Module_PingReply`_."
+msgstr ""
+
+# 66d7aa7cd8e247f4a4b44304bb9fe72f
+#: ../src/Installation.rst:42
+msgid "Installing Erebot as a PHAR archive only involves a few steps:"
+msgstr ""
+
+# 1805aae6b1b041da88e8da6aac2c29e4
+#: ../src/Installation.rst:44
+msgid "Make sure your installation fulfills all of the `prerequisites`_."
+msgstr ""
+
+# fdac631ef99d49d69b00e2d6277c5e72
+#: ../src/Installation.rst:48
+msgid ""
+"As all of Erebot's PHAR archives (core and modules) are digitally signed, you "
+"must make sure the OpenSSL extension is enabled on your PHP installation. "
+"Failure to do so will result in an error when trying to run Erebot's PHAR "
+"archive."
+msgstr ""
+
+# c9c0bdd2e4364aedb513da6b7ed54cb0
+#: ../src/Installation.rst:53
+msgid ""
+"Download the PHAR archive for Erebot itself. You can grab the latest version "
+"from https://packages.erebot.net/get/Erebot-latest.phar. You MUST also "
+"download the public signature for the archive. The signature for the latest "
+"version is available at https://packages.erebot.net/get/Erebot-latest.phar."
+"pubkey."
+msgstr ""
+
+# 898e405a28e442e7935b10a4bc46c13c
+#: ../src/Installation.rst:59
+msgid "Create a directory named :file:`modules` in the same folder as the PHAR."
+msgstr ""
+
+# a2b033e0b267446f9c21b4a722fd8153
+#: ../src/Installation.rst:61
+msgid ""
+"Go to the :file:`modules` directory and drop a copy of the following PHAR "
+"archives with their signature:"
+msgstr ""
+
+# c19ad023f2d54339be3daf9521c3b8c4
+#: ../src/Installation.rst:64
+msgid "Files for the `Erebot_Module_AutoConnect`_ module:"
+msgstr ""
+
+# 11034523199344eca5d0d4f6969519a8
+#: ../src/Installation.rst:66
+msgid "`Erebot_Module_AutoConnect-latest.phar`_"
+msgstr ""
+
+# a7ef36b73f384640beb3689388da95d4
+#: ../src/Installation.rst:67
+msgid "`Erebot_Module_AutoConnect-latest.phar's signature`_"
+msgstr ""
+
+# ddc46f1235314bdfb4df479a1a11c9e2
+#: ../src/Installation.rst:69
+msgid "Files for the `Erebot_Module_IrcConnector`_ module:"
+msgstr ""
+
+# db5ee423a35f4de5b57b6b87b90c4ee6
+#: ../src/Installation.rst:71
+msgid "`Erebot_Module_IrcConnector-latest.phar`_"
+msgstr ""
+
+# bd07eedc29854d4c818e00944a50b5f0
+#: ../src/Installation.rst:72
+msgid "`Erebot_Module_IrcConnector-latest.phar's signature`_"
+msgstr ""
+
+# 4d8014c0524c4e428f58007b46f2bff4
+#: ../src/Installation.rst:74
+msgid "Files for the `Erebot_Module_PingReply`_ module:"
+msgstr ""
+
+# 333a41cb06b94d2181020b4dee17b776
+#: ../src/Installation.rst:76
+msgid "`Erebot_Module_PingReply-latest.phar`_"
+msgstr ""
+
+# 1ab05cb3637b47d4b3dfba79166e8f06
+#: ../src/Installation.rst:77
+msgid "`Erebot_Module_PingReply-latest.phar's signature`_"
+msgstr ""
+
+# 7217812794634e8f94fdd789bec28621
+#: ../src/Installation.rst:79
+msgid ""
+"Make sure you also read each component's documentation (especially the list "
+"of prerequisites)."
+msgstr ""
+
+# 3cb620ce9d1f45bf90980a3d7c0cf2e4
+#: ../src/Installation.rst:84
+msgid ""
+"You **MUST** copy both the PHAR archives and their signature in the :file:"
+"`modules` directory. Otherwise, PHP will refuse to load those PHAR archives "
+"because it cannot check their origin and integrity."
+msgstr ""
+
+# 334706d5e0244655b8d52ab7538d5099
+#: ../src/Installation.rst:88
+msgid ""
+"Optionally, download additional PHAR archives with their signature to install "
+"other modules."
+msgstr ""
+
+# 350318615b164c89b998a6c85b753702
+#: ../src/Installation.rst:91
+msgid "Your tree should now look like this:"
+msgstr ""
+
+# fb257b0c3b454344baeb9123471aab1f
+#: ../src/Installation.rst:103
+msgid "Erebot/"
+msgstr ""
+
+# 35eb0f9fa21a4051833a4c3949c30044
+#: ../src/Installation.rst:94
+msgid "Erebot-latest.phar"
+msgstr ""
+
+# 30db5f9f040b49e4b73ff479ae15e51b
+#: ../src/Installation.rst:95
+msgid "Erebot-latest.phar.pubkey"
+msgstr ""
+
+# 3129a6090b0e4aabb567f4d464cdafce
+#: ../src/Installation.rst:103
+msgid "modules/"
+msgstr ""
+
+# 2728a7021c744e609e5231f7d1e7ea9e
+#: ../src/Installation.rst:97
+msgid "Erebot_Module_AutoConnect-latest.phar"
+msgstr ""
+
+# 5c41ba2d0d5e492fb50338d01207a167
+#: ../src/Installation.rst:98
+msgid "Erebot_Module_AutoConnect-latest.phar.pubkey"
+msgstr ""
+
+# 40b81d60c8fd4c178f0ce34eb8063989
+#: ../src/Installation.rst:99
+msgid "Erebot_Module_IrcConnector-latest.phar"
+msgstr ""
+
+# 4fb18d31fd7a4bc2b2d12ee3b14746b4
+#: ../src/Installation.rst:100
+msgid "Erebot_Module_IrcConnector-latest.phar.pubkey"
+msgstr ""
+
+# b83b30ffd7eb4747b249a37b563b7ea4
+#: ../src/Installation.rst:101
+msgid "Erebot_Module_PingReply-latest.phar"
+msgstr ""
+
+# c7f74e11efa94ed28728ac72d643e55b
+#: ../src/Installation.rst:102
+msgid "Erebot_Module_PingReply-latest.phar.pubkey"
+msgstr ""
+
+# 17a87809aeaf471fad8235d1ef534a30
+#: ../src/Installation.rst:103
+msgid "*eventually, additional PHAR archives with their signature*"
+msgstr ""
+
+# 1282360814c74094bb6e8ad41cdcf674
+#: ../src/Installation.rst:107
+msgid ""
+"The whole installation process using PHAR archives can be automated using the "
+"following commands:"
+msgstr ""
+
+# af466182edd243bdb1427b20c4a82a5a
+#: ../src/Installation.rst:124
+msgid ""
+"Once the PHAR archives have been retrieved, you may wish to change file "
+"permissions on :file:`Erebot-latest.phar`, using this command:"
+msgstr ""
+
+# 2dbd944d93eb46ae8b5bad4acf135276
+#: ../src/Installation.rst:131
+msgid "This way, you may later launch Erebot simply by executing:"
+msgstr ""
+
+# c4318b3e015a4477a71ecdd9b90be9a8
+#: ../src/Installation.rst:139
+msgid ""
+"Even though the command above should work on most installations, a few known "
+"problems may occur due to incompatibilities with certain PHP features and "
+"extensions. To avoid such issues, it is usually a good idea to check the "
+"following items:"
+msgstr ""
+
+# 68909503430d47548ed009de71fb30b0
+#: ../src/Installation.rst:144
+msgid ""
+"Make sure ``detect_unicode`` is set to ``Off`` in your :file:`php.ini`. This "
+"is especially important on MacOS where this setting tends to be ``On`` for a "
+"default PHP installation."
+msgstr ""
+
+# cdd847ee76a54c4b91bb08a0ec6d90d8
+#: ../src/Installation.rst:148
+msgid ""
+"If you applied the Suhosin security patch to your PHP installation, make sure "
+"``phar`` is listed in your :file:`php.ini` under the ``suhosin.executor."
+"include.whitelist`` directive."
+msgstr ""
+
+# 290a7a67f1ac46bfa0a24aa292d698af
+#: ../src/Installation.rst:152
+msgid ""
+"Please be aware of certain incompatibilities between the Phar extension and "
+"the ionCube Loader extension. To run Erebot from a PHAR archive, you will "
+"need to remove the following line from your :file:`php.ini`:"
+msgstr ""
+
+# daf73641c0fc4f47bd0ee0b19f4e2cd6
+#: ../src/Installation.rst:160
+msgid "(the path and versions may be different for your installation)."
+msgstr ""
+
+# 3a2b1aa7f37145fda63377799fe9b70b
+#: ../src/Installation.rst:164
+msgid ""
+"When run from a PHAR archive, Erebot will first try to determine whether all "
+"requirements needed to run the bot and its modules are respected. In case an "
+"error is displayed, follow the indications given in the error message and try "
+"running the bot again."
+msgstr ""
+
+# 3f18367e0456448c83fe8baf33464e65
+#: ../src/Installation.rst:169
+msgid ""
+"That's it! You may now read the section on `final steps`_ for a summary of "
+"what to do next."
+msgstr ""
+
+# 90427d0588b04152ace0fadf69656cad
+#: ../src/Installation.rst:174
+msgid "Installation from source"
+msgstr ""
+
+# fe726893ec0a4512a8e686f178d79986
+#: ../src/Installation.rst:176
+msgid ""
+"First, make sure a git client is installed on your machine. Under Linux, "
+"**from a root shell**, run the command that most closely matches the tools "
+"provided by your distribution:"
+msgstr ""
+
+# ac6b7debadda457782526b020ef75e34
+#: ../src/Installation.rst:196
+msgid ""
+"Windows users may be interested in installing `Git for Windows`_ to get an "
+"equivalent git client. Also, make sure that :program:`git` is present on your "
+"account's :envvar:`PATH`. If not, you'll have to replace :command:`git` by "
+"the full path to :file:`git.exe` on every invocation (eg. :command:`\"C:\\"
+"\\Program Files\\\\Git\\\\bin\\\\git.exe\" clone ...`)"
+msgstr ""
+
+# 6ca099bc96544303aa9f3a2594fa7136
+#: ../src/Installation.rst:202
+msgid ""
+"Also, make sure you have all the `required dependencies`_ installed as well. "
+"Now, retrieve the bot's code from the repository, using the following command:"
+msgstr ""
+
+# 456f93e2e83b4193ad0ae93467cad076
+#: ../src/Installation.rst:215
+msgid ""
+"Linux users (especially Erebot developers) may prefer to create a separate "
+"checkout for each component and then use symbolic links to join them "
+"together, like this:"
+msgstr ""
+
+# fd4a8b618ba54a0f9901015a6de825f6
+#: ../src/Installation.rst:231
+msgid ""
+"Optionally, you can compile the translation files for each component. "
+"However, this requires that `gettext`_ and `phing`_ be installed on your "
+"machine as well. See the documentation on Erebot's `prerequisites`_ for "
+"additional information on how to install these tools depending on your system."
+msgstr ""
+
+# 4f97cbdb523e44cab0d1c5281a5cd214
+#: ../src/Installation.rst:236
+msgid ""
+"Once you got those two up and running, the translation files can be compiled, "
+"assuming you're currently in Erebot's folder, using these commands:"
+msgstr ""
+
+# 61a784e7b5344fefa62a8147c5adfd44
+#: ../src/Installation.rst:250
+msgid ""
+"Be sure to read the section on `final steps`_ for a summary of what to do "
+"next."
+msgstr ""
+
+# 9ac0e42c52974ddeaa29c0ee2a719288
+#: ../src/Installation.rst:254
+msgid "Final steps"
+msgstr ""
+
+# 3de09a9d748140dfac72ecfd42430120
+#: ../src/Installation.rst:256
+msgid ""
+"Once Erebot (core files + a few modules) has been installed, you can `write a "
+"configuration file`_ for Erebot (usually named :file:`Erebot.xml`)."
+msgstr ""
+
+# 0451b174911c4bd8b9c46425a33f8c6e
+#: ../src/Installation.rst:259
+msgid ""
+"When this is done, the bot can be started, assuming that PHP can be found in "
+"your :envvar:`PATH` using one of the following commands. Exactly what command "
+"must be used depends on the installation method."
+msgstr ""
+
+# 62f3070f73674d0188c90494897ec432
+#: ../src/Installation.rst:273
+msgid "Let's call this command ``%EREBOT%``."
+msgstr ""
+
+# 91437ef193084134b923b76fa3696570
+#: ../src/Installation.rst:275
+msgid ""
+"In each case, the bot reacts to a few command-line options. Use the following "
+"command to get help on those options."
+msgstr ""
+
+# 88ba7e4a49914390a71347df23c381a3
+#: ../src/Installation.rst:284
+msgid ""
+"For ease of use, Linux users may prefer to add the path where :file:`Erebot-"
+"{version}.phar` or the :command:`Erebot` script resides to their :envvar:"
+"`PATH`. This way, the bot can be started simply by launching :command:"
+"`Erebot` or :file:`Erebot-{version}.phar` from the command-line or by double-"
+"clicking on them from a graphical file browser."
+msgstr ""
+
+# 1e2f81f5e6eb48959d146a8cf3c8bfdc
+#: ../src/Installation.rst:292
+msgid ""
+"Unfortunately for Windows users, there is no equivalent to the :envvar:`PATH` "
+"trick noted above. However, it is possible to associate the ``.phar`` "
+"extension with PHP. This way, if Erebot was installed using PHAR archives, "
+"the bot can be started simply by double-clicking on :file:`Erebot-{version}."
+"phar`."
+msgstr ""
