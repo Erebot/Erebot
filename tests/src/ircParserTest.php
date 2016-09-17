@@ -22,13 +22,24 @@ extends Erebot_TestEnv_TestCase
     public function setUp()
     {
         $sxml = new SimpleXMLElement('<foo/>');
-        $this->_mainConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Main', array(), array(), '', FALSE, FALSE);
-        $this->_networkConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Network', array(), array($this->_mainConfig, $sxml), '', FALSE, FALSE);
-        $this->_serverConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Server', array(), array($this->_networkConfig, $sxml), '', FALSE, FALSE);
-        $this->_bot = $this->getMock('\\Erebot\\Interfaces\\Core', array(), array($this->_mainConfig), '', FALSE, FALSE);
-        $this->_connection = $this->getMock('\\Erebot\\Interfaces\\IrcConnection', array(), array($this->_bot, $this->_serverConfig), '', FALSE, FALSE);
-        $this->_event = $this->getMock('\\Erebot\\Interfaces\\Event\\Base\\Generic', array(), array(), '', FALSE, FALSE);
-        $this->_parser = $this->getMock('\\Erebot\\IrcParser', array('makeEvent'), array($this->_connection));
+        $this->_mainConfig = $this->getMockBuilder('\\Erebot\\Interfaces\\Config\\Main')->getMock();
+        $this->_networkConfig = $this->getMockBuilder('\\Erebot\\Interfaces\\Config\\Network')
+            ->setConstructorArgs(array($this->_mainConfig, $sxml))
+            ->getMock();
+        $this->_serverConfig = $this->getMockBuilder('\\Erebot\\Interfaces\\Config\\Server')
+            ->setConstructorArgs(array($this->_networkConfig, $sxml))
+            ->getMock();
+        $this->_bot = $this->getMockBuilder('\\Erebot\\Interfaces\\Core')
+            ->setConstructorArgs(array($this->_mainConfig))
+            ->getMock();
+        $this->_connection = $this->getMockBuilder('\\Erebot\\Interfaces\\IrcConnection')
+            ->setConstructorArgs(array($this->_bot, $this->_serverConfig))
+            ->getMock();
+        $this->_event = $this->getMockBuilder('\\Erebot\\Interfaces\\Event\\Base\\Generic')->getMock();
+        $this->_parser = $this->getMockBuilder('\\Erebot\\IrcParser')
+            ->setMethods(array('makeEvent'))
+            ->setConstructorArgs(array($this->_connection))
+            ->getMock();
     }
 
     /**

@@ -57,8 +57,10 @@ extends         Erebot_TestEnv_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->_mainConfig = $this->getMock('\\Erebot\\Interfaces\\Config\\Main', array(), array(), '', FALSE, FALSE);
-        $this->_bot = $this->getMock('\\Erebot\\Interfaces\\Core', array(), array($this->_mainConfig), '', FALSE, FALSE);
+        $this->_mainConfig = $this->getMockBuilder('\\Erebot\\Interfaces\\Config\\Main')->getMock();
+        $this->_bot = $this->getMockBuilder('\\Erebot\\Interfaces\\Core')
+            ->setConstructorArgs(array($this->_mainConfig))
+            ->getMock();
 
         // Create two connected stream-oriented TCP sockets.
         // We can't use stream_socket_pair() as it doesn't exist on Windows

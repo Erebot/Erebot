@@ -32,47 +32,19 @@ extends Erebot_Testenv_Module_TestCase
     public function setUp()
     {
         $sxml = new SimpleXMLElement('<foo/>');
-        $this->_mainConfig = $this->getMock(
-            '\\Erebot\\Interfaces\\Config\\Main',
-            array(), array(), '',
-            FALSE, FALSE, FALSE
-        );
-        $networkConfig = $this->getMock(
-            '\\Erebot\\Interfaces\\Config\\Network',
-            array(),
-            array($this->_mainConfig, $sxml),
-            '',
-            FALSE,
-            FALSE,
-            FALSE
-        );
-        $serverConfig = $this->getMock(
-            '\\Erebot\\Interfaces\\Config\\Server',
-            array(),
-            array($networkConfig, $sxml),
-            '',
-            FALSE,
-            FALSE,
-            FALSE
-        );
-        $bot = $this->getMock(
-            '\\Erebot\\Interfaces\\Core',
-            array(),
-            array($this->_mainConfig),
-            '',
-            FALSE,
-            FALSE,
-            FALSE
-        );
-        $this->_connection = $this->getMock(
-            '\\Erebot\\Interfaces\\Connection',
-            array(),
-            array($bot, $serverConfig),
-            '',
-            FALSE,
-            FALSE,
-            FALSE
-        );
+        $this->_mainConfig = $this->getMockBuilder('\\Erebot\\Interfaces\\Config\\Main')->getMock();
+        $networkConfig = $this->getMockBuilder('\\Erebot\\Interfaces\\Config\\Network')
+            ->setConstructorArgs(array($this->_mainConfig, $sxml))
+            ->getMock();
+        $serverConfig = $this->getMockBuilder('\\Erebot\\Interfaces\\Config\\Server')
+            ->setConstructorArgs(array($networkConfig, $sxml))
+            ->getMock();
+        $bot = $this->getMockBuilder('\\Erebot\\Interfaces\\Core')
+            ->setConstructorArgs(array($this->_mainConfig))
+            ->getMock();
+        $this->_connection = $this->getMockBuilder('\\Erebot\\Interfaces\\Connection')
+            ->setConstructorArgs(array($bot, $serverConfig))
+            ->getMock();
         $this->_cb = \Erebot\CallableWrapper::wrap(array($this, 'dummyCallback'));
     }
 
