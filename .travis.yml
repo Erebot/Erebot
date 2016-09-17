@@ -1,28 +1,36 @@
 language: php
 
+sudo: false
+
+cache:
+    directories:
+    - vendor
+    - $HOME/.composer/cache
+
 php:
-    - 5.3.3
     - 5.3
     - 5.4
     - 5.5
     - 5.6
+    - 7.0
+    - 7.1
+    - nightly
     - hhvm
-
-matrix:
-    allow_failures:
-        - php: hhvm
 
 notifications:
     email: false
     irc: "irc.iiens.net#Erebot"
 
 before_script:
+    - rm composer.lock
     - composer self-update -n
-    - composer install --dev -n
+    - composer install -n
 
-script: phpunit --bootstrap vendor/erebot/testenv/bootstrap.php --coverage-clover clover.xml tests/
+script:
+    - vendor/bin/phpunit --coverage-clover clover.xml
+    - vendor/bin/phpcs
 
-after_script:
-    - composer require --dev $prefer_source "satooshi/php-coveralls dev-master"
-    - php vendor/bin/coveralls -n -v
+after_success:
+    - composer require --dev satooshi/php-coveralls
+    - travis_retry vendor/bin/coveralls -n -v
 

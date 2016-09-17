@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="Erebot">
+    <description>Coding standard for Erebot.</description>
+    <file>src/</file>
+    <arg value="vp"/>
+    <rule ref="PSR2"/>
+    <encoding>utf-8</encoding>
+</ruleset>
+
