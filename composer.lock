@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "42b7baf7211fa99145dfbc00e3ddb145",
-    "content-hash": "a852699c77d24964f9b0aaa529ffb3f6",
+    "hash": "de72860d1594edfb29207f7b5c87187a",
+    "content-hash": "84a430fc72aab0520066a93abe74f046",
     "packages": [
         {
             "name": "erebot/api",
