@@ -393,7 +393,7 @@ class CLI
             if (posix_setsid() == -1) {
                 $logger->error(
                     $translator->gettext(
-                        'Could not start in the background (unable to setsid)'
+                        'Could not start in the background (unable to create a new session)'
                     )
                 );
                 exit(1);
@@ -417,7 +417,7 @@ class CLI
             // Avoid locking up the current directory.
             if (!chdir(DIRECTORY_SEPARATOR)) {
                 $logger->error(
-                    $translator->gettext('Could not chdir to "%(path)s"'),
+                    $translator->gettext('Could not change directory to "%(path)s"'),
                     array('path' => DIRECTORY_SEPARATOR)
                 );
             }
@@ -473,7 +473,7 @@ class CLI
             } elseif (posix_getuid() !== 0) {
                 $logger->warning(
                     $translator->gettext(
-                        'Only root can change group identity! '.
+                        'Only the root user may change group identity! '.
                         'Your current UID is %(uid)d'
                     ),
                     array('uid' => posix_getuid())
@@ -533,7 +533,7 @@ class CLI
             } elseif (posix_getuid() !== 0) {
                 $logger->warning(
                     $translator->gettext(
-                        'Only root can change user identity! '.
+                        'Only the root user may change user identity! '.
                         'Your current UID is %(uid)d'
                     ),
                     array('uid' => posix_getuid())

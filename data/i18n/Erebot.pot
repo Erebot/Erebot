@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Erebot 1.0.x-dev\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
-"POT-Creation-Date: 2014-09-28 21:32+0200\n"
+"POT-Creation-Date: 2016-12-17 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,12 +37,12 @@ msgstr ""
 msgid "Connection failed, removing it from the pool"
 msgstr ""
 #
-# File: src/CLI.php, line: 389
-msgid "Could not change umask"
+# File: src/CLI.php, line: 420
+msgid "Could not change directory to \"%(path)s\""
 msgstr ""
 #
-# File: src/CLI.php, line: 420
-msgid "Could not chdir to \"%(path)s\""
+# File: src/CLI.php, line: 389
+msgid "Could not change umask"
 msgstr ""
 #
 # File: src/Core.php, line: 635
@@ -61,13 +61,13 @@ msgstr ""
 msgid "Could not set user identity to \"%(name)s\" (%(id)d)"
 msgstr ""
 #
+# File: src/CLI.php, line: 396
+msgid "Could not start in the background (unable to create a new session)"
+msgstr ""
+#
 # File: src/CLI.php, line: 359
 # File: src/CLI.php, line: 408
 msgid "Could not start in the background (unable to fork)"
-msgstr ""
-#
-# File: src/CLI.php, line: 396
-msgid "Could not start in the background (unable to setsid)"
 msgstr ""
 #
 # File: src/IrcConnection.php, line: 759
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Limit:"
 msgstr ""
 #
-# File: src/Config/Main.php, line: 264
+# File: src/Config/Main.php, line: 263
 msgid "Loaded configuration data"
 msgstr ""
 #
@@ -151,11 +151,12 @@ msgid "No such user \"%(user)s\""
 msgstr ""
 #
 # File: src/CLI.php, line: 476
-msgid "Only root can change group identity! Your current UID is %(uid)d"
+msgid ""
+"Only the root user may change group identity! Your current UID is %(uid)d"
 msgstr ""
 #
 # File: src/CLI.php, line: 536
-msgid "Only root can change user identity! Your current UID is %(uid)d"
+msgid "Only the root user may change user identity! Your current UID is %(uid)d"
 msgstr ""
 #
 # File: src/IrcConnection.php, line: 661
