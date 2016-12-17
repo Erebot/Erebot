@@ -473,7 +473,7 @@ class CLI
             } elseif (posix_getuid() !== 0) {
                 $logger->warning(
                     $translator->gettext(
-                        'Only the root user may change group identity! '.
+                        'Only the "root" user may change group identity! '.
                         'Your current UID is %(uid)d'
                     ),
                     array('uid' => posix_getuid())
@@ -533,7 +533,7 @@ class CLI
             } elseif (posix_getuid() !== 0) {
                 $logger->warning(
                     $translator->gettext(
-                        'Only the root user may change user identity! '.
+                        'Only the "root" user may change user identity! '.
                         'Your current UID is %(uid)d'
                     ),
                     array('uid' => posix_getuid())
