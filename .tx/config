@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[Erebot.Erebot]
+source_file = data/i18n/Erebot.pot
+source_lang = en_US
+type = PO
+file_filter = data/i18n/<lang>/LC_MESSAGES/Erebot.po
+minimum_perc = 20
