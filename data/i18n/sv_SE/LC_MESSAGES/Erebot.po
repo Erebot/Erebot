@@ -2,293 +2,293 @@
 # This file is put in the public domain.
 # 
 # Translators:
-# François Poirotte <clicky@erebot.net>, 2012,2016
-# rom1504 <romain.rom1@gmail.com>, 2012
+# François Poirotte <clicky@erebot.net>, 2016
+# henrik hjelm <mailto@henrikhjelm.se>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Erebot\n"
 "Report-Msgid-Bugs-To: i18n@erebot.net\n"
 "POT-Creation-Date: 2016-12-17 19:13+0100\n"
-"PO-Revision-Date: 2016-12-17 12:58+0000\n"
+"PO-Revision-Date: 2016-12-19 10:41+0000\n"
 "Last-Translator: François Poirotte <clicky@erebot.net>\n"
-"Language-Team: French (France) (http://www.transifex.com/erebot/Erebot/language/fr_FR/)\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/erebot/Erebot/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr_FR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 # File: src/CLI.php, line: 181
 msgid "A modular IRC bot written in PHP"
-msgstr "Un bot IRC modulaire écrit en PHP"
+msgstr ""
 
 # File: src/Core.php, line: 392
 msgid "Allocated:"
-msgstr "Allouée :"
+msgstr ""
 
 # File: src/IrcConnection.php, line: 821
 msgid "Bad channel name"
-msgstr "Nom de canal non valide"
+msgstr "Fel kanalnamn"
 
 # File: src/IrcConnection.php, line: 770
 # File: src/IrcConnection.php, line: 797
 msgid "Code is not clean!"
-msgstr "Le code n'est pas propre !"
+msgstr "Koden är fel!"
 
 # File: src/Core.php, line: 251
 msgid "Connection failed, removing it from the pool"
-msgstr "Échec de la connexion, elle n'est plus sous notre contrôle"
+msgstr "Anslutning misslyckades, ta bort den från listan"
 
 # File: src/CLI.php, line: 420
 msgid "Could not change directory to \"%(path)s\""
-msgstr "Impossible de changer le dossier en « %(path)s »"
+msgstr ""
 
 # File: src/CLI.php, line: 389
 msgid "Could not change umask"
-msgstr "Impossible de changer l'umask"
+msgstr "Det gick inte att ändra umask"
 
 # File: src/Core.php, line: 635
 msgid "Could not connect to \"%(uri)s\""
-msgstr "Impossible de se connecter à « %(uri)s »"
+msgstr ""
 
 # File: src/CLI.php, line: 659
 msgid "Could not lock pidfile (%(pidfile)s). Is the bot already running?"
-msgstr "Impossible de verrouiller le fichier de PID (%(pidfile)s). Est-ce que le bot s'exécute déjà ?"
+msgstr ""
 
 # File: src/CLI.php, line: 499
 msgid "Could not set group identity to \"%(name)s\" (%(id)d)"
-msgstr "Impossible de changer l'identité du groupe en \"%(name)s\" (%(id)d)"
+msgstr "Det gick inte att ställa in gruppidentitet till \"%(name)s\" (%(id)d)"
 
 # File: src/CLI.php, line: 559
 msgid "Could not set user identity to \"%(name)s\" (%(id)d)"
-msgstr "Impossible de changer l'identité de l'utilisateur en \"%(name)s\" (%(id)d)"
+msgstr "Det gick inte att ställa in användaridentitet till \"%(name)s\" (%(id)d)"
 
 # File: src/CLI.php, line: 396
 msgid "Could not start in the background (unable to create a new session)"
-msgstr "Impossible de démarrer en arrière-plan (impossible de créer une nouvelle session)"
+msgstr ""
 
 # File: src/CLI.php, line: 359
 # File: src/CLI.php, line: 408
 msgid "Could not start in the background (unable to fork)"
-msgstr "Impossible de démarrer en arrière-plan (échec du fork)"
+msgstr "Det gick inte att starta i bakgrunden (fork)"
 
 # File: src/IrcConnection.php, line: 759
 msgid "Dispatching \"%(type)s\" event."
-msgstr "Transmission d'un événement « %(type)s »."
+msgstr ""
 
 # File: src/IrcConnection.php, line: 786
 msgid "Dispatching numeric %(code)s."
-msgstr "Transmission d'un message numérique %(code)s."
+msgstr ""
 
 # File: src/CLI.php, line: 227
 msgid ""
 "Do not run the bot in the background. This is the default, unless the -d "
 "option is used or the bot is configured otherwise."
-msgstr "Ne pas lancer le bot en arrière-plan. Il s'agit de la valeur par défaut, sauf si l'option -d est utilisée ou configuration contraire."
+msgstr "Kör inte bot i bakgrunden. Detta är standardinställningarna, om inte alternativet -d används eller bot konfigureras annars."
 
 # File: src/Core.php, line: 340
 msgid "Erebot has stopped"
-msgstr "Erebot s'est arrêté"
+msgstr "Erebot har stoppats"
 
 # File: src/CLI.php, line: 606
 msgid "Erebot is already running with PID %(pid)d"
-msgstr "Erebot s'exécute déjà avec le PID %(pid)d"
+msgstr ""
 
 # File: src/Core.php, line: 156
 msgid "Erebot is starting"
-msgstr "Erebot démarre"
+msgstr "Erebot har startats"
 
 # File: src/CLI.php, line: 630
 msgid "Found another program's PID %(pid)d in pidfile \"%(pidfile)s\". Exiting"
-msgstr "Le PID d'un autre programme (%(pid)d) a été trouvé dans \"%(pidfile)s\". Abandon"
+msgstr "Hittade ett annat program med PID %(pid)d i pidfile \"%(pidfile)s\". Avslutad"
 
 # File: src/CLI.php, line: 616
 msgid "Found stalled PID %(pid)d in pidfile \"%(pidfile)s\". Removing it"
-msgstr "Un PID obsolète (%(pid)d) a été trouvé dans \"%(pidfile)s\". Suppression"
+msgstr "Hittade avstannade PID %(pid)d i pidfile \"%(pidfile)s\". Ta bort det"
 
 # File: src/IrcConnection.php, line: 576
 msgid ""
 "Got an exception from the rate-limiter module. Assuming implicit approval to"
 " send the message."
-msgstr "Une exception a été levée par le module de contrôle du débit. Un accord implicite d'envoi du message a été obtenu."
+msgstr "Fick ett undantag från den rate-limiter modul. Förutsatt förstått godkännande för att skicka meddelandet."
 
 # File: src/Core.php, line: 216
 msgid "Got exception"
-msgstr "Une exception a été levée"
+msgstr "Fick ett undantag"
 
 # File: src/Core.php, line: 396
 msgid "Limit:"
-msgstr "Limite :"
+msgstr "Gräns:"
 
 # File: src/Config/Main.php, line: 263
 msgid "Loaded configuration data"
-msgstr "Données de configuration chargées"
+msgstr "Laddar konfigurationsdata"
 
 # File: src/IrcConnection.php, line: 326
 msgid "Loading required modules for \"%(uri)s\"..."
-msgstr "Changement des modules requis pour « %(uri)s » ..."
+msgstr ""
 
 # File: src/Core.php, line: 387
 msgid "Memory usage:"
-msgstr "Utilisation de la mémoire :"
+msgstr "Minnesanvändning:"
 
 # File: src/Core.php, line: 513
 msgid "No active connections... Aborting."
-msgstr "Aucune connexion active... Abandon"
+msgstr "Inga aktiva anslutningar ... Avbryter."
 
 # File: src/Core.php, line: 520
 msgid "No configuration file to reload"
-msgstr "Aucun fichier de configuration à recharger"
+msgstr "Ingen konfigurationsfil för att ladda om"
 
 # File: src/Core.php, line: 203
 msgid "No more connections to handle, leaving..."
-msgstr "Il n'y a plus de connexions à gérer, arrêt en cours..."
+msgstr "Inga fler anslutningar för att hantera, lämnar ..."
 
 # File: src/CLI.php, line: 490
 msgid "No such group \"%(group)s\""
-msgstr "Groupe inexistant « %(group)s »"
+msgstr ""
 
 # File: src/CLI.php, line: 550
 msgid "No such user \"%(user)s\""
-msgstr "Utilisateur inexistant « %(user)s »"
+msgstr ""
 
 # File: src/CLI.php, line: 476
 msgid ""
 "Only the \"root\" user may change group identity! Your current UID is "
 "%(uid)d"
-msgstr "Seul l'utilisateur « root » peut changer l'identité du groupe ! Votre UID actuel est %(uid)d"
+msgstr ""
 
 # File: src/CLI.php, line: 536
 msgid ""
 "Only the \"root\" user may change user identity! Your current UID is %(uid)d"
-msgstr "Seul l'utilisateur « root » peut changer l'identité de l'utilisateur ! Votre UID actuel est %(uid)d"
+msgstr ""
 
 # File: src/IrcConnection.php, line: 661
 msgid "PHP archive"
-msgstr "archive PHP"
+msgstr ""
 
 # File: src/CLI.php, line: 681
 msgid "PID (%(pid)d) written into %(pidfile)s"
-msgstr "PID (%(pid)d) écrit dans %(pidfile)s"
+msgstr "PID (%(pid)d) skriven i %(pidfile)s"
 
 # File: src/CLI.php, line: 198
 msgid ""
 "Path to the configuration file to use instead of \"Erebot.xml\", relative to"
 " the current directory."
-msgstr "Chemin vers le fichier de configuration à utiliser au lieu de \"Erebot.xml\", relatif par rapport au dossier courant."
+msgstr "Sökväg till konfigurationsfilen för att använda i stället för \"Erebot.xml\", i förhållande till den aktuella katalogen."
 
 # File: src/Prompt.php, line: 160
 msgid "Prompt started in \"%(path)s\""
-msgstr "Invite de commandes démarrée dans « %(path)s »"
+msgstr ""
 
 # File: src/Core.php, line: 377
 msgid "Received signal #%(signum)d (%(signame)s)"
-msgstr "Réception du signal #%(signum)d (%(signame)s)"
+msgstr "Mottagen signal #%(signum)d (%(signame)s)"
 
 # File: src/Core.php, line: 509
 msgid "Reloading the configuration"
-msgstr "Rechargement de la configuration"
+msgstr "Laddar konfigurationen"
 
 # File: src/Core.php, line: 581
 msgid "Reusing existing connection for network \"%(network)s\""
-msgstr "Réutilisation de la connexion existante pour le réseau « %(network)s »"
+msgstr ""
 
 # File: src/CLI.php, line: 214
 msgid ""
 "Run the bot in the background (daemon). [requires the POSIX and pcntl "
 "extensions]"
-msgstr "Lancer le bot en arrière-plan (démon). [nécessite les extensions POSIX et pcntl]"
+msgstr ""
 
 # File: src/CLI.php, line: 257
 msgid ""
 "Set group identity to this GID/group during startup. The default is to NOT "
 "change group identity, unless configured otherwise. [requires the POSIX "
 "extension]"
-msgstr "Assumer l'identité de ce GID/groupe au démarrage. L'identité du groupe N'EST PAS modifiée par défaut, sauf configuration contraire. [nécessite l'extension POSIX]"
+msgstr ""
 
 # File: src/CLI.php, line: 274
 msgid ""
 "Set user identity to this UID/username during startup. The default is to NOT"
 " change user identity, unless configured otherwise. [requires the POSIX "
 "extension]"
-msgstr "Assumer l'identité de cet UID/utilisateur au démarrage. L'identité de l'utilisateur N'EST PAS modifiée par défaut, sauf configuration contraire. [nécessite l'extension POSIX]"
+msgstr ""
 
 # File: src/CLI.php, line: 353
 msgid "Starting the bot in the background..."
-msgstr "Démarrage du bot en arrière-plan..."
+msgstr "Starta bot i bakgrunden ..."
 
 # File: src/CLI.php, line: 243
 msgid "Store the bot's PID in this file."
-msgstr "Enregistrer le PID du bot dans ce fichier."
+msgstr "Skriver bots PID i denna fil."
 
 # File: src/CLI.php, line: 512
 msgid "Successfully changed group identity to \"%(name)s\" (%(id)d)"
-msgstr "Identité du groupe changée avec succès en \"%(name)s\" (%(id)d)"
+msgstr ""
 
 # File: src/CLI.php, line: 571
 msgid "Successfully changed user identity to \"%(name)s\" (%(id)d)"
-msgstr "Identité de l'utilisateur changée avec succès en \"%(name)s\" (%(id)d)"
+msgstr ""
 
 # File: src/Core.php, line: 624
 msgid "Successfully connected to \"%(uri)s\"..."
-msgstr "Connexion réussie à « %(uri)s » ..."
+msgstr ""
 
 # File: src/IrcConnection.php, line: 657
 msgid "Successfully loaded module '%(module)s' [%(source)s]"
-msgstr "Module '%(module)s' chargé avec succès [%(source)s]"
+msgstr ""
 
 # File: src/Core.php, line: 534
 msgid "Successfully reloaded the configuration"
-msgstr "Configuration rechargée avec succès"
+msgstr ""
 
 # File: src/CLI.php, line: 445
 msgid "Successfully started in the background"
-msgstr "Démarrage réussi en arrière-plan"
+msgstr ""
 
 # File: src/CLI.php, line: 336
 msgid ""
 "The pcntl extension is required in order to start the bot in the background"
-msgstr "L'extension pcntl est requise pour pouvoir démarrer en arrière-plan"
+msgstr ""
 
 # File: src/CLI.php, line: 593
 msgid "The pidfile (%(pidfile)s) contained garbage. Exiting"
-msgstr "Le fichier de PID (%(pidfile)s) est inexploitable. Arrêt"
+msgstr ""
 
 # File: src/CLI.php, line: 469
 msgid "The posix extension is needed in order to change group identity."
-msgstr "L'extension posix est requise pour changer l'identité du groupe."
+msgstr ""
 
 # File: src/CLI.php, line: 529
 msgid "The posix extension is needed in order to change user identity."
-msgstr "L'extension posix est requise pour changer l'identité de l'utilisateur."
+msgstr ""
 
 # File: src/CLI.php, line: 326
 msgid ""
 "The posix extension is required in order to start the bot in the background"
-msgstr "L'extension posix est requise pour pouvoir démarrer en arrière-plan"
+msgstr ""
 
 # File: src/Core.php, line: 617
 msgid "Trying to connect to \"%(uri)s\"..."
-msgstr "Tentative de connexion à « %(uri)s » ..."
+msgstr ""
 
 # File: src/CLI.php, line: 672
 msgid "Unable to write PID to pidfile (%(pidfile)s)"
-msgstr "Impossible d'écrire le PID dans le fichier de PID (%(pidfile)s)"
+msgstr ""
 
 # File: src/CLI.php, line: 643
 msgid ""
 "Unknown error while checking for the existence of another running instance "
 "of Erebot (%(error)s)"
-msgstr "Erreur inconnue lors du test d'existence d'une autre instance d'Erebot en cours d'exécution (%(error)s)"
+msgstr ""
 
 # File: src/Core.php, line: 394
 msgid "Used:"
-msgstr "Utilisée :"
+msgstr ""
 
 # File: src/CLI.php, line: 699
 msgid "You SHOULD NOT run Erebot as root!"
-msgstr "Vous NE DEVRIEZ PAS lancer Erebot en tant que root !"
+msgstr ""
 
 # File: src/IrcConnection.php, line: 662
 msgid "regular file"
-msgstr "fichier régulier"
+msgstr ""
