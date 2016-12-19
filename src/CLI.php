@@ -119,7 +119,10 @@ class CLI
         $logger             = $dic->get('logging');
         $localeGetter       = $dic->getParameter('i18n.default_getter');
         $coreTranslatorCls  = $dic->getParameter('core.classes.i18n');
-        $translator         = new $coreTranslatorCls("Erebot\\Core");
+        // @HACK Make "Erebot" available as a domain name for translations,
+        //       even though no such class really exists.
+        class_alias(__CLASS__, "Erebot", false);
+        $translator         = new $coreTranslatorCls("Erebot");
 
         $categories = array(
             'LC_MESSAGES',
