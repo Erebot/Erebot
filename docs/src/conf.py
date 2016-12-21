@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import glob
 import shutil
 import urllib
 import fnmatch
+from datetime import datetime
 from subprocess import call, Popen, PIPE
 
 try:
@@ -43,8 +45,10 @@ def prepare(globs, locs):
 
     # Figure several configuration values from git.
     origin = Popen([git, 'config', '--local', 'remote.origin.url'],
-                   stdout=PIPE).stdout.read().strip()
-    git_tag = Popen(['git', 'describe', '--tags', '--exact', '--first-parent'],
+                    stdout=PIPE).stdout.read().strip()
+    git_tag = Popen([git, 'describe', '--tags', '--exact', '--first-parent'],
+                    stdout=PIPE).communicate()[0].strip()
+    git_hash = Popen([git, 'rev-parse', 'HEAD'],
                     stdout=PIPE).communicate()[0].strip()
     project = origin.rpartition('/')[2]
     if project.endswith('.git'):
@@ -54,7 +58,7 @@ def prepare(globs, locs):
         os.environ['SPHINX_VERSION'] = git_tag
         os.environ['SPHINX_RELEASE'] = git_tag
     else:
-        commit = Popen(['git', 'describe', '--always', '--first-parent'],
+        commit = Popen([git, 'describe', '--always', '--first-parent'],
                         stdout=PIPE).communicate()[0].strip()
         os.environ['SPHINX_VERSION'] = 'latest'
         os.environ['SPHINX_RELEASE'] = 'latest-%s' % (commit, )
@@ -73,7 +77,7 @@ def prepare(globs, locs):
             os.makedirs(path)
             print "Cloning %s into %s..." % (repository, path)
             call([git, 'clone', repository, path])
-        else:
+        elif os.path.isdir(os.path.join(path, '.git')):
             os.chdir(path)
             print "Updating clone of %s in %s..." % (repository, path)
             call([git, 'checkout', 'master'])
@@ -94,6 +98,7 @@ def prepare(globs, locs):
         shutil.rmtree(os.path.join(root, 'build'))
     except OSError:
         pass
+    os.mkdir(os.path.join(root, 'build'))
     shutil.move(
         os.path.join(root, 'docs', 'api', 'html'),
         os.path.join(root, 'build', 'apidoc'),
@@ -122,9 +127,9 @@ def prepare(globs, locs):
 
     # Compile translation catalogs.
     for locale_dir in glob.iglob(os.path.join(root, 'docs', 'i18n', '*')):
-        for root, dirnames, filenames in os.walk(locale_dir):
+        for base, dirnames, filenames in os.walk(locale_dir):
             for po in fnmatch.filter(filenames, '*.po'):
-                po = os.path.join(root, po)
+                po = os.path.join(base, po)
                 mo = po[:-3] + '.mo'
                 call([pybabel, 'compile', '-f', '--statistics',
                       '-i', po, '-o', mo])
@@ -146,6 +151,13 @@ def prepare(globs, locs):
     if 'locale_dirs' not in locs:
         locs['locale_dirs'] = []
     locs['locale_dirs'].insert(0, os.path.join(root, 'docs', 'i18n'))
+
+    if 'rst_prolog' not in locs:
+        locs['rst_prolog'] = ''
+    locs['rst_prolog'] += '\n    .. _`this_commit`: https://github.com/%s/commit/%s\n' % (
+        project,
+        git_hash,
+    )
 
     # - Custom roles
     if 'doxylinks' in locs and 'api' in locs['doxylinks']:
