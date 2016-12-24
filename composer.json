@@ -48,7 +48,8 @@
     "require-dev": {
         "composer/composer": "^1.2.0",
         "erebot/buildenv": "^1.1.0",
-        "erebot/testenv": "^1.1.2"
+        "erebot/testenv": "^1.1.2",
+        "erebot/generic-doc": "*"
     },
     "suggest": {
         "ext-openssl": "*",
