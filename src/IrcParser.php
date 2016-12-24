@@ -80,7 +80,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \param int $strip
      *      A bitwise OR of the codes of the styles we want to strip.
      *      The default is to strip all forms of styles from the text.
-     *      See also the Erebot::Utils::STRIP_* constants.
+     *      See also the Erebot::IrcParser::STRIP_* constants.
      *
      * \retval string
      *      The text with all the styles specified in $strip stripped.
@@ -115,7 +115,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
     }
 
     /**
-     * \copydoc Erebot::Interfaces::IrcParser::makeEvent()
+     * \copydoc Erebot::Interfaces::IrcParser::makeEvent
      *
      * \note
      *      This method can also use the same shortcuts as
@@ -182,14 +182,14 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
     }
 
     /**
-     * \copydoc Erebot::Interfaces::IrcParser::getEventClass()
+     * \copydoc Erebot::Interfaces::IrcParser::getEventClass
      *
      * \note
      *      As a special shortcut, you may use an exclamation
      *      point ("!") in the interface name, which will be
      *      replaced by the text "\\Erebot\\Interfaces\\Event\\".
      *      Hence, to retrieve the class used to create events
-     *      with the "Erebot::Interface::Event::Op" interface,
+     *      with the "Erebot::Interfaces::Event::Op" interface,
      *      it is enough to simply pass "!Op" as the value
      *      for $iface.
      */
@@ -205,7 +205,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
     }
 
     /**
-     * \copydoc Erebot::Interfaces::IrcParser::getEventClasses()
+     * \copydoc Erebot::Interfaces::IrcParser::getEventClasses
      *
      * \note
      *      The interfaces' name will be returned in lowercase,
@@ -218,7 +218,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
     }
 
     /**
-     * \copydoc Erebot::Interface::IrcParser::setEventClasses()
+     * \copydoc Erebot::Interfaces::IrcParser::setEventClasses
      *
      * \note
      *      As a special shortcut, you may use an exclamation
@@ -233,7 +233,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
     }
 
     /**
-     * \copydoc Erebot::Interfaces::IrcParser::setEventClass()
+     * \copydoc Erebot::Interfaces::IrcParser::setEventClass
      *
      * \note
      *      As a special shortcut, you may use an exclamation
@@ -265,7 +265,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
     }
 
     /**
-     * \copydoc Erebot::Interfaces::IrcParser::parseLine()
+     * \copydoc Erebot::Interfaces::IrcParser::parseLine
      *
      * \warning
      *      Do not ask this parser to parse messages coming
@@ -592,7 +592,7 @@ class IrcParser implements \Erebot\Interfaces\IrcParser
      * \param string $origin
      *      Origin of the message to process.
      *
-     * \param Erebot::Interface::IrcTextWrapper $msg
+     * \param Erebot::Interfaces::IrcTextWrapper $msg
      *      The message to process, wrapped in
      *      a special object that makes it easier
      *      to analyze each token separately.

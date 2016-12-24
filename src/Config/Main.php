@@ -106,7 +106,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
         );
     }
 
-    /// \copydoc Erebot::Interface::Config::Main::__clone()
+    /// \copydoc Erebot::Interfaces::Config::Main::__clone()
     public function __clone()
     {
         throw new \Exception('Cloning is forbidden');

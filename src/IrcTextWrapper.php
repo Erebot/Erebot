@@ -115,81 +115,49 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
         return $text;
     }
 
-    /**
-     * \copydoc Countable::count()
-     * \see
-     *      docs/additions/iface_Countable.php
-     */
+    /// \copydoc Countable::count
     public function count()
     {
         return count($this->parts);
     }
 
-    /**
-     * \copydoc Iterator::current()
-     * \see
-     *      docs/additions/iface_Iterator.php
-     */
+    /// \copydoc Iterator::current
     public function current()
     {
         return $this->parts[$this->position];
     }
 
-    /**
-     * \copydoc Iterator::key()
-     * \see
-     *      docs/additions/iface_Iterator.php
-     */
+    /// \copydoc Iterator::key
     public function key()
     {
         return $this->position;
     }
 
-    /**
-     * \copydoc Iterator::next()
-     * \see
-     *      docs/additions/iface_Iterator.php
-     */
+    /// \copydoc Iterator::next
     public function next()
     {
         $this->position++;
     }
 
-    /**
-     * \copydoc Iterator::rewind()
-     * \see
-     *      docs/additions/iface_Iterator.php
-     */
+    /// \copydoc Iterator::rewind
     public function rewind()
     {
         $this->position = 0;
     }
 
-    /**
-     * \copydoc Iterator::valid()
-     * \see
-     *      docs/additions/iface_Iterator.php
-     */
+    /// \copydoc Iterator::valid
     public function valid()
     {
         return ($this->position < count($this->parts));
     }
 
-    /**
-     * \copydoc ArrayAccess::offsetExists()
-     * \see
-     *      docs/additions/iface_ArrayAccess.php
-     */
+    /// \copydoc ArrayAccess::offsetExists
     public function offsetExists($offset)
     {
         return isset($this->parts[$offset]);
     }
 
-    /**
-     * \copydoc ArrayAccess::offsetGet()
-     * \see
-     *      docs/additions/iface_ArrayAccess.php
-     */
+    /// \copydoc ArrayAccess::offsetGet
     public function offsetGet($offset)
     {
         if (!is_int($offset)) {
@@ -201,21 +169,13 @@ class IrcTextWrapper implements \Erebot\Interfaces\IrcTextWrapper
         return $this->parts[$offset];
     }
 
-    /**
-     * \copydoc ArrayAccess::offsetSet()
-     * \see
-     *      docs/additions/iface_ArrayAccess.php
-     */
+    /// \copydoc ArrayAccess::offsetSet
     public function offsetSet($offset, $value)
     {
         throw new \RuntimeException('The wrapped text is read-only');
     }
 
-    /**
-     * \copydoc ArrayAccess::offsetUnset()
-     * \see
-     *      docs/additions/iface_ArrayAccess.php
-     */
+    /// \copydoc ArrayAccess::offsetUnset
     public function offsetUnset($offset)
     {
         unset($this->parts[$offset]);

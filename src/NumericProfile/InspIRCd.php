@@ -26,234 +26,234 @@ namespace Erebot\NumericProfile;
  */
 class InspIRCd extends \Erebot\NumericProfile\Base
 {
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_WELCOME.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_WELCOME
     const RPL_WELCOME                   =   1;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOURHOSTIS.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOURHOSTIS
     const RPL_YOURHOSTIS                =   2;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_SERVERCREATED.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_SERVERCREATED
     const RPL_SERVERCREATED             =   3;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_SERVERVERSION.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_SERVERVERSION
     const RPL_SERVERVERSION             =   4;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ISUPPORT.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ISUPPORT
     const RPL_ISUPPORT                  =   5;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_MAP.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_MAP
     const RPL_MAP                       =   6;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDMAP.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDMAP
     const RPL_ENDMAP                    =   7;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_SNOMASKIS.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_SNOMASKIS
     const RPL_SNOMASKIS                 =   8;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOURUUID.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOURUUID
     const RPL_YOURUUID                  =  42;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_UMODEIS.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_UMODEIS
     const RPL_UMODEIS                   = 221;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_RULES.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_RULES
     const RPL_RULES                     = 232;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINME.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINME
     const RPL_ADMINME                   = 256;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINLOC1.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINLOC1
     const RPL_ADMINLOC1                 = 257;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINLOC2.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINLOC2
     const RPL_ADMINLOC2                 = 258;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINEMAIL.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ADMINEMAIL
     const RPL_ADMINEMAIL                = 259;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_MAPUSERS.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_MAPUSERS
     const RPL_MAPUSERS                  = 270;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_SYNTAX.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_SYNTAX
     const RPL_SYNTAX                    = 304;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_UNAWAY.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_UNAWAY
     const RPL_UNAWAY                    = 305;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_NOWAWAY.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_NOWAWAY
     const RPL_NOWAWAY                   = 306;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_RULESTART.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_RULESTART
     const RPL_RULESTART                 = 308;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_RULESEND.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_RULESEND
     const RPL_RULESEND                  = 309;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_CHANNELMODEIS.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_CHANNELMODEIS
     const RPL_CHANNELMODEIS             = 324;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_CHANNELCREATED.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_CHANNELCREATED
     const RPL_CHANNELCREATED            = 329;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_NOTOPICSET.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_NOTOPICSET
     const RPL_NOTOPICSET                = 331;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_TOPIC.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_TOPIC
     const RPL_TOPIC                     = 332;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_TOPICTIME.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_TOPICTIME
     const RPL_TOPICTIME                 = 333;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_INVITING.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_INVITING
     const RPL_INVITING                  = 341;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_INVITELIST.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_INVITELIST
     const RPL_INVITELIST                = 346;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFINVITELIST.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFINVITELIST
     const RPL_ENDOFINVITELIST           = 347;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_VERSION.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_VERSION
     const RPL_VERSION                   = 351;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_NAMREPLY.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_NAMREPLY
     const RPL_NAMREPLY                  = 353;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFNAMES.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFNAMES
     const RPL_ENDOFNAMES                = 366;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_INFO.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_INFO
     const RPL_INFO                      = 371;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFINFO.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFINFO
     const RPL_ENDOFINFO                 = 374;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_MOTD.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_MOTD
     const RPL_MOTD                      = 372;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_MOTDSTART.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_MOTDSTART
     const RPL_MOTDSTART                 = 375;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFMOTD.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_ENDOFMOTD
     const RPL_ENDOFMOTD                 = 376;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOUAREOPER.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOUAREOPER
     const RPL_YOUAREOPER                = 381;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_REHASHING.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_REHASHING
     const RPL_REHASHING                 = 382;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_TIME.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_TIME
     const RPL_TIME                      = 391;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOURDISPLAYEDHOST.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_YOURDISPLAYEDHOST
     const RPL_YOURDISPLAYEDHOST         = 396;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOSUCHNICK.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOSUCHNICK
     const ERR_NOSUCHNICK                = 401;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOSUCHSERVER.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOSUCHSERVER
     const ERR_NOSUCHSERVER              = 402;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOSUCHCHANNEL.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOSUCHCHANNEL
     const ERR_NOSUCHCHANNEL             = 403;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANNOTSENDTOCHAN.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANNOTSENDTOCHAN
     const ERR_CANNOTSENDTOCHAN          = 404;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_TOOMANYCHANNELS.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_TOOMANYCHANNELS
     const ERR_TOOMANYCHANNELS           = 405;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_INVALIDCAPSUBCOMMAND.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_INVALIDCAPSUBCOMMAND
     const ERR_INVALIDCAPSUBCOMMAND      = 410;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_UNKNOWNCOMMAND.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_UNKNOWNCOMMAND
     const ERR_UNKNOWNCOMMAND            = 421;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOMOTD.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOMOTD
     const ERR_NOMOTD                    = 422;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NORULES.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NORULES
     const ERR_NORULES                   = 434;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_USERNOTINCHANNEL.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_USERNOTINCHANNEL
     const ERR_USERNOTINCHANNEL          = 441;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOTONCHANNEL.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOTONCHANNEL
     const ERR_NOTONCHANNEL              = 442;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_USERONCHANNEL.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_USERONCHANNEL
     const ERR_USERONCHANNEL             = 443;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTCHANGENICK.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTCHANGENICK
     const ERR_CANTCHANGENICK            = 447;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOTREGISTERED.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOTREGISTERED
     const ERR_NOTREGISTERED             = 451;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NEEDMOREPARAMS.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NEEDMOREPARAMS
     const ERR_NEEDMOREPARAMS            = 461;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_ALREADYREGISTERED.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_ALREADYREGISTERED
     const ERR_ALREADYREGISTERED         = 462;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_BADCHANNELKEY.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_BADCHANNELKEY
     const ERR_BADCHANNELKEY             = 475;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_INVITEONLYCHAN.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_INVITEONLYCHAN
     const ERR_INVITEONLYCHAN            = 473;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CHANNELISFULL.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CHANNELISFULL
     const ERR_CHANNELISFULL             = 471;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_BANNEDFROMCHAN.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_BANNEDFROMCHAN
     const ERR_BANNEDFROMCHAN            = 474;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOPRIVILEGES.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOPRIVILEGES
     const ERR_NOPRIVILEGES              = 481;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CHANOPRIVSNEEDED.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CHANOPRIVSNEEDED
     const ERR_CHANOPRIVSNEEDED          = 482;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_ALLMUSTSSL.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_ALLMUSTSSL
     const ERR_ALLMUSTSSL                = 490;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOCTCPALLOWED.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_NOCTCPALLOWED
     const ERR_NOCTCPALLOWED             = 492;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_DELAYREJOIN.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_DELAYREJOIN
     const ERR_DELAYREJOIN               = 495;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_UNKNOWNSNOMASK.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_UNKNOWNSNOMASK
     const ERR_UNKNOWNSNOMASK            = 501;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_USERSDONTMATCH.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_USERSDONTMATCH
     const ERR_USERSDONTMATCH            = 502;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTJOINOPERSONLY.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTJOINOPERSONLY
     const ERR_CANTJOINOPERSONLY         = 520;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTSENDTOUSER.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTSENDTOUSER
     const ERR_CANTSENDTOUSER            = 531;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_COMMANDS.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_COMMANDS
     const RPL_COMMANDS                  = 702;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_COMMANDSEND.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_COMMANDSEND
     const RPL_COMMANDSEND               = 703;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_WORDFILTERED.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_WORDFILTERED
     const ERR_WORDFILTERED              = 936;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTUNLOADMODULE.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTUNLOADMODULE
     const ERR_CANTUNLOADMODULE          = 972;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_UNLOADEDMODULE.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_UNLOADEDMODULE
     const RPL_UNLOADEDMODULE            = 973;
 
-    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTLOADMODULE.
+    /// \copydoc Erebot::Interfaces::Numerics::ERR_CANTLOADMODULE
     const ERR_CANTLOADMODULE            = 974;
 
-    /// \copydoc Erebot::Interfaces::Numerics::RPL_LOADEDMODULE.
+    /// \copydoc Erebot::Interfaces::Numerics::RPL_LOADEDMODULE
     const RPL_LOADEDMODULE              = 975;
 }
