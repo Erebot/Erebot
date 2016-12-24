@@ -27,3 +27,6 @@
 /docs/src/generic
 /docs/i18n/*/LC_MESSAGES/generic/
 /*.tagfile.xml
+
+# Temporary files
+.*.swp
