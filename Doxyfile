@@ -2,4 +2,10 @@
 INPUT += docs/additions/
 INPUT += vendor/erebot/api/src/
 INPUT += vendor/erebot/api/docs/additions/
+INPUT += vendor/erebot/intl/src/
+INPUT += vendor/erebot/callable-wrapper/src/
+INPUT += vendor/erebot/timer/src/
+INPUT += vendor/erebot/styling/src/
+INPUT += vendor/erebot/dom/src/
+INPUT += vendor/erebot/uri/src/
 EXCLUDE_PATTERNS = Parser.php
