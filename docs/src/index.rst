@@ -9,15 +9,13 @@ PHP 5.3.3 onwards.
 You can find more information about this project on the following websites:
 
 *   https://www.erebot.net/ |---| The official website.
-*   https://github.com/Erebot/Erebot/ |---| Project page on GitHub.
-*   https://packages.erebot.net/ |---| Repository for the project.
-*   https://ci.erebot.net/ |---| Our Continuous Integration server.
-*   http://travis-ci.org/Erebot/Erebot |---| Travis Continuous Integration.
+*   https://github.com/Erebot/Erebot/ |---| Source repository.
+*   http://travis-ci.org/Erebot/Erebot |---| Continuous Integration.
 
 Contents:
 
 ..  toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     Prerequisites
     Installation
@@ -35,9 +33,9 @@ Contents:
     generic/Installation
 
 
-Badges: |badges-travis| |badges-versioneye| |badges-coveralls|
+Badges: |badges-travis| |badges-versioneye| |badges-coveralls| |badges-hhvm|
 
-..  |badges-travis| image:: https://travis-ci.org/Erebot/Erebot.png?branch=master
+..  |badges-travis| image:: https://travis-ci.org/Erebot/Erebot.svg?branch=master
     :alt: Travis-CI (unknown)
     :target: http://travis-ci.org/Erebot/Erebot
 
@@ -48,6 +46,10 @@ Badges: |badges-travis| |badges-versioneye| |badges-coveralls|
 ..  |badges-coveralls| image:: https://coveralls.io/repos/Erebot/Erebot/badge.png?branch=master
     :alt: Coveralls (unknown)
     :target: https://coveralls.io/r/Erebot/Erebot?branch=master
+
+..  |badges-hhvm| image:: http://php-eye.com/badge/Erebot/Erebot/hhvm.svg
+    :alt: Tested on HHVM (unknown)
+    :target: https://php-eye.com/package/erebot/erebot
 
 ..  |---| unicode:: U+02014 .. em dash
     :trim:

@@ -3,6 +3,9 @@ Usage
 
 ..  program:: Erebot
 
+Options
+-------
+
 ..  option:: -c <FILE>, --config <FILE>
 
     Use the given configuration <FILE> instead of the default :file:`Erebot.xml`.
@@ -47,3 +50,54 @@ Usage
 
     Display the bot's version and exit. 
 
+
+Environment variables
+---------------------
+
+Several environment variables related to language settings control the way
+the bot produces its output. The first variable to appear in the environment
+takes precedence over the others.
+
+..  envvar:: LANGUAGE
+
+    Defines the system's supported languages, as a colon-separated list
+    of country names with optional regions.
+    Eg.
+
+    ..  sourcecode:: shell
+
+        LANGUAGE=en_US:en
+
+..  envvar:: LC_ALL
+
+    Defines supported languages for various types of formatting operations,
+    like message formatting, date/time formatting and so on.
+    Setting this variable is equivalent to setting each of the other
+    ``LC_*`` variables individually to the same value.
+
+..  envvar:: LC_MESSAGES
+
+    Defines supported languages when outputting textual messages.
+
+..  envvar:: LC_MONETARY
+
+    Defines supported languages when outputting monetary values.
+
+..  envvar:: LC_TIME
+
+    Defines supported languages when outputting dates/times.
+
+..  envvar:: LC_NUMERIC
+
+    Defines supported languages when outputting other numeric values
+    (eg. floating-point values).
+
+..  envvar:: LANG
+
+    Defines the system's supported languages and encodings, as a colon-separated
+    list of country names with their optional region and their encoding.
+    Eg.
+
+    ..  sourcecode:: shell
+
+        LANG=en_US.utf8

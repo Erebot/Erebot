@@ -11,13 +11,6 @@ There are several ways to achieve that. Each method is described below.
     You cannot mix the different methods. Especially, **you must use the same
     method to install modules as the one you selected for Erebot itself**.
 
-..  note::
-
-    We recommend using the `PHAR installation`_ method
-    or the `Composer installation`_ method, depending on
-    whether your project already uses `Composer`_ or not.
-
-
 ..  _`PHAR installation`:
 
 Installation using PHAR archives
@@ -28,13 +21,13 @@ file. However, PHAR's archive does not contain any module.
 Thus, to get a working installation, you must install additional Erebot
 modules. At a minimum, this includes the following modules:
 
--   `Erebot_Module_IrcConnector`_
--   `Erebot_Module_AutoConnect`_
--   `Erebot_Module_PingReply`_
+-   `Erebot_Module_AutoConnect <./projects/autoconnect/>`_
+-   `Erebot_Module_IrcConnector <./projects/ircconnector/>`_
+-   `Erebot_Module_PingReply <./projects/pingreply/>`_
 
 Installing Erebot from a PHAR archive involves only a few steps:
 
--   Make sure your installation fulfills all of the `prerequisites`_.
+-   Make sure your installation fulfills all of the :doc:`/Prerequisites`.
 
     ..  note::
 
@@ -53,9 +46,9 @@ Installing Erebot from a PHAR archive involves only a few steps:
 -   Download the PHAR archive and its signature for each of the following
     modules:
 
-    -   `Erebot_Module_AutoConnect <github.com/Erebot/Module_AutoConnect/releases/latest/>`
-    -   `Erebot_Module_IrcConnector <github.com/Erebot/Module_IrcConnector/releases/latest/>`
-    -   `Erebot_Module_PingReply <github.com/Erebot/Module_PingReply/releases/latest/>`
+    -   `Erebot_Module_AutoConnect <https://github.com/Erebot/Module_AutoConnect/releases/latest/>`_
+    -   `Erebot_Module_IrcConnector <https://github.com/Erebot/Module_IrcConnector/releases/latest/>`_
+    -   `Erebot_Module_PingReply <https://github.com/Erebot/Module_PingReply/releases/latest/>`_
 
     ..  note::
 
@@ -75,12 +68,12 @@ Your tree should now look like this:
         * :file:`Erebot-{X.Y.Z}.phar`
         * :file:`Erebot-{X.Y.Z}.phar.pubkey`
         * modules/
-            * :file:`Module_AutoConnect-{X.Y.Z}.phar`
-            * :file:`Module_AutoConnect-{X.Y.Z}.phar.pubkey`
-            * :file:`Module_IrcConnector-{X.Y.Z}.phar`
-            * :file:`Module_IrcConnector-{X.Y.Z}.phar.pubkey`
-            * :file:`Module_PingReply-{X.Y.Z}.phar`
-            * :file:`Module_PingReply-{X.Y.Z}.phar.pubkey`
+            * :file:`Erebot_Module_AutoConnect-{X.Y.Z}.phar`
+            * :file:`Erebot_Module_AutoConnect-{X.Y.Z}.phar.pubkey`
+            * :file:`Erebot_Module_IrcConnector-{X.Y.Z}.phar`
+            * :file:`Erebot_Module_IrcConnector-{X.Y.Z}.phar.pubkey`
+            * :file:`Erebot_Module_PingReply-{X.Y.Z}.phar`
+            * :file:`Erebot_Module_PingReply-{X.Y.Z}.phar.pubkey`
             * *eventually, additional PHAR archives with their signature*
 
 Once the PHAR archives have been retrieved, you may wish to change file
@@ -170,7 +163,7 @@ Final steps
 -----------
 
 Once Erebot (core files + a few modules) has been installed, you can
-`write a configuration file`_ for Erebot (usually named :file:`Erebot.xml`).
+`write a configuration file <Configuration.html>`_ for Erebot (usually named :file:`Erebot.xml`).
 
 When this is done, the bot can be started, assuming that PHP can be found
 in your :envvar:`PATH` using one of the following commands.
@@ -211,18 +204,6 @@ Use the following command to get help on those options.
     This way, if Erebot was installed using PHAR archives, the bot can be
     started simply by double-clicking on :file:`Erebot-{version}.phar`.
 
-
-..  _`prerequisites`:
-..  _`required dependencies`:
-    Prerequisites.html
-..  _`Erebot_Module_AutoConnect`:
-    projects/autoconnect/
-..  _`Erebot_Module_IrcConnector`:
-    /projects/ircconnector/
-..  _`Erebot_Module_PingReply`:
-    /projects/pingreply/
-..  _`write a configuration file`:
-    Configuration.html
 ..  _`Composer`:
     https://getcomposer.org/
 

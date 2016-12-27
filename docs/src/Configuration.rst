@@ -1,7 +1,5 @@
-..  _`configuration`:
-
-Erebot's configuration
-======================
+Configuration
+=============
 
 Erebot's configuration is stored in an XML file.
 This file is usually called :file:`Erebot.xml` but can be renamed
