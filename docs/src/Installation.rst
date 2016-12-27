@@ -14,10 +14,8 @@ There are several ways to achieve that. Each method is described below.
 ..  note::
 
     We recommend using the `PHAR installation`_ method
-    or the `composer installation`_ method, depending on
+    or the `Composer installation`_ method, depending on
     whether your project already uses `Composer`_ or not.
-    Installation from sources is reserved for advanced installations (mainly
-    for Erebot's developers).
 
 
 ..  _`PHAR installation`:
@@ -28,12 +26,15 @@ Installation using PHAR archives
 A PHAR archive is simply a way of bundling all the necessary files in one big
 file. However, PHAR's archive does not contain any module.
 Thus, to get a working installation, you must install additional Erebot
-modules. At a minimum, this includes: `Erebot_Module_IrcConnector`_,
-`Erebot_Module_AutoConnect`_, `Erebot_Module_PingReply`_.
+modules. At a minimum, this includes the following modules:
 
-Installing Erebot as a PHAR archive only involves a few steps:
+-   `Erebot_Module_IrcConnector`_
+-   `Erebot_Module_AutoConnect`_
+-   `Erebot_Module_PingReply`_
 
-1.  Make sure your installation fulfills all of the `prerequisites`_.
+Installing Erebot from a PHAR archive involves only a few steps:
+
+-   Make sure your installation fulfills all of the `prerequisites`_.
 
     ..  note::
 
@@ -42,34 +43,19 @@ Installing Erebot as a PHAR archive only involves a few steps:
         PHP installation. Failure to do so will result in an error when trying
         to run Erebot's PHAR archive.
 
-2.  Download the PHAR archive for Erebot itself. You can grab the latest
-    version from https://packages.erebot.net/get/Erebot-latest.phar.
+-   Download the PHAR archive for Erebot itself. You can grab the latest
+    version from our `release page <github.com/Erebot/Erebot/releases/latest/>`.
     You MUST also download the public signature for the archive.
-    The signature for the latest version is available at
-    https://packages.erebot.net/get/Erebot-latest.phar.pubkey.
+    The signature is available for download alongside the PHAR archive.
 
-3.  Create a directory named :file:`modules` in the same folder as the PHAR.
+-   Create a directory named :file:`modules` in the same folder as the PHAR.
 
-4.  Go to the :file:`modules` directory and drop a copy of the following PHAR
-    archives with their signature:
+-   Download the PHAR archive and its signature for each of the following
+    modules:
 
-    *   Files for the `Erebot_Module_AutoConnect`_ module:
-
-        -   `Erebot_Module_AutoConnect-latest.phar`_
-        -   `Erebot_Module_AutoConnect-latest.phar's signature`_
-
-    *   Files for the `Erebot_Module_IrcConnector`_ module:
-
-        -   `Erebot_Module_IrcConnector-latest.phar`_
-        -   `Erebot_Module_IrcConnector-latest.phar's signature`_
-
-    *   Files for the `Erebot_Module_PingReply`_ module:
-
-        -   `Erebot_Module_PingReply-latest.phar`_
-        -   `Erebot_Module_PingReply-latest.phar's signature`_
-
-    Make sure you also read each component's documentation (especially the list
-    of prerequisites).
+    -   `Erebot_Module_AutoConnect <github.com/Erebot/Module_AutoConnect/releases/latest/>`
+    -   `Erebot_Module_IrcConnector <github.com/Erebot/Module_IrcConnector/releases/latest/>`
+    -   `Erebot_Module_PingReply <github.com/Erebot/Module_PingReply/releases/latest/>`
 
     ..  note::
 
@@ -77,54 +63,38 @@ Installing Erebot as a PHAR archive only involves a few steps:
         :file:`modules` directory. Otherwise, PHP will refuse to load those
         PHAR archives because it cannot check their origin and integrity.
 
-5.  Optionally, download additional PHAR archives with their signature
-    to install other modules.
+    Make sure you also read each module's documentation to look for any additional
+    prerequisites.
+
+-   (Optional) Download the PHAR archives & signature of any additional module
+    you would like to use.
 
 Your tree should now look like this:
 
     * Erebot/
-        * Erebot-latest.phar
-        * Erebot-latest.phar.pubkey
+        * :file:`Erebot-{X.Y.Z}.phar`
+        * :file:`Erebot-{X.Y.Z}.phar.pubkey`
         * modules/
-            * Erebot_Module_AutoConnect-latest.phar
-            * Erebot_Module_AutoConnect-latest.phar.pubkey
-            * Erebot_Module_IrcConnector-latest.phar
-            * Erebot_Module_IrcConnector-latest.phar.pubkey
-            * Erebot_Module_PingReply-latest.phar
-            * Erebot_Module_PingReply-latest.phar.pubkey
+            * :file:`Module_AutoConnect-{X.Y.Z}.phar`
+            * :file:`Module_AutoConnect-{X.Y.Z}.phar.pubkey`
+            * :file:`Module_IrcConnector-{X.Y.Z}.phar`
+            * :file:`Module_IrcConnector-{X.Y.Z}.phar.pubkey`
+            * :file:`Module_PingReply-{X.Y.Z}.phar`
+            * :file:`Module_PingReply-{X.Y.Z}.phar.pubkey`
             * *eventually, additional PHAR archives with their signature*
 
-..  note::
-
-    The whole installation process using PHAR archives can be automated
-    using the following commands:
-
-    ..  sourcecode:: bash
-
-        $ wget --no-check-certificate                                                   \
-            https://packages.erebot.net/get/Erebot-latest.phar                              \
-            https://packages.erebot.net/get/Erebot-latest.phar.pubkey                       \
-            https://packages.erebot.net/get/Erebot_Module_AutoConnect-latest.phar           \
-            https://packages.erebot.net/get/Erebot_Module_AutoConnect-latest.phar.pubkey    \
-            https://packages.erebot.net/get/Erebot_Module_IrcConnector-latest.phar          \
-            https://packages.erebot.net/get/Erebot_Module_IrcConnector-latest.phar.pubkey   \
-            https://packages.erebot.net/get/Erebot_Module_PingReply-latest.phar             \
-            https://packages.erebot.net/get/Erebot_Module_PingReply-latest.phar.pubkey
-        $ mkdir modules
-        $ mv Erebot_Module_*-latest.phar Erebot_Module_*-latest.phar.pubkey modules/
-
 Once the PHAR archives have been retrieved, you may wish to change file
-permissions on :file:`Erebot-latest.phar`, using this command:
+permissions on :file:`Erebot-{X.Y.Z}.phar`:
 
     ..  sourcecode:: bash
 
-        $ chmod 0755 Erebot-latest.phar
+        $ chmod 0755 Erebot-*.phar
 
-This way, you may later launch Erebot simply by executing:
+This way, you may later launch Erebot simply by executing the PHAR archive:
 
     ..  sourcecode:: bash
 
-        $ ./Erebot-latest.phar
+        $ ./Erebot-*.phar
 
 ..  warning::
 
@@ -162,83 +132,37 @@ That's it! You may now read the section on `final steps`_ for a summary of
 what to do next.
 
 
-Installation from source
-------------------------
+..  _`Composer installation`:
 
-First, make sure a git client is installed on your machine.
-Under Linux, **from a root shell**, run the command that most closely matches
-the tools provided by your distribution:
+Installation using Composer
+---------------------------
 
-..  sourcecode:: bash
+First, make sure `Composer`_ is installed. If not, follow
+the `installation instructions <https://getcomposer.org/download/>`
+on their website.
 
-    # For apt-based distributions such as Debian or Ubuntu
-    $ apt-get install git
-
-    # For yum-based distributions such as Fedora / RHEL (RedHat)
-    $ yum install git
-
-    # For urpmi-based distributions such as MES (Mandriva)
-    $ urpmi git
-
-    # For Zypper-based distributions such as SLES (SuSE)
-    $ zypper install git
-
-..  note::
-
-    Windows users may be interested in installing `Git for Windows`_ to get
-    an equivalent git client. Also, make sure that :program:`git` is present
-    on your account's :envvar:`PATH`. If not, you'll have to replace
-    :command:`git` by the full path to :file:`git.exe` on every invocation
-    (eg. :command:`"C:\\Program Files\\Git\\bin\\git.exe" clone ...`)
-
-Also, make sure you have all the `required dependencies`_ installed as well.
-Now, retrieve the bot's code from the repository, using the following command:
-
-..  sourcecode:: bash
-
-    $ git clone --recursive git://github.com/Erebot/Erebot.git
-    $ mkdir -p Erebot/vendor/ && cd Erebot/vendor/
-    $ git clone --recursive git://github.com/Erebot/Erebot_Module_IrcConnector.git
-    $ git clone --recursive git://github.com/Erebot/Erebot_Module_AutoConnect.git
-    $ git clone --recursive git://github.com/Erebot/Erebot_Module_PingReply.git
-    $ cd ..
-
-..  note::
-    Linux users (especially Erebot developers) may prefer to create a separate
-    checkout for each component and then use symbolic links to join them
-    together, like this:
+-   Create a new folder named :file:`Erebot` and go into that folder:
 
     ..  sourcecode:: bash
 
-        $ git clone --recursive git://github.com/Erebot/Erebot.git
-        $ git clone --recursive git://github.com/Erebot/Erebot_Module_IrcConnector.git
-        $ git clone --recursive git://github.com/Erebot/Erebot_Module_AutoConnect.git
-        $ git clone --recursive git://github.com/Erebot/Erebot_Module_PingReply.git
-        $ mkdir -p Erebot/vendor/ && cd Erebot/vendor/
-        $ ln -s ../../Erebot_Module_IrcConnector
-        $ ln -s ../../Erebot_Module_AutoConnect
-        $ ln -s ../../Erebot_Module_PingReply
-        $ cd ..
+        me@localhost:~/$ mkdir Erebot
+        me@localhost:~/$ cd Erebot
 
-Optionally, you can compile the translation files for each component.
-However, this requires that `gettext`_ and `phing`_ be installed on your machine
-as well. See the documentation on Erebot's `prerequisites`_ for additional
-information on how to install these tools depending on your system.
+-   Use `Composer`_ to install the bot's code:
 
-Once you got those two up and running, the translation files can be compiled,
-assuming you're currently in Erebot's folder, using these commands:
+    ..  sourcecode:: bash
 
-..  sourcecode:: bash
+        me@localhost:~/Erebot/$ php /path/to/composer.phar require --update-no-dev erebot/erebot erebot/ircconnector-module erebot/pingreply-module erebot/autoconnect-module
 
-    $ phing
-    $ cd vendor/Erebot_Module_IrcConnector/
-    $ phing
-    $ cd ../Erebot_Module_AutoConnect/
-    $ phing
-    $ cd ../Erebot_Module_PingReply/
-    $ phing
-    $ cd ../../
+    You may pass additional module names if you want to use other modules.
 
+-   Next, if you're an Erebot developer, install development dependencies as well:
+
+    ..  sourcecode:: bash
+
+        me@localhost:~/Erebot/$ php /path/to/composer.phar update
+
+That's it! The bot is now installed.
 Be sure to read the section on `final steps`_ for a summary of what to do next.
 
 
@@ -258,9 +182,9 @@ Exactly what command must be used depends on the installation method.
     # Must be run from the folder in which Erebot was installed.
     $ php ./Erebot-<version>.phar
 
-    # For an installation from sources or using Composer.
+    # For an installation using Composer.
     # Must be run from the folder in which Erebot was installed.
-    $ php ./scripts/Erebot
+    $ php ./vendor/bin/Erebot
 
 Let's call this command ``%EREBOT%``.
 
@@ -288,34 +212,18 @@ Use the following command to get help on those options.
     started simply by double-clicking on :file:`Erebot-{version}.phar`.
 
 
-..  _`gettext`:
-    http://www.gnu.org/s/gettext/
-..  _`Phing`:
-    http://www.phing.info/
-..  _`Git for Windows`:
-    http://code.google.com/p/msysgit/downloads/list
 ..  _`prerequisites`:
 ..  _`required dependencies`:
     Prerequisites.html
 ..  _`Erebot_Module_AutoConnect`:
-    /Erebot_Module_AutoConnect/
+    projects/autoconnect/
 ..  _`Erebot_Module_IrcConnector`:
-    /Erebot_Module_IrcConnector/
+    /projects/ircconnector/
 ..  _`Erebot_Module_PingReply`:
-    /Erebot_Module_PingReply/
+    /projects/pingreply/
 ..  _`write a configuration file`:
     Configuration.html
-..  _`Erebot_Module_AutoConnect-latest.phar`:
-    https://packages.erebot.net/get/Erebot_Module_AutoConnect-latest.phar
-..  _`Erebot_Module_AutoConnect-latest.phar's signature`:
-    https://packages.erebot.net/get/Erebot_Module_AutoConnect-latest.phar.pubkey
-..  _`Erebot_Module_IrcConnector-latest.phar`:
-    https://packages.erebot.net/get/Erebot_Module_IrcConnector-latest.phar
-..  _`Erebot_Module_IrcConnector-latest.phar's signature`:
-    https://packages.erebot.net/get/Erebot_Module_IrcConnector-latest.phar.pubkey
-..  _`Erebot_Module_PingReply-latest.phar`:
-    https://packages.erebot.net/get/Erebot_Module_PingReply-latest.phar
-..  _`Erebot_Module_PingReply-latest.phar's signature`:
-    https://packages.erebot.net/get/Erebot_Module_PingReply-latest.phar.pubkey
+..  _`Composer`:
+    https://getcomposer.org/
 
 .. vim: ts=4 et

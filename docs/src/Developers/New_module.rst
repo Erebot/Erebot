@@ -10,6 +10,19 @@ by Erebot for developers (such as the `styling features`_ and `i18n features`_).
 ..  contents:: Table of Contents
     :local:
 
+
+Quick start
+-----------
+
+To quickly create the file structure for a new module, you can start by
+cloning/forking the git repository for the `Module_Skeleton`_ virtual module.
+This will provide you with the basic structure and necessary files.
+
+Please note that the `Module_Skeleton`_ module uses Composer to handle dependencies,
+and so, it is worth reading `Composer's documentation <https://getcomposer.org/doc/>`
+if you are new to PHP packages and dependency management.
+
+
 General structure
 -----------------
 
@@ -33,8 +46,8 @@ As such, it must have at least two methods (declared *abstract* in
     exits).
 
 
-Helping users
--------------
+Providing help
+--------------
 
 ..  note::
     Adding an help method to your module is totally optional, but it is
@@ -80,7 +93,7 @@ Now, there are two types of requests:
 -   Requests for help on the module itself (``!help Foo``).
     In that case, ``$words`` will contain only one word:
     the name of the module itself inside the
-    ``\\Erebot\\Module`` namespace |--| ``Foo`` in this case.
+    ``\\Erebot\\Module`` namespace |---| ``Foo`` in this case.
 
 -   Requests for help on a command/topic (``!help foo``, ``!help foo bar...``).
     In that case, ``$words`` will contain 2 or more words:
@@ -155,23 +168,19 @@ an imaginary module:
 Once the code for your help method is ready, you have to tell Erebot about it
 by using the ``registerHelpMethod()`` method inside your module's ``reload()``
 method. You must call ``registerHelpMethod()`` with an object implementing the
-``\\Erebot\\Interface\\Callable`` interface and referring to your method.
+:api:erebot:`\\Erebot\\CallableInterface` interface and referring to your method.
 
 This can be done using the following snippet:
 
 ..  sourcecode:: inline-php
 
-    // First, we retrieve the factory to use to produce instances
-    // implementing "\Erebot\Interface\Callable".
-    $cls = $this->getFactory('!Callable');
-
-    // Next, we register our help method (here, the getHelp() method
+    // We register our help method (here, the getHelp() method
     // from the current object) by wrapping a callback-compatible
-    // value referring to it in a new callable object.
-    $this->registerHelpMethod(new $cls(array($this, 'getHelp')));
+    // value referring to it a special wrapper object.
+    $this->registerHelpMethod(\Erebot\CallableWrapper::wrap(array($this, 'getHelp')));
 
 Alternatively, you may mark your module as implementing the
-:api:`\\Erebot\\Interface\\HelpEnabled` interface.
+:api:erebot:`\\Erebot\\Interfaces\\HelpEnabled` interface.
 In that case, the bot will automatically register the module's
 ``getHelp()`` method as the help method.
 
@@ -196,10 +205,15 @@ from a remote server.
 
 The reason is simple: PHP does not support multithreading [#pthreads]_,
 so while a long running task is being executed, the rest of the bot
-is literally stopped. This includes other modules responsible for keeping
-the connection alive (``\\Erebot\\Module\\PingReply``).
+is literally stopped.
+This includes other modules responsible for keeping the connection alive
+(eg. `\Erebot\Module\PingReply <http://docs.erebot.net/projects/pingreply/>`_).
 Hence, running a long task in your module may result in the bot
 being disconnected from IRC servers with a "Ping timeout" error.
+
+
+..  |---|               unicode:: U+02014 .. em dash
+    :trim:
 
 .. [#pthreads]
     This is not entirely true anymore, as there is now an extension
@@ -213,5 +227,7 @@ being disconnected from IRC servers with a "Ping timeout" error.
 ..  _`i18n features`:
 ..  _`translating`:
     Internationalization.html
+..  _`Module_Skeleton`:
+    https://github.com/Erebot/Module_Skeleton/
 
 .. vim: ts=4 et

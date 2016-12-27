@@ -22,6 +22,7 @@ Contents:
     Prerequisites
     Installation
     Configuration
+    Usage
     Modules
     HowTo/index
     Contribute

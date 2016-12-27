@@ -38,16 +38,16 @@ This section contains a list of supported modules:
     *  :erebot:module:`RateLimiter`
     *  :erebot:module:`Roulette`
     *  :erebot:module:`ServerCapabilities`
-    *  Thiercelieux
     *  :erebot:module:`TriggerRegistry`
     *  :erebot:module:`TV`
     *  :erebot:module:`Uno`
     *  :erebot:module:`WatchList`
     *  :erebot:module:`WebGetter`
+    *  :erebot:module:`Werewolves`
     *  :erebot:module:`Wordlists`
 
 All supported modules can be found at https://github.com/Erebot/
-(look for repositories whose name starts with *Erebot_Module_*).
+(look for repositories whose name starts with *Module_*).
 See each module's individual documentation for installation instructions
 and additional information.
 

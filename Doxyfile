@@ -1,5 +1,6 @@
 @INCLUDE = vendor/erebot/buildenv/Doxyfile
 INPUT += docs/additions/
+INPUT += vendor/fpoirotte/natives4doxygen/docs/
 INPUT += vendor/erebot/api/src/
 INPUT += vendor/erebot/api/docs/additions/
 INPUT += vendor/erebot/intl/src/

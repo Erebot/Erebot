@@ -3,9 +3,9 @@
 Erebot's configuration
 ======================
 
-Erebot's configuration is stored in an XML file. This file is usually
-called "``Erebot.xml``", though you could name it otherwise and use
-the :option:`Erebot -c` option when running Erebot to point it to your file.
+Erebot's configuration is stored in an XML file.
+This file is usually called :file:`Erebot.xml` but can be renamed
+(see :option:`Erebot -c`).
 
 This file is composed of a hierarchy of settings, with inner sections
 being able to inherit settings from outer sections.
