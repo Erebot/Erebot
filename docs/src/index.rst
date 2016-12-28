@@ -48,7 +48,7 @@ Badges: |badges-travis| |badges-versioneye| |badges-coveralls| |badges-hhvm|
     :alt: Coveralls (unknown)
     :target: https://coveralls.io/r/Erebot/Erebot?branch=master
 
-..  |badges-hhvm| image:: http://php-eye.com/badge/Erebot/Erebot/hhvm.svg
+..  |badges-hhvm| image:: http://php-eye.com/badge/Erebot/Erebot/hhvm.png
     :alt: Tested on HHVM (unknown)
     :target: https://php-eye.com/package/erebot/erebot
 
