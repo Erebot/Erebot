@@ -18,33 +18,33 @@ This section contains a list of supported modules:
 ..  hlist::
     :columns: 3
 
-    *  :erebot:module:`Admin`
-    *  :erebot:module:`AutoConnect`
-    *  :erebot:module:`AutoIdent`
-    *  :erebot:module:`AutoJoin`
-    *  :erebot:module:`AZ`
-    *  :erebot:module:`Countdown`
-    *  :erebot:module:`CtcpResponder`
+    *  `Admin <./projects/admin/>`_
+    *  `AutoConnect <./projects/autoconnect/>`_
+    *  `AutoIdent <./projects/autoident/>`_
+    *  `AutoJoin <./projects/autojoin/>`_
+    *  `AZ <./projects/az/>`_
+    *  `Countdown <./projects/countdown/>`_
+    *  `CtcpResponder <./projects/ctcpresponder/>`_
     *  Feeds
-    *  :erebot:module:`GoF`
-    *  :erebot:module:`Helper`
-    *  :erebot:module:`IrcConnector`
-    *  :erebot:module:`IrcTracker`
-    *  :erebot:module:`LagChecker`
-    *  :erebot:module:`Math`
-    *  :erebot:module:`MiniSed`
-    *  :erebot:module:`PhpFilter`
-    *  :erebot:module:`PingReply`
-    *  :erebot:module:`RateLimiter`
-    *  :erebot:module:`Roulette`
-    *  :erebot:module:`ServerCapabilities`
-    *  :erebot:module:`TriggerRegistry`
-    *  :erebot:module:`TV`
-    *  :erebot:module:`Uno`
-    *  :erebot:module:`WatchList`
-    *  :erebot:module:`WebGetter`
-    *  :erebot:module:`Werewolves`
-    *  :erebot:module:`Wordlists`
+    *  `GoF <./projects/gof/>`_
+    *  `Helper <./projects/helper/>`_
+    *  `IrcConnector <./projects/ircconnector/>`_
+    *  `IrcTracker <./projects/irctracker/>`_
+    *  `LagChecker <./projects/lagchecker/>`_
+    *  `Math <./projects/math/>`_
+    *  `MiniSed <./projects/minised/>`_
+    *  `PhpFilter <./projects/phpfilter/>`_
+    *  `PingReply <./projects/pingreply/>`_
+    *  `RateLimiter <./projects/ratelimiter/>`_
+    *  `Roulette <./projects/roulette/>`_
+    *  `ServerCapabilities <./projects/servercapabilities/>`_
+    *  `TriggerRegistry <./projects/triggerregistry/>`_
+    *  `TV <./projects/tv/>`_
+    *  `Uno <./projects/uno/>`_
+    *  `WatchList <./projects/watchlist/>`_
+    *  `WebGetter <./projects/webgetter/>`_
+    *  `Werewolves <./projects/werewolves/>`_
+    *  `Wordlists <./projects/wordlists/>`_
 
 All supported modules can be found at https://github.com/Erebot/
 (look for repositories whose name starts with *Module_*).

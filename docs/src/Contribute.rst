@@ -46,7 +46,7 @@ New modules
 -----------
 
 If you wish to contribute new modules, you should probably start by reading
-our :ref:`development guides <Writing a new module>`.
+our development guide on :doc:`/Developers/New_module`.
 Once your code is ready, make sure to send an email to erebot@erebot.net
 with a link to it so that your module can be added to our list of
 :ref:`Third-party modules`.
@@ -56,12 +56,13 @@ Pull requests
 -------------
 
 If you plan on sending us pull requests, please read our documentation on
-Erebot's `coding standard`_ first. Your patch will have a greater chance
-of being merged if it already abides by that standard when you submit it.
+Erebot's :doc:`/Developers/Coding_Standard` first.
+Your patch will have a greater chance of being merged if it already abides
+by that standard when you submit it.
 
 To contribute a patch, you will need a GitHub account. Then you can simply:
 
--   `Fork the code`_ to your own account.
+-   `Fork the code <https://github.com/Erebot/Erebot/fork>`__ to your own account.
 -   Create a new branch.
 -   Hack away as much as you want.
 -   Create a pull request with your changes.
@@ -74,9 +75,10 @@ before being merged.
 Translations
 ------------
 
-The project uses the `Transifex service`_ to manage translations.
-All submissions or patches to translations should be submitted through
-`Erebot's project page on Transifex`_.
+The project uses the `Transifex service <https://www.transifex.net/>`__
+to manage translations.
+All submissions or patches to translations must be submitted through
+`Erebot's project page on Transifex <https://www.transifex.net/projects/p/Erebot/>`_.
 
 To submit a new translation or a patch for an already existing translation,
 you will need a Transifex account. Then, apply for one of the translation teams
@@ -98,23 +100,11 @@ This channel can also be used to discuss issues, new ideas / feature requests
 and to follow the bot's development.
 
 
-..  _`reporting new issues`:
-    https://github.com/Erebot/Erebot/issues/new
-..  _`sending pull requests`:
-    https://github.com/Erebot/Erebot/pulls
 ..  _`Sphinx`:
     http://www.sphinx-doc.org/
 ..  _`Read The Docs`:
     https://readthedocs.org/
-..  _`coding standard`:
-    Coding_Standard.html
-..  _`Fork the code`:
-    https://github.com/Erebot/Erebot/fork
 ..  _`Buildbot`:
     http://buildbot.net/
-..  _`Transifex service`:
-    https://www.transifex.net/
-..  _`Erebot's project page on Transifex`:
-    https://www.transifex.net/projects/p/Erebot/
 
 .. vim: ts=4 et

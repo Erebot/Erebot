@@ -8,9 +8,10 @@ PHP 5.3.3 onwards.
 
 You can find more information about this project on the following websites:
 
-*   https://www.erebot.net/ |---| The official website.
-*   https://github.com/Erebot/Erebot/ |---| Source repository.
-*   http://travis-ci.org/Erebot/Erebot |---| Continuous Integration.
+*   `The official website <https://www.erebot.net/>`_
+*   `Source repository <https://github.com/Erebot/Erebot/>`_
+*   `Continuous Integration <http://travis-ci.org/Erebot/Erebot>`_
+*   `API documentation <./apidoc/>`_
 
 Contents:
 

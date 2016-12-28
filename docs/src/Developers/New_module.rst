@@ -1,5 +1,3 @@
-..  _`Writing a new module`:
-
 Writing a new module
 ====================
 

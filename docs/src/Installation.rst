@@ -21,9 +21,9 @@ file. However, PHAR's archive does not contain any module.
 Thus, to get a working installation, you must install additional Erebot
 modules. At a minimum, this includes the following modules:
 
--   `Erebot_Module_AutoConnect <./projects/autoconnect/>`_
--   `Erebot_Module_IrcConnector <./projects/ircconnector/>`_
--   `Erebot_Module_PingReply <./projects/pingreply/>`_
+-   `Erebot_Module_AutoConnect <./projects/autoconnect/>`__
+-   `Erebot_Module_IrcConnector <./projects/ircconnector/>`__
+-   `Erebot_Module_PingReply <./projects/pingreply/>`__
 
 Installing Erebot from a PHAR archive involves only a few steps:
 
@@ -46,9 +46,9 @@ Installing Erebot from a PHAR archive involves only a few steps:
 -   Download the PHAR archive and its signature for each of the following
     modules:
 
-    -   `Erebot_Module_AutoConnect <https://github.com/Erebot/Module_AutoConnect/releases/latest/>`_
-    -   `Erebot_Module_IrcConnector <https://github.com/Erebot/Module_IrcConnector/releases/latest/>`_
-    -   `Erebot_Module_PingReply <https://github.com/Erebot/Module_PingReply/releases/latest/>`_
+    -   `Erebot_Module_AutoConnect <https://github.com/Erebot/Module_AutoConnect/releases/latest/>`__
+    -   `Erebot_Module_IrcConnector <https://github.com/Erebot/Module_IrcConnector/releases/latest/>`__
+    -   `Erebot_Module_PingReply <https://github.com/Erebot/Module_PingReply/releases/latest/>`__
 
     ..  note::
 
