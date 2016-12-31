@@ -18,33 +18,33 @@ This section contains a list of supported modules:
 ..  hlist::
     :columns: 3
 
-    *  `Admin <./projects/admin/>`_
-    *  `AutoConnect <./projects/autoconnect/>`_
-    *  `AutoIdent <./projects/autoident/>`_
-    *  `AutoJoin <./projects/autojoin/>`_
-    *  `AZ <./projects/az/>`_
-    *  `Countdown <./projects/countdown/>`_
-    *  `CtcpResponder <./projects/ctcpresponder/>`_
+    *  `Admin </projects/admin/>`_
+    *  `AutoConnect </projects/autoconnect/>`_
+    *  `AutoIdent </projects/autoident/>`_
+    *  `AutoJoin </projects/autojoin/>`_
+    *  `AZ </projects/az/>`_
+    *  `Countdown </projects/countdown/>`_
+    *  `CtcpResponder </projects/ctcpresponder/>`_
     *  Feeds
-    *  `GoF <./projects/gof/>`_
-    *  `Helper <./projects/helper/>`_
-    *  `IrcConnector <./projects/ircconnector/>`_
-    *  `IrcTracker <./projects/irctracker/>`_
-    *  `LagChecker <./projects/lagchecker/>`_
-    *  `Math <./projects/math/>`_
-    *  `MiniSed <./projects/minised/>`_
-    *  `PhpFilter <./projects/phpfilter/>`_
-    *  `PingReply <./projects/pingreply/>`_
-    *  `RateLimiter <./projects/ratelimiter/>`_
-    *  `Roulette <./projects/roulette/>`_
-    *  `ServerCapabilities <./projects/servercapabilities/>`_
-    *  `TriggerRegistry <./projects/triggerregistry/>`_
-    *  `TV <./projects/tv/>`_
-    *  `Uno <./projects/uno/>`_
-    *  `WatchList <./projects/watchlist/>`_
-    *  `WebGetter <./projects/webgetter/>`_
-    *  `Werewolves <./projects/werewolves/>`_
-    *  `Wordlists <./projects/wordlists/>`_
+    *  `GoF </projects/gof/>`_
+    *  `Helper </projects/helper/>`_
+    *  `IrcConnector </projects/ircconnector/>`_
+    *  `IrcTracker </projects/irctracker/>`_
+    *  `LagChecker </projects/lagchecker/>`_
+    *  `Math </projects/math/>`_
+    *  `MiniSed </projects/minised/>`_
+    *  `PhpFilter </projects/phpfilter/>`_
+    *  `PingReply </projects/pingreply/>`_
+    *  `RateLimiter </projects/ratelimiter/>`_
+    *  `Roulette </projects/roulette/>`_
+    *  `ServerCapabilities </projects/servercapabilities/>`_
+    *  `TriggerRegistry </projects/triggerregistry/>`_
+    *  `TV </projects/tv/>`_
+    *  `Uno </projects/uno/>`_
+    *  `WatchList </projects/watchlist/>`_
+    *  `WebGetter </projects/webgetter/>`_
+    *  `Werewolves </projects/werewolves/>`_
+    *  `Wordlists </projects/wordlists/>`_
 
 All supported modules can be found at https://github.com/Erebot/
 (look for repositories whose name starts with *Module_*).
