@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from os.path import join
+from os.path import join, dirname
 import sys
 import glob
 import shutil
@@ -19,6 +19,7 @@ def prepare(globs, locs):
     # Where are we?
     cwd = os.getcwd()
     root = os.path.abspath(join(cwd, '..', '..'))
+    deps = os.path.abspath(join(cwd, dirname(__file__), 'php-requirements.txt'))
 
     git = Popen('which git 2> %s' % os.devnull, shell=True,
                 stdout=PIPE).stdout.read().strip()
@@ -69,19 +70,22 @@ def prepare(globs, locs):
         os.environ['SPHINX_RELEASE'] = 'latest-%s' % (commit, )
         locs['tags'].add('devel')
 
+    # Common dependencies
+    dependencies = [
+        ('git://github.com/Erebot/Buildenv.git', 'vendor/erebot/buildenv'),
+        ('git://github.com/fpoirotte/PHPNatives4Doxygen', 'vendor/fpoirotte/natives4doxygen'),
+    ]
+
+    # Project-specific dependencies
+    try:
+        with open(deps, 'r') as fd:
+            dependencies += [line.split() for line in fd.readlines()]
+    except:
+        pass
+
     # Clone or update dependencies
-    for repository, path in (
-        ('git://github.com/Erebot/Buildenv.git', join(root, 'vendor', 'erebot', 'buildenv')),
-        ('git://github.com/fpoirotte/PHPNatives4Doxygen', join(root, 'vendor', 'fpoirotte', 'natives4doxygen')),
-        ('git://github.com/Erebot/GenericDoc.git', join(root, 'docs', 'src', 'generic')),
-        ('git://github.com/Erebot/API.git', join(root, 'vendor', 'erebot', 'api')),
-        ('git://github.com/Erebot/Intl.git', join(root, 'vendor', 'erebot', 'intl')),
-        ('git://github.com/Erebot/CallableWrapper.git', join(root, 'vendor', 'erebot', 'callable-wrapper')),
-        ('git://github.com/Erebot/Timer.git', join(root, 'vendor', 'erebot', 'timer')),
-        ('git://github.com/Erebot/Styling.git', join(root, 'vendor', 'erebot', 'styling')),
-        ('git://github.com/Erebot/DOM.git', join(root, 'vendor', 'erebot', 'dom')),
-        ('git://github.com/Erebot/URI.git', join(root, 'vendor', 'erebot', 'uri')),
-    ):
+    for repository, path in dependencies:
+        path = join(root, path)
         if not os.path.isdir(path):
             os.makedirs(path)
             print "Cloning %s into %s..." % (repository, path)
@@ -153,22 +157,16 @@ def prepare(globs, locs):
 
     # Patch configuration afterwards.
     # - Theme
-    if 'html_extra_path' not in locs:
-        locs['html_extra_path'] = []
-    locs['html_extra_path'].append(join(root, 'build'))
+    locs.setdefault('html_extra_path', []).append(join(root, 'build'))
     locs['html_theme'] = 'haiku'
-
     # - I18N
-    if 'locale_dirs' not in locs:
-        locs['locale_dirs'] = []
-    locs['locale_dirs'].insert(0, join(root, 'docs', 'i18n'))
-
-    if 'rst_prolog' not in locs:
-        locs['rst_prolog'] = ''
-    locs['rst_prolog'] += '\n    .. _`this_commit`: https://github.com/%s/%s/commit/%s\n' % (
-        vendor,
-        project,
-        git_hash,
-    )
+    locs.setdefault('locale_dirs', []).insert(0, join(root, 'docs', 'i18n'))
+    # - misc.
+    locs['rst_prolog'] = locs.get('rst_prolog', '') + \
+        '\n    .. _`this_commit`: https://github.com/%s/%s/commit/%s\n' % (
+            vendor,
+            project,
+            git_hash,
+        )
 
 prepare(globals(), locals())
