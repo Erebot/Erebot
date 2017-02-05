@@ -28,7 +28,9 @@ def prepare(globs, locs):
     locs['rtd_slug'] = os.path.basename(os.path.dirname(os.path.dirname(root)))
     locs['rtd_version'] = os.path.basename(root)
     pybabel = join(root, '..', '..', 'envs', locs['rtd_version'], 'bin', 'pybabel')
+    builder = sys.argv[sys.argv.index('-b') + 1]
 
+    print "builder:", builder
     print "git version:"
     call([git, '--version'])
     print "doxygen version:"
@@ -50,7 +52,10 @@ def prepare(globs, locs):
                     stdout=PIPE).communicate()[0].strip()
     git_hash = Popen([git, 'rev-parse', 'HEAD'],
                     stdout=PIPE).communicate()[0].strip()
-    project = origin.rpartition('/')[2]
+
+    origin = origin.replace(':', '/').split('/')
+    vendor = origin[-2]
+    project = origin[-1]
     if project.endswith('.git'):
         project = project[:-4]
     os.environ['SPHINX_PROJECT'] = project
@@ -90,32 +95,34 @@ def prepare(globs, locs):
 
     composer = json.load(open(join(root, 'composer.json'), 'r'))
 
-    # Run doxygen
-    call([doxygen, join(root, 'Doxyfile')], env={
-        'COMPONENT_NAME': os.environ['SPHINX_PROJECT'],
-        'COMPONENT_VERSION': os.environ['SPHINX_VERSION'],
-        'COMPONENT_BRIEF': composer.get('description', ''),
-    })
+    if builder == 'readthedocs':
+        # Run doxygen
+        call([doxygen, join(root, 'Doxyfile')], env={
+            'COMPONENT_NAME': os.environ['SPHINX_PROJECT'],
+            'COMPONENT_VERSION': os.environ['SPHINX_VERSION'],
+            'COMPONENT_BRIEF': composer.get('description', ''),
+        })
 
-    # Remove extra files/folders.
-    try:
-        shutil.rmtree(join(root, 'build'))
-    except OSError:
-        pass
-    os.mkdir(join(root, 'build'))
-    shutil.move(
-        join(root, 'docs', 'api', 'html'),
-        join(root, 'build', 'apidoc'),
-    )
-    try:
+        # Copy API doc to final place,
+        # overwriting files as necessary.
+        try:
+            shutil.rmtree(join(root, 'build'))
+        except OSError:
+            pass
+        os.mkdir(join(root, 'build'))
         shutil.move(
-            join(root, '%s.tagfile.xml' %
-                os.environ['SPHINX_PROJECT']),
-            join(root, 'build', 'apidoc', '%s.tagfile.xml' %
-                os.environ['SPHINX_PROJECT'])
+            join(root, 'docs', 'api', 'html'),
+            join(root, 'build', 'apidoc'),
         )
-    except OSError:
-        pass
+        try:
+            shutil.move(
+                join(root, '%s.tagfile.xml' %
+                    os.environ['SPHINX_PROJECT']),
+                join(root, 'build', 'apidoc', '%s.tagfile.xml' %
+                    os.environ['SPHINX_PROJECT'])
+            )
+        except OSError:
+            pass
 
     # Copy translations for generic docs to catalogs folder.
     gen_i18n = join(root, 'docs', 'src', 'generic', 'i18n', '.')[:-1]
@@ -158,7 +165,8 @@ def prepare(globs, locs):
 
     if 'rst_prolog' not in locs:
         locs['rst_prolog'] = ''
-    locs['rst_prolog'] += '\n    .. _`this_commit`: https://github.com/%s/commit/%s\n' % (
+    locs['rst_prolog'] += '\n    .. _`this_commit`: https://github.com/%s/%s/commit/%s\n' % (
+        vendor,
         project,
         git_hash,
     )
