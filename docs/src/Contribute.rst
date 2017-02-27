@@ -104,7 +104,5 @@ and to follow the bot's development.
     http://www.sphinx-doc.org/
 ..  _`Read The Docs`:
     https://readthedocs.org/
-..  _`Buildbot`:
-    http://buildbot.net/
 
 .. vim: ts=4 et

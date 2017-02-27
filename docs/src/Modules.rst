@@ -31,7 +31,7 @@ This section contains a list of supported modules:
     *  `IrcConnector </projects/ircconnector/>`_
     *  `IrcTracker </projects/irctracker/>`_
     *  `LagChecker </projects/lagchecker/>`_
-    *  `Math </projects/math/>`_
+    *  `Math </projects/maths/>`_
     *  `MiniSed </projects/minised/>`_
     *  `PhpFilter </projects/phpfilter/>`_
     *  `PingReply </projects/pingreply/>`_
