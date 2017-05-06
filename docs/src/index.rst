@@ -6,11 +6,12 @@ It is known to work under both Linux and Windows (contact us on GitHub if you
 managed to use it on MacOSX) and works on a wide range of PHP versions from
 PHP 5.3.3 onwards.
 
-You can find more information about this project on the following websites:
+You can find more information about this project and its sub-components
+on the following websites:
 
 *   `The official website <https://www.erebot.net/>`_
-*   `Source repository <https://github.com/Erebot/Erebot/>`_
-*   `Continuous Integration <http://travis-ci.org/Erebot/Erebot>`_
+*   `Source repository <https://github.com/Erebot/>`_
+*   `Continuous Integration <http://travis-ci.org/Erebot/>`_
 *   `API documentation <./apidoc/>`_
 
 Contents:
