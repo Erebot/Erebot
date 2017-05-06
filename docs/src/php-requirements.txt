@@ -1,8 +1,0 @@
-git://github.com/Erebot/GenericDoc.git       docs/src/generic
-git://github.com/Erebot/API.git              vendor/erebot/api
-git://github.com/Erebot/Intl.git             vendor/erebot/intl
-git://github.com/Erebot/CallableWrapper.git  vendor/erebot/callable-wrapper
-git://github.com/Erebot/Timer.git            vendor/erebot/timer
-git://github.com/Erebot/Styling.git          vendor/erebot/styling
-git://github.com/Erebot/DOM.git              vendor/erebot/dom
-git://github.com/Erebot/URI.git              vendor/erebot/uri
