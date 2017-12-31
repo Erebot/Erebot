@@ -111,9 +111,7 @@ $loader = new \Composer\Package\Loader\ArrayLoader();
 
 // Second pass : register bundled packages.
 foreach ($packages as $package) {
-    // erebot/generic-doc uses a different install-dir.
-    if ($package['name'] !== 'erebot/generic-doc' &&
-        !file_exists('phar://' . __FILE__ . "/vendor/${package['name']}"))
+    if (!file_exists('phar://' . __FILE__ . "/vendor/${package['name']}"))
         continue;
     $repository->addPackage($loader->load($package));
 }

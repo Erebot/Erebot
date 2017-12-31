@@ -17,7 +17,7 @@ Installation using PHAR archives
 --------------------------------
 
 A PHAR archive is simply a way of bundling all the necessary files in one big
-file. However, PHAR's archive does not contain any module.
+file. However, the PHAR archive does not contain any module.
 Thus, to get a working installation, you must install additional Erebot
 modules. At a minimum, this includes the following modules:
 

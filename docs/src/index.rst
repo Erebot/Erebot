@@ -29,11 +29,6 @@ Contents:
     Developers/index
     License
 
-..  toctree::
-    :hidden:
-
-    generic/Installation
-
 
 Badges: |badges-travis| |badges-versioneye| |badges-coveralls| |badges-hhvm|
 

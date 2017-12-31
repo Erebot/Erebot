@@ -6,7 +6,6 @@
         <include name="data/**"/>
         <include name="vendor/erebot/api/**"/>
         <include name="vendor/erebot/dependency-injection/**"/>
-        <include name="vendor/erebot/generic-doc/**"/>
         <include name="vendor/erebot/installers/**"/>
         <include name="vendor/erebot/plop/**"/>
         <include name="vendor/pear/console_commandline/**"/>

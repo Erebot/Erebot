@@ -42,14 +42,12 @@
         "erebot/intl": "*",
         "erebot/callable-wrapper": "^1.0.0",
         "erebot/styling": "^0.1.0",
-        "erebot/uri": "^0.1.0",
-        "erebot/generic-doc": "*"
+        "erebot/uri": "^0.1.0"
     },
     "require-dev": {
         "composer/composer": "^1.2.0",
         "erebot/buildenv": "^1.4.0",
-        "erebot/testenv": "^1.1.2",
-        "erebot/generic-doc": "*"
+        "erebot/testenv": "^1.1.2"
     },
     "suggest": {
         "ext-openssl": "*",
