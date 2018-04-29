@@ -39,7 +39,7 @@
 
         "erebot/dom": "*",
         "erebot/timer": "*",
-        "erebot/intl": "*",
+        "erebot/intl": "^0.1.0",
         "erebot/callable-wrapper": "^1.0.0",
         "erebot/styling": "^0.1.0",
         "erebot/uri": "^0.1.0"
