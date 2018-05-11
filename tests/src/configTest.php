@@ -49,6 +49,11 @@ extends Erebot_TestEnv_TestCase
             $this->_translator
         );
         unset($config);
+
+        // Silence PHPUnit warning about risky/buggy test.
+        // The fact that no exception has been thrown above
+        // is enough to say this test was a success.
+        $this->assertTrue(true);
     }
 
     /**
@@ -67,6 +72,11 @@ extends Erebot_TestEnv_TestCase
             $this->_translator
         );
         unset($config);
+
+        // Silence PHPUnit warning about risky/buggy test.
+        // The fact that no exception has been thrown above
+        // is enough to say this test was a success.
+        $this->assertTrue(true);
     }
 
     /**
@@ -96,6 +106,11 @@ CONFIG;
             $this->_translator
         );
         unset($config);
+
+        // Silence PHPUnit warning about risky/buggy test.
+        // The fact that no exception has been thrown above
+        // is enough to say this test was a success.
+        $this->assertTrue(true);
     }
 
     /**
