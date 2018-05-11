@@ -283,7 +283,7 @@ class Proxy
      *      defined in the module's settings,
      *      or \b null if there is no default value.
      *
-     * \param Erebot::CallableInterface $parser
+     * \param callable $parser
      *      Object that will be used to parse the parameter.
      *      It will receive the value of that parameter as a
      *      string and should convert it to the proper type.
@@ -292,7 +292,7 @@ class Proxy
      *      Name of the method the request to parse
      *      the parameter originated from.
      *
-     * \param Erebot::CallableInterface $checker
+     * \param callable $checker
      *      Object that will be passed the parsed value
      *      and should return \b true if it respects the
      *      type constraints defined by this checker,
@@ -314,9 +314,9 @@ class Proxy
         $module,
         $param,
         $default,
-        \Erebot\CallableInterface $parser,
+        callable $parser,
         $origin,
-        \Erebot\CallableInterface $checker
+        callable $checker
     ) {
         try {
             if (!isset($this->modules[$module])) {
@@ -355,9 +355,9 @@ class Proxy
             $module,
             $param,
             $default,
-            \Erebot\CallableWrapper::wrap(array($this, 'parseBoolHelper')),
+            array($this, 'parseBoolHelper'),
             __FUNCTION__,
-            \Erebot\CallableWrapper::wrap('is_bool')
+            'is_bool'
         );
     }
 
@@ -368,9 +368,9 @@ class Proxy
             $module,
             $param,
             $default,
-            \Erebot\CallableWrapper::wrap('strval'),
+            'strval',
             __FUNCTION__,
-            \Erebot\CallableWrapper::wrap('is_string')
+            'is_string'
         );
     }
 
@@ -381,9 +381,9 @@ class Proxy
             $module,
             $param,
             $default,
-            \Erebot\CallableWrapper::wrap(array($this, 'parseIntHelper')),
+            array($this, 'parseIntHelper'),
             __FUNCTION__,
-            \Erebot\CallableWrapper::wrap('is_int')
+            'is_int'
         );
     }
 
@@ -394,9 +394,9 @@ class Proxy
             $module,
             $param,
             $default,
-            \Erebot\CallableWrapper::wrap(array($this, 'parseRealHelper')),
+            array($this, 'parseRealHelper'),
             __FUNCTION__,
-            \Erebot\CallableWrapper::wrap('is_real')
+            'is_real'
         );
     }
 }

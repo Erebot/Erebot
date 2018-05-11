@@ -45,7 +45,7 @@ extends Erebot_Testenv_Module_TestCase
         $this->_connection = $this->getMockBuilder('\\Erebot\\Interfaces\\Connection')
             ->setConstructorArgs(array($bot, $serverConfig))
             ->getMock();
-        $this->_cb = \Erebot\CallableWrapper::wrap(array($this, 'dummyCallback'));
+        $this->_cb = array($this, 'dummyCallback');
     }
 
     public function classProvider()

@@ -109,7 +109,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
 
         $this->addEventHandler(
             new \Erebot\EventHandler(
-                \Erebot\CallableWrapper::wrap(array($this, 'handleCapabilities')),
+                array($this, 'handleCapabilities'),
                 new \Erebot\Event\Match\Type(
                     '\\Erebot\\Event\\ServerCapabilities'
                 )
@@ -118,7 +118,7 @@ class IrcConnection implements \Erebot\Interfaces\IrcConnection
 
         $this->addEventHandler(
             new \Erebot\EventHandler(
-                \Erebot\CallableWrapper::wrap(array($this, 'handleConnect')),
+                array($this, 'handleConnect'),
                 new \Erebot\Event\Match\Type(
                     '\\Erebot\\Interface\\Event\\Connect'
                 )

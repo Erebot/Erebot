@@ -51,8 +51,6 @@ class Patches
             E_ALL
         );
 
-        \Erebot\CallableWrapper::initialize();
-
         // The name "glob" is already used internally as of PHP 5.3.0.
         // Moreover, the wrapper returns an XML document, hence "xglob".
         if (!in_array("xglob", stream_get_wrappers())) {
