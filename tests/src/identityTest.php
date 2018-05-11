@@ -52,7 +52,7 @@ extends Erebot_TestEnv_TestCase
             'foo!ident@1:2:3:4:5:6:7',
             'foo!ident@1:2:3:4:5:6:7:8:9',
         );
-        $masks = array_map(create_function('$a', 'return array($a);'), $masks);
+        $masks = array_map(function ($a) { return array($a); }, $masks);
         return $masks;
     }
 
@@ -68,7 +68,7 @@ extends Erebot_TestEnv_TestCase
             '*!*@*',
             'FOO!*@*',
         );
-        $masks = array_map(create_function('$a', 'return array($a);'), $masks);
+        $masks = array_map(function ($a) { return array($a); }, $masks);
         return $masks;
     }
 
