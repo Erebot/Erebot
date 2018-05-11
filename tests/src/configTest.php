@@ -23,7 +23,7 @@ extends Erebot_TestEnv_TestCase
     {
         parent::setUp();
         \Erebot\Patches::patch();
-        $this->_translator = new \Erebot\Intl('Erebot\\Core');
+        $this->_translator = $this->getMockBuilder('\\Erebot\\Intl\\TranslatorInterface')->getMock();
     }
 
     /**

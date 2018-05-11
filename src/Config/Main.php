@@ -75,7 +75,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
      *      or the string representation of the configuration data,
      *      respectively.
      *
-     * \param Erebot::IntlInterface $translator
+     * \param Erebot::Intl::TranslatorInterface $translator
      *      Translator to use for messages coming from core files.
      *
      * \throw Erebot::InvalidValueException
@@ -86,7 +86,7 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     public function __construct(
         $configData,
         $source,
-        \Erebot\IntlInterface $translator
+        \Erebot\Intl\TranslatorInterface $translator
     ) {
         $this->proxified        = null;
         $this->modules          = array();
@@ -352,23 +352,9 @@ class Main extends \Erebot\Config\Proxy implements \Erebot\Interfaces\Config\Mai
     public function getTranslator($component)
     {
         if (isset($this->locale)) {
-            $translator = new \Erebot\Intl($component);
-            $translator->setLocale(
-                \Erebot\IntlInterface::LC_MESSAGES,
-                $this->locale
-            );
-            $categories = array(
-                \Erebot\IntlInterface::LC_MONETARY,
-                \Erebot\IntlInterface::LC_NUMERIC,
-                \Erebot\IntlInterface::LC_TIME,
-            );
-            foreach ($categories as $category) {
-                $translator->setLocale(
-                    $category,
-                    $this->coreTranslator->getLocale($category)
-                );
-            }
-            return $translator;
+            $domain = str_replace('\\', '_', ltrim($component, '\\'));
+            $localedir = static::getBaseDir($component);
+            return \Erebot\Intl\GettextFactory::translation($domain, $localedir, array($this->locale));
         }
 
         return $this->coreTranslator;

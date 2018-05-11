@@ -79,13 +79,13 @@ class Core implements \Erebot\Interfaces\Core
      * \param Erebot::Interfaces::Config::MainInterface $config
      *      The (main) configuration to use.
      *
-     * \param Erebot::IntlInterface $translator
+     * \param Erebot::Intl::TranslatorInterface $translator
      *      A translator object that will provide translations
      *      for messages emitted by the core class.
      */
     public function __construct(
         \Erebot\Interfaces\Config\Main $config,
-        \Erebot\IntlInterface $translator
+        \Erebot\Intl\TranslatorInterface $translator
     ) {
         $this->connections  =
         $this->timers       = array();

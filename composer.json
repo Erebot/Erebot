@@ -20,7 +20,7 @@
         "source": "https://github.com/Erebot/Erebot"
     },
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=7.0",
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-libxml": "*",
@@ -34,20 +34,20 @@
         "pear/console_commandline": "*",
         "symfony/dependency-injection": "*",
         "symfony/config": "*",
-        "erebot/api": "^0.7.1",
+        "erebot/api": "^0.8.0",
         "erebot/plop": "^0.6.0",
 
         "erebot/dom": "*",
         "erebot/timer": "*",
-        "erebot/intl": "^0.1.0",
+        "erebot/intl": "^0.2.0",
         "erebot/callable-wrapper": "^1.0.0",
-        "erebot/styling": "^0.1.0",
+        "erebot/styling": "^0.2.0",
         "erebot/uri": "^0.1.0"
     },
     "require-dev": {
         "composer/composer": "^1.2.0",
         "erebot/buildenv": "^1.4.0",
-        "erebot/testenv": "^1.1.2"
+        "erebot/testenv": "^2.0.0"
     },
     "suggest": {
         "ext-openssl": "*",

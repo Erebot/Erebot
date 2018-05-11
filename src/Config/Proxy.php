@@ -99,32 +99,32 @@ class Proxy
         throw new \Exception("Cloning forbidden!");
     }
 
+    protected static function getBaseDir($component)
+    {
+        $reflector = new \ReflectionClass($component);
+        $parts = explode(DIRECTORY_SEPARATOR, $reflector->getFileName());
+        do {
+            $last = array_pop($parts);
+        } while ($last !== 'src' && count($parts));
+        $parts[] = 'data';
+        $parts[] = 'i18n';
+        $base = implode(DIRECTORY_SEPARATOR, $parts);
+        return $base;
+    }
+
     /// \copydoc Erebot::Interfaces::Config::Proxy::getTranslator()
     public function getTranslator($component)
     {
         if (isset($this->locale)) {
-            $translator = new \Erebot\Intl($component);
-            $translator->setLocale(
-                \Erebot\IntlInterface::LC_MESSAGES,
-                $this->locale
-            );
-            $categories = array(
-                \Erebot\IntlInterface::LC_MONETARY,
-                \Erebot\IntlInterface::LC_NUMERIC,
-                \Erebot\IntlInterface::LC_TIME,
-            );
-            $proxiedTranslator = $this->proxified->getTranslator($component);
-            foreach ($categories as $category) {
-                $translator->setLocale(
-                    $category,
-                    $proxiedTranslator->getLocale($category)
-                );
-            }
-            return $translator;
+            $domain = str_replace('\\', '_', ltrim($component, '\\'));
+            $localedir = static::getBaseDir($component);
+            return \Erebot\Intl\GettextFactory::translation($domain, $localedir, array($this->locale));
         }
+
         if ($this->proxified === $this) {
             throw new \Erebot\NotFoundException('No translator associated');
         }
+
         return $this->proxified->getTranslator($component);
     }
 
