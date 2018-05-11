@@ -16,10 +16,23 @@
     along with Erebot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+class UtilsTestHelper
+{
+    public function __construct($testcase)
+    {
+        $this->testcase = $testcase;
+    }
+
+    public function test()
+    {
+        return $this->testcase->getCallerObjectHelper();
+    }
+}
+
 class   UtilsTest
 extends Erebot_TestEnv_TestCase
 {
-    protected function getCallerObjectHelper()
+    public function getCallerObjectHelper()
     {
         return \Erebot\Utils::getCallerObject();
     }
@@ -30,7 +43,7 @@ extends Erebot_TestEnv_TestCase
     public function testGetCallerObject()
     {
         $this->assertSame($this, $this->getCallerObjectHelper());
-        $this->assertNotSame($this, \Erebot\Utils::getCallerObject());
+        $this->assertNotSame($this, (new UtilsTestHelper($this))->test());
     }
 
     public function invalidUTF8Sequences()
