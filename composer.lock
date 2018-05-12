@@ -4,24 +4,23 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9933e5908dcfd19382b48bdc0fb40fa7",
+    "content-hash": "a939cbe043cbe405ac2787731b230619",
     "packages": [
         {
             "name": "erebot/api",
-            "version": "0.8.0",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Erebot/API.git",
-                "reference": "54d78bbc297c2fa82aec46b5d520210f0401ec8f"
+                "reference": "8712b3f53509c987c7356ce0ef4109e864753d09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Erebot/API/zipball/54d78bbc297c2fa82aec46b5d520210f0401ec8f",
-                "reference": "54d78bbc297c2fa82aec46b5d520210f0401ec8f",
+                "url": "https://api.github.com/repos/Erebot/API/zipball/8712b3f53509c987c7356ce0ef4109e864753d09",
+                "reference": "8712b3f53509c987c7356ce0ef4109e864753d09",
                 "shasum": ""
             },
             "require": {
-                "erebot/callable-wrapper": "*",
                 "erebot/intl": "^0.2.0",
                 "erebot/timer": "*",
                 "erebot/uri": "*",
@@ -62,58 +61,7 @@
                 "bot",
                 "irc"
             ],
-            "time": "2018-05-11T15:37:42+00:00"
-        },
-        {
-            "name": "erebot/callable-wrapper",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Erebot/CallableWrapper.git",
-                "reference": "501653f83427f2867ef3ffef497710ad0779bba2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Erebot/CallableWrapper/zipball/501653f83427f2867ef3ffef497710ad0779bba2",
-                "reference": "501653f83427f2867ef3ffef497710ad0779bba2",
-                "shasum": ""
-            },
-            "require": {
-                "ext-spl": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*",
-                "squizlabs/php_codesniffer": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Erebot\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0+"
-            ],
-            "authors": [
-                {
-                    "name": "François Poirotte",
-                    "email": "clicky@erebot.net",
-                    "role": "lead"
-                }
-            ],
-            "description": "Callable wrapper for PHP < 5.4.0",
-            "homepage": "https://github.com/Erebot/CallableWrapper",
-            "keywords": [
-                "callable"
-            ],
-            "time": "2016-07-16T16:21:59+00:00"
+            "time": "2018-05-11T22:03:26+00:00"
         },
         {
             "name": "erebot/dom",
@@ -361,22 +309,21 @@
         },
         {
             "name": "erebot/timer",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Erebot/Timer.git",
-                "reference": "003845e0b2fc1025b949b1e79792122593ba16d5"
+                "reference": "cd04905d859221f9e216deba25693bc8906441f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Erebot/Timer/zipball/003845e0b2fc1025b949b1e79792122593ba16d5",
-                "reference": "003845e0b2fc1025b949b1e79792122593ba16d5",
+                "url": "https://api.github.com/repos/Erebot/Timer/zipball/cd04905d859221f9e216deba25693bc8906441f5",
+                "reference": "cd04905d859221f9e216deba25693bc8906441f5",
                 "shasum": ""
             },
             "require": {
-                "erebot/callable-wrapper": "^1.0",
                 "ext-spl": "*",
-                "php": ">=5.3.0"
+                "php": ">=7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "*",
@@ -409,7 +356,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-08-02T19:32:31+00:00"
+            "time": "2018-05-11T21:59:50+00:00"
         },
         {
             "name": "erebot/uri",
@@ -656,7 +603,7 @@
             "authors": [
                 {
                     "name": "Richard Quadling",
-                    "email": "rquadling@gmail.com"
+                    "email": "RQuadling@GMail.com"
                 },
                 {
                     "name": "David Jean Louis",
@@ -1322,20 +1269,19 @@
         },
         {
             "name": "erebot/testenv",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Erebot/Testenv.git",
-                "reference": "f4c16440e47f2cd9c0361c10808d1a4293942381"
+                "reference": "3c1df86c62f170ada26ddf50eb51eb1bc8510a63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Erebot/Testenv/zipball/f4c16440e47f2cd9c0361c10808d1a4293942381",
-                "reference": "f4c16440e47f2cd9c0361c10808d1a4293942381",
+                "url": "https://api.github.com/repos/Erebot/Testenv/zipball/3c1df86c62f170ada26ddf50eb51eb1bc8510a63",
+                "reference": "3c1df86c62f170ada26ddf50eb51eb1bc8510a63",
                 "shasum": ""
             },
             "require": {
-                "erebot/callable-wrapper": "*",
                 "erebot/plop": "^0.6",
                 "erebot/styling": "^0.2.0",
                 "erebot/timer": "*",
@@ -1368,7 +1314,7 @@
             "keywords": [
                 "Erebot"
             ],
-            "time": "2018-05-11T16:41:27+00:00"
+            "time": "2018-05-11T22:02:25+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
