@@ -31,6 +31,9 @@ script:
     - vendor/bin/phpunit --coverage-clover clover.xml
     - vendor/bin/phpcs
 
+after_script:
+    - vendor/bin/update-docs.sh
+
 after_success:
     - composer require --dev satooshi/php-coveralls
     - travis_retry vendor/bin/php-coveralls -n -v
