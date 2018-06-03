@@ -34,7 +34,7 @@ and channels the bot is connected to.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\MiniSed"/>
+        <module name="\\Erebot\\Module\\MiniSed"/>
       </modules>
     </configuration>
 
@@ -47,7 +47,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\MiniSed
+..  table:: Commands provided by \\Erebot\\Module\\MiniSed
 
     +-----------+-----------------------------------------------------------+
     | Command   | Description                                               |

@@ -35,7 +35,7 @@ configuration level and to disable it only for specific networks if needed.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\ServerCapabilities"/>
+        <module name="\\Erebot\\Module\\ServerCapabilities"/>
       </modules>
     </configuration>
 

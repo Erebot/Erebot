@@ -16,7 +16,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\LagChecker
+..  table:: Options for \\Erebot\\Module\\LagChecker
 
     +-----------+-----------+-----------+-----------------------------------+
     | Name      | Type      | Default   | Description                       |
@@ -94,7 +94,7 @@ the current latency.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\LagChecker">
+        <module name="\\Erebot\\Module\\LagChecker">
           <param name="check"     value="120" />
           <param name="timeout"   value="15" />
           <param name="reconnect" value="60" />
@@ -117,7 +117,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\LagChecker
+..  table:: Commands provided by \\Erebot\\Module\\LagChecker
 
     +---------------------------+-------------------------------------------+
     | Command                   | Description                               |

@@ -15,7 +15,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\AutoIdent
+..  table:: Options for \\Erebot\\Module\\AutoIdent
 
     +----------+--------+---------------+-------------------------------------+
     | Name     | Type   | Default value | Description                         |
@@ -58,7 +58,7 @@ The following configuration has been used successfully on the
         <!-- Other modules ignored for clarity. -->
 
         <!-- Configure the bot's nickname, etc. -->
-        <module name="\Erebot\Module\AutoIdent">
+        <module name="\\Erebot\\Module\\AutoIdent">
           <param name="nickname" value="Erebot" />
           <param name="identity" value="Erebot" />
           <param name="hostname" value="Erebot" />
@@ -69,7 +69,7 @@ The following configuration has been used successfully on the
       <networks>
         <network name="EpiKnet">
            <modules>
-             <module name="\Erebot\Module\AutoIdent">
+             <module name="\\Erebot\\Module\\AutoIdent">
                <!--
                  "NickServ" is called "Themis" on EpiKnet.
                  Both names are whitelisted here.

@@ -15,7 +15,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\Uno
+..  table:: Options for \\Erebot\\Module\\Uno
 
     +---------------+-----------+-----------+-------------------------------+
     | Name          | Type      | Default   | Description                   |
@@ -96,7 +96,7 @@ needs better.
           Make the Uno game available on all networks/servers/channels,
           using the default values for every setting.
         -->
-        <module name="\Erebot\Module\Uno" />
+        <module name="\\Erebot\\Module\\Uno" />
       </modules>
     </configuration>
 
@@ -127,7 +127,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\Uno
+..  table:: Commands provided by \\Erebot\\Module\\Uno
 
     +---------------------------+-------------------------------------------+
     | Command                   | Description                               |
@@ -240,7 +240,7 @@ and that's why this game is so much fun!
 
 The following table lists possible variations of the rules:
 
-..  table:: Rule variations supported by \Erebot\Module\Uno
+..  table:: Rule variations supported by \\Erebot\\Module\\Uno
 
     +-------------------+---------------------------------------------------+
     | Rule              | Description                                       |

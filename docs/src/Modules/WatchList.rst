@@ -21,7 +21,7 @@ Options
 
 This module provides only one configuration option.
 
-..  table:: Options for \Erebot\Module\WatchList
+..  table:: Options for \\Erebot\\Module\\WatchList
 
     +---------------+--------+---------------+------------------------------+
     | Name          | Type   | Default value | Description                  |
@@ -54,7 +54,7 @@ configuration level and to disable it only for specific networks, if needed.
             The bot will receive notifications whenever "Foo" or "Bar"
             joins/quits the IRC server.
         -->
-        <module name="\Erebot\Module\WatchList">
+        <module name="\\Erebot\\Module\\WatchList">
           <param name="nicks" value="Foo Bar"/>
         </module>
       </modules>

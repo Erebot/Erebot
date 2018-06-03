@@ -20,7 +20,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\RateLimiter
+..  table:: Options for \\Erebot\\Module\\RateLimiter
 
     +-----------+-----------+-----------+-----------------------------------+
     | Name      | Type      | Default   | Description                       |
@@ -56,7 +56,7 @@ every 2 seconds.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\RateLimiter">
+        <module name="\\Erebot\\Module\\RateLimiter">
           <param name="limit"  value="4" />
           <param name="period" value="2" />
         </module>

@@ -15,7 +15,7 @@ Options
 
 This module offers several configuration options.
 
-..  table:: Options for \Erebot\Module\IrcConnector
+..  table:: Options for \\Erebot\\Module\\IrcConnector
 
     +----------+--------+---------------+-------------------------------------+
     | Name     | Type   | Default value | Description                         |
@@ -74,7 +74,7 @@ Example
                 to the IRC server but will proceed to a security upgrade to make sure
                 no one can eavesdrop on the connection.
               -->
-              <module name="\Erebot\Module\IrcConnector">
+              <module name="\\Erebot\\Module\\IrcConnector">
                   <param name="password" value="ASecretIsWhatMakesAWomanAWoman"/>
                   <param name="nickname" value="Erebus"/>
                   <param name="realname" value="I decide who must live or die"/>

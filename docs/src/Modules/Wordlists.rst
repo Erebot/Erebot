@@ -15,7 +15,7 @@ Options
 
 This module provides a single configuration option.
 
-..  table:: Options for \Erebot\Module\Wordlists
+..  table:: Options for \\Erebot\\Module\\Wordlists
 
     +---------------+--------+---------------+------------------------------+
     | Name          | Type   | Default value | Description                  |
@@ -69,7 +69,7 @@ whose name starts with 'pkmn', but reject any other wordlist.
             Allow wordlists whose name starts with 'pkmn'
             and deny the use of any other wordlist.
         -->
-        <module name="\Erebot\Module\Wordlists">
+        <module name="\\Erebot\\Module\\Wordlists">
             <param name="policy" value="pkmn* !*"/>
         </module>
       </modules>

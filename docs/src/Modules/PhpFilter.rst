@@ -18,7 +18,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\PhpFilter
+..  table:: Options for \\Erebot\\Module\\PhpFilter
 
     +-----------+-----------+-----------+-----------------------------------+
     | Name      | Type      | Default   | Description                       |
@@ -57,7 +57,7 @@ rotation to text, much like Caesar's cipher).
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\PhpFilter">
+        <module name="\\Erebot\\Module\\PhpFilter">
           <param name="whitelist" value="string.toupper,string.tolower,string.rot13" />
         </module>
       </modules>
@@ -80,7 +80,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\PhpFilter
+..  table:: Commands provided by \\Erebot\\Module\\PhpFilter
 
     +---------------------------+-------------------------------------------+
     | Command                   | Description                               |

@@ -34,7 +34,7 @@ In this example, we just make sure this module is loaded.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\TriggerRegistry"/>
+        <module name="\\Erebot\\Module\\TriggerRegistry"/>
       </modules>
     </configuration>
 

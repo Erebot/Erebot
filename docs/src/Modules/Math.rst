@@ -18,7 +18,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\Math
+..  table:: Options for \\Erebot\\Module\\Math
 
     +----------+--------+---------------+-------------------------------------+
     | Name     | Type   | Default value | Description                         |
@@ -49,7 +49,7 @@ command is used.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\Math">
+        <module name="\\Erebot\\Module\\Math">
           <param name="trigger" value="calc" />
         </module>
       </modules>
@@ -69,7 +69,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\Math
+..  table:: Commands provided by \\Erebot\\Module\\Math
 
     +---------------------------+-------------------------------------------+
     | Command                   | Description                               |

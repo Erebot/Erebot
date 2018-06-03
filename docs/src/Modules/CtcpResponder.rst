@@ -30,7 +30,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\CtcpResponder
+..  table:: Options for \\Erebot\\Module\\CtcpResponder
 
     +-------------------+-----------+-----------+---------------------------+
     | Name              | Type      | Default   | Description               |

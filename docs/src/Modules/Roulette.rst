@@ -15,7 +15,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\Roulette
+..  table:: Options for \\Erebot\\Module\\Roulette
 
     +-----------+-----------+---------------+---------------------------------+
     | Name      | Type      | Default       | Description                     |
@@ -60,7 +60,7 @@ the current latency.
           - the game will be started using the "!gun" command.
           - the gun will have 7 chambers.
         -->
-        <module name="\Erebot\Module\Roulette">
+        <module name="\\Erebot\\Module\\Roulette">
           <param name="chambers"    value="7" />
           <param name="trigger"     value="gun" />
         </module>
@@ -81,7 +81,7 @@ Provided commands
 
 This module provides the following command:
 
-..  table:: Commands provided by \Erebot\Module\Roulette
+..  table:: Commands provided by \\Erebot\\Module\\Roulette
 
     +---------------------------+-------------------------------------------+
     | Command                   | Description                               |

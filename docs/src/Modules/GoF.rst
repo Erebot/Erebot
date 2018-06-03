@@ -19,7 +19,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\GoF
+..  table:: Options for \\Erebot\\Module\\GoF
 
     +---------------+-----------+-----------+-------------------------------+
     | Name          | Type      | Default   | Description                   |
@@ -139,7 +139,7 @@ your needs better.
           - the game will start 2 minutes (120 seconds) after 3 players
             join it (to give time for a fourth player to join the game).
         -->
-        <module name="\Erebot\Module\GoF">
+        <module name="\\Erebot\\Module\\GoF">
           <param name="trigger_create" value="gangof4" />
           <param name="start_delay"    value="120" />
         </module>
@@ -165,7 +165,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\GoF
+..  table:: Commands provided by \\Erebot\\Module\\GoF
 
     +---------------------------+-------------------------------------------+
     | Command                   | Description                               |

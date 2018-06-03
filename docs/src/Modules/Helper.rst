@@ -15,7 +15,7 @@ Options
 
 This module provides only one configuration option.
 
-..  table:: Options for \Erebot\Module\Helper
+..  table:: Options for \\Erebot\\Module\\Helper
 
     +---------------+--------+---------------+------------------------------+
     | Name          | Type   | Default value | Description                  |
@@ -49,7 +49,7 @@ becomes available using the command ``!helpme`` (instead of ``!help``).
         <!-- Other modules ignored for clarity. -->
 
         <!-- We only change the default command name. -->
-        <module name="\Erebot\Module\Helper">
+        <module name="\\Erebot\\Module\\Helper">
           <param name="trigger" value="sos" />
         </module>
       </modules>
@@ -70,7 +70,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\Helper
+..  table:: Commands provided by \\Erebot\\Module\\Helper
 
     +-------------------------------+---------------------------------------+
     | Command                       | Description                           |

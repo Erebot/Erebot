@@ -37,7 +37,7 @@ configuration level and to disable it only for specific networks.
 
         <modules>
             <!-- Other modules ignored for clarity. -->
-            <module name="\Erebot\Module\AutoConnect" />
+            <module name="\\Erebot\\Module\\AutoConnect" />
         </modules>
 
         <networks>
@@ -48,7 +48,7 @@ configuration level and to disable it only for specific networks.
                         Disable auto-connection for the local IRC server,
                         which is used only for debugging purposes.
                     -->
-                    <module name="\Erebot\Module\AutoConnect" active="false" />
+                    <module name="\\Erebot\\Module\\AutoConnect" active="false" />
                 </modules>
 
                 <servers>

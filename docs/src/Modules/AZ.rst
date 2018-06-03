@@ -17,7 +17,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\AZ
+..  table:: Options for \\Erebot\\Module\\AZ
 
     +---------------+--------+---------------+------------------------------+
     | Name          | Type   | Default value | Description                  |
@@ -59,7 +59,7 @@ configuration level and to disable it only for specific networks.
           - the random word to guess will be a Pokémon name
             from either the first or second generation :)
         -->
-        <module name="\Erebot\Module\AZ">
+        <module name="\\Erebot\\Module\\AZ">
           <param name="trigger" value="az" />
           <param name="default_list" value="pkmn1en pkmn2en" />
         </module>
@@ -80,7 +80,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\AZ
+..  table:: Commands provided by \\Erebot\\Module\\AZ
 
     +-------------------------------+---------------------------------------+
     | Command                       | Description                           |

@@ -21,7 +21,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\Countdown
+..  table:: Options for \\Erebot\\Module\\Countdown
 
     +---------------+-----------+-------------------+-------------------------------+
     | Name          | Type      | Default value     | Description                   |
@@ -90,14 +90,14 @@ suits your needs.
           - the game will be started using the "!count" command.
           - contestants will have 2 minutes to make suggestions.
         -->
-        <module name="\Erebot\Module\Countdown">
+        <module name="\\Erebot\\Module\\Countdown">
           <param name="trigger" value="count" />
           <param name="delay"   value="120" />
         </module>
       </modules>
     </configuration>
 
-..  |solver_class| replace:: \Erebot\Module\Countdown\Solver
+..  |solver_class| replace:: \\Erebot\\Module\\Countdown\\Solver
 
 
 Usage

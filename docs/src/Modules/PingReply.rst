@@ -34,7 +34,7 @@ networks/servers so that the bot can stay connected.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\PingReply"/>
+        <module name="\\Erebot\\Module\\PingReply"/>
       </modules>
     </configuration>
 

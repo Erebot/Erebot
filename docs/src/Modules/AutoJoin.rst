@@ -42,7 +42,7 @@ Example
           -->
           <channel name="#Erebot">
             <modules>
-              <module name="\Erebot\Module\AutoJoin" />
+              <module name="\\Erebot\\Module\\AutoJoin" />
             </modules>
           </channel>
         </network>

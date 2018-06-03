@@ -15,7 +15,7 @@ Options
 
 This module provides several configuration options.
 
-..  table:: Options for \Erebot\Module\TV
+..  table:: Options for \\Erebot\\Module\\TV
 
     +---------------+-----------+---------------+-------------------------------+
     | Name          | Type      | Default       | Description                   |
@@ -77,7 +77,7 @@ without any additional parameter.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="\Erebot\Module\TV">
+        <module name="\\Erebot\\Module\\TV">
           <!-- Override the default fetcher. -->
           <param name="fetcher_class"    value="My_TV_Fetcher" />
           <!-- Create a group called "hertzien". -->
@@ -109,7 +109,7 @@ Provided commands
 
 This module provides the following commands:
 
-..  table:: Commands provided by \Erebot\Module\TV
+..  table:: Commands provided by \\Erebot\\Module\\TV
 
     +---------------------------+-------------------------------------------+
     | Command                   | Description                               |

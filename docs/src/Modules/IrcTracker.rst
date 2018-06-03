@@ -40,7 +40,7 @@ this module.
       <modules>
         <!-- Other modules ignored for clarity. -->
 
-        <module name="Erebot\Module\IrcTracker"/>
+        <module name="\\Erebot\\Module\\IrcTracker"/>
       </modules>
     </configuration>
 
