@@ -18,38 +18,35 @@ This section contains a list of supported modules:
 ..  hlist::
     :columns: 3
 
-    *  `Admin <|erebot-module-admin|>`_
-    *  `AutoConnect <|erebot-module-autoconnect|>`_
-    *  `AutoIdent <|erebot-module-autoident|>`_
-    *  `AutoJoin <|erebot-module-autojoin|>`_
-    *  `AZ <|erebot-module-az|>`_
-    *  `Countdown <|erebot-module-countdown|>`_
-    *  `CtcpResponder <|erebot-module-ctcpresponder|>`_
-    *  Feeds
-    *  `GoF <|erebot-module-gof|>`_
-    *  `Helper <|erebot-module-helper|>`_
-    *  `IrcConnector <|erebot-module-ircconnector|>`_
-    *  `IrcTracker <|erebot-module-irctracker|>`_
-    *  `LagChecker <|erebot-module-lagchecker|>`_
-    *  `Math <|erebot-module-maths|>`_
-    *  `MiniSed <|erebot-module-minised|>`_
-    *  `PhpFilter <|erebot-module-phpfilter|>`_
-    *  `PingReply <|erebot-module-pingreply|>`_
-    *  `RateLimiter <|erebot-module-ratelimiter|>`_
-    *  `Roulette <|erebot-module-roulette|>`_
-    *  `ServerCapabilities <|erebot-module-servercapabilities|>`_
-    *  `TriggerRegistry <|erebot-module-triggerregistry|>`_
-    *  `TV <|erebot-module-tv|>`_
-    *  `Uno <|erebot-module-uno|>`_
-    *  `WatchList <|erebot-module-watchlist|>`_
-    *  `WebGetter <|erebot-module-webgetter|>`_
-    *  `Werewolves <|erebot-module-werewolves|>`_
-    *  `Wordlists <|erebot-module-wordlists|>`_
+    *  `Admin <Modules/Admin>`_
+    *  `AutoConnect <Modules/AutoConnect>`_
+    *  `AutoIdent <Modules/AutoIdent>`_
+    *  `AutoJoin <Modules/AutoJoin>`_
+    *  `AZ <Modules/AZ>`_
+    *  `Countdown <Modules/Countdown>`_
+    *  `CtcpResponder <Modules/CtcpResponder>`_
+    *  `GoF <Modules/GoF>`_
+    *  `Helper <Modules/Helper>`_
+    *  `IrcConnector <Modules/IrcConnector>`_
+    *  `IrcTracker <Modules/IrcTracker>`_
+    *  `LagChecker <Modules/LagChecker>`_
+    *  `Math <Modules/Math>`_
+    *  `MiniSed <Modules/MiniSed>`_
+    *  `PhpFilter <Modules/PhpFilter>`_
+    *  `PingReply <Modules/PingReply>`_
+    *  `RateLimiter <Modules/RateLimiter>`_
+    *  `Roulette <Modules/Roulette>`_
+    *  `ServerCapabilities <Modules/ServerCapabilities>`_
+    *  `TriggerRegistry <Modules/TriggerRegistry>`_
+    *  `TV <Modules/TV>`_
+    *  `Uno <Modules/Uno>`_
+    *  `WatchList <Modules/WatchList>`_
+    *  `WebGetter <Modules/WebGetter>`_
+    *  `Wordlists <Modules/Wordlists>`_
 
-All supported modules can be found at https://github.com/Erebot/
+The source code for supported modules can be found at https://github.com/Erebot/
 (look for repositories whose name starts with *Module_*).
-See each module's individual documentation for installation instructions
-and additional information.
+See each module's individual documentation for additional information.
 
 
 .. _`Third-party modules`:
@@ -61,7 +58,8 @@ This sections contains a list of third-party modules:
 
 *No third-party module has been submitted yet.*
 
-Contact us at erebot@erebot.net if you would like your module to be listed here.
+Contact us at erebot@erebot.net if you created a module and would like to see
+it listed here.
 
 ..  warning::
 
