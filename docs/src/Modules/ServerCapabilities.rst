@@ -1,6 +1,9 @@
 ServerCapabilities module
 #########################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

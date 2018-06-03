@@ -1,6 +1,9 @@
 PingReply module
 ################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

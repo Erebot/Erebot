@@ -1,6 +1,9 @@
 Helper module
 #############
 
+..  contents::
+    :local:
+
 Description
 ===========
 

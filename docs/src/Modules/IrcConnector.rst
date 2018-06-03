@@ -1,6 +1,9 @@
 IrcConnector module
 ###################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

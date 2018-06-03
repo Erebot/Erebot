@@ -1,6 +1,9 @@
 AutoJoin module
 ###############
 
+..  contents::
+    :local:
+
 Description
 ===========
 

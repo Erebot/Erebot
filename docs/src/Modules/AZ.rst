@@ -1,6 +1,9 @@
 AZ module
 #########
 
+..  contents::
+    :local:
+
 Description
 ===========
 

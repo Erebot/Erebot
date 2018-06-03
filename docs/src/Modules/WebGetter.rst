@@ -1,6 +1,9 @@
 WebGetter module
 ################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

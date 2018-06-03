@@ -1,6 +1,9 @@
 Countdown module
 ################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

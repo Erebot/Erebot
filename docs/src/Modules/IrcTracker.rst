@@ -1,6 +1,9 @@
 IrcTracker module
 #################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

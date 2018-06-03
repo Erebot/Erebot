@@ -1,6 +1,9 @@
 LagChecker module
 #################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

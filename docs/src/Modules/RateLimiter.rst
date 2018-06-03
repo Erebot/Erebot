@@ -1,6 +1,9 @@
 RateLimiter module
 ##################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

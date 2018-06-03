@@ -1,6 +1,9 @@
 AutoConnect module
 ##################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

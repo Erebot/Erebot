@@ -1,6 +1,9 @@
 CtcpResponder module
 ####################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

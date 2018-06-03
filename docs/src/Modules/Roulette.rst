@@ -1,6 +1,9 @@
 Roulette module
 ###############
 
+..  contents::
+    :local:
+
 Description
 ===========
 

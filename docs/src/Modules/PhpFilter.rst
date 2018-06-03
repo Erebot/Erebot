@@ -1,6 +1,9 @@
 PhpFilter module
 ################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

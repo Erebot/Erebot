@@ -1,6 +1,9 @@
 Math module
 ###########
 
+..  contents::
+    :local:
+
 Description
 ===========
 

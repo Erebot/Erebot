@@ -1,6 +1,9 @@
 TV module
 #########
 
+..  contents::
+    :local:
+
 Description
 ===========
 

@@ -1,6 +1,9 @@
 AutoIdent module
 ################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

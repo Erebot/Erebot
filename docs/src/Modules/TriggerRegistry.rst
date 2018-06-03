@@ -1,6 +1,9 @@
 TriggerRegistry module
 ######################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

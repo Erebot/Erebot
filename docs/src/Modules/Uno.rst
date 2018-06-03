@@ -1,6 +1,9 @@
 Uno module
 ##########
 
+..  contents::
+    :local:
+
 Description
 ===========
 

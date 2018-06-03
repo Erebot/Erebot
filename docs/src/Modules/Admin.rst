@@ -1,6 +1,9 @@
 Admin module
 ############
 
+..  contents::
+    :local:
+
 Description
 ===========
 

@@ -1,6 +1,9 @@
 MiniSed module
 ##############
 
+..  contents::
+    :local:
+
 Description
 ===========
 

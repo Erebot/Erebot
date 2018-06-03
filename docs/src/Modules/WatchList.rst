@@ -1,6 +1,9 @@
 WatchList module
 ################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

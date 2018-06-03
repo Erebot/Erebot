@@ -1,6 +1,9 @@
 GoF module
 ##########
 
+..  contents::
+    :local:
+
 Description
 ===========
 

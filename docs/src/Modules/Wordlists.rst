@@ -1,6 +1,9 @@
 Wordlists module
 ################
 
+..  contents::
+    :local:
+
 Description
 ===========
 

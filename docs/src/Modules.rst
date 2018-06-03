@@ -15,34 +15,12 @@ Supported modules
 
 This section contains a list of supported modules:
 
-..  hlist::
-    :columns: 3
+..  toctree::
+    :maxdepth: 1
+    :titlesonly:
+    :glob:
 
-    *  `Admin <Modules/Admin>`_
-    *  `AutoConnect <Modules/AutoConnect>`_
-    *  `AutoIdent <Modules/AutoIdent>`_
-    *  `AutoJoin <Modules/AutoJoin>`_
-    *  `AZ <Modules/AZ>`_
-    *  `Countdown <Modules/Countdown>`_
-    *  `CtcpResponder <Modules/CtcpResponder>`_
-    *  `GoF <Modules/GoF>`_
-    *  `Helper <Modules/Helper>`_
-    *  `IrcConnector <Modules/IrcConnector>`_
-    *  `IrcTracker <Modules/IrcTracker>`_
-    *  `LagChecker <Modules/LagChecker>`_
-    *  `Math <Modules/Math>`_
-    *  `MiniSed <Modules/MiniSed>`_
-    *  `PhpFilter <Modules/PhpFilter>`_
-    *  `PingReply <Modules/PingReply>`_
-    *  `RateLimiter <Modules/RateLimiter>`_
-    *  `Roulette <Modules/Roulette>`_
-    *  `ServerCapabilities <Modules/ServerCapabilities>`_
-    *  `TriggerRegistry <Modules/TriggerRegistry>`_
-    *  `TV <Modules/TV>`_
-    *  `Uno <Modules/Uno>`_
-    *  `WatchList <Modules/WatchList>`_
-    *  `WebGetter <Modules/WebGetter>`_
-    *  `Wordlists <Modules/Wordlists>`_
+    Modules/*
 
 The source code for supported modules can be found at https://github.com/Erebot/
 (look for repositories whose name starts with *Module_*).
