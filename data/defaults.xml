@@ -10,15 +10,9 @@
         <parameter key="logging.classes.handler">\Plop\Handler\Stream</parameter>
         <parameter key="logging.classes.logger">\Plop\Logger</parameter>
 
-        <parameter key="i18n.default_getter" type="collection">
-            <parameter>Locale</parameter>
-            <parameter>getDefault</parameter>
-        </parameter>
-
         <parameter key="core.classes.core">\Erebot\Core</parameter>
         <parameter key="core.classes.connection">\Erebot\IrcConnection</parameter>
         <parameter key="core.classes.connection_factory">\Erebot\ConnectionFactory</parameter>
-        <parameter key="core.classes.i18n">\Erebot\Intl</parameter>
         <parameter key="core.classes.identity">\Erebot\Identity</parameter>
         <parameter key="core.classes.timer">\Erebot\Timer</parameter>
         <parameter key="core.classes.eventhandler">\Erebot\EventHandler</parameter>
@@ -26,6 +20,18 @@
     </parameters>
 
     <services>
+        <service id="translator">
+            <factory class="\Erebot\Intl\GettextFactory" method="translation"/>
+            <argument>Erebot</argument>
+            <argument>%Erebot.src_dir%/../data/i18n</argument>
+            <argument type="service">
+                <service>
+                    <factory class="\Erebot\Intl\TranslatorInterface" method="getPreferredLocales"/>
+                </service>
+            </argument>
+            <argument type="constant">TRUE</argument>
+        </service>
+
         <service id="logging.formatter.detailed" class="%logging.classes.formatter%">
             <argument>%%(asctime)s &lt;%%(levelname)-7s&gt; * %%(message)s</argument>
         </service>

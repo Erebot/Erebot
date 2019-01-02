@@ -89,6 +89,10 @@ class CLI
         // Apply patches.
         \Erebot\Patches::patch();
 
+        // @HACK Make "Erebot" available as a domain name for translations,
+        //       even though no such class really exists.
+        class_alias(__CLASS__, "Erebot", false);
+
         // Load the configuration for the Dependency Injection Container.
         $dic        = new \Symfony\Component\DependencyInjection\ContainerBuilder();
         $dic->setParameter('Erebot.src_dir', __DIR__);
@@ -117,45 +121,7 @@ class CLI
         $hasPcntl = in_array('pcntl', get_loaded_extensions());
 
         $logger             = $dic->get('logging');
-        $localeGetter       = $dic->getParameter('i18n.default_getter');
-        $coreTranslatorCls  = $dic->getParameter('core.classes.i18n');
-        // @HACK Make "Erebot" available as a domain name for translations,
-        //       even though no such class really exists.
-        class_alias(__CLASS__, "Erebot", false);
-        $translator         = new $coreTranslatorCls("Erebot");
-
-        $categories = array(
-            'LC_MESSAGES',
-            'LC_MONETARY',
-            'LC_TIME',
-            'LC_NUMERIC',
-        );
-        foreach ($categories as $category) {
-            $locales = call_user_func($localeGetter);
-            $locales = empty($locales) ? array() : array($locales);
-            $localeSources = array(
-                'LANGUAGE'      => true,
-                'LC_ALL'        => false,
-                $category       => false,
-                'LANG'          => false,
-            );
-            foreach ($localeSources as $source => $multiple) {
-                if (!isset($_SERVER[$source])) {
-                    continue;
-                }
-                if ($multiple) {
-                    $locales = explode(':', $_SERVER[$source]);
-                } else {
-                    $locales = array($_SERVER[$source]);
-                }
-                break;
-            }
-
-            $translator->setLocale(
-                $translator->nameToCategory($category),
-                $locales
-            );
-        }
+        $translator         = $dic->get('translator');
 
         // Also, include some information about the version
         // of currently loaded PHAR modules, if any.
