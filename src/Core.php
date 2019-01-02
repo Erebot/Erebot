@@ -389,11 +389,11 @@ class Core implements \Erebot\Interfaces\Core
             $limit  = trim(ini_get('memory_limit'));
             $limit  = \Erebot\Utils::parseHumanSize($limit."B");
             $stats  = array(
-                $this->gettext("Allocated:") =>
+                (string) $this->gettext("Allocated:") =>
                     \Erebot\Utils::humanSize(memory_get_peak_usage(true)),
-                $this->gettext("Used:") =>
+                (string) $this->gettext("Used:") =>
                     \Erebot\Utils::humanSize(memory_get_peak_usage(false)),
-                $this->gettext("Limit:") =>
+                (string) $this->gettext("Limit:") =>
                     \Erebot\Utils::humanSize($limit),
             );
 
