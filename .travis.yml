@@ -31,10 +31,28 @@ script:
     - vendor/bin/phpunit --coverage-clover clover.xml
     - vendor/bin/phpcs
 
-after_script:
-    - vendor/bin/update-docs.sh
-
 after_success:
     - composer require --dev satooshi/php-coveralls
     - travis_retry vendor/bin/php-coveralls -n -v
 
+jobs:
+  include:
+    - stage: deploy
+      name: "Documentation"
+      script:
+        - git clone --depth=1 --branch=build https://github.com/Erebot/erebot.github.io.git docs/trigger
+        - "export TRIGGER_DOC_BUILD=$( (git show --pretty=format: --name-only $TRAVIS_COMMIT | grep -q '^docs/' && echo 1) || echo 0 )"
+        - if [ $TRAVIS_PULL_REQUEST != "false" ]; then export TRIGGER_DOC_BUILD=0; fi
+      deploy:
+        provider: pages
+        local-dir: docs/trigger
+        repo: Erebot/erebot.github.io
+        target-branch: trigger
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: false
+        allow-empty-commit: true
+        verbose: true
+        on:
+          all_branches: true
+          condition: '$TRIGGER_DOC_BUILD -eq 1'
